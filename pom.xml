@@ -15,7 +15,6 @@
     <module>sps-order</module>
     <module>sps-merchant</module>
     <module>sps-operation</module>
-    <module>sps-business</module>
     <module>sps-crm</module>
     <module>sps-goods</module>
   </modules>
