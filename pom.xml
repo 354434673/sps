@@ -17,6 +17,6 @@
     <module>sps-operation</module>
     <module>sps-business</module>
     <module>sps-crm</module>
-    <module>sps-commodity</module>
+    <module>sps-goods</module>
   </modules>
 </project>
