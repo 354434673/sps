@@ -13,6 +13,10 @@
     <module>sps-h5</module>
     <module>sps-api</module>
     <module>sps-order</module>
-    <module>sps-commercial</module>
+    <module>sps-merchant</module>
+    <module>sps-operation</module>
+    <module>sps-business</module>
+    <module>sps-crm</module>
+    <module>sps-commodity</module>
   </modules>
 </project>

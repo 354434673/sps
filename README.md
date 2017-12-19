@@ -6,14 +6,18 @@
 
 2. artifactId
 
-		sps-service
-		sps-service-impl
+		sps-service ##接口
+		sps-service-impl ##接口实现,dubbo-privoder
 		
-		sps-parent
+		sps-parent ##父pom
 	
-		sps-h5
-		sps-admin
-		sps-api
-		sps-order
-		sps-commercial
+		sps-h5 ##提供接口
+		sps-admin ##基础数据平台
+		sps-api ##api接口
+		sps-order ##订单
+		sps-merchant ##商户
+		sps-commodity ##商品
+		sps-business ##商家
+		sps-crm ##crm
+		sps-operation ##运营
 
