@@ -16,7 +16,7 @@
 		sps-api ##api接口
 		sps-order ##订单
 		sps-merchant ##商户
-		sps-commodity ##商品
+		sps-goods ##商品
 		sps-business ##商家
 		sps-crm ##crm
 		sps-operation ##运营
