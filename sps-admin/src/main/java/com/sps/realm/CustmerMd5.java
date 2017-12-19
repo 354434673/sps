@@ -13,7 +13,6 @@ public class CustmerMd5 extends AuthenticatingRealm{
 		//获取token中主身份信息
 		String userName = (String) token.getPrincipal();
 		System.out.println(userName);
-		System.out.println("111");
 		//User loginUser = userDao.loginUser(userName);
 		//根据主身份查询数据库
 		if(userName.equals("abc")){

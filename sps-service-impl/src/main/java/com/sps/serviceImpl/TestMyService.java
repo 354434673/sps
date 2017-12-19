@@ -8,7 +8,7 @@ public class TestMyService implements TestService{
 
 	@Override
 	public void name() {
-		// TODO Auto-generated method stub
+		System.out.println("dubbo执行");
 		
 	}
 
