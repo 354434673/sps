@@ -19,6 +19,7 @@ public class UserController {
 	@RequestMapping("/showUser")
 	public String toIndex(HttpServletRequest request, Model model) {
 		model.addAttribute("user", "aaaa");
+		System.out.println("11");
 		return "login";
 	}
 	/**
