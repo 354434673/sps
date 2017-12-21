@@ -1,5 +1,7 @@
 package com.sps.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
@@ -10,7 +12,9 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
 
 @Controller
@@ -34,26 +38,35 @@ public class UserController {
 	 * @throws
 	 */
 	@RequestMapping(value = {"userLogin.html"})
-	public String userLogin() {
-		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken("abc", "123");
+	public @ResponseBody String userLogin(String user, String pass, String code) {
+		UsernamePasswordToken usernamePasswordToken = 
+				new UsernamePasswordToken(user, pass);
 		
 		usernamePasswordToken.setRememberMe(true);
+		
+		HashMap<String, String> loginData = new HashMap<String,String>();
 	    try {  
 	    	SecurityUtils.getSubject().login(usernamePasswordToken);
+	    	
 	    } catch (UnknownAccountException ex) {  
+	    	ex.printStackTrace(); 
 	        System.out.println("用户不存在或者密码错误！");
-	        return "login";
-	    } catch (IncorrectCredentialsException ex) {  
+	        return "inexistence";
+	    } catch (IncorrectCredentialsException ex) { 
+	    	ex.printStackTrace(); 
 	    	System.out.println("用户不存在或者密码错误！");
-	    	return "login";
+	    	return "inexistence";
 	    } catch (AuthenticationException ex) {  
+	    	ex.printStackTrace(); 
 	    	System.out.println("自定义");
-	        //return ex.getMessage(); // 自定义报错信息  
+	    	return "inexistence";
 	    } catch (Exception ex) {  
 	        ex.printStackTrace();  
 	        System.out.println("内部错误，请重试！");
+	        return "error";
 	    }  
-		return "index";
+	    
+		return "success";
 	}
 	
 }

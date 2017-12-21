@@ -8,7 +8,7 @@
 		<!-- 装配 securityManager -->
 		<property name="securityManager" ref="securityManager" />
 		<!-- 配置登陆页面 -->
-		<property name="loginUrl" value="/jsp/login.jsp" />
+		<property name="loginUrl" value="/page/main/login.jsp" />
 		<!-- 登陆成功后的一面 -->
 		<!-- <property name="successUrl" value="/jsp/index.jsp" /> -->
 		<property name="unauthorizedUrl" value="/jsp/unauthorized.jsp" />
@@ -16,7 +16,7 @@
 		<property name="filterChainDefinitions">
 			<value>
 				<!-- js/css等文件,暂时全部放行,需要拦截的待定 -->
-				/jsp/** = anon
+				/page/** = anon
 				<!-- 登陆认证放行 -->
 				/user/userLogin.html = anon
 				<!-- 其余所有全部登陆后可使用 -->

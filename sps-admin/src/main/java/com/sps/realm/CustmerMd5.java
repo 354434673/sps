@@ -15,8 +15,8 @@ public class CustmerMd5 extends AuthenticatingRealm{
 		System.out.println(userName);
 		//User loginUser = userDao.loginUser(userName);
 		//根据主身份查询数据库
-		if(userName.equals("abc")){
-			return new SimpleAuthenticationInfo("abc", "cf70eec17cb788846cb78cfa174ef5be",ByteSource.Util.bytes("111") ,this.getName());
+		if(userName.equals("admin")){
+			return new SimpleAuthenticationInfo(userName, "0a445df77d4bd369c3947339f6826ad0",ByteSource.Util.bytes("SALT") ,this.getName());
 			//return new SimpleAuthenticationInfo("abc", "123", this.getName());
 		}
 		return null;

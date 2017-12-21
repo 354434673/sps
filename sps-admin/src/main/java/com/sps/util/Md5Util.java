@@ -18,7 +18,7 @@ public class Md5Util {
 		/*
 		 * 散列1024次
 		 */
-		Md5Hash md5Hash = new Md5Hash("123", salt, 1024);
+		Md5Hash md5Hash = new Md5Hash(password, salt, 1024);
 		
 		return md5Hash.toString();
 	}
