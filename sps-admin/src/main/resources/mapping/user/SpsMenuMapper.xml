@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.user.SpsMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.sps.entity.user.SpsMenu" >
+    <id column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <result column="menu_nodeType" property="menuNodetype" jdbcType="INTEGER" />
+    <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+    <result column="menu_parentId" property="menuParentid" jdbcType="INTEGER" />
+    <result column="menu_state" property="menuState" jdbcType="INTEGER" />
+    <result column="menu_sort" property="menuSort" jdbcType="INTEGER" />
+    <result column="menu_mark" property="menuMark" jdbcType="INTEGER" />
+    <result column="menu_creater" property="menuCreater" jdbcType="VARCHAR" />
+    <result column="menu_creatTime" property="menuCreattime" jdbcType="TIMESTAMP" />
+    <result column="menu_updateTime" property="menuUpdatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    menu_id, menu_name, menu_nodeType, menu_url, menu_parentId, menu_state, menu_sort, 
+    menu_mark, menu_creater, menu_creatTime, menu_updateTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.user.SpsMenuExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sps.entity.user.SpsMenuExample" >
+    delete from sps_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sps.entity.user.SpsMenu" >
+    insert into sps_menu (menu_id, menu_name, menu_nodeType, 
+      menu_url, menu_parentId, menu_state, 
+      menu_sort, menu_mark, menu_creater, 
+      menu_creatTime, menu_updateTime)
+    values (#{menuId,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, #{menuNodetype,jdbcType=INTEGER}, 
+      #{menuUrl,jdbcType=VARCHAR}, #{menuParentid,jdbcType=INTEGER}, #{menuState,jdbcType=INTEGER}, 
+      #{menuSort,jdbcType=INTEGER}, #{menuMark,jdbcType=INTEGER}, #{menuCreater,jdbcType=VARCHAR}, 
+      #{menuCreattime,jdbcType=TIMESTAMP}, #{menuUpdatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sps.entity.user.SpsMenu" >
+    insert into sps_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="menuName != null" >
+        menu_name,
+      </if>
+      <if test="menuNodetype != null" >
+        menu_nodeType,
+      </if>
+      <if test="menuUrl != null" >
+        menu_url,
+      </if>
+      <if test="menuParentid != null" >
+        menu_parentId,
+      </if>
+      <if test="menuState != null" >
+        menu_state,
+      </if>
+      <if test="menuSort != null" >
+        menu_sort,
+      </if>
+      <if test="menuMark != null" >
+        menu_mark,
+      </if>
+      <if test="menuCreater != null" >
+        menu_creater,
+      </if>
+      <if test="menuCreattime != null" >
+        menu_creatTime,
+      </if>
+      <if test="menuUpdatetime != null" >
+        menu_updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null" >
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuNodetype != null" >
+        #{menuNodetype,jdbcType=INTEGER},
+      </if>
+      <if test="menuUrl != null" >
+        #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParentid != null" >
+        #{menuParentid,jdbcType=INTEGER},
+      </if>
+      <if test="menuState != null" >
+        #{menuState,jdbcType=INTEGER},
+      </if>
+      <if test="menuSort != null" >
+        #{menuSort,jdbcType=INTEGER},
+      </if>
+      <if test="menuMark != null" >
+        #{menuMark,jdbcType=INTEGER},
+      </if>
+      <if test="menuCreater != null" >
+        #{menuCreater,jdbcType=VARCHAR},
+      </if>
+      <if test="menuCreattime != null" >
+        #{menuCreattime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menuUpdatetime != null" >
+        #{menuUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sps.entity.user.SpsMenuExample" resultType="java.lang.Integer" >
+    select count(*) from sps_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_menu
+    <set >
+      <if test="record.menuId != null" >
+        menu_id = #{record.menuId,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuName != null" >
+        menu_name = #{record.menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuNodetype != null" >
+        menu_nodeType = #{record.menuNodetype,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuUrl != null" >
+        menu_url = #{record.menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuParentid != null" >
+        menu_parentId = #{record.menuParentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuState != null" >
+        menu_state = #{record.menuState,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuSort != null" >
+        menu_sort = #{record.menuSort,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuMark != null" >
+        menu_mark = #{record.menuMark,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuCreater != null" >
+        menu_creater = #{record.menuCreater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuCreattime != null" >
+        menu_creatTime = #{record.menuCreattime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.menuUpdatetime != null" >
+        menu_updateTime = #{record.menuUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_menu
+    set menu_id = #{record.menuId,jdbcType=INTEGER},
+      menu_name = #{record.menuName,jdbcType=VARCHAR},
+      menu_nodeType = #{record.menuNodetype,jdbcType=INTEGER},
+      menu_url = #{record.menuUrl,jdbcType=VARCHAR},
+      menu_parentId = #{record.menuParentid,jdbcType=INTEGER},
+      menu_state = #{record.menuState,jdbcType=INTEGER},
+      menu_sort = #{record.menuSort,jdbcType=INTEGER},
+      menu_mark = #{record.menuMark,jdbcType=INTEGER},
+      menu_creater = #{record.menuCreater,jdbcType=VARCHAR},
+      menu_creatTime = #{record.menuCreattime,jdbcType=TIMESTAMP},
+      menu_updateTime = #{record.menuUpdatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sps.entity.user.SpsMenu" >
+    update sps_menu
+    <set >
+      <if test="menuName != null" >
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuNodetype != null" >
+        menu_nodeType = #{menuNodetype,jdbcType=INTEGER},
+      </if>
+      <if test="menuUrl != null" >
+        menu_url = #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParentid != null" >
+        menu_parentId = #{menuParentid,jdbcType=INTEGER},
+      </if>
+      <if test="menuState != null" >
+        menu_state = #{menuState,jdbcType=INTEGER},
+      </if>
+      <if test="menuSort != null" >
+        menu_sort = #{menuSort,jdbcType=INTEGER},
+      </if>
+      <if test="menuMark != null" >
+        menu_mark = #{menuMark,jdbcType=INTEGER},
+      </if>
+      <if test="menuCreater != null" >
+        menu_creater = #{menuCreater,jdbcType=VARCHAR},
+      </if>
+      <if test="menuCreattime != null" >
+        menu_creatTime = #{menuCreattime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menuUpdatetime != null" >
+        menu_updateTime = #{menuUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sps.entity.user.SpsMenu" >
+    update sps_menu
+    set menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_nodeType = #{menuNodetype,jdbcType=INTEGER},
+      menu_url = #{menuUrl,jdbcType=VARCHAR},
+      menu_parentId = #{menuParentid,jdbcType=INTEGER},
+      menu_state = #{menuState,jdbcType=INTEGER},
+      menu_sort = #{menuSort,jdbcType=INTEGER},
+      menu_mark = #{menuMark,jdbcType=INTEGER},
+      menu_creater = #{menuCreater,jdbcType=VARCHAR},
+      menu_creatTime = #{menuCreattime,jdbcType=TIMESTAMP},
+      menu_updateTime = #{menuUpdatetime,jdbcType=TIMESTAMP}
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+</mapper>

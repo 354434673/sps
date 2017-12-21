@@ -91,11 +91,11 @@ $(function(){
         pageSize: 10,
         name: '',
     }
-    JZFQpublicRun.publicAjax('post','http://systemplate.juzifenqi.cn/cap/c/test/getAllUser', setAgenment, function(data){
+/*    JZFQpublicRun.publicAjax('post','http://systemplate.juzifenqi.cn/cap/c/test/getAllUser', setAgenment, function(data){
         structureHtml(data);
-    });
+    });*/
     /* 运行分页方法 */
-    JZFQpublicRun.loadPageMainRun('post','http://systemplate.juzifenqi.cn/cap/c/test/getAllUser', setAgenment,structureHtml);
+    //JZFQpublicRun.loadPageMainRun('post','http://systemplate.juzifenqi.cn/cap/c/test/getAllUser', setAgenment,structureHtml);
     /* 绑定事件方法 */
     var indexMainEvent = {
         init: function(){
