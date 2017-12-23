@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="shiro"  uri="http://shiro.apache.org/tags"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -17,7 +18,7 @@
 <link rel="stylesheet" type="text/css" href="../static/css/sys.main.css">
 </head>
 <body>
-	<div id="sys-head"><!-- load tlp --></div>
+<div id="sys-head"><!-- load tlp --></div>
 	<div id="sys-wrap">
 		<div id="left-bar"><!-- load tlp --></div>
 		<div id="main-wrap">
@@ -27,5 +28,7 @@
 <!-- script -->
 <script type="text/javascript" src="../static/js/JZFQ.ued.lib.js"></script>
 <script type="text/javascript" src="../static/js/laydate/laydate.js"></script>
+<script type="text/javascript">
+</script>
 </body>
 </html>
