@@ -20,7 +20,8 @@
 				<!-- 登陆认证放行 -->
 				/user/userLogin.html = anon
 				<!-- 其余所有全部登陆后可使用 -->
-				/**=authc
+				<!-- /** = authc -->
+				/** = anon
 				<!-- /user/showUser = anon /index.jsp = anon /jsp/login.jsp = anon /user/**=authc -->
 			</value>
 		</property>

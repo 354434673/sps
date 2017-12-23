@@ -1,4 +1,4 @@
-package com.sps.service;
+package com.sps.service.user;
 
 import java.util.HashMap;
 import java.util.List;

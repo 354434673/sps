@@ -43,7 +43,6 @@ public class UserController {
 				new UsernamePasswordToken(user, pass);
 		
 		usernamePasswordToken.setRememberMe(true);
-		
 		HashMap<String, String> loginData = new HashMap<String,String>();
 	    try {  
 	    	SecurityUtils.getSubject().login(usernamePasswordToken);

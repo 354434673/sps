@@ -42,7 +42,7 @@ $(function(){
         	data = json
         }
     });
-    var barList =
+    var barList = 
     	'<h1>数据中心</h1>'+
     	'<ul class="bar-menu clearfix">'+
     	'{{each data as title}}' +

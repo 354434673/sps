@@ -29,8 +29,6 @@
 <script type="text/javascript" src="../static/js/JZFQ.ued.lib.js"></script>
 <script type="text/javascript" src="../static/js/laydate/laydate.js"></script>
 <script type="text/javascript">
-$(function(){
-})
 </script>
 </body>
 </html>
