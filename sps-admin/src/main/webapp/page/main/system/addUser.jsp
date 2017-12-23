@@ -16,7 +16,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
-	href="<%=path%>/page/layer/plugins/layui/css/layui.css" media="all" />
+	href="<%=path%>/page/layui/css/layui.css" media="all" />
 	
 <style type="text/css">
 </style>
@@ -85,7 +85,7 @@
   </div>
 </div>
 <script type="text/javascript"
-		src="<%=path%>/page/layer/plugins/layui/layui.all.js"></script>
+		src="<%=path%>/page/layui/layui.all.js"></script>
 <script type="text/javascript">
 	layui.use('form', function(){
 	  var form = layui.form;
