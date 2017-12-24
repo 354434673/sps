@@ -2,6 +2,8 @@ package com.sps.dao.user;
 
 import com.sps.entity.user.SpsMenu;
 import com.sps.entity.user.SpsMenuExample;
+import com.sps.util.MenuUtil;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +29,8 @@ public interface SpsMenuMapper {
     int updateByPrimaryKeySelective(SpsMenu record);
 
     int updateByPrimaryKey(SpsMenu record);
+    
+    List<MenuUtil> seletMenuList();
+    
+    List<MenuUtil> querySecoud(@Param("menuId")Integer id);
 }

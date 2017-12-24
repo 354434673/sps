@@ -22,7 +22,7 @@
 </style>
 </head>
 <body>
-<div style="margin-top: 20px;margin-left: 120px" >
+<div style="margin-top: 20px;margin-left: 120px">
 <h3>用户信息</h3>
 <hr>
 <div class="layui-form "  >
@@ -77,10 +77,6 @@
 	      </select>
 	    </div>
 	    <button class="layui-btn" lay-submit lay-filter="formDemo">添加</button>
-	  </div>
-	  <div align="center">
-	      <button class="layui-btn" lay-submit lay-filter="formDemo">返回</button>
-	      <button type="reset" class="layui-btn layui-btn-primary">提交</button>
 	  </div>
   </div>
 </div>

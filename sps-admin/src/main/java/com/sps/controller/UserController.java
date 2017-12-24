@@ -38,7 +38,8 @@ public class UserController {
 	 * @throws
 	 */
 	@RequestMapping(value = {"userLogin.html"})
-	public @ResponseBody String userLogin(String user, String pass, String code) {
+	public @ResponseBody String userLogin(String user, String pass, 
+			String code, boolean rememberMe) {
 		UsernamePasswordToken usernamePasswordToken = 
 				new UsernamePasswordToken(user, pass);
 		

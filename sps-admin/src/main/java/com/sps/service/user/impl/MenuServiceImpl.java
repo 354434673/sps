@@ -18,8 +18,8 @@ public class MenuServiceImpl implements MenuService{
 	@Resource
 	private SpsMenuMapper spsMenuMapper;
 	@Override
-	public HashMap<String, List<MenuUtil>> getMenu() {
-		SpsMenuExample example = new SpsMenuExample();
+	public List<MenuUtil> getMenu() {
+/*		SpsMenuExample example = new SpsMenuExample();
 		
 		com.sps.entity.user.SpsMenuExample.Criteria createCriteria = example.createCriteria();
 		
@@ -27,7 +27,6 @@ public class MenuServiceImpl implements MenuService{
 		
 		List<MenuUtil> list = new ArrayList<MenuUtil>();
 		
-		HashMap<String, List<MenuUtil>> hashMap = new HashMap<String,List<MenuUtil>>();
 		
 		List<SpsMenu> selectByExample = spsMenuMapper.selectByExample(example );
 		MenuUtil menuUtil= null;
@@ -45,12 +44,12 @@ public class MenuServiceImpl implements MenuService{
 				}
 			}
 			list.add(menuUtil);
-		}
-		hashMap.put("data", list);
+		}*/
+		List<MenuUtil> seletMenuList = spsMenuMapper.seletMenuList();
 		
-		return hashMap;
+		return seletMenuList;
 	}
-	private List<MenuUtil> getSub(Integer id){
+/*	private List<MenuUtil> getSub(Integer id){
 		SpsMenuExample example2 = new SpsMenuExample();
 		example2.createCriteria().andMenuParentidEqualTo(id);
 		List<SpsMenu> selectByExample2 = spsMenuMapper.selectByExample(example2);
@@ -65,5 +64,5 @@ public class MenuServiceImpl implements MenuService{
 			list2.add(menuUtil);
 		}
 		return list2;
-	}
+	}*/
 }

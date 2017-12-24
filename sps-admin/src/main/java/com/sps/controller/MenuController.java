@@ -3,6 +3,7 @@ package com.sps.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -12,10 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.sps.dao.user.SpsMenuMapper;
-import com.sps.entity.user.SpsMenu;
-import com.sps.entity.user.SpsMenuExample;
-import com.sps.entity.user.SpsUser;
 import com.sps.service.user.MenuService;
 import com.sps.util.MenuUtil;
 
@@ -26,14 +23,12 @@ public class MenuController {
 	private MenuService menuService;
 
 	@RequestMapping(value = "/getMenu.json")
-	public @ResponseBody String getMenuList(){
+	public @ResponseBody List<MenuUtil> getMenuList(){
 		String userName = (String) SecurityUtils.getSubject().getPrincipal();
 		
-		HashMap<String, List<MenuUtil>> menu = menuService.getMenu();
+		List<MenuUtil> menu = menuService.getMenu();
 		
-		String jsonString = JSON.toJSONString(menu);
-		
-		return jsonString;
+		return menu;
 	}
 
 }

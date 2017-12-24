@@ -11,17 +11,17 @@ import java.util.List;
  */
 public class MenuUtil {
 	
-    private Integer menuId;
+    private Integer id;
 
-    private String name;
+    private String title;
 
     private Integer menuNodetype;
 
-    private String script;
+    private String href;
 
     private Integer menuParentid;
 
-    private List<MenuUtil> subMenu;
+    private List<MenuUtil> children;
 
     	
 	public MenuUtil() {
@@ -30,42 +30,42 @@ public class MenuUtil {
 	}
 
 
-	public MenuUtil(Integer menuId, String name, Integer menuNodetype, String script, Integer menuParentid,
-			List<MenuUtil> subMenu) {
+	public MenuUtil(Integer id, String title, Integer menuNodetype, String href, Integer menuParentid,
+			List<MenuUtil> children) {
 		super();
-		this.menuId = menuId;
-		this.name = name;
+		this.id = id;
+		this.title = title;
 		this.menuNodetype = menuNodetype;
-		this.script = script;
+		this.href = href;
 		this.menuParentid = menuParentid;
-		this.subMenu = subMenu;
+		this.children = children;
 	}
 
 
 	@Override
 	public String toString() {
-		return "MenuUtil [menuId=" + menuId + ", name=" + name + ", menuNodetype=" + menuNodetype + ", script=" + script
-				+ ", menuParentid=" + menuParentid + ", subMenu=" + subMenu + "]";
+		return "MenuUtil [id=" + id + ", title=" + title + ", menuNodetype=" + menuNodetype + ", href=" + href
+				+ ", menuParentid=" + menuParentid + ", children=" + children + "]";
 	}
 
 
-	public Integer getMenuId() {
-		return menuId;
+	public Integer getId() {
+		return id;
 	}
 
 
-	public void setMenuId(Integer menuId) {
-		this.menuId = menuId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 
@@ -79,13 +79,13 @@ public class MenuUtil {
 	}
 
 
-	public String getScript() {
-		return script;
+	public String getHref() {
+		return href;
 	}
 
 
-	public void setScript(String script) {
-		this.script = script;
+	public void setHref(String href) {
+		this.href = href;
 	}
 
 
@@ -99,16 +99,13 @@ public class MenuUtil {
 	}
 
 
-	public List<MenuUtil> getSubMenu() {
-		return subMenu;
+	public List<MenuUtil> getChildren() {
+		return children;
 	}
 
 
-	public void setSubMenu(List<MenuUtil> subMenu) {
-		this.subMenu = subMenu;
+	public void setChildren(List<MenuUtil> children) {
+		this.children = children;
 	}
 	
-	
-	
-    
 }

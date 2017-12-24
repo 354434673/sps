@@ -13,8 +13,8 @@ public interface MenuService {
 	 * @param: @return  
 	 * @author YangNingSheng    
 	 * @date 2017年12月22日 下午6:34:45
-	 * @return: HashMap<String,List>      
+	 * @return: List<MenuUtil>   
 	 * @throws
 	 */
-	HashMap<String, List<MenuUtil>> getMenu();
+	List<MenuUtil> getMenu();
 }

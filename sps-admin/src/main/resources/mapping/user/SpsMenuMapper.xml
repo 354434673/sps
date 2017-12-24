@@ -14,6 +14,21 @@
     <result column="menu_creatTime" property="menuCreattime" jdbcType="TIMESTAMP" />
     <result column="menu_updateTime" property="menuUpdatetime" jdbcType="TIMESTAMP" />
   </resultMap>
+  <!-- 封装成特点json格式 -->
+  <resultMap type="com.sps.util.MenuUtil" id="MenuList">
+  	<id column="menu_id" property="id" jdbcType="INTEGER" />
+    <result column="menu_name" property="title" jdbcType="VARCHAR" />
+    <result column="menu_nodeType" property="menuNodetype" jdbcType="INTEGER" />
+    <result column="menu_url" property="href" jdbcType="VARCHAR" />
+    <result column="menu_parentId" property="menuParentid" jdbcType="INTEGER" />
+		<collection property="children" javaType="list" ofType="com.sps.util.MenuUtil" select="querySecoud" column="menu_id">
+  		<id column="menu_id" property="id" jdbcType="INTEGER" />
+    	<result column="menu_name" property="title" jdbcType="VARCHAR" />
+    	<result column="menu_nodeType" property="menuNodetype" jdbcType="INTEGER" />
+    	<result column="menu_url" property="href" jdbcType="VARCHAR" />
+	    <result column="menu_parentId" property="menuParentid" jdbcType="INTEGER" />	
+		</collection>		  
+  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -303,4 +318,17 @@
       menu_updateTime = #{menuUpdatetime,jdbcType=TIMESTAMP}
     where menu_id = #{menuId,jdbcType=INTEGER}
   </update>
+  <!-- mybatis自带级联查询 -->
+  <!-- 查询一级 -->
+  <select id="seletMenuList" resultMap="MenuList" >
+    select
+    menu_id, menu_name, menu_nodeType, menu_url, menu_parentId
+    from sps_menu where menu_nodeType = 1
+  </select>
+  <!-- 查询二级 -->
+  <select id="querySecoud" resultMap="MenuList" >
+    select
+    menu_id, menu_name, menu_nodeType, menu_url, menu_parentId
+    from sps_menu where menu_parentId =  #{id,jdbcType=INTEGER}
+  </select>
 </mapper>

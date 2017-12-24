@@ -28,26 +28,17 @@
 
 	<!-- 添加注解驱动 -->
 	<mvc:annotation-driven enable-matrix-variables="true">
-		<!-- 修改@responseBody使用FastJson转换对象 -->
-		<mvc:message-converters>
-			<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
-				<beans:property name="charset" value="UTF-8" />
-				<beans:property name="supportedMediaTypes">
-					<beans:list>
-						<beans:value>application/json</beans:value>
-						<beans:value>text/html;charset=UTF-8</beans:value>
-					</beans:list>
-				</beans:property>
-				<beans:property name="features">
-					<beans:list>
-						<beans:value>WriteMapNullValue</beans:value>
-						<beans:value>QuoteFieldNames</beans:value>
-						<beans:value>WriteDateUseDateFormat</beans:value>
-						<beans:value>WriteEnumUsingToString</beans:value>
-					</beans:list>
-				</beans:property>
-			</bean>
-		</mvc:message-converters>
+        <mvc:message-converters>
+        	<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"></bean>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                    	<value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
 	</mvc:annotation-driven>
 
 	<!-- 允许对静态资源文件的访问 -->

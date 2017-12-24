@@ -29,7 +29,7 @@
 <title>系统登录</title>
 <meta name="keywords" content="系统登录">
 <meta name="description" content="系统登录">
-<link rel="shortcut icon" href="<%=path%>/page/static/images/logo1.png" type="image/x-icon" >
+<link rel="shortcut icon" href="<%=path%>/page/static/images/1514199484(1).png" type="image/x-icon" >
 <style type="text/css">
 @charset "utf-8";
 
