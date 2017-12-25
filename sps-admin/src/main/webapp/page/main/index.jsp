@@ -104,8 +104,7 @@
 		<div class="site-tree-mobile layui-hide">
 			<i class="layui-icon">&#xe602;</i>
 		</div>
-<script type="text/javascript" src="../static/plugins/layui/layui.js"></script>
-<script type="text/javascript" src="../static/datas/nav.js"></script>
+<script type="text/javascript" src="<%=path%>/page/static/plugins/layui/layui.js"></script>
 <script src="../static/js/index.js"></script>
 <script>
 			var pathStr = "${pageContext.request.contextPath}";//项目名称,方便js获取

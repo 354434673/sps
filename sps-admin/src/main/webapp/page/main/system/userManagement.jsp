@@ -16,7 +16,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
-	href="<%=path%>/page/layui/css/layui.css" media="all" />
+	href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all" />
 <style type="text/css">
 	tr th{
 		text-align: center;
@@ -106,7 +106,7 @@
 		</table>
 	</div>
 	<script type="text/javascript"
-		src="<%=path%>/page/layui/layui.all.js"></script>
+		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 	<script>
 		layui.use(['layer'], function(){
 			  var layer = layui.layer
