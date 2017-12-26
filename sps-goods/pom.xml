@@ -15,6 +15,11 @@
   <name>sps-goods Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
+      <dependency>
+          <groupId>commons-beanutils</groupId>
+          <artifactId>commons-beanutils</artifactId>
+          <version>RELEASE</version>
+      </dependency>
   </dependencies>
   <build>
     <finalName>sps-goods</finalName>
