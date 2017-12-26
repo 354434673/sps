@@ -1,5 +1,7 @@
 package com.sps.service.user;
 
+import java.util.List;
+
 import com.sps.entity.user.SpsUser;
 
 public interface UserService {
@@ -15,4 +17,15 @@ public interface UserService {
 	 * @throws
 	 */
 	SpsUser getUser(String userName);
+	/**
+	 * 全部用户
+	 * @Title: userList   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2017年12月26日 下午3:09:08
+	 * @return: List<SpsUser>      
+	 * @throws
+	 */
+	List<SpsUser> userList();
 }

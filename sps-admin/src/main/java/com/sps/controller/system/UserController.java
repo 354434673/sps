@@ -1,7 +1,9 @@
-package com.sps.controller;
+package com.sps.controller.system;
 
 import java.util.HashMap;
+import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
@@ -16,15 +18,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.sps.entity.user.SpsUser;
+import com.sps.service.user.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	@RequestMapping("/showUser")
-	public String toIndex(HttpServletRequest request, Model model) {
-		model.addAttribute("user", "aaaa");
-		System.out.println("11");
-		return "login";
+	@Resource
+	private UserService userService;
+	@RequestMapping("/userList.html")
+	public @ResponseBody HashMap<String, Object> toIndex(HttpServletRequest request, Model model) {
+		HashMap<String, Object> hashMap = new HashMap<String,Object>();
+		List<SpsUser> userList = userService.userList();
+		hashMap.put("code", 0);
+		hashMap.put("msg", "获取成功");
+		hashMap.put("count", userList.size());
+		hashMap.put("data", userList);
+		return hashMap;
 	}
 	/**
 	 * @Title: userLogin   

@@ -41,57 +41,40 @@
 			</blockquote>
 		</div>
 		<hr>
-		<table lay-even class="layui-table ">
-			<colgroup>
-				<col width="150">
-				<col width="150">
-				<col width="150">
-				<col>
-			</colgroup>
-			<thead>
-				<tr>
-					<th>角色</th>
-					<th>描述</th>
-					<th>操作</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>管理员</td>
-					<td>无描述</td>
-					<td>
-					<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 修改
-					</a>
-					<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 删除
-					</a>
-					<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 查看
-					</a>
-					</td>
-				</tr>
-				<tr>
-					<td>管理员</td>
-					<td>无描述</td>
-					<td>
-					<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 修改
-					</a>
-					<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 删除
-					</a>
-					<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 查看
-					</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<table id="roleList" lay-filter="roleTables"></table>
 	</div>
 	<script type="text/javascript"
-		src="<%=path%>/page/static/plugins/layui/layui.js"></script>
+		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 	<script>
+	layui.use(['table','laypage','layer'], function(){
+		  var table = layui.table;
+		  var laypage = layui.laypage;
+		  var layer = layui.layer
+		  var $ = layui.jquery
+			$('#add').on('click', function() {
+				  layer.open({
+					  type: 2, 
+					  area: ['80%', '80%'],//宽高
+					  content: '<%=path%>/page/main/system/addRole.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+				  }); 
+			  });
+		  table.render({
+		    elem: '#roleList'
+		    ,height: 325
+		   <%--  ,url: '<%=path%>/user/userList.html' //数据接口 --%>
+		    ,id:'userId'
+		    ,page:true
+		    ,cols: [[ //表头
+		      {field: 'userId', title: '用户名', width:177,align:'center'}
+		      ,{field: 'userUsername', title: '用户名', width:177,align:'center'}
+		      ,{field: 'sex', title: '性别', width:177, sort: true,align:'center'}
+		      ,{field: 'city', title: '城市', width:80,align:'center'} 
+		      ,{field: 'sign', title: '签名', width: 177,align:'center'}
+		      ,{field: 'experience', title: '积分', width: 177, sort: true,align:'center'}
+		      ,{field: 'score', title: '评分', width: 120, sort: true,align:'center'}
+		    ]]
+		  });
+		});
 	</script>
 
 </body>

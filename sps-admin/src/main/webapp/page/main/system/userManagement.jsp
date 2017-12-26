@@ -44,79 +44,44 @@
 				</a>
 			</blockquote>
 		</div>
-		<hr>
-		<table lay-even class="layui-table ">
-			<colgroup>
-				<col width="150">
-				<col width="150">
-				<col width="150">
-				<col width="150">
-				<col width="150">
-				<col width="250">
-				<col>
-			</colgroup>
-			<thead>
-				<tr>
-					<th>用户名</th>
-					<th>姓名</th>
-					<th>联系电话</th>
-					<th>电子邮箱</th>
-					<th>角色</th>
-					<th>操作</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>admin</td>
-					<td>xxx</td>
-					<td>135****4567</td>
-					<td>35******@qq.com</td>
-					<td>管理员</td>
-					<td>
-					<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 修改
-					</a>
-					<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 删除
-					</a>
-					<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 查看
-					</a>
-					</td>
-				</tr>
-				<tr>
-					<td>admin</td>
-					<td>xxx</td>
-					<td>135****4567</td>
-					<td>35******@qq.com</td>
-					<td>管理员</td>
-					<td>
-					<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 修改
-					</a>
-					<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 删除
-					</a>
-					<a href="javascript:;" class="layui-btn layui-btn-small" id="add">
-					<i class="layui-icon">&#xe608;</i> 查看
-					</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<table id="userList" lay-filter="userTables"></table>
 	</div>
 	<script type="text/javascript"
 		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+</script>
 	<script>
-		layui.use(['layer'], function(){
+		layui.use(['table','laypage','layer'], function(){
+			  var table = layui.table;
+			  var laypage = layui.laypage;
 			  var layer = layui.layer
-			  ,layer = layui.layer
-		  layer.open({
-			  type: 2, 
-			  area: ['900px', '400px'],//宽高
-			  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-		  }); 
-		});  
+			  var $ = layui.jquery
+			  $('#add').on('click', function() {
+				  layer.open({
+					  type: 2, 
+					  area: ['70%', '80%'],//宽高
+					  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+				  }); 
+			  });
+			  table.render({
+			    elem: '#userList'
+			    ,height: 325
+			    ,url: '<%=path%>/user/userList.html' //数据接口
+			    ,id:'userId'
+			    ,page:true
+			    ,cols: [[ //表头
+			      {field: 'userId', title: '用户名', width:100,align:'center'}
+			      ,{field: 'userUsername', title: '用户名', width:177,align:'center'}
+			      ,{field: 'phone', title: '联系电话', width:230, align:'center'}
+			      ,{field: 'email', title: '电子邮箱', width:230,align:'center'} 
+			      ,{field: 'roleName', title: '角色', width: 100,align:'center'}
+			      ,{field: 'score', title: '操作', align:'center',toolbar:'#barDemo'}
+			    ]]
+			  });
+			});
 	</script>
 </body>
 </html>

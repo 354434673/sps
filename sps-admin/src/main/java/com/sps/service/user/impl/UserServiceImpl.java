@@ -38,4 +38,14 @@ public class UserServiceImpl implements UserService{
 	
 		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
 	}
+	@Override
+	public List<SpsUser> userList() {
+		SpsUserExample example = new SpsUserExample();
+		
+		Criteria createCriteria = example.createCriteria();
+		
+		List<SpsUser> selectByExample = spsUserMapper.selectByExample(example);
+		
+		return selectByExample.size() != 0 ? selectByExample : null;
+	}
 }

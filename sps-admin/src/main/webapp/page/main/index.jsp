@@ -12,7 +12,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>桔子分期店付端</title>
+<title>桔子分期店付</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -20,15 +20,17 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
-
 <link rel="shortcut icon" href="<%=path%>/page/static/images/1514199484(1).png" type="image/x-icon" >
-<link rel="stylesheet" href="../static/plugins/layui/css/layui.css"
-	media="all" />
-<link rel="stylesheet" href="../static/css/global.css" media="all">
+
 <link rel="stylesheet"
-	href="../static/plugins/font-awesome/css/font-awesome.min.css">
-	
+	href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all" />
+<link rel="stylesheet" href="<%=path%>/page/static/css/global.css"
+	media="all">
+<link rel="stylesheet"
+	href="<%=path%>/page/static/plugins/font-awesome/css/font-awesome.min.css">
+
 </head>
+
 <body>
 	<div class="layui-layout layui-layout-admin"
 		style="border-bottom: solid 5px #1aa094;">
@@ -36,8 +38,8 @@
 			<div class="layui-main">
 				<div class="admin-login-box">
 					<a class="logo" style="left: 0;"
-						href="http://beginner.zhengjinfan.cn/demo/beginner_admin/"> 
-						<span style="font-size: 22px;">桔子分期</span>
+						href="http://beginner.zhengjinfan.cn/demo/beginner_admin/"> <span
+						style="font-size: 22px;">桔子分期</span>
 					</a>
 					<div class="admin-side-toggle">
 						<i class="fa fa-bars" aria-hidden="true"></i>
@@ -49,7 +51,7 @@
 				<ul class="layui-nav admin-header-item">
 					<li class="layui-nav-item"><a href="javascript:;">清除缓存</a></li>
 					<li class="layui-nav-item"><a href="javascript:;"
-						class="admin-header-user"> <img src="../static/images/0.jpg" /> <span>beginner</span>
+						class="admin-header-user"> <img src="../../static/images/0.jpg" /> <span>beginner</span>
 					</a>
 						<dl class="layui-nav-child">
 							<dd>
@@ -60,17 +62,15 @@
 								<a href="javascript:;"><i class="fa fa-gear"
 									aria-hidden="true"></i> 设置</a>
 							</dd>
-							<dd id="lock">
-								<a href="javascript:;"> <i class="fa fa-lock"
-									aria-hidden="true"
-									style="padding-right: 3px; padding-left: 1px;"></i> 锁屏 (Alt+L)
-								</a>
-							</dd>
 							<dd>
 								<a href="login.html"><i class="fa fa-sign-out"
 									aria-hidden="true"></i> 注销</a>
 							</dd>
 						</dl></li>
+				</ul>
+				<ul class="layui-nav admin-header-item-mobile">
+					<li class="layui-nav-item"><a href="login.html"><i
+							class="fa fa-sign-out" aria-hidden="true"></i> 注销</a></li>
 				</ul>
 			</div>
 		</div>
@@ -84,12 +84,12 @@
 				lay-filter="admin-tab">
 				<ul class="layui-tab-title">
 					<li class="layui-this"><i class="fa fa-dashboard"
-						aria-hidden="true"></i> <cite>Home</cite></li>
+						aria-hidden="true"></i> <cite>控制面板</cite></li>
 				</ul>
 				<div class="layui-tab-content"
 					style="min-height: 150px; padding: 5px 0 0 0;">
 					<div class="layui-tab-item layui-show">
-						<iframe src="main2.html" height="150px"></iframe>
+						<iframe src="main.html"></iframe>
 					</div>
 				</div>
 			</div>
@@ -104,13 +104,35 @@
 		<div class="site-tree-mobile layui-hide">
 			<i class="layui-icon">&#xe602;</i>
 		</div>
-<script type="text/javascript" src="<%=path%>/page/static/plugins/layui/layui.js"></script>
-<script src="../static/js/index.js"></script>
-<script>
+		<div class="site-mobile-shade"></div>
+
+		<script type="text/javascript"
+			src="<%=path%>/page/static/plugins/layui/layui.js"></script>
+		<script src="<%=path%>/page/static/js/index.js"></script>
+		<script>
 			var pathStr = "${pageContext.request.contextPath}";//项目名称,方便js获取
 			layui.use('layer', function() {
-				var $ = layui.jquery, 
-				layer = layui.layer;
+				var $ = layui.jquery, layer = layui.layer;
+
+				$('#video1').on('click', function() {
+					layer.open({
+						title : 'YouTube',
+						maxmin : true,
+						type : 2,
+						content : 'video.html',
+						area : [ '800px', '500px' ]
+					});
+				});
+				$('#pay').on('click', function() {
+					layer.open({
+						title : false,
+						type : 1,
+						content : '<img src="images/xx.png" />',
+						area : [ '500px', '250px' ],
+						shadeClose : true
+					});
+				});
+
 			});
 		</script>
 	</div>
