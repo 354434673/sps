@@ -16,4 +16,5 @@ public interface RoleService {
 	 * @throws
 	 */
 	List<SpsRole> getRoleList();
+	
 }

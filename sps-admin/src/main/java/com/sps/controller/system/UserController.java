@@ -14,11 +14,12 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sps.entity.user.SpsUser;
+import com.sps.service.user.UserAndRoleService;
 import com.sps.service.user.UserService;
 
 @Controller
@@ -26,8 +27,10 @@ import com.sps.service.user.UserService;
 public class UserController {
 	@Resource
 	private UserService userService;
+	@Resource
+	private UserAndRoleService userAndRoleService;
 	@RequestMapping("/userList.html")
-	public @ResponseBody HashMap<String, Object> toIndex(HttpServletRequest request, Model model) {
+	public @ResponseBody HashMap<String, Object> userList(String page, String limit) {
 		HashMap<String, Object> hashMap = new HashMap<String,Object>();
 		List<SpsUser> userList = userService.userList();
 		hashMap.put("code", 0);
@@ -78,5 +81,14 @@ public class UserController {
 	    
 		return "success";
 	}
-	
+	@RequestMapping(value="insertUser.html")
+	@ResponseBody
+	public  HashMap<String, Object> insertUser(String username, String password, String name, 
+			String phone, String email, @RequestParam(value = "roleList[]") int[] roleList) {
+		HashMap<String, Object> insertUser = 
+				userService.insertUser(username, password, 
+						name, phone, email);//用户添加
+		userAndRoleService.insertUserAndRole(username, roleList);//为该用户添加角色
+		return insertUser;
+	}
 }

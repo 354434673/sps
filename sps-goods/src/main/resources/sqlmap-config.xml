@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<!-- 全局映射器启用缓存 -->
+		<setting name="cacheEnabled" value="false" />
+		<!-- 对于未知的SQL查询，允许返回不同的结果集以达到通用的效果 -->
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<!-- 允许使用列标签代替列名 -->
+		<setting name="useColumnLabel" value="true" />
+		<!-- 数据库超过25000秒仍未响应则超时 -->
+		<setting name="defaultStatementTimeout" value="25000" />
+	</settings>
+	<typeAliases>
+		<typeAlias alias="SpsGoodCategory" type="com.sps.entity.goods.SpsGoodCategory" />
+		<typeAlias alias="SpsBrand" type="com.sps.entity.goods.SpsBrand" />
+
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="mapping/goods/SpsBrandMapper.xml" />
+		<mapper resource="mapping/goods/SpsGoodCategoryMapper.xml" />
+	</mappers>
+</configuration>

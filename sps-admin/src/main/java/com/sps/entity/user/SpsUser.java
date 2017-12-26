@@ -9,6 +9,8 @@ public class SpsUser {
 
     private String userPassword;
 
+    private String userName;
+
     private String userPhone;
 
     private String userEmail;
@@ -24,6 +26,8 @@ public class SpsUser {
     private Integer userState;
 
     private Integer userMark;
+
+    private Integer userSupplierNum;
 
     public Integer getUserId() {
         return userId;
@@ -47,6 +51,14 @@ public class SpsUser {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword == null ? null : userPassword.trim();
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
     }
 
     public String getUserPhone() {
@@ -111,5 +123,13 @@ public class SpsUser {
 
     public void setUserMark(Integer userMark) {
         this.userMark = userMark;
+    }
+
+    public Integer getUserSupplierNum() {
+        return userSupplierNum;
+    }
+
+    public void setUserSupplierNum(Integer userSupplierNum) {
+        this.userSupplierNum = userSupplierNum;
     }
 }

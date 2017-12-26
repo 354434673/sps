@@ -305,6 +305,76 @@ public class SpsUserExample {
             return (Criteria) this;
         }
 
+        public Criteria andUserNameIsNull() {
+            addCriterion("user_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameIsNotNull() {
+            addCriterion("user_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameEqualTo(String value) {
+            addCriterion("user_name =", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameNotEqualTo(String value) {
+            addCriterion("user_name <>", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameGreaterThan(String value) {
+            addCriterion("user_name >", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameGreaterThanOrEqualTo(String value) {
+            addCriterion("user_name >=", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameLessThan(String value) {
+            addCriterion("user_name <", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameLessThanOrEqualTo(String value) {
+            addCriterion("user_name <=", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameLike(String value) {
+            addCriterion("user_name like", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameNotLike(String value) {
+            addCriterion("user_name not like", value, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameIn(List<String> values) {
+            addCriterion("user_name in", values, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameNotIn(List<String> values) {
+            addCriterion("user_name not in", values, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameBetween(String value1, String value2) {
+            addCriterion("user_name between", value1, value2, "userName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserNameNotBetween(String value1, String value2) {
+            addCriterion("user_name not between", value1, value2, "userName");
+            return (Criteria) this;
+        }
+
         public Criteria andUserPhoneIsNull() {
             addCriterion("user_phone is null");
             return (Criteria) this;
@@ -812,6 +882,66 @@ public class SpsUserExample {
 
         public Criteria andUserMarkNotBetween(Integer value1, Integer value2) {
             addCriterion("user_mark not between", value1, value2, "userMark");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserSupplierNumIsNull() {
+            addCriterion("user_supplier_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserSupplierNumIsNotNull() {
+            addCriterion("user_supplier_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserSupplierNumEqualTo(Integer value) {
+            addCriterion("user_supplier_num =", value, "userSupplierNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserSupplierNumNotEqualTo(Integer value) {
+            addCriterion("user_supplier_num <>", value, "userSupplierNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserSupplierNumGreaterThan(Integer value) {
+            addCriterion("user_supplier_num >", value, "userSupplierNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserSupplierNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("user_supplier_num >=", value, "userSupplierNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserSupplierNumLessThan(Integer value) {
+            addCriterion("user_supplier_num <", value, "userSupplierNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserSupplierNumLessThanOrEqualTo(Integer value) {
+            addCriterion("user_supplier_num <=", value, "userSupplierNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserSupplierNumIn(List<Integer> values) {
+            addCriterion("user_supplier_num in", values, "userSupplierNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserSupplierNumNotIn(List<Integer> values) {
+            addCriterion("user_supplier_num not in", values, "userSupplierNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserSupplierNumBetween(Integer value1, Integer value2) {
+            addCriterion("user_supplier_num between", value1, value2, "userSupplierNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserSupplierNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("user_supplier_num not between", value1, value2, "userSupplierNum");
             return (Criteria) this;
         }
     }

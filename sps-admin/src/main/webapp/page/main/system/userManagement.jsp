@@ -28,11 +28,11 @@
 	    <div class="layui-form-item layui-form-pane">
 		    <label class="layui-form-label">用户名:</label>
 		    <div class="layui-input-inline">
-		      <input type="text" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		      <input type="text" name="username" required lay-verify="" placeholder="请输入密码" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label">姓名:</label>
 		    <div class="layui-input-inline">
-		      <input type="text" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		      <input type="text" name="name" required lay-verify="" placeholder="请输入姓名" autocomplete="off" class="layui-input">
 		    </div>
 		    	<button class="layui-btn layui-btn-primary">查询</button>
 		    	<button class="layui-btn layui-btn-primary">重置</button>
@@ -64,6 +64,10 @@
 					  type: 2, 
 					  area: ['70%', '80%'],//宽高
 					  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+					  cancel: function(index, layero){ 
+						  table.reload('userId', {
+							});
+						}    
 				  }); 
 			  });
 			  table.render({
@@ -73,10 +77,11 @@
 			    ,id:'userId'
 			    ,page:true
 			    ,cols: [[ //表头
-			      {field: 'userId', title: '用户名', width:100,align:'center'}
-			      ,{field: 'userUsername', title: '用户名', width:177,align:'center'}
-			      ,{field: 'phone', title: '联系电话', width:230, align:'center'}
-			      ,{field: 'email', title: '电子邮箱', width:230,align:'center'} 
+			      {field: 'userId', title: 'ID', width:50,align:'center'}
+			      ,{field: 'userUsername', title: '用户名', width:140,align:'center'}
+			      ,{field: 'userName', title: '姓名', width:70,align:'center'}
+			      ,{field: 'userPhone', title: '联系电话', width:230, align:'center'}
+			      ,{field: 'userEmail', title: '电子邮箱', width:230,align:'center'} 
 			      ,{field: 'roleName', title: '角色', width: 100,align:'center'}
 			      ,{field: 'score', title: '操作', align:'center',toolbar:'#barDemo'}
 			    ]]

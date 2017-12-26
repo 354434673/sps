@@ -22,7 +22,7 @@
 </style>
 </head>
 <body>
-<div style="margin-top: 20px;margin-left: 120px">
+<div style="padding: 40px" >
 	<h3>角色添加</h3>
 	<hr>
 		<div class="layui-form "  >
