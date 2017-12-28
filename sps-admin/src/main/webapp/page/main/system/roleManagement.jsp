@@ -28,10 +28,10 @@
 	    <div class="layui-form-item layui-form-pane">
 		    <label class="layui-form-label">角色:</label>
 		    <div class="layui-input-inline">
-		      <input type="text" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		      <input id="queryRoleName" type="text" name="queryRoleName" lay-verify="required" placeholder="请输入查询角色" autocomplete="off" class="layui-input">
 		    </div>
-		    	<button class="layui-btn layui-btn-primary">查询</button>
-		    	<button class="layui-btn layui-btn-primary">重置</button>
+			    <button class="layui-btn layui-btn-primary" id="queryRole">查询</button>
+			    <button class="layui-btn layui-btn-primary" id="resetRole">重置</button>
         </div>  
 		<div>
 			<blockquote class="layui-elem-quote">
@@ -45,6 +45,11 @@
 	</div>
 	<script type="text/javascript"
 		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
+		<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+</script>
 	<script>
 	layui.use(['table','laypage','layer'], function(){
 		  var table = layui.table;
@@ -60,20 +65,28 @@
 			  });
 		  table.render({
 		    elem: '#roleList'
-		    ,height: 325
-		   <%--  ,url: '<%=path%>/user/userList.html' //数据接口 --%>
-		    ,id:'userId'
+		    ,height: 350
+		   	,url:'<%=path %>/role/roleList.html'
+		    ,id:'roleId'
 		    ,page:true
 		    ,cols: [[ //表头
-		      {field: 'userId', title: '用户名', width:177,align:'center'}
-		      ,{field: 'userUsername', title: '用户名', width:177,align:'center'}
-		      ,{field: 'sex', title: '性别', width:177, sort: true,align:'center'}
-		      ,{field: 'city', title: '城市', width:80,align:'center'} 
-		      ,{field: 'sign', title: '签名', width: 177,align:'center'}
-		      ,{field: 'experience', title: '积分', width: 177, sort: true,align:'center'}
-		      ,{field: 'score', title: '评分', width: 120, sort: true,align:'center'}
+		      {field: 'roleId', title: 'ID', sort: true,width:50,align:'center'}
+		      ,{field: 'roleName', title: '角色名称', align:'center'}
+		      ,{field: 'roleDescribe', title: '角色描述',align:'center'}
+		      ,{field: 'tool', title: '操作' ,align:'center',toolbar:'#barDemo'}
 		    ]]
 		  });
+		  //查询
+		  $('#queryRole').on('click',function(){
+			  var roleName = $('#queryRoleName').val()
+			  table.reload('roleId', {
+				  where: {roleName:roleName}
+				});
+		  })
+		  //重置
+		  $('#resetRole').on('click',function(){
+			  $('#queryRoleName').val('')
+		  })
 		});
 	</script>
 

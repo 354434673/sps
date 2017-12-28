@@ -39,7 +39,7 @@
   <div class="layui-form-item">
     <label class="layui-form-label">*确认密码：</label>
     <div class="layui-input-inline">
-      <input type="password"  required lay-verify="required|minLength|verify" placeholder="请确认密码" autocomplete="off" class="layui-input">
+      <input type="password"  lay-verify="required|minLength|verify" placeholder="请确认密码" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
@@ -67,7 +67,7 @@
     </div>
   </div>
  	<div class="layui-form-item" align="center">
-		<button class="layui-btn"  lay-submit lay-filter="demo1" id="submit">立即提交</button>
+		<button class="layui-btn"  lay-submit id="submit">立即提交</button>
 		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 	</div>
 </div>
@@ -126,7 +126,7 @@
 		  dataType:'json',
 		  success:function(data){
 			  var list = "";
-			  $.each(data,function(i,item){
+			  $.each(data.data,function(i,item){
 				  list +='<input type="checkbox" name="check" lay-filter="encrypt" title="'+item.roleName+'" value ="'+item.roleId+'">';
 				  $('#checkList').html(list)
 			  })

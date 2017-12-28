@@ -1,5 +1,6 @@
 package com.sps.service.user;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.sps.entity.user.SpsRole;
@@ -15,6 +16,6 @@ public interface RoleService {
 	 * @return: List<SpsRole>      
 	 * @throws
 	 */
-	List<SpsRole> getRoleList();
+	HashMap<String, Object> getRoleList(Integer page, Integer limit, String roleName);
 	
 }

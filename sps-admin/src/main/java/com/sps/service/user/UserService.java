@@ -3,6 +3,8 @@ package com.sps.service.user;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.sps.entity.user.SpsUser;
 
 public interface UserService {
@@ -28,7 +30,8 @@ public interface UserService {
 	 * @return: List<SpsUser>      
 	 * @throws
 	 */
-	List<SpsUser> userList();
+	HashMap<String, Object> userList(Integer page, Integer limit, 
+					String username, String name);
 	/**
 	 * 添加用户
 	 * @Title: insertUser   

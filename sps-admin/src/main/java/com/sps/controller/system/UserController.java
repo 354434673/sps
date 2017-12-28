@@ -2,9 +2,11 @@ package com.sps.controller.system;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -12,12 +14,10 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.sps.entity.user.SpsUser;
 import com.sps.service.user.UserAndRoleService;
 import com.sps.service.user.UserService;
@@ -30,14 +30,10 @@ public class UserController {
 	@Resource
 	private UserAndRoleService userAndRoleService;
 	@RequestMapping("/userList.html")
-	public @ResponseBody HashMap<String, Object> userList(String page, String limit) {
-		HashMap<String, Object> hashMap = new HashMap<String,Object>();
-		List<SpsUser> userList = userService.userList();
-		hashMap.put("code", 0);
-		hashMap.put("msg", "获取成功");
-		hashMap.put("count", userList.size());
-		hashMap.put("data", userList);
-		return hashMap;
+	public @ResponseBody HashMap<String, Object> userList(Integer page, Integer limit,
+			String username, String name) {
+		HashMap<String, Object> userList = userService.userList(page,limit, username, name);
+		return userList;
 	}
 	/**
 	 * @Title: userLogin   

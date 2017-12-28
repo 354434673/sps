@@ -9,12 +9,11 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
-import com.sps.dao.user.SpsRoleMapper;
+import com.github.pagehelper.PageInfo;
 import com.sps.dao.user.SpsUserMapper;
 import com.sps.entity.user.SpsUser;
 import com.sps.entity.user.SpsUserExample;
 import com.sps.entity.user.SpsUserExample.Criteria;
-import com.sps.service.user.UserAndRoleService;
 import com.sps.service.user.UserService;
 import com.sps.util.Md5Util;
 
@@ -45,14 +44,31 @@ public class UserServiceImpl implements UserService{
 		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
 	}
 	@Override
-	public List<SpsUser> userList() {
+	public HashMap<String, Object> userList(Integer page, Integer limit, 
+			String username, String name) {
 		SpsUserExample example = new SpsUserExample();
 		
 		Criteria createCriteria = example.createCriteria();
+		//如果查询条件不为空,则进入模糊查询
+		if(username != null){
+			createCriteria.andUserUsernameLike("%"+username+"%");
+		}else if(name != null){
+			createCriteria.andUserUsernameLike("%"+name+"%");
+		}
+		//分页
+		PageHelper.startPage(page,limit);
 		
 		List<SpsUser> selectByExample = spsUserMapper.selectByExample(example);
+		//转为pageinfo
+		PageInfo pageInfo = new PageInfo(selectByExample);
+		//放入map
+		HashMap<String, Object> hashMap = new HashMap<String,Object>();
+		hashMap.put("code", 0);
+		hashMap.put("msg", "获取成功");
+		hashMap.put("count", pageInfo.getTotal());
+		hashMap.put("data", selectByExample.size() != 0 ? selectByExample : null);
 		
-		return selectByExample.size() != 0 ? selectByExample : null;
+		return hashMap;
 	}
 	@Override
 	public HashMap<String, Object> insertUser(String...strs) {
@@ -70,7 +86,7 @@ public class UserServiceImpl implements UserService{
 			spsUser.setUserPhone(strs[3]);
 			spsUser.setUserEmail(strs[4]);
 			spsUser.setUserState(0);
-			spsUser.setUserMark(1);
+			spsUser.setUserMark(0);
 			spsUser.setUserCreattime(new Date());
 			spsUser.setUserUpdatetime(new Date());
 			int insertSelective = spsUserMapper.insertSelective(spsUser);

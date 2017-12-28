@@ -25,18 +25,20 @@
 </head>
 <body>
 	<div style="margin: 15px;">
-	    <div class="layui-form-item layui-form-pane">
-		    <label class="layui-form-label">用户名:</label>
-		    <div class="layui-input-inline">
-		      <input type="text" name="username" required lay-verify="" placeholder="请输入密码" autocomplete="off" class="layui-input">
-		    </div>
-		    <label class="layui-form-label">姓名:</label>
-		    <div class="layui-input-inline">
-		      <input type="text" name="name" required lay-verify="" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-		    </div>
-		    	<button class="layui-btn layui-btn-primary">查询</button>
-		    	<button class="layui-btn layui-btn-primary">重置</button>
-        </div>  
+		<div class="layui-form layui-form-pane"  >
+		    <div class="layui-form-item">
+			    <label class="layui-form-label">用户名:</label>
+			    <div class="layui-input-inline">
+			      <input id="queryUsername" type="text" name="username"  lay-verify="" placeholder="请输入密码" autocomplete="off" class="layui-input">
+			    </div>
+			    <label class="layui-form-label">姓名:</label>
+			    <div class="layui-input-inline">
+			      <input id="queryName" type="text" name="name"  lay-verify="" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+			    </div>
+			    	<button class="layui-btn layui-btn-primary" id="queryUser">查询</button>
+			    	<button class="layui-btn layui-btn-primary" id="resetUser">重置</button>
+	        </div>  
+        </div>
 		<div>
 			<blockquote class="layui-elem-quote">
 				<a href="javascript:;" class="layui-btn layui-btn-warm" id="add">
@@ -46,12 +48,12 @@
 		</div>
 		<table id="userList" lay-filter="userTables"></table>
 	</div>
-	<script type="text/javascript"
+<script type="text/javascript"
 		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 <script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+  <a class="layui-btn layui-btn-mini" lay-event="del" id="del">查看</a>
+  <a class="layui-btn layui-btn-mini" lay-event="detail" >修改</a>
+  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="edit">删除</a>
 </script>
 	<script>
 		layui.use(['table','laypage','layer'], function(){
@@ -72,7 +74,7 @@
 			  });
 			  table.render({
 			    elem: '#userList'
-			    ,height: 325
+			    ,height: 350
 			    ,url: '<%=path%>/user/userList.html' //数据接口
 			    ,id:'userId'
 			    ,page:true
@@ -83,9 +85,27 @@
 			      ,{field: 'userPhone', title: '联系电话', width:230, align:'center'}
 			      ,{field: 'userEmail', title: '电子邮箱', width:230,align:'center'} 
 			      ,{field: 'roleName', title: '角色', width: 100,align:'center'}
-			      ,{field: 'score', title: '操作', align:'center',toolbar:'#barDemo'}
+			      ,{field: 'tool', title: '操作', align:'center',toolbar:'#barDemo'}
 			    ]]
 			  });
+			  //查询
+			  $('#queryUser').on('click',function(){
+				  var username = $('#queryUsername').val()
+				  var name = $('#queryName').val()
+				  table.reload('userId', {
+					  where: {username:username, name:name}
+					});
+			  })
+			  //重置
+			  $('#resetUser').on('click',function(){
+				  $('#queryUsername').val('')
+				  $('#queryName').val('')
+			  })
+			  //监听工作条
+				table.on('tool(userTables)', function(obj){
+					 var data = obj.data;
+					 console.log(data)
+				});
 			});
 	</script>
 </body>

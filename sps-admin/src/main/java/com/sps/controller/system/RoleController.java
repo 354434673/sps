@@ -1,5 +1,6 @@
 package com.sps.controller.system;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,9 +18,11 @@ public class RoleController {
 	@Resource
 	private RoleService roleService;
 	@RequestMapping(value="roleList.html")
-	public @ResponseBody List<SpsRole> getRoleList(){
+	public @ResponseBody HashMap<String, Object> getRoleList(
+			Integer page, Integer limit,String roleName){
 		
-		List<SpsRole> roleList = roleService.getRoleList();
+		HashMap<String, Object> roleList = 
+				roleService.getRoleList(page, limit, roleName);
 		
 		return roleList;
 	}
