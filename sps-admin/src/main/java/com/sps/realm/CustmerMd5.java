@@ -19,8 +19,7 @@ public class CustmerMd5 extends AuthenticatingRealm{
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) {
 		//获取token中主身份信息
 		String userName = (String) token.getPrincipal();
-		//userService.getUser(userName);
-		//User loginUser = userDao.loginUser(userName);
+		
 		SpsUser user = userService.getUser(userName);
 		//根据主身份查询数据库
 		if(userName.equals(user.getUserUsername())){

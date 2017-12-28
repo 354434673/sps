@@ -29,7 +29,7 @@
 		    <div class="layui-form-item">
 			    <label class="layui-form-label">用户名:</label>
 			    <div class="layui-input-inline">
-			      <input id="queryUsername" type="text" name="username"  lay-verify="" placeholder="请输入密码" autocomplete="off" class="layui-input">
+			      <input id="queryUsername" type="text" name="username"  lay-verify="" placeholder="请输入用户名" autocomplete="off" class="layui-input">
 			    </div>
 			    <label class="layui-form-label">姓名:</label>
 			    <div class="layui-input-inline">
@@ -50,7 +50,7 @@
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
-<script type="text/html" id="barDemo">
+<script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="del" id="del">查看</a>
   <a class="layui-btn layui-btn-mini" lay-event="detail" >修改</a>
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="edit">删除</a>
@@ -85,7 +85,7 @@
 			      ,{field: 'userPhone', title: '联系电话', width:230, align:'center'}
 			      ,{field: 'userEmail', title: '电子邮箱', width:230,align:'center'} 
 			      ,{field: 'roleName', title: '角色', width: 100,align:'center'}
-			      ,{field: 'tool', title: '操作', align:'center',toolbar:'#barDemo'}
+			      ,{field: 'tool', title: '操作', align:'center',toolbar:'#bar'}
 			    ]]
 			  });
 			  //查询

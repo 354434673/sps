@@ -87,4 +87,12 @@ public class UserController {
 		userAndRoleService.insertUserAndRole(username, roleList);//为该用户添加角色
 		return insertUser;
 	}
+	@RequestMapping(value="updatePassword.html")
+	@ResponseBody
+	public  HashMap<String, Object> updatePassword(String oldPassword, String newPassword){
+		
+		HashMap<String, Object> updatePassword = userService.updatePassword(oldPassword, newPassword);
+		
+		return updatePassword;
+	}
 }

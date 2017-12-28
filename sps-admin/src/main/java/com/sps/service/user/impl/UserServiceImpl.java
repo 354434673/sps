@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
@@ -100,6 +101,40 @@ public class UserServiceImpl implements UserService{
 		}else{
 			map.put("msg", "用户重复");
 			map.put("state", "exist");
+		}
+		return map;
+	}
+	@Override
+	public HashMap<String, Object> updatePassword(String oldPassword, String newPassword) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		//获取当前token中的用户
+		String userName = (String) SecurityUtils.getSubject().getPrincipal();
+		
+		SpsUser user = getUser(userName);
+		
+		String userPassword = user.getUserPassword();
+		
+		String md5Password = Md5Util.getMd5(oldPassword, user.getUserSalt());
+		
+		if(userPassword.equals(md5Password)){
+			String salt = Md5Util.getSalt(4);//4位盐
+			
+			user.setUserPassword(Md5Util.getMd5(newPassword, salt));
+			
+			user.setUserSalt(salt);
+			
+			user.setUserUpdatetime(new Date());
+			
+			spsUserMapper.updateByPrimaryKeySelective(user);
+			
+			map.put("msg", "修改成功");
+			map.put("icon", "1");
+			map.put("state", "success");
+		}else{
+			map.put("msg", "原始密码错误");
+			map.put("icon", "2");
+			map.put("state", "error");
 		}
 		return map;
 	}

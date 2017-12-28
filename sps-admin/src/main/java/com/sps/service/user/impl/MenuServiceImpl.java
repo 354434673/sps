@@ -19,50 +19,23 @@ public class MenuServiceImpl implements MenuService{
 	private SpsMenuMapper spsMenuMapper;
 	@Override
 	public List<MenuUtil> getMenu() {
-/*		SpsMenuExample example = new SpsMenuExample();
-		
-		com.sps.entity.user.SpsMenuExample.Criteria createCriteria = example.createCriteria();
-		
-		createCriteria.andMenuNodetypeEqualTo(1);
-		
-		List<MenuUtil> list = new ArrayList<MenuUtil>();
-		
-		
-		List<SpsMenu> selectByExample = spsMenuMapper.selectByExample(example );
-		MenuUtil menuUtil= null;
-		for (SpsMenu spsMenu : selectByExample) {
-			//只遍历nodeType为1的，如果nodeType为1，说明为父节点
-			if(spsMenu.getMenuNodetype() == 1){
-				List<MenuUtil> getSubMenu = getSub(spsMenu.getMenuId());
-				menuUtil = new MenuUtil();
-				menuUtil.setMenuId(spsMenu.getMenuId());
-				menuUtil.setName(spsMenu.getMenuName());
-				menuUtil.setMenuNodetype(spsMenu.getMenuNodetype());
-				menuUtil.setScript(spsMenu.getMenuUrl());
-				if(getSubMenu.size()!= 0){
-					menuUtil.setSubMenu(getSubMenu);
-				}
-			}
-			list.add(menuUtil);
-		}*/
 		List<MenuUtil> seletMenuList = spsMenuMapper.seletMenuList();
 		
 		return seletMenuList;
 	}
-/*	private List<MenuUtil> getSub(Integer id){
-		SpsMenuExample example2 = new SpsMenuExample();
-		example2.createCriteria().andMenuParentidEqualTo(id);
-		List<SpsMenu> selectByExample2 = spsMenuMapper.selectByExample(example2);
-		MenuUtil menuUtil= null;
-		List<MenuUtil> list2 = new ArrayList<MenuUtil>();
-		for (SpsMenu spsMenu : selectByExample2) {
-			menuUtil = new MenuUtil();
-			menuUtil.setMenuId(spsMenu.getMenuId());
-			menuUtil.setName(spsMenu.getMenuName());
-			menuUtil.setMenuNodetype(spsMenu.getMenuNodetype());
-			menuUtil.setScript(spsMenu.getMenuUrl());
-			list2.add(menuUtil);
+	@Override
+	public List<HashMap<String, Object>> getSpecificMenu() {
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		
+		List<MenuUtil> seletMenuList = spsMenuMapper.seletMenuList();
+		
+		ArrayList<HashMap<String, Object>> arrayList = new ArrayList<HashMap<String, Object>>();
+		for (MenuUtil menuUtil : seletMenuList) {
+			hashMap.put("id", menuUtil.getId());
+			hashMap.put("name", menuUtil.getTitle());
+			hashMap.put("children", menuUtil.getChildren());
+			arrayList.add(hashMap);
 		}
-		return list2;
-	}*/
+		return arrayList;
+	}
 }

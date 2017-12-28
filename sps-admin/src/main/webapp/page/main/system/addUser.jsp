@@ -67,7 +67,7 @@
     </div>
   </div>
  	<div class="layui-form-item" align="center">
-		<button class="layui-btn"  lay-submit id="submit">立即提交</button>
+		<button class="layui-btn" lay-filter="submitAddUser" lay-submit id="submit">立即提交</button>
 		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 	</div>
 </div>
@@ -93,34 +93,33 @@
 			}
 		  }
 		}); 
-	  	//提交
-	 	 $('#submit').on('click',function(){
-		 		 var username = $('#username').val()
-		 		 var password = $('#password').val()
-		 		 var name = $('#name').val()
-		 		 var phone = $('#phone').val()
-		 		 var email = $('#email').val()
-		 		 if(array.length != 0){
-			 		 $.get({
-			 			 url:'<%=path%>/user/insertUser.html',
-			 			 dataType:'json',
-			 			 data:{username:username, password:password, name:name,
-			 				phone:phone, email:email,roleList:array
-			 			 },
-			 			 success:function(data){
-			 				 if(data.state == 'success'){
-			 					layer.msg(data.msg,{icon: 1});
-			 				 }else if(data.state == 'exist'){
-			 					layer.msg(data.msg,{icon: 2});
-			 				 }else if(data.state == 'error'){
-			 					layer.msg(data.msg,{icon: 2});
-			 				 }
-			 			 }
-			 		 })
-		 		 }else{
-		 			layer.msg('请选择该用户权限',{icon: 2});
-		 		 }
-			})  
+	  form.on('submit(submitAddUser)', function(data){
+	 		 var username = $('#username').val()
+	 		 var password = $('#password').val()
+	 		 var name = $('#name').val()
+	 		 var phone = $('#phone').val()
+	 		 var email = $('#email').val()
+	 		 if(array.length != 0){
+		 		 $.post({
+		 			 url:'<%=path%>/user/insertUser.html',
+		 			 dataType:'json',
+		 			 data:{username:username, password:password, name:name,
+		 				phone:phone, email:email,roleList:array
+		 			 },
+		 			 success:function(data){
+		 				 if(data.state == 'success'){
+		 					layer.msg(data.msg,{icon: 1});
+		 				 }else if(data.state == 'exist'){
+		 					layer.msg(data.msg,{icon: 2});
+		 				 }else if(data.state == 'error'){
+		 					layer.msg(data.msg,{icon: 2});
+		 				 }
+		 			 }
+		 		 })
+	 		 }else{
+	 			layer.msg('请选择该用户权限',{icon: 2});
+	 		 }
+	  })
 	  $.post({//获取角色列表
 		  url:'<%=path %>/role/roleList.html',
 		  dataType:'json',

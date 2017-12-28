@@ -45,7 +45,7 @@
 	</div>
 	<script type="text/javascript"
 		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
-		<script type="text/html" id="barDemo">
+		<script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
@@ -73,7 +73,7 @@
 		      {field: 'roleId', title: 'ID', sort: true,width:50,align:'center'}
 		      ,{field: 'roleName', title: '角色名称', align:'center'}
 		      ,{field: 'roleDescribe', title: '角色描述',align:'center'}
-		      ,{field: 'tool', title: '操作' ,align:'center',toolbar:'#barDemo'}
+		      ,{field: 'tool', title: '操作' ,align:'center',toolbar:'#bar'}
 		    ]]
 		  });
 		  //查询

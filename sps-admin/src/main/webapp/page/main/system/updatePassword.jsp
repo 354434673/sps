@@ -26,7 +26,7 @@
   <div class="layui-form-item">
     <label class="layui-form-label">原始密码</label>
     <div class="layui-input-inline">
-      <input id = "oldPassword" type="password" name="oldPassword"  lay-verify="required|minLength" placeholder="请输入原始密码" autocomplete="off" class="layui-input">
+      <input id ="oldPassword" type="password" name="oldPassword"  lay-verify="required|minLength" placeholder="请输入原始密码" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
@@ -38,12 +38,12 @@
   <div class="layui-form-item">
     <label class="layui-form-label">确认密码</label>
     <div class="layui-input-inline">
-      <input type="password" lay-verify="required|verify" placeholder="请确认密码" autocomplete="off" class="layui-input">
+      <input id="verifyPwd" type="password" lay-verify="required|verify" placeholder="请确认密码" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
     <div class="layui-input-block">
-      <button class="layui-btn" lay-submit >立即提交</button>
+      <button class="layui-btn" lay-submit lay-filter="submitUpdatePwd" id="updatePassword">立即提交</button>
       <button type="reset" class="layui-btn layui-btn-primary">重置</button>
     </div>
   </div>
@@ -55,6 +55,20 @@
 layui.use(['form','table'], function(){
 		var form = layui.form;
 		var $ = layui.jquery;
+		form.on('submit(submitUpdatePwd)', function(data){
+			var oldPassword = $('#oldPassword').val();
+			var newPassword = $('#password').val();
+			var verifyPwd = $('#verifyPwd').val();
+				$.post({
+					url:'<%=path%>/user/updatePassword.html',
+					dataType:'json',
+					data:{oldPassword:oldPassword,newPassword:newPassword},
+					success:function(data){
+						layer.msg(data.msg,{icon: data.icon});
+					}
+				})
+			  return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+			});
 	  //自定义验证规则  
 	  form.verify({  
 			//验证只包含汉字  
