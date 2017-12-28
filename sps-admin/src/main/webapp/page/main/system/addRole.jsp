@@ -17,7 +17,8 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
 	href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all" />
-	
+<link rel="stylesheet"
+	href="<%=path%>/page/static/css/style.css" media="all" />
 <style type="text/css">
 </style>
 </head>
@@ -25,7 +26,7 @@
 <div style="padding: 40px" >
 	<h3>角色添加</h3>
 	<hr>
-		<div class="layui-form "  >
+		<div class="layui-form " >
 		  <div class="layui-form-item ">
 		    <label class="layui-form-label">*角色：</label>
 		    <div class="layui-input-inline">
@@ -40,9 +41,36 @@
 		  </div>
 		
 		<h3>权限分配</h3>
-		 <div id="layui-xtree-demo1" style="width:300px;height:500px; border:1px solid black; margin:20px;"></div>
-		 <div id="layui-xtree-demo2" style="width:300px;height:500px; border:1px solid black; margin:20px;"></div>
 		<hr>
+	<div class="layui-form-item">
+		<div class="ty-transfer mt20 ml20" id="ued-transfer-1">
+		    <div class="fl ty-transfer-list transfer-list-left" >
+		        <div class="ty-transfer-list-head " >
+		           	 权限菜单列表
+		        </div>
+		         <div class="ty-transfer-list-body" style="overflow: auto; overflow-y: scroll;">
+		  		<div id="layui-xtree-demo1" style=""></div>
+		  		</div>
+		    </div>
+		    <!-- 箭头 -->
+		    <div class="fl ty-transfer-operation">
+		        <span class="ty-transfer-btn-toright to-switch">
+		        </span>
+		        <span class="ty-transfer-btn-toleft to-switch">
+		        </span>
+		    </div>
+		    <div class="fl ty-transfer-list transfer-list-right">
+		        <div class="ty-transfer-list-head">
+		     		   已选择的菜单权限
+		        </div>
+		        <div class="ty-transfer-list-body" style="overflow: auto; overflow-y: scroll;">
+		        </div>
+		    </div>
+		</div>
+		</div>
+	 	<div class="layui-form-item" align="center">
+		<button class="layui-btn" lay-filter="submitAddUser" lay-submit id="submit">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 	</div>
 </div>
 <script type="text/javascript"
@@ -67,19 +95,6 @@
       var xtree1 = new layuiXtree({
           elem: 'layui-xtree-demo1' //放xtree的容器（必填）
            , form: form              //layui form对象 （必填）
-           , data: json              //数据，结构请参照下面 （必填）
-           , isopen: false            //初次加载时全部展开，默认true （选填）
-           , color: "#000"           //图标颜色 （选填）
-           , icon: {                 //图标样式 （选填）
-               open: "&#xe7a0;"      //节点打开的图标
-               , close: "&#xe622;"   //节点关闭的图标
-               , end: "&#xe621;"     //末尾节点的图标
-           }
-      });
-      //创建tree
-      var xtree2 = new layuiXtree({
-          elem: 'layui-xtree-demo2' //放xtree的容器（必填）
-           , form: form2              //layui form对象 （必填）
            , data: json              //数据，结构请参照下面 （必填）
            , isopen: false            //初次加载时全部展开，默认true （选填）
            , color: "#000"           //图标颜色 （选填）
