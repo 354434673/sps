@@ -51,9 +51,9 @@
 <script type="text/javascript"
 		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
-  <a class="layui-btn layui-btn-mini" lay-event="del" id="del">查看</a>
-  <a class="layui-btn layui-btn-mini" lay-event="detail" >修改</a>
-  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="edit">删除</a>
+  <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
+  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
 </script>
 	<script>
 		layui.use(['table','laypage','layer'], function(){
@@ -104,7 +104,49 @@
 			  //监听工作条
 				table.on('tool(userTables)', function(obj){
 					 var data = obj.data;
-					 console.log(data)
+					  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+					  var tr = obj.tr; //获得当前行 tr 的DOM对象
+					 	console.log(data)
+					  if(layEvent === 'detail'){ //查看
+						  layer.open({
+							  type: 2, 
+							  area: ['70%', '80%'],//宽高
+							  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+							  success: function(layero, index){
+								    var body = layer.getChildFrame('body', index);
+								    body.find('#username').val(data.userUsername)
+								    body.find('#name').val(data.userName)
+								    body.find('#phone').val(data.userPhone)
+								    body.find('#email').val(data.userEmail)
+								    body.find('#btn').hide();
+								}  
+						  }); 
+					  } else if(layEvent === 'del'){ //删除
+					    layer.confirm('真的删除行么', function(index){
+					      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+					      layer.close(index);
+					      //向服务端发送删除指令
+					    });
+					  } else if(layEvent === 'edit'){ //编辑
+						  layer.open({
+							  type: 2, 
+							  area: ['70%', '80%'],//宽高
+							  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+							  success: function(layero, index){
+								    var body = layer.getChildFrame('body', index);
+								    body.find('#username').val(data.userUsername)
+								    body.find('#name').val(data.userName)
+								    body.find('#phone').val(data.userPhone)
+								    body.find('#email').val(data.userEmail)
+								}  
+						  }); 
+					    
+					    //同步更新缓存对应的值
+					    obj.update({
+					      username: '123'
+					      ,title: 'xxx'
+					    });
+					  }
 				});
 			});
 	</script>
