@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService{
 			spsUser.setUserPhone(strs[3]);
 			spsUser.setUserEmail(strs[4]);
 			spsUser.setUserState(0);
-			spsUser.setUserMark(0);
+			spsUser.setUserMark(Integer.parseInt(strs[5]));
 			spsUser.setUserCreattime(new Date());
 			spsUser.setUserUpdatetime(new Date());
 			int insertSelective = spsUserMapper.insertSelective(spsUser);

@@ -81,10 +81,10 @@ public class UserController {
 	@RequestMapping(value="insertUser.html")
 	@ResponseBody
 	public  HashMap<String, Object> insertUser(String username, String password, String name, 
-			String phone, String email, @RequestParam(value = "roleList[]") int[] roleList) {
+			String phone, String email,String mark, @RequestParam(value = "roleList[]") int[] roleList) {
 		HashMap<String, Object> insertUser = 
 				userService.insertUser(username, password, 
-						name, phone, email);//用户添加
+						name, phone, email, mark);//用户添加
 		userAndRoleService.insertUserAndRole(username, roleList);//为该用户添加角色
 		return insertUser;
 	}

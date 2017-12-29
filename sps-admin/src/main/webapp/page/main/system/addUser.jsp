@@ -103,8 +103,9 @@
 		 		 $.post({
 		 			 url:'<%=path%>/user/insertUser.html',
 		 			 dataType:'json',
-		 			 data:{username:username, password:password, name:name,
-		 				phone:phone, email:email,roleList:array
+		 			 data:{username:username, password:password, 
+		 				 name:name,phone:phone, email:email,
+		 				 mark:0,roleList:array
 		 			 },
 		 			 success:function(data){
 		 				 if(data.state == 'success'){
