@@ -1,10 +1,12 @@
 package com.sps.service.user.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
@@ -47,6 +49,27 @@ public class RoleServiceImpl implements RoleService{
 		return hashMap;
 		
 		
+	}
+	@Override
+	public HashMap<String, String> insertRole(String roleName, String describe) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		String creater = (String) SecurityUtils.getSubject().getPrincipal();
+		SpsRole role = new SpsRole();
+		role.setRoleName(roleName);
+		role.setRoleDescribe(describe);
+		role.setRoleCreater(creater);
+		role.setRoleCreattime(new Date());
+		role.setRoleUpdatetime(new Date());
+		role.setRoleState(0);
+		int insertSelective = spsRoleMapper.insertSelective(role);
+		if(insertSelective == 1){
+			map.put("msg", "角色添加成功");
+			map.put("state", "success");
+		}else{
+			map.put("msg", "添加失败,联系管理员");
+			map.put("state", "error");
+		}
+		return map;
 	}
 
 }

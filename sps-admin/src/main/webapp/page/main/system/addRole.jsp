@@ -30,13 +30,13 @@
 		  <div class="layui-form-item ">
 		    <label class="layui-form-label">*角色：</label>
 		    <div class="layui-input-inline">
-		      <input type="text" name="title" required  lay-verify="required" placeholder="角色名称" autocomplete="off" class="layui-input">
+		      <input id="roleName"type="text" name="roleName"  lay-verify="required" placeholder="角色名称" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label">*角色描述：</label>
 		    <div class="layui-input-inline" style="width: 400px">
-				<textarea name="" required lay-verify="required" placeholder="请输入" class="layui-textarea"></textarea>
+				<textarea id="roleDescribe" name="roleDescribe" lay-verify="required|MaxLength" placeholder="请输入" class="layui-textarea"></textarea>
 		    </div>
 		  </div>
 		
@@ -64,12 +64,19 @@
 		     		   已选择的菜单权限
 		        </div>
 		        <div class="ty-transfer-list-body" style="overflow: auto; overflow-y: scroll;">
+		        	<ul>
+		        		<li>111
+		        		<li>111
+		        		<li>111
+		        		<li>111
+		        		
+		        	</ul>
 		        </div>
 		    </div>
 		</div>
 		</div>
 	 	<div class="layui-form-item" align="center">
-		<button class="layui-btn" lay-filter="submitAddUser" lay-submit id="submit">立即提交</button>
+		<button class="layui-btn" lay-filter="submitAddRole" lay-submit id="submit">立即提交</button>
 		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 	</div>
 </div>
@@ -91,6 +98,24 @@
 			json= data
 		}
 	})
+	form.on('submit(submitAddRole)', function(data){
+	 		 var roleName = $('#roleName').val();//角色名称
+	 		 var roleDescribe = $('#roleDescribe').val();//角色描述
+		 		 $.post({
+		 			 url:'<%=path%>/role/insertRole.html',
+		 			 dataType:'json',
+		 			 data:{roleName:roleName, describe:roleDescribe},
+		 			 success:function(data){
+		 				 if(data.state == 'success'){
+		 					layer.msg(data.msg,{icon: 1});
+		 				 }else if(data.state == 'exist'){
+		 					layer.msg(data.msg,{icon: 2});
+		 				 }else if(data.state == 'error'){
+		 					layer.msg(data.msg,{icon: 2});
+		 				 }
+		 			 }
+		 		 })
+	  })
       //创建tree
       var xtree1 = new layuiXtree({
           elem: 'layui-xtree-demo1' //放xtree的容器（必填）
@@ -104,6 +129,14 @@
                , end: "&#xe621;"     //末尾节点的图标
            }
       });
+	  //自定义验证规则  
+	  form.verify({  
+			MaxLength: function(value) {
+				if(value.length>100) {
+					return '最多为100个字';
+				}
+			},
+	  });  
 	});
 </script>
 </body>

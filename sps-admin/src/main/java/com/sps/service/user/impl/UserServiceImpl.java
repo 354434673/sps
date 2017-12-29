@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService{
 		SpsUserExample example = new SpsUserExample();
 		
 		Criteria createCriteria = example.createCriteria();
+		createCriteria.andUserStateEqualTo(0);
 		//如果查询条件不为空,则进入模糊查询
 		if(username != null){
 			createCriteria.andUserUsernameLike("%"+username+"%");

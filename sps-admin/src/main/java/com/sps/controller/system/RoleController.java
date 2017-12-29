@@ -26,4 +26,12 @@ public class RoleController {
 		
 		return roleList;
 	}
+	@RequestMapping(value="insertRole.html")
+	public @ResponseBody HashMap<String, String> insertRole(
+			String roleName, String describe){
+		HashMap<String, String> insertRole = 
+				roleService.insertRole(roleName, describe);
+		
+		return insertRole;
+	}
 }

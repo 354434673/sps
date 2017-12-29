@@ -25,6 +25,7 @@ import com.sps.service.user.UserService;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+	private final String LOGIN_PAGE = "login";
 	@Resource
 	private UserService userService;
 	@Resource

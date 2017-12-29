@@ -8,7 +8,7 @@
 		<!-- 装配 securityManager -->
 		<property name="securityManager" ref="securityManager" />
 		<!-- 配置登陆页面 -->
-		<property name="loginUrl" value="/page/main/login.jsp" />
+		<property name="loginUrl" value="/login.html"/>
 		<!-- 登陆成功后的一面 -->
 		<!-- <property name="successUrl" value="/jsp/index.jsp" /> -->
 		<property name="unauthorizedUrl" value="/jsp/unauthorized.jsp" />
@@ -20,8 +20,8 @@
 				<!-- 登陆认证放行 -->
 				/user/userLogin.html = anon
 				<!-- 其余所有全部登陆后可使用 -->
-				<!-- /** = authc -->
-				/** = anon
+				/** = authc
+				<!-- /** = anon -->
 				<!-- /user/showUser = anon /index.jsp = anon /jsp/login.jsp = anon /user/**=authc -->
 			</value>
 		</property>

@@ -79,13 +79,13 @@
 			    ,id:'userId'
 			    ,page:true
 			    ,cols: [[ //表头
-			      {field: 'userId', title: 'ID', width:50,align:'center'}
-			      ,{field: 'userUsername', title: '用户名', width:140,align:'center'}
-			      ,{field: 'userName', title: '姓名', width:70,align:'center'}
+			      {field: 'userId', title: 'ID', align:'center'}
+			      ,{field: 'userUsername', title: '用户名', align:'center'}
+			      ,{field: 'userName', title: '姓名',align:'center'}
 			      ,{field: 'userPhone', title: '联系电话', width:230, align:'center'}
 			      ,{field: 'userEmail', title: '电子邮箱', width:230,align:'center'} 
-			      ,{field: 'roleName', title: '角色', width: 100,align:'center'}
-			      ,{field: 'tool', title: '操作', align:'center',toolbar:'#bar'}
+			      ,{field: 'roleName', title: '角色', align:'center'}
+			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
 			  //查询

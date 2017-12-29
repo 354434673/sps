@@ -322,13 +322,13 @@
   <!-- 查询一级 -->
   <select id="seletMenuList" resultMap="MenuList" >
     select
-    menu_id, menu_name, menu_nodeType, menu_url, menu_parentId
-    from sps_menu where menu_nodeType = 1
+    <include refid="Base_Column_List" />
+    from sps_menu where menu_nodeType = 1 and menu_state = 0
   </select>
   <!-- 查询二级 -->
   <select id="querySecoud" resultMap="MenuList" >
     select
-    menu_id, menu_name, menu_nodeType, menu_url, menu_parentId
-    from sps_menu where menu_parentId =  #{id,jdbcType=INTEGER}
+    <include refid="Base_Column_List" />
+    from sps_menu where menu_parentId =  #{id,jdbcType=INTEGER} and menu_state = 0
   </select>
 </mapper>
