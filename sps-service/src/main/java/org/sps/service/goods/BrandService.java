@@ -1,4 +1,4 @@
-package com.sps.service.goods;
+package org.sps.service.goods;
 
 public interface BrandService {
 }
