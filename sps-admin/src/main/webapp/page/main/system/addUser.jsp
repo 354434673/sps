@@ -17,7 +17,6 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
 	href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all" />
-	
 <style type="text/css">
 </style>
 </head>

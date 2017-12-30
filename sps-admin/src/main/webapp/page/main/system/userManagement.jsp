@@ -18,9 +18,6 @@
 <link rel="stylesheet"
 	href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all" />
 <style type="text/css">
-	tr th{
-		text-align: center;
-	}
 </style>
 </head>
 <body>
