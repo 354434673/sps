@@ -1,8 +1,6 @@
-package com.sps.service.goods;
+package org.sps.service.goods;
+import org.sps.entity.goods.SpsGoodCategory;
 
-import com.sps.entity.goods.SpsGoodCategory;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,4 +23,20 @@ public interface GoodCategoryService {
      * @return
      */
     List<SpsGoodCategory> findList(Map<String, Object> map);
+
+
+
+    /**
+     * 组装JSON
+     * @param categoryList
+     * @return
+     */
+    List<SpsGoodCategory> getJson(List<SpsGoodCategory> categoryList);
+
+    /**
+     * 添加页面使用  只显示2J分类
+     * @param categoryList
+     * @return
+     */
+    List<SpsGoodCategory> getTwoCategoryJson(List<SpsGoodCategory> categoryList);
 }

@@ -14,8 +14,8 @@
 		<setting name="defaultStatementTimeout" value="25000" />
 	</settings>
 	<typeAliases>
-		<typeAlias alias="SpsGoodCategory" type="com.sps.entity.goods.SpsGoodCategory" />
-		<typeAlias alias="SpsBrand" type="com.sps.entity.goods.SpsBrand" />
+		<typeAlias alias="SpsGoodCategory" type="org.sps.entity.goods.SpsGoodCategory" />
+		<typeAlias alias="SpsBrand" type="org.sps.entity.goods.SpsBrand" />
 
 	</typeAliases>
 

@@ -1,7 +1,7 @@
 package com.sps.service.goods.impl;
 
-import com.sps.service.goods.BrandService;
-import org.springframework.stereotype.Service;
+import com.alibaba.dubbo.config.annotation.Service;
+import org.sps.service.goods.BrandService;
 
 @Service
 public class BrandServiceImpl implements BrandService {

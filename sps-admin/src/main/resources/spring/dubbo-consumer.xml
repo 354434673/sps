@@ -11,7 +11,6 @@
         	http://www.springframework.org/schema/context 
         	http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	<!-- 具体的实现bean -->
-	<!-- <bean id="testUserService" class="com.sps.service.impl.UserService" /> -->
 	<!--提供方应用信息，用于计算依赖关系 -->
 	<dubbo:application name="sps-admin" />
 	<!-- 声明注册中心 -->

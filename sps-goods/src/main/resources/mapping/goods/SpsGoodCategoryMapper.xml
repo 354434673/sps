@@ -97,7 +97,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="SpsGoodCategory">
+  <update id="update" parameterType="SpsGoodCategory">
     update sps_good_category
     <set>
       <if test="categoryName != null">
@@ -144,11 +144,19 @@
     from sps_good_category
   </select>
 
+
+
   <select id="findList" parameterType="map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from sps_good_category
 
+  </select>
+  <select id="findById" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_good_category
+    where category_id = #{categoryId,jdbcType=INTEGER}
   </select>
 
   <!-- 查询所有 -->
@@ -160,5 +168,37 @@
     <if test="categoryId !=null and categoryId != ''">
       and category_parent_id = #{categoryId,jdbcType=INTEGER}
     </if>
+    <if test="isFirst == 0">
+      and category_parent_id = 0
+    </if>
   </select>
+  <!-- 封装成特点json格式 -->
+ <!-- <resultMap type="SpsGoodCategory" id="CategoryList">
+    <id column="category_id" property="id" jdbcType="INTEGER" />
+    <result column="category_des" property="categoryDes" jdbcType="VARCHAR" />
+    <result column="category_url" property="categoryUrl" jdbcType="VARCHAR" />
+    <result column="category_weight" property="categoryWeight" jdbcType="VARCHAR" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <collection property="children" javaType="list" ofType="SpsGoodCategory" select="querySecoud" column="menu_id">
+      <id column="menu_id" property="id" jdbcType="INTEGER" />
+      <result column="menu_name" property="title" jdbcType="VARCHAR" />
+      <result column="menu_nodeType" property="menuNodetype" jdbcType="INTEGER" />
+      <result column="menu_url" property="href" jdbcType="VARCHAR" />
+      <result column="menu_parentId" property="menuParentid" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>-->
+
+  <!-- mybatis自带级联查询 -->
+  <!-- 查询一级 -->
+  <!--<select id="seletList" resultMap="CategoryList" >
+    select
+    menu_id, menu_name, menu_nodeType, menu_url, menu_parentId
+    from sps_menu where menu_nodeType = 1
+  </select>
+  &lt;!&ndash; 查询二级 &ndash;&gt;
+  <select id="querySecoud" resultMap="MenuList" >
+    select
+    menu_id, menu_name, menu_nodeType, menu_url, menu_parentId
+    from sps_menu where menu_parentId =  #{id,jdbcType=INTEGER}
+  </select>-->
 </mapper>
