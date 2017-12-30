@@ -20,8 +20,9 @@
     <result column="menu_name" property="title" jdbcType="VARCHAR" />
     <result column="menu_nodeType" property="menuNodetype" jdbcType="INTEGER" />
     <result column="menu_url" property="href" jdbcType="VARCHAR" />
+    <result column="role_id" property="role_id" jdbcType="VARCHAR" />
     <result column="menu_parentId" property="menuParentid" jdbcType="INTEGER" />
-		<collection property="children" javaType="list" ofType="com.sps.util.MenuUtil" select="querySecoud" column="menu_id">
+		<collection property="children" javaType="list" ofType="com.sps.util.MenuUtil" select="querySecoud" column="{menu_id=menu_id,role=menu_id}">
   		<id column="menu_id" property="id" jdbcType="INTEGER" />
     	<result column="menu_name" property="title" jdbcType="VARCHAR" />
     	<result column="menu_nodeType" property="menuNodetype" jdbcType="INTEGER" />
@@ -96,8 +97,12 @@
     <if test="distinct" >
       distinct
     </if>
-    <include refid="Base_Column_List" />
-    from sps_menu
+    <include refid="Column_List" />
+    from 
+    sps_menu m1 
+    join 
+    sps_roleandmenu r1 
+    on m1.menu_id = r1.menu_id
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -319,16 +324,36 @@
     where menu_id = #{menuId,jdbcType=INTEGER}
   </update>
   <!-- mybatis自带级联查询 -->
+  <sql id="Column_List" >
+    DISTINCT m1.menu_id, m1.menu_name, m1.menu_nodeType, m1.menu_url, m1.menu_parentId,
+    m1.menu_state, m1.menu_sort, m1.menu_mark, m1.menu_creater, m1.menu_creatTime, 
+    m1.menu_updateTime
+  </sql>
   <!-- 查询一级 -->
-  <select id="seletMenuList" resultMap="MenuList" >
+  <select id="seletMenuList" resultMap="MenuList" parameterType="list">
     select
-    <include refid="Base_Column_List" />
-    from sps_menu where menu_nodeType = 1 and menu_state = 0
+   <include refid="Column_List" />
+    from 
+    sps_menu m1 
+    join 
+    sps_roleandmenu r1 
+    on m1.menu_id = r1.menu_id
+    where 
+    m1.menu_nodeType = 1 and m1.menu_state = 0 and r1.role_id in 
+       <foreach collection="list" item="roleId" open="(" close=")" separator="," >
+            #{roleId}
+        </foreach>
   </select>
   <!-- 查询二级 -->
   <select id="querySecoud" resultMap="MenuList" >
     select
-    <include refid="Base_Column_List" />
-    from sps_menu where menu_parentId =  #{id,jdbcType=INTEGER} and menu_state = 0
+    <include refid="Column_List" />
+    from 
+    sps_menu m1 
+    join 
+    sps_roleandmenu r1 
+    on m1.menu_id = r1.menu_id
+    where 
+    m1.menu_parentId =  #{menu_id,jdbcType=INTEGER} and m1.menu_state = 0 and r1.role_id in (1)
   </select>
 </mapper>

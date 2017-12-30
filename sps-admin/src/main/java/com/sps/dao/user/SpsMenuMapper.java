@@ -30,7 +30,5 @@ public interface SpsMenuMapper {
 
     int updateByPrimaryKey(SpsMenu record);
     
-    List<MenuUtil> seletMenuList();
-    
-    List<MenuUtil> querySecoud(@Param("menuId")Integer id);
+    List<MenuUtil> seletMenuList(List<Integer> roleId);
 }

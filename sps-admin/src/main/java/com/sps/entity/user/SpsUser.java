@@ -1,6 +1,7 @@
 package com.sps.entity.user;
 
 import java.util.Date;
+import java.util.List;
 
 public class SpsUser {
     private Integer userId;
@@ -29,6 +30,7 @@ public class SpsUser {
 
     private Integer userSupplierNum;
 
+    private List<SpsRole> role;
     public Integer getUserId() {
         return userId;
     }
@@ -132,4 +134,13 @@ public class SpsUser {
     public void setUserSupplierNum(Integer userSupplierNum) {
         this.userSupplierNum = userSupplierNum;
     }
+
+	public List<SpsRole> getRole() {
+		return role;
+	}
+
+	public void setRole(List<SpsRole> role) {
+		this.role = role;
+	}
+    
 }

@@ -30,12 +30,13 @@
     <div class="layui-input-inline">
       <input id="username" type="text" name="username"  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
     </div>
-    <label class="layui-form-label">*登录密码：</label>
+    <button style="display:none" class="layui-btn layui-btn-primary" id="resetPasssword">重置密码</button>
+  </div>
+  <div class="layui-form-item" id="passwordDiv">
+   <label class="layui-form-label">*登录密码：</label>
     <div class="layui-input-inline">
       <input id="password" name="password" type="password"  lay-verify="required|minLength" placeholder="请输入密码" autocomplete="off" class="layui-input">
     </div>
-  </div>
-  <div class="layui-form-item">
     <label class="layui-form-label">*确认密码：</label>
     <div class="layui-input-inline">
       <input type="password"  lay-verify="required|minLength|verify" placeholder="请确认密码" autocomplete="off" class="layui-input">
@@ -92,6 +93,18 @@
 			}
 		  }
 		}); 
+	  $('#resetPasssword').on('click',function(){
+		    layer.confirm('确认重置密码?', function(index){
+			      layer.close(index);
+					$.post({
+						url:'<%=path%>/user/updatePassword.html',
+						dataType:'json',
+						success:function(data){
+							layer.msg(data.msg,{icon: data.icon});
+						}
+					})
+			    });
+	  })
 	  form.on('submit(submitAddUser)', function(data){
 	 		 var username = $('#username').val()
 	 		 var password = $('#password').val()

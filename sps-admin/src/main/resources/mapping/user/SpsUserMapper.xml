@@ -15,6 +15,14 @@
     <result column="user_state" property="userState" jdbcType="INTEGER" />
     <result column="user_mark" property="userMark" jdbcType="INTEGER" />
     <result column="user_supplier_num" property="userSupplierNum" jdbcType="INTEGER" />
+  		<collection property="role" javaType="list" ofType="com.sps.entity.user.SpsRole"  select="queryRole" column="user_id" >
+  			 <id column="role_id" property="roleId" jdbcType="INTEGER" />
+    		 <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+		</collection>	
+  </resultMap>
+   <resultMap id="RoleResultMap" type="com.sps.entity.user.SpsRole" >
+    <id column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -335,4 +343,16 @@
       user_supplier_num = #{userSupplierNum,jdbcType=INTEGER}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
+  
+  <!-- 查询用户拥有的角色 -->
+  <select id="queryRole" resultMap="RoleResultMap" >
+    select
+    r.role_id,r.role_name
+    from
+    sps_userandrole u 
+    join 
+    sps_role r 
+    on u.role_id =r.role_id 
+    where u.user_id = #{userId,jdbcType=INTEGER}
+  </select>
 </mapper>

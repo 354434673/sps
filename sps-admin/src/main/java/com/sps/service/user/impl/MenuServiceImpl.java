@@ -19,7 +19,10 @@ public class MenuServiceImpl implements MenuService{
 	private SpsMenuMapper spsMenuMapper;
 	@Override
 	public List<MenuUtil> getMenu() {
-		List<MenuUtil> seletMenuList = spsMenuMapper.seletMenuList();
+		List<Integer> roldId = new ArrayList<Integer>();
+		
+		roldId.add(3);
+		List<MenuUtil> seletMenuList = spsMenuMapper.seletMenuList(roldId);
 		
 		return seletMenuList;
 	}
@@ -27,7 +30,11 @@ public class MenuServiceImpl implements MenuService{
 	public List<HashMap<String, Object>> getSpecificMenu() {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		
-		List<MenuUtil> seletMenuList = spsMenuMapper.seletMenuList();
+		List<Integer> roldId = new ArrayList<Integer>();
+		
+		roldId.add(1);
+		roldId.add(2);
+		List<MenuUtil> seletMenuList = spsMenuMapper.seletMenuList(roldId);
 		
 		ArrayList<HashMap<String, Object>> arrayList = new ArrayList<HashMap<String, Object>>();
 		for (MenuUtil menuUtil : seletMenuList) {
