@@ -31,10 +31,10 @@ public class MenuController {
 		return menu;
 	}
 	@RequestMapping(value = "/getSpecificMenu.json")
-	public @ResponseBody List<HashMap<String, Object>> getSpecificMenu(){
+	public @ResponseBody List<MenuUtil> getSpecificMenu(){
 		String userName = (String) SecurityUtils.getSubject().getPrincipal();
 		
-		List<HashMap<String, Object>> specificMenu = menuService.getSpecificMenu();
+		List<MenuUtil> specificMenu = menuService.getSpecificMenu();
 		
 		return specificMenu;
 	}

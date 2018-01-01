@@ -13,6 +13,14 @@
     <result column="menu_creater" property="menuCreater" jdbcType="VARCHAR" />
     <result column="menu_creatTime" property="menuCreattime" jdbcType="TIMESTAMP" />
     <result column="menu_updateTime" property="menuUpdatetime" jdbcType="TIMESTAMP" />
+    	<collection property="role" javaType="list" ofType="com.sps.entity.user.SpsRoleandmenu" >
+		    <id column="id" property="id" jdbcType="INTEGER" />
+		    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+		    <result column="menu_id" property="menuId" jdbcType="INTEGER" />
+		    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+		    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		    <result column="state" property="state" jdbcType="INTEGER" />
+		</collection>	
   </resultMap>
   <!-- 封装成特点json格式 -->
   <resultMap type="com.sps.util.MenuUtil" id="MenuList">
@@ -20,14 +28,13 @@
     <result column="menu_name" property="title" jdbcType="VARCHAR" />
     <result column="menu_nodeType" property="menuNodetype" jdbcType="INTEGER" />
     <result column="menu_url" property="href" jdbcType="VARCHAR" />
-    <result column="role_id" property="role_id" jdbcType="VARCHAR" />
     <result column="menu_parentId" property="menuParentid" jdbcType="INTEGER" />
-		<collection property="children" javaType="list" ofType="com.sps.util.MenuUtil" select="querySecoud" column="{menu_id=menu_id,role=menu_id}">
-  		<id column="menu_id" property="id" jdbcType="INTEGER" />
-    	<result column="menu_name" property="title" jdbcType="VARCHAR" />
-    	<result column="menu_nodeType" property="menuNodetype" jdbcType="INTEGER" />
-    	<result column="menu_url" property="href" jdbcType="VARCHAR" />
-	    <result column="menu_parentId" property="menuParentid" jdbcType="INTEGER" />	
+		<collection property="children" javaType="list" ofType="com.sps.util.MenuUtil" select="querySecoud" column="{menu_id=menu_id">
+	  		<id column="menu_id" property="id" jdbcType="INTEGER" />
+	    	<result column="menu_name" property="title" jdbcType="VARCHAR" />
+	    	<result column="menu_nodeType" property="menuNodetype" jdbcType="INTEGER" />
+	    	<result column="menu_url" property="href" jdbcType="VARCHAR" />
+		    <result column="menu_parentId" property="menuParentid" jdbcType="INTEGER" />	
 		</collection>		  
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -99,10 +106,11 @@
     </if>
     <include refid="Column_List" />
     from 
-    sps_menu m1 
-    join 
-    sps_roleandmenu r1 
-    on m1.menu_id = r1.menu_id
+    sps_menu m1
+	JOIN
+	sps_roleandmenu r1
+	ON
+	m1.menu_id = r1.menu_id 
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -327,33 +335,22 @@
   <sql id="Column_List" >
     DISTINCT m1.menu_id, m1.menu_name, m1.menu_nodeType, m1.menu_url, m1.menu_parentId,
     m1.menu_state, m1.menu_sort, m1.menu_mark, m1.menu_creater, m1.menu_creatTime, 
-    m1.menu_updateTime
+    m1.menu_updateTime,r1.role_id
   </sql>
   <!-- 查询一级 -->
   <select id="seletMenuList" resultMap="MenuList" parameterType="list">
     select
-   <include refid="Column_List" />
+   <include refid="Base_Column_List" />
     from 
-    sps_menu m1 
-    join 
-    sps_roleandmenu r1 
-    on m1.menu_id = r1.menu_id
-    where 
-    m1.menu_nodeType = 1 and m1.menu_state = 0 and r1.role_id in 
-       <foreach collection="list" item="roleId" open="(" close=")" separator="," >
-            #{roleId}
-        </foreach>
+    sps_menu  
+	where menu_nodeType = 1 and menu_state = 0
   </select>
   <!-- 查询二级 -->
   <select id="querySecoud" resultMap="MenuList" >
     select
-    <include refid="Column_List" />
+    <include refid="Base_Column_List" />
     from 
-    sps_menu m1 
-    join 
-    sps_roleandmenu r1 
-    on m1.menu_id = r1.menu_id
-    where 
-    m1.menu_parentId =  #{menu_id,jdbcType=INTEGER} and m1.menu_state = 0 and r1.role_id in (1)
+	sps_menu
+	where menu_state = 0 and menu_parentId = #{menu_id}
   </select>
 </mapper>

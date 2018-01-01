@@ -2,6 +2,9 @@ package com.sps.util;
 
 import java.util.List;
 
+import com.sps.entity.user.SpsRole;
+import com.sps.entity.user.SpsRoleandmenu;
+
 /**
  * 该类用于将菜单转为特定的json格式
  * @ClassName:  MenuUtil   
@@ -20,9 +23,10 @@ public class MenuUtil {
     private String href;
 
     private Integer menuParentid;
-
+    
+    private List<SpsRoleandmenu> roleAndMeun;
+    
     private List<MenuUtil> children;
-
     	
 	public MenuUtil() {
 		super();
@@ -106,6 +110,16 @@ public class MenuUtil {
 
 	public void setChildren(List<MenuUtil> children) {
 		this.children = children;
+	}
+
+
+	public List<SpsRoleandmenu> getRole() {
+		return roleAndMeun;
+	}
+
+
+	public void setRole(List<SpsRoleandmenu> roleAndMeun) {
+		this.roleAndMeun = roleAndMeun;
 	}
 	
 }

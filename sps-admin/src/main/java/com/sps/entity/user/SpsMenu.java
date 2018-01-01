@@ -1,6 +1,8 @@
 package com.sps.entity.user;
 
 import java.util.Date;
+import java.util.List;
+
 
 public class SpsMenu {
     private Integer menuId;
@@ -24,6 +26,8 @@ public class SpsMenu {
     private Date menuCreattime;
 
     private Date menuUpdatetime;
+    
+    private List<SpsRoleandmenu> role;
 
     public Integer getMenuId() {
         return menuId;
@@ -112,4 +116,13 @@ public class SpsMenu {
     public void setMenuUpdatetime(Date menuUpdatetime) {
         this.menuUpdatetime = menuUpdatetime;
     }
+
+	public List<SpsRoleandmenu> getRole() {
+		return role;
+	}
+
+	public void setRole(List<SpsRoleandmenu> role) {
+		this.role = role;
+	}
+    
 }

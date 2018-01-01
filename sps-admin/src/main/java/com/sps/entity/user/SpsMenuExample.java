@@ -794,6 +794,10 @@ public class SpsMenuExample {
             addCriterion("menu_updateTime not between", value1, value2, "menuUpdatetime");
             return (Criteria) this;
         }
+        public Criteria andRoleIdIn(List<Integer> values) {
+            addCriterion("r1.role_id in", values, "roldId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

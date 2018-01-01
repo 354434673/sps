@@ -27,5 +27,5 @@ public interface MenuService {
 	 * @return: List<HashMap<String,Object>>      
 	 * @throws
 	 */
-	List<HashMap<String, Object>> getSpecificMenu();
+	List<MenuUtil> getSpecificMenu();
 }
