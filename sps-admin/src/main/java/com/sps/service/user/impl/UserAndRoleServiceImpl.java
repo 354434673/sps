@@ -37,7 +37,7 @@ public class UserAndRoleServiceImpl implements UserAndRoleService{
 				userandroleMapper.insert(spsUserandrole);
 			}
 		}
-		return 1;
+		return 0;
 	}
 	@Override
 	public SpsUserandrole getUserAndrole(int userId, int roleId) {

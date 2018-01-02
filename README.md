@@ -18,6 +18,11 @@
 		sps-goods ##商品
 		sps-crm ##crm
 		sps-operation ##运营
+		
+		
+3. 数据库表
+		
+		
 
 
 ## 注意:

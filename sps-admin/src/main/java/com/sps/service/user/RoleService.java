@@ -29,5 +29,5 @@ public interface RoleService {
 	 * @return: HashMap<String,String>      
 	 * @throws
 	 */
-	HashMap<String, String> insertRole(String roleName, String describe);
+	HashMap<String, String> insertRole(String roleName, String describe, List<Integer> menuList);
 }

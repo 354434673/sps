@@ -54,9 +54,9 @@
 		    </div>
 		    <!-- 箭头 -->
 		    <div class="fl ty-transfer-operation">
-		        <span class="ty-transfer-btn-toright to-switch">
+		        <span class="ty-transfer-btn-toright to-switch" id="addMenu">
 		        </span>
-		        <span class="ty-transfer-btn-toleft to-switch">
+		        <span class="ty-transfer-btn-toleft to-switch" id="removeMenu">
 		        </span>
 		    </div>
 		    <div class="fl ty-transfer-list transfer-list-right">
@@ -64,12 +64,7 @@
 		     		   已选择的菜单权限
 		        </div>
 		        <div class="ty-transfer-list-body" style="overflow: auto; overflow-y: scroll;">
-		        	<ul>
-		        		<li>111
-		        		<li>111
-		        		<li>111
-		        		<li>111
-		        		
+		        	<ul id="selectList">
 		        	</ul>
 		        </div>
 		    </div>
@@ -85,9 +80,8 @@
 <script type="text/javascript"
 		src="<%=path%>/page/static/js/layui-xtree.js"></script>
 <script type="text/javascript">
-	layui.use('form', function(){
+	layui.use(['form'], function(){
 	 var form = layui.form;
-	 var form2 = layui.form;
 	 var $ = layui.jquery;
 	 var json;
 	$.post({
@@ -98,17 +92,22 @@
 			json= data
 		}
 	})
-	console.log(json)
 	form.on('submit(submitAddRole)', function(data){
 	 		 var roleName = $('#roleName').val();//角色名称
 	 		 var roleDescribe = $('#roleDescribe').val();//角色描述
-		 		 $.post({
+	 		 var checkList = getCheckList();
+	 		 if(checkList.length == 0){
+	 			layer.msg('未给角色选择权限',{icon: 2});
+	 		 }
+		 		$.post({
 		 			 url:'<%=path%>/role/insertRole.html',
 		 			 dataType:'json',
-		 			 data:{roleName:roleName, describe:roleDescribe},
+		 			 data:{roleName:roleName, describe:roleDescribe,menuList:checkList},
 		 			 success:function(data){
 		 				 if(data.state == 'success'){
 		 					layer.msg(data.msg,{icon: 1});
+		 				 }else if(data.state == 'menuError'){
+		 					layer.msg(data.msg,{icon: 2});
 		 				 }else if(data.state == 'exist'){
 		 					layer.msg(data.msg,{icon: 2});
 		 				 }else if(data.state == 'error'){
@@ -117,8 +116,26 @@
 		 			 }
 		 		 })
 	  })
+	  $('#addMenu').on('click',function(){
+          var check = getCheck();
+          for (var i = 0; i < check.length; i++) {
+	          $('#selectList').append(
+	        	'<li id="check'+i+'"><input class="check" type="checkbox" value="'+check[i].value+'" title="'+check[i].title+'" lay-skin="primary">'
+	          )
+          }
+          form.render('checkbox');
+	  })
+	  //移除
+	  $('#removeMenu').on('click',function(){
+		  var checkList = $('.check');
+		  for(var i = 0;i<checkList.length;i++){
+			  if(checkList[i].checked){//移除选中节点
+				  $('#check'+i+'').remove()
+			  }
+		  }
+	  })
       //创建tree
-      var xtree1 = new layuiXtree({
+      var xtree = new layuiXtree({
           elem: 'layui-xtree-demo1' //放xtree的容器（必填）
            , form: form              //layui form对象 （必填）
            , data: json              //数据，结构请参照下面 （必填）
@@ -138,6 +155,25 @@
 				}
 			},
 	  });  
+      function getCheckList(){
+    	  var checkList = new Array();
+          var check = $('.check');
+          for (var i = 0; i < check.length; i++) {
+        	  checkList.push(check[i].value)
+          }
+          return checkList;
+      }
+      function getCheck(){//获得所有选中节点,包括父节点
+          var arr = new Array();
+          var arrIndex = 0;
+          var cks = $('.layui-xtree-checkbox');
+          for (var i = 0; i < cks.length; i++) {
+              if (cks[i].checked) {
+                  arr[arrIndex] = cks[i]; arrIndex++;
+              }
+          }
+          return arr;
+      }
 	});
 </script>
 </body>

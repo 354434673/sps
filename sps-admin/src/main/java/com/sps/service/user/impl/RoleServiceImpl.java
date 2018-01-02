@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.user.SpsRoleMapper;
+import com.sps.dao.user.SpsRoleandmenuMapper;
 import com.sps.entity.user.SpsRole;
 import com.sps.entity.user.SpsRoleExample;
+import com.sps.entity.user.SpsRoleandmenu;
 import com.sps.entity.user.SpsRoleExample.Criteria;
 import com.sps.service.user.RoleService;
 
@@ -21,6 +23,8 @@ import com.sps.service.user.RoleService;
 public class RoleServiceImpl implements RoleService{
 	@Resource
 	private SpsRoleMapper spsRoleMapper;
+	@Resource
+	private SpsRoleandmenuMapper spsRoleandmenuMapper;
 	@Override
 	public HashMap<String, Object> getRoleList(Integer page, Integer limit, String roleName) {
 		SpsRoleExample example = new SpsRoleExample();
@@ -51,7 +55,8 @@ public class RoleServiceImpl implements RoleService{
 		
 	}
 	@Override
-	public HashMap<String, String> insertRole(String roleName, String describe) {
+	public HashMap<String, String> insertRole(
+			String roleName, String describe, List<Integer> menuList) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		String creater = (String) SecurityUtils.getSubject().getPrincipal();
 		SpsRole role = new SpsRole();
@@ -63,13 +68,56 @@ public class RoleServiceImpl implements RoleService{
 		role.setRoleState(0);
 		int insertSelective = spsRoleMapper.insertSelective(role);
 		if(insertSelective == 1){
-			map.put("msg", "角色添加成功");
-			map.put("state", "success");
+			int insertRoleAndMenu = insertRoleAndMenu(roleName, menuList);
+			if(insertRoleAndMenu == 1){
+				map.put("msg", "角色添加成功");
+				map.put("state", "success");
+			}else{
+				map.put("msg", "角色权限添加失败");
+				map.put("state", "menuError");
+			}
 		}else{
 			map.put("msg", "添加失败,联系管理员");
 			map.put("state", "error");
 		}
 		return map;
 	}
+	/**
+	 * 添加角色菜单关联表
+	 * @Title: insertRoleAndMenu   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param roleName
+	 * @param: @param menuList
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月2日 下午3:50:24
+	 * @return: int      
+	 * @throws
+	 */
+	private int insertRoleAndMenu(String roleName, List<Integer> menuList) {
+		try {
+			SpsRoleExample roleExample = new SpsRoleExample();
+			
+			roleExample.createCriteria().andRoleNameEqualTo(roleName);
+			
+			List<SpsRole> selectByExample = spsRoleMapper.selectByExample(roleExample);
 
+			Integer roleId = selectByExample.get(0).getRoleId();
+			
+			SpsRoleandmenu roleandmenu = new SpsRoleandmenu();
+			
+			for (int menuId : menuList) {
+				roleandmenu.setRoleId(roleId);
+				roleandmenu.setMenuId(menuId);
+				roleandmenu.setCreatTime(new Date());
+				roleandmenu.setUpdateTime(new Date());
+				roleandmenu.setState(0);
+				spsRoleandmenuMapper.insert(roleandmenu);
+			}
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
 }

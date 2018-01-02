@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sps.entity.user.SpsRole;
@@ -28,9 +29,10 @@ public class RoleController {
 	}
 	@RequestMapping(value="insertRole.html")
 	public @ResponseBody HashMap<String, String> insertRole(
-			String roleName, String describe){
+			String roleName, String describe,
+			@RequestParam(value = "menuList[]")List<Integer> menuList){
 		HashMap<String, String> insertRole = 
-				roleService.insertRole(roleName, describe);
+				roleService.insertRole(roleName, describe, menuList);
 		
 		return insertRole;
 	}
