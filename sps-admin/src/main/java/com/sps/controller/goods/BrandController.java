@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.sps.entity.goods.SpsBrand;
-import org.sps.service.TestDubbo;
 import org.sps.service.goods.BrandService;
 
 import java.util.HashMap;
