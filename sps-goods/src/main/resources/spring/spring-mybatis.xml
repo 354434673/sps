@@ -49,6 +49,18 @@
 	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:sqlmap-config.xml" />
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						<!--使用下面的方式配置参数，一行配置一个 -->
+						<value>
+							params=value1
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
 	</bean>
 
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"

@@ -34,7 +34,6 @@ public class UploadController {
     @ResponseBody
     public Map<String, Object> uploadPicture(@RequestParam(value="file",required=false)MultipartFile file,
                                 HttpServletRequest request){
-        ReturnInfo ri = new ReturnInfo();
         Map<String, Object> resultMap = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
         File targetFile=null;
@@ -63,7 +62,7 @@ public class UploadController {
                 msg=fileName;
                 code=0;
                 resultMap.put("code", 0);
-                resultMap.put("msg", fileName);
+                resultMap.put("fileName", fileName);
                /* ri.setCode(0);
                 ri.setMsg(fileName);*/
             } catch (Exception e) {

@@ -1,9 +1,16 @@
 package org.sps.entity.goods;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SpsBrand {
+public class SpsBrand implements Serializable {
     private Integer brandId;
+
+    private String brandName;
+
+    private String brandCategoryNames;
+
+    private String brandEnglishName;
 
     private String brandCategoryIds;
 
@@ -21,12 +28,36 @@ public class SpsBrand {
 
     private Date brandUpdateTime;
 
+    public String getBrandCategoryNames() {
+        return brandCategoryNames;
+    }
+
+    public void setBrandCategoryNames(String brandCategoryNames) {
+        this.brandCategoryNames = brandCategoryNames;
+    }
+
     public Integer getBrandId() {
         return brandId;
     }
 
     public void setBrandId(Integer brandId) {
         this.brandId = brandId;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName == null ? null : brandName.trim();
+    }
+
+    public String getBrandEnglishName() {
+        return brandEnglishName;
+    }
+
+    public void setBrandEnglishName(String brandEnglishName) {
+        this.brandEnglishName = brandEnglishName == null ? null : brandEnglishName.trim();
     }
 
     public String getBrandCategoryIds() {

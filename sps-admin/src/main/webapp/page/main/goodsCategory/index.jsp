@@ -34,9 +34,15 @@
 <script src="<%=request.getContextPath() %>/page/static/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript">
     $(function(){
-        $(document).on("keyup", "#searchForm input", function (e) {
-            if (e.keyCode == 13) {
-            }
+        //单击显示图片
+        $(".immg").click(function(){
+            var d = dialog({
+                title:'大图',
+                content: '<img width="300" height="450" src="'+$(this).attr('src')+'" value="1"/>',
+                quickClose: true
+            });
+            d.show();
+            $("div.ui-popup.ui-popup-modal.ui-popup-show.ui-popup-focus").css({'z-index':99999});
         });
     });
 
@@ -53,8 +59,17 @@
             colClass: 'value_col',
             style: 'width: 20%',
             render: function(row) {
-                return '<a class="layui-btn layui-btn-danger layui-btn-mini" onclick="toUpdate(' + row.id + ')"><i class="layui-icon">&#xe640;</i> 修改</a>'; //列渲染
+                return '<a class="layui-btn layui-btn-danger layui-btn-mini" onclick="toUpdate(' + row.id + ')"> 修改</a>'; //列渲染
             }
+
+        },
+        {
+            name: '',
+            style: 'width: 15%',
+            render: function(row) {
+                return '<a class="layui-btn layui-btn-danger layui-btn-mini" onclick="toDetail(' + row.id + ')"> 详情</a>'; //列渲染
+            }
+
         },
     ];
     $.ajax({
@@ -79,6 +94,9 @@
     });
     function toUpdate(nodeId) {
         window.location.href="/sps-admin/category/toAddOrEdit?id="+nodeId;
+    }
+    function toDetail(nodeId) {
+        window.location.href="/sps-admin/category/findEntity?id="+nodeId;
     }
 
 

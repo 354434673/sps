@@ -1,4 +1,5 @@
 package com.sps.controller.goods;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import org.springframework.stereotype.Controller;
@@ -22,8 +23,8 @@ public class GoodCategoryController {
 
 
     /**
-     *
      * 进入商品分类列表
+     *
      * @param model 模型
      */
     @RequestMapping
@@ -39,22 +40,19 @@ public class GoodCategoryController {
     @RequestMapping("/getCategory")
     @ResponseBody
     public String getCategory() {
-      /*  try {*/
-            Map<String, Object> map = new HashMap<>();
-            map.put("isFirst", "0");
-            //先查父类
-            List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
-            //组装数据
-            List<SpsGoodCategory> listJson = goodCategoryService.getJson(categoryList);
-            String  jsonString = JSON.toJSONString(listJson);
-      /*  } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+        Map<String, Object> map = new HashMap<>();
+        map.put("isFirst", "0");
+        //先查父类
+        List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
+        //组装数据
+        List<SpsGoodCategory> listJson = goodCategoryService.getJson(categoryList);
+        String jsonString = JSON.toJSONString(listJson);
         return jsonString;
     }
 
     /**
      * 添加分类时 弹出框的分类树 只显示2级
+     *
      * @return
      */
     @RequestMapping("/getTwoCategory")
@@ -66,12 +64,55 @@ public class GoodCategoryController {
         //先查父类
         List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
         //组装数据
-        SpsGoodCategory spsCategory=new SpsGoodCategory();
+        SpsGoodCategory spsCategory = new SpsGoodCategory();
         spsCategory.setName("无");
         List<SpsGoodCategory> listJson = goodCategoryService.getTwoCategoryJson(categoryList);
         listJson.add(spsCategory);
-        String  jsonString = JSON.toJSONString(listJson);
+        String jsonString = JSON.toJSONString(listJson);
         return jsonString;
+    }
+
+
+    /**
+     * 根据id和Pid拼接分类名称 例如： 数码》手机》华为
+     *  这块逻辑有点乱 以后优化优化 写的比较急
+     * @return
+     */
+    @RequestMapping(value = "/getCategoryName", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> saveOrUpdate(Integer pId, Integer id) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try {
+            String name = "";
+            String ids = "";
+            SpsGoodCategory smallCategory = goodCategoryService.findEntityById(id);
+            SpsGoodCategory category = goodCategoryService.findEntityById(pId);
+            if (pId != null && pId != 0) {
+                    SpsGoodCategory Pcategory = goodCategoryService.findEntityById(category.getCategoryParentId());
+                    if(Pcategory!=null){//选了三级
+                        name = Pcategory.getCategoryName() + ">" + category.getCategoryName() + ">" + smallCategory.getCategoryName();
+                        ids = Pcategory.getCategoryId() + "," + category.getCategoryId() + "," + smallCategory.getCategoryId();
+                        resultMap.put("name", name);
+                        resultMap.put("ids", ids);
+                    }else {//选了二级
+                        name = category.getCategoryName() + ">" + smallCategory.getCategoryName();
+                        ids = category.getCategoryId() + "," + smallCategory.getCategoryId();
+                        resultMap.put("name", name);
+                        resultMap.put("ids", ids);
+                    }
+            } else if(pId==null) {//说明只选了一级父类
+                name =  smallCategory.getCategoryName();
+                ids =  smallCategory.getCategoryId()+"";
+                resultMap.put("name", name);
+                resultMap.put("ids", ids);
+            }
+            resultMap.put("flag", 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("flag", 0);
+            resultMap.put("msg", "操作失败");
+        }
+        return resultMap;
     }
 
 
@@ -87,8 +128,8 @@ public class GoodCategoryController {
             if (id != null) {
                 SpsGoodCategory spsGoodCategory = goodCategoryService.findEntityById(id);
                 model.addAttribute("spsGoodCategory", spsGoodCategory);
-                if(spsGoodCategory!=null&&spsGoodCategory.getCategoryParentId()!=null){
-                    model.addAttribute("categoryParentName",  goodCategoryService.findEntityById(spsGoodCategory.getCategoryParentId()).getCategoryName());
+                if (spsGoodCategory != null && spsGoodCategory.getCategoryParentId() != null) {
+                    model.addAttribute("categoryParentName", goodCategoryService.findEntityById(spsGoodCategory.getCategoryParentId()).getCategoryName());
                 }
             }
             model.addAttribute("flag", 1);
@@ -121,8 +162,8 @@ public class GoodCategoryController {
     }
 
     /**
-     *
      * 根据分类ID查找详情
+     *
      * @param id 分类ID
      * @return
      */
@@ -130,21 +171,14 @@ public class GoodCategoryController {
 
     @RequestMapping(value = "/findEntity")
     public String findEntity(Integer id, Model model) {
-        SpsGoodCategory category = null;
-        //categoryParentName
-        try {
-            category = goodCategoryService.findEntityById(id);
-
-
-
-            model.addAttribute("flag", 1);
-        } catch (Exception e) {
-            e.printStackTrace();
-            model.addAttribute("flag", 0);
-            model.addAttribute("msg", "操作失败");
+        if (id != null) {
+            SpsGoodCategory spsGoodCategory = goodCategoryService.findEntityById(id);
+            model.addAttribute("spsGoodCategory", spsGoodCategory);
+            if (spsGoodCategory != null && spsGoodCategory.getCategoryParentId() != null && spsGoodCategory.getCategoryParentId() != 0) {
+                model.addAttribute("categoryParentName", goodCategoryService.findEntityById(spsGoodCategory.getCategoryParentId()).getCategoryName());
+            }
         }
-        model.addAttribute("category", category);
-        return "category/detail";
+        return "goodsCategory/detail";
     }
 
 }

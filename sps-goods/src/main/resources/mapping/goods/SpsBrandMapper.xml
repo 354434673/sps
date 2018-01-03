@@ -3,6 +3,9 @@
 <mapper namespace="sqlmap.SpsBrand">
   <resultMap id="BaseResultMap" type="SpsBrand">
     <id column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+    <result column="brand_english_name" jdbcType="VARCHAR" property="brandEnglishName" />
+    <result column="brand_category_names" jdbcType="VARCHAR" property="brandCategoryNames" />
     <result column="brand_category_ids" jdbcType="VARCHAR" property="brandCategoryIds" />
     <result column="brand_abbreviation" jdbcType="VARCHAR" property="brandAbbreviation" />
     <result column="brand_des" jdbcType="VARCHAR" property="brandDes" />
@@ -13,11 +16,12 @@
     <result column="brand_update_time" jdbcType="TIMESTAMP" property="brandUpdateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    brand_id, brand_category_ids, brand_abbreviation, brand_des, brand_small_url, brand_big_url, 
-    brand_delete_flag, brand_create_time, brand_update_time
+    brand_id, brand_name, brand_english_name, brand_category_ids, brand_abbreviation,
+    brand_des, brand_small_url, brand_big_url, brand_delete_flag, brand_create_time,
+    brand_update_time,brand_category_names
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from sps_brand
     where brand_id = #{brandId,jdbcType=INTEGER}
@@ -27,20 +31,26 @@
     where brand_id = #{brandId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="SpsBrand">
-    insert into sps_brand (brand_id, brand_category_ids, brand_abbreviation, 
-      brand_des, brand_small_url, brand_big_url, 
-      brand_delete_flag, brand_create_time, brand_update_time
-      )
-    values (#{brandId,jdbcType=INTEGER}, #{brandCategoryIds,jdbcType=VARCHAR}, #{brandAbbreviation,jdbcType=VARCHAR}, 
-      #{brandDes,jdbcType=VARCHAR}, #{brandSmallUrl,jdbcType=VARCHAR}, #{brandBigUrl,jdbcType=VARCHAR}, 
-      #{brandDeleteFlag,jdbcType=INTEGER}, #{brandCreateTime,jdbcType=TIMESTAMP}, #{brandUpdateTime,jdbcType=TIMESTAMP}
-      )
+    insert into sps_brand (brand_id, brand_name, brand_english_name,
+    brand_category_ids, brand_abbreviation, brand_des,
+    brand_small_url, brand_big_url, brand_delete_flag,
+    brand_create_time, brand_update_time,brand_category_names)
+    values (#{brandId,jdbcType=INTEGER}, #{brandName,jdbcType=VARCHAR}, #{brandEnglishName,jdbcType=VARCHAR},
+    #{brandCategoryIds,jdbcType=VARCHAR}, #{brandAbbreviation,jdbcType=VARCHAR}, #{brandDes,jdbcType=VARCHAR},
+    #{brandSmallUrl,jdbcType=VARCHAR}, #{brandBigUrl,jdbcType=VARCHAR}, #{brandDeleteFlag,jdbcType=INTEGER},
+    #{brandCreateTime,jdbcType=TIMESTAMP}, #{brandUpdateTime,jdbcType=TIMESTAMP}, #{brandCategoryNames,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="SpsBrand">
     insert into sps_brand
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="brandId != null">
         brand_id,
+      </if>
+      <if test="brandName != null">
+        brand_name,
+      </if>
+      <if test="brandEnglishName != null">
+        brand_english_name,
       </if>
       <if test="brandCategoryIds != null">
         brand_category_ids,
@@ -71,6 +81,12 @@
       <if test="brandId != null">
         #{brandId,jdbcType=INTEGER},
       </if>
+      <if test="brandName != null">
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandEnglishName != null">
+        #{brandEnglishName,jdbcType=VARCHAR},
+      </if>
       <if test="brandCategoryIds != null">
         #{brandCategoryIds,jdbcType=VARCHAR},
       </if>
@@ -97,9 +113,15 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="SpsBrand">
+  <update id="update" parameterType="SpsBrand">
     update sps_brand
     <set>
+      <if test="brandName != null">
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandEnglishName != null">
+        brand_english_name = #{brandEnglishName,jdbcType=VARCHAR},
+      </if>
       <if test="brandCategoryIds != null">
         brand_category_ids = #{brandCategoryIds,jdbcType=VARCHAR},
       </if>
@@ -124,12 +146,17 @@
       <if test="brandUpdateTime != null">
         brand_update_time = #{brandUpdateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="brandCategoryNames != null">
+        brand_category_names =  #{brandCategoryNames,jdbcType=VARCHAR},
+      </if>
     </set>
     where brand_id = #{brandId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="SpsBrand">
     update sps_brand
-    set brand_category_ids = #{brandCategoryIds,jdbcType=VARCHAR},
+    set brand_name = #{brandName,jdbcType=VARCHAR},
+      brand_english_name = #{brandEnglishName,jdbcType=VARCHAR},
+      brand_category_ids = #{brandCategoryIds,jdbcType=VARCHAR},
       brand_abbreviation = #{brandAbbreviation,jdbcType=VARCHAR},
       brand_des = #{brandDes,jdbcType=VARCHAR},
       brand_small_url = #{brandSmallUrl,jdbcType=VARCHAR},
@@ -139,4 +166,41 @@
       brand_update_time = #{brandUpdateTime,jdbcType=TIMESTAMP}
     where brand_id = #{brandId,jdbcType=INTEGER}
   </update>
+
+  <select id="findListCount" parameterType="map" resultType="int">
+    select count(1)
+    from sps_brand
+  </select>
+
+
+
+  <select id="findList" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_brand
+
+  </select>
+  <select id="findById" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_brand
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </select>
+
+  <!-- 查询所有 -->
+  <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_brand
+    where 1=1
+    <if test="brandName !=null and brandName != ''">
+      and brand_name LIKE CONCAT('%',#{brandName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="brandEnglishName !=null and brandEnglishName != ''">
+      and brand_english_name LIKE CONCAT('%',#{brandEnglishName,jdbcType=VARCHAR},'%')
+    </if>
+    AND brand_delete_flag = 0
+    order by brand_create_time desc
+
+  </select>
 </mapper>
