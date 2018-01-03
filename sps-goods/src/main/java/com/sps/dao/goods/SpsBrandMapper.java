@@ -2,11 +2,12 @@ package com.sps.dao.goods;
 
 
 import com.sps.dao.goods.base.BaseDaoImpl;
-import com.sps.entity.goods.SpsBrand;
-import com.sps.entity.goods.SpsGoodCategory;
+import org.springframework.stereotype.Repository;
+import org.sps.entity.goods.SpsBrand;
 
-public class SpsBrandMapper extends BaseDaoImpl<SpsGoodCategory, Integer> {
-
+@SuppressWarnings("unchecked")
+@Repository
+public class SpsBrandMapper extends BaseDaoImpl<SpsBrand, Integer> {
     @Override
     public String getNameSpace() {
         return "sqlmap.SpsBrand";
