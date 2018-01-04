@@ -22,7 +22,17 @@
 		
 3. 数据库表
 		
-		
+		商户:
+		 1.sps_channel 渠道属性
+		 2.sps_channel_account 账户信息
+		 3.sps_channel_business 业务信息
+		 4.sps_channel_enterprise 企业基本信息
+		 5.sps_channel_finance_target 财务指标
+		 6.sps_channel_gather 收款账号
+		 7.sps_channel_logistics 物流配送
+		 8.sps_channel_guarantee 担保信息
+		 9.sps_channel_statistics 统计信息
+		 
 
 
 ## 注意:

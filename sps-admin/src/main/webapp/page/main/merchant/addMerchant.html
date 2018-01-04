@@ -265,14 +265,85 @@
 		<h3>财务指标</h3>
 		<hr>
 		<!-- 财务指标开始 -->
+		 <div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px">*上年销售额(万元)：</label>
+		    <div class="layui-input-inline">
+		      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+		    </div>
+		  </div>
 		<!-- 财务指标结束 -->
 		<h3>物流配送</h3>
 		<hr>
 		<!-- 物流配送开始 -->
+		 <div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px	">业务覆盖地域范围：</label>
+		    <div class="layui-input-inline" style="width:300px">
+		      <input type="checkbox" name="like[write]" title="写作" lay-skin="primary">
+		      <input type="checkbox" name="like[read]" title="阅读" checked lay-skin="primary">
+		      <input type="checkbox" name="like[dai]" title="发呆" lay-skin="primary">
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px">*合作物流名称：</label>
+		    <div class="layui-input-inline">
+		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		    </div>
+		    <label class="layui-form-label" >*其他：</label>
+		    <div class="layui-input-inline">
+		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		    </div>
+		   </div>
+		  <div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px">*年物流总费用(万元)：</label>
+		    <div class="layui-input-inline">
+		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		    </div>
+		   </div>
 		<!-- 物流配送结束 -->
 		<h3>开户信息</h3>
 		<hr>
 		<!-- 开户信息开始 -->
+		<div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px">*管理员账号：</label>
+		    <div class="layui-input-inline">
+		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		    </div>
+		</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px">*账户起始日期：</label>
+		    <div class="layui-input-inline">
+		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		    </div>
+		</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px">*账户到期日期：</label>
+		    <div class="layui-input-inline">
+		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		    </div>
+		</div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px">状态：</label>
+		    <div class="layui-input-inline" >
+		      <select name="realCity" lay-filter="realCity"  lay-search> 
+				  <option value="">选择状态</option>
+				  <option value="010">可用</option>
+				  <option value="021">不可用</option>
+		      </select>
+		    </div>
+		  </div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px	">适用产品：</label>
+		    <div class="layui-input-inline" style="width:300px">
+		      <input type="checkbox" name="like[write]" title="7天包息" lay-skin="primary">
+		      <input type="checkbox" name="like[read]" title="7天不包息" checked lay-skin="primary">
+		    </div>
+		  </div>
+		<div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px">*代销手续费率（%）：</label>
+		    <div class="layui-input-inline">
+		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		    </div>
+		</div>
 		<!-- 开户信息结束 -->
 		 	<div class="layui-form-item" align="center" id="btn" >
 				<button class="layui-btn" lay-filter="submitAddUser" lay-submit id="submit">立即提交</button>
@@ -309,7 +380,7 @@
 	  //收款信息
 	  table.render({
 		    elem: '#userList'
-		    ,height: 350
+		    ,height: 250
 		    ,url: '/sps-admin/user/userList.html' //数据接口
 		    ,id:'userId'
 		    ,page:true
