@@ -62,7 +62,7 @@ layui.config({
     navbar.set({
         spreadOne: true,
         elem: '#admin-navbar-side',
-        cached: false,
+        cached: true,
         //data: navs,
 		/*cached:true,*/
 		url: pathStr+'/menu/getMenu.json'

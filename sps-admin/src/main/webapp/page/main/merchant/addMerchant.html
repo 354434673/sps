@@ -21,11 +21,11 @@
   </ul>
   <div class="layui-tab-content">
     <div class="layui-tab-item layui-show">
-	<div class="layui-form " id="aab">
+	<div class="layui-form layui-form-pane" id="aab">
 		<h3>属性信息</h3>
 		<hr>
 		  <!-- 属性信息开始 -->
-		  <div class="layui-form-item" >
+		  <div class="layui-form-item " >
 		    <label class="layui-form-label" style="width:200px">*所在城市：</label>
 		    <div class="layui-input-inline" >
 		      <select name="realProvince" lay-filter="realProvince"  lay-search> 
@@ -253,6 +253,14 @@
 		<h3>收款信息</h3>
 		<hr>
 		<!-- 收款信息开始 -->
+		<div>
+			<blockquote class="layui-elem-quote">
+				<a href="javascript:;" class="layui-btn layui-btn-warm" id="add">
+					<i class="layui-icon">&#xe608;</i> 新增用户
+				</a>
+			</blockquote>
+		</div>
+		<table id="userList" lay-filter="userTables"></table>
 		<!-- 收款信息结束 -->
 		<h3>财务指标</h3>
 		<hr>
@@ -298,18 +306,23 @@
 			}
 		  }
 		}); 
-	  $('#resetPasssword').on('click',function(){
-		    layer.confirm('确认重置密码?', function(index){
-			      layer.close(index);
-					$.post({
-						url:'<%=path%>/user/updatePassword.html',
-						dataType:'json',
-						success:function(data){
-							layer.msg(data.msg,{icon: data.icon});
-						}
-					})
-			    });
-	  })
+	  //收款信息
+	  table.render({
+		    elem: '#userList'
+		    ,height: 350
+		    ,url: '/sps-admin/user/userList.html' //数据接口
+		    ,id:'userId'
+		    ,page:true
+		    ,cols: [[ //表头
+		      {field: 'userId', title: 'ID', align:'center'}
+		      ,{field: 'userUsername', title: '用户名', align:'center'}
+		      ,{field: 'userName', title: '姓名',align:'center'}
+		      ,{field: 'userPhone', title: '联系电话', width:230, align:'center'}
+		      ,{field: 'userEmail', title: '电子邮箱', width:230,align:'center'} 
+		      ,{field: 'role', title: '角色', align:'center',templet: '#roleTpl'}
+		      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
+		    ]]
+		  });
 	  form.on('submit(submitAddUser)', function(data){
 	 		 var username = $('#username').val()
 	 		 var password = $('#password').val()
