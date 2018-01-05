@@ -9,7 +9,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
-	href="../../static/plugins/layui/css/layui.css" media="all" />
+	href="/sps-admin/page/layui/css/layui.css" media="all" />
 <style type="text/css">
 </style>
 </head>
@@ -28,134 +28,108 @@
 		  <div class="layui-form-item " >
 		    <label class="layui-form-label" style="width:200px">*所在城市：</label>
 		    <div class="layui-input-inline" >
-		      <select name="realProvince" lay-filter="realProvince"  lay-search> 
-				  <option value="">省</option>
-				  <option value="010">layer</option>
-				  <option value="021">form</option>
-				  <option value="0571">layim</option>
+		      <select name="province" lay-filter="province"  id="province" lay-verify="required"> 
 		      </select>
 		    </div>
 		    <div class="layui-input-inline" >
-		      <select name="realCity" lay-filter="realCity"  lay-search> 
+		      <select name="city" lay-filter="city"   id="city" lay-verify="required"> 
 				  <option value="">市</option>
-				  <option value="010">layer</option>
-				  <option value="021">form</option>
-				  <option value="0571">layim</option>
 		      </select>
 		    </div>
 		    <div class="layui-input-inline" >
-		      <select name="realArea" lay-filter="realArea"  lay-search> 
-				  <option value="">区</option>
-				  <option value="010">layer</option>
-				  <option value="021">form</option>
-				  <option value="0571">layim</option>
+		      <select name="area" lay-filter="area"   id="area" lay-verify="required"> 				  
+		      	  <option value="">区</option>
 		      </select>
 		    </div>
 		  </div>
 		  <div class="layui-form-item" >
-		    <label class="layui-form-label" style="width:200px">*我司业务员姓名：</label>
+		    <label class="layui-form-label" style="width:200px">*店付业务员姓名：</label>
 		    <div class="layui-input-inline">
-		      <input id="username" type="text" name="username"  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+		      <input id="channelSalesmanName" type="text" name="channelSalesmanName"  lay-verify="required" placeholder="请输入店付业务员姓名" autocomplete="off" class="layui-input">
+		    </div>
+		    <label class="layui-form-label" style="width:200px">*店付业务员编号：</label>
+		    <div class="layui-input-inline">
+		      <input id="channelSalesmanNum" type="text" name="channelSalesmanNum"  lay-verify="required" placeholder="请输入店付业务员编号" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		  <div class="layui-form-item" id="passwordDiv">
 		   <label class="layui-form-label" style="width:200px">*核心商户编号：</label>
 		    <div class="layui-input-inline">
-		      <input id="password" name="password" type="text"  lay-verify="required|minLength" placeholder="请输入密码" autocomplete="off" class="layui-input">
+		      <input id="channelNum" name="channelNum" disabled type="text" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*核心商户状态：</label>
 		    <div class="layui-input-inline">
-		      <input type="text"  lay-verify="required|minLength|verify" placeholder="请确认密码" autocomplete="off" class="layui-input">
 		    </div>
+		     <div class="layui-form-mid layui-word-aux">&nbsp&nbsp&nbsp 未激活</div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*上线时间：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+		      <input id="channelUpTime" type="text"  disabled name="channelUpTime"   autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*冻结时间：</label>
 		    <div class="layui-input-inline">
-		      <input id="phone" type="text" name="phone" lay-verify="required|phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
+		      <input id="channelFreezeTime"  type="text" disabled name="channelFreezeTime"  autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*营业执照编号：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+		      <input id="enterpriseBusinesslicenseNo" type="text" name="enterpriseBusinesslicenseNo"  lay-verify="required|IsChineseCharacter" placeholder="请输入营业执照编号" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*公司名称：</label>
 		    <div class="layui-input-inline">
-		      <input id="phone" type="text" name="phone" lay-verify="required|phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
+		      <input id="enterpriseCompanyName" type="text" name="enterpriseCompanyName" lay-verify="required|phone" placeholder="请输入公司名称" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">公司注册地址：</label>
 		    <div class="layui-input-inline" >
-		      <select name="province" lay-filter="province"  lay-search> 
-				  <option value="">省</option>
-				  <option value="010">layer</option>
-				  <option value="021">form</option>
-				  <option value="0571">layim</option>
+		      <select id="registerProvince"name="registerProvince" lay-filter="registerProvince" lay-verify="required"> 
 		      </select>
 		    </div>
 		    <div class="layui-input-inline" >
-		      <select name="city" lay-filter="city"  lay-search> 
+		      <select name="registerCity" lay-filter="registerCity" id="registerCity" lay-verify="required"> 
 				  <option value="">市</option>
-				  <option value="010">layer</option>
-				  <option value="021">form</option>
-				  <option value="0571">layim</option>
 		      </select>
 		    </div>
 		    <div class="layui-input-inline" >
-		      <select name="area" lay-filter="area"  lay-search> 
+		      <select name="registerArea" lay-filter="registerArea" id="registerArea" lay-verify="required"> 
 				  <option value="">区</option>
-				  <option value="010">layer</option>
-				  <option value="021">form</option>
-				  <option value="0571">layim</option>
 		      </select>
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">公司实际地址：</label>
 		    <div class="layui-input-inline" >
-		      <select name="realProvince" lay-filter="realProvince"  lay-search> 
-				  <option value="">省</option>
-				  <option value="010">layer</option>
-				  <option value="021">form</option>
-				  <option value="0571">layim</option>
+		      <select name="realProvince" lay-filter="realProvince" id="realProvince" lay-verify="required"> 
 		      </select>
 		    </div>
 		    <div class="layui-input-inline" >
-		      <select name="realCity" lay-filter="realCity"  lay-search> 
+		      <select name="realCity" lay-filter="realCity" id="realCity" lay-verify="required"> 
 				  <option value="">市</option>
-				  <option value="010">layer</option>
-				  <option value="021">form</option>
-				  <option value="0571">layim</option>
 		      </select>
 		    </div>
 		    <div class="layui-input-inline" >
-		      <select name="realArea" lay-filter="realArea"  lay-search> 
+		      <select name="realArea" lay-filter="realArea" id="realArea" lay-verify="required"> 
 				  <option value="">区</option>
-				  <option value="010">layer</option>
-				  <option value="021">form</option>
-				  <option value="0571">layim</option>
 		      </select>
 		    </div>
 		  </div>
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*法人代表姓名：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+		      <input id="enterpriseCorp" type="text" name="enterpriseCorp"  lay-verify="required|IsChineseCharacter" placeholder="请输入法人代表姓名" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*经营年限(年)：</label>
 		    <div class="layui-input-inline">
-		      <input id="phone" type="text" name="phone" lay-verify="required|phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
+		      <input id="enterpriseOperatioTime" type="text" name="enterpriseOperatioTime" lay-verify="required|phone" placeholder="请输入经营年限(年)" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*员工数量(人)：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+		      <input id="enterpriseEmployeeNum" type="text" name="enterpriseEmployeeNum"  lay-verify="required|IsChineseCharacter" placeholder="请输入员工数量" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		<!-- 属性信息结束 -->
@@ -164,7 +138,7 @@
 		<!-- 业务信息开始 -->
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">主营业务：</label>
-		    <div class="layui-input-inline" style="width:600px">
+		    <div class="layui-input-inline" style="width:600px" id="businessProduct">
 		      <input type="checkbox" name="like[write]" title="写作">
 		      <input type="checkbox" name="like[read]" title="阅读" checked>
 		      <input type="checkbox" name="like[dai]" title="发呆">
@@ -179,7 +153,7 @@
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">主营商品类型：</label>
-		    <div class="layui-input-inline" style="width:600px">
+		    <div class="layui-input-inline" style="width:600px" id="businessType">
 		      <input type="checkbox" name="like[write]" title="写作">
 		      <input type="checkbox" name="like[read]" title="阅读" checked>
 		      <input type="checkbox" name="like[dai]" title="发呆">
@@ -190,7 +164,7 @@
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">主营品牌：</label>
-		    <div class="layui-input-inline" style="width:600px">
+		    <div class="layui-input-inline" style="width:600px" id="businessBrand">
 		      <input type="checkbox" name="like[write]" title="写作">
 		      <input type="checkbox" name="like[read]" title="阅读" checked>
 		      <input type="checkbox" name="like[dai]" title="发呆">
@@ -199,9 +173,13 @@
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px	">业务覆盖地域范围：</label>
 		    <div class="layui-input-inline" style="width:600px">
-		      <input type="checkbox" name="like[write]" title="写作">
-		      <input type="checkbox" name="like[read]" title="阅读" checked>
-		      <input type="checkbox" name="like[dai]" title="发呆">
+		     <select lay-verify="required" name="businessScope" lay-filter="businessScope"id="businessScope"> 
+				  <option value="">请选择</option>
+				  <option value="1">全国</option>
+				  <option value="2">本省</option>
+				  <option value="3">本市</option>
+				  <option value="4">本县</option>
+		      </select>
 		    </div>
 		  </div>
 		<!-- 业务信息结束 -->
@@ -211,42 +189,46 @@
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*担保形式：</label>
 		    <div class="layui-input-inline">
-		     <select name="realProvince" lay-filter="realProvince"  lay-search> 
+		     <select lay-verify="required" name="guaranteeSituation" lay-filter="guaranteeSituation" id="guaranteeSituation"> 
 				  <option value="">请选择担保形式</option>
-				  <option value="010">layer</option>
-				  <option value="021">form</option>
-				  <option value="0571">layim</option>
+				  <option value="1">保证金担保</option>
+				  <option value="2">信用担保</option>
+				  <option value="3">无担保</option>
 		      </select>
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*保证金金额：</label>
 		    <div class="layui-input-inline">
-		      <input id="phone" type="text" name="phone" lay-verify="required|phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
+		      <input id="guaranteeDeposit" type="text" name="guaranteeDeposit" lay-verify="required|phone" placeholder="请输入保证金金额" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*法人手机号：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+		      <input id="guaranteeCorpPhone" type="text" name="guaranteeCorpPhone"  lay-verify="required|IsChineseCharacter" placeholder="请输入法人手机号" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*财务联系人姓名：</label>
 		    <div class="layui-input-inline">
-		      <input id="phone" type="text" name="phone" lay-verify="required|phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
+		      <input id="guaranteeFinanceContactname" type="text" name="guaranteeFinanceContactname" lay-verify="required|phone" placeholder="请输入财务联系人姓名" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*财务联系人手机号：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+		      <input id="guaranteeFinanceContactphone" type="text" name="guaranteeFinanceContactphone"  lay-verify="required|IsChineseCharacter" placeholder="财务联系人手机号" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*业务负责人姓名：</label>
 		    <div class="layui-input-inline">
-		      <input id="phone" type="text" name="phone" lay-verify="required|phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
+		      <input id="guaranteeBusinessLeadername" type="text" name="guaranteeBusinessLeadername" lay-verify="required|phone" placeholder="业务负责人姓名" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*业务负责人手机号：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+		      <input id="guaranteeBusinessLeaderphone" type="text" name="guaranteeBusinessLeaderphone"  lay-verify="required|IsChineseCharacter" placeholder="业务负责人手机号" autocomplete="off" class="layui-input">
+		    </div>
+		    <label class="layui-form-label" style="width:200px">*服务密码：</label>
+		    <div class="layui-input-inline">
+		      <input id="guaranteeBusinessPhonePassword" type="text" name="guaranteeBusinessPhonePassword"  lay-verify="required|IsChineseCharacter" placeholder="服务密码" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		<!-- 担保信息结束 -->
@@ -255,8 +237,8 @@
 		<!-- 收款信息开始 -->
 		<div>
 			<blockquote class="layui-elem-quote">
-				<a href="javascript:;" class="layui-btn layui-btn-warm" id="add">
-					<i class="layui-icon">&#xe608;</i> 新增用户
+				<a href="javascript:;" class="layui-btn layui-btn-warm" id="addBank">
+					<i class="layui-icon">&#xe608;</i> 新增
 				</a>
 			</blockquote>
 		</div>
@@ -268,7 +250,7 @@
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*上年销售额(万元)：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+		      <input id="targetLastSale" type="text" name="targetLastSale"  lay-verify="required|IsChineseCharacter" placeholder="请输入上年销售额" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		<!-- 财务指标结束 -->
@@ -277,7 +259,7 @@
 		<!-- 物流配送开始 -->
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px	">业务覆盖地域范围：</label>
-		    <div class="layui-input-inline" style="width:300px">
+		    <div class="layui-input-inline" style="width:300px" id= "logisticsWay">
 		      <input type="checkbox" name="like[write]" title="写作" lay-skin="primary">
 		      <input type="checkbox" name="like[read]" title="阅读" checked lay-skin="primary">
 		      <input type="checkbox" name="like[dai]" title="发呆" lay-skin="primary">
@@ -286,17 +268,17 @@
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*合作物流名称：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		      <input id="logisticsCooperationName" type="logisticsCooperationName" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" >*其他：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="其他" autocomplete="off" class="layui-input">
 		    </div>
 		   </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*年物流总费用(万元)：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		      <input id="logisticsAllCost" type="text" name="logisticsAllCost" lay-verify="required|IsChineseCharacter" placeholder="请输入年物流总费用" autocomplete="off" class="layui-input">
 		    </div>
 		   </div>
 		<!-- 物流配送结束 -->
@@ -306,31 +288,22 @@
 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*管理员账号：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		      <input id="adminNum" type="text" name="adminNum" lay-verify="required|IsChineseCharacter" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
 		    </div>
+		    <div class="layui-form-mid layui-word-aux">**@*******</div>
 		</div>
 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*账户起始日期：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
-		    </div>
+			 <input type="text" class="layui-input" id="startTime" placeholder="年-月-日">	    
+			 </div>
 		</div>
 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*账户到期日期：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
-		    </div>
+			 <input type="text" class="layui-input" id="endTime" placeholder="年-月-日">		    
+			 </div>
 		</div>
-		<div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">状态：</label>
-		    <div class="layui-input-inline" >
-		      <select name="realCity" lay-filter="realCity"  lay-search> 
-				  <option value="">选择状态</option>
-				  <option value="010">可用</option>
-				  <option value="021">不可用</option>
-		      </select>
-		    </div>
-		  </div>
 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px	">适用产品：</label>
 		    <div class="layui-input-inline" style="width:300px">
@@ -341,13 +314,14 @@
 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*代销手续费率（%）：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="请输入" autocomplete="off" class="layui-input">
 		    </div>
 		</div>
 		<!-- 开户信息结束 -->
 		 	<div class="layui-form-item" align="center" id="btn" >
-				<button class="layui-btn" lay-filter="submitAddUser" lay-submit id="submit">立即提交</button>
-				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				<button type="reset" class="layui-btn layui-btn-primary">返回</button>
+				<button class="layui-btn layui-btn-primary" lay-filter="submitAddUser" lay-submit >保存</button>
+				<button type="reset" class="layui-btn layui-btn-primary" id="submit">提交</button>
 			</div>
 	</div>
     </div>
@@ -355,15 +329,48 @@
   </div>
 </div>
 <script type="text/javascript"
-		src="../../static/plugins/layui/layui.all.js"></script>
+		src="/sps-admin/page/layui/layui.js"></script>
 <script type="text/javascript">
-	layui.use(['form','table','flow'], function(){
+	layui.use(['form','table','laydate','flow'], function(){
 	  var form = layui.form;
 	  var $ = layui.jquery;
 	  var table = layui.table;
+	  var laydate = layui.laydate;
 	  var flow = layui.flow;
 	  var array = [];//选择的角色id
+	  getProvince(100000)//先加载省
 	  form.render(); 
+	  //选择城市
+	  form.on('select(province)', function(data){//选省
+		  getCity(data.value,'city')
+		  $('#area').html('')
+	  });    
+	  form.on('select(city)', function(data){//选省
+		  getArea(data.value,'area')
+	  });    
+	  //公司注册地址
+	  form.on('select(registerProvince)', function(data){//选省
+		  getCity(data.value,'registerCity')
+		  $('#registerArea').html('')
+	  });    
+	  form.on('select(registerCity)', function(data){//选省
+		  getArea(data.value,'registerArea')
+	  });   
+	  //公司实际地址
+	  form.on('select(realProvince)', function(data){//选省
+		  getCity(data.value,'realCity')
+		  $('#realArea').html('')
+	  });    
+	  form.on('select(realCity)', function(data){//选省
+		  getArea(data.value,'realArea')
+	  });   
+	  //日期框
+	  laydate.render({
+		    elem: '#startTime'
+		  });
+	  laydate.render({
+		    elem: '#endTime'
+		  });
 	  form.on('checkbox(encrypt)', function(data){
 		  if(data.elem.checked){
 		  	array.push(data.value)
@@ -376,21 +383,38 @@
 				}
 			}
 		  }
-		}); 
+		}); 	
+	  $('#submit').on('click',function(){
+		  //地址
+		  var address = $('#province').find("option:selected").text()+
+		 				 $('#city').find("option:selected").text()+
+		 				 $('#area').find("option:selected").text()
+		  //公司注册地址
+		  var registerAddress = $('#registerProvince').find("option:selected").text()+
+		 				 $('#registerCity').find("option:selected").text()+
+		 				 $('#registerArea').find("option:selected").text()
+		  //公司实际地址
+		  var realAddress = $('#realProvince').find("option:selected").text()+
+		 				 $('#realCity').find("option:selected").text()+
+		 				 $('#realArea').find("option:selected").text()
+	  })
 	  //收款信息
 	  table.render({
 		    elem: '#userList'
-		    ,height: 250
 		    ,url: '/sps-admin/user/userList.html' //数据接口
 		    ,id:'userId'
 		    ,page:true
+		    ,limit:5
+		    ,limits:[5,10,15]
 		    ,cols: [[ //表头
-		      {field: 'userId', title: 'ID', align:'center'}
-		      ,{field: 'userUsername', title: '用户名', align:'center'}
-		      ,{field: 'userName', title: '姓名',align:'center'}
-		      ,{field: 'userPhone', title: '联系电话', width:230, align:'center'}
-		      ,{field: 'userEmail', title: '电子邮箱', width:230,align:'center'} 
-		      ,{field: 'role', title: '角色', align:'center',templet: '#roleTpl'}
+		      {field: 'userId', title: '序号', align:'center'}
+		      ,{field: 'userUsername', title: '收款账号', align:'center'}
+		      ,{field: 'userName', title: '所有人姓名',align:'center'}
+		      ,{field: 'userPhone', title: '身份证号', width:230, align:'center'}
+		      ,{field: 'userEmail', title: '绑定手机号码', width:230,align:'center'} 
+		      ,{field: '1', title: '开户银行', width:230,align:'center'} 
+		      ,{field: '2', title: '开户行分行', width:230,align:'center'} 
+		      ,{field: '3', title: '开户行支行', width:230,align:'center'} 
 		      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 		    ]]
 		  });
@@ -455,6 +479,53 @@
 				}
 			},
 	  });  
+ 		 function getProvince(parentId){
+			$.getJSON({
+	 			 url:'/sps-admin/getAreasList.json',
+	 			 dataType:'json',
+	 			 data:{parentId:parentId},
+	 			 success:function(data){
+			 		 var list = "";
+			 		 $.each(data,function(i,item){
+					  list +='<option value="'+item.areaId+'">'+item.name+'</option>';
+					  $('#province').html(list)
+					  $('#registerProvince').html(list)
+					  $('#realProvince').html(list)
+				  	})
+				  	form.render('select');
+	 			 }
+	 		 })
+		}
+ 		 function getCity(parentId,Id){
+			$.getJSON({
+	 			 url:'/sps-admin/getAreasList.json',
+	 			 dataType:'json',
+	 			 data:{parentId:parentId},
+	 			 success:function(data){
+			 		 var list = "";
+			 		 $.each(data,function(i,item){
+					  list +='<option value="'+item.areaId+'">'+item.name+'</option>';
+					  $('#'+Id).html(list)
+				  	})
+				  	form.render('select');
+	 			 }
+	 		 })
+		}
+ 		 function getArea(parentId,Id){
+			$.getJSON({
+	 			 url:'/sps-admin/getAreasList.json',
+	 			 dataType:'json',
+	 			 data:{parentId:parentId},
+	 			 success:function(data){
+			 		 var list = "";
+			 		 $.each(data,function(i,item){
+					  list +='<option value="'+item.areaId+'" title="'+item.name+'">'+item.name+'</option>';
+					  $('#'+Id).html(list)
+				  	})
+				  	form.render('select');
+	 			 }
+	 		 })
+		}
 	});
 </script>
 </body>

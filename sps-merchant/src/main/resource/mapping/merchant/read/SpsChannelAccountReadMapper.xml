@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.read.SpsChannelAccountReadMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelAccount" >
+    <id column="account_id" property="accountId" jdbcType="INTEGER" />
+    <result column="account_credit_line" property="accountCreditLine" jdbcType="DECIMAL" />
+    <result column="account_credit_present" property="accountCreditPresent" jdbcType="DECIMAL" />
+    <result column="account_deposit" property="accountDeposit" jdbcType="DECIMAL" />
+    <result column="account_deposit_present" property="accountDepositPresent" jdbcType="DECIMAL" />
+    <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    account_id, account_credit_line, account_credit_present, account_deposit, account_deposit_present, 
+    channel_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelAccountExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_channel_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_channel_account
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_channel_account
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.merchant.SpsChannelAccountExample" >
+    delete from sps_channel_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannelAccount" >
+    insert into sps_channel_account (account_id, account_credit_line, account_credit_present, 
+      account_deposit, account_deposit_present, 
+      channel_num)
+    values (#{accountId,jdbcType=INTEGER}, #{accountCreditLine,jdbcType=DECIMAL}, #{accountCreditPresent,jdbcType=DECIMAL}, 
+      #{accountDeposit,jdbcType=DECIMAL}, #{accountDepositPresent,jdbcType=DECIMAL}, 
+      #{channelNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelAccount" >
+    insert into sps_channel_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="accountCreditLine != null" >
+        account_credit_line,
+      </if>
+      <if test="accountCreditPresent != null" >
+        account_credit_present,
+      </if>
+      <if test="accountDeposit != null" >
+        account_deposit,
+      </if>
+      <if test="accountDepositPresent != null" >
+        account_deposit_present,
+      </if>
+      <if test="channelNum != null" >
+        channel_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="accountCreditLine != null" >
+        #{accountCreditLine,jdbcType=DECIMAL},
+      </if>
+      <if test="accountCreditPresent != null" >
+        #{accountCreditPresent,jdbcType=DECIMAL},
+      </if>
+      <if test="accountDeposit != null" >
+        #{accountDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="accountDepositPresent != null" >
+        #{accountDepositPresent,jdbcType=DECIMAL},
+      </if>
+      <if test="channelNum != null" >
+        #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelAccountExample" resultType="java.lang.Integer" >
+    select count(*) from sps_channel_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_channel_account
+    <set >
+      <if test="record.accountId != null" >
+        account_id = #{record.accountId,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountCreditLine != null" >
+        account_credit_line = #{record.accountCreditLine,jdbcType=DECIMAL},
+      </if>
+      <if test="record.accountCreditPresent != null" >
+        account_credit_present = #{record.accountCreditPresent,jdbcType=DECIMAL},
+      </if>
+      <if test="record.accountDeposit != null" >
+        account_deposit = #{record.accountDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.accountDepositPresent != null" >
+        account_deposit_present = #{record.accountDepositPresent,jdbcType=DECIMAL},
+      </if>
+      <if test="record.channelNum != null" >
+        channel_num = #{record.channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_channel_account
+    set account_id = #{record.accountId,jdbcType=INTEGER},
+      account_credit_line = #{record.accountCreditLine,jdbcType=DECIMAL},
+      account_credit_present = #{record.accountCreditPresent,jdbcType=DECIMAL},
+      account_deposit = #{record.accountDeposit,jdbcType=DECIMAL},
+      account_deposit_present = #{record.accountDepositPresent,jdbcType=DECIMAL},
+      channel_num = #{record.channelNum,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.merchant.SpsChannelAccount" >
+    update sps_channel_account
+    <set >
+      <if test="accountCreditLine != null" >
+        account_credit_line = #{accountCreditLine,jdbcType=DECIMAL},
+      </if>
+      <if test="accountCreditPresent != null" >
+        account_credit_present = #{accountCreditPresent,jdbcType=DECIMAL},
+      </if>
+      <if test="accountDeposit != null" >
+        account_deposit = #{accountDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="accountDepositPresent != null" >
+        account_deposit_present = #{accountDepositPresent,jdbcType=DECIMAL},
+      </if>
+      <if test="channelNum != null" >
+        channel_num = #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.merchant.SpsChannelAccount" >
+    update sps_channel_account
+    set account_credit_line = #{accountCreditLine,jdbcType=DECIMAL},
+      account_credit_present = #{accountCreditPresent,jdbcType=DECIMAL},
+      account_deposit = #{accountDeposit,jdbcType=DECIMAL},
+      account_deposit_present = #{accountDepositPresent,jdbcType=DECIMAL},
+      channel_num = #{channelNum,jdbcType=VARCHAR}
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
+</mapper>

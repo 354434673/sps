@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.read.SpsChannelLogisticsReadMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelLogistics" >
+    <id column="logistics_id" property="logisticsId" jdbcType="INTEGER" />
+    <result column="logistics_way" property="logisticsWay" jdbcType="VARCHAR" />
+    <result column="logistics_cooperation_name" property="logisticsCooperationName" jdbcType="VARCHAR" />
+    <result column="logistics_all_cost" property="logisticsAllCost" jdbcType="DECIMAL" />
+    <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    logistics_id, logistics_way, logistics_cooperation_name, logistics_all_cost, channel_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelLogisticsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_channel_logistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_channel_logistics
+    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_channel_logistics
+    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.merchant.SpsChannelLogisticsExample" >
+    delete from sps_channel_logistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannelLogistics" >
+    insert into sps_channel_logistics (logistics_id, logistics_way, logistics_cooperation_name, 
+      logistics_all_cost, channel_num)
+    values (#{logisticsId,jdbcType=INTEGER}, #{logisticsWay,jdbcType=VARCHAR}, #{logisticsCooperationName,jdbcType=VARCHAR}, 
+      #{logisticsAllCost,jdbcType=DECIMAL}, #{channelNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelLogistics" >
+    insert into sps_channel_logistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logisticsId != null" >
+        logistics_id,
+      </if>
+      <if test="logisticsWay != null" >
+        logistics_way,
+      </if>
+      <if test="logisticsCooperationName != null" >
+        logistics_cooperation_name,
+      </if>
+      <if test="logisticsAllCost != null" >
+        logistics_all_cost,
+      </if>
+      <if test="channelNum != null" >
+        channel_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logisticsId != null" >
+        #{logisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsWay != null" >
+        #{logisticsWay,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCooperationName != null" >
+        #{logisticsCooperationName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsAllCost != null" >
+        #{logisticsAllCost,jdbcType=DECIMAL},
+      </if>
+      <if test="channelNum != null" >
+        #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelLogisticsExample" resultType="java.lang.Integer" >
+    select count(*) from sps_channel_logistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_channel_logistics
+    <set >
+      <if test="record.logisticsId != null" >
+        logistics_id = #{record.logisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.logisticsWay != null" >
+        logistics_way = #{record.logisticsWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logisticsCooperationName != null" >
+        logistics_cooperation_name = #{record.logisticsCooperationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logisticsAllCost != null" >
+        logistics_all_cost = #{record.logisticsAllCost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.channelNum != null" >
+        channel_num = #{record.channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_channel_logistics
+    set logistics_id = #{record.logisticsId,jdbcType=INTEGER},
+      logistics_way = #{record.logisticsWay,jdbcType=VARCHAR},
+      logistics_cooperation_name = #{record.logisticsCooperationName,jdbcType=VARCHAR},
+      logistics_all_cost = #{record.logisticsAllCost,jdbcType=DECIMAL},
+      channel_num = #{record.channelNum,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.merchant.SpsChannelLogistics" >
+    update sps_channel_logistics
+    <set >
+      <if test="logisticsWay != null" >
+        logistics_way = #{logisticsWay,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCooperationName != null" >
+        logistics_cooperation_name = #{logisticsCooperationName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsAllCost != null" >
+        logistics_all_cost = #{logisticsAllCost,jdbcType=DECIMAL},
+      </if>
+      <if test="channelNum != null" >
+        channel_num = #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.merchant.SpsChannelLogistics" >
+    update sps_channel_logistics
+    set logistics_way = #{logisticsWay,jdbcType=VARCHAR},
+      logistics_cooperation_name = #{logisticsCooperationName,jdbcType=VARCHAR},
+      logistics_all_cost = #{logisticsAllCost,jdbcType=DECIMAL},
+      channel_num = #{channelNum,jdbcType=VARCHAR}
+    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+  </update>
+</mapper>
