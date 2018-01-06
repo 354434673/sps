@@ -68,7 +68,7 @@ public class RoleServiceImpl implements RoleService{
 		role.setRoleState(0);
 		int insertSelective = spsRoleMapper.insertSelective(role);
 		if(insertSelective == 1){
-			int insertRoleAndMenu = insertRoleAndMenu(roleName, menuList);
+			int insertRoleAndMenu = insertRoleAndMenu(role.getRoleId(), menuList);
 			if(insertRoleAndMenu == 1){
 				map.put("msg", "角色添加成功");
 				map.put("state", "success");
@@ -94,16 +94,8 @@ public class RoleServiceImpl implements RoleService{
 	 * @return: int      
 	 * @throws
 	 */
-	private int insertRoleAndMenu(String roleName, List<Integer> menuList) {
+	private int insertRoleAndMenu(Integer roleId, List<Integer> menuList) {
 		try {
-			SpsRoleExample roleExample = new SpsRoleExample();
-			
-			roleExample.createCriteria().andRoleNameEqualTo(roleName);
-			
-			List<SpsRole> selectByExample = spsRoleMapper.selectByExample(roleExample);
-
-			Integer roleId = selectByExample.get(0).getRoleId();
-			
 			SpsRoleandmenu roleandmenu = new SpsRoleandmenu();
 			
 			for (int menuId : menuList) {

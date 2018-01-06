@@ -110,7 +110,7 @@
       #{roleCreater,jdbcType=VARCHAR}, #{roleCreattime,jdbcType=TIMESTAMP}, #{roleUpdatetime,jdbcType=TIMESTAMP}, 
       #{roleState,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.sps.entity.user.SpsRole" >
+  <insert id="insertSelective" parameterType="com.sps.entity.user.SpsRole" useGeneratedKeys="true" keyProperty="roleId">
     insert into sps_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >

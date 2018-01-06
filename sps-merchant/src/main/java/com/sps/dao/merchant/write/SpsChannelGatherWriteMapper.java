@@ -6,7 +6,6 @@ import org.sps.entity.merchant.SpsChannelGather;
 import org.sps.entity.merchant.SpsChannelGatherExample;
 
 public interface SpsChannelGatherWriteMapper {
-    int countByExample(SpsChannelGatherExample example);
 
     int deleteByExample(SpsChannelGatherExample example);
 
@@ -15,10 +14,6 @@ public interface SpsChannelGatherWriteMapper {
     int insert(SpsChannelGather record);
 
     int insertSelective(SpsChannelGather record);
-
-    List<SpsChannelGather> selectByExample(SpsChannelGatherExample example);
-
-    SpsChannelGather selectByPrimaryKey(Integer gatherId);
 
     int updateByExampleSelective(@Param("record") SpsChannelGather record, @Param("example") SpsChannelGatherExample example);
 

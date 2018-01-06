@@ -6,7 +6,6 @@ import org.sps.entity.merchant.SpsChannelFinanceTarget;
 import org.sps.entity.merchant.SpsChannelFinanceTargetExample;
 
 public interface SpsChannelFinanceTargetWriteMapper {
-    int countByExample(SpsChannelFinanceTargetExample example);
 
     int deleteByExample(SpsChannelFinanceTargetExample example);
 
@@ -15,10 +14,6 @@ public interface SpsChannelFinanceTargetWriteMapper {
     int insert(SpsChannelFinanceTarget record);
 
     int insertSelective(SpsChannelFinanceTarget record);
-
-    List<SpsChannelFinanceTarget> selectByExample(SpsChannelFinanceTargetExample example);
-
-    SpsChannelFinanceTarget selectByPrimaryKey(Integer targetId);
 
     int updateByExampleSelective(@Param("record") SpsChannelFinanceTarget record, @Param("example") SpsChannelFinanceTargetExample example);
 

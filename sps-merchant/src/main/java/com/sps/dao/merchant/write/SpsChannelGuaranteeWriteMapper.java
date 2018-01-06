@@ -6,7 +6,6 @@ import org.sps.entity.merchant.SpsChannelGuarantee;
 import org.sps.entity.merchant.SpsChannelGuaranteeExample;
 
 public interface SpsChannelGuaranteeWriteMapper {
-    int countByExample(SpsChannelGuaranteeExample example);
 
     int deleteByExample(SpsChannelGuaranteeExample example);
 
@@ -15,10 +14,6 @@ public interface SpsChannelGuaranteeWriteMapper {
     int insert(SpsChannelGuarantee record);
 
     int insertSelective(SpsChannelGuarantee record);
-
-    List<SpsChannelGuarantee> selectByExample(SpsChannelGuaranteeExample example);
-
-    SpsChannelGuarantee selectByPrimaryKey(Integer guaranteeId);
 
     int updateByExampleSelective(@Param("record") SpsChannelGuarantee record, @Param("example") SpsChannelGuaranteeExample example);
 

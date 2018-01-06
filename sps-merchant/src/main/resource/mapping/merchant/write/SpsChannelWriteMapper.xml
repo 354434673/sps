@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sps.dao.merchant.write.SpsChannelMapper" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelWriteMapper" >
   <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannel" >
     <id column="channel_id" property="channelId" jdbcType="INTEGER" />
     <result column="channel_city" property="channelCity" jdbcType="VARCHAR" />
@@ -73,31 +73,6 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
-    channel_id, channel_city, channel_salesman_num, channel_salesman_name, channel_num, 
-    channel_state, channel_up_time, channel_freeze_time, standby1, standby2, standby3, 
-    standby4
-  </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from sps_channel
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from sps_channel
-    where channel_id = #{channelId,jdbcType=INTEGER}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sps_channel
     where channel_id = #{channelId,jdbcType=INTEGER}
@@ -120,7 +95,7 @@
       #{standby2,jdbcType=VARCHAR}, #{standby3,jdbcType=VARCHAR}, #{standby4,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannel" >
+  <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannel" useGeneratedKeys="true" keyProperty="channelId">
     insert into sps_channel
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="channelId != null" >
@@ -199,12 +174,6 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelExample" resultType="java.lang.Integer" >
-    select count(*) from sps_channel
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update sps_channel
     <set >

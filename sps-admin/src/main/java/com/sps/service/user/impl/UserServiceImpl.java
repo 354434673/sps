@@ -74,34 +74,38 @@ public class UserServiceImpl implements UserService{
 	}
 	@Override
 	public HashMap<String, Object> insertUser(String...strs) {
-		SpsUser user = getUser(strs[0]);//查重
-		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		if(user == null){
-			String salt = Md5Util.getSalt(4);//4位盐
-			SpsUser spsUser = new SpsUser();
-			spsUser.setUserUsername(strs[0]);
-			spsUser.setUserSalt(salt);
-			spsUser.setUserPassword(Md5Util.getMd5(strs[1], salt));
-			spsUser.setUserName(strs[2]);
-			spsUser.setUserPhone(strs[3]);
-			spsUser.setUserEmail(strs[4]);
-			spsUser.setUserState(0);
-			spsUser.setUserMark(Integer.parseInt(strs[5]));
-			spsUser.setUserCreattime(new Date());
-			spsUser.setUserUpdatetime(new Date());
-			int insertSelective = spsUserMapper.insertSelective(spsUser);
-			if(insertSelective == 1){
-				map.put("msg", "添加成功");
-				map.put("state", "success");
+		try {
+			SpsUser user = getUser(strs[0]);//查重
+			if(user == null){
+				String salt = Md5Util.getSalt(4);//4位盐
+				SpsUser spsUser = new SpsUser();
+				spsUser.setUserUsername(strs[0]);
+				spsUser.setUserSalt(salt);
+				spsUser.setUserPassword(Md5Util.getMd5(strs[1], salt));
+				spsUser.setUserName(strs[2]);
+				spsUser.setUserPhone(strs[3]);
+				spsUser.setUserEmail(strs[4]);
+				spsUser.setUserState(0);
+				spsUser.setUserMark(Integer.parseInt(strs[5]));
+				spsUser.setUserCreattime(new Date());
+				spsUser.setUserUpdatetime(new Date());
+				int insertSelective = spsUserMapper.insertSelective(spsUser);
+				if(insertSelective == 1){
+					map.put("msg", "添加成功");
+					map.put("state", "success");
+				}else{
+					map.put("msg", "添加失败,联系管理员");
+					map.put("state", "error");
+				}
 			}else{
-				map.put("msg", "添加失败,联系管理员");
-				map.put("state", "error");
+				map.put("msg", "用户重复");
+				map.put("state", "exist");
 			}
-		}else{
-			map.put("msg", "用户重复");
-			map.put("state", "exist");
+		} catch (NumberFormatException e) {
+			map.put("msg", "程序错误");
+			map.put("state", "error");
+			e.printStackTrace();
 		}
 		return map;
 	}

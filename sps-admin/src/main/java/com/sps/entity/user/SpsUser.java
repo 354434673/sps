@@ -1,10 +1,16 @@
 package com.sps.entity.user;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class SpsUser {
-    private Integer userId;
+public class SpsUser implements Serializable{
+    /**   
+	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
+	 */   
+	private static final long serialVersionUID = 1L;
+
+	private Integer userId;
 
     private String userUsername;
 

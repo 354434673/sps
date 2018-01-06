@@ -8,23 +8,7 @@ import org.sps.entity.merchant.SpsChannelLogisticsExample;
 public interface SpsChannelLogisticsReadMapper {
     int countByExample(SpsChannelLogisticsExample example);
 
-    int deleteByExample(SpsChannelLogisticsExample example);
-
-    int deleteByPrimaryKey(Integer logisticsId);
-
-    int insert(SpsChannelLogistics record);
-
-    int insertSelective(SpsChannelLogistics record);
-
     List<SpsChannelLogistics> selectByExample(SpsChannelLogisticsExample example);
 
     SpsChannelLogistics selectByPrimaryKey(Integer logisticsId);
-
-    int updateByExampleSelective(@Param("record") SpsChannelLogistics record, @Param("example") SpsChannelLogisticsExample example);
-
-    int updateByExample(@Param("record") SpsChannelLogistics record, @Param("example") SpsChannelLogisticsExample example);
-
-    int updateByPrimaryKeySelective(SpsChannelLogistics record);
-
-    int updateByPrimaryKey(SpsChannelLogistics record);
 }

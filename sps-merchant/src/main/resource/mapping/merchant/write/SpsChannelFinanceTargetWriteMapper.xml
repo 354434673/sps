@@ -64,29 +64,6 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
-    target_id, target_last_sale, channel_num
-  </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelFinanceTargetExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from sps_channel_finance_target
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from sps_channel_finance_target
-    where target_id = #{targetId,jdbcType=INTEGER}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sps_channel_finance_target
     where target_id = #{targetId,jdbcType=INTEGER}
@@ -128,12 +105,6 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelFinanceTargetExample" resultType="java.lang.Integer" >
-    select count(*) from sps_channel_finance_target
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update sps_channel_finance_target
     <set >

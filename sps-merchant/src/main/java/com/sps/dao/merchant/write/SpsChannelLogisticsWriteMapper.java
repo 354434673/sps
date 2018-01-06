@@ -6,7 +6,6 @@ import org.sps.entity.merchant.SpsChannelLogistics;
 import org.sps.entity.merchant.SpsChannelLogisticsExample;
 
 public interface SpsChannelLogisticsWriteMapper {
-    int countByExample(SpsChannelLogisticsExample example);
 
     int deleteByExample(SpsChannelLogisticsExample example);
 
@@ -15,10 +14,6 @@ public interface SpsChannelLogisticsWriteMapper {
     int insert(SpsChannelLogistics record);
 
     int insertSelective(SpsChannelLogistics record);
-
-    List<SpsChannelLogistics> selectByExample(SpsChannelLogisticsExample example);
-
-    SpsChannelLogistics selectByPrimaryKey(Integer logisticsId);
 
     int updateByExampleSelective(@Param("record") SpsChannelLogistics record, @Param("example") SpsChannelLogisticsExample example);
 

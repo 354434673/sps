@@ -6,8 +6,6 @@ import org.sps.entity.merchant.SpsChannelStatistics;
 import org.sps.entity.merchant.SpsChannelStatisticsExample;
 
 public interface SpsChannelStatisticsWriteMapper {
-    int countByExample(SpsChannelStatisticsExample example);
-
     int deleteByExample(SpsChannelStatisticsExample example);
 
     int deleteByPrimaryKey(Integer statisticsId);
@@ -15,10 +13,6 @@ public interface SpsChannelStatisticsWriteMapper {
     int insert(SpsChannelStatistics record);
 
     int insertSelective(SpsChannelStatistics record);
-
-    List<SpsChannelStatistics> selectByExample(SpsChannelStatisticsExample example);
-
-    SpsChannelStatistics selectByPrimaryKey(Integer statisticsId);
 
     int updateByExampleSelective(@Param("record") SpsChannelStatistics record, @Param("example") SpsChannelStatisticsExample example);
 

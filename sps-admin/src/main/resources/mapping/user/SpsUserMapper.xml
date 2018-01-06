@@ -128,7 +128,7 @@
       #{userUpdatetime,jdbcType=TIMESTAMP}, #{userState,jdbcType=INTEGER}, #{userMark,jdbcType=INTEGER}, 
       #{userSupplierNum,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.sps.entity.user.SpsUser" >
+  <insert id="insertSelective" parameterType="com.sps.entity.user.SpsUser" useGeneratedKeys="true" keyProperty="userId">
     insert into sps_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >

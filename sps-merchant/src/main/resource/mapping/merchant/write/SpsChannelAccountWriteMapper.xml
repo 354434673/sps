@@ -71,26 +71,6 @@
     account_id, account_credit_line, account_credit_present, account_deposit, account_deposit_present, 
     channel_num
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelAccountExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from sps_channel_account
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from sps_channel_account
-    where account_id = #{accountId,jdbcType=INTEGER}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sps_channel_account
     where account_id = #{accountId,jdbcType=INTEGER}
@@ -152,12 +132,6 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelAccountExample" resultType="java.lang.Integer" >
-    select count(*) from sps_channel_account
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update sps_channel_account
     <set >

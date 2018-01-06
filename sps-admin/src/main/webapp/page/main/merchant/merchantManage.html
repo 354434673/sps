@@ -28,6 +28,16 @@
 			    	<button class="layui-btn layui-btn-primary" id="queryUser">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="resetUser">重置</button>
 	        </div>  
+		    <div class="layui-form-item">
+			    <label class="layui-form-label" style="width: 200px">核心商户状态:</label>
+			    <div class="layui-input-inline">
+			    <select > 
+				  <option value="1">未激活</option>
+				  <option value="2">正常</option>
+				  <option value="3">冻结</option>
+		      </select>
+			    </div>
+	        </div>  
         </div>
 		<div>
 			<blockquote class="layui-elem-quote">
@@ -69,12 +79,11 @@
 			    ,id:'userId'
 			    ,page:true
 			    ,cols: [[ //表头
-			      {field: 'userId', title: 'ID', align:'center'}
-			      ,{field: 'userUsername', title: '核心账户账户', align:'center'}
-			      ,{field: 'userName', title: '公司名称',align:'center'}
+			      {field: 'userId', title: '序号', align:'center'}
+			      ,{field: 'userUsername', title: '核心账户账户',width:240,align:'center'}
+			      ,{field: 'userName', title: '公司名称',width:240,align:'center'}
 			      ,{field: 'userPhone', title: '营业执照编号', width:230, align:'center'}
 			      ,{field: 'userEmail', title: '核心商户状态', width:230,align:'center'} 
-			      ,{field: 'role', title: '角色', align:'center',templet: '#roleTpl'}
 			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 			    ]]
 			  });

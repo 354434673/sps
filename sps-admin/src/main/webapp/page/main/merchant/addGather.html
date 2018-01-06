@@ -14,14 +14,14 @@
 </style>
 </head>
 <body>
-<div class="layui-tab layui-tab-brie" style="padding:10px" >
+<div class="layui-tab" style="padding: 5px" >
   <ul class="layui-tab-title">
     <li class="layui-this">基本信息</li>
     <li>图片资料</li>
   </ul>
   <div class="layui-tab-content">
     <div class="layui-tab-item layui-show">
-	<div class="layui-form layui-form-pane" style="margin-left: 100px;margin-right: 100px">
+	<div class="layui-form layui-form-pane">
 		<h3>属性信息</h3>
 		<hr>
 		  <!-- 属性信息开始 -->
@@ -159,7 +159,7 @@
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px	">业务覆盖地域范围：</label>
-		    <div class="layui-input-inline">
+		    <div class="layui-input-inline" style="width:600px">
 		     <select lay-verify="required" name="businessScope" lay-filter="businessScope" id="businessScope"> 
 				  <option value="">请选择</option>
 				  <option value="1">全国</option>
@@ -247,9 +247,9 @@
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px	">发货方式：</label>
 		    <div class="layui-input-inline" style="width:400px" id= "logisticsWay">
-		      <input type="checkbox" title="物流" lay-skin="primary" lay-filter="logisticsWay">
-		      <input type="checkbox" title="自主派送" lay-skin="primary" lay-filter="logisticsWay">
-		      <input type="checkbox" title="上门取货" lay-skin="primary" lay-filter="logisticsWay">
+		      <input type="checkbox" name="like[write]" title="物流" lay-skin="primary">
+		      <input type="checkbox" name="like[read]" title="自主派送" checked lay-skin="primary">
+		      <input type="checkbox" name="like[dai]" title="上门取货" lay-skin="primary">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
@@ -301,7 +301,7 @@
 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*代销手续费率（%）：</label>
 		    <div class="layui-input-inline">
-		      <input id="sell" type="text" name="sell" lay-verify="required|IsChineseCharacter" placeholder="请输入" autocomplete="off" class="layui-input">
+		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="请输入" autocomplete="off" class="layui-input">
 		    </div>
 		</div>
 		<!-- 开户信息结束 -->
@@ -312,29 +312,22 @@
 			</div>
 	</div>
     </div>
-    <div class="layui-tab-item">
-    
-    </div>
+    <div class="layui-tab-item layui-show">内容2</div>
   </div>
 <script type="text/javascript"
 		src="/sps-admin/page/layui/layui.js"></script>
-<script type="text/html" id="bar">
-  <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
-  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
-</script>
 <script type="text/javascript">
 	layui.use(['form','table','laydate','flow','element'], function(){
-	  var element = layui.element;
 	  var form = layui.form;
 	  var $ = layui.jquery;
 	  var table = layui.table;
 	  var laydate = layui.laydate;
 	  var flow = layui.flow;
+	  var element = layui.element;
 	  var businessProductArray = [];//主营业务数组
 	  var businessTypeArray = [];//主营商品类型数组
 	  var businessBrandArray = [];//主营品牌数组
-	  var logisticsWay = [];//发货方式
+	  
 	  getProvince(100000)//先加载省
 	  form.render(); 
 	  //选择城市
@@ -368,29 +361,27 @@
 	  laydate.render({
 		    elem: '#endTime'
 		  });
-	  
-	  
 	  form.on('checkbox(businessProduct)', function(data){
 		  if(data.elem.checked){
-			  businessProductArray.push(data.value)
+		  	array.push(data.value)
 		  }else{
 			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
-			for(var i=0; i<businessProductArray.length; i++) {
-				if(businessProductArray[i] == data.value){
-					businessProductArray.splice(i, 1);
+			for(var i=0; i<array.length; i++) {
+				if(array[i] == data.value){
+					array.splice(i, 1);
 					break;
 				}
 			}
 		  }
 		}); 	
-	  form.on('checkbox(businessTypeArray)', function(data){
+	  form.on('checkbox(businessType)', function(data){
 		  if(data.elem.checked){
-			  businessTypeArray.push(data.value)
+		  	array.push(data.value)
 		  }else{
 			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
-			for(var i=0; i<businessTypeArray.length; i++) {
-				if(businessTypeArray[i] == data.value){
-					businessTypeArray.splice(i, 1);
+			for(var i=0; i<array.length; i++) {
+				if(array[i] == data.value){
+					array.splice(i, 1);
 					break;
 				}
 			}
@@ -404,19 +395,6 @@
 			for(var i=0; i<array.length; i++) {
 				if(array[i] == data.value){
 					array.splice(i, 1);
-					break;
-				}
-			}
-		  }
-		}); 	
-	  form.on('checkbox(logisticsWay)', function(data){
-		  if(data.elem.checked){
-			  businessBrandArray.push(data.value)
-		  }else{
-			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
-			for(var i=0; i<businessBrandArray.length; i++) {
-				if(businessBrandArray[i] == data.value){
-					businessBrandArray.splice(i, 1);
 					break;
 				}
 			}
@@ -439,10 +417,10 @@
 		      ,{field: 'userUsername', title: '收款账号', align:'center'}
 		      ,{field: 'userName', title: '所有人姓名',align:'center'}
 		      ,{field: 'userPhone', title: '身份证号', width:230, align:'center'}
-		      ,{field: 'userEmail', title: '绑定手机号码', width:130,align:'center'} 
-		      ,{field: '1', title: '开户银行', width:170,align:'center'} 
-		      ,{field: '2', title: '开户行分行', width:170,align:'center'} 
-		      ,{field: '3', title: '开户行支行', width:170,align:'center'} 
+		      ,{field: 'userEmail', title: '绑定手机号码', width:230,align:'center'} 
+		      ,{field: '1', title: '开户银行', width:230,align:'center'} 
+		      ,{field: '2', title: '开户行分行', width:230,align:'center'} 
+		      ,{field: '3', title: '开户行支行', width:230,align:'center'} 
 		      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 		    ]]
 		  });
@@ -454,18 +432,13 @@
 			  var address = $('#province').find("option:selected").text()+
 			 				 $('#city').find("option:selected").text()+
 			 				 $('#area').find("option:selected").text();
-		  	  console.log('地址'+address)
 		  	  var channelSalesmanName = $('#channelSalesmanName').val();//店付业务员姓名
 		  	  var channelSalesmanNum = $('#channelSalesmanNum').val();//店付业务员编号
-		  	 console.log('店付业务员姓名'+channelSalesmanName)
-		  	  console.log('店付业务员编号'+channelSalesmanNum)
 		  	  /*
 		  	   	企业基本信息
 		  	  */
 			  var enterpriseBusinesslicenseNo = $('#enterpriseBusinesslicenseNo').val();//营业执照编号
 			  var enterpriseCompanyName = $('#enterpriseCompanyName').val();//公司名称
-			  console.log('营业执照编号'+enterpriseBusinesslicenseNo)
-			   console.log('公司名称'+enterpriseCompanyName)
 			  //公司注册地址
 			  var registerAddress = $('#registerProvince').find("option:selected").text()+
 			 				 $('#registerCity').find("option:selected").text()+
@@ -477,16 +450,13 @@
 			  var enterpriseCorp = $('#enterpriseCorp').val();//法人名称
 			  var enterpriseOperatioTime = $('#enterpriseOperatioTime').val();//经营年限(年)
 			  var enterpriseEmployeeNum = $('#enterpriseEmployeeNum').val();//员工数量(人)
-			  console.log('/公司注册地址'+registerAddress)
-			   console.log('公司实际地址号'+realAddress)
-			    console.log('法人名称'+enterpriseCorp)
-			     console.log('经营年限(年)'+enterpriseOperatioTime)
-			      console.log('员工数量(人)'+enterpriseEmployeeNum)
 		  	  /*
 		  	   	业务信息
 		  	  */
-			  businessScope = $('#businessScope').find("option:selected").text();//业务覆盖地域范围
-			  console.log('业务覆盖地域范围'+businessScope)
+			  var businessProductArray = [];//主营业务数组
+			  var businessTypeArray = [];//主营商品类型数组
+			  var businessBrandArray = [];//主营品牌数组
+			  var businessScope = $('#businessScope').find("option:selected").text();//业务覆盖地域范围
 		  	  /*
 		  	   	担保信息
 		  	  */
@@ -498,42 +468,21 @@
 			  var guaranteeBusinessLeadername = $('#guaranteeBusinessLeadername').val();//业务负责人姓名
 			  var guaranteeBusinessLeaderphone = $('#guaranteeBusinessLeaderphone').val();//业务负责人手机
 			  var guaranteeBusinessPhonePassword = $('#guaranteeBusinessPhonePassword').val();//服务密码
-			  console.log('担保形式'+guaranteeSituation)
-			  console.log('保证金金额'+guaranteeDeposit)
-			  console.log('法人手机'+guaranteeCorpPhone)
-			  console.log('财务联系人姓名'+guaranteeFinanceContactname)
-			  console.log('财务联系人手机号'+guaranteeFinanceContactphone)
-			  console.log('业务负责人姓名'+guaranteeBusinessLeadername)
-			  console.log('业务负责人手机'+guaranteeBusinessLeaderphone)
-			  console.log('服务密码'+guaranteeBusinessPhonePassword)
-			  /*
-		  	   	收款账号:窗口添加
+		  	  /*
+		  	   	收款账号
 		  	  */
-		  	  //TODO:
+		  	  var guaranteeDeposit = $('#guaranteeDeposit').val();//保证金金额
 		  	  /*
 		  	   	财务指标
 		  	  */
-		  	  var targetLastSale = $('#targetLastSale').val();//保证金金额
-		  	console.log('保证金金额'+targetLastSale)
 		  	  /*
 		  	   	物流配送
 		  	  */
-		  	  var logisticsCooperationName = $('#logisticsCooperationName').val();//合作物流：
-		  	  var logisticsAllCost = $('#logisticsAllCost').val();//年物流总费用(万元)：
-		  	console.log('合作物流'+logisticsCooperationName)
-		  	console.log('/年物流总费用(万元)'+logisticsAllCost)
 		  	  /*
 		  	   	开户信息
 		  	  */
-			  var adminNum = $('#adminNum').val();//管理员账号
-			  var startTime = $('#startTime').val();//起始时间
-			  var endTime = $('#endTime').val();//结束时间
-			  //var adminNum = $('#adminNum').val();
-			  //var adminNum = $('#adminNum').val();
-			  console.log('管理员账号'+adminNum)
-			  console.log('起始时间'+startTime)
-			  console.log('结束时间'+endTime)
 			  
+
 /* 	 		 if(array.length != 0){
 		 		 $.post({
 		 			 url:'<%=path%>/user/insertUser.html',
@@ -556,7 +505,7 @@
 	 			layer.msg('请选择该用户权限',{icon: 2});
 	 		 } */
 	  })
-/* 	  $.post({//获取角色列表
+	  $.post({//获取角色列表
 		  url:'<%=path %>/role/roleList.html',
 		  dataType:'json',
 		  success:function(data){
@@ -567,7 +516,7 @@
 			  })
 			  form.render('checkbox');
 		  }
-	  }) */
+	  })
 	  //自定义验证规则  
 	  form.verify({  
 			//验证只包含汉字  
@@ -589,17 +538,6 @@
 				}
 			},
 	  });  
-	  $('#addBank').on('click', function() {
-		  layer.open({
-			  type: 2, 
-			  area: ['70%', '80%'],//宽高
-			  content: 'addGather.html' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-			  cancel: function(index, layero){ 
-				  table.reload('userId', {
-					});
-				}    
-		  }); 
-	  });
 	  	//获得省
  		 function getProvince(parentId){
 			$.getJSON({

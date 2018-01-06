@@ -35,38 +35,15 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
   <sql id="Base_Column_List" >
     target_id, target_last_sale, channel_num
   </sql>
+  <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelFinanceTargetExample" resultType="java.lang.Integer" >
+    select count(*) from sps_channel_finance_target
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelFinanceTargetExample" >
     select
     <if test="distinct" >
@@ -87,95 +64,4 @@
     from sps_channel_finance_target
     where target_id = #{targetId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from sps_channel_finance_target
-    where target_id = #{targetId,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="org.sps.entity.merchant.SpsChannelFinanceTargetExample" >
-    delete from sps_channel_finance_target
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannelFinanceTarget" >
-    insert into sps_channel_finance_target (target_id, target_last_sale, channel_num
-      )
-    values (#{targetId,jdbcType=INTEGER}, #{targetLastSale,jdbcType=DECIMAL}, #{channelNum,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelFinanceTarget" >
-    insert into sps_channel_finance_target
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="targetId != null" >
-        target_id,
-      </if>
-      <if test="targetLastSale != null" >
-        target_last_sale,
-      </if>
-      <if test="channelNum != null" >
-        channel_num,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="targetId != null" >
-        #{targetId,jdbcType=INTEGER},
-      </if>
-      <if test="targetLastSale != null" >
-        #{targetLastSale,jdbcType=DECIMAL},
-      </if>
-      <if test="channelNum != null" >
-        #{channelNum,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelFinanceTargetExample" resultType="java.lang.Integer" >
-    select count(*) from sps_channel_finance_target
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update sps_channel_finance_target
-    <set >
-      <if test="record.targetId != null" >
-        target_id = #{record.targetId,jdbcType=INTEGER},
-      </if>
-      <if test="record.targetLastSale != null" >
-        target_last_sale = #{record.targetLastSale,jdbcType=DECIMAL},
-      </if>
-      <if test="record.channelNum != null" >
-        channel_num = #{record.channelNum,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update sps_channel_finance_target
-    set target_id = #{record.targetId,jdbcType=INTEGER},
-      target_last_sale = #{record.targetLastSale,jdbcType=DECIMAL},
-      channel_num = #{record.channelNum,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.merchant.SpsChannelFinanceTarget" >
-    update sps_channel_finance_target
-    <set >
-      <if test="targetLastSale != null" >
-        target_last_sale = #{targetLastSale,jdbcType=DECIMAL},
-      </if>
-      <if test="channelNum != null" >
-        channel_num = #{channelNum,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where target_id = #{targetId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.sps.entity.merchant.SpsChannelFinanceTarget" >
-    update sps_channel_finance_target
-    set target_last_sale = #{targetLastSale,jdbcType=DECIMAL},
-      channel_num = #{channelNum,jdbcType=VARCHAR}
-    where target_id = #{targetId,jdbcType=INTEGER}
-  </update>
 </mapper>

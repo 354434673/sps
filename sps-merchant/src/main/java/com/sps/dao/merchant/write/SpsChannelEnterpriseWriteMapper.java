@@ -6,7 +6,6 @@ import org.sps.entity.merchant.SpsChannelEnterprise;
 import org.sps.entity.merchant.SpsChannelEnterpriseExample;
 
 public interface SpsChannelEnterpriseWriteMapper {
-    int countByExample(SpsChannelEnterpriseExample example);
 
     int deleteByExample(SpsChannelEnterpriseExample example);
 
@@ -15,10 +14,6 @@ public interface SpsChannelEnterpriseWriteMapper {
     int insert(SpsChannelEnterprise record);
 
     int insertSelective(SpsChannelEnterprise record);
-
-    List<SpsChannelEnterprise> selectByExample(SpsChannelEnterpriseExample example);
-
-    SpsChannelEnterprise selectByPrimaryKey(Integer enterpriseId);
 
     int updateByExampleSelective(@Param("record") SpsChannelEnterprise record, @Param("example") SpsChannelEnterpriseExample example);
 

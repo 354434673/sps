@@ -75,26 +75,6 @@
     enterprise_company_realit_addr, enterprise_corp, enterprise_operatio_time, enterprise_employee_num, 
     channel_num
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelEnterpriseExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from sps_channel_enterprise
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from sps_channel_enterprise
-    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sps_channel_enterprise
     where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
@@ -178,12 +158,6 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelEnterpriseExample" resultType="java.lang.Integer" >
-    select count(*) from sps_channel_enterprise
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update sps_channel_enterprise
     <set >

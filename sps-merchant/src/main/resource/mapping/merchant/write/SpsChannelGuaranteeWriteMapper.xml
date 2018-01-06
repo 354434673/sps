@@ -71,31 +71,6 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
-    guarantee_id, guarantee_situation, guarantee_deposit, guarantee_corp_phone, guarantee_finance_contactName, 
-    guarantee_finance_contactPhone, guarantee_business_LeaderName, guarantee_business_LeaderPhone, 
-    guarantee_business_phone_password, channel_num
-  </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelGuaranteeExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from sps_channel_guarantee
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from sps_channel_guarantee
-    where guarantee_id = #{guaranteeId,jdbcType=INTEGER}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sps_channel_guarantee
     where guarantee_id = #{guaranteeId,jdbcType=INTEGER}
@@ -185,12 +160,6 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelGuaranteeExample" resultType="java.lang.Integer" >
-    select count(*) from sps_channel_guarantee
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update sps_channel_guarantee
     <set >
