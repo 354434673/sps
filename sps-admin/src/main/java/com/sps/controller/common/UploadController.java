@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sps.util.FinalData;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -56,9 +58,13 @@ public class UploadController {
                 code = 0;
                 resultMap.put("code", 0);
                 resultMap.put("fileName", fileName);
+                resultMap.put("state", FinalData.STATE_SUCCESS);
                /* ri.setCode(0);
                 ri.setMsg(fileName);*/
             } catch (Exception e) {
+                resultMap.put("code", 0);
+                resultMap.put("fileName", fileName);
+                resultMap.put("state", FinalData.STATE_ERROR);
                 e.printStackTrace();
             }
         }
@@ -111,6 +117,7 @@ public class UploadController {
         }
         resultMap.put("code", 0);
         resultMap.put("fileName", imgList);
+        resultMap.put("state", FinalData.STATE_SUCCESS);
         return resultMap;
     }
 
