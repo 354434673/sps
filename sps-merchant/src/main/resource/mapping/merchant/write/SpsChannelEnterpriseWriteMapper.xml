@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sps.dao.merchant.write.SpsChannelEnterpriseMapper" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelEnterpriseWriteMapper" >
   <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelEnterprise" >
     <id column="enterprise_id" property="enterpriseId" jdbcType="INTEGER" />
     <result column="enterprise_businesslicense_no" property="enterpriseBusinesslicenseNo" jdbcType="VARCHAR" />

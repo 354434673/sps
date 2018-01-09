@@ -14,10 +14,10 @@
 </style>
 </head>
 <body>
-<div class="layui-tab layui-tab-brie" style="padding:10px" >
+<div class="layui-tab layui-tab-brie" lay-filter ="tab" style="padding:10px" >
   <ul class="layui-tab-title">
-    <li class="layui-this">基本信息</li>
-    <li>图片资料</li>
+    <li lay-id="111" class="layui-this">基本信息</li>
+    <li lay-id="222">图片资料</li>
   </ul>
   <div class="layui-tab-content">
     <div class="layui-tab-item layui-show">
@@ -37,7 +37,7 @@
 		      </select>
 		    </div>
 		    <div class="layui-input-inline" >
-		      <select name="area" lay-filter="area"   id="area" lay-verify="required"> 				  
+		      <select name="area" lay-filter="area"   id="area" lay-verify=""> 				  
 		      	  <option value="">区</option>
 		      </select>
 		    </div>
@@ -45,7 +45,7 @@
 		  <div class="layui-form-item" >
 		    <label class="layui-form-label" style="width:200px">*店付业务员姓名：</label>
 		    <div class="layui-input-inline">
-		      <input id="channelSalesmanName" type="text" name="channelSalesmanName"  lay-verify="required" placeholder="请输入店付业务员姓名" autocomplete="off" class="layui-input">
+		      <input id="channelSalesmanName" type="text" name="channelSalesmanName"  lay-verify="required|IsChineseCharacter" placeholder="请输入店付业务员姓名" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*店付业务员编号：</label>
 		    <div class="layui-input-inline">
@@ -75,11 +75,11 @@
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*营业执照编号：</label>
 		    <div class="layui-input-inline">
-		      <input id="enterpriseBusinesslicenseNo" type="text" name="enterpriseBusinesslicenseNo"  lay-verify="required|IsChineseCharacter" placeholder="请输入营业执照编号" autocomplete="off" class="layui-input">
+		      <input id="enterpriseBusinesslicenseNo" type="text" name="enterpriseBusinesslicenseNo"  lay-verify="required" placeholder="请输入营业执照编号" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*公司名称：</label>
 		    <div class="layui-input-inline">
-		      <input id="enterpriseCompanyName" type="text" name="enterpriseCompanyName" lay-verify="required|phone" placeholder="请输入公司名称" autocomplete="off" class="layui-input">
+		      <input id="enterpriseCompanyName" type="text" name="enterpriseCompanyName" lay-verify="required" placeholder="请输入公司名称" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
@@ -111,7 +111,7 @@
 		      </select>
 		    </div>
 		    <div class="layui-input-inline" >
-		      <select name="realArea" lay-filter="realArea" id="realArea" lay-verify="required"> 
+		      <select name="realArea" lay-filter="realArea" id="realArea" lay-verify=""> 
 				  <option value="">区</option>
 		      </select>
 		    </div>
@@ -123,13 +123,13 @@
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*经营年限(年)：</label>
 		    <div class="layui-input-inline">
-		      <input id="enterpriseOperatioTime" type="text" name="enterpriseOperatioTime" lay-verify="required|phone" placeholder="请输入经营年限(年)" autocomplete="off" class="layui-input">
+		      <input id="enterpriseOperatioTime" type="text" name="enterpriseOperatioTime" lay-verify="required" placeholder="请输入经营年限(年)" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*员工数量(人)：</label>
 		    <div class="layui-input-inline">
-		      <input id="enterpriseEmployeeNum" type="text" name="enterpriseEmployeeNum"  lay-verify="required|IsChineseCharacter" placeholder="请输入员工数量" autocomplete="off" class="layui-input">
+		      <input id="enterpriseEmployeeNum" type="text" name="enterpriseEmployeeNum"  lay-verify="required" placeholder="请输入员工数量" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		<!-- 属性信息结束 -->
@@ -140,21 +140,21 @@
 		    <label class="layui-form-label" style="width:200px">主营业务：</label>
 		    <div class="layui-input-inline" style="width:600px" id="businessProduct">
 		      <input type="checkbox"  title="一级分类名称1" value="1" lay-filter = "businessProduct">
-		      <input type="checkbox"  title="一级分类名称2" value="2" lay-filter = "businessProduct" checked>
+		      <input type="checkbox"  title="一级分类名称2" value="2" lay-filter = "businessProduct">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">主营商品类型：</label>
 		    <div class="layui-input-inline" style="width:600px" id="businessType">
-		      <input type="checkbox" title="三级分类名称1" value="1" lay-filter = "businessType">
-		      <input type="checkbox" title="三级分类名称2" value="2" lay-filter = "businessType" checked>
+		      <input type="checkbox" title="三级分类名称1" value="1" lay-filter = "businessType" >
+		      <input type="checkbox" title="三级分类名称2" value="2" lay-filter = "businessType">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">主营品牌：</label>
 		    <div class="layui-input-inline" style="width:600px" id="businessBrand">
 		      <input type="checkbox"  title="品牌名称1" value="1" lay-filter = "businessBrand">
-		      <input type="checkbox"  title="品牌名称2" value="2" lay-filter = "businessBrand" checked>
+		      <input type="checkbox"  title="品牌名称2" value="2" lay-filter = "businessBrand">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
@@ -176,7 +176,7 @@
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*担保形式：</label>
 		    <div class="layui-input-inline">
-		     <select lay-verify="required" name="guaranteeSituation" lay-filter="guaranteeSituation" id="guaranteeSituation"> 
+		     <select lay-verify="" name="guaranteeSituation" lay-filter="guaranteeSituation" id="guaranteeSituation"> 
 				  <option value="">请选择担保形式</option>
 				  <option value="1">保证金担保</option>
 				  <option value="2">信用担保</option>
@@ -185,37 +185,37 @@
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*保证金金额：</label>
 		    <div class="layui-input-inline">
-		      <input id="guaranteeDeposit" type="text" name="guaranteeDeposit" lay-verify="required|phone" placeholder="请输入保证金金额" autocomplete="off" class="layui-input">
+		      <input id="guaranteeDeposit" type="text" name="guaranteeDeposit" lay-verify="required" placeholder="请输入保证金金额" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		 <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*法人手机号：</label>
+		    <label class="layui-form-label" style="width:200px">*法人代表手机号：</label>
 		    <div class="layui-input-inline">
-		      <input id="guaranteeCorpPhone" type="text" name="guaranteeCorpPhone"  lay-verify="required|IsChineseCharacter" placeholder="请输入法人手机号" autocomplete="off" class="layui-input">
+		      <input id="guaranteeCorpPhone" type="text" name="guaranteeCorpPhone"  lay-verify="required|phone" placeholder="请输入法人手机号" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*财务联系人姓名：</label>
 		    <div class="layui-input-inline">
-		      <input id="guaranteeFinanceContactname" type="text" name="guaranteeFinanceContactname" lay-verify="required|phone" placeholder="请输入财务联系人姓名" autocomplete="off" class="layui-input">
+		      <input id="guaranteeFinanceContactname" type="text" name="guaranteeFinanceContactname" lay-verify="required|IsChineseCharacter" placeholder="请输入财务联系人姓名" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*财务联系人手机号：</label>
 		    <div class="layui-input-inline">
-		      <input id="guaranteeFinanceContactphone" type="text" name="guaranteeFinanceContactphone"  lay-verify="required|IsChineseCharacter" placeholder="财务联系人手机号" autocomplete="off" class="layui-input">
+		      <input id="guaranteeFinanceContactphone" type="text" name="guaranteeFinanceContactphone"  lay-verify="required|phone" placeholder="财务联系人手机号" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*业务负责人姓名：</label>
 		    <div class="layui-input-inline">
-		      <input id="guaranteeBusinessLeadername" type="text" name="guaranteeBusinessLeadername" lay-verify="required|phone" placeholder="业务负责人姓名" autocomplete="off" class="layui-input">
+		      <input id="guaranteeBusinessLeadername" type="text" name="guaranteeBusinessLeadername" lay-verify="required|IsChineseCharacter" placeholder="业务负责人姓名" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*业务负责人手机号：</label>
 		    <div class="layui-input-inline">
-		      <input id="guaranteeBusinessLeaderphone" type="text" name="guaranteeBusinessLeaderphone"  lay-verify="required|IsChineseCharacter" placeholder="业务负责人手机号" autocomplete="off" class="layui-input">
+		      <input id="guaranteeBusinessLeaderphone" type="text" name="guaranteeBusinessLeaderphone"  lay-verify="required|phone" placeholder="业务负责人手机号" autocomplete="off" class="layui-input">
 		    </div>
-		    <label class="layui-form-label" style="width:200px">*服务密码：</label>
+		    <label class="layui-form-label" style="width:200px">*业务负责人手机服务密码：</label>
 		    <div class="layui-input-inline">
-		      <input id="guaranteeBusinessPhonePassword" type="text" name="guaranteeBusinessPhonePassword"  lay-verify="required|IsChineseCharacter" placeholder="服务密码" autocomplete="off" class="layui-input">
+		      <input id="guaranteeBusinessPhonePassword" type="password" name="guaranteeBusinessPhonePassword"  lay-verify="required|minLength" placeholder="服务密码" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		<!-- 担保信息结束 -->
@@ -237,7 +237,7 @@
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*上年销售额(万元)：</label>
 		    <div class="layui-input-inline">
-		      <input id="targetLastSale" type="text" name="targetLastSale"  lay-verify="required|IsChineseCharacter" placeholder="请输入上年销售额" autocomplete="off" class="layui-input">
+		      <input id="targetLastSale" type="text" name="targetLastSale"  lay-verify="required" placeholder="请输入上年销售额" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		<!-- 财务指标结束 -->
@@ -247,25 +247,25 @@
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px	">发货方式：</label>
 		    <div class="layui-input-inline" style="width:400px" id= "logisticsWay">
-		      <input type="checkbox" title="物流" lay-skin="primary" lay-filter="logisticsWay">
-		      <input type="checkbox" title="自主派送" lay-skin="primary" lay-filter="logisticsWay">
-		      <input type="checkbox" title="上门取货" lay-skin="primary" lay-filter="logisticsWay">
+		      <input type="checkbox" title="物流" value="0" lay-skin="primary" lay-filter="logisticsWay">
+		      <input type="checkbox" title="自主派送" value="1" lay-skin="primary" lay-filter="logisticsWay">
+		      <input type="checkbox" title="上门取货" value="2" lay-skin="primary" lay-filter="logisticsWay">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*合作物流名称：</label>
 		    <div class="layui-input-inline">
-		      <input id="logisticsCooperationName" type="logisticsCooperationName" name="name" lay-verify="required|IsChineseCharacter" placeholder="搜索" autocomplete="off" class="layui-input">
+		      <input id="logisticsCooperationName" type="logisticsCooperationName" name="name" lay-verify="required" placeholder="搜索" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" >*其他：</label>
 		    <div class="layui-input-inline">
-		      <input id="name" type="text" name="name" lay-verify="required|IsChineseCharacter" placeholder="其他" autocomplete="off" class="layui-input">
+		      <input id="logisticsOther" type="text" name="logisticsOther" lay-verify="required" placeholder="其他" autocomplete="off" class="layui-input">
 		    </div>
 		   </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*年物流总费用(万元)：</label>
 		    <div class="layui-input-inline">
-		      <input id="logisticsAllCost" type="text" name="logisticsAllCost" lay-verify="required|IsChineseCharacter" placeholder="请输入年物流总费用" autocomplete="off" class="layui-input">
+		      <input id="logisticsAllCost" type="text" name="logisticsAllCost" lay-verify="required" placeholder="请输入年物流总费用" autocomplete="off" class="layui-input">
 		    </div>
 		   </div>
 		<!-- 物流配送结束 -->
@@ -275,66 +275,159 @@
 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*管理员账号：</label>
 		    <div class="layui-input-inline">
-		      <input id="adminNum" type="text" name="adminNum" lay-verify="required|IsChineseCharacter" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
+		      <input id="adminNum" type="text" name="adminNum" lay-verify="required|IsSpecial" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
 		    </div>
-		    <div class="layui-form-mid layui-word-aux">**@*******</div>
+		    <div class="layui-form-mid layui-word-aux"> lili@juzifenqi</div>
 		</div>
 		<div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*账户起始日期：</label>
+		    <label class="layui-form-label" style="width:200px">*签约开始日期：</label>
 		    <div class="layui-input-inline">
-			 <input type="text" class="layui-input" id="startTime" placeholder="年-月-日">	    
+			 <input type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required" >	    
 			 </div>
 		</div>
 		<div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*账户到期日期：</label>
+		    <label class="layui-form-label" style="width:200px">*签约结束日期：</label>
 		    <div class="layui-input-inline">
-			 <input type="text" class="layui-input" id="endTime" placeholder="年-月-日">		    
+			 <input type="text" class="layui-input" id="endTime" placeholder="年-月-日" lay-verify="required" >		    
 			 </div>
 		</div>
 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px	">适用产品：</label>
 		    <div class="layui-input-inline" style="width:300px">
-		      <input type="checkbox" name="like[write]" title="7天包息" lay-skin="primary">
-		      <input type="checkbox" name="like[read]" title="7天不包息" checked lay-skin="primary">
+		      <input type="checkbox" title="7天包息" value="0" lay-skin="primary" lay-filter="openApplyProduct">
+		      <input type="checkbox" title="7天不包息" value="1" lay-skin="primary" lay-filter="openApplyProduct">
 		    </div>
 		  </div>
 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*代销手续费率（%）：</label>
 		    <div class="layui-input-inline">
-		      <input id="sell" type="text" name="sell" lay-verify="required|IsChineseCharacter" placeholder="请输入" autocomplete="off" class="layui-input">
+		      <input id="sell" type="text" name="sell" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
 		    </div>
 		</div>
 		<!-- 开户信息结束 -->
 		 	<div class="layui-form-item" align="center" id="btn" >
 				<button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">返回</button>
-				<button class="layui-btn layui-btn-primary" lay-filter="submitAddChanel" lay-submit >保存</button>
-				<button class="layui-btn layui-btn-primary" id="submit">提交</button>
+				<button class="layui-btn layui-btn-primary" lay-filter="submitAddChanel" lay-submit >保存并进入下一步</button>
+				<button class="layui-btn layui-btn-primary" id="next" >下一步</button>
 			</div>
 	</div>
     </div>
     <div class="layui-tab-item">
-    
+   			<div align="center">
+   				<div class="layui-row layui-col-space10">
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="test1" style="width: 250px">
+						  <p>*营业执照</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="test2" style="width: 250px">
+						  <p>*近12个月的对公流水或法人名下流水</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="test10" style="width: 250px">
+						  <p>*法人身份证正面</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+				</div>
+   				<div class="layui-row layui-col-space10">
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="test10" style="width: 250px">
+						  <p>*法人身份证反面</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="test10" style="width: 250px">
+						  <p>*业务负责人身份证正面</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="test10" style="width: 250px">
+						  <p>业务负责人身份证反面</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+				</div>
+   				<div class="layui-row layui-col-space10">
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="test10" style="width: 250px">
+						  <p>*公司全景照</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="test10" style="width: 250px">
+						  <p>*公司大门照</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="test10" style="width: 250px">
+						  <p>*核心商户合作合同（必须加盖公司公章）</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+				</div>
+   				<div class="layui-row layui-col-space10">
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="test10" style="width: 250px">
+						  <p>*签约合影照片</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="test10" style="width: 250px">
+						  <p>*经营地租赁协议</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 按钮 -->
+    		 <div class="layui-form-item" align="center" id="btn" style="padding-top: 10px" >
+				<button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">返回</button>
+				<button class="layui-btn layui-btn-primary" lay-filter="" lay-submit >保存</button>
+				<button class="layui-btn layui-btn-primary" lay-filter="" id="test">提交</button>
+			</div>
     </div>
   </div>
 <script type="text/javascript"
 		src="/sps-admin/page/layui/layui.js"></script>
 <script type="text/html" id="bar">
-  <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
 </script>
 <script type="text/javascript">
-	layui.use(['form','table','laydate','flow','element'], function(){
+	layui.use(['form','table','laydate','flow','element','upload'], function(){
 	  var element = layui.element;
 	  var form = layui.form;
 	  var $ = layui.jquery;
 	  var table = layui.table;
 	  var laydate = layui.laydate;
 	  var flow = layui.flow;
+	  var upload = layui.upload;
 	  var businessProductArray = [];//主营业务数组
 	  var businessTypeArray = [];//主营商品类型数组
 	  var businessBrandArray = [];//主营品牌数组
 	  var logisticsWay = [];//发货方式
+	  var openApplyProduct = [];//适用产品
 	  getProvince(100000)//先加载省
 	  form.render(); 
 	  //选择城市
@@ -368,10 +461,8 @@
 	  laydate.render({
 		    elem: '#endTime'
 		  });
-	  
-	  
 	  form.on('checkbox(businessProduct)', function(data){
-		  if(data.elem.checked){
+ 		  if(data.elem.checked){
 			  businessProductArray.push(data.value)
 		  }else{
 			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
@@ -381,9 +472,9 @@
 					break;
 				}
 			}
-		  }
+		  } 
 		}); 	
-	  form.on('checkbox(businessTypeArray)', function(data){
+	  form.on('checkbox(businessType)', function(data){
 		  if(data.elem.checked){
 			  businessTypeArray.push(data.value)
 		  }else{
@@ -398,55 +489,70 @@
 		}); 	
 	  form.on('checkbox(businessBrand)', function(data){
 		  if(data.elem.checked){
-		  	array.push(data.value)
-		  }else{
-			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
-			for(var i=0; i<array.length; i++) {
-				if(array[i] == data.value){
-					array.splice(i, 1);
-					break;
-				}
-			}
-		  }
-		}); 	
-	  form.on('checkbox(logisticsWay)', function(data){
-		  if(data.elem.checked){
 			  businessBrandArray.push(data.value)
 		  }else{
 			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
 			for(var i=0; i<businessBrandArray.length; i++) {
-				if(businessBrandArray[i] == data.value){
+				if(array[i] == data.value){
 					businessBrandArray.splice(i, 1);
 					break;
 				}
 			}
 		  }
 		}); 	
-	  $('#submit').on('click',function(){
-		  console.log($('#startTime').val());
+	  form.on('checkbox(logisticsWay)', function(data){
+		  console.log(data.value)
+		  if(data.elem.checked){
+			  logisticsWay.push(data.value)
+		  }else{
+			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
+			for(var i=0; i<logisticsWay.length; i++) {
+				if(logisticsWay[i] == data.value){
+					logisticsWay.splice(i, 1);
+					break;
+				}
+			}
+		  }
+		}); 	
+	  form.on('checkbox(openApplyProduct)', function(data){
+		  console.log(data.value)
+		  if(data.elem.checked){
+			  openApplyProduct.push(data.value)
+		  }else{
+			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
+			for(var i=0; i<openApplyProduct.length; i++) {
+				if(openApplyProduct[i] == data.value){
+					openApplyProduct.splice(i, 1);
+					break;
+				}
+			}
+		  }
+		}); 	
+	  $('#next').on('click',function(){
+		  element.tabChange('tab','222')
 
 	  })
 	  //收款信息
 	  table.render({
 		    elem: '#userList'
-		    ,url: '/sps-admin/user/userList.html' //数据接口
+		    ,url: '/sps-admin/merchant/getGatherList.html' //数据接口
 		    ,id:'userId'
 		    ,page:true
 		    ,limit:5
 		    ,limits:[5,10,15]
 		    ,cols: [[ //表头
-		      {field: 'userId', title: '序号', align:'center'}
-		      ,{field: 'userUsername', title: '收款账号', align:'center'}
-		      ,{field: 'userName', title: '所有人姓名',align:'center'}
-		      ,{field: 'userPhone', title: '身份证号', width:230, align:'center'}
-		      ,{field: 'userEmail', title: '绑定手机号码', width:130,align:'center'} 
-		      ,{field: '1', title: '开户银行', width:170,align:'center'} 
-		      ,{field: '2', title: '开户行分行', width:170,align:'center'} 
-		      ,{field: '3', title: '开户行支行', width:170,align:'center'} 
-		      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
+		      {field: 'gatherId', title: '序号', align:'center'}
+		      ,{field: 'gatherBankId', title: '收款银行卡账号', align:'center'}
+		      ,{field: 'gatherOwnerName', title: '所有人姓名',align:'center'}
+		      ,{field: 'gatherIdcard', title: '身份证号', width:230, align:'center'}
+		      ,{field: 'gatherPhone', title: '银行卡绑定手机号码', width:130,align:'center'} 
+		      ,{field: 'gatherDepositBank', title: '开户银行', width:170,align:'center'} 
+		      ,{field: 'gatherBankBranch', title: '开户行分行', width:170,align:'center'} 
+		      ,{field: 'gatherBankSubbranch', title: '开户行支行', width:170,align:'center'} 
+		      ,{field: 'tool', title: '操作', width:200,align:'center',toolbar:'#bar'}
 		    ]]
 		  });
-	  form.on('submit(submitAddChanel)', function(data){
+ 	  form.on('submit(submitAddChanel)', function(data){
 		  	  /*
 		  	   	渠道属性
 		  	  */
@@ -454,18 +560,13 @@
 			  var address = $('#province').find("option:selected").text()+
 			 				 $('#city').find("option:selected").text()+
 			 				 $('#area').find("option:selected").text();
-		  	  console.log('地址'+address)
 		  	  var channelSalesmanName = $('#channelSalesmanName').val();//店付业务员姓名
 		  	  var channelSalesmanNum = $('#channelSalesmanNum').val();//店付业务员编号
-		  	 console.log('店付业务员姓名'+channelSalesmanName)
-		  	  console.log('店付业务员编号'+channelSalesmanNum)
 		  	  /*
 		  	   	企业基本信息
 		  	  */
 			  var enterpriseBusinesslicenseNo = $('#enterpriseBusinesslicenseNo').val();//营业执照编号
 			  var enterpriseCompanyName = $('#enterpriseCompanyName').val();//公司名称
-			  console.log('营业执照编号'+enterpriseBusinesslicenseNo)
-			   console.log('公司名称'+enterpriseCompanyName)
 			  //公司注册地址
 			  var registerAddress = $('#registerProvince').find("option:selected").text()+
 			 				 $('#registerCity').find("option:selected").text()+
@@ -477,16 +578,10 @@
 			  var enterpriseCorp = $('#enterpriseCorp').val();//法人名称
 			  var enterpriseOperatioTime = $('#enterpriseOperatioTime').val();//经营年限(年)
 			  var enterpriseEmployeeNum = $('#enterpriseEmployeeNum').val();//员工数量(人)
-			  console.log('/公司注册地址'+registerAddress)
-			   console.log('公司实际地址号'+realAddress)
-			    console.log('法人名称'+enterpriseCorp)
-			     console.log('经营年限(年)'+enterpriseOperatioTime)
-			      console.log('员工数量(人)'+enterpriseEmployeeNum)
 		  	  /*
 		  	   	业务信息
 		  	  */
 			  businessScope = $('#businessScope').find("option:selected").text();//业务覆盖地域范围
-			  console.log('业务覆盖地域范围'+businessScope)
 		  	  /*
 		  	   	担保信息
 		  	  */
@@ -498,14 +593,6 @@
 			  var guaranteeBusinessLeadername = $('#guaranteeBusinessLeadername').val();//业务负责人姓名
 			  var guaranteeBusinessLeaderphone = $('#guaranteeBusinessLeaderphone').val();//业务负责人手机
 			  var guaranteeBusinessPhonePassword = $('#guaranteeBusinessPhonePassword').val();//服务密码
-			  console.log('担保形式'+guaranteeSituation)
-			  console.log('保证金金额'+guaranteeDeposit)
-			  console.log('法人手机'+guaranteeCorpPhone)
-			  console.log('财务联系人姓名'+guaranteeFinanceContactname)
-			  console.log('财务联系人手机号'+guaranteeFinanceContactphone)
-			  console.log('业务负责人姓名'+guaranteeBusinessLeadername)
-			  console.log('业务负责人手机'+guaranteeBusinessLeaderphone)
-			  console.log('服务密码'+guaranteeBusinessPhonePassword)
 			  /*
 		  	   	收款账号:窗口添加
 		  	  */
@@ -514,48 +601,76 @@
 		  	   	财务指标
 		  	  */
 		  	  var targetLastSale = $('#targetLastSale').val();//保证金金额
-		  	console.log('保证金金额'+targetLastSale)
 		  	  /*
 		  	   	物流配送
 		  	  */
 		  	  var logisticsCooperationName = $('#logisticsCooperationName').val();//合作物流：
+		  	  var logisticsOther = $('#logisticsOther').val();//其他：
 		  	  var logisticsAllCost = $('#logisticsAllCost').val();//年物流总费用(万元)：
-		  	console.log('合作物流'+logisticsCooperationName)
-		  	console.log('/年物流总费用(万元)'+logisticsAllCost)
 		  	  /*
 		  	   	开户信息
 		  	  */
-			  var adminNum = $('#adminNum').val();//管理员账号
-			  var startTime = $('#startTime').val();//起始时间
-			  var endTime = $('#endTime').val();//结束时间
-			  //var adminNum = $('#adminNum').val();
-			  //var adminNum = $('#adminNum').val();
-			  console.log('管理员账号'+adminNum)
-			  console.log('起始时间'+startTime)
-			  console.log('结束时间'+endTime)
+			  var openAdminNum = $('#adminNum').val();//管理员账号
+			  var openStartTime = $('#startTime').val();//起始时间
+			  var openEndTime = $('#endTime').val();//结束时间
+			  var openSellRate = $('#sell').val();//费率
 			  
-/* 	 		 if(array.length != 0){
-		 		 $.post({
-		 			 url:'<%=path%>/user/insertUser.html',
-		 			 dataType:'json',
-		 			 data:{username:username, password:password, 
-		 				 name:name,phone:phone, email:email,
-		 				 mark:0,roleList:array
-		 			 },
-		 			 success:function(data){
-		 				 if(data.state == 'success'){
-		 					layer.msg(data.msg,{icon: 1});
-		 				 }else if(data.state == 'exist'){
-		 					layer.msg(data.msg,{icon: 2});
-		 				 }else if(data.state == 'error'){
-		 					layer.msg(data.msg,{icon: 2});
-		 				 }
-		 			 
-		 		 })
-	 		 }else{
-	 			layer.msg('请选择该用户权限',{icon: 2});
-	 		 } */
-	  })
+ 			  $.post({
+				  url:'/sps-admin/merchant/insertChannel',
+				  dataType:'json',
+				  data:{
+					  	//渠道信息
+ 		 				channelCity:address,
+		 				channelSalesmanName:channelSalesmanName,
+		 				channelSalesmanNum:channelSalesmanNum,
+		 				//企业信息
+  		 				enterpriseBusinesslicenseNo:enterpriseBusinesslicenseNo,
+		 				enterpriseCompanyName:enterpriseCompanyName,
+		 				enterpriseCompanyRegisterAddr:registerAddress,
+		 				enterpriseCompanyRealitAddr:realAddress,
+		 				enterpriseCorp:enterpriseCorp,
+		 				enterpriseOperatioTime:enterpriseOperatioTime,
+		 				enterpriseEmployeeNum:enterpriseEmployeeNum,
+		 				//业务信息
+		 				businessProduct:businessProductArray.toString(),
+		 				businessType:businessTypeArray.toString(),
+		 				businessBrand:businessBrandArray.toString(),
+		 				businessScope:businessScope,
+		 				//担保信息
+		 				guaranteeSituation:guaranteeSituation,
+		 				guaranteeDeposit:guaranteeDeposit,
+		 				guaranteeCorpPhone:guaranteeCorpPhone,
+		 				guaranteeFinanceContactname:guaranteeFinanceContactname,
+		 				guaranteeFinanceContactphone:guaranteeFinanceContactphone,
+		 				guaranteeBusinessLeadername:guaranteeBusinessLeadername,
+		 				guaranteeBusinessLeaderphone:guaranteeBusinessLeaderphone,
+		 				guaranteeBusinessPhonePassword:guaranteeBusinessPhonePassword,
+		 				//财务指标
+		 				targetLastSale:targetLastSale,
+		 				//物流配送
+		 				logisticsWay:logisticsWay.toString(),
+		 				logisticsCooperationName:logisticsCooperationName,
+		 				logisticsAllCost:logisticsAllCost,
+		 				logisticsOther:logisticsOther, 
+		 				//开户
+		 				openAdminNum:openAdminNum,
+		 				openStartTime:openStartTime,
+		 				openEndTime:openEndTime,
+		 				openApplyProduct:openApplyProduct.toString(),
+		 				openSellRate:openSellRate
+				  },
+				  success:function(result){
+					  if(result.state == 'success'){
+						  layer.msg(result.msg,{icon: result.icon});
+					  }else if(result.state == 'error'){
+						  layer.msg(result.msg,{icon: result.icon});
+					  }
+				  },
+				  error:function(){
+					  layer.msg('网络错误',{icon: 2});
+				  }
+			  }) 
+	  }) 
 /* 	  $.post({//获取角色列表
 		  url:'<%=path %>/role/roleList.html',
 		  dataType:'json',
@@ -587,13 +702,19 @@
 				if(value != repass) {
 					return '两次输入的密码不一致!';
 				}
+			},			
+			IsSpecial: function(value) {
+				var regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])/ ;
+				if(!value.match(regex)) {
+					return '请输入正确的姓名';
+				}
 			},
 	  });  
 	  $('#addBank').on('click', function() {
 		  layer.open({
 			  type: 2, 
-			  area: ['70%', '80%'],//宽高
-			  content: 'addGather.html' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+			  area: ['75%', '70%'],//宽高
+			  content: ['addGather.html'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 			  cancel: function(index, layero){ 
 				  table.reload('userId', {
 					});
@@ -651,6 +772,45 @@
 	 			 }
 	 		 })
 		}
+ 		 /*
+ 		 图片上传
+ 		 */
+ 		  upload.render({
+ 			    elem: '#test1' //绑定元素
+ 			    ,accept:'images'
+ 			    ,multiple:true//多文件上传
+ 			    ,auto:false
+ 			    ,bindAction:'#test'
+ 			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
+ 			    ,done: function(res){
+ 			    	if(res.state == 'success'){
+	 			    	layer.msg('图片上传成功',{icon: 1});
+ 			    	}else if(res.state == 'error'){
+ 			    		layer.msg('图片失败',{icon: 2});
+ 			    	}
+ 			    }
+ 			    ,error: function(){
+ 			    	layer.msg('图片失败',{icon: 2});
+ 			    }
+ 			  });
+ 		  upload.render({
+ 			    elem: '#test2' //绑定元素
+ 			    ,accept:'images'
+ 			    ,multiple:true//多文件上传
+ 			    ,auto:false
+ 			    ,bindAction:'#test'
+ 			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
+ 			    ,done: function(res){
+ 			    	if(res.state == 'success'){
+	 			    	layer.msg('图片上传成功',{icon: 1});
+ 			    	}else if(res.state == 'error'){
+ 			    		layer.msg('图片失败',{icon: 2});
+ 			    	}
+ 			    }
+ 			    ,error: function(){
+ 			    	layer.msg('图片失败',{icon: 2});
+ 			    }
+ 			  });
 	});
 </script>
 </body>

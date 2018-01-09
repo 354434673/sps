@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sps.dao.merchant.write.SpsChannelAccountMapper" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelAccountWriteMapper" >
   <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelAccount" >
     <id column="account_id" property="accountId" jdbcType="INTEGER" />
     <result column="account_credit_line" property="accountCreditLine" jdbcType="DECIMAL" />

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sps.dao.merchant.write.SpsChannelGatherMapper" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelGatherWriteMapper" >
   <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelGather" >
     <id column="gather_id" property="gatherId" jdbcType="INTEGER" />
     <result column="gather_bank_id" property="gatherBankId" jdbcType="VARCHAR" />
@@ -94,7 +94,8 @@
       #{gatherBankBranch,jdbcType=VARCHAR}, #{gatherBankSubbranch,jdbcType=VARCHAR}, 
       #{channelNum,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelGather" >
+  <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelGather" 
+  							useGeneratedKeys="true" keyProperty="gatherId">
     insert into sps_channel_gather
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="gatherId != null" >
