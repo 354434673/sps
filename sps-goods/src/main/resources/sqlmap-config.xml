@@ -16,11 +16,15 @@
 	<typeAliases>
 		<typeAlias alias="SpsGoodCategory" type="org.sps.entity.goods.SpsGoodCategory" />
 		<typeAlias alias="SpsBrand" type="org.sps.entity.goods.SpsBrand" />
+		<typeAlias alias="SpsGoods" type="org.sps.entity.goods.SpsGoods" />
+		<typeAlias alias="SpsGoodSku" type="org.sps.entity.goods.SpsGoodSku" />
 
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mapping/goods/SpsBrandMapper.xml" />
 		<mapper resource="mapping/goods/SpsGoodCategoryMapper.xml" />
+		<mapper resource="mapping/goods/SpsGoodsMapper.xml" />
+		<mapper resource="mapping/goods/SpsGoodSkuMapper.xml" />
 	</mappers>
 </configuration>

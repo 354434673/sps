@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@Service(timeout = 1200000)
 public class BrandServiceImpl implements BrandService {
     @Resource
     private SpsBrandMapper spsBrandMapper;

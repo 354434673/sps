@@ -16,59 +16,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="<%=request.getContextPath() %>/page/static/treeTable/css/layui.css" media="all"/>
+    <link rel="stylesheet"
+          href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all" />
 </head>
 <body>
 <div style="padding: 40px">
     <h3>品牌信息</h3>
     <hr>
     <div class="layui-form layui-form-pane">
-        <input type="hidden" name="categoryParentName" id="categoryParentName" value="${categoryParentName}">
-        <input type="hidden" name="categoryId" id="brandId" value="${spsBrand.brandId}">
+        <input type="hidden" name="categoryId" id="brandId" >
         <div class="layui-form-item ">
             <label class="layui-form-label">*品牌名称：</label>
             <div class="layui-input-inline">
-                <input id="brandName" type="text" name="brandName" lay-verify="required" placeholder="请输入品牌名称"
-                       autocomplete="off" class="layui-input" value="${spsBrand.brandName}">
+                <input id="brandName" type="text" name="brandName"  lay-verify="required" placeholder="请输入品牌名称"
+                       autocomplete="off" class="layui-input" >
             </div>
             <label class="layui-form-label">*英文名称：</label>
             <div class="layui-input-inline">
                 <input id="brandEnglishName" name="brandEnglishName" type="text" lay-verify="required"
                        placeholder="请输入英文名称" autocomplete="off" class="layui-input"
-                       value="${spsBrand.brandEnglishName}">
+                       >
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*简称：</label>
             <div class="layui-input-inline">
                 <input id="brandAbbreviation" name="brandAbbreviation" type="text" lay-verify="required"
-                       placeholder="请输入简称" autocomplete="off" class="layui-input"
-                       value="${spsBrand.brandAbbreviation}">
+                       placeholder="请输入简称" autocomplete="off" class="layui-input">
             </div>
             <label class="layui-form-label">*关联分类：</label>
             <div class="layui-input-inline">
-                <input type="hidden" id="brandCategoryIds" name="categoryParentId"
-                       autocomplete="off" class="layui-input"
-                       value="${spsBrand.brandCategoryIds}">
-                <input type="hidden" id="brandCategoryNames" name="brandCategoryNames"
-                       autocomplete="off" class="layui-input"
-                       value="${spsBrand.brandCategoryNames}">
+                <input type="hidden" id="brandCategoryIds" name="categoryParentId"  lay-verify="required"
+                       autocomplete="off" class="layui-input">
+                <input type="hidden" id="brandCategoryNames" name="brandCategoryNames" lay-verify="required"
+                       autocomplete="off" class="layui-input">
                 <button class="layui-btn layui-btn-primary" id="showCategory">
-                    <c:choose>
-                        <c:when test="${spsBrand.brandCategoryNames eq ''}">
-                            选择分类
-                        </c:when>
-                        <c:when test="${spsBrand.brandCategoryNames!= ''}">
-                            ${spsBrand.brandCategoryNames}
-                        </c:when>
-                    </c:choose>
                 </button>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*小图标：</label>
             <div class="layui-input-inline">
-                <input type="text" id="brandSmallUrl" name="brandSmallUrl" value="${spsBrand.brandSmallUrl}"
+                <input type="text" id="brandSmallUrl" name="brandSmallUrl"
                        placeholder="图片" class="layui-input"/>
                 <button onclick="checkImgType()">上传图片</button>
             </div>
@@ -76,39 +65,43 @@
         <div class="layui-form-item">
             <label class="layui-form-label">*大图标：</label>
             <div class="layui-input-inline">
-                <input type="text" id="brandBigUrl" name="brandBigUrl" value="${spsBrand.brandBigUrl}" placeholder="图片"
+                <input type="text" id="brandBigUrl" name="brandBigUrl"  placeholder="图片"
                        class="layui-input"/>
-                <button onclick="checkImgType()">上传图片</button>
+                <button onclick="checkImgType1()">上传图片</button>
             </div>
         </div>
-    </div>
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">品牌描述</label>
-        <div class="layui-input-block">
-            <textarea placeholder="请输入内容" id="brandDes" class="layui-textarea">${spsBrand.brandDes}</textarea>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">品牌描述</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入内容" id="brandDes" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" align="center">
+            <button class="layui-btn" lay-filter="submitCategory" lay-submit  id="submit">立即提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
-    <div class="layui-form-item" align="center">
-        <button class="layui-btn" lay-filter="submitCategory" lay-submit lay-filter="demo1" id="submit">立即提交
-        </button>
-        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-    </div>
-
 </div>
 <div id="tree"></div>
 </div>
 <form id="upload" enctype="multipart/form-data">
     <input type="file" id='imgupl' name="file" style="display:none" onchange="validateFile()"/>
 </form>
-<script src="<%=request.getContextPath() %>/page/static/js/jquery-1.10.2.min.js"></script>
+<form id="upload1" enctype="multipart/form-data">
+    <input type="file" id='imgup' name="file" style="display:none" onchange="validateFile1()"/>
+</form>
+<script src="<%=path%>/page/static/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript"
-        src="<%=request.getContextPath() %>/page/static/treeTable/layui.all.js"></script>
-<script src="<%=request.getContextPath() %>/page/static/treeTable/layui.js"></script>
-
+        src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
+<script src="<%=path%>/page/static/treeTable/layui.js"></script>
 <script type="text/javascript">
     $(function () {
         $(".import").on("click", function () {
             $('#imgupl').click();
+        });
+        $(".import").on("click", function () {
+            $('#imgup').click();
         });
         initTree();
         $("#tree").hide();
@@ -125,6 +118,10 @@
     // 图片截取
     function checkImgType() {
         $("#imgupl").click();
+    }
+    // 图片截取
+    function checkImgType1() {
+        $("#imgup").click();
     }
 
     // 验证图片格式及上传
@@ -143,7 +140,7 @@
                 processData: false,    //不可缺
                 success: function (res) {
                     if (res.code == 0) {
-                        $("#categoryUrl").val(res.fileName);
+                        $("#brandSmallUrl").val(res.fileName);
                         // $("#imgShow").attr('src',data.data.avatar);
                     } else {
                         layer.msg('上传失败');
@@ -152,7 +149,35 @@
             });
         } else {
             $.layer.confirm('提示', '文件格式必须是‘jpg，jpeg，png’');
-            $('#categoryUrl').val('');
+            $('#brandSmallUrl').val('');
+        }
+    }
+    // 验证图片格式及上传
+    function validateFile1() {
+        var filename = $('#imgup').val();
+        var f = filename.split(".");
+        if (f.length == 2 && (f[1] == 'jpg' || f[1] == 'jpeg' || f[1] == 'png')) {
+            var formData = new FormData($('#upload')[0]);
+            $.ajax({
+                url: '/sps-admin/common/file/upload',
+                type: 'POST',
+                dataType: 'json',
+                data: formData,
+                cache: false,
+                contentType: false,    //不可缺
+                processData: false,    //不可缺
+                success: function (res) {
+                    if (res.code == 0) {
+                        $("#brandBigUrl").val(res.fileName);
+                        // $("#imgShow").attr('src',data.data.avatar);
+                    } else {
+                        layer.msg('上传失败');
+                    }
+                }
+            });
+        } else {
+            $.layer.confirm('提示', '文件格式必须是‘jpg，jpeg，png’');
+            $('#brandBigUrl').val('');
         }
     }
 
@@ -279,7 +304,7 @@
                         if (result.flag == '1') {
                             layer.msg("操作成功");
                             setTimeout(function () {
-                                window.location.href = "/sps-admin/brand";
+                                window.location.href = "/sps-admin//page/main/brand/index.jsp";
                             }, 1000);
                         } else {
                             post_flag = false; //在提交成功之后将标志标记为可提交状态

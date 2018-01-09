@@ -10,7 +10,7 @@ import org.sps.service.goods.GoodCategoryService;
 import javax.annotation.Resource;
 import java.util.*;
 
-@Service
+@Service(timeout = 1200000)
 public class GoodCategoryServiceImpl  implements GoodCategoryService {
     @Resource
     private SpsGoodCategoryMapper spsGoodCategoryMapper;

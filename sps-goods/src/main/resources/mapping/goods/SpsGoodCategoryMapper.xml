@@ -171,6 +171,8 @@
     <if test="isFirst == 0">
       and category_parent_id = 0
     </if>
+    AND category_delete_flag = 0
+    order by category_weight desc
   </select>
   <!-- 封装成特点json格式 -->
  <!-- <resultMap type="SpsGoodCategory" id="CategoryList">

@@ -100,9 +100,24 @@
             var data = obj.data;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
-            console.log(data)
+           /* console.log(data)*/
             if(layEvent === 'detail'){ //查看
-                window.location.href="/sps-admin/brand/findEntity?id="+data.brandId;
+               // window.location.href="/sps-admin/brand/findEntity?id="+data.brandId;
+                layer.open({
+                    type: 2,
+                    area: ['100%', '100%'],//宽高
+                    content: '<%=path%>/page/main/brand/detail.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                    success: function(layero, index){
+                        var body = layer.getChildFrame('body', index);
+                        body.find('input').attr({"disabled":"disabled"});
+                        body.find('#brandId').val(data.brandId)
+                        body.find('#brandName').val(data.brandName)
+                        body.find('#brandEnglishName').val(data.brandEnglishName)
+                        body.find('#brandAbbreviation').val(data.brandAbbreviation)
+                        body.find('#brandCategoryNames').val(data.brandCategoryNames)
+                        body.find('#brandDes').val(data.brandDes)
+                    }
+                });
             } else if(layEvent === 'del'){ //删除
                 layer.confirm('真的删除行么', function(index){
                     obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
@@ -124,7 +139,25 @@
                     //向服务端发送删除指令
                 });
             } else if(layEvent === 'edit'){ //编辑
-                window.location.href="/sps-admin/brand/toAddOrEdit?id="+data.brandId;
+                //window.location.href="/sps-admin/brand/toAddOrEdit?id="+data.brandId;
+                layer.open({
+                    type: 2,
+                    area: ['100%', '100%'],//宽高
+                    content: '<%=path%>/page/main/brand/addBrand.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                    success: function(layero, index){
+                        var body = layer.getChildFrame('body', index);
+                        //body.find('input').attr({"disabled":"disabled"});
+                        body.find('#brandId').val(data.brandId)
+                        body.find('#brandCategoryIds').val(data.brandCategoryIds)
+                        body.find('#brandName').val(data.brandName)
+                        body.find('#brandSmallUrl').val(data.brandSmallUrl)
+                        body.find('#brandBigUrl').val(data.brandBigUrl)
+                        body.find('#brandEnglishName').val(data.brandEnglishName)
+                        body.find('#brandAbbreviation').val(data.brandAbbreviation)
+                        body.find('button').eq(0).html(data.brandCategoryNames)
+                        body.find('#brandDes').val(data.brandDes)
+                    }
+                });
             }
         });
     });

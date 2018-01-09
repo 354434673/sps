@@ -67,7 +67,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">*图片：</label>
             <div class="layui-input-inline">
-                <input type="text" id="categoryUrl" name="categoryUrl" value="${spsGoodCategory.categoryUrl}"
+                <input type="text" id="categoryUrl"  lay-verify="required" name="categoryUrl" value="${spsGoodCategory.categoryUrl}"
                        placeholder="图片" class="layui-input"/>
                 <button onclick="checkImgType()">上传图片</button>
                 <%--  <input id="categoryUrl" type="hidden" name="categoryUrl"
@@ -78,12 +78,13 @@
                       <p id="demoText"></p>--%>
             </div>
         </div>
+        <div class="layui-form-item" align="center">
+            <button class="layui-btn" lay-filter="submitCategory" lay-submit lay-filter="demo1" id="submit">立即提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
     </div>
-    <div class="layui-form-item" align="center">
-        <button class="layui-btn" lay-filter="submitCategory" lay-submit lay-filter="demo1" id="submit">立即提交
-        </button>
-        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-    </div>
+
 </div>
 <div id="tree"></div>
 </div>
