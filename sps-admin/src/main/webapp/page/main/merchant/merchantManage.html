@@ -17,24 +17,24 @@
 	<div style="margin: 15px;">
 		<div class="layui-form layui-form-pane"  >
 		    <div class="layui-form-item">
-			    <label class="layui-form-label" style="width: 200px">核心商户账户:</label>
+			    <label class="layui-form-label" style="width: 200px">核心商户编号:</label>
 			    <div class="layui-input-inline">
-			      <input id="queryUsername" type="text" name="username"  lay-verify="" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+			      <input id="channelNum" type="text" name="username"  lay-verify="" placeholder="请输入用户名" autocomplete="off" class="layui-input">
 			    </div>
 			    <label class="layui-form-label" style="width: 200px" >核心商户名称:</label>
 			    <div class="layui-input-inline">
 			      <input id="queryName" type="text" name="name"  lay-verify="" placeholder="请输入姓名" autocomplete="off" class="layui-input">
 			    </div>
-			    	<button class="layui-btn layui-btn-primary" id="queryUser">查询</button>
-			    	<button class="layui-btn layui-btn-primary" id="resetUser">重置</button>
+			    	<button class="layui-btn layui-btn-primary" id="queryChannelNum">查询</button>
+			    	<button class="layui-btn layui-btn-primary" id="reset">重置</button>
 	        </div>  
 		    <div class="layui-form-item">
 			    <label class="layui-form-label" style="width: 200px">核心商户状态:</label>
-			    <div class="layui-input-inline">
-			    <select > 
-				  <option value="1">未激活</option>
-				  <option value="2">正常</option>
-				  <option value="3">冻结</option>
+			    <div class="layui-input-inline" >
+			    <select lay-filter="channelState"> 
+				  <option value="0">未激活</option>
+				  <option value="1">正常</option>
+				  <option value="2">冻结</option>
 		      </select>
 			    </div>
 	        </div>  
@@ -47,7 +47,7 @@
 
 			</blockquote>
 		</div>
-		<table id="userList" lay-filter="userTables"></table>
+		<table id="channelList" lay-filter="channelTables"></table>
 	</div>
 <script type="text/javascript"
 		src="/sps-admin//page/static/plugins/layui/layui.all.js"></script>
@@ -59,10 +59,15 @@
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
 </script>
 <!-- 进行数据渲染 -->
-<script type="text/html" id="roleTpl">
-  {{#  layui.each(d.role, function(index, item){ }}
-    {{item.roleName}},
-  {{#  }); }}
+<script type="text/html" id="channelTpl">
+  {{}}
+  {{#  if(d.channel.channelState == 0){ }}
+    	未激活
+  {{#  } else if(d.channel.channelState == 1){ }}
+    	正常
+  {{#  } else if(d.channel.channelState == 2){ }}
+    	冻结
+  {{#  } }}
 </script>
 	<script>
 	layui.use(['table','layer','form'], function(){
@@ -74,32 +79,36 @@
 				  location.href = '../../main/merchant/addMerchant.html'
 			  });
 			  table.render({
-			    elem: '#userList'
-			    ,url: '/sps-admin/user/userList.html' //数据接口
-			    ,id:'userId'
+			    elem: '#channelList'
+			    ,url: '/sps-admin/merchant/getChannelList.html' //数据接口
+			    ,id:'enterpriseId'
 			    ,page:true
 			    ,cols: [[ //表头
-			      {field: 'userId', title: '序号', align:'center'}
-			      ,{field: 'userUsername', title: '核心账户账户',width:240,align:'center'}
-			      ,{field: 'userName', title: '公司名称',width:240,align:'center'}
-			      ,{field: 'userPhone', title: '营业执照编号', width:230, align:'center'}
-			      ,{field: 'userEmail', title: '核心商户状态', width:230,align:'center'} 
+			      {field: 'enterpriseId', title: '序号', align:'center'}
+			      ,{field: 'channelNum', title: '核心账户编号',width:240,align:'center'}
+			      ,{field: 'enterpriseCompanyName', title: '公司名称',width:240,align:'center'}
+			      ,{field: 'enterpriseEmployeeNum', title: '营业执照编号', width:230, align:'center'}
+			      ,{field: 'channel', title: '核心商户状态', width:140,align:'center',templet: '#channelTpl'} 
 			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
 			  //查询
-			  $('#queryUser').on('click',function(){
-				  var username = $('#queryUsername').val()
-				  var name = $('#queryName').val()
-				  table.reload('userId', {
-					  where: {username:username, name:name}
+			  $('#queryChannelNum').on('click',function(){
+				  var channelNum = $('#channelNum').val()
+				  table.reload('enterpriseId', {
+					  where: {channelNum:channelNum}
 					});
 			  })
 			  //重置
-			  $('#resetUser').on('click',function(){
-				  $('#queryUsername').val('')
-				  $('#queryName').val('')
+			  $('#reset').on('click',function(){
+				  $('#channelNum').val()
+				  $('#queryName').val()
 			  })
+			  form.on('select(channelState)', function(data){
+				  table.reload('enterpriseId', {
+					  where: {channelState:data.value}
+					}); 
+			  });    
 			  //监听工作条
 				table.on('tool(userTables)', function(obj){
 					 var data = obj.data;

@@ -1,9 +1,15 @@
 package org.sps.entity.merchant;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class SpsChannelAccount {
-    private Integer accountId;
+public class SpsChannelAccount implements Serializable{
+    /**   
+	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
+	 */   
+	private static final long serialVersionUID = 1L;
+
+	private Integer accountId;
 
     private BigDecimal accountCreditLine;
 

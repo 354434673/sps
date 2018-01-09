@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sps.dao.merchant.write.SpsChannelGuaranteeMapper" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelGuaranteeWriteMapper" >
   <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelGuarantee" >
     <id column="guarantee_id" property="guaranteeId" jdbcType="INTEGER" />
     <result column="guarantee_situation" property="guaranteeSituation" jdbcType="VARCHAR" />

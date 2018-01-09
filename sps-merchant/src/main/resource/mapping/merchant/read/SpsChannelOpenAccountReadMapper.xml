@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sps.dao.merchant.read.SpsChannelLogisticsReadMapper" >
-  <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelLogistics" >
-    <id column="logistics_id" property="logisticsId" jdbcType="INTEGER" />
-    <result column="logistics_way" property="logisticsWay" jdbcType="VARCHAR" />
-    <result column="logistics_cooperation_name" property="logisticsCooperationName" jdbcType="VARCHAR" />
-    <result column="logistics_other" property="logisticsOther" jdbcType="VARCHAR" />
-    <result column="logistics_all_cost" property="logisticsAllCost" jdbcType="DECIMAL" />
+<mapper namespace="com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelOpenAccount" >
+    <id column="open_id" property="openId" jdbcType="INTEGER" />
+    <result column="open_admin_num" property="openAdminNum" jdbcType="VARCHAR" />
+    <result column="open_start_time" property="openStartTime" jdbcType="TIMESTAMP" />
+    <result column="open_end_time" property="openEndTime" jdbcType="TIMESTAMP" />
+    <result column="open_apply_product" property="openApplyProduct" jdbcType="VARCHAR" />
+    <result column="open_sell_rate" property="openSellRate" jdbcType="INTEGER" />
     <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -39,22 +40,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    logistics_id, logistics_way, logistics_cooperation_name, logistics_other, logistics_all_cost, 
+    open_id, open_admin_num, open_start_time, open_end_time, open_apply_product, open_sell_rate, 
     channel_num
   </sql>
-  <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelLogisticsExample" resultType="java.lang.Integer" >
-    select count(*) from sps_channel_logistics
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelLogisticsExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelOpenAccountExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sps_channel_logistics
+    from sps_channel_open_account
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -65,7 +60,13 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from sps_channel_logistics
-    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+    from sps_channel_open_account
+    where open_id = #{openId,jdbcType=INTEGER}
+  </select>
+  <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelOpenAccountExample" resultType="java.lang.Integer" >
+    select count(*) from sps_channel_open_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
   </select>
 </mapper>

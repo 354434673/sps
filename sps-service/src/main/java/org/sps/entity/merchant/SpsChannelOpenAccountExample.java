@@ -1,17 +1,17 @@
 package org.sps.entity.merchant;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class SpsChannelLogisticsExample {
+public class SpsChannelOpenAccountExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public SpsChannelLogisticsExample() {
+    public SpsChannelOpenAccountExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -105,333 +105,373 @@ public class SpsChannelLogisticsExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andLogisticsIdIsNull() {
-            addCriterion("logistics_id is null");
+        public Criteria andOpenIdIsNull() {
+            addCriterion("open_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsIdIsNotNull() {
-            addCriterion("logistics_id is not null");
+        public Criteria andOpenIdIsNotNull() {
+            addCriterion("open_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsIdEqualTo(Integer value) {
-            addCriterion("logistics_id =", value, "logisticsId");
+        public Criteria andOpenIdEqualTo(Integer value) {
+            addCriterion("open_id =", value, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsIdNotEqualTo(Integer value) {
-            addCriterion("logistics_id <>", value, "logisticsId");
+        public Criteria andOpenIdNotEqualTo(Integer value) {
+            addCriterion("open_id <>", value, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsIdGreaterThan(Integer value) {
-            addCriterion("logistics_id >", value, "logisticsId");
+        public Criteria andOpenIdGreaterThan(Integer value) {
+            addCriterion("open_id >", value, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("logistics_id >=", value, "logisticsId");
+        public Criteria andOpenIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("open_id >=", value, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsIdLessThan(Integer value) {
-            addCriterion("logistics_id <", value, "logisticsId");
+        public Criteria andOpenIdLessThan(Integer value) {
+            addCriterion("open_id <", value, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsIdLessThanOrEqualTo(Integer value) {
-            addCriterion("logistics_id <=", value, "logisticsId");
+        public Criteria andOpenIdLessThanOrEqualTo(Integer value) {
+            addCriterion("open_id <=", value, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsIdIn(List<Integer> values) {
-            addCriterion("logistics_id in", values, "logisticsId");
+        public Criteria andOpenIdIn(List<Integer> values) {
+            addCriterion("open_id in", values, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsIdNotIn(List<Integer> values) {
-            addCriterion("logistics_id not in", values, "logisticsId");
+        public Criteria andOpenIdNotIn(List<Integer> values) {
+            addCriterion("open_id not in", values, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsIdBetween(Integer value1, Integer value2) {
-            addCriterion("logistics_id between", value1, value2, "logisticsId");
+        public Criteria andOpenIdBetween(Integer value1, Integer value2) {
+            addCriterion("open_id between", value1, value2, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("logistics_id not between", value1, value2, "logisticsId");
+        public Criteria andOpenIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("open_id not between", value1, value2, "openId");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayIsNull() {
-            addCriterion("logistics_way is null");
+        public Criteria andOpenAdminNumIsNull() {
+            addCriterion("open_admin_num is null");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayIsNotNull() {
-            addCriterion("logistics_way is not null");
+        public Criteria andOpenAdminNumIsNotNull() {
+            addCriterion("open_admin_num is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayEqualTo(String value) {
-            addCriterion("logistics_way =", value, "logisticsWay");
+        public Criteria andOpenAdminNumEqualTo(String value) {
+            addCriterion("open_admin_num =", value, "openAdminNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayNotEqualTo(String value) {
-            addCriterion("logistics_way <>", value, "logisticsWay");
+        public Criteria andOpenAdminNumNotEqualTo(String value) {
+            addCriterion("open_admin_num <>", value, "openAdminNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayGreaterThan(String value) {
-            addCriterion("logistics_way >", value, "logisticsWay");
+        public Criteria andOpenAdminNumGreaterThan(String value) {
+            addCriterion("open_admin_num >", value, "openAdminNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayGreaterThanOrEqualTo(String value) {
-            addCriterion("logistics_way >=", value, "logisticsWay");
+        public Criteria andOpenAdminNumGreaterThanOrEqualTo(String value) {
+            addCriterion("open_admin_num >=", value, "openAdminNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayLessThan(String value) {
-            addCriterion("logistics_way <", value, "logisticsWay");
+        public Criteria andOpenAdminNumLessThan(String value) {
+            addCriterion("open_admin_num <", value, "openAdminNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayLessThanOrEqualTo(String value) {
-            addCriterion("logistics_way <=", value, "logisticsWay");
+        public Criteria andOpenAdminNumLessThanOrEqualTo(String value) {
+            addCriterion("open_admin_num <=", value, "openAdminNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayLike(String value) {
-            addCriterion("logistics_way like", value, "logisticsWay");
+        public Criteria andOpenAdminNumLike(String value) {
+            addCriterion("open_admin_num like", value, "openAdminNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayNotLike(String value) {
-            addCriterion("logistics_way not like", value, "logisticsWay");
+        public Criteria andOpenAdminNumNotLike(String value) {
+            addCriterion("open_admin_num not like", value, "openAdminNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayIn(List<String> values) {
-            addCriterion("logistics_way in", values, "logisticsWay");
+        public Criteria andOpenAdminNumIn(List<String> values) {
+            addCriterion("open_admin_num in", values, "openAdminNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayNotIn(List<String> values) {
-            addCriterion("logistics_way not in", values, "logisticsWay");
+        public Criteria andOpenAdminNumNotIn(List<String> values) {
+            addCriterion("open_admin_num not in", values, "openAdminNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayBetween(String value1, String value2) {
-            addCriterion("logistics_way between", value1, value2, "logisticsWay");
+        public Criteria andOpenAdminNumBetween(String value1, String value2) {
+            addCriterion("open_admin_num between", value1, value2, "openAdminNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsWayNotBetween(String value1, String value2) {
-            addCriterion("logistics_way not between", value1, value2, "logisticsWay");
+        public Criteria andOpenAdminNumNotBetween(String value1, String value2) {
+            addCriterion("open_admin_num not between", value1, value2, "openAdminNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameIsNull() {
-            addCriterion("logistics_cooperation_name is null");
+        public Criteria andOpenStartTimeIsNull() {
+            addCriterion("open_start_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameIsNotNull() {
-            addCriterion("logistics_cooperation_name is not null");
+        public Criteria andOpenStartTimeIsNotNull() {
+            addCriterion("open_start_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameEqualTo(String value) {
-            addCriterion("logistics_cooperation_name =", value, "logisticsCooperationName");
+        public Criteria andOpenStartTimeEqualTo(Date value) {
+            addCriterion("open_start_time =", value, "openStartTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameNotEqualTo(String value) {
-            addCriterion("logistics_cooperation_name <>", value, "logisticsCooperationName");
+        public Criteria andOpenStartTimeNotEqualTo(Date value) {
+            addCriterion("open_start_time <>", value, "openStartTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameGreaterThan(String value) {
-            addCriterion("logistics_cooperation_name >", value, "logisticsCooperationName");
+        public Criteria andOpenStartTimeGreaterThan(Date value) {
+            addCriterion("open_start_time >", value, "openStartTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameGreaterThanOrEqualTo(String value) {
-            addCriterion("logistics_cooperation_name >=", value, "logisticsCooperationName");
+        public Criteria andOpenStartTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("open_start_time >=", value, "openStartTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameLessThan(String value) {
-            addCriterion("logistics_cooperation_name <", value, "logisticsCooperationName");
+        public Criteria andOpenStartTimeLessThan(Date value) {
+            addCriterion("open_start_time <", value, "openStartTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameLessThanOrEqualTo(String value) {
-            addCriterion("logistics_cooperation_name <=", value, "logisticsCooperationName");
+        public Criteria andOpenStartTimeLessThanOrEqualTo(Date value) {
+            addCriterion("open_start_time <=", value, "openStartTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameLike(String value) {
-            addCriterion("logistics_cooperation_name like", value, "logisticsCooperationName");
+        public Criteria andOpenStartTimeIn(List<Date> values) {
+            addCriterion("open_start_time in", values, "openStartTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameNotLike(String value) {
-            addCriterion("logistics_cooperation_name not like", value, "logisticsCooperationName");
+        public Criteria andOpenStartTimeNotIn(List<Date> values) {
+            addCriterion("open_start_time not in", values, "openStartTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameIn(List<String> values) {
-            addCriterion("logistics_cooperation_name in", values, "logisticsCooperationName");
+        public Criteria andOpenStartTimeBetween(Date value1, Date value2) {
+            addCriterion("open_start_time between", value1, value2, "openStartTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameNotIn(List<String> values) {
-            addCriterion("logistics_cooperation_name not in", values, "logisticsCooperationName");
+        public Criteria andOpenStartTimeNotBetween(Date value1, Date value2) {
+            addCriterion("open_start_time not between", value1, value2, "openStartTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameBetween(String value1, String value2) {
-            addCriterion("logistics_cooperation_name between", value1, value2, "logisticsCooperationName");
+        public Criteria andOpenEndTimeIsNull() {
+            addCriterion("open_end_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsCooperationNameNotBetween(String value1, String value2) {
-            addCriterion("logistics_cooperation_name not between", value1, value2, "logisticsCooperationName");
+        public Criteria andOpenEndTimeIsNotNull() {
+            addCriterion("open_end_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherIsNull() {
-            addCriterion("logistics_other is null");
+        public Criteria andOpenEndTimeEqualTo(Date value) {
+            addCriterion("open_end_time =", value, "openEndTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherIsNotNull() {
-            addCriterion("logistics_other is not null");
+        public Criteria andOpenEndTimeNotEqualTo(Date value) {
+            addCriterion("open_end_time <>", value, "openEndTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherEqualTo(String value) {
-            addCriterion("logistics_other =", value, "logisticsOther");
+        public Criteria andOpenEndTimeGreaterThan(Date value) {
+            addCriterion("open_end_time >", value, "openEndTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherNotEqualTo(String value) {
-            addCriterion("logistics_other <>", value, "logisticsOther");
+        public Criteria andOpenEndTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("open_end_time >=", value, "openEndTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherGreaterThan(String value) {
-            addCriterion("logistics_other >", value, "logisticsOther");
+        public Criteria andOpenEndTimeLessThan(Date value) {
+            addCriterion("open_end_time <", value, "openEndTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherGreaterThanOrEqualTo(String value) {
-            addCriterion("logistics_other >=", value, "logisticsOther");
+        public Criteria andOpenEndTimeLessThanOrEqualTo(Date value) {
+            addCriterion("open_end_time <=", value, "openEndTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherLessThan(String value) {
-            addCriterion("logistics_other <", value, "logisticsOther");
+        public Criteria andOpenEndTimeIn(List<Date> values) {
+            addCriterion("open_end_time in", values, "openEndTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherLessThanOrEqualTo(String value) {
-            addCriterion("logistics_other <=", value, "logisticsOther");
+        public Criteria andOpenEndTimeNotIn(List<Date> values) {
+            addCriterion("open_end_time not in", values, "openEndTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherLike(String value) {
-            addCriterion("logistics_other like", value, "logisticsOther");
+        public Criteria andOpenEndTimeBetween(Date value1, Date value2) {
+            addCriterion("open_end_time between", value1, value2, "openEndTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherNotLike(String value) {
-            addCriterion("logistics_other not like", value, "logisticsOther");
+        public Criteria andOpenEndTimeNotBetween(Date value1, Date value2) {
+            addCriterion("open_end_time not between", value1, value2, "openEndTime");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherIn(List<String> values) {
-            addCriterion("logistics_other in", values, "logisticsOther");
+        public Criteria andOpenApplyProductIsNull() {
+            addCriterion("open_apply_product is null");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherNotIn(List<String> values) {
-            addCriterion("logistics_other not in", values, "logisticsOther");
+        public Criteria andOpenApplyProductIsNotNull() {
+            addCriterion("open_apply_product is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherBetween(String value1, String value2) {
-            addCriterion("logistics_other between", value1, value2, "logisticsOther");
+        public Criteria andOpenApplyProductEqualTo(String value) {
+            addCriterion("open_apply_product =", value, "openApplyProduct");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsOtherNotBetween(String value1, String value2) {
-            addCriterion("logistics_other not between", value1, value2, "logisticsOther");
+        public Criteria andOpenApplyProductNotEqualTo(String value) {
+            addCriterion("open_apply_product <>", value, "openApplyProduct");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsAllCostIsNull() {
-            addCriterion("logistics_all_cost is null");
+        public Criteria andOpenApplyProductGreaterThan(String value) {
+            addCriterion("open_apply_product >", value, "openApplyProduct");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsAllCostIsNotNull() {
-            addCriterion("logistics_all_cost is not null");
+        public Criteria andOpenApplyProductGreaterThanOrEqualTo(String value) {
+            addCriterion("open_apply_product >=", value, "openApplyProduct");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsAllCostEqualTo(BigDecimal value) {
-            addCriterion("logistics_all_cost =", value, "logisticsAllCost");
+        public Criteria andOpenApplyProductLessThan(String value) {
+            addCriterion("open_apply_product <", value, "openApplyProduct");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsAllCostNotEqualTo(BigDecimal value) {
-            addCriterion("logistics_all_cost <>", value, "logisticsAllCost");
+        public Criteria andOpenApplyProductLessThanOrEqualTo(String value) {
+            addCriterion("open_apply_product <=", value, "openApplyProduct");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsAllCostGreaterThan(BigDecimal value) {
-            addCriterion("logistics_all_cost >", value, "logisticsAllCost");
+        public Criteria andOpenApplyProductIn(List<String> values) {
+            addCriterion("open_apply_product in", values, "openApplyProduct");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsAllCostGreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("logistics_all_cost >=", value, "logisticsAllCost");
+        public Criteria andOpenApplyProductNotIn(List<String> values) {
+            addCriterion("open_apply_product not in", values, "openApplyProduct");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsAllCostLessThan(BigDecimal value) {
-            addCriterion("logistics_all_cost <", value, "logisticsAllCost");
+        public Criteria andOpenApplyProductBetween(String value1, String value2) {
+            addCriterion("open_apply_product between", value1, value2, "openApplyProduct");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsAllCostLessThanOrEqualTo(BigDecimal value) {
-            addCriterion("logistics_all_cost <=", value, "logisticsAllCost");
+        public Criteria andOpenApplyProductNotBetween(String value1, String value2) {
+            addCriterion("open_apply_product not between", value1, value2, "openApplyProduct");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsAllCostIn(List<BigDecimal> values) {
-            addCriterion("logistics_all_cost in", values, "logisticsAllCost");
+        public Criteria andOpenSellRateIsNull() {
+            addCriterion("open_sell_rate is null");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsAllCostNotIn(List<BigDecimal> values) {
-            addCriterion("logistics_all_cost not in", values, "logisticsAllCost");
+        public Criteria andOpenSellRateIsNotNull() {
+            addCriterion("open_sell_rate is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsAllCostBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("logistics_all_cost between", value1, value2, "logisticsAllCost");
+        public Criteria andOpenSellRateEqualTo(Integer value) {
+            addCriterion("open_sell_rate =", value, "openSellRate");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsAllCostNotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("logistics_all_cost not between", value1, value2, "logisticsAllCost");
+        public Criteria andOpenSellRateNotEqualTo(Integer value) {
+            addCriterion("open_sell_rate <>", value, "openSellRate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenSellRateGreaterThan(Integer value) {
+            addCriterion("open_sell_rate >", value, "openSellRate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenSellRateGreaterThanOrEqualTo(Integer value) {
+            addCriterion("open_sell_rate >=", value, "openSellRate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenSellRateLessThan(Integer value) {
+            addCriterion("open_sell_rate <", value, "openSellRate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenSellRateLessThanOrEqualTo(Integer value) {
+            addCriterion("open_sell_rate <=", value, "openSellRate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenSellRateIn(List<Integer> values) {
+            addCriterion("open_sell_rate in", values, "openSellRate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenSellRateNotIn(List<Integer> values) {
+            addCriterion("open_sell_rate not in", values, "openSellRate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenSellRateBetween(Integer value1, Integer value2) {
+            addCriterion("open_sell_rate between", value1, value2, "openSellRate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenSellRateNotBetween(Integer value1, Integer value2) {
+            addCriterion("open_sell_rate not between", value1, value2, "openSellRate");
             return (Criteria) this;
         }
 
@@ -472,16 +512,6 @@ public class SpsChannelLogisticsExample {
 
         public Criteria andChannelNumLessThanOrEqualTo(String value) {
             addCriterion("channel_num <=", value, "channelNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andChannelNumLike(String value) {
-            addCriterion("channel_num like", value, "channelNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andChannelNumNotLike(String value) {
-            addCriterion("channel_num not like", value, "channelNum");
             return (Criteria) this;
         }
 

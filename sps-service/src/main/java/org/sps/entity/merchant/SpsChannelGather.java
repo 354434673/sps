@@ -1,7 +1,14 @@
 package org.sps.entity.merchant;
 
-public class SpsChannelGather {
-    private Integer gatherId;
+import java.io.Serializable;
+
+public class SpsChannelGather implements Serializable{
+    /**   
+	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
+	 */   
+	private static final long serialVersionUID = 1L;
+
+	private Integer gatherId;
 
     private String gatherBankId;
 

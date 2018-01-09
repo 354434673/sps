@@ -1,7 +1,14 @@
 package org.sps.entity.merchant;
 
-public class SpsChannelEnterprise {
-    private Integer enterpriseId;
+import java.io.Serializable;
+
+public class SpsChannelEnterprise implements Serializable{
+    /**   
+	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
+	 */   
+	private static final long serialVersionUID = 1L;
+
+	private Integer enterpriseId;
 
     private String enterpriseBusinesslicenseNo;
 
@@ -18,6 +25,8 @@ public class SpsChannelEnterprise {
     private Integer enterpriseEmployeeNum;
 
     private String channelNum;
+    
+    private SpsChannel channel;
 
     public Integer getEnterpriseId() {
         return enterpriseId;
@@ -90,4 +99,13 @@ public class SpsChannelEnterprise {
     public void setChannelNum(String channelNum) {
         this.channelNum = channelNum == null ? null : channelNum.trim();
     }
+
+	public SpsChannel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(SpsChannel channel) {
+		this.channel = channel;
+	}
+    
 }

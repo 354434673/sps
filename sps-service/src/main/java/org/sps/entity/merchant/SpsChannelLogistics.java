@@ -1,13 +1,21 @@
 package org.sps.entity.merchant;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class SpsChannelLogistics {
-    private Integer logisticsId;
+public class SpsChannelLogistics implements Serializable{
+    /**   
+	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
+	 */   
+	private static final long serialVersionUID = 1L;
+
+	private Integer logisticsId;
 
     private String logisticsWay;
 
     private String logisticsCooperationName;
+
+    private String logisticsOther;
 
     private BigDecimal logisticsAllCost;
 
@@ -35,6 +43,14 @@ public class SpsChannelLogistics {
 
     public void setLogisticsCooperationName(String logisticsCooperationName) {
         this.logisticsCooperationName = logisticsCooperationName == null ? null : logisticsCooperationName.trim();
+    }
+
+    public String getLogisticsOther() {
+        return logisticsOther;
+    }
+
+    public void setLogisticsOther(String logisticsOther) {
+        this.logisticsOther = logisticsOther == null ? null : logisticsOther.trim();
     }
 
     public BigDecimal getLogisticsAllCost() {
