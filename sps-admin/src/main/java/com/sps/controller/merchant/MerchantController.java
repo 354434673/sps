@@ -69,6 +69,4 @@ public class MerchantController {
 		HashMap<String, Object> insertGather = chanelWriteService.insertGather(gather, null);
 		
 		return insertGather;
-		
-	}
 }

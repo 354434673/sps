@@ -134,31 +134,26 @@ public class ChannelWriteServiceImpl implements ChannelWriteService{
 			e.printStackTrace();
 		}
 		return hashMap;
-	}
+
+}
 	@Override
 	public HashMap<String, String> insertLogistics(SpsChannelLogistics logistics, String channelNum) {
-		logistics.setChannelNum(channelNum);
-		logisticsWrite.insertSelective(logistics);
+		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public HashMap<String, String> insertGuarantee(SpsChannelGuarantee guarantee, String channelNum) {
-		guarantee.setChannelNum(channelNum);
-		guaranteeWrite.insertSelective(guarantee);
-		
+		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public HashMap<String, String> insertFinanceTarget(SpsChannelFinanceTarget financeTarget, String channelNum) {
-		financeTarget.setChannelNum(channelNum);
-		financeTargetWrit.insertSelective(financeTarget);
+		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public HashMap<String, String> insertOpenAccount(SpsChannelOpenAccount account, String channelNum) {
-		account.setChannelNum(channelNum);
-		openAccountWrite.insertSelective(account);
+		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

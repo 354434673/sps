@@ -75,7 +75,6 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 			hashMap.put("code", 0);
 			hashMap.put("msg", "获取成功");
 			hashMap.put("count", pageInfo.getTotal());
-			
 			hashMap.put("data", selectByExample.size() != 0 ? selectByExample : null);
 		} catch (Exception e) {
 			e.printStackTrace();
