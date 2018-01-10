@@ -8,6 +8,7 @@
     <result column="enterprise_company_register_addr" property="enterpriseCompanyRegisterAddr" jdbcType="VARCHAR" />
     <result column="enterprise_company_realit_addr" property="enterpriseCompanyRealitAddr" jdbcType="VARCHAR" />
     <result column="enterprise_corp" property="enterpriseCorp" jdbcType="VARCHAR" />
+    <result column="enterprise_corp_idCard" property="enterpriseCorpIdcard" jdbcType="VARCHAR" />
     <result column="enterprise_operatio_time" property="enterpriseOperatioTime" jdbcType="INTEGER" />
     <result column="enterprise_employee_num" property="enterpriseEmployeeNum" jdbcType="INTEGER" />
     <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
@@ -70,11 +71,6 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
-    enterprise_id, enterprise_businesslicense_no, enterprise_company_name, enterprise_company_register_addr, 
-    enterprise_company_realit_addr, enterprise_corp, enterprise_operatio_time, enterprise_employee_num, 
-    channel_num
-  </sql>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sps_channel_enterprise
     where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
@@ -89,13 +85,13 @@
     insert into sps_channel_enterprise (enterprise_id, enterprise_businesslicense_no, 
       enterprise_company_name, enterprise_company_register_addr, 
       enterprise_company_realit_addr, enterprise_corp, 
-      enterprise_operatio_time, enterprise_employee_num, 
-      channel_num)
+      enterprise_corp_idCard, enterprise_operatio_time, 
+      enterprise_employee_num, channel_num)
     values (#{enterpriseId,jdbcType=INTEGER}, #{enterpriseBusinesslicenseNo,jdbcType=VARCHAR}, 
       #{enterpriseCompanyName,jdbcType=VARCHAR}, #{enterpriseCompanyRegisterAddr,jdbcType=VARCHAR}, 
       #{enterpriseCompanyRealitAddr,jdbcType=VARCHAR}, #{enterpriseCorp,jdbcType=VARCHAR}, 
-      #{enterpriseOperatioTime,jdbcType=INTEGER}, #{enterpriseEmployeeNum,jdbcType=INTEGER}, 
-      #{channelNum,jdbcType=VARCHAR})
+      #{enterpriseCorpIdcard,jdbcType=VARCHAR}, #{enterpriseOperatioTime,jdbcType=INTEGER}, 
+      #{enterpriseEmployeeNum,jdbcType=INTEGER}, #{channelNum,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelEnterprise" >
     insert into sps_channel_enterprise
@@ -117,6 +113,9 @@
       </if>
       <if test="enterpriseCorp != null" >
         enterprise_corp,
+      </if>
+      <if test="enterpriseCorpIdcard != null" >
+        enterprise_corp_idCard,
       </if>
       <if test="enterpriseOperatioTime != null" >
         enterprise_operatio_time,
@@ -146,6 +145,9 @@
       </if>
       <if test="enterpriseCorp != null" >
         #{enterpriseCorp,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCorpIdcard != null" >
+        #{enterpriseCorpIdcard,jdbcType=VARCHAR},
       </if>
       <if test="enterpriseOperatioTime != null" >
         #{enterpriseOperatioTime,jdbcType=INTEGER},
@@ -179,6 +181,9 @@
       <if test="record.enterpriseCorp != null" >
         enterprise_corp = #{record.enterpriseCorp,jdbcType=VARCHAR},
       </if>
+      <if test="record.enterpriseCorpIdcard != null" >
+        enterprise_corp_idCard = #{record.enterpriseCorpIdcard,jdbcType=VARCHAR},
+      </if>
       <if test="record.enterpriseOperatioTime != null" >
         enterprise_operatio_time = #{record.enterpriseOperatioTime,jdbcType=INTEGER},
       </if>
@@ -201,6 +206,7 @@
       enterprise_company_register_addr = #{record.enterpriseCompanyRegisterAddr,jdbcType=VARCHAR},
       enterprise_company_realit_addr = #{record.enterpriseCompanyRealitAddr,jdbcType=VARCHAR},
       enterprise_corp = #{record.enterpriseCorp,jdbcType=VARCHAR},
+      enterprise_corp_idCard = #{record.enterpriseCorpIdcard,jdbcType=VARCHAR},
       enterprise_operatio_time = #{record.enterpriseOperatioTime,jdbcType=INTEGER},
       enterprise_employee_num = #{record.enterpriseEmployeeNum,jdbcType=INTEGER},
       channel_num = #{record.channelNum,jdbcType=VARCHAR}
@@ -226,6 +232,9 @@
       <if test="enterpriseCorp != null" >
         enterprise_corp = #{enterpriseCorp,jdbcType=VARCHAR},
       </if>
+      <if test="enterpriseCorpIdcard != null" >
+        enterprise_corp_idCard = #{enterpriseCorpIdcard,jdbcType=VARCHAR},
+      </if>
       <if test="enterpriseOperatioTime != null" >
         enterprise_operatio_time = #{enterpriseOperatioTime,jdbcType=INTEGER},
       </if>
@@ -245,6 +254,7 @@
       enterprise_company_register_addr = #{enterpriseCompanyRegisterAddr,jdbcType=VARCHAR},
       enterprise_company_realit_addr = #{enterpriseCompanyRealitAddr,jdbcType=VARCHAR},
       enterprise_corp = #{enterpriseCorp,jdbcType=VARCHAR},
+      enterprise_corp_idCard = #{enterpriseCorpIdcard,jdbcType=VARCHAR},
       enterprise_operatio_time = #{enterpriseOperatioTime,jdbcType=INTEGER},
       enterprise_employee_num = #{enterpriseEmployeeNum,jdbcType=INTEGER},
       channel_num = #{channelNum,jdbcType=VARCHAR}

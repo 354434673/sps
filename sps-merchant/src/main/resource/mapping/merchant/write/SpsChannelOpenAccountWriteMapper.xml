@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelOpenAccount" >
     <id column="open_id" property="openId" jdbcType="INTEGER" />
     <result column="open_admin_num" property="openAdminNum" jdbcType="VARCHAR" />
+    <result column="open_admin_phone" property="openAdminPhone" jdbcType="VARCHAR" />
     <result column="open_start_time" property="openStartTime" jdbcType="TIMESTAMP" />
     <result column="open_end_time" property="openEndTime" jdbcType="TIMESTAMP" />
     <result column="open_apply_product" property="openApplyProduct" jdbcType="VARCHAR" />
@@ -68,10 +69,6 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
-    open_id, open_admin_num, open_start_time, open_end_time, open_apply_product, open_sell_rate, 
-    channel_num
-  </sql>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sps_channel_open_account
     where open_id = #{openId,jdbcType=INTEGER}
@@ -83,12 +80,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannelOpenAccount" >
-    insert into sps_channel_open_account (open_id, open_admin_num, open_start_time, 
-      open_end_time, open_apply_product, open_sell_rate, 
-      channel_num)
-    values (#{openId,jdbcType=INTEGER}, #{openAdminNum,jdbcType=VARCHAR}, #{openStartTime,jdbcType=TIMESTAMP}, 
-      #{openEndTime,jdbcType=TIMESTAMP}, #{openApplyProduct,jdbcType=VARCHAR}, #{openSellRate,jdbcType=INTEGER}, 
-      #{channelNum,jdbcType=VARCHAR})
+    insert into sps_channel_open_account (open_id, open_admin_num, open_admin_phone, 
+      open_start_time, open_end_time, open_apply_product, 
+      open_sell_rate, channel_num)
+    values (#{openId,jdbcType=INTEGER}, #{openAdminNum,jdbcType=VARCHAR}, #{openAdminPhone,jdbcType=VARCHAR}, 
+      #{openStartTime,jdbcType=TIMESTAMP}, #{openEndTime,jdbcType=TIMESTAMP}, #{openApplyProduct,jdbcType=VARCHAR}, 
+      #{openSellRate,jdbcType=INTEGER}, #{channelNum,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelOpenAccount" >
     insert into sps_channel_open_account
@@ -98,6 +95,9 @@
       </if>
       <if test="openAdminNum != null" >
         open_admin_num,
+      </if>
+      <if test="openAdminPhone != null" >
+        open_admin_phone,
       </if>
       <if test="openStartTime != null" >
         open_start_time,
@@ -121,6 +121,9 @@
       </if>
       <if test="openAdminNum != null" >
         #{openAdminNum,jdbcType=VARCHAR},
+      </if>
+      <if test="openAdminPhone != null" >
+        #{openAdminPhone,jdbcType=VARCHAR},
       </if>
       <if test="openStartTime != null" >
         #{openStartTime,jdbcType=TIMESTAMP},
@@ -148,6 +151,9 @@
       <if test="record.openAdminNum != null" >
         open_admin_num = #{record.openAdminNum,jdbcType=VARCHAR},
       </if>
+      <if test="record.openAdminPhone != null" >
+        open_admin_phone = #{record.openAdminPhone,jdbcType=VARCHAR},
+      </if>
       <if test="record.openStartTime != null" >
         open_start_time = #{record.openStartTime,jdbcType=TIMESTAMP},
       </if>
@@ -172,6 +178,7 @@
     update sps_channel_open_account
     set open_id = #{record.openId,jdbcType=INTEGER},
       open_admin_num = #{record.openAdminNum,jdbcType=VARCHAR},
+      open_admin_phone = #{record.openAdminPhone,jdbcType=VARCHAR},
       open_start_time = #{record.openStartTime,jdbcType=TIMESTAMP},
       open_end_time = #{record.openEndTime,jdbcType=TIMESTAMP},
       open_apply_product = #{record.openApplyProduct,jdbcType=VARCHAR},
@@ -186,6 +193,9 @@
     <set >
       <if test="openAdminNum != null" >
         open_admin_num = #{openAdminNum,jdbcType=VARCHAR},
+      </if>
+      <if test="openAdminPhone != null" >
+        open_admin_phone = #{openAdminPhone,jdbcType=VARCHAR},
       </if>
       <if test="openStartTime != null" >
         open_start_time = #{openStartTime,jdbcType=TIMESTAMP},
@@ -208,6 +218,7 @@
   <update id="updateByPrimaryKey" parameterType="org.sps.entity.merchant.SpsChannelOpenAccount" >
     update sps_channel_open_account
     set open_admin_num = #{openAdminNum,jdbcType=VARCHAR},
+      open_admin_phone = #{openAdminPhone,jdbcType=VARCHAR},
       open_start_time = #{openStartTime,jdbcType=TIMESTAMP},
       open_end_time = #{openEndTime,jdbcType=TIMESTAMP},
       open_apply_product = #{openApplyProduct,jdbcType=VARCHAR},

@@ -32,6 +32,9 @@
 		 7.sps_channel_logistics 物流配送
 		 8.sps_channel_guarantee 担保信息
 		 9.sps_channel_statistics 统计信息
+		 10.sps_channel_open_account 开户信息
+		 11.sps_channel_salesman 业务员信息
+		 12.sps_channel_pic 商户上传图片表
 		 
 
 

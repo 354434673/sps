@@ -514,6 +514,76 @@ public class SpsChannelEnterpriseExample {
             return (Criteria) this;
         }
 
+        public Criteria andEnterpriseCorpIdcardIsNull() {
+            addCriterion("enterprise_corp_idCard is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardIsNotNull() {
+            addCriterion("enterprise_corp_idCard is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardEqualTo(String value) {
+            addCriterion("enterprise_corp_idCard =", value, "enterpriseCorpIdcard");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardNotEqualTo(String value) {
+            addCriterion("enterprise_corp_idCard <>", value, "enterpriseCorpIdcard");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardGreaterThan(String value) {
+            addCriterion("enterprise_corp_idCard >", value, "enterpriseCorpIdcard");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardGreaterThanOrEqualTo(String value) {
+            addCriterion("enterprise_corp_idCard >=", value, "enterpriseCorpIdcard");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardLessThan(String value) {
+            addCriterion("enterprise_corp_idCard <", value, "enterpriseCorpIdcard");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardLessThanOrEqualTo(String value) {
+            addCriterion("enterprise_corp_idCard <=", value, "enterpriseCorpIdcard");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardLike(String value) {
+            addCriterion("enterprise_corp_idCard like", value, "enterpriseCorpIdcard");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardNotLike(String value) {
+            addCriterion("enterprise_corp_idCard not like", value, "enterpriseCorpIdcard");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardIn(List<String> values) {
+            addCriterion("enterprise_corp_idCard in", values, "enterpriseCorpIdcard");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardNotIn(List<String> values) {
+            addCriterion("enterprise_corp_idCard not in", values, "enterpriseCorpIdcard");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardBetween(String value1, String value2) {
+            addCriterion("enterprise_corp_idCard between", value1, value2, "enterpriseCorpIdcard");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCorpIdcardNotBetween(String value1, String value2) {
+            addCriterion("enterprise_corp_idCard not between", value1, value2, "enterpriseCorpIdcard");
+            return (Criteria) this;
+        }
+
         public Criteria andEnterpriseOperatioTimeIsNull() {
             addCriterion("enterprise_operatio_time is null");
             return (Criteria) this;

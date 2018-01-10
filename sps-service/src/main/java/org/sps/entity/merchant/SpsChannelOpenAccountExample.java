@@ -235,6 +235,76 @@ public class SpsChannelOpenAccountExample {
             return (Criteria) this;
         }
 
+        public Criteria andOpenAdminPhoneIsNull() {
+            addCriterion("open_admin_phone is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneIsNotNull() {
+            addCriterion("open_admin_phone is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneEqualTo(String value) {
+            addCriterion("open_admin_phone =", value, "openAdminPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneNotEqualTo(String value) {
+            addCriterion("open_admin_phone <>", value, "openAdminPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneGreaterThan(String value) {
+            addCriterion("open_admin_phone >", value, "openAdminPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("open_admin_phone >=", value, "openAdminPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneLessThan(String value) {
+            addCriterion("open_admin_phone <", value, "openAdminPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneLessThanOrEqualTo(String value) {
+            addCriterion("open_admin_phone <=", value, "openAdminPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneLike(String value) {
+            addCriterion("open_admin_phone like", value, "openAdminPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneNotLike(String value) {
+            addCriterion("open_admin_phone not like", value, "openAdminPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneIn(List<String> values) {
+            addCriterion("open_admin_phone in", values, "openAdminPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneNotIn(List<String> values) {
+            addCriterion("open_admin_phone not in", values, "openAdminPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneBetween(String value1, String value2) {
+            addCriterion("open_admin_phone between", value1, value2, "openAdminPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenAdminPhoneNotBetween(String value1, String value2) {
+            addCriterion("open_admin_phone not between", value1, value2, "openAdminPhone");
+            return (Criteria) this;
+        }
+
         public Criteria andOpenStartTimeIsNull() {
             addCriterion("open_start_time is null");
             return (Criteria) this;
@@ -395,6 +465,16 @@ public class SpsChannelOpenAccountExample {
             return (Criteria) this;
         }
 
+        public Criteria andOpenApplyProductLike(String value) {
+            addCriterion("open_apply_product like", value, "openApplyProduct");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenApplyProductNotLike(String value) {
+            addCriterion("open_apply_product not like", value, "openApplyProduct");
+            return (Criteria) this;
+        }
+
         public Criteria andOpenApplyProductIn(List<String> values) {
             addCriterion("open_apply_product in", values, "openApplyProduct");
             return (Criteria) this;
@@ -512,6 +592,16 @@ public class SpsChannelOpenAccountExample {
 
         public Criteria andChannelNumLessThanOrEqualTo(String value) {
             addCriterion("channel_num <=", value, "channelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelNumLike(String value) {
+            addCriterion("channel_num like", value, "channelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelNumNotLike(String value) {
+            addCriterion("channel_num not like", value, "channelNum");
             return (Criteria) this;
         }
 

@@ -1,9 +1,14 @@
 package com.sps.controller.merchant;
 
 import java.util.HashMap;
+import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.sps.entity.merchant.SpsChannel;
 import org.sps.entity.merchant.SpsChannelBusiness;
@@ -17,6 +22,9 @@ import org.sps.service.merchant.read.ChannelReadService;
 import org.sps.service.merchant.write.ChannelWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.sps.controller.common.UploadController;
+import com.sps.service.user.UserService;
+import com.sps.util.ControllerLsit;
 
 
 @Controller
@@ -26,7 +34,10 @@ public class MerchantController {
 	private ChannelWriteService chanelWriteService;
 	@Reference
 	private ChannelReadService channelReadService;
+	@Resource
+	private UserService userService;
 	@RequestMapping(value="/insertChannel.html")
+	@ResponseBody
 	public HashMap<String, String> getChannel(
 			SpsChannel channel, 
 			SpsChannelEnterprise enterprise, 
@@ -39,7 +50,9 @@ public class MerchantController {
 		HashMap<String, String> result = chanelWriteService.insertAll(channel, enterprise, 
 				business, guarantee, financeTarget, 
 				logistics, openAccount);
-		
+		//添加后增加到user表
+		userService.insertUser(openAccount.getOpenAdminNum(),"123456",openAccount.getOpenAdminNum(), 
+				openAccount.getOpenAdminPhone(),null,"1");
 		return result;
 	}
 	@RequestMapping(value="/getGatherList.html")
@@ -66,9 +79,16 @@ public class MerchantController {
 	@ResponseBody
 	public HashMap<String, Object> insertGather(SpsChannelGather gather){
 		
-		HashMap<String, Object> insertGather = chanelWriteService.insertGather(gather, null);
+		HashMap<String, Object> insertGather = chanelWriteService.insertGather(gather);
 		
 		return insertGather;
-		
 	}
+/*	@RequestMapping(value="/insertGather.html")
+	@ResponseBody
+	public HashMap<String, Object> uploadPic(SpsChannelGather gather){
+		
+		HashMap<String, Object> insertGather = chanelWriteService.insertGather(gather);
+		
+		return insertGather;
+	}*/
 }

@@ -70,7 +70,7 @@ public interface ChannelWriteService {
 	 * @return: int      
 	 * @throws
 	 */
-	HashMap<String, Object> insertGather(SpsChannelGather gather, String channelNum);
+	HashMap<String, Object> insertGather(SpsChannelGather gather);
 	/**
 	 * 添加物流信息
 	 * @Title: insertLogistics   

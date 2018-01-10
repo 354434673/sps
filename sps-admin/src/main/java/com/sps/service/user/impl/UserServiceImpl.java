@@ -156,4 +156,34 @@ public class UserServiceImpl implements UserService{
 		}
 		return map;
 	}
+	@Override
+	public HashMap<String, Object> updateUser(SpsUser spsUser) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		try {
+			SpsUser record = new SpsUser();
+			String salt = Md5Util.getSalt(4);//4位盐
+			record.setUserName(spsUser.getUserName());
+			record.setUserPassword(Md5Util.getMd5(spsUser.getUserPassword(), salt));
+			record.setUserPhone(record.getUserPhone());
+			record.setUserUpdatetime(new Date());
+			record.setUserMark(spsUser.getUserMark());
+			record.setUserSalt(salt);
+			record.setUserEmail(spsUser.getUserEmail());
+			SpsUserExample example = new SpsUserExample();
+			
+			example.createCriteria().andUserUsernameEqualTo(spsUser.getUserUsername());
+			
+			spsUserMapper.updateByExampleSelective(record, example);
+			
+			map.put("msg", "用户信息修改成功");
+			map.put("icon", "1");
+			map.put("state", "success");
+		} catch (Exception e) {
+			map.put("msg", "用户信息修改失败");
+			map.put("icon", "2");
+			map.put("state", "error");
+			e.printStackTrace();
+		}
+		return map;
+	}
 }

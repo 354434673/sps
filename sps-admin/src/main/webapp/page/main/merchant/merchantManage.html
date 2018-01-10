@@ -35,7 +35,17 @@
 				  <option value="0">未激活</option>
 				  <option value="1">正常</option>
 				  <option value="2">冻结</option>
-		      </select>
+				  <option value="3">激活失败</option>
+		      	</select>
+			    </div>
+			    <label class="layui-form-label" style="width: 200px">流程状态:</label>
+			    <div class="layui-input-inline" >
+			    <select lay-filter="channelState"> 
+				  <option value="0">待提交</option>
+				  <option value="1">风控审核中</option>
+				  <option value="2">风控审核通过</option>
+				  <option value="3">风控审核失败</option>
+		      	</select>
 			    </div>
 	        </div>  
         </div>
@@ -47,7 +57,7 @@
 
 			</blockquote>
 		</div>
-		<table id="channelList" lay-filter="channelTables"></table>
+		<table id="channelList" lay-filter="channelTables" class="layui-fluid"></table>
 	</div>
 <script type="text/javascript"
 		src="/sps-admin//page/static/plugins/layui/layui.all.js"></script>
@@ -84,12 +94,12 @@
 			    ,id:'enterpriseId'
 			    ,page:true
 			    ,cols: [[ //表头
-			      {field: 'enterpriseId', title: '序号', align:'center'}
-			      ,{field: 'channelNum', title: '核心账户编号',width:240,align:'center'}
+			      {field: 'enterpriseId', title: '序号',align:'center'}
+			      ,{field: 'channelNum', title: '核心账户编号',align:'center'}
 			      ,{field: 'enterpriseCompanyName', title: '公司名称',width:240,align:'center'}
 			      ,{field: 'enterpriseEmployeeNum', title: '营业执照编号', width:230, align:'center'}
 			      ,{field: 'channel', title: '核心商户状态', width:140,align:'center',templet: '#channelTpl'} 
-			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
+			      ,{field: 'tool', title: '操作',align:'center',toolbar:'#bar'}
 			    ]]
 			  });
 			  //查询

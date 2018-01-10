@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.sps.entity.merchant.SpsChannel;
 import org.sps.entity.merchant.SpsChannelEnterprise;
+import org.sps.entity.merchant.SpsChannelEnterpriseExample;
 import org.sps.entity.merchant.SpsChannelGather;
 import org.sps.entity.merchant.SpsChannelGatherExample;
 import org.sps.entity.merchant.SpsChannelGatherExample.Criteria;
@@ -75,12 +76,32 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 			hashMap.put("code", 0);
 			hashMap.put("msg", "获取成功");
 			hashMap.put("count", pageInfo.getTotal());
-			
 			hashMap.put("data", selectByExample.size() != 0 ? selectByExample : null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return hashMap;
+	}
+	@Override
+	public SpsChannelGather getGather(SpsChannelGather gather) {
+		SpsChannelGatherExample example = new SpsChannelGatherExample();
+		
+		example.createCriteria()
+							.andChannelNumEqualTo(gather.getChannelNum())
+							.andGatherBankIdEqualTo(gather.getGatherBankId())
+							.andGatherIdcardEqualTo(gather.getGatherIdcard());
+		List<SpsChannelGather> selectByExample = gatherRead.selectByExample(example);
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
+	}
+	@Override
+	public SpsChannelEnterprise getChannel(SpsChannelEnterprise enterprise) {
+		
+		SpsChannelEnterpriseExample example = new SpsChannelEnterpriseExample();
+		
+		example.createCriteria().andEnterpriseBusinesslicenseNoEqualTo(enterprise.getEnterpriseBusinesslicenseNo());
+		
+		List<SpsChannelEnterprise> selectByExample = enterpriseRead.selectByExample(example);
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
 	}
 	
 

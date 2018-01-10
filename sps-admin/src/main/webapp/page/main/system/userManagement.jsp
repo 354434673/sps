@@ -125,6 +125,7 @@
 								    body.find('#btn').hide();//隐藏提交按钮
 								    body.find('#passwordDiv').hide();//隐藏密码输入框
 								    body.find('#resetPasssword').show();//显示重置密码按钮
+
 								}  
 						  }); 
 					  } else if(layEvent === 'del'){ //删除
@@ -142,11 +143,18 @@
 							  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 							  success: function(layero, index){
 								    var body = layer.getChildFrame('body', index);
+								    body.find('#username').attr({"disabled":"disabled"});
 								    body.find('#username').val(data.userUsername)
 								    body.find('#name').val(data.userName)
 								    body.find('#phone').val(data.userPhone)
 								    body.find('#email').val(data.userEmail)
-								}  
+								    body.find('#submit').hide();//显示重置密码按钮
+								    body.find('#submitUpdate').show();//显示重置密码按钮
+								},
+							  cancel: function(index, layero){ 
+								  table.reload('userId', {
+									});
+								}   
 						  }); 
 					    
 					    //同步更新缓存对应的值

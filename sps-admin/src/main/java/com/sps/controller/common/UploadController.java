@@ -81,7 +81,7 @@ public class UploadController {
     @RequestMapping(value = "/file/manyUpload")
     @ResponseBody
     public Map<String, Object> uploadPicture(@RequestParam(value = "file", required = false) MultipartFile[] file,
-                                             HttpServletRequest request) {
+        String accept, String status, String types, String type, String id, HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         File targetFile = null;
         String msg = "";//返回存储路径
@@ -99,10 +99,10 @@ public class UploadController {
                     SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
                     // 转换成String
                     String d = format.format(date);// 得到的值20130802
-                    File file1 = new File("D:/sps-ws/sps/sps-admin/src/main/webapp/upload/imgs" + "/");
+                    File file1 = new File("c:/sps/sps/sps-admin/src/main/webapp/upload/"+status+"/"+type+"/"+id+"/"+accept+"/");
                     //如果文件夹不存在则创建
                     if (!file1.exists() && !file1.isDirectory()) {
-                        file1.mkdir();
+                        file1.mkdirs();
                     }
                     targetFile = new File(file1, fileName);
                     try {

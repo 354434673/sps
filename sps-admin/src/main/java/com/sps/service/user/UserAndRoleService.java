@@ -34,4 +34,17 @@ public interface UserAndRoleService {
 	 * @throws
 	 */
 	SpsUserandrole getUserAndrole(int userId, int roleId);
+	/**
+	 * 修改用户权限
+	 * @Title: updateUserForRole   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param userId
+	 * @param: @param roleId
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月11日 下午4:02:52
+	 * @return: int      
+	 * @throws
+	 */
+	int updateUserForRole(String userName,int[] roleList);
 }

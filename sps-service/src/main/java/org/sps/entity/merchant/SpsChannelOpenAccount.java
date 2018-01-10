@@ -13,6 +13,8 @@ public class SpsChannelOpenAccount implements Serializable{
 
     private String openAdminNum;
 
+    private String openAdminPhone;
+
     private String openStartTime;
 
     private String openEndTime;
@@ -39,6 +41,14 @@ public class SpsChannelOpenAccount implements Serializable{
         this.openAdminNum = openAdminNum == null ? null : openAdminNum.trim();
     }
 
+    public String getOpenAdminPhone() {
+        return openAdminPhone;
+    }
+
+    public void setOpenAdminPhone(String openAdminPhone) {
+        this.openAdminPhone = openAdminPhone == null ? null : openAdminPhone.trim();
+    }
+
     public String getOpenStartTime() {
         return openStartTime;
     }
@@ -60,7 +70,7 @@ public class SpsChannelOpenAccount implements Serializable{
     }
 
     public void setOpenApplyProduct(String openApplyProduct) {
-        this.openApplyProduct = openApplyProduct;
+        this.openApplyProduct = openApplyProduct == null ? null : openApplyProduct.trim();
     }
 
     public Integer getOpenSellRate() {
@@ -76,6 +86,7 @@ public class SpsChannelOpenAccount implements Serializable{
     }
 
     public void setChannelNum(String channelNum) {
-        this.channelNum = channelNum;
+        this.channelNum = channelNum == null ? null : channelNum.trim();
     }
+    
 }

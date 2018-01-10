@@ -68,6 +68,7 @@
   </div>
  	<div class="layui-form-item" align="center" id="btn" >
 		<button class="layui-btn" lay-filter="submitAddUser" lay-submit id="submit">立即提交</button>
+		<button style="display: none" class="layui-btn" lay-filter="submitUpdate" lay-submit id="submitUpdate">提交修改</button>
 		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 	</div>
 </div>
@@ -105,6 +106,7 @@
 					})
 			    });
 	  })
+	  //添加
 	  form.on('submit(submitAddUser)', function(data){
 	 		 var username = $('#username').val()
 	 		 var password = $('#password').val()
@@ -129,6 +131,35 @@
 		 				 }
 		 			 }
 		 		 })
+	 		 }else{
+	 			layer.msg('请选择该用户权限',{icon: 2});
+	 		 }
+	  })
+	  //修改
+	  form.on('submit(submitUpdate)', function(data){
+		     var username = $('#username').val()
+	 		 var password = $('#password').val()
+	 		 var name = $('#name').val()
+	 		 var phone = $('#phone').val()
+	 		 var email = $('#email').val()
+	 		 if(array.length != 0){
+		 		 $.post({
+		 			 url:'<%=path%>/user/updateUser.html',
+		 			 dataType:'json',
+		 			 data:{userUsername:username,userPassword:password, 
+		 				 userName:name,userPhone:phone, userEmail:email,
+		 				 userMark:0,roleList:array
+		 			 },
+		 			 success:function(data){
+		 				 if(data.state == 'success'){
+		 					layer.msg(data.msg,{icon: 1});
+		 				 }else if(data.state == 'exist'){
+		 					layer.msg(data.msg,{icon: 2});
+		 				 }else if(data.state == 'error'){
+		 					layer.msg(data.msg,{icon: 2});
+		 				 }
+		 			 }
+		 		 }) 
 	 		 }else{
 	 			layer.msg('请选择该用户权限',{icon: 2});
 	 		 }

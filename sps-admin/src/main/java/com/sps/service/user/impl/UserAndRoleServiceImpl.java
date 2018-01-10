@@ -52,5 +52,29 @@ public class UserAndRoleServiceImpl implements UserAndRoleService{
 		
 		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
 	}
+	@Override
+	public int updateUserForRole(String userName, int[] roleList) {
+		
+		SpsUser user = userService.getUser(userName);
+		SpsUserandroleExample example = new SpsUserandroleExample();
+		example.createCriteria().andUserIdEqualTo(user.getUserId());
+		//直接删除当前用户的所有权限,重新添加
+		userandroleMapper.deleteByExample(example );
+		//添加角色
+		for (int roleId : roleList) {
+			SpsUserandrole userAndrole = 
+					getUserAndrole(user.getUserId(), roleId);
+			if(userAndrole == null){
+				SpsUserandrole spsUserandrole = new SpsUserandrole();
+				spsUserandrole.setUserId(user.getUserId());
+				spsUserandrole.setRoleId(roleId);
+				spsUserandrole.setCreatTime(new Date());
+				spsUserandrole.setUpdateTime(new Date());
+				spsUserandrole.setState(0);
+				userandroleMapper.insert(spsUserandrole);
+			}
+		}
+		return 1;
+	}
 
 }

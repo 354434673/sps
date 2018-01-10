@@ -25,7 +25,6 @@ import com.sps.service.user.UserService;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	private final String LOGIN_PAGE = "login";
 	@Resource
 	private UserService userService;
 	@Resource
@@ -87,6 +86,16 @@ public class UserController {
 						name, phone, email, mark);//用户添加
 		userAndRoleService.insertUserAndRole(username, roleList);//为该用户添加角色
 		return insertUser;
+	}
+	@RequestMapping(value="updateUser.html")
+	@ResponseBody
+	public  HashMap<String, Object> updateUser(SpsUser user,  
+				@RequestParam(value = "roleList[]") int[] roleList) {
+		HashMap<String, Object> updateUser = userService.updateUser(user);
+		
+		userAndRoleService.updateUserForRole(user.getUserUsername(), roleList);//修改用户角色
+		
+		return updateUser;
 	}
 	@RequestMapping(value="updatePassword.html")
 	@ResponseBody

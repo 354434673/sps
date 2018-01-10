@@ -370,7 +370,7 @@ to {
 					name="userName" placeholder="请输入用户名" /></li>
 				<li><input type="password" class="login-inpt" name="password"
 					placeholder="请输入密码" /></li>
-				<li><input type="text" class="login-inpt wa" name="code"
+				<li style="display: none"><input  value="1" type="text" class="login-inpt wa" name="code"
 					placeholder="验证码" /><span id="code">验证码</span></li>
 				<li><input type="submit" class="login-submit" value="登录" /></li>
 			</ul>

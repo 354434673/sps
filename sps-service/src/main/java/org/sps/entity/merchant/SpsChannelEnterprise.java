@@ -19,6 +19,8 @@ public class SpsChannelEnterprise implements Serializable{
     private String enterpriseCompanyRealitAddr;
 
     private String enterpriseCorp;
+    
+    private String enterpriseCorpIdcard;
 
     private Integer enterpriseOperatioTime;
 
@@ -74,6 +76,14 @@ public class SpsChannelEnterprise implements Serializable{
 
     public void setEnterpriseCorp(String enterpriseCorp) {
         this.enterpriseCorp = enterpriseCorp == null ? null : enterpriseCorp.trim();
+    }
+
+    public String getEnterpriseCorpIdcard() {
+        return enterpriseCorpIdcard;
+    }
+
+    public void setEnterpriseCorpIdcard(String enterpriseCorpIdcard) {
+        this.enterpriseCorpIdcard = enterpriseCorpIdcard == null ? null : enterpriseCorpIdcard.trim();
     }
 
     public Integer getEnterpriseOperatioTime() {

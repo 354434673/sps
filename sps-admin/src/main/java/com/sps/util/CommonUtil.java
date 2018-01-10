@@ -1,6 +1,7 @@
 package com.sps.util;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -8,9 +9,15 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 保存上传文件等工具类
@@ -152,5 +159,42 @@ public class CommonUtil {
         }
         return date;
     }
-
+    public Map<String, Object> uploadPicture(@RequestParam(value = "file", required = false) MultipartFile[] file,
+            String path, HttpServletRequest request) {
+            Map<String, Object> resultMap = new HashMap<>();
+            File targetFile = null;
+            String msg = "";//返回存储路径
+            List imgList = new ArrayList();
+            if (file != null && file.length > 0) {
+                for (int i = 0; i < file.length; i++) {
+                    String fileName = file[i].getOriginalFilename();//获取文件名加后缀
+                    if (fileName != null && fileName != "") {
+                        String fileF = fileName.substring(fileName.lastIndexOf("."), fileName.length());//文件后缀
+                        fileName = new Date().getTime() + "_" + new Random().nextInt(1000) + fileF;//新的文件名
+                        Date date = new Date();
+                        //先判断文件是否存在
+                        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+                        // 转换成String
+                        String d = format.format(date);// 得到的值20130802
+                        File file1 = new File(path);
+                        //如果文件夹不存在则创建
+                        if (!file1.exists() && !file1.isDirectory()) {
+                            file1.mkdirs();
+                        }
+                        targetFile = new File(file1, fileName);
+                        try {
+                            file[i].transferTo(targetFile);
+                            //  msg=returnUrl+d+"/"+fileName;
+                            imgList.add(fileName);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            resultMap.put("code", 0);
+            resultMap.put("fileName", imgList);
+            resultMap.put("state", FinalData.STATE_SUCCESS);
+            return resultMap;
+        }
 }

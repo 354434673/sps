@@ -56,6 +56,18 @@ public interface UserService {
 	 * @throws
 	 */
 	HashMap<String, Object> updatePassword(String oldPassword, String newPassword);
+	/**
+	 * 修改用户信息
+	 * @Title: updateUser   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param spsUser
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月11日 下午3:37:43
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	HashMap<String, Object> updateUser(SpsUser spsUser);
 	
 	
 }
