@@ -40,7 +40,7 @@
 			    </div>
 			    <label class="layui-form-label" style="width: 200px">流程状态:</label>
 			    <div class="layui-input-inline" >
-			    <select lay-filter="channelState"> 
+			    <select lay-filter="channelFlowState"> 
 				  <option value="0">待提交</option>
 				  <option value="1">风控审核中</option>
 				  <option value="2">风控审核通过</option>
@@ -115,33 +115,25 @@
 				  $('#queryName').val()
 			  })
 			  form.on('select(channelState)', function(data){
+				  
 				  table.reload('enterpriseId', {
 					  where: {channelState:data.value}
 					}); 
 			  });    
+			  form.on('select(channelFlowState)', function(data){
+				  console.log(data.value)
+				  table.reload('enterpriseId', {
+					  where: {channelFlowState:data.value}
+					}); 
+			  });    
 			  //监听工作条
-				table.on('tool(userTables)', function(obj){
+				table.on('tool(channelTables)', function(obj){
 					 var data = obj.data;
 					  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 					  var tr = obj.tr; //获得当前行 tr 的DOM对象
 					 	console.log(data)
 					  if(layEvent === 'detail'){ //查看
-						  layer.open({
-							  type: 2, 
-							  area: ['70%', '80%'],//宽高
-							  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-							  success: function(layero, index){
-								    var body = layer.getChildFrame('body', index);
-								    body.find('input').attr({"disabled":"disabled"});
-								    body.find('#username').val(data.userUsername)
-								    body.find('#name').val(data.userName)
-								    body.find('#phone').val(data.userPhone)
-								    body.find('#email').val(data.userEmail)
-								    body.find('#btn').hide();//隐藏提交按钮
-								    body.find('#passwordDiv').hide();//隐藏密码输入框
-								    body.find('#resetPasssword').show();//显示重置密码按钮
-								}  
-						  }); 
+						  location.href = '../../main/merchant/queryMerchant.html	'
 					  } else if(layEvent === 'del'){ //删除
 					    layer.confirm('真的删除行么', function(index){
 					      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
@@ -156,24 +148,7 @@
 					      //向服务端发送删除指令
 					    });
 					  } else if(layEvent === 'edit'){ //编辑
-						  layer.open({
-							  type: 2, 
-							  area: ['70%', '80%'],//宽高
-							  content: '../../page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-							  success: function(layero, index){
-								    var body = layer.getChildFrame('body', index);
-								    body.find('#username').val(data.userUsername)
-								    body.find('#name').val(data.userName)
-								    body.find('#phone').val(data.userPhone)
-								    body.find('#email').val(data.userEmail)
-								}  
-						  }); 
-					    
-					    //同步更新缓存对应的值
-/* 					    obj.update({
-					      username: '123'
-					      ,title: 'xxx'
-					    }); */
+						  location.href = '../../main/merchant/queryMerchant.html	'
 					  }
 				});
 			});

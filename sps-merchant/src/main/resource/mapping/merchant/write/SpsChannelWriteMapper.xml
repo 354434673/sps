@@ -8,6 +8,7 @@
     <result column="channel_salesman_name" property="channelSalesmanName" jdbcType="VARCHAR" />
     <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
     <result column="channel_state" property="channelState" jdbcType="INTEGER" />
+    <result column="channel_flow_state" jdbcType="INTEGER" property="channelFlowState" />
     <result column="channel_up_time" property="channelUpTime" jdbcType="TIMESTAMP" />
     <result column="channel_freeze_time" property="channelFreezeTime" jdbcType="TIMESTAMP" />
     <result column="standby1" property="standby1" jdbcType="VARCHAR" />
@@ -86,12 +87,12 @@
   <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannel" >
     insert into sps_channel (channel_id, channel_city, channel_salesman_num, 
       channel_salesman_name, channel_num, channel_state, 
-      channel_up_time, channel_freeze_time, standby1, 
+      channel_flow_state, channel_up_time, channel_freeze_time, standby1, 
       standby2, standby3, standby4
       )
     values (#{channelId,jdbcType=INTEGER}, #{channelCity,jdbcType=VARCHAR}, #{channelSalesmanNum,jdbcType=VARCHAR}, 
       #{channelSalesmanName,jdbcType=VARCHAR}, #{channelNum,jdbcType=VARCHAR}, #{channelState,jdbcType=INTEGER}, 
-      #{channelUpTime,jdbcType=TIMESTAMP}, #{channelFreezeTime,jdbcType=TIMESTAMP}, #{standby1,jdbcType=VARCHAR}, 
+      #{channelFlowState,jdbcType=INTEGER}, #{channelUpTime,jdbcType=TIMESTAMP}, #{channelFreezeTime,jdbcType=TIMESTAMP}, #{standby1,jdbcType=VARCHAR}, 
       #{standby2,jdbcType=VARCHAR}, #{standby3,jdbcType=VARCHAR}, #{standby4,jdbcType=VARCHAR}
       )
   </insert>
@@ -115,6 +116,9 @@
       </if>
       <if test="channelState != null" >
         channel_state,
+      </if>
+      <if test="channelFlowState != null">
+        channel_flow_state,
       </if>
       <if test="channelUpTime != null" >
         channel_up_time,
@@ -153,6 +157,9 @@
       </if>
       <if test="channelState != null" >
         #{channelState,jdbcType=INTEGER},
+      </if>
+      <if test="channelFlowState != null">
+        #{channelFlowState,jdbcType=INTEGER},
       </if>
       <if test="channelUpTime != null" >
         #{channelUpTime,jdbcType=TIMESTAMP},
@@ -195,6 +202,9 @@
       <if test="record.channelState != null" >
         channel_state = #{record.channelState,jdbcType=INTEGER},
       </if>
+      <if test="record.channelFlowState != null">
+        channel_flow_state = #{record.channelFlowState,jdbcType=INTEGER},
+      </if>
       <if test="record.channelUpTime != null" >
         channel_up_time = #{record.channelUpTime,jdbcType=TIMESTAMP},
       </if>
@@ -226,6 +236,7 @@
       channel_salesman_name = #{record.channelSalesmanName,jdbcType=VARCHAR},
       channel_num = #{record.channelNum,jdbcType=VARCHAR},
       channel_state = #{record.channelState,jdbcType=INTEGER},
+      channel_flow_state = #{record.channelFlowState,jdbcType=INTEGER},
       channel_up_time = #{record.channelUpTime,jdbcType=TIMESTAMP},
       channel_freeze_time = #{record.channelFreezeTime,jdbcType=TIMESTAMP},
       standby1 = #{record.standby1,jdbcType=VARCHAR},
@@ -253,6 +264,9 @@
       </if>
       <if test="channelState != null" >
         channel_state = #{channelState,jdbcType=INTEGER},
+      </if>
+      <if test="channelFlowState != null">
+        channel_flow_state = #{channelFlowState,jdbcType=INTEGER},
       </if>
       <if test="channelUpTime != null" >
         channel_up_time = #{channelUpTime,jdbcType=TIMESTAMP},
@@ -282,6 +296,7 @@
       channel_salesman_name = #{channelSalesmanName,jdbcType=VARCHAR},
       channel_num = #{channelNum,jdbcType=VARCHAR},
       channel_state = #{channelState,jdbcType=INTEGER},
+      channel_flow_state = #{channelFlowState,jdbcType=INTEGER},
       channel_up_time = #{channelUpTime,jdbcType=TIMESTAMP},
       channel_freeze_time = #{channelFreezeTime,jdbcType=TIMESTAMP},
       standby1 = #{standby1,jdbcType=VARCHAR},

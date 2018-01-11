@@ -505,6 +505,66 @@ public class SpsChannelExample {
             return (Criteria) this;
         }
 
+        public Criteria andChannelFlowStateIsNull() {
+            addCriterion("channel_flow_state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelFlowStateIsNotNull() {
+            addCriterion("channel_flow_state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelFlowStateEqualTo(Integer value) {
+            addCriterion("channel_flow_state =", value, "channelFlowState");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelFlowStateNotEqualTo(Integer value) {
+            addCriterion("channel_flow_state <>", value, "channelFlowState");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelFlowStateGreaterThan(Integer value) {
+            addCriterion("channel_flow_state >", value, "channelFlowState");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelFlowStateGreaterThanOrEqualTo(Integer value) {
+            addCriterion("channel_flow_state >=", value, "channelFlowState");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelFlowStateLessThan(Integer value) {
+            addCriterion("channel_flow_state <", value, "channelFlowState");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelFlowStateLessThanOrEqualTo(Integer value) {
+            addCriterion("channel_flow_state <=", value, "channelFlowState");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelFlowStateIn(List<Integer> values) {
+            addCriterion("channel_flow_state in", values, "channelFlowState");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelFlowStateNotIn(List<Integer> values) {
+            addCriterion("channel_flow_state not in", values, "channelFlowState");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelFlowStateBetween(Integer value1, Integer value2) {
+            addCriterion("channel_flow_state between", value1, value2, "channelFlowState");
+            return (Criteria) this;
+        }
+
+        public Criteria andChannelFlowStateNotBetween(Integer value1, Integer value2) {
+            addCriterion("channel_flow_state not between", value1, value2, "channelFlowState");
+            return (Criteria) this;
+        }
+
         public Criteria andChannelUpTimeIsNull() {
             addCriterion("channel_up_time is null");
             return (Criteria) this;

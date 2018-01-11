@@ -68,6 +68,20 @@ public interface UserService {
 	 * @throws
 	 */
 	HashMap<String, Object> updateUser(SpsUser spsUser);
+	/**
+	 * 删除该用户,假删除,改字段
+	 * @Title: updateUserState   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param userName
+	 * @param: @param state
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月11日 下午6:38:09
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	HashMap<String, Object> updateUserState(String userName, Integer state);
+	
 	
 	
 }

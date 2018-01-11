@@ -166,7 +166,6 @@ public class UserServiceImpl implements UserService{
 			record.setUserPassword(Md5Util.getMd5(spsUser.getUserPassword(), salt));
 			record.setUserPhone(record.getUserPhone());
 			record.setUserUpdatetime(new Date());
-			record.setUserMark(spsUser.getUserMark());
 			record.setUserSalt(salt);
 			record.setUserEmail(spsUser.getUserEmail());
 			SpsUserExample example = new SpsUserExample();
@@ -180,6 +179,26 @@ public class UserServiceImpl implements UserService{
 			map.put("state", "success");
 		} catch (Exception e) {
 			map.put("msg", "用户信息修改失败");
+			map.put("icon", "2");
+			map.put("state", "error");
+			e.printStackTrace();
+		}
+		return map;
+	}
+	@Override
+	public HashMap<String, Object> updateUserState(String userName, Integer state) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		try {
+			SpsUser record = new SpsUser();
+			record.setUserState(state);
+			SpsUserExample example = new SpsUserExample();
+			example.createCriteria().andUserUsernameEqualTo(userName);
+			spsUserMapper.updateByExampleSelective(record, example);
+			map.put("msg", "用户删除成功");
+			map.put("icon", "1");
+			map.put("state", "success");
+		} catch (Exception e) {
+			map.put("msg", "用户删除失败");
 			map.put("icon", "2");
 			map.put("state", "error");
 			e.printStackTrace();

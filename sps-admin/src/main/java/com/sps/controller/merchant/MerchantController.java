@@ -51,8 +51,10 @@ public class MerchantController {
 				business, guarantee, financeTarget, 
 				logistics, openAccount);
 		//添加后增加到user表
-		userService.insertUser(openAccount.getOpenAdminNum(),"123456",openAccount.getOpenAdminNum(), 
-				openAccount.getOpenAdminPhone(),null,"1");
+		if(result.get("state").equals("success")){
+			userService.insertUser(openAccount.getOpenAdminNum(),"123456",openAccount.getOpenAdminNum(), 
+					openAccount.getOpenAdminPhone(),null,"1");
+		}
 		return result;
 	}
 	@RequestMapping(value="/getGatherList.html")
@@ -66,11 +68,11 @@ public class MerchantController {
 	}
 	@RequestMapping(value="/getChannelList.html")
 	@ResponseBody
-	public HashMap<String, Object> getChannelList(String channelNum, Integer channelState, 
-			Integer page, Integer limit){
+	public HashMap<String, Object> getChannelList(String channelNum, Integer channelState,  
+			Integer channelFlowState, Integer page, Integer limit){
 		
 		HashMap<String, Object> channelList = channelReadService.getChannelList(
-				channelNum, channelState, page, limit);
+				channelNum, channelState, channelFlowState, page, limit);
 		
 		return channelList;
 		

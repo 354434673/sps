@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -105,4 +106,20 @@ public class UserController {
 		
 		return updatePassword;
 	}
+	@RequestMapping(value="updateUserState.html")
+	@ResponseBody
+	public  HashMap<String, Object> updateUserState(String userName, Integer state){
+		
+		HashMap<String, Object> updateUserState = userService.updateUserState(userName, state);
+		
+		return updateUserState;
+	}
+	@RequestMapping(value="/logout.html")
+	public String logout(){
+		//清除令牌中的信息
+		SecurityUtils.getSubject().logout();
+		
+		return "login";
+	}
+	
 }

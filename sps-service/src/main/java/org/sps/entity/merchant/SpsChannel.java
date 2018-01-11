@@ -3,7 +3,7 @@ package org.sps.entity.merchant;
 import java.io.Serializable;
 import java.util.Date;
 
-public class SpsChannel implements Serializable{
+public class SpsChannel implements Serializable {
     /**   
 	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
 	 */   
@@ -20,6 +20,8 @@ public class SpsChannel implements Serializable{
     private String channelNum;
 
     private Integer channelState;
+
+    private Integer channelFlowState;
 
     private Date channelUpTime;
 
@@ -79,6 +81,14 @@ public class SpsChannel implements Serializable{
 
     public void setChannelState(Integer channelState) {
         this.channelState = channelState;
+    }
+
+    public Integer getChannelFlowState() {
+        return channelFlowState;
+    }
+
+    public void setChannelFlowState(Integer channelFlowState) {
+        this.channelFlowState = channelFlowState;
     }
 
     public Date getChannelUpTime() {

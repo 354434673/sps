@@ -18,7 +18,7 @@ public interface ChannelReadService {
 	 * @throws
 	 */
 	HashMap<String, Object> getChannelList(String channelNum, Integer channelState, 
-			Integer page, Integer limit);
+			Integer channelFlowState, Integer page, Integer limit);
 	/**
 	 * 根据营业执照编号查询
 	 * @Title: getChannel   

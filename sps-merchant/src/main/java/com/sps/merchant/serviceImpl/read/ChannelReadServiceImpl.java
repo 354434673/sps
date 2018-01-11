@@ -28,7 +28,7 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 	private SpsChannelGatherReadMapper gatherRead;
 	@Override
 	public HashMap<String, Object> getChannelList(String channelNum, Integer channelState, 
-			Integer page, Integer limit) {
+			Integer channelFlowState, Integer page, Integer limit) {
 		
 		HashMap<String, Object> hashMap = new HashMap<String,Object>();
 		try {
@@ -38,6 +38,9 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 			}
 			if(channelState != null){
 				channel.setChannelState(channelState);
+			}
+			if(channelFlowState != null){
+				channel.setChannelFlowState(channelFlowState);
 			}
 			PageHelper.startPage(page, limit);
 			List<SpsChannelEnterprise> selectChannel = enterpriseRead.selectChannel(channel);

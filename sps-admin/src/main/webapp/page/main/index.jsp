@@ -66,13 +66,13 @@
 									aria-hidden="true"></i> 设置</a>
 							</dd>
 							<dd>
-								<a href="logout.html"><i class="fa fa-sign-out"
+								<a href="<%=path %>/user/logout.html"><i class="fa fa-sign-out"
 									aria-hidden="true"></i> 注销</a>
 							</dd>
 						</dl></li>
 				</ul>
 				<ul class="layui-nav admin-header-item-mobile">
-					<li class="layui-nav-item"><a href="logout.html"><i
+					<li class="layui-nav-item"><a href="/user/logout.html"><i
 							class="fa fa-sign-out" aria-hidden="true"></i> 注销</a></li>
 				</ul>
 			</div>

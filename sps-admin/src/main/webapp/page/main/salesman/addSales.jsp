@@ -25,45 +25,30 @@
 <h3>用户信息</h3>
 <hr>
 <div class="layui-form layui-form-pane"  >
-  <div class="layui-form-item ">
-    <label class="layui-form-label">*用户名：</label>
-    <div class="layui-input-inline">
-      <input id="username" type="text" name="username"  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
-    </div>
-    <button style="display:none" class="layui-btn layui-btn-primary" id="resetPasssword">重置密码</button>
-  </div>
   <div class="layui-form-item" id="passwordDiv">
-   <label class="layui-form-label">*登录密码：</label>
+   <label class="layui-form-label">*业务员姓名：</label>
     <div class="layui-input-inline">
       <input id="password" name="password" type="password"  lay-verify="required|minLength" placeholder="请输入密码" autocomplete="off" class="layui-input">
     </div>
-    <label class="layui-form-label">*确认密码：</label>
+    <label class="layui-form-label">*身份证号码：</label>
     <div class="layui-input-inline">
       <input type="password"  lay-verify="required|minLength|verify" placeholder="请确认密码" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">*姓名：</label>
+    <label class="layui-form-label">*手机号：</label>
     <div class="layui-input-inline">
       <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="请输入姓名" autocomplete="off" class="layui-input">
     </div>
-    <label class="layui-form-label">*联系电话：</label>
+    <label class="layui-form-label">*电子邮箱：</label>
     <div class="layui-input-inline">
       <input id="phone" type="text" name="phone" lay-verify="required|phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">*电子邮箱：</label>
+    <label class="layui-form-label">*城市：</label>
     <div class="layui-input-inline">
       <input id="email"  type="email" name="email" lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
-    </div>
-  </div>
-
-<h3>角色信息</h3>
-<hr>
-  <div class="layui-form-item">
-    <label class="layui-form-label">选择角色：</label>
-    <div class="layui-input-block" id="checkList" name="check">
     </div>
   </div>
  	<div class="layui-form-item" align="center" id="btn" >

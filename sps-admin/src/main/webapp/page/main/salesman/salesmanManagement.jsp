@@ -24,13 +24,17 @@
 	<div style="margin: 15px;">
 		<div class="layui-form layui-form-pane"  >
 		    <div class="layui-form-item">
-			    <label class="layui-form-label">用户名:</label>
+			    <label class="layui-form-label">业务员名称:</label>
 			    <div class="layui-input-inline">
-			      <input id="queryUsername" type="text" name="username"  lay-verify="" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+			      <input id="salesmanName" type="text" name="salesmanName"  lay-verify="" placeholder="请输入业务员名称" autocomplete="off" class="layui-input">
 			    </div>
-			    <label class="layui-form-label">姓名:</label>
+			    <label class="layui-form-label">身份证号码:</label>
 			    <div class="layui-input-inline">
-			      <input id="queryName" type="text" name="name"  lay-verify="" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+			      <input id="salesmanIdCard" type="text" name="salesmanIdCard"  lay-verify="" placeholder="请输入身份证" autocomplete="off" class="layui-input">
+			    </div>
+			    <label class="layui-form-label">手机号:</label>
+			    <div class="layui-input-inline">
+			      <input id="salesmanPhone" type="text" name="salesmanPhone"  lay-verify="" placeholder="请输入手机" autocomplete="off" class="layui-input">
 			    </div>
 			    	<button class="layui-btn layui-btn-primary" id="queryUser">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="resetUser">重置</button>
@@ -68,7 +72,7 @@
 				  layer.open({
 					  type: 2, 
 					  area: ['70%', '80%'],//宽高
-					  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+					  content: '<%=path%>/page/main/salesman/addSales.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					  cancel: function(index, layero){ 
 						  table.reload('userId', {
 							});
@@ -109,6 +113,7 @@
 					 var data = obj.data;
 					  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 					  var tr = obj.tr; //获得当前行 tr 的DOM对象
+					 	console.log(data)
 					  if(layEvent === 'detail'){ //查看
 						  layer.open({
 							  type: 2, 
@@ -130,23 +135,10 @@
 					  } else if(layEvent === 'del'){ //删除
 					    layer.confirm('真的删除行么', function(index){
 					      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-					      layer.close(index);
-  					  			$.post({
-						 			 url:'/sps-admin/user/updateUserState.html',
-						 			 dataType:'json',
-						 			 data:{
-						 				 userName:data.userUsername,
-						 				 state:1
-						 				 },
-						 			 success:function(data){
-								 		 var list = "";
-								 		 $.each(data,function(i,item){
-										  list +='<option value="'+item.areaId+'" title="'+item.name+'">'+item.name+'</option>';
-										  $('#'+Id).html(list)
-									  	})
-									  	form.render('select');
-						 			 }
-						 		 })
+					      layer.close(
+
+						  );
+					      //向服务端发送删除指令
 					    });
 					  } else if(layEvent === 'edit'){ //编辑
 						  layer.open({
