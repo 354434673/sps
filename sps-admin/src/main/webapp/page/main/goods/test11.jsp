@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <title>添加商品</title>
     <meta name="renderer" content="webkit">
-    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -80,22 +80,49 @@
                     <th>波动方式</th>
                     <th>波动值</th>
                     <th>波动区间</th>
-                    <th><a href="#" style="text-decoration: underline " id="addGoodSku">添加</a></th>
+                    <th>操作</th>
+                    <%--<th><a href="#" style="text-decoration: underline " id="addGoodSku">添加</a></th>--%>
                 </tr>
                 </thead>
-                <tbody id="content">
+                <tbody>
                 <tr>
                     <td><input type="text" name="gSpuName" id="gColor" class="tdStyle"></td>
                     <td><input type="text" name="gSpuName" id="gSize" class="tdStyle"></td>
                     <td><input type="text" name="gSpuName" id="gNo" class="tdStyle"></td>
+                    <td><input type="text" name="gSpuName" id="gPrice" class="tdStyle"></td>
+                    <td width="208px"><input type="radio" name="gType" value="1" title="按比例" class="type" checked>
+                        <input type="radio" name="gType" value="0" title="按金额" class="type"></td>
+                    <td><input type="text" name="gSpuName" id="gScale" class="tdStyle"></td>
+                    <td><input type="text" name="gSpuName" id="gAprice" class="tdStyle">-<input type="text"
+                                                                                                name="gSpuName"
+                                                                                                id="gBprice"
+                                                                                                class="tdStyle"></td>
+                    <td><a href="#" style="text-decoration: underline " id="adGoodSku">添加</a></td>
+                </tr>
+                </tbody>
+                <tbody id="content">
+                <%-- <tr>
+                 <td>112</td>
+                 <td>1212</td>
+                 <td>44</td>
+                 <td>444</td>
+                 <td width="208px"><input type="radio"  name="gType" value="1" title="按比例" checked>
+                     <input type="radio" name="gType" value="0" title="按金额"></td>
+                 <td><input type="text" name="gSpuName" id="gScale" class="tdStyle"></td>
+                 <td><input type="text" name="gSpuName" id="gAprice" class="tdStyle">-<input type="text" name="gSpuName" id="gBprice" class="tdStyle"></td>
+                 <td><a href="#" style="text-decoration: underline " id="adGoodSku">添加</a></td>
+                 </tr>--%>
+                <%--<tr>
+                    <td><input type="text" name="gSpuName" id="gColor" class="tdStyle"></td>
+                    <td><input type="text" name="gSpuName" id="gSize" class="tdStyle"></td>
+                    <td><input type="text" name="gSpuName" id="gNo" class="tdStyle"></td>
                     <td><input type="text" name="gSpuName" id="gPrice"  class="tdStyle"></td>
-                    <td width="208px"><input type="radio"  name="gPrice" value="1" title="按比例" checked>
-                        <input type="radio" name="gPrice" value="0" title="按金额"></td>
-                    <td><input type="text" name="gSpuName"  id="gType" class="tdStyle"></td>
+                    <td width="208px"><input type="radio"  name="gType" value="1" title="按比例" checked>
+                        <input type="radio" name="gType" value="0" title="按金额"></td>
                     <td><input type="text" name="gSpuName" id="gScale" class="tdStyle"></td>
                     <td><input type="text" name="gSpuName" id="gAprice" class="tdStyle">-<input type="text" name="gSpuName" id="gBprice" class="tdStyle"></td>
                     <td><a href="#" style="text-decoration: underline " id="adGoodSku">添加</a></td>
-                </tr>
+                </tr>--%>
                 </tbody>
                 <%--      <input type="button" value="提交数据" id="btnSubmit" onclick="SaveData()"/>--%>
             </table>
@@ -124,7 +151,8 @@
             <label class="layui-form-label">*主图：</label>
             <div class="layui-input-inline">
                 <input type="hidden" name="gPic" id="gPic" value="">
-                <input type="file" name="file"   style="padding-left: 5px;padding-top: 5px;" id="logoFile2"  onchange="setImg2(this);" multiple="multiple"/>
+                <input type="file" name="file" style="padding-left: 5px;padding-top: 5px;" id="logoFile2"
+                       onchange="setImg2(this);" multiple="multiple"/>
                 <%-- <br/><font color="red">图片尺寸：750*300（支持多图批量上传）</font>--%>
                 <%--   <input type="text" id="gPic" name="gPic"
                           placeholder="图片" class="layui-input"/>
@@ -135,7 +163,8 @@
             <label class="layui-form-label">*详情图：</label>
             <div class="layui-input-inline">
                 <input type="hidden" name="gDpic" id="gDpic" value="">
-                <input type="file" name="file" id="logoFile1"   style="padding-left: 5px;padding-top: 5px;" onchange="setImg1(this);" multiple="multiple"/ >
+                <input type="file" name="file" id="logoFile1" style="padding-left: 5px;padding-top: 5px;"
+                       onchange="setImg1(this);" multiple="multiple"/ >
                 <%-- <br/><font color="red">图片尺寸：750*300（支持多图批量上传）</font>--%>
                 <%--   <input type="text" id="gPic" name="gPic"
                           placeholder="图片" class="layui-input"/>
@@ -153,25 +182,30 @@
 <div id="tree"></div>
 </div>
 <form id="upload" enctype="multipart/form-data">
-    <input type="file" id='imgupl' name="file" style="display:none"  onchange="validateFile()"/>
+    <input type="file" id='imgupl' name="file" style="display:none" onchange="validateFile()"/>
 </form>
 <form id="upload1" enctype="multipart/form-data">
-    <input type="file" id='imgup' name="file"  multiple="multiple"  style="display:none" onchange="validateFile1()"/>
+    <input type="file" id='imgup' name="file" multiple="multiple" style="display:none" onchange="validateFile1()"/>
 </form>
 <script src="<%=path%>/page/static/js/jquery-1.10.2.min.js"></script>
 <script src="<%=path%>/page/static/js/ajaxfileupload.js"></script>
-<script type="text/javascript"
-        src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 <script src="<%=path%>/page/static/treeTable/layui.js"></script>
 <script type="text/javascript">
     $(function () {
+        $('input[type=radio][name=gType]').change(function () {
+            alert("222");
+            if (this.value == 'allot') {
+            }
+            else if (this.value == 'transfer') {
+            }
+        });
         //修改时候获取数据
         if ($("#goodsId").val() != "") {
             getDate($("#goodsId").val());
-            $("#showCategory").attr({"disabled":"disabled"});
-            $("#gBrandId").attr({"disabled":"disabled"});
-            $("#gSpuName").attr({"disabled":"disabled"});
-            $("#gSpuNo").attr({"disabled":"disabled"});
+            $("#showCategory").attr({"disabled": "disabled"});
+            $("#gBrandId").attr({"disabled": "disabled"});
+            $("#gSpuName").attr({"disabled": "disabled"});
+            $("#gSpuNo").attr({"disabled": "disabled"});
         }
         initBrandList();
         initTree();
@@ -182,30 +216,43 @@
             $("#showCategory").html($("#brandCategoryNames").val())
         }
 
-
     })
 
-    function setImg2(obj){//用于进行图片上传，返回地址
-        var f=$(obj).val();
-        if(f == null || f ==undefined || f == ''){
+    /* $(".type").click(function(){
+       alert($(this).val())
+     });
+     $(document).on("click", ".type", function (e) {
+         alert(1)
+
+     });
+     $('input:radio[name="gType"]').change(function(){
+         if($(this).is(":checked")){
+             alert($(this).val());
+         }else{
+             alert(0);
+         }
+     });*/
+
+    function setImg2(obj) {//用于进行图片上传，返回地址
+        var f = $(obj).val();
+        if (f == null || f == undefined || f == '') {
             return false;
-        }else if(!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f))
-        {
+        } else if (!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f)) {
             layer.msg("类型必须是图片(.png|jpg|bmp|gif|PNG|JPG|BMP|GIF)");
             $(obj).val('');
             return false;
-        }else{
+        } else {
             //批量上传图片
             $.ajaxFileUpload({
                 type: 'POST',
                 url: '/sps-admin/common/file/manyUpload',
-                secureuri:false,
+                secureuri: false,
                 cache: false,
-                fileElementId:"logoFile2",//文件选择框的id属性  ,//文件选择框的id属性
+                fileElementId: "logoFile2",//文件选择框的id属性  ,//文件选择框的id属性
                 dataType: 'json',   //json
                 contentType: false,    //不可缺
                 processData: false,    //不可缺
-                success: function (data){
+                success: function (data) {
                     if (data.code == 0) {
                         $("#gPic").val(data.fileName);
                         // $("#brandSmallUrl").val(res.fileName);
@@ -233,7 +280,7 @@
                          $(obj).val('');
                      }*/
                 },
-                error:function(XMLHttpRequest, textStatus, errorThrown){
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     layer.msg("上传失败，请检查网络后重试");
                     $("#url").val("");
                     $(obj).val('');
@@ -241,34 +288,34 @@
             });
         }
     }
-    function setImg1(obj){//用于进行图片上传，返回地址
-        var f=$(obj).val();
-        if(f == null || f ==undefined || f == ''){
+
+    function setImg1(obj) {//用于进行图片上传，返回地址
+        var f = $(obj).val();
+        if (f == null || f == undefined || f == '') {
             return false;
-        }else if(!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f))
-        {
+        } else if (!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f)) {
             layer.msg("类型必须是图片(.png|jpg|bmp|gif|PNG|JPG|BMP|GIF)");
             $(obj).val('');
             return false;
-        }else{
+        } else {
             //批量上传图片
             $.ajaxFileUpload({
                 type: 'POST',
                 url: '/sps-admin/common/file/manyUpload',
-                secureuri:false,
+                secureuri: false,
                 cache: false,
-                fileElementId:"logoFile1",//文件选择框的id属性  ,//文件选择框的id属性
+                fileElementId: "logoFile1",//文件选择框的id属性  ,//文件选择框的id属性
                 dataType: 'json',   //json
                 contentType: false,    //不可缺
                 processData: false,    //不可缺
-                success: function (data){
+                success: function (data) {
                     if (data.code == 0) {
                         $("#gDpic").val(data.fileName);
                     } else {
                         layer.msg('上传失败');
                     }
                 },
-                error:function(XMLHttpRequest, textStatus, errorThrown){
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     layer.msg("上传失败，请检查网络后重试");
                     $("#url").val("");
                     $(obj).val('');
@@ -276,9 +323,10 @@
             });
         }
     }
+
     //上传之后如果感觉有张上传错了，想删除怎么办：
-    function delespan1(id){
-        $('#P'+id).remove();
+    function delespan1(id) {
+        $('#P' + id).remove();
     }
 
     //修改获取数据
@@ -358,56 +406,76 @@
     });
 
     //动态添加表格
-    $(document).on('click', '#addGoodSku', function (e) {
-        var no = $("#gSpuNo").val()+'-';
-        $('#content').append(
-            "<tr >" +
-            "<input type='hidden'  value=''></td>" +
-            "<td ><input type='text'   class='tdStyle' value=''></td>" +
-            "<td ><input type='text' class='tdStyle' value=''></td>" +
-            "<td >" + no + "<input type='text' style='width: 30px' value=''></td>" +
-            "<td ><input type='text' class='tdStyle' value=''></td>" +
-            "<td >" +
-            "<input type='radio' value='0' name='type' title='按比例'>" +
-            "<input type='radio' value='1'  name='type' title='按金额'  >" +
-            "</td >" +
-            "<td ><input type='text' class='tdStyle' value=''></td>" +
-            "<td ><input type='text' class='tdStyle' value=''></td>" +
-            "<td >" +
-            "<span onclick='remove_line(this);'>删除</span> " +
-            "</td>" +
-            "</tr>");
+    $(document).on('click', '#adGoodSku', function (e) {
+        if ($("#gSpuNo").val() != "") {
+            var no = $("#gSpuNo").val();
+            var gColor = $("#gColor").val();
+            var gSize = $("#gSize").val();
+            var gNo = $("#gNo").val();
+            var gPrice = $("#gPrice").val();
+            var gType = $("input[type='radio']:checked").val();
+            var gScale = $("#gScale").val();
+            var gAprice;
+            var gBprice;
+            if (gType == '1') {
+                gType = '按比例';
+                gAprice = accSub(gPrice, accMul(gPrice, accDiv(gScale, 100)));
+                gBprice = accAdd(gPrice, accMul(gPrice, accDiv(gScale, 100)));
+                gScale = gScale + "%"
+            } else if (gType == '0') {
+                gType = '按金额';
+                gAprice = accSub(gPrice, gScale);
+                gBprice = accAdd(gPrice, gScale);
+            }
+            $('#content').append(
+                "<tr >" +
+                "<td > " + gColor + "</td>" +
+                "<td >" + gSize + "</td>" +
+                "<td >" + no + -+gNo + "</td>" +
+                "<td >" + gPrice + "</td>" +
+                "<td >" + gType + "</td>" +
+                "<td >" + gScale + "</td>" +
+                "<td >" + gAprice + "-" + gBprice + "</td>" +
+                "<td >" +
+                "<span onclick='remove_line(this);'>删除</span> " +
+                "</td>" +
+                "</tr>");
+        } else {
+            layer.msg("请先输入spu编号")
+        }
     });
+    $(document).on('change', '#addGoodSku', function (e) {
+
+    })
 
 
     //动态添加表格
-    $(document).on('click', '#adGoodSku', function (e) {
+    $(document).on('click', '#addGoodSku', function (e) {
         var no = $("#gSpuNo").val();
         var gColor = $("#gColor").val();
         var gSize = $("#gSize").val();
         var gNo = $("#gNo").val();
         var gPrice = $("#gPrice").val();
-        var gType = $("#gType").val();
+        var gType = $("input[type='radio']:checked").val();
         var gScale = $("#gSpuNo").val();
         var gAprice = $("#gSpuNo").val();
         var gBprice = $("#gBprice").val();
-
-
         $('#content').append(
             "<tr >" +
-            "<input type='hidden'  value=''></td>" +
             "<td > " + gColor + "</td>" +
             "<td >" + gSize + "</td>" +
-            "<td >" + no +-+gNo+"</td>" +
+            "<td >" + no + -+gNo + "</td>" +
             "<td >" + gPrice + "</td>" +
             "<td >" + gType + "</td>" +
             "<td >" + gScale + "</td>" +
-            "<td >" + gBprice- gAprice+ "</td>" +
+            "<td >" + gBprice - gAprice + "</td>" +
             "<td >" +
             "<span onclick='remove_line(this);'>删除</span> " +
             "</td>" +
             "</tr>");
+
     });
+
     //删除选择记录
     function remove_line(index) {
         $(index).parent().parent().remove();
@@ -415,25 +483,27 @@
 
     //保存sku数据
     function SaveData() {
+        var type="";
         $('#content tr').each(function () {
-            /* var json = {};
-             json.gColor = $(this).find("td:eq(0)").find("input").val();
-             json.gSize = $(this).find("td:eq(1)").find("input").val();
-             json.gNo = $(this).find("td:eq(2)").find("input").val();
-             json.gPrice = $(this).find("td:eq(3)").find("input").val();
-             json.gType = $(this).find("td:eq(4)").find("input").val();
-             json.gScale = $(this).find("td:eq(5)").find("input").val();
-             json.certno = $(this).find("td:eq(6)").find("input").val();
-             var jsonStr = JSON.stringify(json);*/
+            var  aprice = $(this).find("td:eq(6)").html().split('-')[0];
+            var  bprice = $(this).find("td:eq(6)").html().split('-')[1];
+
+            if ($(this).find("td:eq(4)").html() == "按比例") {
+                type = "0";
+            } else {
+                type = "1";
+            }
             $.ajax({
                 data: {
+                    gType: type,
+                    gBprice:bprice,
+                    gAprice: aprice,
                     gGid: $("#goodsId").val(),
-                    gColor: $(this).find("td:eq(0)").find("input").val(),
-                    gSize: $(this).find("td:eq(1)").find("input").val(),
-                    gNo: $(this).find("td:eq(2)").find("input").val(),
-                    gPrice: $(this).find("td:eq(3)").find("input").val(),
-                    gType: $(this).find("td:eq(4)").find("input").val(),
-                    gScale: $(this).find("td:eq(5)").find("input").val(),
+                    gColor: $(this).find("td:eq(0)").html(),
+                    gSize: $(this).find("td:eq(1)").html(),
+                    gNo: $(this).find("td:eq(2)").html(),
+                    gPrice: $(this).find("td:eq(3)").html(),
+                    gScale: $(this).find("td:eq(5)").html()
                 },//提交的数据
                 url: "<%=path%>/goodSku/saveOrUpdate",//提交连接
                 type: 'post',
@@ -449,6 +519,7 @@
         });
 
     }
+
     //从后台再查一次
     function getCategoryName(pId, id) {
         $.ajax({
@@ -610,6 +681,76 @@
             },
         });
     });
+
+
+    // 两个浮点数求和
+    function accAdd(num1, num2) {
+        var r1, r2, m;
+        try {
+            r1 = num1.toString().split('.')[1].length;
+        } catch (e) {
+            r1 = 0;
+        }
+        try {
+            r2 = num2.toString().split(".")[1].length;
+        } catch (e) {
+            r2 = 0;
+        }
+        m = Math.pow(10, Math.max(r1, r2));
+        // return (num1*m+num2*m)/m;
+        return Math.round(num1 * m + num2 * m) / m;
+    }
+
+    // 两个浮点数相减
+    function accSub(num1, num2) {
+        var r1, r2, m;
+        try {
+            r1 = num1.toString().split('.')[1].length;
+        } catch (e) {
+            r1 = 0;
+        }
+        try {
+            r2 = num2.toString().split(".")[1].length;
+        } catch (e) {
+            r2 = 0;
+        }
+        m = Math.pow(10, Math.max(r1, r2));
+        n = (r1 >= r2) ? r1 : r2;
+        return (Math.round(num1 * m - num2 * m) / m).toFixed(n);
+    }
+
+    // 两数相除
+    function accDiv(num1, num2) {
+        var t1, t2, r1, r2;
+        try {
+            t1 = num1.toString().split('.')[1].length;
+        } catch (e) {
+            t1 = 0;
+        }
+        try {
+            t2 = num2.toString().split(".")[1].length;
+        } catch (e) {
+            t2 = 0;
+        }
+        r1 = Number(num1.toString().replace(".", ""));
+        r2 = Number(num2.toString().replace(".", ""));
+        return (r1 / r2) * Math.pow(10, t2 - t1);
+    }
+
+    function accMul(num1, num2) {
+        var m = 0, s1 = num1.toString(), s2 = num2.toString();
+        try {
+            m += s1.split(".")[1].length
+        } catch (e) {
+        }
+        ;
+        try {
+            m += s2.split(".")[1].length
+        } catch (e) {
+        }
+        ;
+        return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
+    }
 </script>
 </body>
 </html>

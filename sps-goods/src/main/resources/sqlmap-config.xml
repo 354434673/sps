@@ -18,6 +18,7 @@
 		<typeAlias alias="SpsBrand" type="org.sps.entity.goods.SpsBrand" />
 		<typeAlias alias="SpsGoods" type="org.sps.entity.goods.SpsGoods" />
 		<typeAlias alias="SpsGoodSku" type="org.sps.entity.goods.SpsGoodSku" />
+		<typeAlias alias="SpsGoodsAlbum" type="org.sps.entity.goods.SpsGoodsAlbum" />
 
 	</typeAliases>
 
@@ -26,5 +27,6 @@
 		<mapper resource="mapping/goods/SpsGoodCategoryMapper.xml" />
 		<mapper resource="mapping/goods/SpsGoodsMapper.xml" />
 		<mapper resource="mapping/goods/SpsGoodSkuMapper.xml" />
+		<mapper resource="mapping/goods/SpsGoodsAlbumMapper.xml" />
 	</mappers>
 </configuration>
