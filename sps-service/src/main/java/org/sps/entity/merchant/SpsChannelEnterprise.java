@@ -13,7 +13,9 @@ public class SpsChannelEnterprise implements Serializable{
     private String enterpriseBusinesslicenseNo;
 
     private String enterpriseCompanyName;
-
+    
+    private String enterpriseCompanyAbbreviation;
+    
     private String enterpriseCompanyRegisterAddr;
 
     private String enterpriseCompanyRealitAddr;
@@ -52,6 +54,14 @@ public class SpsChannelEnterprise implements Serializable{
 
     public void setEnterpriseCompanyName(String enterpriseCompanyName) {
         this.enterpriseCompanyName = enterpriseCompanyName == null ? null : enterpriseCompanyName.trim();
+    }
+
+    public String getEnterpriseCompanyAbbreviation() {
+        return enterpriseCompanyAbbreviation;
+    }
+
+    public void setEnterpriseCompanyAbbreviation(String enterpriseCompanyAbbreviation) {
+        this.enterpriseCompanyAbbreviation = enterpriseCompanyAbbreviation == null ? null : enterpriseCompanyAbbreviation.trim();
     }
 
     public String getEnterpriseCompanyRegisterAddr() {

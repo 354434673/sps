@@ -26,15 +26,15 @@
 		    <div class="layui-form-item">
 			    <label class="layui-form-label">业务员名称:</label>
 			    <div class="layui-input-inline">
-			      <input id="salesmanName" type="text" name="salesmanName"  lay-verify="" placeholder="请输入业务员名称" autocomplete="off" class="layui-input">
+			      <input id="salesmanName" type="text" name="salesmanName"  placeholder="请输入业务员名称" autocomplete="off" class="layui-input">
 			    </div>
 			    <label class="layui-form-label">身份证号码:</label>
 			    <div class="layui-input-inline">
-			      <input id="salesmanIdCard" type="text" name="salesmanIdCard"  lay-verify="" placeholder="请输入身份证" autocomplete="off" class="layui-input">
+			      <input id="salesmanIdcard" type="text" name="salesmanIdcard"  placeholder="请输入身份证" autocomplete="off" class="layui-input">
 			    </div>
 			    <label class="layui-form-label">手机号:</label>
 			    <div class="layui-input-inline">
-			      <input id="salesmanPhone" type="text" name="salesmanPhone"  lay-verify="" placeholder="请输入手机" autocomplete="off" class="layui-input">
+			      <input id="salesmanPhone" type="text" name="salesmanPhone"  placeholder="请输入手机" autocomplete="off" class="layui-input">
 			    </div>
 			    	<button class="layui-btn layui-btn-primary" id="queryUser">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="resetUser">重置</button>
@@ -82,30 +82,32 @@
 			  table.render({
 			    elem: '#salesmanList'
 			    ,url: '<%=path%>/salesman/getSalesmanList.json' //数据接口
-			    ,id:'userId'
+			    ,id:'salesmanId'
 			    ,page:true
 			    ,cols: [[ //表头
-			      {field: 'userId', title: '序号', align:'center'}
-			      ,{field: 'userUsername', title: '业务员姓名', align:'center'}
-			      ,{field: 'userName', title: '身份证号码',align:'center'}
-			      ,{field: 'userPhone', title: '手机号', width:230, align:'center'}
-			      ,{field: 'userEmail', title: '电子邮箱', width:230,align:'center'} 
-			      ,{field: 'role', title: '城市', align:'center',templet: '#roleTpl'}
+			      {field: 'salesmanId', type:'numbers',title: '序号', align:'center'}
+			      ,{field: 'salesmanName', title: '业务员姓名', align:'center'}
+			      ,{field: 'salesmanIdcard', title: '身份证号码',align:'center'}
+			      ,{field: 'salesmanPhone', title: '手机号', width:230, align:'center'}
+			      ,{field: 'salesmanEmail', title: '电子邮箱', width:230,align:'center'} 
+			      ,{field: 'salesmanCity', title: '城市', align:'center'}
 			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
 			  //查询
 			  $('#queryUser').on('click',function(){
-				  var username = $('#queryUsername').val()
-				  var name = $('#queryName').val()
-				  table.reload('userId', {
-					  where: {username:username, name:name}
+				  var salesmanName = $('#salesmanName').val()
+				  var salesmanIdcard = $('#salesmanIdcard').val()
+				  var salesmanPhone = $('#salesmanPhone').val()
+				  table.reload('salesmanId', {
+					  where: {salesmanName:salesmanName,
+						  salesmanIdcard:salesmanIdcard,
+						  salesmanPhone:salesmanPhone}
 					});
 			  })
 			  //重置
 			  $('#resetUser').on('click',function(){
-				  $('#queryUsername').val('')
-				  $('#queryName').val('')
+				  $('input').val('')
 			  })
 			  //监听工作条
 				table.on('tool(userTables)', function(obj){

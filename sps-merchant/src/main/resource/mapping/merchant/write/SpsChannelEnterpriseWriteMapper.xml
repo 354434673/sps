@@ -81,16 +81,16 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannelEnterprise" >
+  <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannelEnterprise">
     insert into sps_channel_enterprise (enterprise_id, enterprise_businesslicense_no, 
-      enterprise_company_name, enterprise_company_register_addr, 
-      enterprise_company_realit_addr, enterprise_corp, 
-      enterprise_corp_idCard, enterprise_operatio_time, 
+      enterprise_company_name, enterprise_company_abbreviation, 
+      enterprise_company_register_addr, enterprise_company_realit_addr, 
+      enterprise_corp, enterprise_corp_idCard, enterprise_operatio_time, 
       enterprise_employee_num, channel_num)
     values (#{enterpriseId,jdbcType=INTEGER}, #{enterpriseBusinesslicenseNo,jdbcType=VARCHAR}, 
-      #{enterpriseCompanyName,jdbcType=VARCHAR}, #{enterpriseCompanyRegisterAddr,jdbcType=VARCHAR}, 
-      #{enterpriseCompanyRealitAddr,jdbcType=VARCHAR}, #{enterpriseCorp,jdbcType=VARCHAR}, 
-      #{enterpriseCorpIdcard,jdbcType=VARCHAR}, #{enterpriseOperatioTime,jdbcType=INTEGER}, 
+      #{enterpriseCompanyName,jdbcType=VARCHAR}, #{enterpriseCompanyAbbreviation,jdbcType=VARCHAR}, 
+      #{enterpriseCompanyRegisterAddr,jdbcType=VARCHAR}, #{enterpriseCompanyRealitAddr,jdbcType=VARCHAR}, 
+      #{enterpriseCorp,jdbcType=VARCHAR}, #{enterpriseCorpIdcard,jdbcType=VARCHAR}, #{enterpriseOperatioTime,jdbcType=INTEGER}, 
       #{enterpriseEmployeeNum,jdbcType=INTEGER}, #{channelNum,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelEnterprise" >
@@ -104,6 +104,9 @@
       </if>
       <if test="enterpriseCompanyName != null" >
         enterprise_company_name,
+      </if>
+       <if test="enterpriseCompanyAbbreviation != null">
+        enterprise_company_abbreviation,
       </if>
       <if test="enterpriseCompanyRegisterAddr != null" >
         enterprise_company_register_addr,
@@ -136,6 +139,9 @@
       </if>
       <if test="enterpriseCompanyName != null" >
         #{enterpriseCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCompanyAbbreviation != null">
+        #{enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
       </if>
       <if test="enterpriseCompanyRegisterAddr != null" >
         #{enterpriseCompanyRegisterAddr,jdbcType=VARCHAR},
@@ -172,6 +178,9 @@
       <if test="record.enterpriseCompanyName != null" >
         enterprise_company_name = #{record.enterpriseCompanyName,jdbcType=VARCHAR},
       </if>
+      <if test="record.enterpriseCompanyAbbreviation != null">
+        enterprise_company_abbreviation = #{record.enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
+      </if>
       <if test="record.enterpriseCompanyRegisterAddr != null" >
         enterprise_company_register_addr = #{record.enterpriseCompanyRegisterAddr,jdbcType=VARCHAR},
       </if>
@@ -203,6 +212,7 @@
     set enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
       enterprise_businesslicense_no = #{record.enterpriseBusinesslicenseNo,jdbcType=VARCHAR},
       enterprise_company_name = #{record.enterpriseCompanyName,jdbcType=VARCHAR},
+      enterprise_company_abbreviation = #{record.enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
       enterprise_company_register_addr = #{record.enterpriseCompanyRegisterAddr,jdbcType=VARCHAR},
       enterprise_company_realit_addr = #{record.enterpriseCompanyRealitAddr,jdbcType=VARCHAR},
       enterprise_corp = #{record.enterpriseCorp,jdbcType=VARCHAR},
@@ -222,6 +232,9 @@
       </if>
       <if test="enterpriseCompanyName != null" >
         enterprise_company_name = #{enterpriseCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCompanyAbbreviation != null">
+        enterprise_company_abbreviation = #{enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
       </if>
       <if test="enterpriseCompanyRegisterAddr != null" >
         enterprise_company_register_addr = #{enterpriseCompanyRegisterAddr,jdbcType=VARCHAR},
@@ -251,6 +264,7 @@
     update sps_channel_enterprise
     set enterprise_businesslicense_no = #{enterpriseBusinesslicenseNo,jdbcType=VARCHAR},
       enterprise_company_name = #{enterpriseCompanyName,jdbcType=VARCHAR},
+      enterprise_company_abbreviation = #{enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
       enterprise_company_register_addr = #{enterpriseCompanyRegisterAddr,jdbcType=VARCHAR},
       enterprise_company_realit_addr = #{enterpriseCompanyRealitAddr,jdbcType=VARCHAR},
       enterprise_corp = #{enterpriseCorp,jdbcType=VARCHAR},

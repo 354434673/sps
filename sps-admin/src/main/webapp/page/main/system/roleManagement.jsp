@@ -74,7 +74,7 @@
 		    ,id:'roleId'
 		    ,page:true
 		    ,cols: [[ //表头
-		      {field: 'roleId', title: 'ID', sort: true,width:50,align:'center'}
+		      {field: 'roleId', type:'numbers',title: 'ID', sort: true,width:50,align:'center'}
 		      ,{field: 'roleName', title: '角色名称', align:'center'}
 		      ,{field: 'roleDescribe', title: '角色描述',align:'center'}
 		      ,{field: 'tool', title: '操作' ,align:'center',toolbar:'#bar'}

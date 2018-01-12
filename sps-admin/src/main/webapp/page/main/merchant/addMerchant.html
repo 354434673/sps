@@ -53,21 +53,21 @@
 		    </div>
 		  </div>
 		  <div class="layui-form-item" id="passwordDiv">
-		   <label class="layui-form-label" style="width:200px">*核心商户编号：</label>
+		   <label class="layui-form-label" style="width:200px">核心商户编号：</label>
 		    <div class="layui-input-inline">
 		      <input  id="channelNum" name="channelNum" disabled type="text" autocomplete="off" class="layui-input">
 		    </div>
-		    <label class="layui-form-label" style="width:200px">*核心商户状态：</label>
+		    <label class="layui-form-label" style="width:200px">核心商户状态：</label>
 		    <div class="layui-input-inline">
 		    </div>
 		     <div class="layui-form-mid layui-word-aux">&nbsp&nbsp&nbsp 未激活</div>
 		  </div>
 		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*上线时间：</label>
+		    <label class="layui-form-label" style="width:200px">上线时间：</label>
 		    <div class="layui-input-inline">
 		      <input id="channelUpTime" type="text"  disabled name="channelUpTime"   autocomplete="off" class="layui-input">
 		    </div>
-		    <label class="layui-form-label" style="width:200px">*冻结时间：</label>
+		    <label class="layui-form-label" style="width:200px">冻结时间：</label>
 		    <div class="layui-input-inline">
 		      <input id="channelFreezeTime"  type="text" disabled name="channelFreezeTime"  autocomplete="off" class="layui-input">
 		    </div>
@@ -131,6 +131,10 @@
 		    <div class="layui-input-inline">
 		      <input  id="enterpriseEmployeeNum" type="text" name="enterpriseEmployeeNum"  lay-verify="required" placeholder="请输入员工数量" autocomplete="off" class="layui-input">
 		    </div>
+		    <label class="layui-form-label" style="width:200px">*公司简称：</label>
+		    <div class="layui-input-inline">
+		      <input  id="enterpriseCompanyAbbreviation" type="text" name="enterpriseCompanyAbbreviation"  lay-verify="required" placeholder="请输入公司简称" autocomplete="off" class="layui-input">
+		    </div>
 		  </div>
 		<!-- 属性信息结束 -->
 		<h3>业务信息</h3>
@@ -138,16 +142,14 @@
 		<!-- 业务信息开始 -->
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">主营业务：</label>
-		    <div class="layui-input-inline" style="width:600px" id="businessProduct">
-		      <input type="checkbox"  title="一级分类名称1" value="1" lay-filter = "businessProduct">
-		      <input type="checkbox"  title="一级分类名称2" value="2" lay-filter = "businessProduct">
+		    <div class="layui-input-inline" style="width:600px" id="businessProduct" >
 		    </div>
 		  </div>
 		  <div class="layui-form-item"><!-- 树 -->
 		    <label class="layui-form-label" style="width:200px">主营商品类型：</label>
-		    <div class="layui-input-inline" style="width:600px" id="businessType">
-		      <input type="checkbox" title="三级分类名称1" value="1" lay-filter = "businessType" >
-		      <input type="checkbox" title="三级分类名称2" value="2" lay-filter = "businessType">
+		    <div class="layui-input-inline" id="businessType">
+			    <button class="layui-btn layui-btn-primary" lay-filter="businessType" >
+			    <i class="layui-icon">&#xe608;</i> 新增选择商品类型</button>
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
@@ -255,13 +257,17 @@
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*合作物流名称：</label>
 		    <div class="layui-input-inline">
-		      <input id="logisticsCooperationName" type="logisticsCooperationName" name="name" lay-verify="required" placeholder="搜索" autocomplete="off" class="layui-input">
+		      <input id="logisticsCooperationName" type="logisticsCooperationName" name="name" lay-verify="required" placeholder="合作物流" autocomplete="off" class="layui-input">
 		    </div>
-		    <label class="layui-form-label" >*其他：</label>
+		   		<button class="layui-btn layui-btn-primary" lay-filter="openExpress" id="openExpress">
+			    <i class="layui-icon">&#xe608;</i> 搜索</button>
+		   </div>
+		   <div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px">*其他：</label>
 		    <div class="layui-input-inline">
 		      <input  id="logisticsOther" type="text" name="logisticsOther" lay-verify="required" placeholder="其他" autocomplete="off" class="layui-input">
 		    </div>
-		   </div>
+		    </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*年物流总费用(万元)：</label>
 		    <div class="layui-input-inline">
@@ -305,12 +311,12 @@
 		      <input type="checkbox" title="7天不包息" value="1" lay-skin="primary" lay-filter="openApplyProduct">
 		    </div>
 		  </div> -->
-		<div class="layui-form-item">
+<!-- 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*代销手续费率（%）：</label>
 		    <div class="layui-input-inline">
 		      <input   id="sell" type="text" name="sell" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
 		    </div>
-		</div>
+		</div> -->
 		<!-- 开户信息结束 -->
 		 	<div class="layui-form-item" align="center" id="btn" >
 				<button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">返回</button>
@@ -462,7 +468,7 @@
 	  });    
 	  form.on('select(realCity)', function(data){//选省
 		  getArea(data.value,'realArea')
-	  });   
+	  });  
 	  //加载日期框
 	  laydate.render({
 		    elem: '#startTime'
@@ -563,8 +569,8 @@
 		    ,limits:[5,10,15]
 		    ,cols: [[ //表头
 		      {field: 'gatherId', title: '序号', align:'center'}
-		      ,{field: 'gatherBankId', title: '收款银行卡账号', align:'center'}
-		      ,{field: 'gatherOwnerName', title: '所有人姓名',align:'center'}
+		      ,{field: 'gatherBankId', title: '收款银行卡账号',width:230,align:'center'}
+		      ,{field: 'gatherOwnerName', title: '所有人姓名',width:230,align:'center'}
 		      ,{field: 'gatherIdcard', title: '身份证号', width:230, align:'center'}
 		      ,{field: 'gatherPhone', title: '银行卡绑定手机号码', width:130,align:'center'} 
 		      ,{field: 'gatherDepositBank', title: '开户银行', width:170,align:'center'} 
@@ -599,6 +605,7 @@
 			  var enterpriseCorp = $('#enterpriseCorp').val();//法人名称
 			  var enterpriseOperatioTime = $('#enterpriseOperatioTime').val();//经营年限(年)
 			  var enterpriseEmployeeNum = $('#enterpriseEmployeeNum').val();//员工数量(人)
+			  var enterpriseCompanyAbbreviation = $('#enterpriseCompanyAbbreviation').val();//公司简称
 		  	  /*
 		  	   	业务信息
 		  	  */
@@ -677,14 +684,14 @@
 		 				logisticsOther:logisticsOther, 
 		 				//开户
 		 				//管理员账户为业务负责人手机号
- 		 				openAdminNum:guaranteeBusinessLeaderphone,
+ 		 				openAdminNum:guaranteeBusinessLeaderphone+'@'+enterpriseCompanyAbbreviation,
 		 				//管理员手机号为业务负责人手机号
 		 				openAdminPhone:guaranteeBusinessLeaderphone,
 		 				openStartTime:openStartTime,
 		 				openEndTime:openEndTime,
 		 				//openApplyProduct:openApplyProduct.toString(),
 		 				openApplyProduct:openApplyProduct.toString(),
-		 				openSellRate:openSellRate, 
+		 				//openSellRate:openSellRate, 
 				  },
 				  success:function(result){
 					  if(result.state == 'success'){
@@ -703,18 +710,19 @@
 				  }
 			  }) 
 	  }) 
-/* 	  $.post({//获取角色列表
-		  url:'<%=path %>/role/roleList.html',
+ 	  $.post({//获取主营业务
+		  url:'/sps-admin/category/getFistCategory',
 		  dataType:'json',
 		  success:function(data){
+			  console.log(data)
 			  var list = "";
-			  $.each(data.data,function(i,item){
-				  list +='<input type="checkbox" name="check" lay-filter="encrypt" title="'+item.roleName+'" value ="'+item.roleId+'">';
-				  $('#checkList').html(list)
+			  $.each(data.categoryList,function(i,item){
+				  list +='<input type="checkbox" name="businessProduct" lay-filter="businessProduct" title="'+item.categoryName+'" value ="'+item.categoryId+'">';
+				  $('#businessProduct').html(list)
 			  })
 			  form.render('checkbox');
 		  }
-	  }) */
+	  }) 
 	  //自定义验证规则  
 	  form.verify({  
 			//验证只包含汉字  
@@ -735,6 +743,21 @@
 			  type: 2, 
 			  area: ['75%', '70%'],//宽高
 			  content: ['addGather.html'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+			  cancel: function(index, layero){ 
+				  var data = $(layero).find("iframe")[0].contentWindow.gatherListJson;
+				  console.log(data)
+				  gatherListJson = data;
+				  table.reload('gather', {
+					  data:gatherListJson
+					});
+				}    
+		  }); 
+	  });
+	  $('#openExpress').on('click', function() {
+		  layer.open({
+			  type: 2, 
+			  area: ['75%', '70%'],//宽高
+			  content: ['../express/expressManage.html'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 			  cancel: function(index, layero){ 
 				  var data = $(layero).find("iframe")[0].contentWindow.gatherListJson;
 				  console.log(data)

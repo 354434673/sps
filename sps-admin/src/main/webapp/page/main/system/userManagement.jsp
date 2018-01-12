@@ -82,7 +82,7 @@
 			    ,id:'userId'
 			    ,page:true
 			    ,cols: [[ //表头
-			      {field: 'userId', title: 'ID', align:'center'}
+			      {field: 'userId',type:'numbers', title: 'ID', align:'center'}
 			      ,{field: 'userUsername', title: '用户名', align:'center'}
 			      ,{field: 'userName', title: '姓名',align:'center'}
 			      ,{field: 'userPhone', title: '联系电话', width:230, align:'center'}

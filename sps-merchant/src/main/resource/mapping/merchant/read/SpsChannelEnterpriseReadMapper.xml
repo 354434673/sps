@@ -5,6 +5,7 @@
     <id column="enterprise_id" property="enterpriseId" jdbcType="INTEGER" />
     <result column="enterprise_businesslicense_no" property="enterpriseBusinesslicenseNo" jdbcType="VARCHAR" />
     <result column="enterprise_company_name" property="enterpriseCompanyName" jdbcType="VARCHAR" />
+    <result column="enterprise_company_abbreviation" jdbcType="VARCHAR" property="enterpriseCompanyAbbreviation" />
     <result column="enterprise_company_register_addr" property="enterpriseCompanyRegisterAddr" jdbcType="VARCHAR" />
     <result column="enterprise_company_realit_addr" property="enterpriseCompanyRealitAddr" jdbcType="VARCHAR" />
     <result column="enterprise_corp" property="enterpriseCorp" jdbcType="VARCHAR" />
@@ -49,12 +50,12 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    enterprise_id, enterprise_businesslicense_no, enterprise_company_name, enterprise_company_register_addr, 
+    enterprise_id, enterprise_businesslicense_no, enterprise_company_name, enterprise_company_abbreviation,enterprise_company_register_addr, 
     enterprise_company_realit_addr, enterprise_corp, enterprise_corp_idCard, enterprise_operatio_time, 
     enterprise_employee_num, channel_num
   </sql>
   <sql id="ChannelAndEnterprise" >
-    e1.enterprise_id, e1.enterprise_businesslicense_no, e1.enterprise_company_name, e1.enterprise_company_register_addr, 
+    e1.enterprise_id, e1.enterprise_businesslicense_no, e1.enterprise_company_name, e1.enterprise_company_abbreviation,e1.enterprise_company_register_addr, 
     e1.enterprise_company_realit_addr, e1.enterprise_corp, e1.enterprise_corp_idCard, e1.enterprise_operatio_time, 
     e1.enterprise_employee_num, c1.channel_num, c1.channel_state, c1.channel_flow_state
   </sql>
