@@ -116,13 +116,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label">*主图：</label>
             <div class="layui-input-inline">
-                <input type="hidden" name="gPic" id="gPic" value="">
+                <div  id="pic"></div>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*详情图：</label>
             <div class="layui-input-inline">
-                <input type="hidden" name="gDpic" id="gDpic" value="">
+                <div  id="detailPic"></div>
             </div>
         </div>
     </div>
@@ -152,7 +152,7 @@
     })
 
 
-    //修改获取数据
+    //获取数据
     function getDate(goodsId) {
         $.ajax({
             url: "/sps-admin/goods/findEntity",//提交连接
@@ -180,6 +180,11 @@
                     if (json.skuList != null) {
                         if ($.isArray(json.skuList)) {
                             $.each(json.skuList, function (index, val) {
+                                if(val.gType=="0"){
+                                    val.gType="按金额"
+                                }else if(val.gType=="1"){
+                                    val.gType="按比例"
+                                }
                                 $('#content').append(
                                     "<tr >" +
                                     "<input type='hidden'  value=''></td>" +
@@ -189,8 +194,27 @@
                                     "<td >" + val.gPrice + "</td>" +
                                     "<td >" + val.gType + "</td>" +
                                     "<td >" + val.gScale + "</td>" +
-                                    "<td >" + val.gScale + "</td>" +
+                                    "<td >" + val.gAprice + "-" + val.gBprice + "</td>" +
                                     "</tr>");
+                            })
+                        }
+                    }
+                    if (json.detailList != null) {
+                        if ($.isArray(json.detailList)) {
+                            $.each(json.detailList, function (index, val) {
+                                $('#detailPic').append(
+                                "<img  src='D:/ws-juzi/sps/sps-admin/src/main/webapp/upload/imgs/" + val.albumUrl + "' />"
+                                )
+                            })
+                        }
+                    }
+                    if (json.picList != null) {
+                        if ($.isArray(json.picList)) {
+                            $.each(json.picList, function (index, val) {
+                                $('#pic').append(
+                                    "<img  src='D:/ws-juzi/sps/sps-admin/src/main/webapp/upload/imgs/" + val.albumUrl + "' />"
+                                )
+
                             })
                         }
                     }

@@ -3,8 +3,10 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.goods.SpsGoodSkuMapper;
+import com.sps.dao.goods.SpsGoodsAlbumMapper;
 import com.sps.dao.goods.SpsGoodsMapper;
 import org.sps.entity.goods.SpsGoods;
+import org.sps.entity.goods.SpsGoodsAlbum;
 import org.sps.service.goods.GoodsService;
 import javax.annotation.Resource;
 import java.util.Date;
@@ -18,10 +20,26 @@ public class GoodServiceImpl implements GoodsService {
     private SpsGoodsMapper spsGoodsMapper;
     @Resource
     private SpsGoodSkuMapper spsGoodSkuMapper;
+    @Resource
+    private SpsGoodsAlbumMapper spsGoodsAlbumMapper;
 
     @Override
     public void saveOrUpdate(SpsGoods goods) {
         if(goods.getgId()!=null){
+            //如果UpdateDetailFlag不为空 则删除 改商品的详情图
+            if(goods.getUpdateDetailFlag()!=null){
+                Map<String, Object> map = new HashMap<>();
+                map.put("goodsId", goods.getgId());
+                map.put("updateDetailFlag", goods.getUpdateDetailFlag());
+                spsGoodsAlbumMapper.deleteDetailPic(map);
+            }
+            //如果UpdatePicFlag 则删除 改商品的主图
+            if(goods.getUpdatePicFlag()!=null){
+                Map<String, Object> map = new HashMap<>();
+                map.put("goodsId", goods.getgId());
+                map.put("updatePicFlag", goods.getUpdatePicFlag());
+                spsGoodsAlbumMapper.deleteDetailPic(map);
+            }
             //删除sku中的商品数据
             spsGoodSkuMapper.deleteSku(goods.getgId());
             goods.setgUpdateTime(new Date());

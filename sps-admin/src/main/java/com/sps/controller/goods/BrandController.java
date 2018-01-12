@@ -145,10 +145,11 @@ public class BrandController {
      */
     @RequestMapping(value = "/findBrandList")
     @ResponseBody
-    public Map<String, Object> findBrandList() {
+    public Map<String, Object> findBrandList(Integer categoryId) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
             Map<String, Object> map = new HashMap<>();
+            map.put("categoryId", categoryId);
             List<SpsBrand> spsBrandList = brandService.findList(map);
             resultMap.put("data", spsBrandList);
             resultMap.put("flag", 1);

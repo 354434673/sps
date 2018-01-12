@@ -99,7 +99,6 @@
             var data = obj.data;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
-           /* console.log(data)*/
             if(layEvent === 'detail'){ //查看
                window.location.href="/sps-admin/goods/toGoodsDetail?id="+data.gId;
             } else if(layEvent === 'del'){ //删除
