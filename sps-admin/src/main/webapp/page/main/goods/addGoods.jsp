@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <title>添加商品</title>
     <meta name="renderer" content="webkit">
-    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -32,6 +32,8 @@
     <div class="layui-form layui-form-pane">
         <input type="hidden" name="goodsId" id="goodsId" value="${goodsId}">
         <input type="hidden" name="goodsNumberFlag" id="goodsNumberFlag">
+        <input type="hidden" name="updateDetailFlag" id="updateDetailFlag">
+        <input type="hidden" name="goodsNumberFlag" id="updatePicFlag">
         <div class="layui-form-item ">
             <label class="layui-form-label">*三级分类：</label>
             <div class="layui-input-inline">
@@ -48,8 +50,12 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">*品牌：</label>
             <div class="layui-input-inline">
-                <select id="gBrandId" name="gBrandId" lay-verify="">
-                </select>
+                <input id="brandName" type="text" name="gSpuName" class="layui-input" style="display: none">
+                <div id="brandId">
+                    <select id="gBrandId" name="gBrandId" lay-filter="selFilter">
+
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -80,23 +86,25 @@
                     <th>波动方式</th>
                     <th>波动值</th>
                     <th>波动区间</th>
-                    <th><a href="#" style="text-decoration: underline " id="addGoodSku">添加</a></th>
+                    <th>操作</th>
                 </tr>
                 </thead>
-                <tbody id="content">
-                 <tr>
-                    <%-- <td><input type="text" name="gSpuName" class="tdStyle"></td>
-                     <td><input type="text" name="gSpuName" class="tdStyle"></td>
-                     <td><input type="text" name="gSpuName" class="tdStyle"></td>
-                     <td><input type="text" name="gSpuName" class="tdStyle"></td>
-                     <td width="208px"><input type="radio" name="sex" value="1" title="按比例" checked>
-                         <input type="radio" name="sex" value="0" title="按金额"></td>
-                     <td><input type="text" name="gSpuName" class="tdStyle"></td>
-                     <td><input type="text" name="gSpuName" class="tdStyle"></td>
-                     <td><a href="#" style="text-decoration: underline " id="adGoodSku">添加</a></td>--%>
-                 </tr>
+                <tbody>
+                <tr>
+                    <td><input type="text" name="gSpuName" id="gColor" class="tdStyle"></td>
+                    <td><input type="text" name="gSpuName" id="gSize" class="tdStyle"></td>
+                    <td><input type="text" name="gSpuName" id="gNo" class="tdStyle"></td>
+                    <td><input type="text" name="gSpuName" id="gPrice" class="tdStyle"></td>
+                    <td width="208px"><input lay-filter="scale" type="radio" name="gType" value="1" title="按比例" class="type" checked>
+                        <input type="radio" lay-filter="money" name="gType" value="0" title="按金额" class="type"></td>
+                    <td><input type="text" name="gSpuName" id="gScale" class="tdStyle"><span id="number">%</span></td>
+                    <td></td>
+                    <td><a href="#" style="text-decoration: underline " id="adGoodSku">添加</a></td>
+                </tr>
                 </tbody>
-          <%--      <input type="button" value="提交数据" id="btnSubmit" onclick="SaveData()"/>--%>
+                <tbody id="content">
+                </tbody>
+
             </table>
         </div>
         <div class="layui-form-item ">
@@ -108,13 +116,14 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">*商品描述</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入内容" id="gDetails" class="layui-textarea"></textarea>
+                <input value="" type="hidden" id="detail">
+                <textarea placeholder="请输入内容" name="gDetails" id="gDetails" class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">包装清单</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入内容" id="gRemark" class="layui-textarea"></textarea>
+                <textarea placeholder="请输入内容" name="gRemark" id="gRemark" class="layui-textarea"></textarea>
             </div>
         </div>
 
@@ -122,23 +131,17 @@
         <div class="layui-form-item">
             <label class="layui-form-label">*主图：</label>
             <div class="layui-input-inline">
-                <input type="hidden" name="gPic" id="gPic" value="">
-                <input type="file" name="file"   style="padding-left: 5px;padding-top: 5px;" id="logoFile2"  onchange="setImg2(this);" multiple="multiple"/>
-              <%-- <br/><font color="red">图片尺寸：750*300（支持多图批量上传）</font>--%>
-             <%--   <input type="text" id="gPic" name="gPic"
-                       placeholder="图片" class="layui-input"/>
-                <button onclick="checkImgType()">上传图片</button>--%>
+                <input type="text" name="gPic" id="gPic" class="layui-input" value="" readonly="readonly">
+                <input type="file" name="file" style="padding-left: 5px;padding-top: 5px;" id="logoFile2"
+                       onchange="setImg2(this);" multiple="multiple"/>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*详情图：</label>
             <div class="layui-input-inline">
-                <input type="hidden" name="gDpic" id="gDpic" value="">
-                <input type="file" name="file" id="logoFile1"   style="padding-left: 5px;padding-top: 5px;" onchange="setImg1(this);" multiple="multiple"/ >
-                <%-- <br/><font color="red">图片尺寸：750*300（支持多图批量上传）</font>--%>
-                <%--   <input type="text" id="gPic" name="gPic"
-                          placeholder="图片" class="layui-input"/>
-                   <button onclick="checkImgType()">上传图片</button>--%>
+                <input type="text" name="gDpic" id="gDpic" value="" class="layui-input" readonly="readonly">
+                <input type="file" name="file" id="logoFile1" style="padding-left: 5px;padding-top: 5px;"
+                       onchange="setImg1(this);" multiple="multiple">
             </div>
         </div>
 
@@ -152,87 +155,179 @@
 <div id="tree"></div>
 </div>
 <form id="upload" enctype="multipart/form-data">
-    <input type="file" id='imgupl' name="file" style="display:none"  onchange="validateFile()"/>
+    <input type="file" id='imgupl' name="file" style="display:none" onchange="validateFile()"/>
 </form>
 <form id="upload1" enctype="multipart/form-data">
-    <input type="file" id='imgup' name="file"  multiple="multiple"  style="display:none" onchange="validateFile1()"/>
+    <input type="file" id='imgup' name="file" multiple="multiple" style="display:none" onchange="validateFile1()"/>
 </form>
 <script src="<%=path%>/page/static/js/jquery-1.10.2.min.js"></script>
 <script src="<%=path%>/page/static/js/ajaxfileupload.js"></script>
-<script type="text/javascript"
-        src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 <script src="<%=path%>/page/static/treeTable/layui.js"></script>
 <script type="text/javascript">
     $(function () {
+       // initBrandList();
+        initTree();
+        $("#tree").hide();
+        $('input[type=radio][name=gType]').change(function () {
+            if (this.value == 'allot') {
+            }
+            else if (this.value == 'transfer') {
+            }
+        });
         //修改时候获取数据
         if ($("#goodsId").val() != "") {
             getDate($("#goodsId").val());
-            $("#showCategory").attr({"disabled":"disabled"});
-            $("#gBrandId").attr({"disabled":"disabled"});
-            $("#gSpuName").attr({"disabled":"disabled"});
-            $("#gSpuNo").attr({"disabled":"disabled"});
+            $("#brandName").attr({"disabled": "disabled"});
+            $("#showCategory").attr({"disabled": "disabled"});
+            $("#gBrandId").attr({"disabled": "disabled"});
+            $("#gSpuName").attr({"disabled": "disabled"});
+            $("#gSpuNo").attr({"disabled": "disabled"});
         }
-        initBrandList();
-        initTree();
-        $("#tree").hide();
+
         if ($("#brandCategoryNames").val() == "") {
             $("#showCategory").html("关联分类")
         } else {
             $("#showCategory").html($("#brandCategoryNames").val())
         }
 
-
     })
 
-    function setImg2(obj){//用于进行图片上传，返回地址
-        var f=$(obj).val();
-        if(f == null || f ==undefined || f == ''){
+    layui.use(['form','table','layedit','flow','element'], function(){
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var laydate = layui.laydate;
+        var flow = layui.flow;
+        var element = layui.element;
+        var layedit = layui.layedit;
+        var layedits = layui.layedit;
+        var index= layedit.build('gDetails');
+        var indexes= layedits.build('gRemark');
+        form.on('radio(scale)', function(){
+            $("#number").show();
+        })
+        form.on('radio(money)', function(){
+            $("#number").hide();
+        })
+        var post_flag = false; //设置一个对象来控制是否进入AJAX过程
+        form.on('submit(submitGoods)', function (data) {
+            var type = true;
+            if ($('#goodsNumberFlag').val() == "1") {
+                layer.msg("SKU编号已经存在！");
+                type = false;
+            }
+            if (post_flag) return; //如果正在提交则直接返回，停止执行
+            post_flag = true;//标记当前状态为正在提交状态\
+            if (type) {
+                layedit.sync(index)
+                $.ajax(
+                    {
+                        data: {
+                            gId: $('#goodsId').val(),
+                            gCategoryIds: $('#gCategoryIds').val(),
+                            gCategoryNames: $('#gCategoryNames').val(),
+                            gBrandId: $('#gBrandId').val(),
+                            gSpuName: $('#gSpuName').val(),
+                            gSpuNo: $('#gSpuNo').val(),
+                            gDetails: layedit.getContent(index),
+                            gRemark: layedits.getContent(indexes),
+                            goodsDpic: $('#gDpic').val(),
+                            goodsPic: $('#gPic').val(),
+                            updateDetailFlag: $("#updateDetailFlag").val(),
+                            updatePicFlag: $("#updatePicFlag").val()
+                        },
+                        url: "/sps-admin/goods/saveOrUpdate",//提交连接
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (result) {
+                            post_flag = false; //在提交成功之后将标志标记为可提交状态
+                            if (result.flag == '1') {
+                                $('#goodsId').val(result.goodsId)
+                                //插入sku商品
+                                SaveData()
+                                layer.msg("操作成功");
+                                setTimeout(function () {
+                                    /* window.location.href = "/sps-admin//page/main/goods/index.jsp";*/
+                                }, 1000);
+                            } else {
+                                post_flag = false; //在提交成功之后将标志标记为可提交状态
+                                layer.msg("操作失败");
+                            }
+                        }//回调方法
+                    });
+            }
+
+        })
+    });
+    /*  layui.use(['form'], function () {
+          var form = layui.form;
+          var $ = layui.jquery;
+          form.on('select()', function (da) {
+
+          });
+      });*/
+    /*  layui.use(["form"], function(){
+          var form= layui.form();
+          form.on("select(selFilter)", function(data){
+              var OptionIndex = data.elem.selectedIndex; //得到选中的下标
+              var text = data.elem.options[OptionIndex].text; //得到选中下标的文本信息
+              console.log(data.elem); //得到select原始DOM对象
+              console.log(data.value); //得到被选中的值
+          });
+      });*/
+
+    function setImg2(obj) {//用于进行图片上传，返回地址
+        var f = $(obj).val();
+        if (f == null || f == undefined || f == '') {
             return false;
-        }else if(!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f))
-        {
+        } else if (!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f)) {
             layer.msg("类型必须是图片(.png|jpg|bmp|gif|PNG|JPG|BMP|GIF)");
             $(obj).val('');
             return false;
-        }else{
+        } else {
             //批量上传图片
             $.ajaxFileUpload({
                 type: 'POST',
                 url: '/sps-admin/common/file/manyUpload',
-                secureuri:false,
+                secureuri: false,
                 cache: false,
-                fileElementId:"logoFile2",//文件选择框的id属性  ,//文件选择框的id属性
+                fileElementId: "logoFile2",//文件选择框的id属性  ,//文件选择框的id属性
                 dataType: 'json',   //json
                 contentType: false,    //不可缺
                 processData: false,    //不可缺
-                success: function (data){
+                success: function (data) {
                     if (data.code == 0) {
                         $("#gPic").val(data.fileName);
-                       // $("#brandSmallUrl").val(res.fileName);
+                        //如果重新调用过上传图片的方法 则表示商品主图修改过，后台删掉重新添加
+                        $("#updatePicFlag").val(0);
+
+                        // $("#pic").val(data.fileName);
+                        // $("#brandSmallUrl").val(res.fileName);
                         // $("#imgShow").attr('src',data.data.avatar);
                     } else {
                         layer.msg('上传失败');
                     }
-                   /* if(data!=null){
-                        $.each(data,function(i,url){
-                            //拼接图片列表
-                            var id = $('#detailImgs li:last').attr('id');
-                            id = id.substr(1);
-                            id = parseInt(id) + 1;
-                            var ids=id;
-                            id = 'P'+id;
-                            var a_hidden="<li id='"+ id +"'><input type='hidden' value='"+url+"' name='imgs'>";
-                            var img_html="<img  src='"+url+"'  onclick='showOriginal(this)' original='"+url+"'>";
-                            var a_html="<a href='javascript:void(0);' onclick='delespan1("+ids+")'>删除</a>";
-                            var li_html="</li>";
-                            $('#detailImgs').append(a_hidden+img_html+a_html+li_html);
-                        });
-                    }else{
-                        layer.msg("上传失败");
-                        $("#url").val("");
-                        $(obj).val('');
-                    }*/
+                    /* if(data!=null){
+                         $.each(data,function(i,url){
+                             //拼接图片列表
+                             var id = $('#detailImgs li:last').attr('id');
+                             id = id.substr(1);
+                             id = parseInt(id) + 1;
+                             var ids=id;
+                             id = 'P'+id;
+                             var a_hidden="<li id='"+ id +"'><input type='hidden' value='"+url+"' name='imgs'>";
+                             var img_html="<img  src='"+url+"'  onclick='showOriginal(this)' original='"+url+"'>";
+                             var a_html="<a href='javascript:void(0);' onclick='delespan1("+ids+")'>删除</a>";
+                             var li_html="</li>";
+                             $('#detailImgs').append(a_hidden+img_html+a_html+li_html);
+                         });
+                     }else{
+                         layer.msg("上传失败");
+                         $("#url").val("");
+                         $(obj).val('');
+                     }*/
                 },
-                error:function(XMLHttpRequest, textStatus, errorThrown){
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     layer.msg("上传失败，请检查网络后重试");
                     $("#url").val("");
                     $(obj).val('');
@@ -240,34 +335,36 @@
             });
         }
     }
-    function setImg1(obj){//用于进行图片上传，返回地址
-        var f=$(obj).val();
-        if(f == null || f ==undefined || f == ''){
+
+    function setImg1(obj) {//用于进行图片上传，返回地址
+        var f = $(obj).val();
+        if (f == null || f == undefined || f == '') {
             return false;
-        }else if(!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f))
-        {
+        } else if (!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f)) {
             layer.msg("类型必须是图片(.png|jpg|bmp|gif|PNG|JPG|BMP|GIF)");
             $(obj).val('');
             return false;
-        }else{
+        } else {
             //批量上传图片
             $.ajaxFileUpload({
                 type: 'POST',
                 url: '/sps-admin/common/file/manyUpload',
-                secureuri:false,
+                secureuri: false,
                 cache: false,
-                fileElementId:"logoFile1",//文件选择框的id属性  ,//文件选择框的id属性
+                fileElementId: "logoFile1",//文件选择框的id属性  ,//文件选择框的id属性
                 dataType: 'json',   //json
                 contentType: false,    //不可缺
                 processData: false,    //不可缺
-                success: function (data){
+                success: function (data) {
                     if (data.code == 0) {
                         $("#gDpic").val(data.fileName);
+                        //如果重新调用过上传图片的方法 则表示商品详情图修改过，后台删掉重新添加
+                        $("#updateDetailFlag").val(1);
                     } else {
                         layer.msg('上传失败');
                     }
                 },
-                error:function(XMLHttpRequest, textStatus, errorThrown){
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
                     layer.msg("上传失败，请检查网络后重试");
                     $("#url").val("");
                     $(obj).val('');
@@ -275,9 +372,37 @@
             });
         }
     }
+
     //上传之后如果感觉有张上传错了，想删除怎么办：
-    function delespan1(id){
-        $('#P'+id).remove();
+    function delespan1(id) {
+        $('#P' + id).remove();
+    }
+
+    function getBrand(id) {
+        //获取品牌数据
+        if ($("#gCategoryIds").val() != "") {
+            $.ajax({
+                data:{categoryId:id},
+                url: "/sps-admin/brand/findBrandList",//提交连接
+                type: 'post',
+                dataType: 'json',
+                success: function (result) {
+                    if (result.flag == '1') {
+                        if ($.isArray(result.data)) {
+                            var html = '<option value="">请选择</option>';
+                            $.each(result.data, function (index, val) {
+                                html += '<option value="' + val.brandId + '">' + val.brandName + '</option>';
+                            })
+                            $("#gBrandId").html(html);
+                        }
+                        layui.form.render('select');
+                    } else {
+                        $("#gBrandId").html(html);
+                    }
+                }//回调方法
+            });
+        }
+
     }
 
     //修改获取数据
@@ -294,30 +419,80 @@
                         $('#gCategoryIds').val(json.goods.gCategoryIds);
                         $('#gCategoryNames').val(json.goods.gCategoryNames);
                         $("#showCategory").html(json.goods.gCategoryNames);
-                        $('#gBrandId').val(json.goods.gBrandId);
+
+                        /* $("#gBrandId").find("option[text="+json.goods.gBrandId+"]").attr("selected",true);*/
                         $('#gSpuName').val(json.goods.gSpuName);
                         $('#gSpuNo').val(json.goods.gSpuNo);
                         $('#gDetails').val(json.goods.gDetails);
                         $('#gRemark').val(json.goods.gRemark);
                         $('#gDpic').val(json.goods.gDpic);
                         $('#gPic').val(json.goods.gPic);
+                        $('#gBrandId').val(json.goods.gBrandId);
+                    }
+                    if (json.brandName != null) {
+                        $("#brandName").val(json.brandName);
+                        $("#brandId").hide();
+                        $("#brandName").show();
+
+                        //   $("#gBrandId").addClass("layui-hide");
+                        //document.getElementById("gBrandId").style.display="none";
+                        //  $('#gBrandId').addClass("display","block");
+                        /* layer.select("selFilter").setValue(json.brandName);*/
+                        /*  $("#gBrandId").val(json.brandName)
+                          layui.form().render('select')
+                          $(select).val(option[json.brandName]);*/
+
+                        /* $("#brandName").attr("display","block");
+                         $("#gBrandId").attr("display","none");
+                         $("#brandName").val(json.brandName)e
+                         $("#gBrandId option[text="+json.brandName+"]").attr("selected", "selected");*/
+                        // $("#gBrandId").html('<option value="">' + json.brandName + '</option>');
+                        /* var html = '<option value="">' + json.brandName + '</option>';
+                         $("#gBrandId").html(html);*/
+                    }
+                    if (json.detailList != null) {
+                        var picVal = "";
+                        if ($.isArray(json.detailList)) {
+                            $.each(json.detailList, function (index, val) {
+                                if (index != json.detailList.length - 1) {
+                                    picVal += val.albumUrl + ","
+                                } else {
+                                    picVal += val.albumUrl
+                                }
+                            })
+                        }
+                        $('#gDpic').val(picVal)
+                    }
+                    if (json.picList != null) {
+                        var picVal = "";
+                        if ($.isArray(json.picList)) {
+                            $.each(json.picList, function (index, val) {
+                                if (index != json.picList.length - 1) {
+                                    picVal += val.albumUrl + ","
+                                } else {
+                                    picVal += val.albumUrl
+                                }
+                            })
+                        }
+                        $('#gPic').val(picVal)
                     }
                     if (json.skuList != null) {
                         if ($.isArray(json.skuList)) {
                             $.each(json.skuList, function (index, val) {
+                                if (val.gType == "0") {
+                                    val.gType = "按金额"
+                                } else if (val.gType == "1") {
+                                    val.gType = "按比例"
+                                }
                                 $('#content').append(
                                     "<tr >" +
-                                    "<input type='hidden'  value=''></td>" +
-                                    "<td ><input type='text'   class='tdStyle' value=" + val.gColor + "></td>" +
-                                    "<td ><input type='text' class='tdStyle' value=" + val.gSize + "></td>" +
-                                    "<td ><input type='text' class='tdStyle' value=" + val.gNo + "></td>" +
-                                    "<td ><input type='text' class='tdStyle' value=" + val.gPrice + "></td>" +
-                                    "<td >" +
-                                    "<input type='radio' value='0' name='type' title='按比例' checked>" +
-                                    "<input type='radio' value='1'  name='type' title='按金额'  >" +
-                                    "</td >" +
-                                    "<td ><input type='text' class='tdStyle' value=" + val.gScale + "></td>" +
-                                    "<td ><input type='text' class='tdStyle' value=" + val.gScale + "></td>" +
+                                    "<td > " + val.gColor + "</td>" +
+                                    "<td >" + val.gSize + "</td>" +
+                                    "<td >" + val.gNo + "</td>" +
+                                    "<td >" + val.gPrice + "</td>" +
+                                    "<td >" + val.gType + "</td>" +
+                                    "<td >" + val.gScale + "</td>" +
+                                    "<td >" + val.gAprice + "-" + val.gBprice + "</td>" +
                                     "<td >" +
                                     "<span onclick='remove_line(this);'>删除</span> " +
                                     "</td>" +
@@ -357,25 +532,100 @@
     });
 
     //动态添加表格
+    $(document).on('click', '#adGoodSku', function (e) {
+
+        if ($("#gSpuNo").val() != "") {
+            if ($("#gColor").val() == "") {
+                layer.msg("颜色不能为空！")
+                $("#gColor").focus()
+                return false;
+            }
+            if ($("#gSize").val() == "") {
+                layer.msg(" 尺寸不能为空！")
+                $("#gSize").focus()
+                return false;
+            }
+            if ($("#gNo").val() == "") {
+                layer.msg("尺寸不能为空！")
+                $("#gNo").focus()
+                return false;
+            }
+            if ($("#gPrice").val() == "") {
+                layer.msg("基准价不能为空！")
+                $("#gPrice").focus()
+                return false;
+            }
+            if ($("#gScale").val() == "") {
+                layer.msg("波动值不能为空！")
+                $("#gScale").focus()
+                return false;
+            }
+            var no = $("#gSpuNo").val();
+            var gColor = $("#gColor").val();
+            var gSize = $("#gSize").val();
+            var gNo = $("#gNo").val();
+            var gPrice = $("#gPrice").val();
+            var gType = $("input[type='radio']:checked").val();
+            var gScale = $("#gScale").val();
+            var gAprice;
+            var gBprice;
+            if (gType == "1") {
+                gType = '按比例';
+                gAprice = accSub(gPrice, accMul(gPrice, accDiv(gScale, 100)));
+                gBprice = accAdd(gPrice, accMul(gPrice, accDiv(gScale, 100)));
+                gScale = gScale + "%";
+            } else if (gType == "0") {
+                gType = '按金额';
+                gAprice = accSub(gPrice, gScale);
+                gBprice = accAdd(gPrice, gScale);
+            }
+            $('#content').append(
+                "<tr >" +
+                "<td > " + gColor + "</td>" +
+                "<td >" + gSize + "</td>" +
+                "<td >" + no + -+gNo + "</td>" +
+                "<td >" + gPrice + "</td>" +
+                "<td >" + gType + "</td>" +
+                "<td >" + gScale + "</td>" +
+                "<td >" + gAprice + "-" + gBprice + "</td>" +
+                "<td >" +
+                "<span onclick='remove_line(this);'>删除</span> " +
+                "</td>" +
+                "</tr>");
+        } else {
+            layer.msg("请先输入spu编号")
+        }
+    });
+    $(document).on('change', '#addGoodSku', function (e) {
+
+    })
+
+
+    //动态添加表格
     $(document).on('click', '#addGoodSku', function (e) {
-        var no = $("#gSpuNo").val()+'-';
+        var no = $("#gSpuNo").val();
+        var gColor = $("#gColor").val();
+        var gSize = $("#gSize").val();
+        var gNo = $("#gNo").val();
+        var gPrice = $("#gPrice").val();
+        var gType = $("input[type='radio']:checked").val();
+        var gScale = $("#gSpuNo").val();
+        var gAprice = $("#gSpuNo").val();
+        var gBprice = $("#gBprice").val();
         $('#content').append(
             "<tr >" +
-            "<input type='hidden'  value=''></td>" +
-            "<td ><input type='text'   class='tdStyle' value=''></td>" +
-            "<td ><input type='text' class='tdStyle' value=''></td>" +
-            "<td >" + no + "<input type='text' style='width: 30px' value=''></td>" +
-            "<td ><input type='text' class='tdStyle' value=''></td>" +
-            "<td >" +
-            "<input type='radio' value='0' name='type' title='按比例'>" +
-            "<input type='radio' value='1'  name='type' title='按金额'  >" +
-            "</td >" +
-            "<td ><input type='text' class='tdStyle' value=''></td>" +
-            "<td ><input type='text' class='tdStyle' value=''></td>" +
+            "<td > " + gColor + "</td>" +
+            "<td >" + gSize + "</td>" +
+            "<td >" + no + -+gNo + "</td>" +
+            "<td >" + gPrice + "</td>" +
+            "<td >" + gType + "</td>" +
+            "<td >" + gScale + "</td>" +
+            "<td >" + gBprice - gAprice + "</td>" +
             "<td >" +
             "<span onclick='remove_line(this);'>删除</span> " +
             "</td>" +
             "</tr>");
+
     });
 
     //删除选择记录
@@ -385,25 +635,32 @@
 
     //保存sku数据
     function SaveData() {
+
         $('#content tr').each(function () {
-            /* var json = {};
-             json.gColor = $(this).find("td:eq(0)").find("input").val();
-             json.gSize = $(this).find("td:eq(1)").find("input").val();
-             json.gNo = $(this).find("td:eq(2)").find("input").val();
-             json.gPrice = $(this).find("td:eq(3)").find("input").val();
-             json.gType = $(this).find("td:eq(4)").find("input").val();
-             json.gScale = $(this).find("td:eq(5)").find("input").val();
-             json.certno = $(this).find("td:eq(6)").find("input").val();
-             var jsonStr = JSON.stringify(json);*/
+            var aprice = $(this).find("td:eq(6)").html().split('-')[0];
+            var bprice = $(this).find("td:eq(6)").html().split('-')[1];
+            var scale = $(this).find("td:eq(5)").html();
+            var tag='%';
+            if(scale.indexOf(tag)!=-1){
+                scale=scale.split('%')[0];
+            }
+            var waveType;
+            if ($(this).find("td:eq(4)").html() == "按比例") {
+                waveType = "1";
+            } else if ($(this).find("td:eq(4)").html() == "按金额") {
+                waveType = "0";
+            }
             $.ajax({
                 data: {
+                    gType: waveType,
+                    gBprice: bprice,
+                    gAprice: aprice,
                     gGid: $("#goodsId").val(),
-                    gColor: $(this).find("td:eq(0)").find("input").val(),
-                    gSize: $(this).find("td:eq(1)").find("input").val(),
-                    gNo: $(this).find("td:eq(2)").find("input").val(),
-                    gPrice: $(this).find("td:eq(3)").find("input").val(),
-                    gType: $(this).find("td:eq(4)").find("input").val(),
-                    gScale: $(this).find("td:eq(5)").find("input").val(),
+                    gColor: $(this).find("td:eq(0)").html(),
+                    gSize: $(this).find("td:eq(1)").html(),
+                    gNo: $(this).find("td:eq(2)").html(),
+                    gPrice: $(this).find("td:eq(3)").html(),
+                    gScale: scale
                 },//提交的数据
                 url: "<%=path%>/goodSku/saveOrUpdate",//提交连接
                 type: 'post',
@@ -419,6 +676,7 @@
         });
 
     }
+
     //从后台再查一次
     function getCategoryName(pId, id) {
         $.ajax({
@@ -429,8 +687,10 @@
             success: function (result) {
                 if (result.flag == '1') {
                     $("#showCategory").html(result.name);
-                    $("#gCategoryIds").val(result.ids)
+                    $("#gCategoryIds").val(id)
                     $("#gCategoryNames").val(result.name)
+                    getBrand(id);
+
                 } else {
                     layer.msg("操作失败");
                 }
@@ -459,8 +719,8 @@
                         click: function (item) {          //节点点击事件
                             //根据pid和id 到后台拼接分类名称和ids
                             getCategoryName(item.pid, item.id);
-                            $("#tree").hide()
-                            layer.closeAll()
+                            $("#tree").hide();
+                            layer.closeAll();
                         },
                         nodes: eval(result),
                     });
@@ -471,14 +731,14 @@
     }
 
     //获取品牌数据
+    var html = '<option value="">请选择</option>';
+
     function initBrandList() {
         $.ajax({
-            data: {},//提交的数据
             url: "/sps-admin/brand/findBrandList",//提交连接
             type: 'post',
             dataType: 'json',
             success: function (result) {
-                var html = '<option value="">请选择</option>';
                 if (result.flag == '1') {
                     if ($.isArray(result.data)) {
                         $.each(result.data, function (index, val) {
@@ -499,53 +759,6 @@
         var form = layui.form;
         var $ = layui.jquery;
         var table = layui.table;
-        //提交
-        var post_flag = false; //设置一个对象来控制是否进入AJAX过程
-        form.on('submit(submitGoods)', function (data) {
-            var type = true;
-            if ($('#goodsNumberFlag').val() == "1") {
-                layer.msg("SKU编号已经存在！");
-                type = false;
-            }
-            if (post_flag) return; //如果正在提交则直接返回，停止执行
-            post_flag = true;//标记当前状态为正在提交状态\
-            if (type) {
-                $.ajax(
-                    {
-                        data: {
-                            gId: $('#goodsId').val(),
-                            gCategoryIds: $('#gCategoryIds').val(),
-                            gCategoryNames: $('#gCategoryNames').val(),
-                            gBrandId: $('#gBrandId').val(),
-                            gSpuName: $('#gSpuName').val(),
-                            gSpuNo: $('#gSpuNo').val(),
-                            gDetails: $('#gDetails').val(),
-                            gRemark: $('#gRemark').val(),
-                            gDpic: $('#gDpic').val(),
-                            gPic: $('#gPic').val()
-                        },
-                        url: "/sps-admin/goods/saveOrUpdate",//提交连接
-                        type: 'post',
-                        dataType: 'json',
-                        success: function (result) {
-                            post_flag = false; //在提交成功之后将标志标记为可提交状态
-                            if (result.flag == '1') {
-                                $('#goodsId').val(result.goodsId)
-                                //插入sku商品
-                                SaveData()
-                                layer.msg("操作成功");
-                                setTimeout(function () {
-                                    /* window.location.href = "/sps-admin//page/main/goods/index.jsp";*/
-                                }, 1000);
-                            } else {
-                                post_flag = false; //在提交成功之后将标志标记为可提交状态
-                                layer.msg("操作失败");
-                            }
-                        }//回调方法
-                    });
-            }
-
-        })
         $(document).on("click", "#showCategory", function () {
             layer.open({
                 type: 1,
@@ -580,6 +793,76 @@
             },
         });
     });
+
+
+    // 两个浮点数求和
+    function accAdd(num1, num2) {
+        var r1, r2, m;
+        try {
+            r1 = num1.toString().split('.')[1].length;
+        } catch (e) {
+            r1 = 0;
+        }
+        try {
+            r2 = num2.toString().split(".")[1].length;
+        } catch (e) {
+            r2 = 0;
+        }
+        m = Math.pow(10, Math.max(r1, r2));
+        // return (num1*m+num2*m)/m;
+        return Math.round(num1 * m + num2 * m) / m;
+    }
+
+    // 两个浮点数相减
+    function accSub(num1, num2) {
+        var r1, r2, m;
+        try {
+            r1 = num1.toString().split('.')[1].length;
+        } catch (e) {
+            r1 = 0;
+        }
+        try {
+            r2 = num2.toString().split(".")[1].length;
+        } catch (e) {
+            r2 = 0;
+        }
+        m = Math.pow(10, Math.max(r1, r2));
+        n = (r1 >= r2) ? r1 : r2;
+        return (Math.round(num1 * m - num2 * m) / m).toFixed(n);
+    }
+
+    // 两数相除
+    function accDiv(num1, num2) {
+        var t1, t2, r1, r2;
+        try {
+            t1 = num1.toString().split('.')[1].length;
+        } catch (e) {
+            t1 = 0;
+        }
+        try {
+            t2 = num2.toString().split(".")[1].length;
+        } catch (e) {
+            t2 = 0;
+        }
+        r1 = Number(num1.toString().replace(".", ""));
+        r2 = Number(num2.toString().replace(".", ""));
+        return (r1 / r2) * Math.pow(10, t2 - t1);
+    }
+
+    function accMul(num1, num2) {
+        var m = 0, s1 = num1.toString(), s2 = num2.toString();
+        try {
+            m += s1.split(".")[1].length
+        } catch (e) {
+        }
+        ;
+        try {
+            m += s2.split(".")[1].length
+        } catch (e) {
+        }
+        ;
+        return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
+    }
 </script>
 </body>
 </html>

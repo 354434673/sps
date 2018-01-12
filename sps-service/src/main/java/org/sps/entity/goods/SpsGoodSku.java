@@ -1,6 +1,7 @@
 package org.sps.entity.goods;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class SpsGoodSku implements Serializable {
@@ -12,15 +13,15 @@ public class SpsGoodSku implements Serializable {
 
     private String gNo;
 
-    private Long gPrice;
+    private BigDecimal gPrice;
 
     private String gType;
 
     private Double gScale;
 
-    private Long gBprice;
+    private BigDecimal gBprice;
 
-    private Long gAprice;
+    private BigDecimal gAprice;
 
     private Integer gGid;
 
@@ -62,13 +63,6 @@ public class SpsGoodSku implements Serializable {
         this.gNo = gNo == null ? null : gNo.trim();
     }
 
-    public Long getgPrice() {
-        return gPrice;
-    }
-
-    public void setgPrice(Long gPrice) {
-        this.gPrice = gPrice;
-    }
 
     public String getgType() {
         return gType;
@@ -86,19 +80,27 @@ public class SpsGoodSku implements Serializable {
         this.gScale = gScale;
     }
 
-    public Long getgBprice() {
+    public BigDecimal getgPrice() {
+        return gPrice;
+    }
+
+    public void setgPrice(BigDecimal gPrice) {
+        this.gPrice = gPrice;
+    }
+
+    public BigDecimal getgBprice() {
         return gBprice;
     }
 
-    public void setgBprice(Long gBprice) {
+    public void setgBprice(BigDecimal gBprice) {
         this.gBprice = gBprice;
     }
 
-    public Long getgAprice() {
+    public BigDecimal getgAprice() {
         return gAprice;
     }
 
-    public void setgAprice(Long gAprice) {
+    public void setgAprice(BigDecimal gAprice) {
         this.gAprice = gAprice;
     }
 

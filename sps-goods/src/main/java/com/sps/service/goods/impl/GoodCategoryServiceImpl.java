@@ -81,6 +81,35 @@ public class GoodCategoryServiceImpl  implements GoodCategoryService {
         return list;
     }
 
+    @Override
+    public List<SpsGoodCategory> findLastCategory(String ids) {
+        List spsGoodCategoryList = new ArrayList<>();
+        if (ids != null && !"".equals(ids)) {
+            String[] id = ids.split(",");
+            for (String ides : id) {
+                List<SpsGoodCategory> list = new ArrayList<>();
+                Map<String,Object> map=new HashMap<>();
+                map.put("categoryId",ides);
+                List<SpsGoodCategory> selectChildern = this.findList(map);
+                SpsGoodCategory spsCategory;
+                List<SpsGoodCategory> childernList = new ArrayList<>();
+                for (SpsGoodCategory category : selectChildern) {
+                    spsCategory=new SpsGoodCategory();
+                    spsCategory.setId(category.getCategoryId());
+                    spsCategory.setName(category.getCategoryName());
+                    childernList.add(spsCategory);
+                    List<SpsGoodCategory> getGrandson = getGrand(category.getCategoryId());
+                    if(getGrandson.size()!= 0){
+                        spsCategory.setChildren(getGrandson);
+                    }
+                    list.add(spsCategory);
+                }
+                spsGoodCategoryList.add(childernList) ;
+            }
+        }
+        return spsGoodCategoryList;
+    }
+
     private List<SpsGoodCategory> getTowChildren(Integer categoryId) {
         List<SpsGoodCategory> list = new ArrayList<>();
         Map<String,Object> map=new HashMap<>();
@@ -139,6 +168,20 @@ public class GoodCategoryServiceImpl  implements GoodCategoryService {
             spsCategory.setCategoryWeight(category.getCategoryWeight());
             spsCategory.setCategoryDes(category.getCategoryDes());
             spsCategory.setCategoryUrl(category.getCategoryUrl());
+            childernList.add(spsCategory);
+        }
+        return childernList;
+    }
+    private List<SpsGoodCategory> getGrand(Integer categoryId) {
+        Map<String,Object> map=new HashMap<>();
+        map.put("categoryId",categoryId);
+        List<SpsGoodCategory> selectChildern = this.findList(map);
+        SpsGoodCategory spsCategory;
+        List<SpsGoodCategory> childernList = new ArrayList<>();
+        for (SpsGoodCategory category : selectChildern) {
+            spsCategory=new SpsGoodCategory();
+            spsCategory.setId(category.getCategoryId());
+            spsCategory.setName(category.getCategoryName());
             childernList.add(spsCategory);
         }
         return childernList;

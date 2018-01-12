@@ -181,4 +181,35 @@ public class GoodCategoryController {
         return "goodsCategory/detail";
     }
 
+
+    /**
+     * 查询一级
+     * @return
+     */
+    @RequestMapping("/getFistCategory")
+    @ResponseBody
+    public  Map<String, Object>  getFistCategory() {
+        Map<String, Object> resultMap = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("isFirst", "0");
+        //先查父类
+        List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
+        resultMap.put("categoryList", categoryList);
+        resultMap.put("code", 0);
+        return resultMap;
+    }
+    /**
+     * 查询二级三级
+     * @return
+     */
+    @RequestMapping("/getChildrenCategory")
+    @ResponseBody
+    public  Map<String, Object>  getChildrenCategory( String ids) {
+        Map<String, Object> resultMap = new HashMap<>();
+        List<SpsGoodCategory> childrenList = goodCategoryService.findLastCategory(ids);
+        resultMap.put("childrenList", childrenList);
+        resultMap.put("code", 0);
+        return resultMap;
+    }
+
 }

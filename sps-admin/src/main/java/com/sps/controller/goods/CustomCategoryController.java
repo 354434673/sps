@@ -6,46 +6,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.sps.entity.goods.SpsBrand;
-import org.sps.service.goods.BrandService;
+import org.sps.entity.goods.SpsCustomCategory;
+import org.sps.service.goods.CustomCategoryService;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = "/brand")
-public class BrandController {
+@RequestMapping(value = "/customCategory")
+public class CustomCategoryController {
     @Reference
-    private BrandService brandService;
-
-    /**
-     * 进入商品分类列表
-     *
-     * @param model 模型
-     */
-    @RequestMapping
-    public String index(Model model) {
-        try {
-        } catch (Exception e) {
-            model.addAttribute("tips", "操作失败");
-            model.addAttribute("flag", 0);
-        }
-        return "brand/index";
-    }
+    private CustomCategoryService customCategoryService;
 
     /**
      * @param page
      * @param limit
-     * @param brandName
-     * @param brandEnglishName
      * @return
      */
-    @RequestMapping("/brandList")
-    public @ResponseBody
-    HashMap<String, Object> userList(Integer page, Integer limit, String brandName, String brandEnglishName) {
-        HashMap<String, Object> brandList = brandService.findBrandList(page, limit, brandName, brandEnglishName);
-        return brandList;
+    @RequestMapping("/customCategoryList")
+    @ResponseBody
+    public HashMap<String, Object> customCategoryList(Integer page, Integer limit, String name) {
+        HashMap<String, Object> customCategoryList = customCategoryService.findCustomCategoryList(page, limit, name);
+        return customCategoryList;
     }
 
 
@@ -59,15 +42,15 @@ public class BrandController {
     public String toUpdateProduct(Integer id, Model model) {
         try {
             if (id != null) {
-                SpsBrand spsBrand = brandService.findEntityById(id);
-                model.addAttribute("spsBrand", spsBrand);
+                SpsCustomCategory customCategory = customCategoryService.findEntityById(id);
+                model.addAttribute("customCategory", customCategory);
             }
             model.addAttribute("flag", 1);
         } catch (Exception e) {
             model.addAttribute("tips", "操作失败");
             model.addAttribute("flag", 0);
         }
-        return "brand/addBrand";
+        return "";
     }
 
     /**
@@ -78,10 +61,10 @@ public class BrandController {
 
     @RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> saveOrUpdate(SpsBrand brand, Model model) {
+    public Map<String, Object> saveOrUpdate(SpsCustomCategory customCategory, Model model) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            brandService.saveOrUpdate(brand);
+            customCategoryService.saveOrUpdate(customCategory);
             resultMap.put("flag", 1);
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,8 +87,8 @@ public class BrandController {
         Map<String, Object> resultMap = new HashMap<>();
         try {
             if (id != null) {
-                SpsBrand spsBrand = brandService.findEntityById(id);
-                resultMap.put("spsBrand", spsBrand);
+                SpsCustomCategory customCategory = customCategoryService.findEntityById(id);
+                resultMap.put("customCategory", customCategory);
                 resultMap.put("flag", 1);
             }
         } catch (Exception e) {
@@ -122,12 +105,12 @@ public class BrandController {
      * @param id 用户ID
      * @return
      */
-    @RequestMapping(value = "/delBrand")
+    @RequestMapping(value = "/delCustomCategory")
     @ResponseBody
     public Map<String, Object> dellab(Integer id) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            brandService.falseDeletion(id);
+            customCategoryService.falseDeletion(id);
             resultMap.put("flag", 1);
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,15 +126,14 @@ public class BrandController {
      *
      * @return
      */
-    @RequestMapping(value = "/findBrandList")
+    @RequestMapping(value = "/findCustomCategoryList")
     @ResponseBody
-    public Map<String, Object> findBrandList(Integer categoryId) {
+    public Map<String, Object> findBrandList() {
         Map<String, Object> resultMap = new HashMap<>();
         try {
             Map<String, Object> map = new HashMap<>();
-            map.put("categoryId", categoryId);
-            List<SpsBrand> spsBrandList = brandService.findList(map);
-            resultMap.put("data", spsBrandList);
+            List<SpsCustomCategory> customCategoryList = customCategoryService.findList(map);
+            resultMap.put("data", customCategoryList);
             resultMap.put("flag", 1);
         } catch (Exception e) {
             e.printStackTrace();
