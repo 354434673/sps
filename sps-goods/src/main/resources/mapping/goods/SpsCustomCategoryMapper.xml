@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsCustomCategory">
+  <resultMap id="BaseResultMap" type="SpsCustomCategory">
+    <id column="custom_id" jdbcType="INTEGER" property="customId" />
+    <result column="custom_name" jdbcType="VARCHAR" property="customName" />
+    <result column="custom_wide" jdbcType="VARCHAR" property="customWide" />
+    <result column="custom_delete_flag" jdbcType="INTEGER" property="customDeleteFlag" />
+    <result column="custom_create_time" jdbcType="TIMESTAMP" property="customCreateTime" />
+    <result column="custom_update_time" jdbcType="TIMESTAMP" property="customUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    custom_id, custom_name, custom_wide, custom_delete_flag, custom_create_time, custom_update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_custom_category
+    where custom_id = #{customId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_custom_category
+    where custom_id = #{customId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsCustomCategory">
+    insert into sps_custom_category (custom_id, custom_name, custom_wide, 
+      custom_delete_flag, custom_create_time, custom_update_time
+      )
+    values (#{customId,jdbcType=INTEGER}, #{customName,jdbcType=VARCHAR}, #{customWide,jdbcType=VARCHAR}, 
+      #{customDeleteFlag,jdbcType=INTEGER}, #{customCreateTime,jdbcType=TIMESTAMP}, #{customUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="SpsCustomCategory">
+    insert into sps_custom_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="customId != null">
+        custom_id,
+      </if>
+      <if test="customName != null">
+        custom_name,
+      </if>
+      <if test="customWide != null">
+        custom_wide,
+      </if>
+      <if test="customDeleteFlag != null">
+        custom_delete_flag,
+      </if>
+      <if test="customCreateTime != null">
+        custom_create_time,
+      </if>
+      <if test="customUpdateTime != null">
+        custom_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="customId != null">
+        #{customId,jdbcType=INTEGER},
+      </if>
+      <if test="customName != null">
+        #{customName,jdbcType=VARCHAR},
+      </if>
+      <if test="customWide != null">
+        #{customWide,jdbcType=VARCHAR},
+      </if>
+      <if test="customDeleteFlag != null">
+        #{customDeleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="customCreateTime != null">
+        #{customCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customUpdateTime != null">
+        #{customUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="SpsCustomCategory">
+    update sps_custom_category
+    <set>
+      <if test="customName != null">
+        custom_name = #{customName,jdbcType=VARCHAR},
+      </if>
+      <if test="customWide != null">
+        custom_wide = #{customWide,jdbcType=VARCHAR},
+      </if>
+      <if test="customDeleteFlag != null">
+        custom_delete_flag = #{customDeleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="customCreateTime != null">
+        custom_create_time = #{customCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customUpdateTime != null">
+        custom_update_time = #{customUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where custom_id = #{customId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="spsCustomCategory">
+    update sps_custom_category
+    set custom_name = #{customName,jdbcType=VARCHAR},
+      custom_wide = #{customWide,jdbcType=VARCHAR},
+      custom_delete_flag = #{customDeleteFlag,jdbcType=INTEGER},
+      custom_create_time = #{customCreateTime,jdbcType=TIMESTAMP},
+      custom_update_time = #{customUpdateTime,jdbcType=TIMESTAMP}
+    where custom_id = #{customId,jdbcType=INTEGER}
+  </update>
+  <!-- 查询所有 -->
+  <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_custom_category
+    where 1=1
+    <if test="name !=null and name != ''">
+      and custom_name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+    </if>
+    AND custom_delete_flag = 0
+  </select>
+</mapper>

@@ -39,4 +39,10 @@ public interface GoodCategoryService {
      * @return
      */
     List<SpsGoodCategory> getTwoCategoryJson(List<SpsGoodCategory> categoryList);
+    /**
+     * 查询二级三级分类
+     * @param ids
+     * @return
+     */
+    List<SpsGoodCategory> findLastCategory(String ids);
 }
