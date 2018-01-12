@@ -18,7 +18,20 @@ import com.sps.service.user.RoleService;
 public class RoleController {
 	@Resource
 	private RoleService roleService;
-	@RequestMapping(value="roleList.html")
+	/**
+	 * 获得所有角色列表
+	 * @Title: getRoleList   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param page
+	 * @param: @param limit
+	 * @param: @param roleName
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月12日 下午4:19:01
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	@RequestMapping(value="roleList.json")
 	public @ResponseBody HashMap<String, Object> getRoleList(
 			Integer page, Integer limit,String roleName){
 		
@@ -27,7 +40,20 @@ public class RoleController {
 		
 		return roleList;
 	}
-	@RequestMapping(value="insertRole.html")
+	/**
+	 * 添加角色
+	 * @Title: insertRole   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param roleName
+	 * @param: @param describe
+	 * @param: @param menuList
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月12日 下午4:19:12
+	 * @return: HashMap<String,String>      
+	 * @throws
+	 */
+	@RequestMapping(value="insertRole")
 	public @ResponseBody HashMap<String, String> insertRole(
 			String roleName, String describe,
 			@RequestParam(value = "menuList[]")List<Integer> menuList){

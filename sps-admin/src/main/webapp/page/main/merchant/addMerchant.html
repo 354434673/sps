@@ -324,6 +324,7 @@
    				<div class="layui-row layui-col-space10">
    					<div class="layui-col-md4">
 					    <div class="layui-upload-drag" id="businesslicense" style="width: 250px">
+						  
 						  <p>*营业执照</p>
 						  <i class="layui-icon"></i>
 						  <p>点击上传，或将文件拖拽到此处</p>
@@ -556,7 +557,6 @@
 	  //收款信息
 	  table.render({
 		    elem: '#gatherList'
-		    //,url: '/sps-admin/merchant/getGatherList.html' //数据接口
 		    ,id:'gather'
 		    ,page:true
 		    ,limit:5
@@ -637,7 +637,7 @@
 			  var openSellRate = $('#sell').val();//费率
 			  
  			  $.post({
-				  url:'/sps-admin/merchant/insertChannel.html',
+				  url:'/sps-admin/merchant/insertChannel',
 				  dataType:'json',
 				  data:{
 					  	//渠道信息
@@ -748,7 +748,7 @@
 	  	function addGather(gatherListJson,channelNum){
 	  		$.each(gatherListJson,function(i,data){
 	  			$.post({
-	  				url:'/sps-admin/merchant/insertGather.html',
+	  				url:'/sps-admin/merchant/insertGather',
 	  				dataType:'json',
 	  				data:{
 	  					gatherBankId:data.gatherBankId,
@@ -826,15 +826,17 @@
  			    elem: '#businesslicense' //绑定元素
  			    ,accept:'images'
  			    ,multiple:true//多文件上传
- 			    ,data:{type:'businesslicense',types:0,id:channelNum,status:'channel',accept:'images'}
- 			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
+ 			    ,data:{type:'businesslicense',types:0,channelNum:'1',status:'channel',accept:'images'}
+ 			    ,url: '/sps-admin/merchant/uploadPic' //上传接口
  			    ,done: function(res){
  			    	if(res.state == 'success'){
-	 			    	layer.msg('图片上传成功',{icon: 1});
+	 			    	layer.msg(res.msg,{icon: 1});
  			    	}else if(res.state == 'error'){
- 			    		layer.msg('图片失败',{icon: 2});
+ 			    		layer.msg(res.msg,{icon: 2});
+ 			    	}else if(res.state == 'max'){
+ 			    		layer.msg(res.msg,{icon: 2});
  			    	}
- 			    }
+ 			    } 
  			    ,error: function(){
  			    	layer.msg('图片失败',{icon: 2});
  			    }
@@ -843,7 +845,7 @@
  			    elem: '#statement' //绑定元素
  			    ,accept:'images'
  			    ,multiple:true//多文件上传
- 			    ,data:{type:'statement',types:0,id:channelNum,status:'channel',accept:'images'}
+ 			    ,data:{type:'statement',types:1,id:channelNum,status:'channel',accept:'images'}
  			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
  			    ,done: function(res){
  			    	if(res.state == 'success'){
@@ -860,7 +862,7 @@
  			    elem: '#corpIdCardFront' //绑定元素
  			    ,accept:'images'
  			    ,multiple:true//多文件上传
- 			    ,data:{type:'corpIdCardFront',types:0,id:channelNum,status:'channel',accept:'images'}
+ 			    ,data:{type:'corpIdCardFront',types:2,id:channelNum,status:'channel',accept:'images'}
  			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
  			    ,done: function(res){
  			    	if(res.state == 'success'){
@@ -877,7 +879,7 @@
  			    elem: '#corpIdCardReverse' //绑定元素
  			    ,accept:'images'
  			    ,multiple:true//多文件上传
- 			    ,data:{type:'corpIdCardReverse',types:0,id:channelNum,status:'channel',accept:'images'}
+ 			    ,data:{type:'corpIdCardReverse',types:3,id:channelNum,status:'channel',accept:'images'}
  			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
  			    ,done: function(res){
  			    	if(res.state == 'success'){
@@ -894,7 +896,7 @@
  			    elem: '#salesmanIdCardFront' //绑定元素
  			    ,accept:'images'
  			    ,multiple:true//多文件上传
- 			    ,data:{type:'salesmanIdCardFront',types:0,id:channelNum,status:'channel',accept:'images'}
+ 			    ,data:{type:'salesmanIdCardFront',types:4,id:channelNum,status:'channel',accept:'images'}
  			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
  			    ,done: function(res){
  			    	if(res.state == 'success'){
@@ -911,7 +913,7 @@
  			    elem: '#salesmanIdCardReverse' //绑定元素
  			    ,accept:'images'
  			    ,multiple:true//多文件上传
- 			    ,data:{type:'salesmanIdCardReverse',types:0,id:channelNum,status:'channel',accept:'images'}
+ 			    ,data:{type:'salesmanIdCardReverse',types:5,id:channelNum,status:'channel',accept:'images'}
  			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
  			    ,done: function(res){
  			    	if(res.state == 'success'){
@@ -928,7 +930,7 @@
  			    elem: '#companyPanorama' //绑定元素
  			    ,accept:'images'
  			    ,multiple:true//多文件上传
- 			    ,data:{type:'companyPanorama',types:0,id:channelNum,status:'channel',accept:'images'}
+ 			    ,data:{type:'companyPanorama',types:6,id:channelNum,status:'channel',accept:'images'}
  			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
  			    ,done: function(res){
  			    	if(res.state == 'success'){
@@ -945,7 +947,7 @@
  			    elem: '#companyGate' //绑定元素
  			    ,accept:'images'
  			    ,multiple:true//多文件上传
- 			    ,data:{type:'companyGate',types:0,id:channelNum,status:'channel',accept:'images'}
+ 			    ,data:{type:'companyGate',types:7,id:channelNum,status:'channel',accept:'images'}
  			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
  			    ,done: function(res){
  			    	if(res.state == 'success'){
@@ -962,7 +964,7 @@
  			    elem: '#contract' //绑定元素
  			    ,accept:'images'
  			    ,multiple:true//多文件上传
- 			    ,data:{type:'contract',types:0,id:channelNum,status:'channel',accept:'images'}
+ 			    ,data:{type:'contract',types:8,id:channelNum,status:'channel',accept:'images'}
  			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
  			    ,done: function(res){
  			    	if(res.state == 'success'){
@@ -979,7 +981,7 @@
  			    elem: '#signed' //绑定元素
  			    ,accept:'images'
  			    ,multiple:true//多文件上传
- 			    ,data:{type:'signed',types:0,id:channelNum,status:'channel',accept:'images'}
+ 			    ,data:{type:'signed',types:9,id:channelNum,status:'channel',accept:'images'}
  			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
  			    ,done: function(res){
  			    	if(res.state == 'success'){
@@ -996,7 +998,7 @@
  			    elem: '#lease' //绑定元素
  			    ,accept:'images'
  			    ,multiple:true//多文件上传
- 			    ,data:{type:'lease',types:0,id:channelNum,status:'channel',accept:'images'}
+ 			    ,data:{type:'lease',types:10,id:channelNum,status:'channel',accept:'images'}
  			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
  			    ,done: function(res){
  			    	if(res.state == 'success'){

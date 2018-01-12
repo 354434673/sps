@@ -45,9 +45,6 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 			PageHelper.startPage(page, limit);
 			List<SpsChannelEnterprise> selectChannel = enterpriseRead.selectChannel(channel);
 			
-			for (SpsChannelEnterprise spsChannelEnterprise : selectChannel) {
-				System.out.println(spsChannelEnterprise.getChannelNum());
-			}
 			PageInfo pageInfo = new PageInfo(selectChannel);
 			hashMap.put("code", 0);
 			hashMap.put("msg", "获取成功");

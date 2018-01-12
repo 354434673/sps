@@ -21,39 +21,51 @@
 </style>
 </head>
 <body>
-<div style="padding: 40px" >
+<div style="padding: 20px" >
 <h3>用户信息</h3>
 <hr>
-<div class="layui-form layui-form-pane"  >
-  <div class="layui-form-item" id="passwordDiv">
-   <label class="layui-form-label">*业务员姓名：</label>
-    <div class="layui-input-inline">
-      <input id="password" name="password" type="password"  lay-verify="required|minLength" placeholder="请输入密码" autocomplete="off" class="layui-input">
-    </div>
-    <label class="layui-form-label">*身份证号码：</label>
-    <div class="layui-input-inline">
-      <input type="password"  lay-verify="required|minLength|verify" placeholder="请确认密码" autocomplete="off" class="layui-input">
-    </div>
+<div class="layui-form layui-form-pane" >
+	<div style="padding-left: 13%">
+	  <div class="layui-form-item" id="passwordDiv">
+	   <label class="layui-form-label">*业务员姓名：</label>
+	    <div class="layui-input-inline">
+	      <input id="salesmanName" name="salesmanName" type="text"  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+	    </div>
+	    <label class="layui-form-label">*身份证号码：</label>
+	    <div class="layui-input-inline">
+	      <input id="salesmanIdcard" name="salesmanIdcard" type="text"  lay-verify="required" placeholder="请确认密码" autocomplete="off" class="layui-input">
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">*手机号：</label>
+	    <div class="layui-input-inline">
+	      <input id="salesmanPhone" type="text" name="salesmanPhone"  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+	    </div>
+	    <label class="layui-form-label">*电子邮箱：</label>
+	    <div class="layui-input-inline">
+	      <input id="salesmanEmail" type="text" name="salesmanEmail" lay-verify="required" placeholder="请输入电话" autocomplete="off" class="layui-input">
+	    </div>
+	  </div>
+		  <div class="layui-form-item " >
+		    <label class="layui-form-label" >*城市：</label>
+		    <div class="layui-input-inline" style="width: 150px">
+		      <select name="province" lay-filter="province"  id="province" lay-verify="required"> 
+		      </select>
+		    </div>
+		    <div class="layui-input-inline" style="width: 150px">
+		      <select name="city" lay-filter="city"   id="city" lay-verify="required"> 
+				  <option value="" >市</option>
+		      </select>
+		    </div>
+		    <div class="layui-input-inline" style="width: 150px">
+		      <select name="area" lay-filter="area"   id="area" lay-verify=""> 				  
+		      	  <option value="">区</option>
+		      </select>
+		    </div>
+		  </div>
   </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">*手机号：</label>
-    <div class="layui-input-inline">
-      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-    </div>
-    <label class="layui-form-label">*电子邮箱：</label>
-    <div class="layui-input-inline">
-      <input id="phone" type="text" name="phone" lay-verify="required|phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">*城市：</label>
-    <div class="layui-input-inline">
-      <input id="email"  type="email" name="email" lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
-    </div>
-  </div>
- 	<div class="layui-form-item" align="center" id="btn" >
-		<button class="layui-btn" lay-filter="submitAddUser" lay-submit id="submit">立即提交</button>
-		<button style="display: none" class="layui-btn" lay-filter="submitUpdate" lay-submit id="submitUpdate">提交修改</button>
+ 	<div class="layui-form-item" align="center" id="btn" style="padding-top: 40px">
+		<button class="layui-btn" lay-filter="submitSalesMan" lay-submit id="submit">立即提交</button>
 		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 	</div>
 </div>
@@ -65,20 +77,16 @@
 	  var form = layui.form;
 	  var $ = layui.jquery;
 	  var table = layui.table;
-	  var array = [];//选择的角色id
-	  form.on('checkbox(encrypt)', function(data){
-		  if(data.elem.checked){
-		  	array.push(data.value)
-		  }else{
-			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
-			for(var i=0; i<array.length; i++) {
-				if(array[i] == data.value){
-					array.splice(i, 1);
-					break;
-				}
-			}
-		  }
-		}); 
+	  getProvince(100000)//先加载省
+	  
+	  //选择城市
+	  form.on('select(province)', function(data){//选省
+		  getCity(data.value)
+		  $('#area').html('')
+	  });    
+	  form.on('select(city)', function(data){//选省
+		  getArea(data.value)
+	  });    
 	  $('#resetPasssword').on('click',function(){
 		    layer.confirm('确认重置密码?', function(index){
 			      layer.close(index);
@@ -92,19 +100,24 @@
 			    });
 	  })
 	  //添加
-	  form.on('submit(submitAddUser)', function(data){
-	 		 var username = $('#username').val()
-	 		 var password = $('#password').val()
-	 		 var name = $('#name').val()
-	 		 var phone = $('#phone').val()
-	 		 var email = $('#email').val()
-	 		 if(array.length != 0){
+	  form.on('submit(submitSalesMan)', function(data){
+	 		 var salesmanName = $('#salesmanName').val()
+	 		 var salesmanIdcard = $('#salesmanIdcard').val()
+	 		 var salesmanPhone = $('#salesmanPhone').val()
+	 		 var salesmanEmail = $('#salesmanEmail').val()
+	 		 var salesmanCity = $('#province').find("option:selected").text()+
+			 			 $('#city').find("option:selected").text()+
+			 			$('#area').find("option:selected").text();
 		 		 $.post({
-		 			 url:'<%=path%>/user/insertUser.html',
+		 			 url:'<%=path%>/salesman/insertSalesman',
 		 			 dataType:'json',
-		 			 data:{username:username, password:password, 
-		 				 name:name,phone:phone, email:email,
-		 				 mark:0,roleList:array
+		 			 data:{
+		 			 	salesmanName:salesmanName,
+		 			 	salesmanIdcard:salesmanIdcard,
+		 			 	salesmanPhone:salesmanPhone,
+		 			 	salesmanEmail:salesmanEmail,
+		 			 	salesmanCity:salesmanCity,
+		 			 	bei1:0
 		 			 },
 		 			 success:function(data){
 		 				 if(data.state == 'success'){
@@ -116,9 +129,6 @@
 		 				 }
 		 			 }
 		 		 })
-	 		 }else{
-	 			layer.msg('请选择该用户权限',{icon: 2});
-	 		 }
 	  })
 	  //修改
 	  form.on('submit(submitUpdate)', function(data){
@@ -149,18 +159,6 @@
 	 			layer.msg('请选择该用户权限',{icon: 2});
 	 		 }
 	  })
-	  $.post({//获取角色列表
-		  url:'<%=path %>/role/roleList.html',
-		  dataType:'json',
-		  success:function(data){
-			  var list = "";
-			  $.each(data.data,function(i,item){
-				  list +='<input type="checkbox" name="check" lay-filter="encrypt" title="'+item.roleName+'" value ="'+item.roleId+'">';
-				  $('#checkList').html(list)
-			  })
-			  form.render('checkbox');
-		  }
-	  })
 	  //自定义验证规则  
 	  form.verify({  
 			//验证只包含汉字  
@@ -181,7 +179,59 @@
 					return '两次输入的密码不一致!';
 				}
 			},
-	  });  
+	  }); 
+	  	//获得省
+		 function getProvince(parentId){
+			$.getJSON({
+	 			 url:'/sps-admin/getAreasList.json',
+	 			 dataType:'json',
+	 			 data:{parentId:parentId},
+	 			 success:function(data){
+			 		 var list = "";
+			 		 $.each(data,function(i,item){
+					  list +='<option value="'+item.areaId+'">'+item.name+'</option>';
+					  $('#province').html(list)
+					  getCity($('#province').val())
+			 		  
+				  	})
+				  	form.render('select');
+	 			 }
+	 		 })
+		}
+		//获得城市
+		 function getCity(parentId){
+			$.getJSON({
+	 			 url:'/sps-admin/getAreasList.json',
+	 			 dataType:'json',
+	 			 data:{parentId:parentId},
+	 			 success:function(data){
+			 		 var list = "";
+			 		 $.each(data,function(i,item){
+					  list +='<option value="'+item.areaId+'">'+item.name+'</option>';
+					  $('#city').html(list)
+					  getArea($('#city').val())
+				  	})
+				  	form.render('select');
+	 			 }
+	 		 })
+		}
+		 
+		 //获得区
+		 function getArea(parentId){
+			$.getJSON({
+	 			 url:'/sps-admin/getAreasList.json',
+	 			 dataType:'json',
+	 			 data:{parentId:parentId},
+	 			 success:function(data){
+			 		 var list = "";
+			 		 $.each(data,function(i,item){
+					  list +='<option value="'+item.areaId+'" title="'+item.name+'">'+item.name+'</option>';
+					  $('#area').html(list)
+				  	})
+				  	form.render('select');
+	 			 }
+	 		 })
+		}
 	});
 </script>
 </body>

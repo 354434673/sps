@@ -98,7 +98,7 @@
 		    layer.confirm('确认重置密码?', function(index){
 			      layer.close(index);
 					$.post({
-						url:'<%=path%>/user/updatePassword.html',
+						url:'<%=path%>/user/updatePassword',
 						dataType:'json',
 						success:function(data){
 							layer.msg(data.msg,{icon: data.icon});
@@ -115,7 +115,7 @@
 	 		 var email = $('#email').val()
 	 		 if(array.length != 0){
 		 		 $.post({
-		 			 url:'<%=path%>/user/insertUser.html',
+		 			 url:'<%=path%>/user/insertUser',
 		 			 dataType:'json',
 		 			 data:{username:username, password:password, 
 		 				 name:name,phone:phone, email:email,
@@ -144,7 +144,7 @@
 	 		 var email = $('#email').val()
 	 		 if(array.length != 0){
 		 		 $.post({
-		 			 url:'<%=path%>/user/updateUser.html',
+		 			 url:'<%=path%>/user/updateUser',
 		 			 dataType:'json',
 		 			 data:{userUsername:username,userPassword:password, 
 		 				 userName:name,userPhone:phone, userEmail:email,
@@ -165,7 +165,7 @@
 	 		 }
 	  })
 	  $.post({//获取角色列表
-		  url:'<%=path %>/role/roleList.html',
+		  url:'<%=path %>/role/roleList.json',
 		  dataType:'json',
 		  success:function(data){
 			  var list = "";

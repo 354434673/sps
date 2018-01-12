@@ -125,30 +125,6 @@
 				 gatherBankSubbranch:gatherBankSubbranch,
 				 })
 		      $('input').val('')
-	/* 	 		 $.post({
-		 			 url:'/sps-admin/merchant/insertGather.html',
-		 			 dataType:'json',
-		 			 data:{
-		 				gatherBankId:gatherBankId,
-		 				gatherOwnerName:gatherOwnerName,
-		 				gatherPhone:gatherPhone,
-		 				gatherIdcard:gatherIdcard,
-		 				gatherDepositBank:gatherDepositBank,
-		 				gatherBankBranch:gatherBankBranch,
-		 				gatherBankSubbranch:gatherBankSubbranch
-		 			 },
-		 			 success:function(data){
-		 				 console.log(data)
-		 				 if(data.state == 'success'){
-		 					gatherIdArray.push(data.gatherId)//将id返回来,放进一个数组
-		 					layer.msg(data.msg,{icon: 1});
-		 				 }else if(data.state == 'exist'){
-		 					layer.msg(data.msg,{icon: 2});
-		 				 }else if(data.state == 'error'){
-		 					layer.msg(data.msg,{icon: 2});
-		 				 }
-		 			 }
-		 		 }) */
 	  })  
 	  //自定义验证规则  
 	  form.verify({  

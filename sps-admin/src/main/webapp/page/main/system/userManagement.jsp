@@ -78,7 +78,7 @@
 			  table.render({
 			    elem: '#userList'
 			    ,height: 350
-			    ,url: '<%=path%>/user/userList.html' //数据接口
+			    ,url: '<%=path%>/user/userList.json' //数据接口
 			    ,id:'userId'
 			    ,page:true
 			    ,cols: [[ //表头
@@ -132,7 +132,7 @@
 					      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 					      layer.close(index);
   					  			$.post({
-						 			 url:'/sps-admin/user/updateUserState.html',
+						 			 url:'/sps-admin/user/updateUserState',
 						 			 dataType:'json',
 						 			 data:{
 						 				 userName:data.userUsername,

@@ -536,7 +536,7 @@ to {
     return window.sysLogin;
 });
 document.addEventListener('DOMContentLoaded',function(){
-    sysLogin.init('<%=path%>/user/userLogin.html','post','userName','password','code');
+    sysLogin.init('<%=path%>/user/userLogin','post','userName','password','code');
 },false);
 </script>
 </body>

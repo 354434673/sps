@@ -52,9 +52,9 @@
 				</div>
 				<ul class="layui-nav admin-header-item">
 					<li class="layui-nav-item"><a href="javascript:;">清除缓存</a></li>
-					<li class="layui-nav-item"><a href="javascript:;"
-						class="admin-header-user"><img
-							src="<%=path%>/page/static/images/0.jpg" /> <span><shiro:principal /></span>
+					<li class="layui-nav-item"><a href="javascript:;" class="admin-header-user">
+						<img src="<%=path%>/page/static/images/0.jpg" /> 
+						<span><shiro:principal /></span>
 					</a>
 						<dl class="layui-nav-child">
 							<dd>

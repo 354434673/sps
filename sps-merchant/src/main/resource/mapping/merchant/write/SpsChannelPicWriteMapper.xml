@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sps.dao.merchant.SpsChannelPicMapper">
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelPicWriteMapper">
   <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelPic">
     <id column="pic_id" jdbcType="INTEGER" property="picId" />
     <result column="pic_src" jdbcType="VARCHAR" property="picSrc" />

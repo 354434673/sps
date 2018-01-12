@@ -18,7 +18,7 @@
 				<!-- js/css等文件,暂时全部放行,需要拦截的待定 -->
 				/page/static/** = anon
 				<!-- 登陆认证放行 -->
-				/user/userLogin.html = anon
+				/user/userLogin = anon
 				<!-- 其余所有全部登陆后可使用 -->
 				/** = authc
 				<!-- /** = anon -->

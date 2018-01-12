@@ -47,7 +47,7 @@
 				</a>
 			</blockquote>
 		</div>
-		<table id="userList" lay-filter="userTables"></table>
+		<table id="salesmanList" lay-filter="salesmanTables"></table>
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
@@ -71,7 +71,7 @@
 			  $('#add').on('click', function() {
 				  layer.open({
 					  type: 2, 
-					  area: ['70%', '80%'],//宽高
+					  area: ['60%', '60%'],//宽高
 					  content: '<%=path%>/page/main/salesman/addSales.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					  cancel: function(index, layero){ 
 						  table.reload('userId', {
@@ -80,18 +80,17 @@
 				  }); 
 			  });
 			  table.render({
-			    elem: '#userList'
-			    ,height: 350
-			    ,url: '<%=path%>/user/userList.html' //数据接口
+			    elem: '#salesmanList'
+			    ,url: '<%=path%>/salesman/getSalesmanList.json' //数据接口
 			    ,id:'userId'
 			    ,page:true
 			    ,cols: [[ //表头
-			      {field: 'userId', title: 'ID', align:'center'}
-			      ,{field: 'userUsername', title: '用户名', align:'center'}
-			      ,{field: 'userName', title: '姓名',align:'center'}
-			      ,{field: 'userPhone', title: '联系电话', width:230, align:'center'}
+			      {field: 'userId', title: '序号', align:'center'}
+			      ,{field: 'userUsername', title: '业务员姓名', align:'center'}
+			      ,{field: 'userName', title: '身份证号码',align:'center'}
+			      ,{field: 'userPhone', title: '手机号', width:230, align:'center'}
 			      ,{field: 'userEmail', title: '电子邮箱', width:230,align:'center'} 
-			      ,{field: 'role', title: '角色', align:'center',templet: '#roleTpl'}
+			      ,{field: 'role', title: '城市', align:'center',templet: '#roleTpl'}
 			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 			    ]]
 			  });

@@ -100,7 +100,7 @@
 	 			layer.msg('未给角色选择权限',{icon: 2});
 	 		 }
 		 		$.post({
-		 			 url:'<%=path%>/role/insertRole.html',
+		 			 url:'<%=path%>/role/insertRole',
 		 			 dataType:'json',
 		 			 data:{roleName:roleName, describe:roleDescribe,menuList:checkList},
 		 			 success:function(data){

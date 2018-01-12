@@ -5,8 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.sps.util.FinalData;
+import org.sps.util.FinalData;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;

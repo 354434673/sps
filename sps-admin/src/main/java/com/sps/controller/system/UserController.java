@@ -30,7 +30,21 @@ public class UserController {
 	private UserService userService;
 	@Resource
 	private UserAndRoleService userAndRoleService;
-	@RequestMapping("/userList.html")
+	/**
+	 * 用户列表
+	 * @Title: userList   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param page
+	 * @param: @param limit
+	 * @param: @param username
+	 * @param: @param name
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月12日 下午4:19:27
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	@RequestMapping("/userList.json")
 	public @ResponseBody HashMap<String, Object> userList(Integer page, Integer limit,
 			String username, String name) {
 		HashMap<String, Object> userList = userService.userList(page,limit, username, name);
@@ -47,7 +61,7 @@ public class UserController {
 	 * @return: String      
 	 * @throws
 	 */
-	@RequestMapping(value = {"userLogin.html"})
+	@RequestMapping(value = {"userLogin"})
 	public @ResponseBody String userLogin(String user, String pass, 
 			String code, boolean rememberMe) {
 		UsernamePasswordToken usernamePasswordToken = 
@@ -78,7 +92,24 @@ public class UserController {
 	    
 		return "success";
 	}
-	@RequestMapping(value="insertUser.html")
+	/**
+	 * 添加用户
+	 * @Title: insertUser   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param username
+	 * @param: @param password
+	 * @param: @param name
+	 * @param: @param phone
+	 * @param: @param email
+	 * @param: @param mark
+	 * @param: @param roleList
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月12日 下午4:19:40
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	@RequestMapping(value="insertUser")
 	@ResponseBody
 	public  HashMap<String, Object> insertUser(String username, String password, String name, 
 			String phone, String email,String mark, @RequestParam(value = "roleList[]") int[] roleList) {
@@ -88,7 +119,19 @@ public class UserController {
 		userAndRoleService.insertUserAndRole(username, roleList);//为该用户添加角色
 		return insertUser;
 	}
-	@RequestMapping(value="updateUser.html")
+	/**
+	 * 修改用户
+	 * @Title: updateUser   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param user
+	 * @param: @param roleList
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月12日 下午4:19:47
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	@RequestMapping(value="updateUser")
 	@ResponseBody
 	public  HashMap<String, Object> updateUser(SpsUser user,  
 				@RequestParam(value = "roleList[]") int[] roleList) {
@@ -98,7 +141,19 @@ public class UserController {
 		
 		return updateUser;
 	}
-	@RequestMapping(value="updatePassword.html")
+	/**
+	 * 修改密码
+	 * @Title: updatePassword   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param oldPassword
+	 * @param: @param newPassword
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月12日 下午4:19:54
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	@RequestMapping(value="updatePassword")
 	@ResponseBody
 	public  HashMap<String, Object> updatePassword(String oldPassword, String newPassword){
 		
@@ -106,7 +161,19 @@ public class UserController {
 		
 		return updatePassword;
 	}
-	@RequestMapping(value="updateUserState.html")
+	/**
+	 * 删除用户,这里假删除,只改状态
+	 * @Title: updateUserState   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param userName
+	 * @param: @param state
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月12日 下午4:20:01
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	@RequestMapping(value="updateUserState")
 	@ResponseBody
 	public  HashMap<String, Object> updateUserState(String userName, Integer state){
 		
@@ -114,7 +181,17 @@ public class UserController {
 		
 		return updateUserState;
 	}
-	@RequestMapping(value="/logout.html")
+	/**
+	 * 登出
+	 * @Title: logout   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月12日 下午4:20:25
+	 * @return: String      
+	 * @throws
+	 */
+	@RequestMapping(value="/logout")
 	public String logout(){
 		//清除令牌中的信息
 		SecurityUtils.getSubject().logout();

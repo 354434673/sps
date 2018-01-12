@@ -70,7 +70,7 @@
 		  table.render({
 		    elem: '#roleList'
 		    ,height: 350
-		   	,url:'<%=path %>/role/roleList.html'
+		   	,url:'<%=path %>/role/roleList.json'
 		    ,id:'roleId'
 		    ,page:true
 		    ,cols: [[ //表头

@@ -60,7 +60,7 @@ layui.use(['form','table'], function(){
 			var newPassword = $('#password').val();
 			var verifyPwd = $('#verifyPwd').val();
 				$.post({
-					url:'<%=path%>/user/updatePassword.html',
+					url:'<%=path%>/user/updatePassword',
 					dataType:'json',
 					data:{oldPassword:oldPassword,newPassword:newPassword},
 					success:function(data){

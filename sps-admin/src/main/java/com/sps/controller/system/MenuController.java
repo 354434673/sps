@@ -21,7 +21,17 @@ import com.sps.util.MenuUtil;
 public class MenuController {
 	@Resource
 	private MenuService menuService;
-
+	
+	/**
+	 * 获得菜单
+	 * @Title: getMenuList   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月12日 下午4:18:34
+	 * @return: List<MenuUtil>      
+	 * @throws
+	 */
 	@RequestMapping(value = "/getMenu.json")
 	public @ResponseBody List<MenuUtil> getMenuList(){
 		String userName = (String) SecurityUtils.getSubject().getPrincipal();
@@ -30,6 +40,16 @@ public class MenuController {
 		
 		return menu;
 	}
+	/**
+	 * 封装后的菜单
+	 * @Title: getSpecificMenu   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月12日 下午4:18:42
+	 * @return: List<MenuUtil>      
+	 * @throws
+	 */
 	@RequestMapping(value = "/getSpecificMenu.json")
 	public @ResponseBody List<MenuUtil> getSpecificMenu(){
 		String userName = (String) SecurityUtils.getSubject().getPrincipal();
