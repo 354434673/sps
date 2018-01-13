@@ -30,6 +30,7 @@ import org.sps.service.merchant.write.ChannelWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sps.controller.common.UploadController;
+import com.sps.service.user.ExpressService;
 import com.sps.service.user.UserService;
 import com.sps.util.CommonUtil;
 import com.sps.util.ControllerLsit;
@@ -52,6 +53,8 @@ public class MerchantController {
 	private ChannelPicUploadService uploadService;
 	@Resource
 	private UserService userService;
+	@Resource
+	private ExpressService expressService;
 	/**
 	 * 插入核心商户,将channelNum返回回来
 	 * @Title: getChannel   
@@ -79,7 +82,10 @@ public class MerchantController {
 			SpsChannelFinanceTarget financeTarget,
 			SpsChannelLogistics logistics , 
 			SpsChannelOpenAccount openAccount){
-		
+		String otherName = logistics.getLogisticsOther();
+		if(!(otherName.equals("")||otherName == null)){//物流配送中其他字段如果填了选项,则插入数据
+			expressService.insertExpress(otherName);
+		}
 		HashMap<String, String> result = chanelWriteService.insertAll(channel, enterprise, 
 				business, guarantee, financeTarget, 
 				logistics, openAccount);

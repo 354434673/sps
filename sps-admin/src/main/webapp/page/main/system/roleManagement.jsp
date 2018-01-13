@@ -69,7 +69,6 @@
 			  });
 		  table.render({
 		    elem: '#roleList'
-		    ,height: 350
 		   	,url:'<%=path %>/role/roleList.json'
 		    ,id:'roleId'
 		    ,page:true

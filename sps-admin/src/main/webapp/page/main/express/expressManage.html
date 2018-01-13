@@ -31,16 +31,9 @@
 		src="/sps-admin//page/static/plugins/layui/layui.all.js"></script>
 <!-- 进行数据渲染 -->
 <script type="text/html" id="channelTpl">
-  {{}}
-  {{#  if(d.channel.channelState == 0){ }}
-    	未激活
-  {{#  } else if(d.channel.channelState == 1){ }}
-    	正常
-  {{#  } else if(d.channel.channelState == 2){ }}
-    	冻结
-  {{#  } }}
 </script>
 	<script>
+	var expressIds = [];
 	layui.use(['table','layer','form'], function(){
 			  var table = layui.table;
 			  var layer = layui.layer
@@ -74,36 +67,24 @@
 					}); 
 			  });    
 			  form.on('select(channelFlowState)', function(data){
-				  console.log(data.value)
 				  table.reload('enterpriseId', {
 					  where: {channelFlowState:data.value}
 					}); 
 			  });    
-			  //监听工作条
-				table.on('tool(channelTables)', function(obj){
-					 var data = obj.data;
-					  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-					  var tr = obj.tr; //获得当前行 tr 的DOM对象
-					 	console.log(data)
-					  if(layEvent === 'detail'){ //查看
-						  location.href = '../../main/merchant/queryMerchant.html	'
-					  } else if(layEvent === 'del'){ //删除
-					    layer.confirm('真的删除行么', function(index){
-					      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-					      layer.close(index);
-							$.get({
-								url:'http://rap.juzifenqi.com/mockjs/3/m/areas/get',
-								dataType:'json',
-								success:function(data){
-									console.log(data);
-								}
-							})
-					      //向服务端发送删除指令
-					    });
-					  } else if(layEvent === 'edit'){ //编辑
-						  location.href = '../../main/merchant/queryMerchant.html	'
-					  }
-				});
+ 			  table.on('checkbox(expressTables)', function(obj){
+ 				  console.log(obj.data)
+				  if(obj.checked){
+					  expressIds.push(obj.data.name)
+					  console.log(expressIds)
+				  }else{
+						for(var i=0; i<expressIds.length; i++) {
+							if(expressIds[i] == obj.data.name){
+								expressIds.splice(i, 1);
+								break;
+							}
+						}
+				  }
+				}); 
 			});
 	</script>
 </body>

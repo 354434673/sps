@@ -133,7 +133,7 @@
 					  var tr = obj.tr; //获得当前行 tr 的DOM对象
 					 	console.log(data)
 					  if(layEvent === 'detail'){ //查看
-						  location.href = '../../main/merchant/queryMerchant.html	'
+						  location.href = '../../main/merchant/queryMerchant.html'
 					  } else if(layEvent === 'del'){ //删除
 					    layer.confirm('真的删除行么', function(index){
 					      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
@@ -148,7 +148,7 @@
 					      //向服务端发送删除指令
 					    });
 					  } else if(layEvent === 'edit'){ //编辑
-						  location.href = '../../main/merchant/queryMerchant.html	'
+						  location.href = '../../main/merchant/updateMerchant.html'
 					  }
 				});
 			});

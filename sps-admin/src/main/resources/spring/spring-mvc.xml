@@ -63,6 +63,15 @@
 		<property name="maxInMemorySize" value="40960" />
 	</bean>
 
+	 <bean id="exceptionResolver"  
+        class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
+        <property name="exceptionMappings">  
+            <props>  
+                <prop key="com.gift.exception.SessionTimeoutException">redirect:/page/main/login.jsp</prop>  
+            </props>  
+        </property>  
+    </bean> 
+    
 	<!-- 通知spring识别@Aspect注解生效 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 </beans>

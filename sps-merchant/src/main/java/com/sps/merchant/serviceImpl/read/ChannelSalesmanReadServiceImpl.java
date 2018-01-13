@@ -41,13 +41,20 @@ public class ChannelSalesmanReadServiceImpl implements ChannelSalesmanReadServic
 			if(!(salesmanEmail == null || salesmanEmail.equals(""))){
 				createCriteria.andSalesmanEmailLike("%"+salesmanEmail+"%");
 			}
-			PageHelper.startPage(page, limit);
-			List<SpsChannelSalesman> selectByExample = salesmanRead.selectByExample(example);
+			long count = 0;
+			List<SpsChannelSalesman> selectByExample = null;
+			if(page != null&&limit!=null){
+				PageHelper.startPage(page, limit);
+				selectByExample = salesmanRead.selectByExample(example);
+				PageInfo pageInfo = new PageInfo(selectByExample);
+				count = pageInfo.getTotal();
+			}else{
+				selectByExample = salesmanRead.selectByExample(example);
+			}
 			
-			PageInfo pageInfo = new PageInfo(selectByExample);
 			hashMap.put("code", 0);
 			hashMap.put("msg", "获取成功");
-			hashMap.put("count", pageInfo.getTotal());
+			hashMap.put("count",count);
 			hashMap.put("data", selectByExample.size() != 0 ? selectByExample : null);
 		} catch (Exception e) {
 			hashMap.put("code", 1);

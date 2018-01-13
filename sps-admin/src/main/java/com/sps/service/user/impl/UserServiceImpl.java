@@ -73,24 +73,23 @@ public class UserServiceImpl implements UserService{
 		return hashMap;
 	}
 	@Override
-	public HashMap<String, Object> insertUser(String...strs) {
+	public HashMap<String, Object> insertUser(SpsUser user) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		try {
-			SpsUser user = getUser(strs[0]);//查重
-			if(user == null){
+			SpsUser spsUser = getUser(user.getUserUsername());//查重
+			if(spsUser == null){
 				String salt = Md5Util.getSalt(4);//4位盐
-				SpsUser spsUser = new SpsUser();
-				spsUser.setUserUsername(strs[0]);
-				spsUser.setUserSalt(salt);
-				spsUser.setUserPassword(Md5Util.getMd5(strs[1], salt));
-				spsUser.setUserName(strs[2]);
-				spsUser.setUserPhone(strs[3]);
-				spsUser.setUserEmail(strs[4]);
-				spsUser.setUserState(0);
-				spsUser.setUserMark(Integer.parseInt(strs[5]));
-				spsUser.setUserCreattime(new Date());
-				spsUser.setUserUpdatetime(new Date());
-				int insertSelective = spsUserMapper.insertSelective(spsUser);
+				
+				user.setUserSalt(salt);
+				
+				user.setUserPassword(Md5Util.getMd5(user.getUserPassword(), salt));
+				
+				user.setUserState(0);
+				
+				user.setUserCreattime(new Date());
+				
+				user.setUserUpdatetime(new Date());
+				int insertSelective = spsUserMapper.insertSelective(user);
 				if(insertSelective == 1){
 					map.put("msg", "添加成功");
 					map.put("state", "success");

@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>用户添加</title>
+<title>操作员添加</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -32,16 +32,6 @@
     </div>
     <button style="display:none" class="layui-btn layui-btn-primary" id="resetPasssword">重置密码</button>
   </div>
-  <div class="layui-form-item" id="passwordDiv">
-   <label class="layui-form-label">*登录密码：</label>
-    <div class="layui-input-inline">
-      <input id="password" name="password" type="password"  lay-verify="required|minLength" placeholder="请输入密码" autocomplete="off" class="layui-input">
-    </div>
-    <label class="layui-form-label">*确认密码：</label>
-    <div class="layui-input-inline">
-      <input type="password"  lay-verify="required|minLength|verify" placeholder="请确认密码" autocomplete="off" class="layui-input">
-    </div>
-  </div>
   <div class="layui-form-item">
     <label class="layui-form-label">*姓名：</label>
     <div class="layui-input-inline">
@@ -54,6 +44,10 @@
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">*电子邮箱：</label>
+    <div class="layui-input-inline">
+      <input id="email"  type="email" name="email" lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+    </div>
+    <label class="layui-form-label">*备注：</label>
     <div class="layui-input-inline">
       <input id="email"  type="email" name="email" lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
     </div>
@@ -117,10 +111,9 @@
 		 		 $.post({
 		 			 url:'<%=path%>/user/insertUser',
 		 			 dataType:'json',
-		 			 data:{
-		 				userUsername:username, userPassword:password, 
-		 				userName:name,userPhone:phone, userEmail:email,
-		 				userMark:0,roleList:array
+		 			 data:{username:username, password:password, 
+		 				 name:name,phone:phone, email:email,
+		 				 mark:3,roleList:array
 		 			 },
 		 			 success:function(data){
 		 				 if(data.state == 'success'){

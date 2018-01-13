@@ -42,7 +42,7 @@ public interface UserService {
 	 * @return: HashMap<String,Object>      
 	 * @throws
 	 */
-	HashMap<String, Object> insertUser(String...strs);
+	HashMap<String, Object> insertUser(SpsUser user);
 	/**
 	 * 修改密码
 	 * @Title: updatePassword   

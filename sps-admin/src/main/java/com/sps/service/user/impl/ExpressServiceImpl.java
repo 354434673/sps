@@ -40,5 +40,15 @@ public class ExpressServiceImpl implements ExpressService{
 		
 		return hashMap;
 	}
+	@Override
+	public int insertExpress(String name) {
+		SpsExpress record = new SpsExpress();
+		
+		record.setName(name);
+		
+		express.insertSelective(record);
+		
+		return 0;
+	}
 	
 }

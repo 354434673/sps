@@ -384,6 +384,9 @@ to {
 		<div class="login-aperture"></div>
 	</div>
 	<script type="text/javascript">
+	if (window != top) {
+		top.location.href = location.href;  
+	} 
 !function(ROOT, callback) {
     var testStyle = document.createElement("div").style, camelCase = function(a) {
         return a.replace(/^-ms-/, "ms-").replace(/-([a-z]|[0-9])/gi, function(a, b) {

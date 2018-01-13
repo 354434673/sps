@@ -21,4 +21,16 @@ public interface ExpressService {
 	 * @throws
 	 */
 	HashMap<String,Object> getExpress(String name, Integer page, Integer limit);
+	/**
+	 * 插入其他
+	 * @Title: insertExpress   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param name
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月13日 下午5:04:48
+	 * @return: int      
+	 * @throws
+	 */
+	int insertExpress(String name);
 }
