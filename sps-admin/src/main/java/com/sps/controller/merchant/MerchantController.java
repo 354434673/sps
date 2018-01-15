@@ -1,17 +1,11 @@
 package com.sps.controller.merchant;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,11 +23,10 @@ import org.sps.service.merchant.write.ChannelPicUploadService;
 import org.sps.service.merchant.write.ChannelWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.sps.controller.common.UploadController;
+import com.sps.entity.user.SpsUser;
 import com.sps.service.user.ExpressService;
 import com.sps.service.user.UserService;
 import com.sps.util.CommonUtil;
-import com.sps.util.ControllerLsit;
 
 /**
  * 核心商户控制层
@@ -91,8 +84,13 @@ public class MerchantController {
 				logistics, openAccount);
 		//添加后增加到user表
 		if(result.get("state").equals("success")){
-			userService.insertUser(openAccount.getOpenAdminNum(),"123456",openAccount.getOpenAdminNum(), 
-					openAccount.getOpenAdminPhone(),null,"1");
+			SpsUser spsUser = new SpsUser();
+			spsUser.setUserUsername(openAccount.getOpenAdminNum());
+			spsUser.setUserPassword("123456");
+			spsUser.setUserName(openAccount.getOpenAdminNum());
+			spsUser.setUserPhone(openAccount.getOpenAdminPhone());
+			spsUser.setUserMark(1);
+			userService.insertUser(spsUser);
 		}
 		return result;
 	}

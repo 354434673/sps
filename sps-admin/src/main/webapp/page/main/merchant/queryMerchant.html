@@ -11,6 +11,15 @@
 <link rel="stylesheet"
 	href="/sps-admin/page/layui/css/layui.css" media="all" />
 <style type="text/css">
+ .spsImages{
+ 	height: 200px;
+ 	width: 400px;
+ 	background-color: #eee;
+ }
+ .imageSize{
+  	height: 200px;
+ 	width: 400px;
+ }
 </style>
 </head>
 <body>
@@ -265,106 +274,33 @@
 		    	<div class="layui-form-mid layui-word-aux"> lili@juzifenqi</div>
 		    </div>
 		</div> -->
-		<!-- 开户信息结束 -->
-		 	<div class="layui-form-item" align="center" id="btn" >
-				<button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">返回</button>
-				<button class="layui-btn layui-btn-primary" lay-filter="submitAddChanel" lay-submit >保存并进入下一步</button>
-				<button class="layui-btn layui-btn-primary" id="next" >下一步</button>
-			</div>
 	</div>
     </div>
+    <!-- 商品信息 -->
+    <div class="layui-tab-item">
+    	
+    </div>
+    <!-- 额度信息 -->
+    <div class="layui-tab-item">
+    </div>
+    <!-- 操作员信息 -->
+    <div class="layui-tab-item">
+    </div>
+    <!-- 图片资料 -->
     <div class="layui-tab-item">
    			<div align="center">
    				<div class="layui-row layui-col-space10">
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="businesslicense" style="width: 250px">
-						  <p>*营业执照</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="statement" style="width: 250px">
-						  <p>*近12个月的对公流水或法人名下流水</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="corpIdCardFront" style="width: 250px">
-						  <p>*法人身份证正面</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-				</div>
-   				<div class="layui-row layui-col-space10">
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="corpIdCardReverse" style="width: 250px">
-						  <p>*法人身份证反面</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="salesmanIdCardFront" style="width: 250px">
-						  <p>*业务负责人身份证正面</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="salesmanIdCardReverse" style="width: 250px">
-						  <p>业务负责人身份证反面</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-				</div>
-   				<div class="layui-row layui-col-space10">
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="companyPanorama" style="width: 250px">
-						  <p>*公司全景照</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="companyGate" style="width: 250px">
-						  <p>*公司大门照</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="contract" style="width: 250px">
-						  <p>*核心商户合作合同（必须加盖公司公章）</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-				</div>
-   				<div class="layui-row layui-col-space10">
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="signed" style="width: 250px">
-						  <p>*签约合影照片</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="lease" style="width: 250px">
-						  <p>*经营地租赁协议</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 按钮 -->
-    		 <div class="layui-form-item" align="center" id="btn" style="padding-top: 10px" >
-				<button class="layui-btn layui-btn-primary" id="last">返回</button>
-				<button class="layui-btn layui-btn-primary" lay-filter="" lay-submit >保存</button>
+    				<ul>
+	   				<li>
+	   					<div class="layui-col-md4">
+		   					<a href="javascript:void(0)" class="spsImages" >
+		   						<img alt="" src="/sps-admin/page/static/images/404.png" class="imageSize">
+		   					</a>
+		   					<p>营业执照</p>
+	   					</div>
+	   				</li>
+   				</ul>
+   				</div>
 			</div>
     </div>
   </div>

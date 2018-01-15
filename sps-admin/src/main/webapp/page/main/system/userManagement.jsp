@@ -138,12 +138,14 @@
 						 				 state:1
 						 				 },
 						 			 success:function(data){
-								 		 var list = "";
-								 		 $.each(data,function(i,item){
-										  list +='<option value="'+item.areaId+'" title="'+item.name+'">'+item.name+'</option>';
-										  $('#'+Id).html(list)
-									  	})
-									  	form.render('select');
+						 				 if(data.state == 'success'){
+						 					layer.msg(data.msg,{icon: 1});
+						 				 }else{
+						 					layer.msg(data.msg,{icon: 1});
+						 				 }
+						 			 },
+						 			 error:function(){
+						 				layer.msg('系统错误',{icon: 2});
 						 			 }
 						 		 })
 					    });
