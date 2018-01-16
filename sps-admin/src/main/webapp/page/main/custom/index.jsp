@@ -24,7 +24,7 @@
 <div style="margin: 15px;">
     <div class="layui-form layui-form-pane"  >
         <div class="layui-form-item">
-            <label class="layui-form-label">自定义分类名称:</label>
+            <label class="layui-form-label">分类名称:</label>
             <div class="layui-input-inline">
                 <input id="queryCustomName" type="text" name="queryCustomName"  lay-verify="" placeholder="请输入自定义分类名称" autocomplete="off" class="layui-input">
             </div>

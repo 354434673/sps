@@ -227,6 +227,9 @@
     <if test="goodsNo !=null and goodsNo != ''">
       and g.g_spu_no = #{goodsNo,jdbcType=VARCHAR}
     </if>
+    <if test="brandId !=null and brandId != ''">
+      and  FIND_IN_SET(#{brandId,jdbcType=INTEGER}, g.g_brand_id)
+    </if>
     AND g.g_delete_flag = 0
     order by g.g_create_time desc
   </select>

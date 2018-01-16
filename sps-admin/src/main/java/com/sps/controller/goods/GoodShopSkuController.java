@@ -3,37 +3,20 @@ package com.sps.controller.goods;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.sps.entity.goods.SpsGoodSku;
-import org.sps.entity.goods.SpsGoods;
-import org.sps.service.goods.GoodSkuService;
-import org.sps.service.goods.GoodsService;
+import org.sps.entity.goods.SpsGoodShopSku;
+import org.sps.service.goods.GoodShopSkuService;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = "/goodSku")
-public class GoodSkuController {
+@RequestMapping(value = "/goodShopSku")
+public class GoodShopSkuController {
     @Reference
-    private GoodSkuService goodskuService;
-
-    /**
-     * @param page
-     * @param limit
-     * @param goodsName
-     * @param spuNo
-     * @return
-     */
-    @RequestMapping("/goodSkuList")
-    @ResponseBody
-    public HashMap<String, Object> userList(Integer page, Integer limit,String goodsName, String spuNo, String size) {
-        HashMap<String, Object> goodSkuList = goodskuService.findGoodSkuList(page, limit, goodsName, spuNo,size);
-        return goodSkuList;
-    }
+    private GoodShopSkuService goodSkuService;
 
 
     /**
@@ -42,10 +25,10 @@ public class GoodSkuController {
      * @return
      */
     @RequestMapping("/toAddOrEdit")
-    public String toUpdateProduct(Integer id, Model model) {
+    public String toAddOrEdit(Integer id, Model model) {
         try {
             if (id != null) {
-                SpsGoodSku goodSku = goodskuService.findEntityById(id);
+                SpsGoodShopSku goodSku = goodSkuService.findEntityById(id);
                 model.addAttribute("goodSku", goodSku);
             }
             model.addAttribute("flag", 1);
@@ -64,10 +47,10 @@ public class GoodSkuController {
 
     @RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> saveOrUpdate( SpsGoodSku goodSku , Model model) {
+    public Map<String, Object> saveOrUpdate( SpsGoodShopSku goodShopSku , Model model) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            goodskuService.saveOrUpdate(goodSku);
+            goodSkuService.saveOrUpdate(goodShopSku);
             resultMap.put("flag", 1);
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,7 +73,7 @@ public class GoodSkuController {
         Map<String, Object> resultMap = new HashMap<>();
         try {
             if (id != null) {
-                SpsGoodSku goodSku = goodskuService.findEntityById(id);
+                SpsGoodShopSku goodSku = goodSkuService.findEntityById(id);
                 resultMap.put("goodSku", goodSku);
                 resultMap.put("flag", 1);
             }
@@ -113,7 +96,7 @@ public class GoodSkuController {
     public Map<String, Object> dellab(Integer id) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            goodskuService.falseDeletion(id);
+            goodSkuService.falseDeletion(id);
             resultMap.put("flag", 1);
         } catch (Exception e) {
             e.printStackTrace();

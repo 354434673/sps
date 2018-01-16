@@ -30,8 +30,8 @@ import com.sps.util.CommonUtil;
 
 /**
  * 核心商户控制层
- * @ClassName:  MerchantController   
- * @Description:TODO(这里用一句话描述这个类的作用)   
+ * @ClassName:  MerchantController
+ * @Description:TODO(这里用一句话描述这个类的作用)
  * @author YangNingSheng
  * @date 2018年1月12日 下午4:15:29
  */
@@ -50,8 +50,8 @@ public class MerchantController {
 	private ExpressService expressService;
 	/**
 	 * 插入核心商户,将channelNum返回回来
-	 * @Title: getChannel   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @Title: getChannel
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
 	 * @param: @param channel
 	 * @param: @param enterprise
 	 * @param: @param business
@@ -59,10 +59,10 @@ public class MerchantController {
 	 * @param: @param financeTarget
 	 * @param: @param logistics
 	 * @param: @param openAccount
-	 * @param: @return  
-	 * @author YangNingSheng    
+	 * @param: @return
+	 * @author YangNingSheng
 	 * @date 2018年1月12日 下午4:15:40
-	 * @return: HashMap<String,String>      
+	 * @return: HashMap<String,String>
 	 * @throws
 	 */
 	@RequestMapping(value="/insertChannel")
@@ -96,15 +96,15 @@ public class MerchantController {
 	}
 	/**
 	 * 获得所有收款信息
-	 * @Title: getGatherList   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @Title: getGatherList
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
 	 * @param: @param page
 	 * @param: @param limit
 	 * @param: @param channelNum
-	 * @param: @return  
-	 * @author YangNingSheng    
+	 * @param: @return
+	 * @author YangNingSheng
 	 * @date 2018年1月12日 下午4:16:10
-	 * @return: HashMap<String,Object>      
+	 * @return: HashMap<String,Object>
 	 * @throws
 	 */
 	@RequestMapping(value="/getGatherList.json")
@@ -118,17 +118,17 @@ public class MerchantController {
 	}
 	/**
 	 * 获得所有商户列表
-	 * @Title: getChannelList   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @Title: getChannelList
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
 	 * @param: @param channelNum
 	 * @param: @param channelState
 	 * @param: @param channelFlowState
 	 * @param: @param page
 	 * @param: @param limit
-	 * @param: @return  
-	 * @author YangNingSheng    
+	 * @param: @return
+	 * @author YangNingSheng
 	 * @date 2018年1月12日 下午4:16:22
-	 * @return: HashMap<String,Object>      
+	 * @return: HashMap<String,Object>
 	 * @throws
 	 */
 	@RequestMapping(value="/getChannelList")
@@ -144,13 +144,13 @@ public class MerchantController {
 	}
 	/**
 	 * 添加收款信息
-	 * @Title: insertGather   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @Title: insertGather
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
 	 * @param: @param gather
-	 * @param: @return  
-	 * @author YangNingSheng    
+	 * @param: @return
+	 * @author YangNingSheng
 	 * @date 2018年1月12日 下午4:16:38
-	 * @return: HashMap<String,Object>      
+	 * @return: HashMap<String,Object>
 	 * @throws
 	 */
 	@RequestMapping(value="/insertGather")
@@ -163,8 +163,8 @@ public class MerchantController {
 	}
 	/**
 	 * 上传图片
-	 * @Title: uploadPic   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @Title: uploadPic
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
 	 * @param: @param file
 	 * @param: @param type 图片类型
 	 * @param: @param accept 文件类型
@@ -172,15 +172,15 @@ public class MerchantController {
 	 * @param: @param types 数据库类型字段
 	 * @param: @param channelNum 外键
 	 * @param: @param request
-	 * @param: @return  
-	 * @author YangNingSheng    
+	 * @param: @return
+	 * @author YangNingSheng
 	 * @date 2018年1月12日 下午4:16:47
-	 * @return: HashMap<String,Object>      
+	 * @return: HashMap<String,Object>
 	 * @throws
 	 */
 	@RequestMapping(value="/uploadPic")
 	@ResponseBody
-	public HashMap<String, Object> uploadPic(@RequestParam(value = "file", required = false) MultipartFile[] file, 
+	public HashMap<String, Object> uploadPic(@RequestParam(value = "file", required = false) MultipartFile[] file,
 		String type,String accept, String status, Integer types, String channelNum,  HttpServletRequest request){
 		
 		HashMap<String, Object> uploadPic = null;
@@ -190,8 +190,8 @@ public class MerchantController {
 		
 		for (MultipartFile multipartFile : file) {
 			String newName = CommonUtil.getFileName(multipartFile);
-			
-			uploadPic = uploadService.uploadPic(filePath, types, multipartFile.getOriginalFilename(), 
+
+			uploadPic = uploadService.uploadPic(filePath, types, multipartFile.getOriginalFilename(),
 									newName, 0, channelNum);
 			if(uploadPic.get("state").equals("success")){//插入成功后才上传
 				CommonUtil.uploadPicture(multipartFile, realPath+filePath, newName);

@@ -6,44 +6,35 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.sps.entity.goods.SpsBrand;
-import org.sps.entity.goods.SpsGoodSku;
-import org.sps.entity.goods.SpsGoods;
-import org.sps.entity.goods.SpsGoodsAlbum;
-import org.sps.service.goods.BrandService;
-import org.sps.service.goods.GoodSkuService;
-import org.sps.service.goods.GoodsAlbumService;
-import org.sps.service.goods.GoodsService;
+import org.sps.entity.goods.*;
+import org.sps.service.goods.*;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 @Controller
-@RequestMapping(value = "/goods")
-public class GoodsController {
+@RequestMapping(value = "/goodShop")
+public class GoodShopController {
     @Reference
-    private GoodsService goodService;
+    private GoodShopService goodService;
     @Reference
     private GoodSkuService goodSkuService;
     @Reference
     private BrandService brandService;
-    @Reference
-    private GoodsAlbumService goodsAlbumService;
+
 
 
     /**
      * @param page
      * @param limit
      * @param goodsName
-     * @param goodsNo
      * @return
      */
     @RequestMapping("/goodsList")
     @ResponseBody
-    public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName, String goodsNo) {
-        HashMap<String, Object> goodsList = goodService.findGoodsList(page, limit, goodsName, goodsNo);
+    public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName, Integer shopStatus,Integer flowStatus ) {
+        HashMap<String, Object> goodsList = goodService.findGoodsList(page, limit, goodsName, shopStatus,flowStatus);
         return goodsList;
     }
 
@@ -74,14 +65,12 @@ public class GoodsController {
 
     @RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> saveOrUpdate(SpsGoods goods,String goodsDpic,String goodsPic, Model model) {
+    public Map<String, Object> saveOrUpdate(SpsGoodShop goods) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
             goodService.saveOrUpdate(goods);
-            SpsGoods spsGoods = goodService.findLastId();
+            SpsGoodShop spsGoods = goodService.findLastId();
             if(spsGoods.getgId()!=null){
-                //处理商品相册逻辑
-                goodsAlbumService.saveGoodsDetailPic(goodsPic, goodsDpic,spsGoods.getgId());
                 resultMap.put("goodsId", spsGoods.getgId());
             }
             resultMap.put("flag", 1);
@@ -99,10 +88,10 @@ public class GoodsController {
      */
     @RequestMapping("checkGoodsNumber")
     @ResponseBody
-    public Map<String, Object> checkGoodsNumber(String gSpuNo, Model model) {
+    public Map<String, Object> checkGoodsNumber(String gSpuNo, String spuName) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            Integer result = goodService.getEntityBySearchLimit(gSpuNo);
+            Integer result = goodService.getEntityBySearchLimit(gSpuNo,spuName);
             if (result > 0) {
                 resultMap.put("flag", 1);
             } else {
@@ -131,7 +120,6 @@ public class GoodsController {
 
     /**
      * 根据分类ID查找详情
-     *
      * @param id 分类ID
      * @return
      */
@@ -143,7 +131,7 @@ public class GoodsController {
         Map<String, Object> resultMap = new HashMap<>();
         try {
             if (id != null) {
-                SpsGoods goods = goodService.findEntityById(id);
+                SpsGoodShop goods = goodService.findEntityById(id);
                 if(goods.getgBrandId()!=null){
                     //查询商品品牌信息
                     SpsBrand spsBrand = brandService.findEntityById(goods.getgBrandId());
@@ -154,25 +142,6 @@ public class GoodsController {
                 map.put("goodsId", goods.getgId());
                 List<SpsGoodSku> skuList = goodSkuService.findList(map);
                 resultMap.put("skuList", skuList);
-                //查询商品图片
-                Map<String, Object> albumMap = new HashMap<>();
-                albumMap.put("goodsId", goods.getgId());
-                List<SpsGoodsAlbum> picList=new ArrayList<>();
-                List<SpsGoodsAlbum> detailList=new ArrayList<>();
-                List<SpsGoodsAlbum> albumList = goodsAlbumService.findList(map);
-                if(albumList!=null&&albumList.size()>0){
-                    for(SpsGoodsAlbum list : albumList){
-                        if(list.getAlbumType()==1){
-                            detailList.add(list);
-                        }else if(list.getAlbumType()==0){
-                            picList.add(list);
-                        }
-                    }
-                }
-                //主图
-                resultMap.put("picList", picList);
-                //详情图
-                resultMap.put("detailList", detailList);
                 resultMap.put("goods", goods);
                 resultMap.put("flag", 1);
             }
@@ -204,21 +173,31 @@ public class GoodsController {
         }
         return resultMap;
     }
+
     /**
-     * 根据品牌ID查询商品
-     * @param id 用户ID
+     * 上下架商品
      * @return
      */
-    @RequestMapping(value = "/findBrandGoods")
+    @RequestMapping(value = "/onSale")
     @ResponseBody
-    public Map<String, Object> findBrandGoods(Integer id) {
+    public Map<String, Object> onSale(String ids,String state) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            Map<String, Object> map = new HashMap<>();
-            map.put("brandId", id);
-            List<SpsGoods> goodsList= goodService.findList(map);
-            resultMap.put("goodsList", goodsList);
-            resultMap.put("flag", 1);
+            if (ids != null && !"".equals(ids)) {
+                String[] idList = ids.split(",");
+                for (String id : idList) {
+                    SpsGoodShop goods = goodService.findEntityById(Integer.valueOf(id));
+                    if(goods.getgStatus()!=1){
+                        resultMap.put("msg", "请选择审核通过的商品");
+                        resultMap.put("flag", 2);
+                        return resultMap;
+                    }
+                }
+                for (String id : idList) {
+                    goodService.setSale(Integer.valueOf(id),state);
+                }
+                resultMap.put("flag", 1);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("flag", 0);
@@ -226,4 +205,40 @@ public class GoodsController {
         }
         return resultMap;
     }
+    /**
+     * 上下架商品
+     * @return
+     */
+    @RequestMapping(value = "/onRecommend")
+    @ResponseBody
+    public Map<String, Object> onRecommend(String ids,String state) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            if (ids != null && !"".equals(ids)) {
+                String[] idList = ids.split(",");
+                for (String id : idList) {
+                    SpsGoodShop goods = goodService.findEntityById( Integer.valueOf(id));
+                    if(goods.getgStatus()!=1){
+                        resultMap.put("msg", "请选择审核通过的商品");
+                        resultMap.put("flag", 2);
+                        return resultMap;
+                    }
+                }
+                for (String id : idList) {
+                    goodService.setRecommend(Integer.valueOf(id),state);
+                }
+                resultMap.put("flag", 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("flag", 0);
+            resultMap.put("msg", "操作失败");
+        }
+        return resultMap;
+    }
+
+
+
+
+
 }
