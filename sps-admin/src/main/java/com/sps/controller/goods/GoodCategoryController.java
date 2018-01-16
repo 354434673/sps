@@ -3,6 +3,7 @@ package com.sps.controller.goods;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -216,41 +217,10 @@ public class GoodCategoryController {
      */
     @RequestMapping("/getChildrenCategorys")
     @ResponseBody
-    public  Map<String, Object>  getChildrenCategorys( String ids) {
-        Map<String, Object> resultMap = new HashMap<>();
+    @JSONField(serialize = false)
+    public  List  getChildrenCategorys( String ids) {
         List<SpsGoodCategory> childrenList = goodCategoryService.findLastCategory(ids);
-        String jsonString = JSON.toJSONString(childrenList);
-        resultMap.put("childrenList", childrenList);
-
-
-       /* List spsGoodCategoryList = new ArrayList<>();
-        if (ids != null && !"".equals(ids)) {
-            String[] id = ids.split(",");
-            for (String ides : id) {
-                List<SpsGoodCategory> list = new ArrayList<>();
-                Map<String,Object> map=new HashMap<>();
-                map.put("categoryId",ides);
-                List<SpsGoodCategory> selectChildern = this.findList(map);
-                SpsGoodCategory spsCategory;
-                List<SpsGoodCategory> childernList = new ArrayList<>();
-                for (SpsGoodCategory category : selectChildern) {
-                    spsCategory=new SpsGoodCategory();
-                    spsCategory.setId(category.getCategoryId());
-                    spsCategory.setTitle(category.getCategoryName());
-                    childernList.add(spsCategory);
-                    List<SpsGoodCategory> getGrandson = getGrand(category.getCategoryId());
-                    if(getGrandson.size()!= 0){
-                        spsCategory.setChildren(getGrandson);
-                    }
-                    list.add(spsCategory);
-                }
-                spsGoodCategoryList.add(childernList) ;
-            }
-        }
-        return spsGoodCategoryList;*/
-
-
-        return resultMap;
+        return childrenList;
     }
 
     /**
