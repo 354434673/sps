@@ -160,4 +160,26 @@ public class BrandController {
         }
         return resultMap;
     }
+    /**
+     * 查询品牌列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getBrandList")
+    @ResponseBody
+    public Map<String, Object> getBrandList(String categoryIds) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("categoryIds", categoryIds);
+            List<SpsBrand> spsBrandList = brandService.findList(map);
+            resultMap.put("data", spsBrandList);
+            resultMap.put("flag", 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("flag", 0);
+            resultMap.put("msg", "操作失败");
+        }
+        return resultMap;
+    }
 }

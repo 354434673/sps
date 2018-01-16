@@ -6,7 +6,7 @@ import java.util.List;
 
 public class SpsGoodCategory implements Serializable {
     private Integer id;
-
+    private String title;
     private String name;
 
     private Integer categoryId;
@@ -125,5 +125,13 @@ public class SpsGoodCategory implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

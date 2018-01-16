@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsGoodShopSku">
+  <resultMap id="BaseResultMap" type="SpsGoodShopSku">
+    <id column="g_id" jdbcType="INTEGER" property="gId" />
+    <result column="g_gid" jdbcType="INTEGER" property="gGid" />
+    <result column="g_color" jdbcType="VARCHAR" property="gColor" />
+    <result column="g_size" jdbcType="VARCHAR" property="gSize" />
+    <result column="g_sku" jdbcType="VARCHAR" property="gSku" />
+    <result column="g_price" jdbcType="DECIMAL" property="gPrice" />
+    <result column="g_quantity" jdbcType="INTEGER" property="gQuantity" />
+    <result column="g_stock" jdbcType="INTEGER" property="gStock" />
+    <result column="g_scale" jdbcType="DOUBLE" property="gScale" />
+    <result column="g_service" jdbcType="DECIMAL" property="gService" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    g_id, g_gid, g_color, g_size, g_sku, g_price, g_quantity, g_stock, g_scale, g_service
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_good_shop_sku
+    where g_id = #{gId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_good_shop_sku
+    where g_id = #{gId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsGoodShopSku">
+    insert into sps_good_shop_sku (g_id, g_gid, g_color, 
+      g_size, g_sku, g_price, 
+      g_quantity, g_stock, g_scale, 
+      g_service)
+    values (#{gId,jdbcType=INTEGER}, #{gGid,jdbcType=INTEGER}, #{gColor,jdbcType=VARCHAR}, 
+      #{gSize,jdbcType=VARCHAR}, #{gSku,jdbcType=VARCHAR}, #{gPrice,jdbcType=DECIMAL}, 
+      #{gQuantity,jdbcType=INTEGER}, #{gStock,jdbcType=INTEGER}, #{gScale,jdbcType=DOUBLE}, 
+      #{gService,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="SpsGoodShopSku">
+    insert into sps_good_shop_sku
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gId != null">
+        g_id,
+      </if>
+      <if test="gGid != null">
+        g_gid,
+      </if>
+      <if test="gColor != null">
+        g_color,
+      </if>
+      <if test="gSize != null">
+        g_size,
+      </if>
+      <if test="gSku != null">
+        g_sku,
+      </if>
+      <if test="gPrice != null">
+        g_price,
+      </if>
+      <if test="gQuantity != null">
+        g_quantity,
+      </if>
+      <if test="gStock != null">
+        g_stock,
+      </if>
+      <if test="gScale != null">
+        g_scale,
+      </if>
+      <if test="gService != null">
+        g_service,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gId != null">
+        #{gId,jdbcType=INTEGER},
+      </if>
+      <if test="gGid != null">
+        #{gGid,jdbcType=INTEGER},
+      </if>
+      <if test="gColor != null">
+        #{gColor,jdbcType=VARCHAR},
+      </if>
+      <if test="gSize != null">
+        #{gSize,jdbcType=VARCHAR},
+      </if>
+      <if test="gSku != null">
+        #{gSku,jdbcType=VARCHAR},
+      </if>
+      <if test="gPrice != null">
+        #{gPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gQuantity != null">
+        #{gQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="gStock != null">
+        #{gStock,jdbcType=INTEGER},
+      </if>
+      <if test="gScale != null">
+        #{gScale,jdbcType=DOUBLE},
+      </if>
+      <if test="gService != null">
+        #{gService,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="SpsGoodShopSku">
+    update sps_good_shop_sku
+    <set>
+      <if test="gGid != null">
+        g_gid = #{gGid,jdbcType=INTEGER},
+      </if>
+      <if test="gColor != null">
+        g_color = #{gColor,jdbcType=VARCHAR},
+      </if>
+      <if test="gSize != null">
+        g_size = #{gSize,jdbcType=VARCHAR},
+      </if>
+      <if test="gSku != null">
+        g_sku = #{gSku,jdbcType=VARCHAR},
+      </if>
+      <if test="gPrice != null">
+        g_price = #{gPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gQuantity != null">
+        g_quantity = #{gQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="gStock != null">
+        g_stock = #{gStock,jdbcType=INTEGER},
+      </if>
+      <if test="gScale != null">
+        g_scale = #{gScale,jdbcType=DOUBLE},
+      </if>
+      <if test="gService != null">
+        g_service = #{gService,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where g_id = #{gId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsGoodShopSku">
+    update sps_good_shop_sku
+    set g_gid = #{gGid,jdbcType=INTEGER},
+      g_color = #{gColor,jdbcType=VARCHAR},
+      g_size = #{gSize,jdbcType=VARCHAR},
+      g_sku = #{gSku,jdbcType=VARCHAR},
+      g_price = #{gPrice,jdbcType=DECIMAL},
+      g_quantity = #{gQuantity,jdbcType=INTEGER},
+      g_stock = #{gStock,jdbcType=INTEGER},
+      g_scale = #{gScale,jdbcType=DOUBLE},
+      g_service = #{gService,jdbcType=DECIMAL}
+    where g_id = #{gId,jdbcType=INTEGER}
+  </update>
+  <!-- 查询所有 -->
+  <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_good_shop_sku
+    where 1=1
+    <if test="goodsId !=null and goodsId != ''">
+      and g_gid = #{goodsId,jdbcType=INTEGER}
+    </if>
+
+  </select>
+  <delete id="deleteSku" parameterType="java.lang.Integer">
+    delete from sps_good_shop_sku
+    where g_gid = #{goodsId,jdbcType=INTEGER}
+  </delete>
+</mapper>

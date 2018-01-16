@@ -58,7 +58,7 @@ public class GoodServiceImpl implements GoodsService {
 
     @Override
     public List<SpsGoods> findList(Map<String, Object> map) {
-        return null;
+        return  spsGoodsMapper.findListAllWithMap(map);
     }
 
     @Override

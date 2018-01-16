@@ -83,11 +83,10 @@ public class GoodCategoryServiceImpl  implements GoodCategoryService {
 
     @Override
     public List<SpsGoodCategory> findLastCategory(String ids) {
-        List spsGoodCategoryList = new ArrayList<>();
+        List list = new ArrayList<>();
         if (ids != null && !"".equals(ids)) {
             String[] id = ids.split(",");
             for (String ides : id) {
-                List<SpsGoodCategory> list = new ArrayList<>();
                 Map<String,Object> map=new HashMap<>();
                 map.put("categoryId",ides);
                 List<SpsGoodCategory> selectChildern = this.findList(map);
@@ -96,7 +95,7 @@ public class GoodCategoryServiceImpl  implements GoodCategoryService {
                 for (SpsGoodCategory category : selectChildern) {
                     spsCategory=new SpsGoodCategory();
                     spsCategory.setId(category.getCategoryId());
-                    spsCategory.setName(category.getCategoryName());
+                    spsCategory.setTitle(category.getCategoryName());
                     childernList.add(spsCategory);
                     List<SpsGoodCategory> getGrandson = getGrand(category.getCategoryId());
                     if(getGrandson.size()!= 0){
@@ -104,10 +103,10 @@ public class GoodCategoryServiceImpl  implements GoodCategoryService {
                     }
                     list.add(spsCategory);
                 }
-                spsGoodCategoryList.add(childernList) ;
+                list.add(childernList) ;
             }
         }
-        return spsGoodCategoryList;
+        return list;
     }
 
     private List<SpsGoodCategory> getTowChildren(Integer categoryId) {
@@ -146,7 +145,7 @@ public class GoodCategoryServiceImpl  implements GoodCategoryService {
             spsCategory.setCategoryDes(category.getCategoryDes());
             spsCategory.setCategoryUrl(category.getCategoryUrl());
             childernList.add(spsCategory);
-            List<SpsGoodCategory> getGrandson = getGrandson(category.getCategoryId());
+            List<SpsGoodCategory> getGrandson = getGrand(category.getCategoryId());
             if(getGrandson.size()!= 0){
                 spsCategory.setChildren(getGrandson);
             }
@@ -181,7 +180,7 @@ public class GoodCategoryServiceImpl  implements GoodCategoryService {
         for (SpsGoodCategory category : selectChildern) {
             spsCategory=new SpsGoodCategory();
             spsCategory.setId(category.getCategoryId());
-            spsCategory.setName(category.getCategoryName());
+            spsCategory.setTitle(category.getCategoryName());
             childernList.add(spsCategory);
         }
         return childernList;
