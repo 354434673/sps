@@ -34,6 +34,16 @@ public class SpsChannel implements Serializable {
     private String standby3;
 
     private String standby4;
+    
+    private SpsChannelEnterprise enterprise;
+    
+    private SpsChannelBusiness business;
+    
+    private SpsChannelGuarantee guarantee;
+    
+    private SpsChannelLogistics logistics;
+    
+    private SpsChannelSalesman salesman;
 
     public Integer getChannelId() {
         return channelId;

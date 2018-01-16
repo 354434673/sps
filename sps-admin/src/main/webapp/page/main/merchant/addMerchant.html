@@ -122,16 +122,22 @@
 		    <div class="layui-input-inline">
 		      <input id="enterpriseCorp" type="text" name="enterpriseCorp"  lay-verify="required|IsChineseCharacter" placeholder="请输入法人代表姓名" autocomplete="off" class="layui-input">
 		    </div>
+		    <label class="layui-form-label" style="width:200px">*法人代表身份证号：</label>
+		    <div class="layui-input-inline">
+		      <input id="enterpriseCorpIdcard" type="text" name="enterpriseCorpIdcard"  lay-verify="required|IsChineseCharacter" placeholder="请输入法人代表姓名" autocomplete="off" class="layui-input">
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*经营年限(年)：</label>
 		    <div class="layui-input-inline">
 		      <input   id="enterpriseOperatioTime" type="text" name="enterpriseOperatioTime" lay-verify="required" placeholder="请输入经营年限(年)" autocomplete="off" class="layui-input">
 		    </div>
-		  </div>
-		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*员工数量(人)：</label>
 		    <div class="layui-input-inline">
 		      <input  id="enterpriseEmployeeNum" type="text" name="enterpriseEmployeeNum"  lay-verify="required" placeholder="请输入员工数量" autocomplete="off" class="layui-input">
 		    </div>
+		  </div>
+		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*公司简称：</label>
 		    <div class="layui-input-inline">
 		      <input  id="enterpriseCompanyAbbreviation" type="text" name="enterpriseCompanyAbbreviation"  lay-verify="required" placeholder="请输入公司简称" autocomplete="off" class="layui-input">
@@ -250,9 +256,9 @@
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px	">发货方式：</label>
 		    <div class="layui-input-inline" style="width:400px" id= "logisticsWay">
-		      <input type="checkbox" title="物流" value="0" lay-skin="primary" lay-filter="logisticsWay">
-		      <input type="checkbox" title="自主派送" value="1" lay-skin="primary" lay-filter="logisticsWay">
-		      <input type="checkbox" title="上门取货" value="2" lay-skin="primary" lay-filter="logisticsWay">
+		      <input type="checkbox" title="物流" value="物流" lay-skin="primary" lay-filter="logisticsWay">
+		      <input type="checkbox" title="自主派送" value="自主派送" lay-skin="primary" lay-filter="logisticsWay">
+		      <input type="checkbox" title="上门取货" value="上门取货" lay-skin="primary" lay-filter="logisticsWay">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
@@ -524,7 +530,6 @@
 		  }
 		}); 	
 	  form.on('checkbox(logisticsWay)', function(data){
-		  console.log(data.value)
 		  if(data.elem.checked){
 			  logisticsWay.push(data.value)
 		  }else{
@@ -595,7 +600,7 @@
 			  var address = $('#province').find("option:selected").text()+
 			 				 $('#city').find("option:selected").text()+
 			 				 $('#area').find("option:selected").text();
-		  	  var channelSalesmanName = $('#channelSalesmanName').val();//店付业务员姓名
+		  	  var channelSalesmanName = $('#channelSalesmanName').find("option:selected").text();//店付业务员姓名
 		  	  var channelSalesmanNum = $('#channelSalesmanNum').val();//店付业务员编号
 		  	  /*
 		  	   	企业基本信息
@@ -611,6 +616,7 @@
 			 				 $('#realCity').find("option:selected").text()+
 			 				 $('#realArea').find("option:selected").text();
 			  var enterpriseCorp = $('#enterpriseCorp').val();//法人名称
+			  var enterpriseCorpIdcard = $('#enterpriseCorpIdcard').val();//法人名称
 			  var enterpriseOperatioTime = $('#enterpriseOperatioTime').val();//经营年限(年)
 			  var enterpriseEmployeeNum = $('#enterpriseEmployeeNum').val();//员工数量(人)
 			  var enterpriseCompanyAbbreviation = $('#enterpriseCompanyAbbreviation').val();//公司简称

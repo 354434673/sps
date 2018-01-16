@@ -23,20 +23,20 @@ function layuiXtree(options) {
 
 //生产结构
 layuiXtree.prototype.dataBind = function (d) {
-	console.log(d)
+	console.log(d[0])
     var _this = this;
-    if (d.length > 0) {
-        for (i in d) {
+    if (d[0].length > 0) {
+        for (i in d[0]) {
             var xtree_isend = '';
             _this._domStr += '<div class="layui-xtree-item">';
-            if (d[i].children.length > 0)
+            if (d[0][i].data.length > 0)
                 _this._domStr += '<i class="layui-icon layui-xtree-icon" data-xtree="' + (_this._isopen ? '1' : '0') + '">' + (_this._isopen ? _this._iconOpen : _this._iconClose) + '</i>';
             else {
                 _this._domStr += '<i class="layui-icon layui-xtree-icon-null">' + _this._iconEnd + '</i>';
                 xtree_isend = 'data-xend="1"';
             }
-            _this._domStr += '<input type="checkbox" class="layui-xtree-checkbox" ' + xtree_isend + ' value="' + d[i].id + '" title="' + d[i].name + '" lay-skin="primary" lay-filter="xtreeck">';
-            _this.dataBind(d[i].children);
+            _this._domStr += '<input type="checkbox" class="layui-xtree-checkbox" ' + xtree_isend + ' value="' + d[0][i].value + '" title="' + d[0][i].title + '" lay-skin="primary" lay-filter="xtreeck">';
+            _this.dataBind(d[0][i].data);
             _this._domStr += '</div>';
         }
     }

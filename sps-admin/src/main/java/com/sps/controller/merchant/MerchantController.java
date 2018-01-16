@@ -162,6 +162,91 @@ public class MerchantController {
 		return insertGather;
 	}
 	/**
+	 * 获得商户基本信息
+	 * @Title: getChannel   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月15日 下午6:11:35
+	 * @return: SpsChannelEnterprise      
+	 * @throws
+	 */
+	@RequestMapping(value="/getChannel")
+	@ResponseBody
+	public SpsChannelEnterprise getChannel(String channelNum){
+		
+		SpsChannelEnterprise channelOne = channelReadService.getChannelOne(channelNum, null);
+		
+		return channelOne;
+	}
+	/**
+	 * 获得该商户财务指标
+	 * @Title: getFinanceTarget   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月15日 下午6:12:29
+	 * @return: SpsChannelFinanceTarget      
+	 * @throws
+	 */
+	@RequestMapping(value="/getFinanceTarget")
+	@ResponseBody
+	public SpsChannelFinanceTarget getFinanceTarget(String channelNum){
+		
+		SpsChannelFinanceTarget financeTarget = channelReadService.getFinanceTarget(channelNum);
+		
+		return financeTarget;
+	}
+	/**
+	 * 获得该商户担保信息
+	 * @Title: getGuarantee   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月15日 下午6:13:04
+	 * @return: SpsChannelGuarantee      
+	 * @throws
+	 */
+	@RequestMapping(value="/getGuarantee")
+	@ResponseBody
+	public SpsChannelGuarantee getGuarantee(String channelNum){
+		
+		SpsChannelGuarantee guarantee = channelReadService.getGuarantee(channelNum);
+		
+		return guarantee;
+	}
+	/**
+	 * 获得该商户物流配送信息
+	 * @Title: getLogistics   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月15日 下午6:13:38
+	 * @return: SpsChannelFinanceTarget      
+	 * @throws
+	 */
+	@RequestMapping(value="/getLogistics")
+	@ResponseBody
+	public SpsChannelLogistics getLogistics(String channelNum){
+		
+		SpsChannelLogistics logistics = channelReadService.getLogistics(channelNum);
+		
+		return logistics;
+	}
+	@RequestMapping(value="/getOpenAccount")
+	@ResponseBody
+	public SpsChannelOpenAccount getOpenAccount(String channelNum){
+		
+		SpsChannelOpenAccount openAccount = channelReadService.getOpenAccount(channelNum);
+		
+		return openAccount;
+	}
+	
+	/**
 	 * 上传图片
 	 * @Title: uploadPic   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   

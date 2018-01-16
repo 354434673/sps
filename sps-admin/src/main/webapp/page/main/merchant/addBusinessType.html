@@ -62,16 +62,69 @@
 	layui.use(['form'], function(){
 	 var form = layui.form;
 	 var $ = layui.jquery;
-	 var json;
+  	 var json = [[
+	             {"value": 41,"title": "22" ,"data": [
+	                 {"value": 43,"title": "234234","data":[]},
+	                 {"value": 43,"title": "234234","data":[]},
+	                 {"value": 43,"title": "234234","data":[]},
+	                 {"value": 43,"title": "234234","data":[]},
+	                 {"value": 43,"title": "234234","data":[]},
+	             	]
+				},
+	             {"value": 41,"title": "22" ,"data": [
+	                 {"value": 43,"title": "234234","data":[]},
+	                 {"value": 43,"title": "234234","data":[]},
+	                 {"value": 43,"title": "234234","data":[]},
+	                 {"value": 43,"title": "234234","data":[]},
+	                 {"value": 43,"title": "234234","data":[]},
+	             	]
+				},
+	             {"value": 41,"title": "22" ,"data": [
+	                 {"value": 43,"title": "234234","data":[]},
+	                 {"value": 43,"title": "234234","data":[]},
+	                 {"value": 43,"title": "234234","data":[]},
+	                 {"value": 43,"title": "234234","data":[]},
+	             	]
+				}
+				]];  
+/*  	    var json = [
+	                {
+	                    title: "节点1", value: "jd1", data: [
+	                        { title: "节点1.1", value: "jd1.1", data: [] }
+	                    , { title: "节点1.2", value: "jd1.2", data: [] }
+	                    , { title: "节点1.3", value: "jd1.3", data: [] }
+	                    , { title: "节点1.4", value: "jd1.4", data: [] }
+	                    ]
+	                }
+	                , {
+	                    title: "节点2", value: "jd2", data: [
+	                        { title: "节点2.1", value: "jd2.1", data: [] }
+	                    , {
+	                        title: "节点2.2", value: "jd2.2", data: [
+	                            { title: "节点2.2.1", value: "jd2.2.1", data: [] }
+	                            , { title: "节点2.2.2", value: "jd2.2.2", data: [] }
+	                            , { title: "节点2.2.3", value: "jd2.2.3", data: [] }
+	                            , { title: "节点2.2.4", value: "jd2.2.4", data: [] }
+	                        ]
+	                    }
+	                    , { title: "节点2.3", value: "jd2.3", data: [] }
+	                    , { title: "节点2.4", value: "jd2.4", data: [] }
+	                    ]
+	                }
+	                , { title: "节点3", value: "jd3", data: [] }
+	                , { title: "节点4", value: "jd4", data: [] }
+	        ];  */
 	 console.log(window.parent.businessProductArray)
-	$.post({
-		url:'/sps-admin/category/getChildrenCategory?ids=1',
+/* 	$.post({
+		url:'/sps-admin/category/getChildrenCategory?ids=1,2,51',
 		dataType:'json',
 		async:false,//同步,赋值给json,否则会找不到
 		success:function(data){
-			json= data.childrenList
+			console.log(eval(data))
+			json= eval(data.childrenList)
 		}
-	})
+	}) */
+	console.log(json)
 	form.on('submit(submitAddRole)', function(data){
 	 		 var roleName = $('#roleName').val();//角色名称
 	 		 var roleDescribe = $('#roleDescribe').val();//角色描述

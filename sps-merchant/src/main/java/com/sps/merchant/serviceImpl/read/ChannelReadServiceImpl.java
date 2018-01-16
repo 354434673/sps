@@ -5,27 +5,49 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.merchant.SpsChannel;
 import org.sps.entity.merchant.SpsChannelEnterprise;
 import org.sps.entity.merchant.SpsChannelEnterpriseExample;
+import org.sps.entity.merchant.SpsChannelFinanceTarget;
+import org.sps.entity.merchant.SpsChannelFinanceTargetExample;
 import org.sps.entity.merchant.SpsChannelGather;
 import org.sps.entity.merchant.SpsChannelGatherExample;
 import org.sps.entity.merchant.SpsChannelGatherExample.Criteria;
+import org.sps.entity.merchant.SpsChannelGuarantee;
+import org.sps.entity.merchant.SpsChannelGuaranteeExample;
+import org.sps.entity.merchant.SpsChannelLogistics;
+import org.sps.entity.merchant.SpsChannelLogisticsExample;
+import org.sps.entity.merchant.SpsChannelOpenAccount;
+import org.sps.entity.merchant.SpsChannelOpenAccountExample;
 import org.sps.service.merchant.read.ChannelReadService;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.merchant.read.SpsChannelEnterpriseReadMapper;
+import com.sps.dao.merchant.read.SpsChannelFinanceTargetReadMapper;
 import com.sps.dao.merchant.read.SpsChannelGatherReadMapper;
+import com.sps.dao.merchant.read.SpsChannelGuaranteeReadMapper;
+import com.sps.dao.merchant.read.SpsChannelLogisticsReadMapper;
+import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
 
 
 @Service(timeout=12000)
+@Transactional(readOnly = true)
 public class ChannelReadServiceImpl implements ChannelReadService{
 	@Resource
 	private SpsChannelEnterpriseReadMapper enterpriseRead;
 	@Resource
 	private SpsChannelGatherReadMapper gatherRead;
+	@Resource
+	private SpsChannelGuaranteeReadMapper guaranteeRead;
+	@Resource
+	private SpsChannelLogisticsReadMapper logisticsRead;
+	@Resource
+	private SpsChannelFinanceTargetReadMapper financeTargetRead;
+	@Resource
+	private SpsChannelOpenAccountReadMapper openAccountRead;
 	@Override
 	public HashMap<String, Object> getChannelList(String channelNum, Integer channelState, 
 			Integer channelFlowState, Integer page, Integer limit) {
@@ -103,6 +125,61 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 		List<SpsChannelEnterprise> selectByExample = enterpriseRead.selectByExample(example);
 		return selectByExample.size() == 0 ? null : selectByExample.get(0);
 	}
-	
+	@Override
+	public SpsChannelEnterprise getChannelOne(String channelNum, String state) {
+		
+		SpsChannel channel = new SpsChannel();
+		
+		channel.setChannelNum(channelNum);
+		
+		channel.setChannelState(0);
+		
+		List<SpsChannelEnterprise> selectChannel = enterpriseRead.selectChannel(channel);
+		
+		return selectChannel.size() == 0 ? null : selectChannel.get(0);
+	}
+	@Override
+	public SpsChannelGuarantee getGuarantee(String channelNum) {
+		
+		SpsChannelGuaranteeExample example = new SpsChannelGuaranteeExample();
+		
+		example.createCriteria().andChannelNumEqualTo(channelNum);
+		
+		List<SpsChannelGuarantee> selectByExample = guaranteeRead.selectByExample(example);
+		
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
+	}
+	@Override
+	public SpsChannelFinanceTarget getFinanceTarget(String channelNum) {
+		
+		SpsChannelFinanceTargetExample example = new SpsChannelFinanceTargetExample();
+		
+		example.createCriteria().andChannelNumEqualTo(channelNum);
+		
+		List<SpsChannelFinanceTarget> selectByExample = financeTargetRead.selectByExample(example );
+		
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
+	}
+	@Override
+	public SpsChannelLogistics getLogistics(String channelNum) {
+		SpsChannelLogisticsExample example = new SpsChannelLogisticsExample();
+		
+		example.createCriteria().andChannelNumEqualTo(channelNum);
+		
+		List<SpsChannelLogistics> selectByExample = logisticsRead.selectByExample(example);
+		
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
 
+	}
+	@Override
+	public SpsChannelOpenAccount getOpenAccount(String channelNum) {
+		SpsChannelOpenAccountExample example = new SpsChannelOpenAccountExample();
+		
+		example.createCriteria().andChannelNumEqualTo(channelNum);
+		
+		List<SpsChannelOpenAccount> selectByExample = openAccountRead.selectByExample(example);
+		
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
+
+	}
 }

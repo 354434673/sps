@@ -17,6 +17,7 @@ import com.github.pagehelper.PageInfo;
 import com.sps.dao.merchant.read.SpsChannelSalesmanReadMapper;
 
 @Service
+@Transactional(readOnly = true)
 public class ChannelSalesmanReadServiceImpl implements ChannelSalesmanReadService{
 	@Resource
 	private SpsChannelSalesmanReadMapper salesmanRead;

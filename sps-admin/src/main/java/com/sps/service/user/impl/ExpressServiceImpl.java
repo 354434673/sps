@@ -15,7 +15,6 @@ import com.sps.entity.express.SpsExpress;
 import com.sps.entity.express.SpsExpressExample;
 import com.sps.service.user.ExpressService;
 @Service
-@Transactional(readOnly = true)
 public class ExpressServiceImpl implements ExpressService{
 	@Resource
 	private SpsExpressMapper express;

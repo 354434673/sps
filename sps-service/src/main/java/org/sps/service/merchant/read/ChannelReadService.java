@@ -3,8 +3,13 @@ package org.sps.service.merchant.read;
 import java.util.HashMap;
 
 import org.sps.entity.merchant.SpsChannel;
+import org.sps.entity.merchant.SpsChannelBusiness;
 import org.sps.entity.merchant.SpsChannelEnterprise;
+import org.sps.entity.merchant.SpsChannelFinanceTarget;
 import org.sps.entity.merchant.SpsChannelGather;
+import org.sps.entity.merchant.SpsChannelGuarantee;
+import org.sps.entity.merchant.SpsChannelLogistics;
+import org.sps.entity.merchant.SpsChannelOpenAccount;
 
 public interface ChannelReadService {
 	/**
@@ -57,4 +62,65 @@ public interface ChannelReadService {
 	 * @throws
 	 */
 	SpsChannelGather getGather(SpsChannelGather gather);
+	/**
+	 * 获得该商户的基本信息
+	 * @Title: getChannelOne   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @param state
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月15日 下午5:07:00
+	 * @return: SpsChannelEnterprise      
+	 * @throws
+	 */
+	SpsChannelEnterprise getChannelOne(String channelNum, String state);
+	/**
+	 * 查询该商户的担保信息
+	 * @Title: getGuarantee   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月15日 下午6:03:00
+	 * @return: SpsChannelGuarantee      
+	 * @throws
+	 */
+	SpsChannelGuarantee getGuarantee(String channelNum);
+	/**
+	 * 查询该商户的财务指标
+	 * @Title: getFinanceTarget   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月15日 下午6:06:14
+	 * @return: SpsChannelFinanceTarget      
+	 * @throws
+	 */
+	SpsChannelFinanceTarget getFinanceTarget(String channelNum);
+	/**
+	 * 查询该商户的物流配送
+	 * @Title: getLogistics   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月15日 下午6:06:24
+	 * @return: SpsChannelLogistics      
+	 * @throws
+	 */
+	SpsChannelLogistics getLogistics(String channelNum);
+	/**
+	 * 查询该用户的开户信息
+	 * @Title: getOpenAccount   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月15日 下午6:07:09
+	 * @return: SpsChannelOpenAccount      
+	 * @throws
+	 */
+	SpsChannelOpenAccount getOpenAccount(String channelNum);
 }
