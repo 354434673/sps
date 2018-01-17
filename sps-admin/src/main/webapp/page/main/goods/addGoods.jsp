@@ -184,12 +184,6 @@
             $("#gSpuNo").attr({"disabled": "disabled"});
         }
 
-        if ($("#brandCategoryNames").val() == "") {
-            $("#showCategory").html("关联分类")
-        } else {
-            $("#showCategory").html($("#brandCategoryNames").val())
-        }
-
     })
 
     layui.use(['form','table','layedit','flow','element'], function(){

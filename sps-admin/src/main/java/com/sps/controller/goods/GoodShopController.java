@@ -19,9 +19,13 @@ public class GoodShopController {
     @Reference
     private GoodShopService goodService;
     @Reference
-    private GoodSkuService goodSkuService;
+    private GoodCategoryService goodCategoryService;
+    @Reference
+    private GoodShopSkuService goodSkuService;
     @Reference
     private BrandService brandService;
+    @Reference
+    private CustomCategoryService customCategoryService;
 
 
 
@@ -54,7 +58,7 @@ public class GoodShopController {
             model.addAttribute("tips", "操作失败");
             model.addAttribute("flag", 0);
         }
-        return "goods/addGoods";
+        return "goodShop/addGoods";
     }
 
     /**
@@ -114,7 +118,7 @@ public class GoodShopController {
             model.addAttribute("tips", "操作失败");
             model.addAttribute("flag", 0);
         }
-        return "goods/detailGoods";
+        return "goodShop/detailGoods";
     }
 
 
@@ -137,10 +141,25 @@ public class GoodShopController {
                     SpsBrand spsBrand = brandService.findEntityById(goods.getgBrandId());
                     resultMap.put("brandName", spsBrand.getBrandName());
                 }
+                if(goods.getgCategoryIds()!=null){
+                    //查询商品品牌信息
+                    String [] ids = goods.getgCategoryIds().split(",");
+                    SpsGoodCategory firstCategory = goodCategoryService.findEntityById(Integer.valueOf(ids[0]));
+                    resultMap.put("firstCategory", firstCategory.getCategoryName());
+                    SpsGoodCategory twoCategory = goodCategoryService.findEntityById(Integer.valueOf(ids[1]));
+                    resultMap.put("twoCategory", twoCategory.getCategoryName());
+                    SpsGoodCategory threeCategory = goodCategoryService.findEntityById(Integer.valueOf(ids[2]));
+                    resultMap.put("threeCategory", threeCategory.getCategoryName());
+                }
+                if(goods.getgCategorySelf()!=null){
+                    //查询商品品牌信息
+                    SpsCustomCategory category = customCategoryService.findEntityById(goods.getgCategorySelf());
+                    resultMap.put("customName", category.getCustomName());
+                }
                 //查询商品sku
                 Map<String, Object> map = new HashMap<>();
                 map.put("goodsId", goods.getgId());
-                List<SpsGoodSku> skuList = goodSkuService.findList(map);
+                List<SpsGoodShopSku> skuList = goodSkuService.findList(map);
                 resultMap.put("skuList", skuList);
                 resultMap.put("goods", goods);
                 resultMap.put("flag", 1);

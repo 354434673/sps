@@ -171,6 +171,9 @@
     <if test="isFirst == 0">
       and category_parent_id = 0
     </if>
+    <if test="id !=null and id != ''">
+      and category_id = #{id,jdbcType=INTEGER}
+    </if>
     AND category_delete_flag = 0
     order by category_weight desc
   </select>

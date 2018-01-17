@@ -33,7 +33,7 @@ public class GoodShopSkuServiceImpl implements GoodShopSkuService {
 
     @Override
     public List<SpsGoodShopSku> findList(Map<String, Object> map) {
-        return null;
+        return spsGoodShopSkuMapper.findListAllWithMap(map);
     }
 
     @Override

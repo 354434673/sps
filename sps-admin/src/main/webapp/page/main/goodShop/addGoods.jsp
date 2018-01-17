@@ -36,6 +36,8 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">*一级分类：</label>
             <div class="layui-input-inline">
+                <input id="firstCategoryName" type="text" class="layui-input" name="gSpuName"
+                       style="display: none;">
                 <select id="firstCategory" name="firstCategory" lay-filter="firstFilter">
                     <option value="1">1</option>
                 </select>
@@ -44,14 +46,17 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">*二级分类：</label>
             <div class="layui-input-inline">
+                <input id="twoCategoryName" type="text" class="layui-input" name="gSpuName"
+                       style="display: none;">
                 <select id="secondCategory" name="secondCategory" lay-filter="secondFilter">
-
                 </select>
             </div>
         </div>
         <div class="layui-form-item ">
             <label class="layui-form-label">*三级分类：</label>
             <div class="layui-input-inline">
+                <input id="threeCategoryName" type="text" class="layui-input " name="gSpuName"
+                       style="display: none;">
                 <select id="threeCategory" name="threeCategory" lay-filter="threeFilter">
 
                 </select>
@@ -61,6 +66,8 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">*关联品牌：</label>
             <div class="layui-input-inline">
+                <input id="brandName" type="text" class="layui-input" name="gSpuName"
+                       style="display: none;">
                 <select id="gBrandId" name="gBrandId" lay-filter="selFilter">
 
                 </select>
@@ -70,6 +77,8 @@
             <label class="layui-form-label">*SPU：</label>
             <input type="hidden" id="spu">
             <div class="layui-input-inline">
+                <input id="gSpuName" type="text" class="layui-input" name="gSpuName"
+                       style="display: none;">
                 <select id="spuNo" name="gBrandId" lay-filter="spuFilter">
 
                 </select>
@@ -126,9 +135,8 @@
             </div>
 
             <div class="layui-form-item" align="center">
-                <button type="reset" class="layui-btn layui-btn-primary">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary" lay-submit id="save">保存</button>
                 <button class="layui-btn" lay-filter="submitGoods" lay-submit id="submit">提交
-
             </div>
         </div>
     </div>
@@ -145,9 +153,16 @@
 <script src="<%=path%>/page/static/treeTable/layui.js"></script>
 <script type="text/javascript">
     $(function () {
+        initCategory();
         //修改时候获取数据
         if ($("#goodsId").val() != "") {
             getDate($("#goodsId").val());
+       /*     $('#firstCategoryName').attr({"disabled": "disabled"});
+            $('#twoCategoryName').attr({"disabled": "disabled"});
+            $('#threeCategoryName').attr({"disabled": "disabled"});
+            $('#gSpuName').attr({"disabled": "disabled"});
+            $('#brandName').attr({"disabled": "disabled"});*/
+
             $("#firstCategory").attr({"disabled": "disabled"});
             $("#secondCategory").attr({"disabled": "disabled"});
             $("#threeCategory").attr({"disabled": "disabled"});
@@ -298,6 +313,19 @@
         });
     }
 
+
+    function initCategory() {
+        $.ajax({
+            data:{ids:"1"},
+            url: "/sps-admin/category/getChildrenCategorys",//提交连接
+            type: 'post',
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+            }//回调方法
+        });
+    }
+
     //获得分类
     function getChildren(parentId, Id) {
         $.ajax(
@@ -425,12 +453,13 @@
                                     "<td ><input type='text'></td>" +
                                     "<td ><input type='text'></td>" +
                                     "<td >0.7%</td>" +
-                                    "<td ><span>0.7</span></td>" +
+                                    "<td ><span>0</span></td>" +
                                     "</tr>");
 
                             })
 
                         }
+                        layui.form.render();
                     }
                 } else {
                     //layer.msg("操作失败")
@@ -452,99 +481,59 @@
 
     //修改获取数据
     function getDate(goodsId) {
+        initCustomCategory()
         $.ajax({
-            url: "/sps-admin/goods/findEntity",//提交连接
+            url: "/sps-admin/goodShop/findEntity",//提交连接
             type: 'post',
             dataType: 'json',
             async: false,
             data: {id: goodsId},
             success: function (json) {
                 if (json.flag == "1") {
+                    $("#two").show();
+                    $("#next").hide();
                     if (json.goods != null) {
-                        $('#gCategoryIds').val(json.goods.gCategoryIds);
-                        $('#gCategoryNames').val(json.goods.gCategoryNames);
-                        $("#showCategory").html(json.goods.gCategoryNames);
+                        $('#firstCategoryName').val(json.firstCategory);
+                        $('#twoCategoryName').val(json.twoCategory);
+                        $('#threeCategoryName').val(json.threeCategory);
+                        $('#gCategorySelf').val(json.customName);
+                        $('#gSpuName').val(json.goods.gSpuName+'-'+json.goods.gSpuNo);
+                        $('#firstCategory').hide();
+                        $('#secondCategory').hide();
+                        $('#threeCategory').hide();
+                        $('#spuNo').hide();
+                        $('#firstCategoryName').show()
+                        $('#twoCategoryName').show()
+                        $('#threeCategoryName').show()
+                        $('#gSpuName').show();
 
-                        /* $("#gBrandId").find("option[text="+json.goods.gBrandId+"]").attr("selected",true);*/
-                        $('#gSpuName').val(json.goods.gSpuName);
-                        $('#gSpuNo').val(json.goods.gSpuNo);
-                        $('#gDetails').val(json.goods.gDetails);
-                        $('#gRemark').val(json.goods.gRemark);
-                        $('#gDpic').val(json.goods.gDpic);
-                        $('#gPic').val(json.goods.gPic);
-                        $('#gBrandId').val(json.goods.gBrandId);
+                        //layui.form.render();
                     }
                     if (json.brandName != null) {
                         $("#brandName").val(json.brandName);
-                        $("#brandId").hide();
+                        $("#gBrandId").hide();
                         $("#brandName").show();
-
-                        //   $("#gBrandId").addClass("layui-hide");
-                        //document.getElementById("gBrandId").style.display="none";
-                        //  $('#gBrandId').addClass("display","block");
-                        /* layer.select("selFilter").setValue(json.brandName);*/
-                        /*  $("#gBrandId").val(json.brandName)
-                          layui.form().render('select')
-                          $(select).val(option[json.brandName]);*/
-
-                        /* $("#brandName").attr("display","block");
-                         $("#gBrandId").attr("display","none");
-                         $("#brandName").val(json.brandName)e
-                         $("#gBrandId option[text="+json.brandName+"]").attr("selected", "selected");*/
-                        // $("#gBrandId").html('<option value="">' + json.brandName + '</option>');
-                        /* var html = '<option value="">' + json.brandName + '</option>';
-                         $("#gBrandId").html(html);*/
-                    }
-                    if (json.detailList != null) {
-                        var picVal = "";
-                        if ($.isArray(json.detailList)) {
-                            $.each(json.detailList, function (index, val) {
-                                if (index != json.detailList.length - 1) {
-                                    picVal += val.albumUrl + ","
-                                } else {
-                                    picVal += val.albumUrl
-                                }
-                            })
-                        }
-                        $('#gDpic').val(picVal)
-                    }
-                    if (json.picList != null) {
-                        var picVal = "";
-                        if ($.isArray(json.picList)) {
-                            $.each(json.picList, function (index, val) {
-                                if (index != json.picList.length - 1) {
-                                    picVal += val.albumUrl + ","
-                                } else {
-                                    picVal += val.albumUrl
-                                }
-                            })
-                        }
-                        $('#gPic').val(picVal)
                     }
                     if (json.skuList != null) {
                         if ($.isArray(json.skuList)) {
                             $.each(json.skuList, function (index, val) {
-                                if (val.gType == "0") {
-                                    val.gType = "按金额"
-                                } else if (val.gType == "1") {
-                                    val.gType = "按比例"
-                                }
                                 $('#content').append(
                                     "<tr >" +
-                                    "<td > " + val.gColor + "</td>" +
+                                    "<td > <input  lay-filter='sscale' type='checkbox'><div class='layui-unselect layui-form-checkbox' lay-skin='primary'><i class='layui-icon'></i></div></td>" +
+                                    "<td >" + val.gColor + "</td>" +
                                     "<td >" + val.gSize + "</td>" +
-                                    "<td >" + val.gNo + "</td>" +
-                                    "<td >" + val.gPrice + "</td>" +
-                                    "<td >" + val.gType + "</td>" +
+                                    "<td >" + val.gSku + "</td>" +
+                                    "<td ><input type='text'onchange='countService(this);' value= "+val.gPrice+"></td>" +
+                                    "<td ><input type='text'  value= "+val.gQuantity+"></td>" +
+                                    "<td ><input type='text'  value= "+val.gStock+"></td>" +
                                     "<td >" + val.gScale + "</td>" +
-                                    "<td >" + val.gAprice + "-" + val.gBprice + "</td>" +
-                                    "<td >" +
-                                    "<span onclick='remove_line(this);'>删除</span> " +
-                                    "</td>" +
+                                    "<td >" + val.gService + "</td>" +
+
                                     "</tr>");
                             })
                         }
                     }
+                    layui.form.render('checkbox');
                 } else {
                     //layer.msg("操作失败")
 

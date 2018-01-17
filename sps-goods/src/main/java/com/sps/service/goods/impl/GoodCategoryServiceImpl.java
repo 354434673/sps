@@ -98,9 +98,9 @@ public class GoodCategoryServiceImpl  implements GoodCategoryService {
                     spsCategory.setTitle(category.getCategoryName());
                     childernList.add(spsCategory);
                     List<SpsGoodCategory> getGrandson = getGrand(category.getCategoryId());
-                    if(getGrandson.size()!= 0){
+                  /*  if(getGrandson.size()!= 0){*/
                         spsCategory.setChildren(getGrandson);
-                    }
+                  /*  }*/
                     list.add(spsCategory);
                 }
                 list.add(childernList) ;
@@ -177,10 +177,12 @@ public class GoodCategoryServiceImpl  implements GoodCategoryService {
         List<SpsGoodCategory> selectChildern = this.findList(map);
         SpsGoodCategory spsCategory;
         List<SpsGoodCategory> childernList = new ArrayList<>();
+        List<SpsGoodCategory> list = new ArrayList<>();
         for (SpsGoodCategory category : selectChildern) {
             spsCategory=new SpsGoodCategory();
             spsCategory.setId(category.getCategoryId());
             spsCategory.setTitle(category.getCategoryName());
+            spsCategory.setChildren(list);
             childernList.add(spsCategory);
         }
         return childernList;

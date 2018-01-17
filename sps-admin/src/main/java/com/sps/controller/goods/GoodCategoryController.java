@@ -4,6 +4,8 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -187,13 +189,24 @@ public class GoodCategoryController {
      */
     @RequestMapping("/getFistCategory")
     @ResponseBody
-    public  Map<String, Object>  getFistCategory() {
+    public  Map<String, Object>  getFistCategory(String ids) {
         Map<String, Object> resultMap = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
-        map.put("isFirst", "0");
-        //先查父类
-        List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
-        resultMap.put("categoryList", categoryList);
+        if(ids==""){
+            map.put("isFirst", "0");
+            //先查父类
+            List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
+            resultMap.put("categoryList", categoryList);
+
+        }else {
+            String [] idList = ids.split(",");
+            for( String id:idList){
+                map.put("id", id);
+                //先查父类
+                List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
+                resultMap.put("categoryList", categoryList);
+            }
+        }
         resultMap.put("code", 0);
         return resultMap;
     }
@@ -217,10 +230,10 @@ public class GoodCategoryController {
      */
     @RequestMapping("/getChildrenCategorys")
     @ResponseBody
-    @JSONField(serialize = false)
-    public  List  getChildrenCategorys( String ids) {
+    public  String  getChildrenCategorys(String ids) {
         List<SpsGoodCategory> childrenList = goodCategoryService.findLastCategory(ids);
-        return childrenList;
+        String jsonString = JSON.toJSONString(childrenList, SerializerFeature.DisableCircularReferenceDetect);
+        return jsonString;
     }
 
     /**

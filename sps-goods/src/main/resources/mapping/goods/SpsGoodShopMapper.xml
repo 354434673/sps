@@ -134,7 +134,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="SpsGoodShop">
+  <update id="update" parameterType="SpsGoodShop">
     update sps_good_shop
     <set>
       <if test="gCategoryIds != null">
@@ -179,7 +179,7 @@
     </set>
     where g_id = #{gId,jdbcType=INTEGER}
   </update>
-  <update id="update" parameterType="SpsGoodShop">
+  <update id="updateBy" parameterType="SpsGoodShop">
     update sps_good_shop
     set g_category_ids = #{gCategoryIds,jdbcType=VARCHAR},
       g_brand_id = #{gBrandId,jdbcType=INTEGER},

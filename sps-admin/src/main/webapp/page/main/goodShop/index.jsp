@@ -45,19 +45,19 @@
         <button class="layui-btn" id="onSale" data-type="getCheckData">
             上架
         </button>
-        <a href="javascript:;" class="layui-btn" id="noSale">
+        <a href="javascript:;" class="layui-btn" id="noSale" data-type="noSale">
             下架
         </a>
-        <a href="javascript:;" class="layui-btn" id="toUpdate">
+        <a href="javascript:;" class="layui-btn"  data-type="update">
             修改
         </a>
-        <a href="javascript:;" class="layui-btn" id="detail">
+        <a href="javascript:;" class="layui-btn" data-type="detail">
             查看
         </a>
-        <a href="javascript:;" class="layui-btn" id="onRecommend">
+        <a href="javascript:;" class="layui-btn" id="onRecommend"data-type="onRecommend">
             置为推荐
         </a>
-        <a href="javascript:;" class="layui-btn" id="noRecommend">
+        <a href="javascript:;" class="layui-btn" id="noRecommend" data-type="noRecommend">
             取消推荐
         </a>
     </div>
@@ -115,7 +115,6 @@
                         list +=checkStatus.data[i].gId
                     }
                 }
-                console.log('选中：'+list);
                 if(list!=null&&list!=""){
                     $.ajax({
                         url: "/sps-admin/goodShop/onSale",//提交连接
@@ -125,14 +124,162 @@
                         data: {ids: list,state:1},
                         success: function (json) {
                             if (json.flag == "1") {
-
-                            } else {
+                                layer.msg("上架成功");
+                            } else if (json.flag == "2")  {
+                                layer.msg("请选择审核通过的商品");
                             }
                         }
                     });
                 }
 
-        }
+        },
+            noSale: function () { //获取选中数据
+                var checkStatus = table.checkStatus('gId')
+                    , data = checkStatus.data;
+                list="";
+                for(var i=0;i<checkStatus.data.length;i++){
+                    if (i != checkStatus.data.length - 1) {
+                        list +=checkStatus.data[i].gId+',';
+                    } else {
+                        list +=checkStatus.data[i].gId
+                    }
+                }
+                if(list!=null&&list!=""){
+                    $.ajax({
+                        url: "/sps-admin/goodShop/onSale",//提交连接
+                        type: 'post',
+                        dataType: 'json',
+                        async: false,
+                        data: {ids: list,state:0},
+                        success: function (json) {
+                            if (json.flag == "1") {
+                                layer.msg("下架成功");
+                            } else if (json.flag == "2")  {
+                                layer.msg("请选择审核通过的商品");
+                            }
+                        }
+                    });
+                }
+
+            },
+            onRecommend: function () { //获取选中数据
+                var checkStatus = table.checkStatus('gId')
+                    , data = checkStatus.data;
+                list="";
+                for(var i=0;i<checkStatus.data.length;i++){
+                    if (i != checkStatus.data.length - 1) {
+                        list +=checkStatus.data[i].gId+',';
+                    } else {
+                        list +=checkStatus.data[i].gId
+                    }
+                }
+                if(list!=null&&list!=""){
+                    $.ajax({
+                        url: "/sps-admin/goodShop/onRecommend",//提交连接
+                        type: 'post',
+                        dataType: 'json',
+                        async: false,
+                        data: {ids: list,state:1},
+                        success: function (json) {
+                            if (json.flag == "1") {
+                                layer.msg("推荐成功");
+                            } else if (json.flag == "2")  {
+                                layer.msg("请选择审核通过的商品");
+                            }
+                        }
+                    });
+                }
+
+            },
+            noRecommend: function () { //获取选中数据
+                var checkStatus = table.checkStatus('gId')
+                    , data = checkStatus.data;
+                list="";
+                for(var i=0;i<checkStatus.data.length;i++){
+                    if (i != checkStatus.data.length - 1) {
+                        list +=checkStatus.data[i].gId+',';
+                    } else {
+                        list +=checkStatus.data[i].gId
+                    }
+                }
+                if(list!=null&&list!=""){
+                    $.ajax({
+                        url: "/sps-admin/goodShop/onRecommend",//提交连接
+                        type: 'post',
+                        dataType: 'json',
+                        async: false,
+                        data: {ids: list,state:0},
+                        success: function (json) {
+                            if (json.flag == "1") {
+                                layer.msg("取消推荐成功");
+                            } else if (json.flag == "2")  {
+                                layer.msg("请选择审核通过的商品");
+                            }
+                        }
+                    });
+                }
+
+            },
+
+            noRecommend: function () { //获取选中数据
+                var checkStatus = table.checkStatus('gId')
+                    , data = checkStatus.data;
+                list="";
+                for(var i=0;i<checkStatus.data.length;i++){
+                    if (i != checkStatus.data.length - 1) {
+                        list +=checkStatus.data[i].gId+',';
+                    } else {
+                        list +=checkStatus.data[i].gId
+                    }
+                }
+                if(list!=null&&list!=""){
+                    $.ajax({
+                        url: "/sps-admin/goodShop/onRecommend",//提交连接
+                        type: 'post',
+                        dataType: 'json',
+                        async: false,
+                        data: {ids: list,state:0},
+                        success: function (json) {
+                            if (json.flag == "1") {
+                                layer.msg("取消推荐成功");
+                            } else if (json.flag == "2")  {
+                                layer.msg("请选择审核通过的商品");
+                            }
+                        }
+                    });
+                }
+
+            },
+            detail: function () { //获取选中数据
+                var checkStatus = table.checkStatus('gId')
+                    , data = checkStatus.data;
+                list="";
+                if (checkStatus.data.length >1) {
+                    layer.msg("请选择一条商品信息")
+                }else {
+                    list =checkStatus.data[0].gId
+                }
+                if(list!=null&&list!=""){
+                    window.location.href="/sps-admin/goodShop/toGoodsDetail?id="+list;
+                }
+
+            },
+            update: function () { //获取选中数据
+                var checkStatus = table.checkStatus('gId')
+                    , data = checkStatus.data;
+                list="";
+                if (checkStatus.data.length >1) {
+                    layer.msg("请选择一条商品信息")
+                }else {
+                    list =checkStatus.data[0].gId
+                }
+                if(list!=null&&list!=""){
+                    window.location.href="/sps-admin/goodShop/toAddOrEdit?id="+list;
+                }
+
+            }
+
+
 
             /*,getCheckLength: function(){ //获取选中数目
                 var checkStatus = table.checkStatus('idTest')
