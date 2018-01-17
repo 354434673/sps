@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.sps.entity.goods.SpsBrand;
 import org.sps.service.goods.BrandService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -170,11 +171,17 @@ public class BrandController {
     public Map<String, Object> getBrandList(String categoryIds) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            Map<String, Object> map = new HashMap<>();
-            map.put("categoryIds", categoryIds);
-            List<SpsBrand> spsBrandList = brandService.findList(map);
-            resultMap.put("data", spsBrandList);
+            List list = new ArrayList<>();
+            String[] ids = categoryIds.split(",");
+            for(String id:ids){
+                Map<String, Object> map = new HashMap<>();
+                map.put("categoryIds", id);
+                List<SpsBrand> spsBrandList = brandService.findList(map);
+                list.add(spsBrandList);
+            }
+            resultMap.put("data", list);
             resultMap.put("flag", 1);
+
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("flag", 0);

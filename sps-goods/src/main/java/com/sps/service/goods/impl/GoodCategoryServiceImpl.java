@@ -143,12 +143,11 @@ public class GoodCategoryServiceImpl implements GoodCategoryService {
             spsCategory.setCategoryDes(category.getCategoryDes());
             spsCategory.setCategoryUrl(category.getCategoryUrl());
             childernList.add(spsCategory);
-            List<SpsGoodCategory> getGrandson = getGrand(category.getCategoryId());
+            List<SpsGoodCategory> getGrandson = getGrandson(category.getCategoryId());
             if (getGrandson.size() != 0) {
                 spsCategory.setChildren(getGrandson);
             }
             list.add(spsCategory);
-
         }
         return childernList;
     }

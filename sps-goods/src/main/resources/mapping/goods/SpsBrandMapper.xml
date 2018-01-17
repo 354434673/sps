@@ -203,9 +203,8 @@
       and  FIND_IN_SET(#{categoryId,jdbcType=INTEGER}, brand_category_ids)
     </if>
     <if test="categoryIds !=null">
-      and   brand_category_ids in(#{categoryIds,jdbcType=VARCHAR})
+      AND FIND_IN_SET(#{categoryIds,jdbcType=VARCHAR},brand_category_ids)
     </if>
-
     AND brand_delete_flag = 0
     order by brand_create_time desc
 
