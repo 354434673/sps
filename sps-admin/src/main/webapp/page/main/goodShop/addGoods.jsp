@@ -153,7 +153,6 @@
 <script src="<%=path%>/page/static/treeTable/layui.js"></script>
 <script type="text/javascript">
     $(function () {
-        initCategory();
         //修改时候获取数据
         if ($("#goodsId").val() != "") {
             getDate($("#goodsId").val());
@@ -314,17 +313,7 @@
     }
 
 
-    function initCategory() {
-        $.ajax({
-            data:{ids:"1"},
-            url: "/sps-admin/category/getChildrenCategorys",//提交连接
-            type: 'post',
-            dataType: 'json',
-            success: function (result) {
-                console.log(result);
-            }//回调方法
-        });
-    }
+
 
     //获得分类
     function getChildren(parentId, Id) {

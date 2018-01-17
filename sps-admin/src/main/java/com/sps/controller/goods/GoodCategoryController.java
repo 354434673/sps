@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -199,13 +198,15 @@ public class GoodCategoryController {
             resultMap.put("categoryList", categoryList);
 
         }else {
+            List list = new ArrayList<>();
             String [] idList = ids.split(",");
             for( String id:idList){
                 map.put("id", id);
                 //先查父类
                 List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
-                resultMap.put("categoryList", categoryList);
+                list.add(categoryList);
             }
+            resultMap.put("categoryList", list);
         }
         resultMap.put("code", 0);
         return resultMap;
@@ -230,7 +231,8 @@ public class GoodCategoryController {
      */
     @RequestMapping("/getChildrenCategorys")
     @ResponseBody
-    public  String  getChildrenCategorys(String ids) {
+    @JSONField(serialize = false)
+    public  String  getChildrenCategorys( String ids) {
         List<SpsGoodCategory> childrenList = goodCategoryService.findLastCategory(ids);
         String jsonString = JSON.toJSONString(childrenList, SerializerFeature.DisableCircularReferenceDetect);
         return jsonString;
