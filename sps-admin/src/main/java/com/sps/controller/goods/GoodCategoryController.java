@@ -191,7 +191,7 @@ public class GoodCategoryController {
     public  Map<String, Object>  getFistCategory(String ids) {
         Map<String, Object> resultMap = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
-        if(ids==""){
+        if(ids==null){
             map.put("isFirst", "0");
             //先查父类
             List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
