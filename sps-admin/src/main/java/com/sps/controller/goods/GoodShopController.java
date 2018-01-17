@@ -206,7 +206,7 @@ public class GoodShopController {
                 String[] idList = ids.split(",");
                 for (String id : idList) {
                     SpsGoodShop goods = goodService.findEntityById(Integer.valueOf(id));
-                    if(goods.getgStatus()!=1){
+                    if(goods.getgStatus()!=2){
                         resultMap.put("msg", "请选择审核通过的商品");
                         resultMap.put("flag", 2);
                         return resultMap;
@@ -237,7 +237,7 @@ public class GoodShopController {
                 String[] idList = ids.split(",");
                 for (String id : idList) {
                     SpsGoodShop goods = goodService.findEntityById( Integer.valueOf(id));
-                    if(goods.getgStatus()!=1){
+                    if(goods.getgStatus()!=2){
                         resultMap.put("msg", "请选择审核通过的商品");
                         resultMap.put("flag", 2);
                         return resultMap;

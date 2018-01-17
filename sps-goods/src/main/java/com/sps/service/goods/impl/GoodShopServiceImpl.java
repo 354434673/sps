@@ -29,6 +29,8 @@ public class GoodShopServiceImpl implements GoodShopService {
             goods.setgUpdateTime(new Date());
             spsGoodShopMapper.update(goods);
         }else{
+            //审核中 1
+            goods.setgStatus(1);
             goods.setgDeleteFlag(0);
             goods.setgCreateTime(new Date());
             spsGoodShopMapper.insert(goods);

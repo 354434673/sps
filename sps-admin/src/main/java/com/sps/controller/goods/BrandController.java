@@ -171,13 +171,18 @@ public class BrandController {
     public Map<String, Object> getBrandList(String categoryIds) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
+            List<Map<String, Object>> result = new ArrayList<>();
             List list = new ArrayList<>();
             String[] ids = categoryIds.split(",");
             for(String id:ids){
                 Map<String, Object> map = new HashMap<>();
                 map.put("categoryIds", id);
                 List<SpsBrand> spsBrandList = brandService.findList(map);
-                list.add(spsBrandList);
+                if(spsBrandList!=null&&spsBrandList.size()>0){
+                    for(SpsBrand brand :spsBrandList){
+                        list.add(brand);
+                    }
+                }
             }
             resultMap.put("data", list);
             resultMap.put("flag", 1);

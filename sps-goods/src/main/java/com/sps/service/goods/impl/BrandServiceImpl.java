@@ -39,13 +39,6 @@ public class BrandServiceImpl implements BrandService {
         return spsBrandMapper.findListAllWithMap(map);
     }
 
-    @Override
-    public void falseDeletion(Integer id) {
-        SpsBrand brand = new SpsBrand();
-        brand.setBrandId(id);
-        brand.setBrandDeleteFlag(1);
-        spsBrandMapper.update(brand);
-    }
 
     @Override
     public HashMap<String, Object> findBrandList(Integer page, Integer limit, String brandName, String brandEnglishName) {
@@ -65,4 +58,23 @@ public class BrandServiceImpl implements BrandService {
         hashMap.put("data", brandList.size() != 0 ? brandList : null);
         return hashMap;
     }
+
+    @Override
+    public HashMap<String, Object> findBrand(Map<String, Object> map) {
+       /* Map<String, Object> map1 = new HashMap<>();
+        List<SpsBrand> brandList = spsBrandMapper.findListAllWithMap(map);
+        map1.put("brandList",brandList);
+        return map1;*/
+        return null;
+    }
+
+    @Override
+    public void falseDeletion(Integer id) {
+        SpsBrand brand = new SpsBrand();
+        brand.setBrandId(id);
+        brand.setBrandDeleteFlag(1);
+        spsBrandMapper.update(brand);
+    }
+
+
 }

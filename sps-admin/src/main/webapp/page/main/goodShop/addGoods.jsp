@@ -556,7 +556,7 @@
 
     //保存sku数据
     function SaveData() {
-        $('#content tr').each(function () {
+        $('#content tr ').each(function () {
             var scale = $(this).find("td:eq(7)").html();
             var tag='%';
             if(scale.indexOf(tag)!=-1){
