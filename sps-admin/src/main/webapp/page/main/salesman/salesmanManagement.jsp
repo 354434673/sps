@@ -36,9 +36,11 @@
 			    <div class="layui-input-inline">
 			      <input id="salesmanPhone" type="text" name="salesmanPhone"  placeholder="请输入手机" autocomplete="off" class="layui-input">
 			    </div>
+	        </div>  
+	         <div class="layui-form-item">
 			    	<button class="layui-btn layui-btn-primary" id="queryUser">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="resetUser">重置</button>
-	        </div>  
+	         </div>
         </div>
 		<div>
 			<blockquote class="layui-elem-quote">
@@ -71,7 +73,7 @@
 			  $('#add').on('click', function() {
 				  layer.open({
 					  type: 2, 
-					  area: ['60%', '60%'],//宽高
+					  area: ['65%', '65%'],//宽高
 					  content: '<%=path%>/page/main/salesman/addSales.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					  cancel: function(index, layero){ 
 						  table.reload('userId', {

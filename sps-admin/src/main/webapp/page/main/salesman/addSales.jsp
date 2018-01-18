@@ -25,7 +25,7 @@
 <h3>用户信息</h3>
 <hr>
 <div class="layui-form layui-form-pane" >
-	<div style="padding-left: 13%">
+	<div >
 	  <div class="layui-form-item" id="passwordDiv">
 	   <label class="layui-form-label">*业务员姓名：</label>
 	    <div class="layui-input-inline">

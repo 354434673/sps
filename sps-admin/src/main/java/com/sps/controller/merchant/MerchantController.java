@@ -1,6 +1,7 @@
 package com.sps.controller.merchant;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import org.sps.entity.merchant.SpsChannelGather;
 import org.sps.entity.merchant.SpsChannelGuarantee;
 import org.sps.entity.merchant.SpsChannelLogistics;
 import org.sps.entity.merchant.SpsChannelOpenAccount;
+import org.sps.entity.merchant.SpsChannelPic;
+import org.sps.service.merchant.read.ChannelPicReadService;
 import org.sps.service.merchant.read.ChannelReadService;
 import org.sps.service.merchant.write.ChannelPicUploadService;
 import org.sps.service.merchant.write.ChannelWriteService;
@@ -44,6 +47,8 @@ public class MerchantController {
 	private ChannelReadService channelReadService;
 	@Reference
 	private ChannelPicUploadService uploadService;
+	@Reference
+	private ChannelPicReadService picReadService;
 	@Resource
 	private UserService userService;
 	@Resource
@@ -245,7 +250,12 @@ public class MerchantController {
 		
 		return openAccount;
 	}
-	
+	@RequestMapping("/getPicList")
+	@ResponseBody
+	public List<SpsChannelPic> getPicList(String channelNum, Integer type){
+		
+		return picReadService.getPicList(channelNum, type);
+	}
 	/**
 	 * 上传图片
 	 * @Title: uploadPic

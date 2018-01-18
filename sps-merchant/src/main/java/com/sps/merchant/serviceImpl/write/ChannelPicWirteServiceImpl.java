@@ -37,6 +37,7 @@ public class ChannelPicWirteServiceImpl implements ChannelPicUploadService{
 				record.setPicType(type);
 				record.setPicOldName(oldName);
 				record.setPicNewName(newName);
+				record.setPicState(state);
 				record.setPicUploadTime(new Date());
 				record.setChannelNum(channelNum);
 				picWrite.insertSelective(record);

@@ -92,6 +92,7 @@
 			json= data
 		}
 	})
+	console.log(json)
 	form.on('submit(submitAddRole)', function(data){
 	 		 var roleName = $('#roleName').val();//角色名称
 	 		 var roleDescribe = $('#roleDescribe').val();//角色描述
