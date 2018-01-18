@@ -35,18 +35,23 @@
 			    <div class="layui-input-inline">
 			      <input id="orderid" type="text" name="orderid"  lay-verify="" placeholder="请输入订单编号" autocomplete="off" class="layui-input">
 			    </div>
-			     <label class="layui-form-label">订单申请日期:</label>
-			    <div class="layui-input-inline">
-			      <input id="startTime" type="text" name="startTime"  lay-verify="" placeholder="起始日期 " autocomplete="off" class="layui-input">
+			 </div>
+			 <div class="layui-form-item">
+			     <div class="layui-inline">
+			     	<label class="layui-form-label">订单申请日期:</label>
+			    	<div class="layui-input-inline">
+			      		<input id="startTime" type="text" name="startTime"  lay-verify="" placeholder="起始日期 " autocomplete="off" class="layui-input">
+			    	</div>
+			     	<div class="layui-input-inline">
+			      		<input id="endTime" type="text" name="endTime"  lay-verify="" placeholder="截止日期 " autocomplete="off" class="layui-input">
+			    	</div>
 			    </div>
-			     <div class="layui-input-inline">
-			      <input id="endTime" type="text" name="endTime"  lay-verify="" placeholder="截止日期 " autocomplete="off" class="layui-input">
-			    </div>
+			 </div>
 			      <div class="layui-form-item">
 				    <label class="layui-form-label">流程状态</label>
 				    <div class="layui-input-block">
-				      <select name="flag" lay-filter="flag">
-				        <option value="0">全部</option>
+				      <select name="flag" lay-filter="flag" id="flag">
+				        <option value="" selected="selected">全部</option>
 				        <option value="1">待确认</option>
 				        <option value="2">已拒绝</option>
 				        <option value="3">订单审核中</option>
@@ -67,7 +72,6 @@
 	        </div>  
         </div>
 		<table id="orderList" lay-filter="orderTables"></table>
-	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
@@ -96,38 +100,37 @@
 			    , type:'datetime'
 			  /*   , format:'yyyy-MM-dd HH:mm:ss' */
 			  });
-				//监听所有的select事件，获取下拉选框对应的值
-			 form.on('select',function(data){
-				  layer.msg(data.value);//获取下拉选框对应的值
-				  /* layer.msg('下拉选框'); */
-			  });
-			  
 			  
 			  table.render({
 			    elem: '#orderList'
-			    ,height: 350
+			    ,height: 500
 			    ,url: '<%=path%>/order/show.json' //数据接口
 			    ,id:'orderOfAll'
 			    ,page:true
 			    ,cols: [[ //表头
-		              {field: 'orderid', title: '订单编号', align:'center'}
+		              {field: 'orderid', title: '订单编号', align:'center',sort:true}
 				      ,{field: 'name', title: '店主名称', align:'center'}
 				      ,{field: 'selfname', title: '店铺名称', align:'center'}
 				      ,{field: 'money', title: '订单金额',align:'center'}
 				      ,{field: 'servicemoney', title: '代销服务费',align:'center'}
 				      ,{field: 'sumMoney',  title: '实销金额',align:'center'}
 				      ,{field: 'createtime', title: '订单申请日期', format:'yyyy-MM-dd HH:mm:ss', width:230, align:'center'}
+				      ,{field: 'flag', title: '订单状态', align:'center'}
 				      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 		    ]]
 			  });
 			  //查询
 			  $('#queryOrders').on('click',function(){
-				  var name = $('#name').val();
+				  var name = $ ('#name').val();
 				  var orderid = $('#orderid').val();
 				  var startTime = $('#startTime').val();
 				  var endTime = $('#endTime').val();
+				  var flag=$('#flag').val();
 				  table.reload('orderOfAll', {
-					  where: {name:name,orderid:orderid,startTime:startTime,endTime:endTime}
+					  page:{
+						  curr:1//重新从第一页开始
+					  },
+					  where: {name:name,orderid:orderid,startTime:startTime,endTime:endTime,flag:flag}
 					});
 			  });
 			  //重置
@@ -136,6 +139,7 @@
 				  $('#orderid').val('');
 				  $('#startTime').val('');
 				  $('#endTime').val(''); 
+				  $('#flag').val('');
 				  form.render(); //更新全部
 			  });
 			  //监听工作条
@@ -143,9 +147,9 @@
 					 var data = obj.data,  //获得当前行数据
 					 layEvent = obj.event; //获得 lay-event 对应的值
 					 if(layEvent=='detail'){//详情
-						 window.location.href="<%=path%>/page/main/order/confimed.jsp";
-					 }else if(layEvent=='print'){
-						 layer.msg('print');
+						 window.location.href="<%=path%>/page/main/order/detail.jsp?orderid="+data.orderid;
+					 }else if(layEvent=='print'){//打印
+						 window.location.href="<%=path%>/page/main/order/print.jsp?orderid="+data.orderid;
 					 } 
 					 console.log(data)
 				});

@@ -17,11 +17,11 @@
 	<!-- 声明注册中心 -->
 	<dubbo:registry address="zookeeper://localhost:2181" />
 	<!-- 声明协议 -->
-	<dubbo:protocol name="dubbo" port="20881" />
+	<dubbo:protocol name="dubbo" port="20883" />
 	<!-- 暴露服务 -->
 	<!-- <dubbo:service interface="com.sps.service.IUserService" ref="testUserService" /> -->
 	    <!-- 使用注解方式暴露接口 -->     
-    <dubbo:annotation package="com.sps.order.service.impl" />
+    <dubbo:annotation package="com.sps.serviceImpl.order" />
 </beans>
  
  
