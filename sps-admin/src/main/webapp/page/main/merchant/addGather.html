@@ -71,7 +71,7 @@
     		 <div class="layui-form-item" align="center" id="btn" style="padding-top: 10px" >
 				<button class="layui-btn layui-btn-primary">取消</button>
 				<button class="layui-btn layui-btn-primary" lay-filter="insertGather" id="insertGather" lay-submit>保存</button>
-				<!-- <button class="layui-btn layui-btn-primary" lay-filter="insertGather" id="test" >aaa</button> -->
+				<button class="layui-btn layui-btn-primary" lay-filter="insertGather" id="test" >aaa</button>
 			</div>
 	</div>
 </div>
@@ -84,7 +84,7 @@
 	  var $ = layui.jquery;
 	  var element = layui.element;
 	  var index = 1;
-/*  	  $('#test').on('click',function(){
+  	  $('#test').on('click',function(){
 			 var gatherBankId = $('#gatherBankId').val()
 			 var gatherOwnerName = $('#gatherOwnerName').val()
 			 var gatherPhone = $('#gatherPhone').val()
@@ -104,7 +104,7 @@
 				 })
 				$('input').val('')
 				console.log(gatherListJson)
-	  })  */
+	  })  
   	  form.on('submit(insertGather)', function(data){
 			 var gatherBankId = $('#gatherBankId').val()
 			 var gatherOwnerName = $('#gatherOwnerName').val()
