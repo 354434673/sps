@@ -10,8 +10,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>订单管理</title>
-<!-- 待发货订单 -->
+<title>退货管理</title>
+<!-- 待确认退货申请 -->
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -32,109 +32,108 @@
 			    <div class="layui-input-inline">
 			      <input id="name" type="text" name="name"  lay-verify="" placeholder="请输入店主名称" autocomplete="off" class="layui-input">
 			    </div>
+			    <label class="layui-form-label">店铺名称:</label>
+			    <div class="layui-input-inline">
+			      <input id="selfname" type="text" name="selfname"  lay-verify="" placeholder="请输入店铺名称" autocomplete="off" class="layui-input">
+			    </div>
 			    <label class="layui-form-label">订单编号:</label>
 			    <div class="layui-input-inline">
 			      <input id="orderid" type="text" name="orderid"  lay-verify="" placeholder="请输入订单编号" autocomplete="off" class="layui-input">
 			    </div>
-			 </div>
-			  <div class="layui-form-item">
+			</div>
+			<div class="layui-form-item">
 			     <div class="layui-inline">
-				     <label class="layui-form-label">订单申请日期:</label>
-				    <div class="layui-input-inline">
-				      <input id="startTime" type="text" name="startTime"  lay-verify="" placeholder="起始日期 " autocomplete="off" class="layui-input">
-				    </div>
-				     <div class="layui-input-inline">
-				      <input id="endTime" type="text" name="endTime"  lay-verify="" placeholder="截止日期 " autocomplete="off" class="layui-input">
-				    </div>
-			    </div>
-			    </div>	
+				     <label class="layui-form-label">退货申请日期:</label>
+					    <div class="layui-input-inline">
+					      <input id="startTime" type="text" name="startTime"  lay-verify="" placeholder="起始日期" autocomplete="off" class="layui-input">
+					    </div>
+					     <div class="layui-input-inline">
+					     <input id="endTime" type="text" name="endTime"  lay-verify="" placeholder="截止日期" autocomplete="off" class="layui-input">
+				    	</div>
+				</div>
+			</div> 
 			    	<button class="layui-btn layui-btn-primary" id="queryOrders">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="resetInput">重置</button>
-        </div>
+	       
 		<table id="orderList" lay-filter="orderTables"></table>
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
+<script type="text/html" id="indexTpl">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
 <script type="text/html" id="bar">
-  <a class="layui-btn layui-btn-mini" lay-event="register" id="register">发货登记</a>
-  <a class="layui-btn layui-btn-mini" lay-event="detail"  id="detail">详情</a>
-  <a class="layui-btn layui-btn-mini" lay-event="print" id="print">打印</a>
+  <a class="layui-btn layui-btn-mini" lay-event="confirm" id="confirm">去确认</a>
 </script>
 	<script>
-		layui.use(['table','laypage','layer','laydate'], function(){
+		layui.use(['laydate','table','laypage','layer'], function(){
 			  var table = layui.table;
 			  var laypage = layui.laypage;
 			  var layer = layui.layer;
 			  var laydate = layui.laydate;
 			  var $ = layui.jquery;
 			  
-			  //执行一个laydate实例
-			  laydate.render({
-			    elem: '#startTime' //指定元素
-			    , type:'datetime'
-			   /*  , format:'yyyy-MM-dd HH:mm:ss' */
-			  });
-			
-			  //执行一个laydate实例
-			  laydate.render({
-			    elem: '#endTime' //指定元素
-			    , type:'datetime'
-			   /*  ,format:'yyyy-MM-dd HH:mm:ss' */
-			  });
+				//执行一个laydate实例
+				  laydate.render({
+				    elem: '#startTime', //指定元素
+				    type:'datetime'
+				  });
+				
+				  //执行一个laydate实例
+				  laydate.render({
+				    elem: '#endTime', //指定元素
+				    type:'datetime'
+				  }); 
 			  
 			  table.render({
 			    elem: '#orderList'
 			    ,height: 500
 			    ,url: '<%=path%>/order/show.json' //数据接口
-			    ,where:{flag:6}
-			    ,id:'orderToBeDelivery'
+			    ,where:{flag:1} 
+			    ,id:'orderToBeRejected'
 			    ,page:true
 			    ,cols: [[ //表头
-		              {field: 'orderid', title: '订单编号', align:'center',sort:true}
-				      ,{field: 'name', title: '店主名称', align:'center'}
-				      ,{field: 'selfname', title: '店铺名称', align:'center'}
-				      ,{field: 'money', title: '订单金额',align:'center'}
-				      ,{field: 'servicemoney', title: '代销服务费',align:'center'}
-				      ,{field: 'sumMoney',  title: '实销金额',align:'center'}
-				      ,{field: 'createtime', title: '订单申请日期', format:'yyyy-MM-dd HH:mm:ss', width:230, align:'center'}
-				      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
+			       {title: '序号', align:'center',templet:'#indexTpl'} 
+	 			  ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
+			      ,{field: 'name', title: '店主名称', align:'center'}
+			      ,{field: 'selfname', title: '店铺名称', align:'center'}
+			      ,{field: 'money', title: '退款金额',align:'center'}
+			      ,{field: 'createtime', title: '退货申请日期', type:'datetime', width:230, align:'center'}
+			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
+			  
 			  //查询
 			  $('#queryOrders').on('click',function(){
 				  var name = $('#name').val();
+				  var selfname = $('#selfname').val();
 				  var orderid = $('#orderid').val();
 				  var startTime = $('#startTime').val();
 				  var endTime = $('#endTime').val();
-				  var flag=6;
-				  table.reload('orderToBeDelivery', {
+				  //var flag=1;//待确认订单1，已拒绝2，订单审核中3，订单审核不通过4，待签约5，待发货6......默认如果不输入的话查询全部
+				  //待确认的退货申请，flag未确定
+				  table.reload('orderToBeRejected', {
 					  page:{
 						  curr:1//重新从第一页开始
 					  },
-					  where: {name:name,orderid:orderid,startTime:startTime,endTime:endTime,flag:flag}
+					  where: {name:name,selfname:selfname,orderid:orderid,startTime:startTime,endTime:endTime/* ,flag:flag */}
 					});
 			  })
 			  //重置
 			  $('#resetInput').on('click',function(){
 				  $('#name').val('');
+				  $('#selfname').val('');
 				  $('#orderid').val('');
 				  $('#startTime').val('');
 				  $('#endTime').val('');
-			  })
+			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){
 					 var data = obj.data,  //获得当前行数据
 					 layEvent = obj.event; //获得 lay-event 对应的值
-					 if(layEvent=='register'){//发货登记
-						 window.location.href="<%=path%>/page/main/order/register.jsp?orderid="+data.orderid;
-					 }else if(layEvent=='detail'){//详情
-						 /* layer.alert('详情：<br>'+ JSON.stringify(data)); */
-						 window.location.href="<%=path%>/page/main/order/detail.jsp?orderid="+data.orderid;
-					 }else if(layEvent=='print'){
-						 /* layer.msg('print'); */
-						 window.location.href="<%=path%>/page/main/order/print.jsp?orderid="+data.orderid;
-					 } 
-					 //console.log(data)
+					 if(layEvent=='confirm'){//确认
+						   window.location.href="<%=path%>/page/main/rejected/toCondirmRejected.jsp?orderid="+data.orderid; 
+					 }
 				});
 			});
 	</script>

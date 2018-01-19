@@ -25,8 +25,9 @@
   <div class="layui-tab-content">
     <div class="layui-tab-item layui-show" id="123">
 	<div class="layui-form" style="margin-left: 100px;margin-right: 100px">
-		<h3>属性信息</h3>
-		<hr>
+	    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+			<legend>属性信息</legend>
+		</fieldset>
 		  <!-- 属性信息开始 -->
 		  <div class="layui-form-item " >
 		    <label class="layui-form-label" style="width:152px">*所在城市：</label>
@@ -64,8 +65,9 @@
 		    	<div class="layui-form-mid layui-word-aux" id="channelFreezeTime"> </div>
 		    </div>
 		  </div>
-		<h3>基本信息</h3>
-		<hr>
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+			<legend>基本信息</legend>
+		</fieldset>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:152px">*营业执照编号：</label>
 		    <div class="layui-input-inline">
@@ -103,37 +105,44 @@
 		    </div>
 		  </div>
 		<!-- 属性信息结束 -->
-		<h3>业务信息</h3>
-		<hr>
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+		<legend>业务信息</legend>
+		</fieldset>
 		<!-- 业务信息开始 -->
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:152px">主营业务：</label>
-		    <div class="layui-input-inline" style="width:600px" id="businessProduct">
+		    <div class="layui-input-inline" style="width:600px" >
+		    	<span class="layui-form-mid layui-breadcrumb" lay-separator="|" id="businessProduct">
+				</span>
 		    </div>
 		  </div>
-		  <div class="layui-form-item"><!-- 树 -->
+		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:152px">主营商品类型：</label>
-		    <div class="layui-input-inline" style="width:600px" id="businessType">
-		      <input type="checkbox" title="三级分类名称1" value="1" lay-filter = "businessType" >
-		      <input type="checkbox" title="三级分类名称2" value="2" lay-filter = "businessType">
+		    <div class="layui-input-inline" style="width:600px" >
+		    	<span class="layui-form-mid layui-breadcrumb"  id="businessProduct">
+				  <a href="javascript:;">首页</a>
+				  <a href="">国际新闻</a>
+				  <a href="">亚太地区</a>
+				</span>
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:152px">主营品牌：</label>
-		    <div class="layui-input-inline" style="width:600px" id="businessBrand">
-		      <input type="checkbox"  title="品牌名称1" value="1" lay-filter = "businessBrand">
-		      <input type="checkbox"  title="品牌名称2" value="2" lay-filter = "businessBrand">
+		    <div class="layui-input-inline" style="width:600px" >
+		    	<span class="layui-form-mid layui-breadcrumb" lay-separator="|" id="businessBrand">
+				</span>
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:152px	">业务覆盖地域范围：</label>
 		    <div class="layui-input-inline">
-		    	<div class="layui-form-mid layui-word-aux" id=""> 123</div>
+		    	<div class="layui-form-mid layui-word-aux" id="businessScope"></div>
 		    </div>
 		  </div>
 		<!-- 业务信息结束 -->
-		<h3>担保信息</h3>
-		<hr>
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+		<legend>担保信息</legend>
+		</fieldset>
 		<!-- 担保信息开始 -->
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:152px">*担保形式：</label>
@@ -176,13 +185,15 @@
 		    </div>
 		  </div>
 		<!-- 担保信息结束 -->
-		<h3>收款信息</h3>
-		<hr>
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+		<legend>收款信息</legend>
+		</fieldset>
 		<!-- 收款信息开始 -->
 		<table id="gatherList" lay-filter="gatherTables"></table>
 		<!-- 收款信息结束 -->
-		<h3>财务指标</h3>
-		<hr>
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+		<legend>财务指标</legend>
+		</fieldset>
 		<!-- 财务指标开始 -->
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:152px">*上年销售额(万元)：</label>
@@ -191,8 +202,9 @@
 		    </div>
 		  </div>
 		<!-- 财务指标结束 -->
-		<h3>物流配送</h3>
-		<hr>
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+		<legend>物流配送</legend>
+		</fieldset>
 		<!-- 物流配送开始 -->
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:152px	">发货方式：</label>
@@ -215,8 +227,9 @@
 		    </div>
 		   </div>
 		<!-- 物流配送结束 -->
-		<h3>开户信息</h3>
-		<hr>
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+		<legend>开户信息</legend>
+		</fieldset>
 		<!-- 开户信息开始 -->
  		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:152px">*管理员账号：</label>
@@ -511,19 +524,65 @@
 			  //$('#openSellRate').html(result.openSellRate)//代销手续费率
 		  }
 	  })
-	  $.post({//获取主营业务
-		  url:'/sps-admin/category/getFistCategory',
-		  dataType:'json',
-		  data:{ids:'51,79'},
-		  success:function(data){
-			  var list = "";
-			  $.each(data.categoryList,function(i,item){
-				  list +='<input type="checkbox" name="businessProduct" lay-filter="businessProduct" title="'+item[0].categoryName+'" value ="'+item[0].categoryId+'">';
-				  $('#businessProduct').html(list)
-			  })
-			  form.render('checkbox');
+		  $.post({//获得业务信息
+				  url:'/sps-admin/merchant/getBusiness'
+				  ,dataType:'json'
+				  ,data:{channelNum:channelNum}
+				  ,success:function(result){
+					  console.log(result)
+					  $('#businessScope').html(result.businessScope)
+					  getProduct(result.businessProduct);
+					  getType(result.businessType);
+					  getBrand(result.businessBrand);
+				  }
+		  }) 
+	  function getProduct(ids){
+		  $.post({//获取主营业务
+			  url:'/sps-admin/category/getFistCategory',
+			  dataType:'json',
+			  data:{ids:ids},
+			  success:function(data){
+ 				  var list = "";
+				  $.each(data.categoryList,function(i,item){
+					  list += '<a href="javascript:;">'+item[0].categoryName+'</a>'
+ 					  $('#businessProduct').html(list) 
+				  }) 
+				  element.render('breadcrumb');
+			  }
+		  }) 
 		  }
-	  }) 
+ 	function getType(ids){
+	 	  $.post({//主营商品类型
+			  url:'/sps-admin/category/getChildrenCategorys',
+			  dataType:'json',
+			  data:{ids:ids},
+			  success:function(data){
+				  console.log(eval(data))
+ 				  var list = "";
+/* 				  $.each(eval(data),function(i,item){
+					  list += '<a href="javascript:;">'+item[0].categoryName+'</a>'
+					  $('#businessProduct').html(list)
+				  })  */
+				  element.render('breadcrumb');
+			  }
+		  }) 
+	} 
+	function getBrand(categoryIds){
+	 	  $.post({//获取主营业务
+			  url:'/sps-admin/brand/getBrandList',
+			  dataType:'json',
+			  data:{categoryIds:categoryIds},
+			  success:function(data){
+ 				  console.log(data)
+		 			  var list = "";
+ 				  $.each(data.data,function(i,item){
+					  list += '<a href="javascript:;">'+item.brandName+'</a>'
+					  $('#businessBrand').html(list)
+				  }) 
+				  element.render('breadcrumb');
+			  }
+		  }) 
+	}
 	  console.log(channelNum)
 	  $.post({//获得图片
 		  url:'/sps-admin/merchant/getPicList'

@@ -250,6 +250,14 @@ public class MerchantController {
 		
 		return openAccount;
 	}
+	@RequestMapping(value="/getBusiness")
+	@ResponseBody
+	public SpsChannelBusiness getBusiness(String channelNum){
+		
+		SpsChannelBusiness business = channelReadService.getBusiness(channelNum);
+		
+		return business;
+	}
 	@RequestMapping("/getPicList")
 	@ResponseBody
 	public List<SpsChannelPic> getPicList(String channelNum, Integer type){

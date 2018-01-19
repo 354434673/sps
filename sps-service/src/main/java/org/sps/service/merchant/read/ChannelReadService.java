@@ -123,4 +123,16 @@ public interface ChannelReadService {
 	 * @throws
 	 */
 	SpsChannelOpenAccount getOpenAccount(String channelNum);
+	/**
+	 * 查询该商户的业务信息
+	 * @Title: getBusiness   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月18日 下午7:57:29
+	 * @return: SpsChannelBusiness      
+	 * @throws
+	 */
+	SpsChannelBusiness getBusiness(String channelNum);
 }

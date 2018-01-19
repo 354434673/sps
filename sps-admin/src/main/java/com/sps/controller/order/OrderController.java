@@ -15,9 +15,12 @@ import com.alibaba.dubbo.config.annotation.Reference;
 @Controller
 @RequestMapping("/order")
 public class OrderController {
+
 	Logger logger=Logger.getLogger(this.getClass().getName());
+	
 	@Reference
 	OrderService orderService;
+	
 	
 	@RequestMapping("/showOrder.json")
 	@ResponseBody
@@ -82,8 +85,6 @@ public class OrderController {
 		return result;
 	}*/
 	
-	
-
 	/*@RequestMapping(value="/updatePriceBeath",method=RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> updatePriceBeath(List<OrderGoods> orderGoods){
@@ -109,7 +110,12 @@ public class OrderController {
 		orderService.updatePriceBatch(orderGoods);
 		return  "/order/confimed";
 	}
-	/**
+	/*@RequestMapping(value="/updatePriceBeath",method=RequestMethod.POST)
+	public String updatePriceBeath(OrderGoods[] orderGoods){
+		orderService.updatePriceBatch(Arrays.asList(orderGoods));
+		return  "/order/confimed";
+	}*/
+	/**	
 	 * 修改待确认订单状态，修改好后返回到待确认订单页面
 	 * @param orderid 订单id
 	 * @return
@@ -130,11 +136,4 @@ public class OrderController {
 		orderService.updateOrderFlag(orderid, flag,null);
 		return "/order/orderToBeDelivery";
 	}
-	
-	/*@RequestMapping("/selectExpressById")
-	@ResponseBody
-	public HashMap<String,Object> selectExpressById(Integer id){
-		return orderService.selectByExpressPrimaryKey(id);
-	}*/
-	 
 }

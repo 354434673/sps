@@ -26,6 +26,8 @@
 	        </div>  
         </div>
 		<table id="expressList" lay-filter="expressTables" class="layui-fluid"></table>
+	 <button class="layui-btn layui-btn-primary" id="queryName">查询</button>
+		
 	</div>
 <script type="text/javascript"
 		src="/sps-admin//page/static/plugins/layui/layui.all.js"></script>
@@ -34,6 +36,7 @@
 </script>
 	<script>
 	var expressIds = [];
+	//var data = $(layero).find("iframe")[0].contentWindow.expressIds;父窗口获取参数
 	layui.use(['table','layer','form'], function(){
 			  var table = layui.table;
 			  var layer = layui.layer

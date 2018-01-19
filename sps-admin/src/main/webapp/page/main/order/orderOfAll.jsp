@@ -11,12 +11,13 @@
 <head>
 <meta charset="UTF-8">
 <title>订单管理</title>
+<!-- 全部订单 -->
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
-	href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all" />
+	href="<%=path%>/page/layui/css/layui.css" media="all" />
 <style type="text/css">
 	tr th{
 		text-align: center;
@@ -73,7 +74,7 @@
         </div>
 		<table id="orderList" lay-filter="orderTables"></table>
 <script type="text/javascript"
-		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
+		src="<%=path%>/page/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="detail"  id="detail">详情</a>
   <a class="layui-btn layui-btn-mini" lay-event="print" id="print">打印</a>

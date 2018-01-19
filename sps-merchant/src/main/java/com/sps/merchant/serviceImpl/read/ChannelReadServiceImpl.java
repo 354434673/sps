@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.merchant.SpsChannel;
+import org.sps.entity.merchant.SpsChannelBusiness;
+import org.sps.entity.merchant.SpsChannelBusinessExample;
 import org.sps.entity.merchant.SpsChannelEnterprise;
 import org.sps.entity.merchant.SpsChannelEnterpriseExample;
 import org.sps.entity.merchant.SpsChannelFinanceTarget;
@@ -25,6 +27,7 @@ import org.sps.service.merchant.read.ChannelReadService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sps.dao.merchant.read.SpsChannelBusinessReadMapper;
 import com.sps.dao.merchant.read.SpsChannelEnterpriseReadMapper;
 import com.sps.dao.merchant.read.SpsChannelFinanceTargetReadMapper;
 import com.sps.dao.merchant.read.SpsChannelGatherReadMapper;
@@ -48,6 +51,8 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 	private SpsChannelFinanceTargetReadMapper financeTargetRead;
 	@Resource
 	private SpsChannelOpenAccountReadMapper openAccountRead;
+	@Resource
+	private SpsChannelBusinessReadMapper businessRead;
 	@Override
 	public HashMap<String, Object> getChannelList(String channelNum, Integer channelState, 
 			Integer channelFlowState, Integer page, Integer limit) {
@@ -181,5 +186,16 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 		
 		return selectByExample.size() == 0 ? null : selectByExample.get(0);
 
+	}
+	@Override
+	public SpsChannelBusiness getBusiness(String channelNum) {
+		
+		SpsChannelBusinessExample example = new SpsChannelBusinessExample();
+		
+		example.createCriteria().andChannelNumEqualTo(channelNum);
+		
+		List<SpsChannelBusiness> selectByExample = businessRead.selectByExample(example);
+		
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
 	}
 }
