@@ -26,20 +26,44 @@
 </head>
 <body>
 	<div style="margin: 15px;">
-		<table id="orderBasic" lay-filter="orderBasic">
-		</table>
-		<table id="orderGoodsDetail" lay-filter="orderGoodsDetail">
-		</table>
-		<div>
-			总订货量：<input id="totalAmount" readonly="readonly" text="text">
-			订单金额：<input id="totalSummation" readonly="readonly" text="text">
-		</div>
+			 <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">订单编号：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="orderid"> </div>
+		    </div>
+		 </div>
+		 <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">收货人：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="name"> </div>
+		    </div>
+		    <label class="layui-form-label" style="width:152px">联系电话：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="phone"> </div>
+		    </div>
+		 </div>
+		 <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">收货地址：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="address"> </div>
+		    </div>
+		 </div>
+		 <div style="margin-left: 100px;margin-right: 100px">
+			<table id="orderGoodsDetail" lay-filter="orderGoodsDetail">
+			</table>
+			<div style="padding-top: 10px">
+				总订货量：<span id="amountTotle"></span> 件
+				 / 
+				 订单金额：<span id="priceTotle"></span> ￥
+			</div>
+		 </div>
 	</div>
+		<div align="center" style="padding-top: 10px">
+			<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-normal" >返回</button>
+			<button id="agree" class="layui-btn layui-btn-warm" >导出PDF</button>
+		</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
-		<script type="text/html" id="indexTpl">
-    {{d.LAY_TABLE_INDEX+1}}
-</script>
 	<script>
 		layui.use(['laydate','table','laypage','layer'], function(){
 			  var table = layui.table;
@@ -47,38 +71,37 @@
 			  var layer = layui.layer;
 			  var $ = layui.jquery;
 			  
-				table.render({
-				    elem: '#orderBasic'
-				    ,height: 230
-				    ,url: '<%=path%>/order/showOrder.json' //数据接口
-				    ,where:{orderid:<%=request.getParameter("orderid")%>} 
-			        ,id:'orderBasic' 
-			        /* ,page:true */
-				    ,cols: 
- 					 [[ //表头
- 				      {field: 'orderid', title: '订单编号',align:'center'},
- 				      {field: 'money', title: '订单金额',align:'center'},
- 				      {field: 'servicescale', title: '代销服务费率',align:'center'},
- 				      {field: 'servicemoney', title: '代销服务费',align:'center'},
- 				      {field: 'sumMoney', title: '实销金额',align:'center'},
- 				      {field: 'unit', title: '单位',align:'center'},
- 				      {field: 'createtime', title: '订单申请日期', align:'center'},
- 				      {field: 'name', title: '店主名称' ,align:'center'},
- 				      {field: 'phone', title: '联系电话',align:'center'},
- 				      {field: 'selfname', title: '店铺名称', align:'center'},
- 				      {field: 'address', title: '收货信息',align:'center'}
- 				      ]]    
-				  });
+			  $.post({//获得信息
+				  url:'<%=path%>/order/showOrder.json'
+				  ,dataType:'json'
+				  ,data:{orderid:<%=request.getParameter("orderid")%>}
+				  ,success:function(result){
+					  $('#orderid').html(result.data[0].orderid)//订单编号
+					  $('#name').html(result.data[0].name)//店主名称
+					  $('#phone').html(result.data[0].phone)//联系电话
+					  $('#address').html(result.data[0].address)//收货信息
+				  }
+			  })
+			  $.post({//获得信息
+				  url:'<%=path%>/order/showOrderGoods.json'
+				  ,dataType:'json'
+				  ,data:{orderid:<%=request.getParameter("orderid")%>}
+				  ,success:function(result){
+					  $('#amountTotle').html(result.amountTotle)
+					  $('#priceTotle').html(result.priceTotle)
+				  }
+			  })
 			  
 			  table.render({
 				    elem: '#orderGoodsDetail'
-				    ,height: 500
 				    ,url: '<%=path%>/order/showOrderGoods.json'//数据接口
 				    ,where:{orderid:<%=request.getParameter("orderid")%>} 
 				    ,id:'orderGoods'
 				    ,page:true
+				    ,skin:'row'
+				    ,even:true
 				    ,cols: [[ //表头
-				       {title: '序号', align:'center',templet:'#indexTpl'} 
+				       {title: '序号', type:'numbers',align:'center'} 
 				      ,{field: 'sku', title: 'SKU编号', align:'center',sort:true}
 				      ,{field: 'skuname', title: '商品名称', align:'center'}
 				      ,{field: 'color', title: '规格', align:'center'}
@@ -86,10 +109,14 @@
 				      ,{field: 'amount', title: '订货量',align:'center'}
 				      ,{field: 'summation', title: '金额',align:'center',sort:true}
 				    ]]
+				    ,response: {
+				    	  statusName: 'code' //数据状态的字段名称，默认：code
+				    	  ,msgName: 'msg' //状态信息的字段名称，默认：msg
+				    	  ,countName: 'count' //数据总数的字段名称，默认：count
+				    	  ,dataName: 'data' //数据列表的字段名称，默认：data
+				    	}  
 				  });
-			  
 			  //计算总订货量与总金额
-			 //$("#totalAmount").val(10);
 		 	 	var totalAmount=0;
 				$("#orderGoodsDetail tr").each(function(){
 		 	 	alert(0);
@@ -99,14 +126,6 @@
 						$("#totalAmount").val(totalAmount);
 					});
 				});  
-			  
-			//需要引入jquery.PrintArea.js才可以使用
-			/*  $(function(){
-				 $("").click(){
-					$().printArea(); 
-				 }
-			 }); */
-				
 			});
 	  
 	</script>

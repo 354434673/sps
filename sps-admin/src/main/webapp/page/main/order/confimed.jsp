@@ -91,34 +91,30 @@
 		    	<div class="layui-form-mid layui-word-aux" id=""> </div>
 		    </div>
 		 </div>
-		</table>
       	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>商品列表</legend>
 		</fieldset>
-		<div>
-			<button id="updatePrice" class="layui-btn layui-btn-normal" >修改</button>
+		<div style="padding: 5px 15px">
+			<div>
+				<button id="updatePrice" class="layui-btn layui-btn-normal" >修改</button>
+			</div>
+			<table id="orderGoodsDetail" lay-filter="orderGoodsDetail">
+			</table>
 		</div>
-		<table id="orderGoodsDetail" lay-filter="orderGoodsDetail">
-		</table>
 		<div class="layui-form-item layui-form-text">
-			<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+			<fieldset class="layui-elem-field layui-field-title" >
 			<legend>说明</legend>
 			  </fieldset>
-	   		 <div class="layui-input-block">
 	     	 	<textarea placeholder="请输入内容" class="layui-textarea"></textarea>
-	   		 </div>
   		</div>
-		<div>
-			<button id="back" class="layui-btn layui-btn-normal" >返回</button>
+		<div align="center">
+			<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-normal" >返回</button>
 			<button id="refuse" class="layui-btn layui-btn-danger" >拒绝</button>
 			<button id="agree" class="layui-btn layui-btn-warm" >同意</button>
 		</div>
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
-<script type="text/html" id="indexTpl">
-    {{d.LAY_TABLE_INDEX+1}}
-</script>
 	<script>
 		layui.use(['laydate','table','laypage','layer'], function(){
 			  var table = layui.table;
@@ -126,12 +122,11 @@
 			  var layer = layui.layer;
 			  var $ = layui.jquery;
 			  
-			  $.post({//获得担保信息
+			  $.post({//获得信息
 				  url:'<%=path%>/order/showOrder.json'
 				  ,dataType:'json'
 				  ,data:{orderid:<%=request.getParameter("orderid")%>}
 				  ,success:function(result){
-					  console.log(result.data[0])
 					  $('#orderid').html(result.data[0].orderid)//订单编号
 					  $('#money').html(result.data[0].money)//订单金额
 					  $('#servicescale').html(result.data[0].servicescale)//代销服务费率
@@ -147,13 +142,12 @@
 			  })
 			  table.render({
 				    elem: '#orderGoodsDetail'
-				    ,height: 500
 				    ,url: '<%=path%>/order/showOrderGoods.json'//数据接口
 				    ,where:{orderid:<%=request.getParameter("orderid")%>} 
 				    ,id:'orderGoods'
 				    ,page:true
 				    ,cols: [[ //表头
-				      {title: '序号', align:'center',templet:'#indexTpl'} 
+				      {title: '序号', type:'numbers',align:'center'} 
 				      ,{field: 'sku', title: 'SKU编号', align:'center',sort:true}
 				      ,{field: 'skuname', title: '商品名称', align:'center'}
 				      ,{field: 'color', title: '规格', align:'center'}
@@ -171,20 +165,28 @@
 					  area:  ['700px', '460px']/* iframe自适应，但是并不好用，示例： parent.layer.iframeAuto(parent.layer.getFrameIndex(window.name))*/,
 					  fixed: false, //不固定
 					  maxmin: true,
-					  content: '<%=path%>/page/main/order/orderGoods.jsp?orderid='+<%=request.getParameter("orderid")%>
+					  content: '<%=path%>/page/main/order/orderGoods.jsp?orderid='+<%=request.getParameter("orderid")%>,
+				  	  cancel: function(index, layero){ 
+						  table.reload('orderGoods', {
+							    cols: [[ //表头
+									      {title: '序号', type:'numbers',align:'center'} 
+									      ,{field: 'sku', title: 'SKU编号', align:'center',sort:true}
+									      ,{field: 'skuname', title: '商品名称', align:'center'}
+									      ,{field: 'color', title: '规格', align:'center'}
+									      ,{field: 'prePrice', title: '修改前单价', width:130,align:'center'}
+									      ,{field: 'price', title: '单价',align:'center'}
+									      ,{field: 'preAmount', title: '修改前订货量', width:140,align:'center'}
+									      ,{field: 'amount', title: '订货量',align:'center'}
+									      ,{field: 'summation', title: '金额',align:'center',sort:true}
+									    ]]
+							}); 
+						}    
 				  }) 
 			  });
-			  
-			  //点击返回按钮，则返回到待确认订单主页面
-			  $(document).on("click","#back",function(){
-				  window.location.href='<%=path%>/page/main/order/orderToBeConfimed.jsp';
-			  });
-			  
 			  $(document).on("click","#refuse",function(){
 				  //这里需要提交到后台处理，修改订单状态码为已拒绝，并将信息发送到风控
 				  window.location.href='<%=path%>/order/updateConfirmOrderFlag?flag=2&orderid='+<%=request.getParameter("orderid")%>;
 			  });
-			  
 			  $(document).on("click","#agree",function(){
 				  //这里需要提交到后台处理，修改订单状态码为订单审核中，并将信息发送到风控
 				  //暂时这里不提交风控，只是修改状态，之后再进行提交风控

@@ -78,7 +78,7 @@
 </update> -->
 
 <!-- 批量修改商品的价格和订货数量，并重新计算总金额 -->
-<update id="updatePriceBatch" parameterType="org.sps.entity.order.OrderGoodsVo">
+<update id="updatePriceBatch" parameterType="org.sps.entity.order.OrderGoods" >
  <foreach collection="list" separator=";" item="item">  
         update 
         	sps_order_goods 
@@ -89,10 +89,10 @@
 	         <if test="item.amount !=null ">
 	        	,amount = #{item.amount}
 	        </if>
-	         <if test="item.pre_price !=null ">
+	         <if test="item.prePrice !=null ">
 	        	,pre_price = #{item.prePrice}
 	        </if>
-	         <if test="item.pre_amount !=null ">
+	         <if test="item.preAmount !=null ">
 	        	,pre_amount = #{item.preAmount}
 	        </if>
 	         <if test="item.summation !=null ">

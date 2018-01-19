@@ -90,6 +90,7 @@
 			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
+			  console.log(table.cache)
 			  //查询
 			  $('#queryUser').on('click',function(){
 				  var username = $('#queryUsername').val()

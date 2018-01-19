@@ -1,13 +1,16 @@
 package com.sps.controller.order;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.sps.entity.order.OrderGoodsVo;
+import org.sps.entity.order.OrderGoods;
 import org.sps.service.order.OrderService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -104,11 +107,13 @@ public class OrderController {
 	 * 修改订单的价格以及订货量，修改后页面刷新返回到修改后的详情页面
 	 * @param orderGoods
 	 * @return
-	 */
+	 */ 
 	@RequestMapping(value="/updatePriceBeath",method=RequestMethod.POST)
-	public String updatePriceBeath(OrderGoodsVo orderGoods){
-		orderService.updatePriceBatch(orderGoods);
-		return  "/order/confimed";
+	@ResponseBody
+	public HashMap<String, Object> updatePriceBeath(@RequestBody List<OrderGoods> orderGoods){
+		HashMap<String, Object> updatePriceBatch = orderService.updatePriceBatch(orderGoods);
+		
+		return  updatePriceBatch;
 	}
 	/*@RequestMapping(value="/updatePriceBeath",method=RequestMethod.POST)
 	public String updatePriceBeath(OrderGoods[] orderGoods){

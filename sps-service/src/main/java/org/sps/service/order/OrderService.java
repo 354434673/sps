@@ -1,7 +1,9 @@
 package org.sps.service.order;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.sps.entity.order.OrderGoods;
 import org.sps.entity.order.OrderGoodsVo;
 
 public interface OrderService {
@@ -61,7 +63,7 @@ public interface OrderService {
 /*	int updatePrice(OrderGoods orderGoods);*/
 	//批量修改
 	/*HashMap<String, Object> updatePriceBatch(List<OrderGoods> orderGoodses);*/
-	HashMap<String, Object> updatePriceBatch(OrderGoodsVo orderGoodses);
+	HashMap<String, Object> updatePriceBatch(List<OrderGoods> orderGoods);
 	//只查询订单详情，不包含订单中的商品
 	HashMap<String, Object> selectOrderByOrderId(String orderid);
 	

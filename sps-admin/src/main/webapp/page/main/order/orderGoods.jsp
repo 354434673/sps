@@ -38,17 +38,13 @@
 		<!-- <form> -->
 				<table id="orderGoodsDetailUpdate" lay-filter="orderGoodsDetailUpdate">
 				</table>
-				<div class="layui-input-block">
+				<div align="center">
 			    	<button class="layui-btn layui-btn-primary" id="submit">提交</button>
 			    	<button class="layui-btn layui-btn-primary" id="closeWindow">取消</button>
-		 <!--    	</div>
-		    	</form> -->
+		    	</div>
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
-<script type="text/html" id="indexTpl">
-    {{d.LAY_TABLE_INDEX+1}}
-</script>
 	<script>
 		layui.use(['laydate','table','laypage','layer','form'], function(){
 			  var table = layui.table;
@@ -59,21 +55,20 @@
 			  
 			  table.render({
 				    elem: '#orderGoodsDetailUpdate'
-				    ,height: 500
 				    ,url: '<%=path%>/order/showOrderGoods.json'//数据接口
 				    ,where:{orderid:<%=request.getParameter("orderid")%>}
 				    ,id:'orderGoodsUpdate'
 				    ,page:true
 				    ,cols: [[ //表头
-				      {title: '序号', align:'center',templet:'#indexTpl'} 
-				      ,{field: 'sku', title: 'SKU编号', edit: 'text',align:'center',sort:true}
-				      ,{field: 'skuname', title: '商品名称', align:'center'}
-				      ,{field: 'color', title: '规格', align:'center'}
-				      ,{field: 'prePrice', title: '修改前单价',align:'center'}
-				      ,{field: 'price', title: '单价',align:'center',edit: 'text',event: 'setPrice', style:'cursor: pointer;'}
-				      ,{field: 'preAmount', title: '修改前订货量',align:'center'}
-				      ,{field: 'amount', title: '订货量',align:'center',edit: 'text',event: 'setAmount',style:'cursor: pointer;'}
-				      ,{field: 'summation', title: '金额',align:'center',sort:true}
+				      {title: '序号', align:'center',type:'nubmers'} 
+				      ,{field: 'sku', title: 'SKU编号', width:100,edit: 'text',align:'center',sort:true}
+				      ,{field: 'skuname', title: '商品名称',  width:90,align:'center'}
+				      ,{field: 'color', title: '规格', width:90, align:'center'}
+				      ,{field: 'prePrice', title: '修改前单价', width:130,align:'center'}
+				      ,{field: 'price', title: '单价', width:90,align:'center',edit: 'text',event: 'setPrice', style:'cursor: pointer;'}
+				      ,{field: 'preAmount', title: '修改前订货量', width:140,align:'center'}
+				      ,{field: 'amount', title: '订货量', width:90,align:'center',edit: 'text',event: 'setAmount',style:'cursor: pointer;'}
+				      ,{field: 'summation', title: '金额', width:90,align:'center',sort:true}
 				    ]]
 				  });
 			  
@@ -154,42 +149,29 @@
 		  	 
 			  
 			  $("#submit").click(function(){
-				  
-			 
 				  //获取table的值
-				  console.log(JSON.stringify(table.cache));
-				  
+				  //console.log(table.cache.orderGoodsUpdate);
 				 /* var tableSer=$("#orderGoodsDetailUpdate").serializeArray(); */
-				 var orderGoods=JSON.stringify(table.cache);
+				 //var orderGoods=JSON.stringify(table.cache.orderGoodsUpdate);
+ 				var orderGoods = table.cache.orderGoodsUpdate;
 				 $.ajax({
 					  type:'POST',
 					  url:"<%=path%>/order/updatePriceBeath",
-					  data: {orderGoodsVo:JSON.stringify(orderGoods)},
-					  traditional:true,
 					  dataType:"json",
 					  contentType: 'application/json;charset=utf-8',
+					  data: JSON.stringify(orderGoods),
 					  success:function(data){
-						  layer.msg(data); 
+						  if(data.state == 'success'){
+							  layer.msg(data.msg,{icon: 1});
+						  }else{
+							  layer.msg('修改失败',{icon: 2});
+						  }
 					  },
 					  error:function(request){
-						  /* layer.msg(data); */
+						  layer.msg('系统异常',{icon: 2});
 					  }	
 				  });
 			  }); 
-			  
-			 <%--  $.ajax({
-                  type: "POST",
-                  data: $("form").serialize(), 
-                  dataType: "json",
-                  url:"<%=path%>/order/updatePriceBeath",
-                  success: function(msg){
-    
-                  }
-               }); --%>
-			  
-		  	 /*  }); */
-		  		
-		  		
 			});
 	</script>
 	

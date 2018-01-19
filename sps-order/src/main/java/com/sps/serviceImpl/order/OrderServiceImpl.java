@@ -118,9 +118,15 @@ public class OrderServiceImpl implements OrderService {
 		}
 		// 分页
 		PageHelper.startPage(page, limit);
-
+		
+		long amountTotl = 0;
+		BigDecimal priceTotle = new BigDecimal(0);
+		
 		List<OrderGoods> orderGoods = this.getOrderGoods(orderid,sku);
-
+		for (OrderGoods goods : orderGoods) {
+			amountTotl += goods.getAmount();
+			priceTotle = priceTotle.add(goods.getPrice());
+		}
 		// 转为pageinfo
 		PageInfo pageInfo = new PageInfo(orderGoods);
 
@@ -128,6 +134,8 @@ public class OrderServiceImpl implements OrderService {
 		hashMap.put("code", 0);
 		hashMap.put("msg", "获取成功");
 		hashMap.put("count", pageInfo.getTotal());
+		hashMap.put("amountTotle", amountTotl);
+		hashMap.put("priceTotle", priceTotle);
 		hashMap.put("data", orderGoods.size() > 0 ? orderGoods : null);
 
 		return hashMap;
@@ -289,11 +297,11 @@ public class OrderServiceImpl implements OrderService {
 	
 	
 @SuppressWarnings("unchecked")
-public HashMap<String, Object> updatePriceBatch(OrderGoodsVo orderGoodses) {
+public HashMap<String, Object> updatePriceBatch(List<OrderGoods> goods) {
 		
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		List<OrderGoods> orderGoodsList=new ArrayList<OrderGoods>();
-		for(OrderGoods orderGoods:orderGoodses.getOrderGoodsList()){
+		for(OrderGoods orderGoods:goods){
 			String sku=orderGoods.getSku();
 			//根据sku编号值会查出来的只包含一个OrderGoods的List,一个sku只对应一种商品
 			List<OrderGoods> myOrderGood=orderGoodsMapper.selectOrderGoods(null, sku);
@@ -328,17 +336,9 @@ public HashMap<String, Object> updatePriceBatch(OrderGoodsVo orderGoodses) {
 			
 			orderGoodsList.add(orderGoods);
 		}
-		List<OrderGoods> orderGoodsListNew=orderGoodsMapper.updatePriceBatch(orderGoodsList);
-		
-		// 转为pageinfo
-		@SuppressWarnings("rawtypes")
-		PageInfo pageInfo = new PageInfo(orderGoodsListNew);
-
-		hashMap.put("code", 0);
-		hashMap.put("msg", "获取成功");
-		hashMap.put("count", pageInfo.getTotal());
-		hashMap.put("data", orderGoodsListNew.size() > 0 ? orderGoodsListNew : null);
-		
+		orderGoodsMapper.updatePriceBatch(orderGoodsList);
+		hashMap.put("msg", "修改成功");
+		hashMap.put("state", "success");
 		return hashMap;
 	}
 	/**
