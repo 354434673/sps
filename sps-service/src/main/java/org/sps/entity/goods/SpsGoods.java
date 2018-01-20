@@ -11,6 +11,8 @@ public class SpsGoods  implements Serializable {
 
     private Integer gId;
 
+    private Integer flowStatus;
+
     private String gCategoryNames;
 
     private String brandName;
@@ -39,6 +41,14 @@ public class SpsGoods  implements Serializable {
 
     private String gRemark;
 
+
+    public Integer getFlowStatus() {
+        return flowStatus;
+    }
+
+    public void setFlowStatus(Integer flowStatus) {
+        this.flowStatus = flowStatus;
+    }
 
     public String getBrandName() {
         return brandName;

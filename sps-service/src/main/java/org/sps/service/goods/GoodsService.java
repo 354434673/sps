@@ -35,7 +35,7 @@ public interface GoodsService {
      * @param
      * @return
      */
-    HashMap<String,Object> findGoodsList(Integer page, Integer limit, String goodsName, String spuNo);
+    HashMap<String,Object> findGoodsList(Integer page, Integer limit, String goodsName, String spuNo,Integer flowStatus);
 
     /**
      * 获取最后的id

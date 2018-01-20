@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.sps.entity.goods.*;
 import org.sps.service.goods.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
-@RequestMapping(value = "/goodShop")
-public class GoodShopController {
+@RequestMapping(value = "/auditGood")
+public class AuditSaleGoodController {
     @Reference
     private GoodShopService goodService;
     @Reference
@@ -29,6 +32,7 @@ public class GoodShopController {
 
 
     /**
+     * 平台端审核商品上架
      * @param page
      * @param limit
      * @param goodsName
@@ -36,8 +40,8 @@ public class GoodShopController {
      */
     @RequestMapping("/goodsList")
     @ResponseBody
-    public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName, Integer shopStatus, Integer flowStatus, String endTime, String startTime) {
-        HashMap<String, Object> goodsList = goodService.findGoodsList(page, limit, goodsName, shopStatus, flowStatus, endTime, startTime);
+    public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName,String shopName,String shopNumber, Integer shopStatus, String endTime, String startTime) {
+        HashMap<String, Object> goodsList = goodService.findAutidGoodsList(page, limit, shopName,goodsName,shopNumber, shopStatus, endTime, startTime);
         return goodsList;
     }
 
@@ -119,7 +123,7 @@ public class GoodShopController {
             model.addAttribute("tips", "操作失败");
             model.addAttribute("flag", 0);
         }
-        return "goodShop/detailGoods";
+        return "auditSale/detailGoods";
     }
 
 
@@ -174,7 +178,6 @@ public class GoodShopController {
                     }
                 }
                 String[] idList = skuIds.split(",");
-                //List<Long> sdf = convertStringArrayToLong(idList);
                 Map<String, Object> map1 = new HashMap<>();
                 map1.put("gNo", goods.getgSpuName());
                 map1.put("list", idList);
@@ -285,6 +288,44 @@ public class GoodShopController {
                 }
                 resultMap.put("flag", 1);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("flag", 0);
+            resultMap.put("msg", "操作失败");
+        }
+        return resultMap;
+    }
+
+    /**
+     * 进入商品分类新增页面
+     *
+     * @return
+     */
+    @RequestMapping("/toAudit")
+    public String toAudit(Integer id, Model model) {
+        try {
+            if (id != null) {
+                model.addAttribute("goodsId", id);
+            }
+        } catch (Exception e) {
+            model.addAttribute("tips", "操作失败");
+            model.addAttribute("flag", 0);
+        }
+        return "auditSale/auditGoods";
+    }
+
+
+    /**
+     * 审核商品
+     * @return
+     */
+    @RequestMapping(value = "/auditShopGood")
+    @ResponseBody
+    public Map<String, Object> auditShopGood(SpsGoodShop goods) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            goodService.auditShopGood(goods);
+            resultMap.put("flag", 1);
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("flag", 0);

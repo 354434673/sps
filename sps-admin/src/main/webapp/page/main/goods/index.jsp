@@ -32,6 +32,17 @@
             <div class="layui-input-inline">
                 <input id="goodsName" type="text" name="goodsName"  lay-verify="" placeholder="请输入商品名称" autocomplete="off" class="layui-input">
             </div>
+            <label class="layui-form-label">流程状态:</label>
+            <div class="layui-input-inline">
+                <select   id="status" lay-filter="channelFlowState">
+                    <option value=""></option>
+                    <option value="0">待提交</option>
+                    <option value="1">审核中</option>
+                    <option value="2">审核不通过</option>
+                    <option value="3">审核通过</option>
+                </select>
+
+            </div>
             <button class="layui-btn layui-btn-primary" id="queryGoods">查询</button>
             <button class="layui-btn layui-btn-primary" id="resetGoods">重置</button>
         </div>
@@ -78,8 +89,24 @@
                 ,{field: 'gSpuName', title: '商品名称',align:'center'}
                 ,{field: 'gCategoryNames', title: '分类', width:230, align:'center'}
                 ,{field: 'brandName', title: '品牌', width:230,align:'center'}
+                ,{field: 'flowStatus', title: '流程状态', width:230,align:'center'}
                 ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
-            ]]
+            ]], done: function (res, page, count) {
+                $("[data-field='flowStatus']").children().each(function () {
+                    if ($(this).text() == '0') {
+                        $(this).text("待提交")
+                    } else if ($(this).text() == '1') {
+                        $(this).text("审核中")
+                    } else if ($(this).text() == '2') {
+                        $(this).text("审核不通过")
+                    } else if ($(this).text() == '3') {
+                        $(this).text("审核通过")
+                    }
+                })
+
+
+
+            }
         });
         //查询
         $('#queryGoods').on('click',function(){

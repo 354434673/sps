@@ -146,7 +146,9 @@
         </div>
 
         <div class="layui-form-item" align="center">
-            <button class="layui-btn" lay-filter="submitGoods" lay-submit id="submit">立即提交
+            <button class="layui-btn" lay-filter="submitGoods" lay-submit id="submit">提交
+            </button>
+            <button class="layui-btn" lay-filter="saveGoods" lay-submit id="saveGoods">保存
             </button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
@@ -203,8 +205,8 @@
         form.on('radio(money)', function(){
             $("#number").hide();
         })
-        var post_flag = false; //设置一个对象来控制是否进入AJAX过程
-        form.on('submit(submitGoods)', function (data) {
+
+        form.on('submit(saveGoods)', function (data) {
             var type = true;
             if ($('#goodsNumberFlag').val() == "1") {
                 layer.msg("SKU编号已经存在！");
@@ -217,6 +219,7 @@
                 $.ajax(
                     {
                         data: {
+                            flowStatus: 0,
                             gId: $('#goodsId').val(),
                             gCategoryIds: $('#gCategoryIds').val(),
                             gCategoryNames: $('#gCategoryNames').val(),
@@ -236,7 +239,65 @@
                         success: function (result) {
                             post_flag = false; //在提交成功之后将标志标记为可提交状态
                             if (result.flag == '1') {
-                                $('#goodsId').val(result.goodsId)
+                                //如果为空则为新增  给goodsId赋值 不为空则为修改 不改变goodsId
+                                if($('#goodsId').val()==""){
+                                    $('#goodsId').val(result.goodsId)
+                                }
+                                //插入sku商品
+                                SaveData()
+                                layer.msg("操作成功");
+                                setTimeout(function () {
+                                    /* window.location.href = "/sps-admin//page/main/goods/index.jsp";*/
+                                }, 1000);
+                            } else {
+                                post_flag = false; //在提交成功之后将标志标记为可提交状态
+                                layer.msg("操作失败");
+                            }
+                        }//回调方法
+                    });
+            }
+
+        })
+
+
+        var post_flag = false; //设置一个对象来控制是否进入AJAX过程
+        form.on('submit(submitGoods)', function (data) {
+            var type = true;
+            if ($('#goodsNumberFlag').val() == "1") {
+                layer.msg("SKU编号已经存在！");
+                type = false;
+            }
+            if (post_flag) return; //如果正在提交则直接返回，停止执行
+            post_flag = true;//标记当前状态为正在提交状态\
+            if (type) {
+                layedit.sync(index)
+                $.ajax(
+                    {
+                        data: {
+                            flowStatus: 1,
+                            gId: $('#goodsId').val(),
+                            gCategoryIds: $('#gCategoryIds').val(),
+                            gCategoryNames: $('#gCategoryNames').val(),
+                            gBrandId: $('#gBrandId').val(),
+                            gSpuName: $('#gSpuName').val(),
+                            gSpuNo: $('#gSpuNo').val(),
+                            gDetails: layedit.getContent(index),
+                            gRemark: layedits.getContent(indexes),
+                            goodsDpic: $('#gDpic').val(),
+                            goodsPic: $('#gPic').val(),
+                            updateDetailFlag: $("#updateDetailFlag").val(),
+                            updatePicFlag: $("#updatePicFlag").val()
+                        },
+                        url: "/sps-admin/goods/saveOrUpdate",//提交连接
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (result) {
+                            post_flag = false; //在提交成功之后将标志标记为可提交状态
+                            if (result.flag == '1') {
+                                //如果为空则为新增  给goodsId赋值 不为空则为修改 不改变goodsId
+                                if($('#goodsId').val()==""){
+                                    $('#goodsId').val(result.goodsId)
+                                }
                                 //插入sku商品
                                 SaveData()
                                 layer.msg("操作成功");

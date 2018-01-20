@@ -32,35 +32,41 @@
             </div>
             <label class="layui-form-label">修改时间:</label>
             <div class="layui-input-inline">
-               <%-- <input id="updateTime" type="text" name="goodsName" lay-verify="" placeholder="请输入商品名称"
-                       autocomplete="off" class="layui-input">--%>
-                <input type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required" >- <input type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required" >
+                <%-- <input id="updateTime" type="text" name="goodsName" lay-verify="" placeholder="请输入商品名称"
+                        autocomplete="off" class="layui-input">--%>
+                <input type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required">
             </div>
-            <button class="layui-btn layui-btn-primary" id="queryGoods">查询</button>
-            <button class="layui-btn layui-btn-primary" id="resetGoods">重置</button>
+            <div class="layui-input-inline">
+                <%-- <input id="updateTime" type="text" name="goodsName" lay-verify="" placeholder="请输入商品名称"
+                        autocomplete="off" class="layui-input">--%>
+                <input type="text" class="layui-input" id="endTime" placeholder="年-月-日" lay-verify="required">
+            </div>
+
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">商品状态:</label>
             <div class="layui-input-inline">
-                <select lay-filter="channelState">
+                <select id="grounding" lay-filter="channelState">
                     <option value=""></option>
-                    <option value="0">未激活</option>
-                    <option value="1">正常</option>
-                    <option value="2">冻结</option>
-                    <option value="3">激活失败</option>
+                    <option value="0">已下架</option>
+                    <option value="1">已上架</option>
+                    <option value="2">已删除</option>
+                    <option value="3">未生效</option>
                 </select>
             </div>
             <label class="layui-form-label">流程状态:</label>
             <div class="layui-input-inline">
-                <select lay-filter="channelFlowState">
+                <select   id="status" lay-filter="channelFlowState">
                     <option value=""></option>
                     <option value="0">待提交</option>
-                    <option value="1">风控审核中</option>
-                    <option value="2">风控审核通过</option>
-                    <option value="3">风控审核失败</option>
+                    <option value="1">审核中</option>
+                    <option value="2">审核通过</option>
+                    <option value="3">审核失败</option>
                 </select>
 
             </div>
+            <button class="layui-btn layui-btn-primary" id="queryGoods">查询</button>
+            <button class="layui-btn layui-btn-primary" id="resetGoods">重置</button>
         </div>
         <div class="demoTable">
             <a href="javascript:;" class="layui-btn" id="add">
@@ -88,19 +94,43 @@
         <table id="goodsList" lay-filter="goodsTables"></table>
     </div>
     <script type="text/javascript"
-            src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
+            src="/sps-admin/page/layui/layui.js"></script>
     <script type="text/html" id="bar">
         <a class="layui-btn layui-btn-mini" lay-event="detail">详情</a>
         <a class="layui-btn layui-btn-mini" lay-event="edit">修改</a>
         <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
     </script>
-
+    <script type="text/html" id="date">
+        {{#
+        var da = d.gUpdateTime;
+        da = new Date(da);
+        var year = da.getFullYear();
+        var month = da.getMonth()+1;
+        var date = da.getDate();
+        var hours= da.getHours();
+        var minutes= da.getMinutes();
+        var seconds= da.getSeconds();
+        console.log([year,month,date,hours,minutes,seconds].join('-'));
+        var fn = function(){
+        return [year,month,date].join('-');
+        };
+        }}
+        {{ fn() }}
+    </script>
     <script>
-        layui.use(['table', 'laypage', 'layer'], function () {
+        layui.use(['table', 'laypage','laydate', 'layer'], function () {
             var table = layui.table;
             var laypage = layui.laypage;
             var layer = layui.layer
+            var laydate = layui.laydate;
             var $ = layui.jquery;
+            //加载日期框
+            laydate.render({
+                elem: '#startTime'
+            });
+            laydate.render({
+                elem: '#endTime'
+            });
 
             $('#add').on('click', function () {
                 window.location.href = "<%=path%>/page/main/goodShop/addGoods.jsp";
@@ -118,7 +148,7 @@
                     , {field: 'gSpuName', title: '商品名称', width: 230, align: 'center'}
                     , {field: 'categoryName', title: '自定义分类', width: 230, align: 'center'}
                     , {field: 'gRecommend', title: '是否推荐', width: 230, align: 'center',}
-                    , {field: 'gUpdateTime', title: '最后修改时间', width: 230, align: 'center'}
+                    , {field: 'gUpdateTime', templet:'#date', title: '最后修改时间', width: 230, align: 'center'}
                     , {field: 'gGroundingFlag', title: '商品状态', width: 163, align: 'center'}
                     , {field: 'gStatus', title: '流程状态', width: 164, align: 'center'}
                 ]], done: function (res, page, count) {
@@ -152,7 +182,7 @@
                     })
                     $("[data-field='gGroundingFlag']").children().each(function () {
                         if ($(this).text() == '0') {
-                            $(this).text("未上架")
+                            $(this).text("已下架")
                         } else if ($(this).text() == '1') {
                             $(this).text("已上架")
                         } else if ($(this).text() == '2') {
@@ -367,10 +397,14 @@
 
             //查询
             $('#queryGoods').on('click', function () {
-                var goodsNo = $('#goodsNo').val();
+                var endTime = $('#endTime').val();
+                var startTime = $('#startTime').val();
                 var goodsName = $('#goodsName').val();
+                var grounding = $('#grounding').val();
+                var status = $('#status').val();
+
                 table.reload('gId', {
-                    where: {goodsNo: goodsNo, goodsName: goodsName}
+                    where: { goodsName: goodsName,endTime:endTime,startTime:startTime,shopStatus:grounding,flowStatus:status}
                 });
             })
             //重置

@@ -12,9 +12,14 @@
     <result column="g_stock" jdbcType="INTEGER" property="gStock" />
     <result column="g_scale" jdbcType="DOUBLE" property="gScale" />
     <result column="g_service" jdbcType="DECIMAL" property="gService" />
+    <result column="g_delete_flag" jdbcType="INTEGER" property="gDeleteFlag" />
+    <result column="g_sku_id" jdbcType="INTEGER" property="gSkuId" />
+    <result column="g_create_time" jdbcType="TIMESTAMP" property="gCreateTime" />
+    <result column="g_update_time" jdbcType="TIMESTAMP" property="gUpdateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    g_id, g_gid, g_color, g_size, g_sku, g_price, g_quantity, g_stock, g_scale, g_service
+    g_id, g_gid, g_color, g_size, g_sku, g_price, g_quantity, g_stock, g_scale, g_service,
+    g_delete_flag, g_sku_id, g_create_time, g_update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,14 +32,16 @@
     where g_id = #{gId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="SpsGoodShopSku">
-    insert into sps_good_shop_sku (g_id, g_gid, g_color, 
-      g_size, g_sku, g_price, 
-      g_quantity, g_stock, g_scale, 
-      g_service)
-    values (#{gId,jdbcType=INTEGER}, #{gGid,jdbcType=INTEGER}, #{gColor,jdbcType=VARCHAR}, 
-      #{gSize,jdbcType=VARCHAR}, #{gSku,jdbcType=VARCHAR}, #{gPrice,jdbcType=DECIMAL}, 
-      #{gQuantity,jdbcType=INTEGER}, #{gStock,jdbcType=INTEGER}, #{gScale,jdbcType=DOUBLE}, 
-      #{gService,jdbcType=DECIMAL})
+    insert into sps_good_shop_sku (g_id, g_gid, g_color,
+    g_size, g_sku, g_price,
+    g_quantity, g_stock, g_scale,
+    g_service, g_delete_flag, g_sku_id,
+    g_create_time, g_update_time)
+    values (#{gId,jdbcType=INTEGER}, #{gGid,jdbcType=INTEGER}, #{gColor,jdbcType=VARCHAR},
+    #{gSize,jdbcType=VARCHAR}, #{gSku,jdbcType=VARCHAR}, #{gPrice,jdbcType=DECIMAL},
+    #{gQuantity,jdbcType=INTEGER}, #{gStock,jdbcType=INTEGER}, #{gScale,jdbcType=DOUBLE},
+    #{gService,jdbcType=DECIMAL}, #{gDeleteFlag,jdbcType=INTEGER}, #{gSkuId,jdbcType=INTEGER},
+    #{gCreateTime,jdbcType=TIMESTAMP}, #{gUpdateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="SpsGoodShopSku">
     insert into sps_good_shop_sku
@@ -69,6 +76,18 @@
       <if test="gService != null">
         g_service,
       </if>
+      <if test="gDeleteFlag != null">
+        g_delete_flag,
+      </if>
+      <if test="gSkuId != null">
+        g_sku_id,
+      </if>
+      <if test="gCreateTime != null">
+        g_create_time,
+      </if>
+      <if test="gUpdateTime != null">
+        g_update_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="gId != null">
@@ -100,6 +119,18 @@
       </if>
       <if test="gService != null">
         #{gService,jdbcType=DECIMAL},
+      </if>
+      <if test="gDeleteFlag != null">
+        #{gDeleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="gSkuId != null">
+        #{gSkuId,jdbcType=INTEGER},
+      </if>
+      <if test="gCreateTime != null">
+        #{gCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gUpdateTime != null">
+        #{gUpdateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -133,6 +164,18 @@
       <if test="gService != null">
         g_service = #{gService,jdbcType=DECIMAL},
       </if>
+      <if test="gDeleteFlag != null">
+        g_delete_flag = #{gDeleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="gSkuId != null">
+        g_sku_id = #{gSkuId,jdbcType=INTEGER},
+      </if>
+      <if test="gCreateTime != null">
+        g_create_time = #{gCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gUpdateTime != null">
+        g_update_time = #{gUpdateTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where g_id = #{gId,jdbcType=INTEGER}
   </update>
@@ -146,7 +189,11 @@
       g_quantity = #{gQuantity,jdbcType=INTEGER},
       g_stock = #{gStock,jdbcType=INTEGER},
       g_scale = #{gScale,jdbcType=DOUBLE},
-      g_service = #{gService,jdbcType=DECIMAL}
+      g_service = #{gService,jdbcType=DECIMAL},
+      g_delete_flag = #{gDeleteFlag,jdbcType=INTEGER},
+      g_sku_id = #{gSkuId,jdbcType=INTEGER},
+      g_create_time = #{gCreateTime,jdbcType=TIMESTAMP},
+      g_update_time = #{gUpdateTime,jdbcType=TIMESTAMP}
     where g_id = #{gId,jdbcType=INTEGER}
   </update>
   <!-- 查询所有 -->
@@ -158,10 +205,37 @@
     <if test="goodsId !=null and goodsId != ''">
       and g_gid = #{goodsId,jdbcType=INTEGER}
     </if>
-
   </select>
   <delete id="deleteSku" parameterType="java.lang.Integer">
     delete from sps_good_shop_sku
     where g_gid = #{goodsId,jdbcType=INTEGER}
   </delete>
+
+  <!-- 查询所有 -->
+  <select id="findSkuList" parameterType="map"  resultMap="BaseResultMap">
+    select
+    s.g_id, s.g_gid, s.g_color, s.g_size, s.g_sku, s.g_price, s.g_quantity, s.g_stock, s.g_scale, s.g_service,
+    s.g_delete_flag, s.g_sku_id, s.g_create_time, s.g_update_time,g.g_spu_name as spuName
+    from sps_good_shop_sku s LEFT  JOIN  sps_good_shop g on g.g_id= s.g_gid
+    where 1=1
+    <if test="spec !=null and spec != ''">
+      and (s.g_size LIKE CONCAT('%',#{spec,jdbcType=VARCHAR},'%')or s.g_color LIKE CONCAT('%',#{spec,jdbcType=VARCHAR},'%'))
+    </if>
+    <if test="goodSku !=null and goodSku != ''">
+      and s.g_sku LIKE CONCAT('%',#{goodSku,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="goodsName !=null and goodsName != ''">
+      and g.g_spu_name LIKE CONCAT('%',#{goodsName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="startTime!=null and startTime != ''">
+      and s.g_update_time <![CDATA[>=]]>  #{startTime}
+    </if>
+    <if test="endTime!=null and endTime != ''">
+      and s.g_update_time<![CDATA[<=]]> #{endTime}
+    </if>
+    <if test="gShopId != null">
+      g.g_shop_id = #{gShopId,jdbcType=INTEGER},
+    </if>
+
+  </select>
 </mapper>

@@ -171,7 +171,6 @@ public class BrandController {
     public Map<String, Object> getBrandList(String categoryIds) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            List<Map<String, Object>> result = new ArrayList<>();
             List list = new ArrayList<>();
             String[] ids = categoryIds.split(",");
             for(String id:ids){

@@ -194,6 +194,16 @@
     <if test="goodsId !=null and goodsId != ''">
       and g_gid = #{goodsId,jdbcType=INTEGER}
     </if>
+    <if test="gNo !=null and gNo != ''">
+      and g_no LIKE CONCAT('%',#{gNo,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="gNo !=null and gNo != ''">
+      and g_id not in
+    <foreach item="item" index="index" collection="list" open="("
+             separator="," close=")">
+      #{item}
+    </foreach>
+    </if>
     AND g_delete_flag = 0
   </select>
   <delete id="deleteSku" parameterType="java.lang.Integer">

@@ -42,8 +42,8 @@ public class GoodsController {
      */
     @RequestMapping("/goodsList")
     @ResponseBody
-    public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName, String goodsNo) {
-        HashMap<String, Object> goodsList = goodService.findGoodsList(page, limit, goodsName, goodsNo);
+    public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName, String goodsNo,Integer flowStatus) {
+        HashMap<String, Object> goodsList = goodService.findGoodsList(page, limit, goodsName, goodsNo,flowStatus);
         return goodsList;
     }
 

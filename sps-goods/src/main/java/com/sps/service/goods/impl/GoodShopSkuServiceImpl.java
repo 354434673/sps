@@ -1,7 +1,10 @@
 package com.sps.service.goods.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sps.dao.goods.SpsGoodShopSkuMapper;
+import org.sps.entity.goods.SpsGoodShop;
 import org.sps.entity.goods.SpsGoodShopSku;
 import org.sps.entity.goods.SpsGoods;
 import org.sps.service.goods.GoodShopSkuService;
@@ -19,11 +22,13 @@ public class GoodShopSkuServiceImpl implements GoodShopSkuService {
     @Override
     public void saveOrUpdate(SpsGoodShopSku goods) {
         if(goods.getgId()!=null){
+            goods.setgUpdateTime(new Date());
             spsGoodShopSkuMapper.update(goods);
         }else{
+            goods.setgCreateTime(new Date());
+            goods.setgDeleteFlag(0);
             spsGoodShopSkuMapper.insert(goods);
         }
-
     }
 
     @Override
@@ -54,5 +59,30 @@ public class GoodShopSkuServiceImpl implements GoodShopSkuService {
     @Override
     public Integer getEntityBySearchLimit(String gSpuNo) {
         return null;
+    }
+
+    @Override
+    public HashMap<String, Object> findSkuList(Integer page, Integer limit, String goodsName, String spec, String goodSku, String endTime, String startTime) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("goodsName", goodsName);
+        map.put("goodSku", goodSku);
+        if (endTime != null && !"".equals(endTime)) {
+            map.put("endTime", endTime + " 23:59:59");
+        }
+        if (startTime != null && !"".equals(startTime)) {
+            map.put("startTime", startTime + " 00:00:00");
+        }
+
+        //分页
+        PageHelper.startPage(page, limit);
+        List<SpsGoodShopSku> goodsList = spsGoodShopSkuMapper.findList(map);
+        PageInfo pageInfo = new PageInfo(goodsList);
+        //放入map
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("code", 0);
+        hashMap.put("msg", "获取成功");
+        hashMap.put("count", pageInfo.getTotal());
+        hashMap.put("data", goodsList.size() != 0 ? goodsList : null);
+        return hashMap;
     }
 }
