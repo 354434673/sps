@@ -36,7 +36,7 @@ public interface GoodShopService {
      * @param
      * @return
      */
-    HashMap<String,Object> findGoodsList(Integer page, Integer limit, String goodsName, Integer shopStatus,Integer flowStatus);
+    HashMap<String,Object> findGoodsList(Integer page, Integer limit, String goodsName, Integer shopStatus,Integer flowStatus,String endTime,String startTime);
 
     /**
      * 获取最后的id
@@ -54,4 +54,24 @@ public interface GoodShopService {
     void setSale(Integer id, String state);
 
     void setRecommend(Integer id, String state);
+
+    /**
+     * 平台审核上架商品列表
+     * @param page
+     * @param limit
+     * @param shopName
+     * @param goodsName
+     * @param shopNumber
+     * @param shopStatus
+     * @param endTime
+     * @param startTime
+     * @return
+     */
+    HashMap<String,Object> findAutidGoodsList(Integer page, Integer limit, String shopName, String goodsName, String shopNumber, Integer shopStatus, String endTime, String startTime);
+
+    /**
+     * 审核商品
+     * @param goods
+     */
+    void auditShopGood(SpsGoodShop goods);
 }

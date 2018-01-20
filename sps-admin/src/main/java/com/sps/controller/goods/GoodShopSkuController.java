@@ -19,6 +19,21 @@ public class GoodShopSkuController {
     private GoodShopSkuService goodSkuService;
 
 
+
+    /**
+     * @param page
+     * @param limit
+     * @param goodsName
+     * @return
+     */
+    @RequestMapping("/goodsList")
+    @ResponseBody
+    public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName, String goodSku ,String spec, String endTime, String startTime) {
+        HashMap<String, Object> goodsList = goodSkuService.findSkuList(page, limit, goodsName, spec, goodSku, endTime, startTime);
+        return goodsList;
+    }
+
+
     /**
      * 进入商品分类新增页面
      *

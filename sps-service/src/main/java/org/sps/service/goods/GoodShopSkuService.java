@@ -51,4 +51,17 @@ public interface GoodShopSkuService {
      * @return
      */
     Integer getEntityBySearchLimit(String gSpuNo);
+
+    /**
+     * 查询商品SKU列表
+     * @param page
+     * @param limit
+     * @param goodsName
+     * @param spec
+     * @param goodSku
+     * @param endTime
+     * @param startTime
+     * @return
+     */
+    HashMap<String,Object> findSkuList(Integer page, Integer limit, String goodsName, String spec, String goodSku, String endTime, String startTime);
 }

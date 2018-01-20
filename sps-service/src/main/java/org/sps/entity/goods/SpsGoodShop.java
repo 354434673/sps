@@ -6,6 +6,10 @@ import java.util.Date;
 public class SpsGoodShop implements Serializable {
 
     private String categoryName;
+    private String companyName;
+    private String adminNum;
+
+    private String gOpinion;
 
     private Integer gId;
 
@@ -35,6 +39,30 @@ public class SpsGoodShop implements Serializable {
 
     private Date gUpdateTime;
 
+
+    public String getgOpinion() {
+        return gOpinion;
+    }
+
+    public void setgOpinion(String gOpinion) {
+        this.gOpinion = gOpinion;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getAdminNum() {
+        return adminNum;
+    }
+
+    public void setAdminNum(String adminNum) {
+        this.adminNum = adminNum;
+    }
 
     public String getCategoryName() {
         return categoryName;

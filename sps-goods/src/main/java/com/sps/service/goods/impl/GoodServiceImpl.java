@@ -1,4 +1,5 @@
 package com.sps.service.goods.impl;
+
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -8,6 +9,7 @@ import com.sps.dao.goods.SpsGoodsMapper;
 import org.sps.entity.goods.SpsGoods;
 import org.sps.entity.goods.SpsGoodsAlbum;
 import org.sps.service.goods.GoodsService;
+
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,16 +27,16 @@ public class GoodServiceImpl implements GoodsService {
 
     @Override
     public void saveOrUpdate(SpsGoods goods) {
-        if(goods.getgId()!=null){
+        if (goods.getgId() != null) {
             //如果UpdateDetailFlag不为空 则删除 改商品的详情图
-            if(goods.getUpdateDetailFlag()!=null){
+            if (goods.getUpdateDetailFlag() != null) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("goodsId", goods.getgId());
                 map.put("updateDetailFlag", goods.getUpdateDetailFlag());
                 spsGoodsAlbumMapper.deleteDetailPic(map);
             }
             //如果UpdatePicFlag 则删除 改商品的主图
-            if(goods.getUpdatePicFlag()!=null){
+            if (goods.getUpdatePicFlag() != null) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("goodsId", goods.getgId());
                 map.put("updatePicFlag", goods.getUpdatePicFlag());
@@ -44,7 +46,7 @@ public class GoodServiceImpl implements GoodsService {
             spsGoodSkuMapper.deleteSku(goods.getgId());
             goods.setgUpdateTime(new Date());
             spsGoodsMapper.update(goods);
-        }else{
+        } else {
             goods.setgDeleteFlag(0);
             goods.setgCreateTime(new Date());
             spsGoodsMapper.insert(goods);
@@ -58,7 +60,7 @@ public class GoodServiceImpl implements GoodsService {
 
     @Override
     public List<SpsGoods> findList(Map<String, Object> map) {
-        return  spsGoodsMapper.findListAllWithMap(map);
+        return spsGoodsMapper.findListAllWithMap(map);
     }
 
     @Override
@@ -71,26 +73,27 @@ public class GoodServiceImpl implements GoodsService {
     }
 
     @Override
-    public HashMap<String, Object> findGoodsList(Integer page, Integer limit, String goodsName, String goodsNo) {
+    public HashMap<String, Object> findGoodsList(Integer page, Integer limit, String goodsName, String goodsNo,Integer flowStatus) {
         Map<String, Object> map = new HashMap<>();
+        map.put("flowStatus", flowStatus);
         map.put("goodsName", goodsName);
         map.put("goodsNo", goodsNo);
         //分页
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(page, limit);
         List<SpsGoods> goodsList = spsGoodsMapper.findListAllWithMap(map);
         PageInfo pageInfo = new PageInfo(goodsList);
         //放入map
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("code", 0);
         hashMap.put("msg", "获取成功");
-        hashMap.put("count",  pageInfo.getTotal());
+        hashMap.put("count", pageInfo.getTotal());
         hashMap.put("data", goodsList.size() != 0 ? goodsList : null);
         return hashMap;
     }
 
     @Override
     public SpsGoods findLastId() {
-      return spsGoodsMapper.findLastId();
+        return spsGoodsMapper.findLastId();
     }
 
     @Override

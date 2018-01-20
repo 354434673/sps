@@ -2,8 +2,11 @@ package org.sps.entity.goods;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class SpsGoodShopSku implements Serializable {
+    private String spuName;
+
     private Integer gId;
 
     private Integer gGid;
@@ -23,6 +26,54 @@ public class SpsGoodShopSku implements Serializable {
     private Double gScale;
 
     private BigDecimal gService;
+
+    private Integer gDeleteFlag;
+
+    private Integer gSkuId;
+    private Date gCreateTime;
+
+    private Date gUpdateTime;
+
+
+    public String getSpuName() {
+        return spuName;
+    }
+
+    public void setSpuName(String spuName) {
+        this.spuName = spuName;
+    }
+
+    public Date getgCreateTime() {
+        return gCreateTime;
+    }
+
+    public void setgCreateTime(Date gCreateTime) {
+        this.gCreateTime = gCreateTime;
+    }
+
+    public Date getgUpdateTime() {
+        return gUpdateTime;
+    }
+
+    public void setgUpdateTime(Date gUpdateTime) {
+        this.gUpdateTime = gUpdateTime;
+    }
+
+    public Integer getgDeleteFlag() {
+        return gDeleteFlag;
+    }
+
+    public void setgDeleteFlag(Integer gDeleteFlag) {
+        this.gDeleteFlag = gDeleteFlag;
+    }
+
+    public Integer getgSkuId() {
+        return gSkuId;
+    }
+
+    public void setgSkuId(Integer gSkuId) {
+        this.gSkuId = gSkuId;
+    }
 
     public Integer getgId() {
         return gId;
