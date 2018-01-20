@@ -3,7 +3,7 @@ package com.sps.service.user;
 import java.util.HashMap;
 
 /**
- * 物流
+ * 物流接口
  * @ClassName:  ExpressService   
  * @Description:TODO(这里用一句话描述这个类的作用)   
  * @author YangNingSheng

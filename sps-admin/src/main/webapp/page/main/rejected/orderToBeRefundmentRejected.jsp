@@ -54,7 +54,6 @@
 			</div> 
 			    	<button class="layui-btn layui-btn-primary" id="queryOrders">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="resetInput">重置</button>
-	       
 		<table id="orderList" lay-filter="orderTables"></table>
 	</div>
 <script type="text/javascript"
@@ -87,13 +86,12 @@
 			  
 			  table.render({
 			    elem: '#orderList'
-			    ,height: 500
 			    ,url: '<%=path%>/order/show.json' //数据接口
 			    ,where:{flag:1} 
 			    ,id:'orderToBeRecieved'
 			    ,page:true
 			    ,cols: [[ //表头
-			       {title: '序号', align:'center',templet:'#indexTpl'} 
+			       {title: '序号', align:'center',type:'numbers'} 
 				  ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
 			      ,{field: 'name', title: '店主名称', align:'center'}
 			      ,{field: 'selfname', title: '店铺名称', align:'center'}

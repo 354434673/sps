@@ -57,8 +57,21 @@
 		src="<%=path%>/page/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="register" id="register">发货登记</a>
-  <a class="layui-btn layui-btn-mini" lay-event="detail"  id="detail">详情</a>
   <a class="layui-btn layui-btn-mini" lay-event="print" id="print">打印</a>
+</script>
+<script type="text/html" id="date">
+{{#  
+   var da = d.createtime;
+    da = new Date(da);
+    var year = da.getFullYear();
+    var month = da.getMonth()+1;
+    var date = da.getDate();
+    console.log([year,month,date].join('-'));
+  var fn = function(){
+    return [year,month,date].join('-');
+  }; 
+}}
+{{ fn() }}
 </script>
 	<script>
 		layui.use(['table','laypage','layer','laydate'], function(){
@@ -84,7 +97,6 @@
 			  
 			  table.render({
 			    elem: '#orderList'
-			    ,height: 500
 			    ,url: '<%=path%>/order/show.json' //数据接口
 			    ,where:{flag:6}
 			    ,id:'orderToBeDelivery'
@@ -96,8 +108,8 @@
 				      ,{field: 'money', title: '订单金额',align:'center'}
 				      ,{field: 'servicemoney', title: '代销服务费',align:'center'}
 				      ,{field: 'sumMoney',  title: '实销金额',align:'center'}
-				      ,{field: 'createtime', title: '订单申请日期', format:'yyyy-MM-dd HH:mm:ss', width:230, align:'center'}
-				      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
+				      ,{field: 'createtime', title: '订单申请日期',templet:'#date',width:230, align:'center'}
+				      ,{field: 'tool', title: '操作', width:210,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
 			  //查询

@@ -30,44 +30,108 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>基本信息</legend>
 		</fieldset>
-		<table id="orderBasic" lay-filter="orderBasic">
-		</table>
+		<div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">订单编号：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="orderid"> </div>
+		    </div>
+		    <label class="layui-form-label" style="width:152px">订单金额：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="money"> </div>
+		    </div>
+		 </div>
+		 <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">代销服务费率：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="servicescale"> </div>
+		    </div>
+		    <label class="layui-form-label" style="width:152px">代销服务费：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="servicemoney"> </div>
+		    </div>
+		 </div>
+		 <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">实销金额：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="sumMoney"> </div>
+		    </div>
+		    <label class="layui-form-label" style="width:152px">单位：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="unit"> </div>
+		    </div>
+		 </div>
+		 <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">订单申请日期：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="createtime"> </div>
+		    </div>
+		    <label class="layui-form-label" style="width:152px">店主名称：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="name"> </div>
+		    </div>
+		 </div>
+		 <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">联系电话：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="phone"> </div>
+		    </div>
+		    <label class="layui-form-label" style="width:152px">店铺名称：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="selfname"> </div>
+		    </div>
+		 </div>
+		 <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">收货信息：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="address"> </div>
+		    </div>
+		 </div>
+		 <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">订单备注：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id=""> </div>
+		    </div>
+		 </div>
       	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>商品列表</legend>
 		</fieldset>
 		<table id="orderGoodsDetail" lay-filter="orderGoodsDetail">
 		</table>
-		
-		
-		<div class="layui-form-item">
-	    <label class="layui-form-label">*物流公司：</label>
-	    <div class="layui-input-inline">
-	      <input name="expressConpany" lay-verify="" autocomplete="off" placeholder="物流公司" class="layui-input" type="text" width="130">
-    	</div>
-    	<div class="layui-form-item">
-	    <label class="layui-form-label">*物流单号：</label>
-	    <div class="layui-input-inline">
-	      <input name="trackingNumber"  lay-verify="" autocomplete="off" placeholder="物流单号" class="layui-input" type="text" width="130">
-    	</div>
-    	<div class="layui-form-item">
-    	 	<div class="layui-inline">
-    			<label class="layui-form-label">物流单据：</label>
-    			<div class="layui-input-inline">
-      				<input name="expressDocuments" lay-verify="" autocomplete="off" placeholder="物流单据" class="layui-input" type="text" width="130">
-      			</div>
-    		</div>	
-    	</div>
-    	<div class="layui-upload">
-				  <button type="button" class="layui-btn" id="test1">上传图片</button>
-				  <div class="layui-upload-list">
-				    <img class="layui-upload-img" id="signed">
-				    <p id="demoText"></p>
-				  </div>
-				</div>   
-    	<button class="layui-btn layui-btn-primary" id="back">返回</button>
-		<button class="layui-btn layui-btn-primary" id="submit">提交</button>
-    	
-  </div>
+		<div class="layui-form" >
+			<div class="layui-form-item">
+		    <label class="layui-form-label" style="width:130px">*合作物流名称：</label>
+		    <div class="layui-input-inline">
+		      <input disabled="disabled" id="logisticsCooperationName" type="logisticsCooperationName" name="name" lay-verify="required" placeholder="合作物流" autocomplete="off" class="layui-input">
+		    </div>
+		   		<button class="layui-btn layui-btn-primary" lay-filter="openExpress" id="openExpress">
+			    <i class="layui-icon">&#xe608;</i> 搜索</button>
+		   </div>
+			<div class="layui-form-item">
+		    <label class="layui-form-label" style="width:130px">*其他：</label>
+		    <div class="layui-input-inline">
+		      <input  id="logisticsOther" type="text" name="logisticsOther" placeholder="其他" autocomplete="off" class="layui-input">
+		    </div>
+		   </div>
+			<div class="layui-form-item">
+		    <label class="layui-form-label" style="width:130px">*物流单号：</label>
+		    <div class="layui-input-inline">
+		      <input  id="logisticsOther" lay-verify="required" type="text" name="logisticsOther" placeholder="物流单号" autocomplete="off" class="layui-input">
+		    </div>
+		   </div>
+			<div class="layui-form-item">
+		    <label class="layui-form-label" style="width:130px">*物流单据：</label>
+		    <div class="layui-input-inline">
+		      <input  id="logisticsOther" type="text" name="logisticsOther" placeholder="物流单据" autocomplete="off" class="layui-input">
+		    </div>
+		   </div>
+		   <div class="layui-form-item">
+		   </div>
+		   <!-- 按钮 -->
+    		 <div class="layui-form-item" align="center" id="btn" style="padding-top: 10px" >
+				<button class="layui-btn layui-btn-primary" id="last">返回</button>
+				<button class="layui-btn layui-btn-primary" lay-filter="" lay-submit >提交</button>
+			</div>
+		</div>
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
@@ -81,33 +145,27 @@
 			  var layer = layui.layer;
 			  var $ = layui.jquery;
 			  var upload=layui.upload;
-			  
-				table.render({
-				    elem: '#orderBasic'
-				    ,height: 230
-				    ,url: '<%=path%>/order/showOrder.json' //数据接口
-				    ,where:{orderid:<%=request.getParameter("orderid")%>} 
-				    /* ,page:false  */
-				    ,cols: 
- 					[[ //表头
- 				      {field: 'orderid', title: '订单编号',align:'center',sort:true},
- 				      {field: 'money', title: '订单金额',align:'center'},
- 				      {field: 'servicescale', title: '代销服务费率',align:'center'},
- 				      {field: 'servicemoney', title: '代销服务费',align:'center'},
- 				      {field: 'sumMoney', title: '实销金额',align:'center'},
- 				      {field: 'unit', title: '单位',align:'center'},
- 				      {field: 'createtime', title: '订单申请日期', align:'center'},
- 				      {field: 'name', title: '店主名称' ,align:'center'},
- 				      {field: 'phone', title: '联系电话',align:'center'},
- 				      {field: 'selfname', title: '店铺名称', align:'center'},
- 				      {field: 'address', title: '收货信息',align:'center'}
- 				      ]]
-				  });
-			  
-			  
+			  $.post({//获得信息
+				  url:'<%=path%>/order/showOrder.json'
+				  ,dataType:'json'
+				  ,data:{orderid:<%=request.getParameter("orderid")%>}
+				  ,success:function(result){
+					  $('#orderid').html(result.data[0].orderid)//订单编号
+					  $('#money').html(result.data[0].money)//订单金额
+					  $('#servicescale').html(result.data[0].servicescale)//代销服务费率
+					  $('#servicemoney').html(result.data[0].servicemoney)//代销服务费
+					  $('#sumMoney').html(result.data[0].sumMoney)//实销金额
+					  $('#unit').html(result.data[0].unit)//单位
+					  var date = getDate(result.data[0].createtime)
+					  $('#createtime').html(date)//订单申请日期
+					  $('#name').html(result.data[0].name)//店主名称
+					  $('#phone').html(result.data[0].phone)//联系电话
+					  $('#selfname').html(result.data[0].selfname)//店铺名称
+					  $('#address').html(result.data[0].address)//收货信息
+				  }
+			  })
 			  table.render({
 				    elem: '#orderGoodsDetail'
-				    ,height: 500
 				    ,url: '<%=path%>/order/showOrderGoods.json'//数据接口
 				    ,where:{orderid:<%=request.getParameter("orderid")%>} 
 				    ,id:'orderGoods'
@@ -122,46 +180,22 @@
 				      ,{field: 'summation', title: '金额',align:'center',sort:true}
 				    ]]
 				  });
-			  
-			  //点击返回按钮，则返回到待确认订单主页面
-			  $(document).on("click","#back",function(){
-				  window.location.href='<%=path%>/page/main/order/orderToBeDelivery.jsp';
-			  });
-			  
 			//点击提交按钮，则提交至风控，改变状态为待审核
 			  $(document).on("click","#submit",function(){
 				 window.location.href='<%=path%>/order/updateDeliveryOrderFlag?flag=7&orderid='+<%=request.getParameter("orderid")%>;
 			  });
-			 
-			
-			//普通图片上传
-			/* var uploadInst = upload.render({
-			    elem: '#test1'
-			    ,url: '/upload/'
-			    ,before: function(obj){
-			      //预读本地文件示例，不支持ie8
-			      obj.preview(function(index, file, result){
-			        $('#demo1').attr('src', result); //图片链接（base64）
-			      });
-			    }
-			    ,done: function(res){
-			      //如果上传失败
-			      if(res.code > 0){
-			        return layer.msg('上传失败');
-			      }
-			      //上传成功
-			    }
-			    ,error: function(){
-			      //演示失败状态，并实现重传
-			      var demoText = $('#demoText');
-			      demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
-			      demoText.find('.demo-reload').on('click', function(){
-			        uploadInst.upload();
-			      });
-			    }
-			  }); */
-			
-			
+			//物流信息
+			  $('#openExpress').on('click', function() {
+				  layer.open({
+					  type: 2, 
+					  area: ['75%', '70%'],//宽高
+					  content: ['../express/expressManage.html'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+					  cancel: function(index, layero){
+						  var data = $(layero).find("iframe")[0].contentWindow.expressIds;
+						  $('#logisticsCooperationName').val(data.toString())
+						}    
+				  }); 
+			  });
 			  upload.render({//签约合影照片
 	 			    elem: '#test1' //绑定元素
 	 			    ,accept:'images'
@@ -175,7 +209,14 @@
 	 			    		layer.msg('图片失败',{icon: 2});
 	 			    	}
 	 			    }
-			});
+				});
+			  function getDate(data){
+				    da = new Date(data);
+				    var year = da.getFullYear();
+				    var month = da.getMonth()+1;
+				    var date = da.getDate();
+				    return [year,month,date].join('-');
+			  }
 		});
 	</script>
 	

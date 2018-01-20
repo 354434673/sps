@@ -26,7 +26,7 @@
 </head>
 <body>
 	<div style="margin: 15px;">
-		<div class="layui-form layui-form-pane"  >
+		<div class="layui-form layui-form-pane" >
 		    <div class="layui-form-item">
 			    <label class="layui-form-label">店主名称:</label>
 			    <div class="layui-input-inline">
@@ -65,6 +65,20 @@
 <script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="confirm" id="confirm">去确认</a>
 </script>
+<script type="text/html" id="date">
+{{#  
+   var da = d.createtime;
+    da = new Date(da);
+    var year = da.getFullYear();
+    var month = da.getMonth()+1;
+    var date = da.getDate();
+    console.log([year,month,date].join('-'));
+  var fn = function(){
+    return [year,month,date].join('-');
+  }; 
+}}
+{{ fn() }}
+</script>
 	<script>
 		layui.use(['laydate','table','laypage','layer'], function(){
 			  var table = layui.table;
@@ -72,22 +86,18 @@
 			  var layer = layui.layer;
 			  var laydate = layui.laydate;
 			  var $ = layui.jquery;
-			  
 				//执行一个laydate实例
 				  laydate.render({
 				    elem: '#startTime', //指定元素
 				    type:'datetime'
 				  });
-				
 				  //执行一个laydate实例
 				  laydate.render({
 				    elem: '#endTime', //指定元素
 				    type:'datetime'
 				  }); 
-			  
 			  table.render({
 			    elem: '#orderList'
-			    ,height: 500
 			    ,url: '<%=path%>/order/show.json' //数据接口
 			    ,where:{flag:1} 
 			    ,id:'orderToBeRejected'
@@ -98,8 +108,8 @@
 			      ,{field: 'name', title: '店主名称', align:'center'}
 			      ,{field: 'selfname', title: '店铺名称', align:'center'}
 			      ,{field: 'money', title: '退款金额',align:'center'}
-			      ,{field: 'createtime', title: '退货申请日期', type:'datetime', width:230, align:'center'}
-			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
+			      ,{field: 'createtime', title: '退货申请日期', templet:'#date', width:230, align:'center'}
+			      ,{field: 'tool', title: '操作', width:140,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
 			  
@@ -121,11 +131,7 @@
 			  })
 			  //重置
 			  $('#resetInput').on('click',function(){
-				  $('#name').val('');
-				  $('#selfname').val('');
-				  $('#orderid').val('');
-				  $('#startTime').val('');
-				  $('#endTime').val('');
+				  $('input').val('');
 			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){

@@ -50,7 +50,7 @@
 			 </div>
 			      <div class="layui-form-item">
 				    <label class="layui-form-label">流程状态</label>
-				    <div class="layui-input-block">
+				    <div class="layui-input-inline">
 				      <select name="flag" lay-filter="flag" id="flag">
 				        <option value="" selected="selected">全部</option>
 				        <option value="1">待确认</option>
@@ -94,17 +94,14 @@
 			    , type:'datetime'
 			    /* ,format:'yyyy-MM-dd HH:mm:ss' */
 			  });
-			
 			  //执行一个laydate实例
 			  laydate.render({
 			    elem: '#endTime' //指定元素
 			    , type:'datetime'
 			  /*   , format:'yyyy-MM-dd HH:mm:ss' */
 			  });
-			  
 			  table.render({
 			    elem: '#orderList'
-			    ,height: 500
 			    ,url: '<%=path%>/order/show.json' //数据接口
 			    ,id:'orderOfAll'
 			    ,page:true
@@ -136,12 +133,7 @@
 			  });
 			  //重置
 			  $('#resetInput').on('click',function(){
-				  $('#name').val('');
-				  $('#orderid').val('');
-				  $('#startTime').val('');
-				  $('#endTime').val(''); 
-				  $('#flag').val('');
-				  form.render(); //更新全部
+				  $('input').val('');
 			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){
@@ -152,9 +144,7 @@
 					 }else if(layEvent=='print'){//打印
 						 window.location.href="<%=path%>/page/main/order/print.jsp?orderid="+data.orderid;
 					 } 
-					 console.log(data)
 				});
-		
 			});
 	</script>
 	

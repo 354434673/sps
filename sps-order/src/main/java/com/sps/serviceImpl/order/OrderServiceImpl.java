@@ -364,6 +364,7 @@ public HashMap<String, Object> updatePriceBatch(List<OrderGoods> goods) {
 				 //这里处理的逻辑，需要更新数据库的状态，如果有说明则将remark添加入说明中
 	 			 result=orderMapper.updateOrderFlag(orderid,flag,remark);
 				 hashMap.put("count", result);
+				 hashMap.put("state", "success");
 				 break;
 			 }
 		return hashMap;

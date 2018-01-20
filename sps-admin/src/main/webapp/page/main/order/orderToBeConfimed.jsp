@@ -80,25 +80,6 @@
 			  var layer = layui.layer;
 			  var laydate = layui.laydate;
 			  var $ = layui.jquery;
-			 /*  
-			  var options={
-					 min: '2010-01-01 00:00:00',
-		             max: '2099-06-16 23:59:59',
-		             event : 'click',
-		             istoday: false 
-			  };
-			  
-			  document.getElementById("startTime").onclick=function(){
-				  opitons.elem=this;
-				  options.format="yyyy-MM-dd HH:mm:ss";
-				  laydate(options);
-			  }
-			  document.getElementById("endTime").onclick=function(){
-				  opitons.elem=this;
-				  options.format="yyyy-MM-dd HH:mm:ss";
-				  laydate(options);
-			  } */
-			  
 				//执行一个laydate实例
 				  laydate.render({
 				    elem: '#startTime', //指定元素
@@ -128,7 +109,7 @@
 			      ,{field: 'money', title: '订单金额',align:'center'}
 			      ,{field: 'servicemoney', title: '代销服务费',align:'center'}
 			      ,{field: 'sumMoney',  title: '实销金额',align:'center'}
-			      ,{field: 'createtime', title: '订单申请日期', templet:'#date',type:'datetime', width:230, align:'center'}
+			      ,{field: 'createtime', title: '订单申请日期', templet:'#date',width:230, align:'center'}
 			      ,{field: 'tool', title: '操作', width:210,align:'center',toolbar:'#bar'}
 			    ]]
 			  });

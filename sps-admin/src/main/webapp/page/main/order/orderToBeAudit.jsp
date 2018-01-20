@@ -10,8 +10,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>退货管理</title>
-<!-- 待收货退货申请 -->
+<title>订单管理</title>
+<!-- 待确认订单 -->
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -32,10 +32,6 @@
 			    <div class="layui-input-inline">
 			      <input id="name" type="text" name="name"  lay-verify="" placeholder="请输入店主名称" autocomplete="off" class="layui-input">
 			    </div>
-			    <label class="layui-form-label">店铺名称:</label>
-			    <div class="layui-input-inline">
-			      <input id="selfname" type="text" name="selfname"  lay-verify="" placeholder="请输入店铺名称" autocomplete="off" class="layui-input">
-			    </div>
 			    <label class="layui-form-label">订单编号:</label>
 			    <div class="layui-input-inline">
 			      <input id="orderid" type="text" name="orderid"  lay-verify="" placeholder="请输入订单编号" autocomplete="off" class="layui-input">
@@ -43,7 +39,7 @@
 			</div>
 			<div class="layui-form-item">
 			     <div class="layui-inline">
-				     <label class="layui-form-label">退货申请日期:</label>
+				     <label class="layui-form-label">订单申请日期:</label>
 					    <div class="layui-input-inline">
 					      <input id="startTime" type="text" name="startTime"  lay-verify="" placeholder="起始日期" autocomplete="off" class="layui-input">
 					    </div>
@@ -52,6 +48,17 @@
 				    	</div>
 				</div>
 			</div> 
+			<div class="layui-form-item">
+				    <label class="layui-form-label">流程状态</label>
+				    <div class="layui-input-inline">
+				      <select name="flag" lay-filter="flag" id="flag">
+				        <option value="" selected="selected">全部</option>
+				        <option value="3">订单审核中</option>
+				        <option value="4">订单审核不通过</option>
+				        <option value="6">待发货</option>
+				      </select>
+				    </div>
+				  </div>
 			    	<button class="layui-btn layui-btn-primary" id="queryOrders">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="resetInput">重置</button>
 	       
@@ -59,12 +66,23 @@
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
-<script type="text/html" id="indexTpl">
-    {{d.LAY_TABLE_INDEX+1}}
-</script>
 <script type="text/html" id="bar">
-  <a class="layui-btn layui-btn-mini" lay-event="confirm" id="confirm">去确认</a>
-  <a class="layui-btn layui-btn-mini" lay-event="check"  id="check">查看物流</a>
+  <a class="layui-btn layui-btn-mini" lay-event="audit" id="audit">审核</a>
+  <a class="layui-btn layui-btn-mini" lay-event="query" id="query">查看</a>
+</script>
+<script type="text/html" id="date">
+{{#  
+   var da = d.createtime;
+    da = new Date(da);
+    var year = da.getFullYear();
+    var month = da.getMonth()+1;
+    var date = da.getDate();
+    console.log([year,month,date].join('-'));
+  var fn = function(){
+    return [year,month,date].join('-');
+  }; 
+}}
+{{ fn() }}
 </script>
 	<script>
 		layui.use(['laydate','table','laypage','layer'], function(){
@@ -73,54 +91,58 @@
 			  var layer = layui.layer;
 			  var laydate = layui.laydate;
 			  var $ = layui.jquery;
-			  
 				//执行一个laydate实例
 				  laydate.render({
 				    elem: '#startTime', //指定元素
+				  /*   event:'click',//触发事件 */
 				    type:'datetime'
+				  /*   ,format:'yyyy-MM-dd HH:mm:ss' */
 				  });
 				  //执行一个laydate实例
 				  laydate.render({
 				    elem: '#endTime', //指定元素
-				    type:'datetime'
+				  /*   event:'click',//触发事件 */
+				    type:'datetime'/* ,
+				    format:'yyyy-MM-dd HH:mm:ss' */
 				  }); 
+			  
 			  table.render({
 			    elem: '#orderList'
 			    ,url: '<%=path%>/order/show.json' //数据接口
-			    ,where:{flag:1} 
-			    ,id:'orderToBeRecieved'
+			    ,where:{flag:3}
+			    ,id:'orderToBeAudit'
 			    ,page:true
 			    ,cols: [[ //表头
-			       {title: '序号', align:'center',templet:'#indexTpl'}
-			      ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
-			      ,{field: 'name', title: '店主名称', align:'center'}
-			      ,{field: 'selfname', title: '店铺名称', align:'center'}
-			      ,{field: 'money', title: '退款金额',align:'center'}
-			      ,{field: 'createtime', title: '退货申请日期', type:'datetime', width:230, align:'center'}
-			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
+			      {title: '序号', type:'numbers',width:70,align:'center',sort:true}
+			      ,{field: 'orderid', title: '订单编号',width:110, align:'center',sort:true}
+			      ,{field: 'name', title: '店主名称',width:90, align:'center'}
+			      ,{field: 'shopkeeper', title: '核心商户名称',width:130, align:'center'}
+			      ,{field: 'money', title: '订单金额',width:90,align:'center'}
+			      ,{field: 'payment', title: '订单首付',width:90,align:'center'}
+			      ,{field: 'sumMoney',  title: '店付金额',width:90,align:'center'}
+			      ,{field: 'createtime', title: '订单申请日期',templet:'#date', width:230, align:'center'}
+			      ,{field: 'flag', title: '订单状态',width:110, align:'center'}
+			      ,{field: 'tool', title: '操作', width:210,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
 			  
 			  //查询
 			  $('#queryOrders').on('click',function(){
 				  var name = $('#name').val();
-				  var selfname = $('#selfname').val();
 				  var orderid = $('#orderid').val();
 				  var startTime = $('#startTime').val();
 				  var endTime = $('#endTime').val();
-				  //var flag=1;//待确认订单1，已拒绝2，订单审核中3，订单审核不通过4，待签约5，待发货6......默认如果不输入的话查询全部
-				  //待确认的退货申请，flag未确定
-				  table.reload('orderToBeRecieved', {
+				  var flag=$('#flag').val();
+				  table.reload('orderToBeAudit', {
 					  page:{
 						  curr:1//重新从第一页开始
 					  },
-					  where: {name:name,selfname:selfname,orderid:orderid,startTime:startTime,endTime:endTime/* ,flag:flag */}
+					  where: {name:name,orderid:orderid,startTime:startTime,endTime:endTime,flag:flag}
 					});
 			  })
 			  //重置
 			  $('#resetInput').on('click',function(){
 				  $('#name').val('');
-				  $('#selfname').val('');
 				  $('#orderid').val('');
 				  $('#startTime').val('');
 				  $('#endTime').val('');
@@ -129,11 +151,11 @@
 			 table.on('tool(orderTables)', function(obj){
 					 var data = obj.data,  //获得当前行数据
 					 layEvent = obj.event; //获得 lay-event 对应的值
-					 if(layEvent=='confirm'){//确认
-						  window.location.href="<%=path%>/page/main/rejected/toRecievedRejected.jsp?orderid="+data.orderid; 
-					 }else if(layEvent=='check'){//查看物流，跳转到具体的物流页面
-						  window.location.href="<%=path%>/page/main/rejected/check.jsp?orderid="+data.orderid;
-					 }
+					 if(layEvent=='audit'){//审核
+						   window.location.href="<%=path%>/page/main/order/audit.jsp?isQuery=1&orderid="+data.orderid; 
+					 }else if(layEvent=='query'){//查看
+						 window.location.href="<%=path%>/page/main/order/audit.jsp?orderid="+data.orderid;
+					 } 
 				});
 			});
 	</script>

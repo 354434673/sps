@@ -70,7 +70,7 @@
 			        ,page:true
 				    ,cols: 
  					 [[ //表头
- 				      {field: 'orderid', title: '订单编号',align:'center'},
+ 				      {field: 'orderid',type:'numbers',title: '订单编号',align:'center'},
  				      {field: 'money', title: '订单金额',align:'center'},
  				      {field: 'servicescale', title: '代销服务费率',align:'center'},
  				      {field: 'servicemoney', title: '代销服务费',align:'center'},
@@ -93,7 +93,7 @@
 				    ,id:'orderGoods'
 				    ,page:true
 				    ,cols: [[ //表头
-				      {title: '序号', align:'center',templet:'#indexTpl'} 
+				      {title: '序号', align:'center',type:'numbers'} 
 				      ,{field: 'sku', title: 'SKU编号', align:'center',sort:true}
 				      ,{field: 'skuname', title: '商品名称', align:'center'}
 				      ,{field: 'color', title: '规格', align:'center'}

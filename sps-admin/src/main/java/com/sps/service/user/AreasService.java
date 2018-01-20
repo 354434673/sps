@@ -3,7 +3,13 @@ package com.sps.service.user;
 import java.util.List;
 
 import com.sps.entity.areas.Areas;
-
+/**
+ * 获得省市级service接口
+ * @ClassName:  AreasService   
+ * @Description:TODO(这里用一句话描述这个类的作用)   
+ * @author YangNingSheng
+ * @date 2018年1月20日 下午4:42:17
+ */
 public interface AreasService {
 	/**
 	 * 获得省市级

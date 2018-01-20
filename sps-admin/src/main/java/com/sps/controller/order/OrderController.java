@@ -126,9 +126,10 @@ public class OrderController {
 	 * @return
 	 */
 	@RequestMapping("/updateConfirmOrderFlag")
-	public String updateOrderFlag(String orderid,String flag,String remark){
-		orderService.updateOrderFlag(orderid, flag, remark);
-		return "/order/afterConfimed";
+	@ResponseBody
+	public HashMap<String, Object> updateOrderFlag(String orderid,String flag,String remark){
+		HashMap<String, Object> updateOrderFlag = orderService.updateOrderFlag(orderid, flag, remark);
+		return updateOrderFlag;
 	}
 	
 	/**
