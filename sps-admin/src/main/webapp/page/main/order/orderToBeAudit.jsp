@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>订单管理</title>
-<!-- 待确认订单 -->
+<!-- 订单审核 -->
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"

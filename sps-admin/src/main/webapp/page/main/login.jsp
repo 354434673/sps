@@ -385,7 +385,8 @@ to {
 	</div>
 	<script type="text/javascript">
 	if (window != top) {
-		top.location.href = location.href;  
+			alert('会话超时,请重新登陆')
+			top.location.href = location.href;  
 	} 
 !function(ROOT, callback) {
     var testStyle = document.createElement("div").style, camelCase = function(a) {

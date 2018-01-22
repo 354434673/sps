@@ -64,7 +64,21 @@
 </script>
 <script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="confirm" id="confirm">去确认</a>
-  <a class="layui-btn layui-btn-mini" lay-event="check"  id="check">查看物流</a>
+  <a class="layui-btn layui-btn-mini" lay-event="express" id="express">查看物流</a>
+</script>
+<script type="text/html" id="date">
+{{#  
+   var da = d.createtime;
+    da = new Date(da);
+    var year = da.getFullYear();
+    var month = da.getMonth()+1;
+    var date = da.getDate();
+    console.log([year,month,date].join('-'));
+  var fn = function(){
+    return [year,month,date].join('-');
+  }; 
+}}
+{{ fn() }}
 </script>
 	<script>
 		layui.use(['laydate','table','laypage','layer'], function(){
@@ -91,14 +105,14 @@
 			    ,id:'orderToBeRecieved'
 			    ,page:true
 			    ,cols: [[ //表头
-			       {title: '序号', align:'center',templet:'#indexTpl'}
-			      ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
-			      ,{field: 'name', title: '店主名称', align:'center'}
-			      ,{field: 'selfname', title: '店铺名称', align:'center'}
-			      ,{field: 'money', title: '退款金额',align:'center'}
-			      ,{field: 'createtime', title: '退货申请日期', type:'datetime', width:230, align:'center'}
-			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
-			    ]]
+					       {title: '序号', align:'center',type:'numbers'} 
+			 			  ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
+					      ,{field: 'name', title: '店主名称', align:'center'}
+					      ,{field: 'selfname', title: '店铺名称', align:'center'}
+					      ,{field: 'money', title: '退款金额',align:'center'}
+					      ,{field: 'createtime', title: '退货申请日期', templet:'#date', width:230, align:'center'}
+					      ,{field: 'tool', title: '操作', width:200,align:'center',toolbar:'#bar'}
+					    ]]
 			  });
 			  
 			  //查询
@@ -131,8 +145,8 @@
 					 layEvent = obj.event; //获得 lay-event 对应的值
 					 if(layEvent=='confirm'){//确认
 						  window.location.href="<%=path%>/page/main/rejected/toRecievedRejected.jsp?orderid="+data.orderid; 
-					 }else if(layEvent=='check'){//查看物流，跳转到具体的物流页面
-						  window.location.href="<%=path%>/page/main/rejected/check.jsp?orderid="+data.orderid;
+					 }else if(layEvent == 'express'){
+						 window.location.href="<%=path%>/page/main/order/queryExpress.jsp?orderid="+data.orderid;
 					 }
 				});
 			});

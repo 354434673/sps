@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>用户管理</title>
+<title>操作员管理</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -54,9 +54,7 @@
 </script>
 <!-- 进行数据渲染 -->
 <script type="text/html" id="roleTpl">
-  {{#  layui.each(d.role, function(index, item){ }}
-    {{item.roleName}},
-  {{#  }); }}
+  无
 </script>
 	<script>
 		layui.use(['table','laypage','layer'], function(){
@@ -67,8 +65,8 @@
 			  $('#add').on('click', function() {
 				  layer.open({
 					  type: 2, 
-					  area: ['70%', '80%'],//宽高
-					  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+					  area: ['70%', '82%'],//宽高
+					  content: '<%=path%>/page/main/operator/addOperator.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					  cancel: function(index, layero){ 
 						  table.reload('userId', {
 							});
@@ -82,11 +80,12 @@
 			    ,page:true
 			    ,cols: [[ //表头
 			      {field: 'userId',type:'numbers', title: 'ID', align:'center'}
-			      ,{field: 'userUsername', title: '用户名', align:'center'}
-			      ,{field: 'userName', title: '姓名',align:'center'}
+			      ,{field: 'userUsername', title: '登录名',width:140, align:'center'}
+			      ,{field: 'userName', title: '姓名',width:100,align:'center'}
 			      ,{field: 'userPhone', title: '联系电话', width:230, align:'center'}
 			      ,{field: 'userEmail', title: '电子邮箱', width:230,align:'center'} 
-			      ,{field: 'role', title: '角色', align:'center',templet: '#roleTpl'}
+			      ,{field: 'backups', title: '备注', width:100,align:'center',templet:'#roleTpl'} 
+			      ,{field: 'userState', title: '状态', align:'center'}
 			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 			    ]]
 			  });

@@ -64,6 +64,20 @@
 <script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="toRefundment" id="toRefundment">去退款</a>
 </script>
+<script type="text/html" id="date">
+{{#  
+   var da = d.createtime;
+    da = new Date(da);
+    var year = da.getFullYear();
+    var month = da.getMonth()+1;
+    var date = da.getDate();
+    console.log([year,month,date].join('-'));
+  var fn = function(){
+    return [year,month,date].join('-');
+  }; 
+}}
+{{ fn() }}
+</script>
 	<script>
 		layui.use(['laydate','table','laypage','layer'], function(){
 			  var table = layui.table;
@@ -91,14 +105,14 @@
 			    ,id:'orderToBeRecieved'
 			    ,page:true
 			    ,cols: [[ //表头
-			       {title: '序号', align:'center',type:'numbers'} 
-				  ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
-			      ,{field: 'name', title: '店主名称', align:'center'}
-			      ,{field: 'selfname', title: '店铺名称', align:'center'}
-			      ,{field: 'money', title: '退款金额',align:'center'}
-			      ,{field: 'createtime', title: '退货申请日期', type:'datetime', width:230, align:'center'}
-			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
-			    ]]
+					       {title: '序号', align:'center',type:'numbers'} 
+			 			  ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
+					      ,{field: 'name', title: '店主名称', align:'center'}
+					      ,{field: 'selfname', title: '店铺名称', align:'center'}
+					      ,{field: 'money', title: '退款金额',align:'center'}
+					      ,{field: 'createtime', title: '退货申请日期', templet:'#date', width:230, align:'center'}
+					      ,{field: 'tool', title: '操作', width:140,align:'center',toolbar:'#bar'}
+					    ]]
 			  });
 			  
 			  //查询

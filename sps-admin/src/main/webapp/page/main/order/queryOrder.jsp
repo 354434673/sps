@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>订单管理</title>
-<!-- 全部订单 -->
+<!-- 订单查询 -->
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -35,6 +35,10 @@
 			    <label class="layui-form-label">订单编号:</label>
 			    <div class="layui-input-inline">
 			      <input id="orderid" type="text" name="orderid"  lay-verify="" placeholder="请输入订单编号" autocomplete="off" class="layui-input">
+			    </div>
+			    <label class="layui-form-label">核心商户名称:</label>
+			    <div class="layui-input-inline">
+			      <input id="orderid" type="text" name="orderid"  lay-verify="" placeholder="核心商户名称" autocomplete="off" class="layui-input">
 			    </div>
 			 </div>
 			 <div class="layui-form-item">
@@ -77,7 +81,6 @@
 		src="<%=path%>/page/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="detail"  id="detail">详情</a>
-  <a class="layui-btn layui-btn-mini" lay-event="print" id="print">面单打印</a>
   <a class="layui-btn layui-btn-mini" lay-event="express" id="express">查看物流</a>
 </script>
 <script type="text/html" id="date">
@@ -129,7 +132,7 @@
 				      ,{field: 'sumMoney',  title: '实销金额',width:100,align:'center'}
 				      ,{field: 'createtime', title: '订单申请日期',templet:'#date',width:150, align:'center'}
 				      ,{field: 'flag', title: '订单状态',width:100,align:'center'}
-				      ,{field: 'tool', title: '操作', width:300,align:'center',toolbar:'#bar'}
+				      ,{field: 'tool', title: '操作', width:200,align:'center',toolbar:'#bar'}
 		    ]]
 			  });
 			  //查询
@@ -155,7 +158,7 @@
 					 var data = obj.data,  //获得当前行数据
 					 layEvent = obj.event; //获得 lay-event 对应的值
 					 if(layEvent=='detail'){//详情
-						 window.location.href="<%=path%>/page/main/order/detail.jsp?orderid="+data.orderid;
+						 window.location.href="<%=path%>/page/main/order/queryOfDetail.jsp?orderid="+data.orderid;
 					 }else if(layEvent=='print'){//打印
 						 window.location.href="<%=path%>/page/main/order/print.jsp?orderid="+data.orderid;
 					 }else if(layEvent == 'express'){
