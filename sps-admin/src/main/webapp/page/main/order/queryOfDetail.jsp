@@ -158,6 +158,14 @@
 		    </div>
 		 </div>
       	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>合同文本</legend>
+		</fieldset>
+		 <div class="layui-form-item" >
+			 <div style="padding-left: 90px">
+			    <button class="layui-btn layui-btn-primary" id="queryOrders">查看</button>
+			 </div>
+		 </div>
+      	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>商品列表</legend>
 		</fieldset>
 		<table id="orderGoodsDetail" lay-filter="orderGoodsDetail">

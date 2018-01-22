@@ -20,15 +20,11 @@
 <link rel="stylesheet"
 	href="<%=path%>/page/layui/css/layui.css" media="all"/>
 <style type="text/css">
-	tr th{
-		text-align: center;
-	}
 </style>
 </head>
 <body>
 	<div style="margin: 15px;">
-	  
-	  <div>
+	 	<div align="center">
 			<button id="back" class="layui-btn layui-btn-normal" >返回</button>
 			<button id="recharge" class="layui-btn layui-btn-warm" >确认充值</button>
 		</div>
@@ -41,8 +37,6 @@
 			  var laypage = layui.laypage;
 			  var layer = layui.layer;
 			  var $ = layui.jquery;
-			  
-			  
 			  
 			  $(document).on("click","#back",function(){
  				  window.location.href='<%=path%>/page/main/rejected/toRefundmentRejected.jsp?orderid='+<%=request.getParameter("orderid")%>;

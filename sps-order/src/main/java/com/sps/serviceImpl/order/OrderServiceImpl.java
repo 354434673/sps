@@ -357,10 +357,16 @@ public HashMap<String, Object> updatePriceBatch(List<OrderGoods> goods) {
 			 case "6"://待发货
 			 case "7"://物流审核中
 			 case "8"://物流审核不通过
-	 		 case "9"://待还款
-	 		 case "10"://已完成
-	 		 case "11"://已退货
-	 		 case "12"://已取消
+	 		 //case "9"://待还款
+	 		 case "9"://已完成
+	 		 case "10"://已退货
+	 		 case "11"://已取消
+	 		 case "12"://待确认退货
+	 		 case "13"://待确认退货未通过
+	 		 case "14"://已确认退货审核
+	 		 case "15"://已确认退货审核未通过
+	 		 case "16"://待收货退款
+	 		 case "17"://待退款退货
 				 //这里处理的逻辑，需要更新数据库的状态，如果有说明则将remark添加入说明中
 	 			 result=orderMapper.updateOrderFlag(orderid,flag,remark);
 				 hashMap.put("count", result);

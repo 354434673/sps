@@ -156,13 +156,13 @@
 					  layer.msg('拒绝理由不可为空',{icon: 2});
 				  }else{
 					  //这里需要提交到后台处理，修改订单状态码为已拒绝，并将信息发送到风控
-					  update(2,remark,"退货拒绝成功,1秒后跳转")
+					  update(13,remark,"退货拒绝成功,1秒后跳转")
 				  }
 			  });
 			  $(document).on("click","#agree",function(){
 				  //这里需要提交到后台处理，修改订单状态码为订单审核中，并将信息发送到风控
 				  //暂时这里不提交风控，只是修改状态，之后再进行提交风控
-				  window.location.href='<%=path%>/rejected/updateRejectedOrderFlag?flag=3&orderid='+<%=request.getParameter("orderid")%>;
+				  update(14,null,"订单已成功,1秒后跳转")
 			  });
 			  //更改状态方法
 			  function update(flag,remark,msg){
@@ -176,7 +176,7 @@
 						  layer.msg(msg,{icon: 1});
 						  setTimeout(function(){
 							  //跳转到上一页
-							  window.location.href='<%=path%>/page/main/order/orderToBeConfimed.jsp'
+							  window.location.href='<%=path%>/page/main/rejected/orderToBeConfirmRejected.jsp'
 						  },1000);
 					  },
 					  error:function(){

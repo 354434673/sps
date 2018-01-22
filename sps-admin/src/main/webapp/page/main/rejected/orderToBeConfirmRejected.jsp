@@ -99,11 +99,11 @@
 			  table.render({
 			    elem: '#orderList'
 			    ,url: '<%=path%>/order/show.json' //数据接口
-			    ,where:{flag:1} 
+			    ,where:{flag:12} 
 			    ,id:'orderToBeRejected'
 			    ,page:true
 			    ,cols: [[ //表头
-			       {title: '序号', align:'center',templet:'#indexTpl'} 
+			       {title: '序号', align:'center',type:'numbers'} 
 	 			  ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
 			      ,{field: 'name', title: '店主名称', align:'center'}
 			      ,{field: 'selfname', title: '店铺名称', align:'center'}
