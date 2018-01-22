@@ -54,10 +54,10 @@
 
 	<bean id="loginOut" class="com.sps.system.security.filter.LogoutFilter" />
 	<bean id="myAuthc" class="com.sps.system.security.filter.MyFilter" />
-	<bean id="systemAuthorizingRealm" class="sps-sps.system.security.SystemAuthorizingRealm">
+	<bean id="systemAuthorizingRealm" class="com.sps.system.security.SystemAuthorizingRealm">
 		<!-- 密码加密验证方式 -->  
         <property name="credentialsMatcher">
-            <bean class="sps-sps.system.security.matcher.HashedCredentialsMatcher">
+            <bean class="com.sps.system.security.matcher.HashedCredentialsMatcher">
                 <!--<property name="hashAlgorithmName" value="MD5" />-->
             </bean>
         </property>
@@ -70,7 +70,7 @@
 	</bean>
 	
 	<!-- 自定义会话管理配置 -->
-	<bean id="sessionManager" class="sps-sps.system.session.SessionManager">
+	<bean id="sessionManager" class="com.sps.system.session.SessionManager">
 		<!-- 会话超时时间，单位：毫秒 -->
 		<property name="globalSessionTimeout" value="${session.sessionTimeout}" />
 		<!-- 定时清理失效会话, 清理用户直接关闭浏览器造成的孤立会话 -->

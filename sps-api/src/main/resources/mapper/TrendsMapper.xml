@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.TrendsDao">
+
+	<sql id="columns">
+		T_ID, T_TITLE, T_CREATETIME, T_CONTENT, T_IMG, T_REMARK,
+		T_BAK, T_ISUSE 
+	</sql>
+
+	<!-- select -->
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM SPS_APP_TRENDS
+	</select>
+
+	<select id="countByEntity" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM SPS_APP_TRENDS
+	  	<if test="entity != null">
+			<where>
+				<if test="entity.tTitle != null and entity.tTitle != ''">
+					AND T_TITLE = #{entity.tTitle}
+				</if>
+				<if test="entity.tIsuse != null">
+					AND T_ISUSE = #{entity.tIsuse}
+				</if>
+			</where>
+		</if>
+	</select>
+
+	<select id="get" resultType="com.sps.entity.app.SpsAppTrends">
+		SELECT * FROM SPS_APP_TRENDS WHERE B_ID = #{bId}
+	</select>
+
+	<select id="find" resultType="com.sps.entity.app.SpsAppTrends">
+		SELECT * FROM SPS_APP_TRENDS
+		<if test="entity != null">
+			<where>
+				<if test="entity.tTitle != null and entity.tTitle != ''">
+					AND T_TITLE = #{entity.tTitle}
+				</if>
+				<if test="entity.tIsuse != null">
+					AND T_ISUSE = #{entity.tIsuse}
+				</if>
+			</where>
+		</if>
+	</select>
+
+	<select id="query" resultType="com.sps.entity.app.SpsAppTrends">
+		SELECT * FROM SPS_APP_TRENDS
+		<if test="entity != null">
+			<where>
+				<if test="entity.tTitle != null and entity.tTitle != ''">
+					AND T_TITLE = #{entity.tTitle}
+				</if>
+				<if test="entity.tIsuse != null">
+					AND T_ISUSE = #{entity.tIsuse}
+				</if>
+			</where>
+		</if>
+		ORDER BY T_ISUSE DESC
+	</select>
+
+	<select id="queryByPage" resultType="com.sps.entity.app.SpsAppTrends">
+		SELECT * FROM SPS_APP_TRENDS
+	  	<if test="entity != null">
+			<where>
+				<if test="entity.tTitle != null and entity.tTitle != ''">
+					AND T_TITLE = #{entity.tTitle}
+				</if>
+				<if test="entity.tIsuse != null">
+					AND T_ISUSE = #{entity.tIsuse}
+				</if>
+			</where>
+		</if>
+		ORDER BY T_ISUSE DESC
+		<if test="page != null">
+			LIMIT #{page.start}, #{page.pagesize}
+		</if>
+	</select>
+
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.BannerDao">
+
+	<sql id="columns">
+		B_ID, B_NAME, B_PATH, B_CREATETIME, B_INDEX, B_CAROUSELTIME,
+		B_SECOND, B_REMARK, B_ISUSE, B_LINKADDRESS 
+	</sql>
+
+	<!-- select -->
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM SPS_APP_BANNER
+	</select>
+
+	<select id="countByEntity" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM SPS_APP_BANNER
+	  	<if test="entity != null">
+			<where>
+				<if test="entity.bName != null and entity.bName != ''">
+					AND B_NAME = #{entity.bName}
+				</if>
+			</where>
+		</if>
+	</select>
+
+	<select id="get" resultType="com.sps.entity.app.SpsAppBanner">
+		SELECT * FROM SPS_APP_BANNER WHERE B_ID = #{bId}
+	</select>
+
+	<select id="find" resultType="com.sps.entity.app.SpsAppBanner">
+		SELECT * FROM SPS_APP_BANNER
+		<if test="entity != null">
+			<where>
+				<if test="entity.bName != null and entity.bName != ''">
+					AND B_NAME = #{entity.bName}
+				</if>
+			</where>
+		</if>
+	</select>
+
+	<select id="query" resultType="com.sps.entity.app.SpsAppBanner">
+		SELECT * FROM SPS_APP_BANNER
+		<if test="entity != null">
+			<where>
+				<if test="entity.bName != null and entity.bName != ''">
+					AND B_NAME = #{entity.bName}
+				</if>
+			</where>
+		</if>
+		ORDER BY B_INDEX DESC
+	</select>
+
+	<select id="queryByPage" resultType="com.sps.entity.app.SpsAppBanner">
+		SELECT * FROM SPS_APP_BANNER
+	  	<if test="entity != null">
+			<where>
+				<if test="entity.bName != null and entity.bName != ''">
+					AND B_NAME = #{entity.bName}
+				</if>
+			</where>
+		</if>
+		ORDER BY B_INDEX DESC
+		<if test="page != null">
+			LIMIT #{page.start}, #{page.pagesize}
+		</if>
+	</select>
+
+</mapper>
