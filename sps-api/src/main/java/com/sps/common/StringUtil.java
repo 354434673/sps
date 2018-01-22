@@ -1,17 +1,12 @@
 package com.sps.common;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
-import java.text.Collator;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Pattern;
+
 import com.alibaba.fastjson.JSONObject;
 
 
@@ -20,7 +15,7 @@ public class StringUtil {
 	/**
 	 * 判断是否是一个中文汉字
 	 * @param c
-	 *            字符
+	 *            字符 
 	 * @return true表示是中文汉字，false表示是英文字母
 	 * @throws UnsupportedEncodingException    使用了JAVA不支持的编码格式
 	 */

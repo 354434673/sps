@@ -3,14 +3,15 @@ package com.sps.common;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
 import javax.crypto.Cipher;
 import javax.crypto.Mac;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
 import org.apache.commons.codec.binary.Base64;
+
 import com.alibaba.fastjson.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DESUtil {
 
@@ -19,7 +20,6 @@ public class DESUtil {
 	private static final byte[] IV = {9, 3, 1, 2, 7, 0, 8, 6};
 	private static final String DES_KEY = "o!20&^/@";
 
-	private static Logger logger = LoggerFactory.getLogger(DESUtil.class);
 
 	/**
 	 * base64加密算法

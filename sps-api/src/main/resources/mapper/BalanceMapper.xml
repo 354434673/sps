@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.BalanceDao">
+
+	<sql id="columns">
+		BALANCE_ID, BALANCE_TYPE, BALANCE_AMOUNT, BALANCE_AMOUNT_USED, BALANCE_AMOUNT_USABLE, BALANCE_EXPIRE_DATE,
+		BALANCE_START_DATE, BALANCE_STATE, BALANCE_CLIENT_NUM 
+	</sql>
+
+	<!-- select -->
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM BALANCE
+	</select>
+
+	<select id="countByEntity" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM BALANCE
+	  	<if test="entity != null">
+			<where>
+				<if test="entity.balanceType != null and entity.balanceType != ''">
+					AND BALANCE_TYPE = #{entity.balanceType}
+				</if>
+				<if test="entity.balanceState != null">
+					AND BALANCE_STATE = #{entity.balanceState}
+				</if>
+				<if test="entity.balanceClientNum != null and entity.balanceClientNum != ''">
+					AND BALANCE_CLIENT_NUM = #{entity.balanceClientNum}
+				</if>
+			</where>
+		</if>
+	</select>
+
+	<select id="get" resultType="com.sps.entity.app.Balance">
+		SELECT * FROM BALANCE WHERE B_ID = #{bId}
+	</select>
+
+	<select id="find" resultType="com.sps.entity.app.Balance">
+		SELECT * FROM BALANCE
+		<if test="entity != null">
+			<where>
+				<if test="entity.balanceType != null and entity.balanceType != ''">
+					AND BALANCE_TYPE = #{entity.balanceType}
+				</if>
+				<if test="entity.balanceState != null">
+					AND BALANCE_STATE = #{entity.balanceState}
+				</if>
+				<if test="entity.balanceClientNum != null and entity.balanceType != ''">
+					AND BALANCE_CLIENT_NUM = #{entity.balanceClientNum}
+				</if>
+			</where>
+		</if>
+	</select>
+
+	<select id="query" resultType="com.sps.entity.app.Balance">
+		SELECT * FROM BALANCE
+		<if test="entity != null">
+			<where>
+				<if test="entity.balanceType != null and entity.balanceType != ''">
+					AND BALANCE_TYPE = #{entity.balanceType}
+				</if>
+				<if test="entity.balanceState != null">
+					AND BALANCE_STATE = #{entity.balanceState}
+				</if>
+				<if test="entity.balanceClientNum != null and entity.balanceType != ''">
+					AND BALANCE_CLIENT_NUM = #{entity.balanceClientNum}
+				</if>
+			</where>
+		</if>
+		ORDER BY BALANCE_ID DESC
+	</select>
+
+	<select id="queryByPage" resultType="com.sps.entity.app.Balance">
+		SELECT * FROM BALANCE
+	    <if test="entity != null">
+			<where>
+				<if test="entity.balanceType != null and entity.balanceType != ''">
+					AND BALANCE_TYPE = #{entity.balanceType}
+				</if>
+				<if test="entity.balanceState != null">
+					AND BALANCE_STATE = #{entity.balanceState}
+				</if>
+				<if test="entity.balanceClientNum != null and entity.balanceType != ''">
+					AND BALANCE_CLIENT_NUM = #{entity.balanceClientNum}
+				</if>
+			</where>
+		</if>
+		ORDER BY BALANCE_ID DESC
+		<if test="page != null">
+			LIMIT #{page.start}, #{page.pagesize}
+		</if>
+	</select>
+
+</mapper>

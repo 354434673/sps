@@ -5,21 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+
 import org.apache.shiro.SecurityUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.sps.common.Md5Util;
 import com.sps.dao.SpsUserDao;
 import com.sps.entity.user.SpsUser;
 import com.sps.entity.user.SpsUserExample;
 import com.sps.entity.user.SpsUserExample.Criteria;
-import com.sps.service.UserService;
 
 
 @RestController
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl {
 	@Resource
 	private SpsUserDao dao;
 

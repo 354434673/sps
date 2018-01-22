@@ -91,6 +91,14 @@ public class Message {
 		jsonObject.put(key, result);
 		return jsonObject.toJSONString();
 	}
+	
+	public static String responseStr(String code, String msg, Object result){
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("code", code);
+		jsonObject.put("msg", msg);
+		jsonObject.put("result", result);
+		return jsonObject.toJSONString();
+	}
 
 
 	public static String responseSystemError(){
