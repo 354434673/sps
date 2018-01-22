@@ -15,7 +15,7 @@ public class StringUtil {
 	/**
 	 * 判断是否是一个中文汉字
 	 * @param c
-	 *            字符
+	 *            字符 
 	 * @return true表示是中文汉字，false表示是英文字母
 	 * @throws UnsupportedEncodingException    使用了JAVA不支持的编码格式
 	 */
