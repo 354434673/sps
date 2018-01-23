@@ -1,5 +1,6 @@
 package org.sps.service.merchant.write;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import org.sps.entity.merchant.SpsChannel;
@@ -13,7 +14,7 @@ import org.sps.entity.merchant.SpsChannelOpenAccount;
 /*
  * 写相关
  */
-public interface ChannelWriteService {
+public interface ChannelWriteService extends Serializable{
 	
 	HashMap<String, String> insertAll(SpsChannel channel, 
 			SpsChannelEnterprise enterprise, 

@@ -1,12 +1,13 @@
 package org.sps.service.order;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
 import org.sps.entity.order.OrderGoods;
 import org.sps.entity.order.OrderGoodsVo;
 
-public interface OrderService {
+public interface OrderService extends Serializable{
 
 	/**
 	 * 根据oId查看订单，以及订单中的商品
