@@ -22,9 +22,9 @@ import com.alibaba.dubbo.config.annotation.Reference;
 @Controller
 @RequestMapping("/salesman")
 public class SalesmanController {
-	@Reference(check=false)
+	@Reference(check=false,group="dianfu-dev")
 	private ChannelSalesmanWriteService salesmanWrite;
-	@Reference(check=false)
+	@Reference(check=false,group="dianfu-dev")
 	private ChannelSalesmanReadService salesmanRead;
 	/**
 	 * 添加业务员

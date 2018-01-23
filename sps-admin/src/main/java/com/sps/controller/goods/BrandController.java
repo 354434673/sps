@@ -17,7 +17,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/brand")
 public class BrandController {
-    @Reference(check=false)
+    @Reference(check=false,group="dianfu-dev")
     private BrandService brandService;
 
     /**

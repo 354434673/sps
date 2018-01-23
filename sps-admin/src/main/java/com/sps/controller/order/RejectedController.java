@@ -16,7 +16,7 @@ public class RejectedController {
 
 	Logger logger=Logger.getLogger(this.getClass().getName());
 	
-	@Reference(check=false)
+	@Reference(check=false,group="dianfu-dev")
 	OrderService orderService;
 	
 	

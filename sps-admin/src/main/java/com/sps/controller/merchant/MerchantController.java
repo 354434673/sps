@@ -41,13 +41,13 @@ import com.sps.util.CommonUtil;
 @Controller
 @RequestMapping(value="/merchant")
 public class MerchantController {
-	@Reference(check=false)
+	@Reference(check=false,group="dianfu-dev")
 	private ChannelWriteService chanelWriteService;
-	@Reference(check=false)
+	@Reference(check=false,group="dianfu-dev")
 	private ChannelReadService channelReadService;
-	@Reference(check=false)
+	@Reference(check=false,group="dianfu-dev")
 	private ChannelPicUploadService uploadService;
-	@Reference(check=false)
+	@Reference(check=false,group="dianfu-dev")
 	private ChannelPicReadService picReadService;
 	@Resource
 	private UserService userService;

@@ -18,7 +18,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/category")
 public class GoodCategoryController {
-    @Reference(check=false)
+    @Reference(check=false,group="dianfu-dev")
     GoodCategoryService goodCategoryService;
 
 

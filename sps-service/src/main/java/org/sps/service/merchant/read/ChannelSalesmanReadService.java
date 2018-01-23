@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.sps.entity.merchant.SpsChannelSalesman;
 
-public interface ChannelSalesmanReadService extends Serializable{
+public interface ChannelSalesmanReadService{
 	/**
 	 * 获取业务员列表
 	 * @Title: getSalesmanList   

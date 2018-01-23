@@ -12,7 +12,7 @@ import org.sps.entity.merchant.SpsChannelGuarantee;
 import org.sps.entity.merchant.SpsChannelLogistics;
 import org.sps.entity.merchant.SpsChannelOpenAccount;
 
-public interface ChannelReadService extends Serializable{
+public interface ChannelReadService{
 	/**
 	 * 获得所有核心商户
 	 * @Title: getChannelList   

@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import org.sps.entity.merchant.SpsChannelSalesman;
 
-public interface ChannelSalesmanWriteService extends Serializable{
+public interface ChannelSalesmanWriteService{
 	/**
 	 * 添加业务员
 	 * @Title: insertSalesman   

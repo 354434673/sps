@@ -14,7 +14,7 @@ import org.sps.entity.merchant.SpsChannelOpenAccount;
 /*
  * 写相关
  */
-public interface ChannelWriteService extends Serializable{
+public interface ChannelWriteService{
 	
 	HashMap<String, String> insertAll(SpsChannel channel, 
 			SpsChannelEnterprise enterprise, 

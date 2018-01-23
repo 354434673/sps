@@ -17,17 +17,17 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/auditGood")
 public class AuditSaleGoodController {
-    @Reference(check=false)
+    @Reference(check=false,group="dianfu-dev")
     private GoodShopService goodService;
-    @Reference(check=false)
+    @Reference(check=false,group="dianfu-dev")
     private GoodCategoryService goodCategoryService;
-    @Reference(check=false)
+    @Reference(check=false,group="dianfu-dev")
     private GoodShopSkuService goodSkuService;
-    @Reference(check=false)
+    @Reference(check=false,group="dianfu-dev")
     private BrandService brandService;
-    @Reference(check=false)
+    @Reference(check=false,group="dianfu-dev")
     private CustomCategoryService customCategoryService;
-    @Reference(check=false)
+    @Reference(check=false,group="dianfu-dev")
     private GoodSkuService skuService;
 
 

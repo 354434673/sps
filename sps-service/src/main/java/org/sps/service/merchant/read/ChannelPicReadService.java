@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.sps.entity.merchant.SpsChannelPic;
 
-public interface ChannelPicReadService extends Serializable{
+public interface ChannelPicReadService{
 	/**
 	 * 查询该商户不同类型的图片
 	 * @Title: getPicList   
