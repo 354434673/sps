@@ -1,3 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
 <html>
@@ -9,7 +16,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
-	href="../../static/plugins/layui/css/layui.css" media="all" />
+	href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all" />
 <style type="text/css">
 </style>
 </head>
@@ -30,7 +37,7 @@
 		
 	</div>
 <script type="text/javascript"
-		src="/sps-admin//page/static/plugins/layui/layui.all.js"></script>
+		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 <!-- 进行数据渲染 -->
 <script type="text/html" id="channelTpl">
 </script>
@@ -44,7 +51,7 @@
 			  var $ = layui.jquery
 			  table.render({
 			    elem: '#expressList'
-			    ,url: '/sps-admin/express/getExpressList.json' //数据接口
+			    ,url: '<%=path%>/express/getExpressList.json' //数据接口
 			    ,id:'express'
 			    ,page:true
 			    ,cols: [[ //表头

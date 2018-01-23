@@ -1,3 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
 <html>
@@ -9,7 +16,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
-	href="/sps-admin/page/layui/css/layui.css" media="all" />
+	href="<%=path%>/page/layui/css/layui.css" media="all" />
 <style type="text/css">
 </style>
 </head>
@@ -291,7 +298,7 @@
 		   					<a href="javascript:void(0)" class="spsImages" >
 		   					<div class="layui-carousel" id="business" lay-filter="business">
 							  <div carousel-item id="businessList">
-							  	<img alt="" lay-src="/sps-admin/page/static/images/404.png">
+							  	<img alt="" lay-src="<%=path%>/page/static/images/404.png">
 							  </div>
 							</div>
 							</a>
@@ -303,7 +310,7 @@
 		   					<a href="javascript:void(0)" class="spsImages" >
 		   					<div class="layui-carousel" id="corpIdCard-front" lay-filter="corpIdCard-front">
 							  <div carousel-item id="corpIdCard-frontList">	
-							    <img alt="" lay-src="/sps-admin/page/static/images/404.png">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
 							  </div>
 							</div>
 							</a>
@@ -315,7 +322,7 @@
 		   					<a href="javascript:void(0)" class="spsImages" >
 		   					<div class="layui-carousel" id="corpIdCard-reverse" lay-filter="corpIdCard-reverse">
 							  <div carousel-item id="corpIdCard-reverseList">
-							    <img alt="" lay-src="/sps-admin/page/static/images/404.png">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
 							  </div>
 							</div>
 							</a>
@@ -327,7 +334,7 @@
 		   					<a href="javascript:void(0)" class="spsImages" >
 		   					<div class="layui-carousel" id="businessIdCard-front" lay-filter="businessIdCard-front">
 							  <div carousel-item id="businessIdCard-frontList">
-							    <img alt="" lay-src="/sps-admin/page/static/images/404.png">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
 							  </div>
 							</div>
 							</a>
@@ -339,7 +346,7 @@
 		   					<a href="javascript:void(0)" class="spsImages" >
 		   					<div class="layui-carousel" id="businessIdCard-reverse" lay-filter="businessIdCard-reverse">
 							  <div carousel-item id="businessIdCard-reverseList">
-							    <img alt="" lay-src="/sps-admin/page/static/images/404.png">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
 							  </div>
 							</div>
 							</a>
@@ -351,7 +358,7 @@
 		   					<a href="javascript:void(0)" class="spsImages" >
 		   					<div class="layui-carousel" id="panorama" lay-filter="panorama">
 							  <div carousel-item id="panoramaList">
-							    <img alt="" lay-src="/sps-admin/page/static/images/404.png">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
 							  </div>
 							</div>
 							</a>
@@ -363,7 +370,7 @@
 		   					<a href="javascript:void(0)" class="spsImages" >
 		   					<div class="layui-carousel" id="gate" lay-filter="gate">
 							  <div carousel-item id="gateList">
-							    <img alt="" lay-src="/sps-admin/page/static/images/404.png">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
 							  </div>
 							</div>
 							</a>
@@ -375,7 +382,7 @@
 		   					<a href="javascript:void(0)" class="spsImages" >
 		   					<div class="layui-carousel" id="contract" lay-filter="contract">
 							  <div carousel-item id="contractList">
-							    <img alt="" lay-src="/sps-admin/page/static/images/404.png">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
 							  </div>
 							</div>
 							</a>
@@ -387,7 +394,7 @@
 		   					<a href="javascript:void(0)" class="spsImages" >
 		   					<div class="layui-carousel" id="photo" lay-filter="photo">
 							  <div carousel-item id="photoList">
-							    <img alt="" lay-src="/sps-admin/page/static/images/404.png">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
 							  </div>
 							</div>
 							</a>
@@ -403,7 +410,7 @@
 				<button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">返回</button>
 			</div>
 <script type="text/javascript"
-		src="/sps-admin/page/layui/layui.js"></script>
+		src="<%=path%>/page/layui/layui.js"></script>
 		<!-- 进行数据渲染 -->
 <script type="text/html" id="roleTpl">
   {{#  layui.each(d.role, function(index, item){ }}
@@ -424,7 +431,7 @@
 	  //收款信息
 	  table.render({
 		    elem: '#gatherList'
-		    ,url: '/sps-admin/merchant/getGatherList.json' //数据接口
+		    ,url: '<%=path%>/merchant/getGatherList.json' //数据接口
 		    ,where:{channelNum:channelNum}
 		    ,id:'gather'
 		    ,page:true
@@ -443,7 +450,7 @@
 		  });
 	  table.render({
 		    elem: '#gatherList2'
-		    ,url: '/sps-admin/user/userList.json' //数据接口
+		    ,url: '<%=path%>/user/userList.json' //数据接口
 		    ,where:{channelNum:'DF20180136191770'}
 		    ,id:'gather1'
 		    ,page:true
@@ -458,7 +465,7 @@
 				    ]]
 		  });
 	  $.post({//获得物流配送信息
-		  url:'/sps-admin/merchant/getLogistics'
+		  url:'<%=path%>/merchant/getLogistics'
 		  ,dataType:'json'
 		  ,data:{channelNum:channelNum}
 		  ,success:function(result){
@@ -469,7 +476,7 @@
 		  }
 	  })
 	  $.post({//获得属性信息和基本信息
-		  url:'/sps-admin/merchant/getChannel'
+		  url:'<%=path%>/merchant/getChannel'
 		  ,dataType:'json'
 		  ,data:{channelNum:channelNum}
 		  ,success:function(result){
@@ -490,7 +497,7 @@
 		  }
 	  })
 	  $.post({//获得担保信息
-		  url:'/sps-admin/merchant/getGuarantee'
+		  url:'<%=path%>/merchant/getGuarantee'
 		  ,dataType:'json'
 		  ,data:{channelNum:channelNum}
 		  ,success:function(result){
@@ -505,7 +512,7 @@
 		  }
 	  })
 	  $.post({//获得财务指标
-		  url:'/sps-admin/merchant/getFinanceTarget'
+		  url:'<%=path%>/merchant/getFinanceTarget'
 		  ,dataType:'json'
 		  ,data:{channelNum:channelNum}
 		  ,success:function(result){
@@ -513,7 +520,7 @@
 		  }
 	  })
 	  $.post({//获得开户信息
-		  url:'/sps-admin/merchant/getOpenAccount'
+		  url:'<%=path%>/merchant/getOpenAccount'
 		  ,dataType:'json'
 		  ,data:{channelNum:channelNum}
 		  ,success:function(result){
@@ -525,7 +532,7 @@
 		  }
 	  })
 		  $.post({//获得业务信息
-				  url:'/sps-admin/merchant/getBusiness'
+				  url:'<%=path%>/merchant/getBusiness'
 				  ,dataType:'json'
 				  ,data:{channelNum:channelNum}
 				  ,success:function(result){
@@ -538,7 +545,7 @@
 		  }) 
 	  function getProduct(ids){
 		  $.post({//获取主营业务
-			  url:'/sps-admin/category/getFistCategory',
+			  url:'<%=path%>/category/getFistCategory',
 			  dataType:'json',
 			  data:{ids:ids},
 			  success:function(data){
@@ -553,7 +560,7 @@
 		  }
  	function getType(ids){
 	 	  $.post({//主营商品类型
-			  url:'/sps-admin/category/getChildrenCategorys',
+			  url:'<%=path%>/category/getChildrenCategorys',
 			  dataType:'json',
 			  data:{ids:ids},
 			  success:function(data){
@@ -569,7 +576,7 @@
 	} 
 	function getBrand(categoryIds){
 	 	  $.post({//获取主营业务
-			  url:'/sps-admin/brand/getBrandList',
+			  url:'<%=path%>/brand/getBrandList',
 			  dataType:'json',
 			  data:{categoryIds:categoryIds},
 			  success:function(data){
@@ -585,7 +592,7 @@
 	}
 	  console.log(channelNum)
 	  $.post({//获得图片
-		  url:'/sps-admin/merchant/getPicList'
+		  url:'<%=path%>/merchant/getPicList'
 		  ,dataType:'json'
 		  ,async:false//同步,赋值给json,否则会找不到
 		  ,data:{channelNum:channelNum}
@@ -601,31 +608,31 @@
 			  var photoList = '';
 				  $.each(result,function(i,data){
 					  if(data.picType == 0){
-						  businessList += '<img alt="" src="/sps-admin/upload/'+data.picSrc+data.picNewName+'">'
+						  businessList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
 			  			$('#businessList').html(businessList)
 					  }else if(data.picType == 1){
-						  corpIdCardfrontList += '<img alt="" src="/sps-admin/upload/'+data.picSrc+data.picNewName+'">'
+						  corpIdCardfrontList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
 			  			$('#corpIdCard-frontList').html(corpIdCardfrontList)
 					  }else if(data.picType == 2){
-						  corpIdCardreverseList += '<img alt="" src="/sps-admin/upload/'+data.picSrc+data.picNewName+'">'
+						  corpIdCardreverseList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
 			  			$('#corpIdCard-reverseList').html(corpIdCardreverseList)
 					  }else if(data.picType == 3){
-						  businessIdCardfrontList += '<img alt="" src="/sps-admin/upload/'+data.picSrc+data.picNewName+'">'
+						  businessIdCardfrontList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
 			  			$('#businessIdCard-frontList').html(businessIdCardfrontList)
 					  }else if(data.picType == 4){
-						  businessIdCardreverseList += '<img alt="" src="/sps-admin/upload/'+data.picSrc+data.picNewName+'">'
+						  businessIdCardreverseList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
 			  			$('#businessIdCard-reverseList').html(businessIdCardreverseList)
 					  }else if(data.picType == 5){
-						  panoramaList += '<img alt="" src="/sps-admin/upload/'+data.picSrc+data.picNewName+'">'
+						  panoramaList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
 			  			$('#panoramaList').html(panoramaList)
 					  }else if(data.picType == 6){
-						  gateList += '<img alt="" src="/sps-admin/upload/'+data.picSrc+data.picNewName+'">'
+						  gateList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
 			  			$('#gateList').html(gateList)
 					  }else if(data.picType == 7){
-						  contractList += '<img alt="" src="/sps-admin/upload/'+data.picSrc+data.picNewName+'">'
+						  contractList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
 			  			$('#contractList').html(contractList)
 					  }else if(data.picType == 8){
-						  photoList += '<img alt="" src="/sps-admin/upload/'+data.picSrc+data.picNewName+'">'
+						  photoList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
 			  			$('#photoList').html(photoList)
 					  }
 				  })

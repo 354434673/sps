@@ -1,3 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
 <html>
@@ -9,7 +16,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
-	href="/sps-admin/page/layui/css/layui.css" media="all" />
+	href="<%=path%>/page/layui/css/layui.css" media="all" />
 <style type="text/css">
 </style>
 </head>
@@ -71,12 +78,12 @@
     		 <div class="layui-form-item" align="center" id="btn" style="padding-top: 10px" >
 				<button class="layui-btn layui-btn-primary">取消</button>
 				<button class="layui-btn layui-btn-primary" lay-filter="insertGather" id="insertGather" lay-submit>保存</button>
-				<button class="layui-btn layui-btn-primary" lay-filter="insertGather" id="test" >aaa</button>
+				<!-- <button class="layui-btn layui-btn-primary" lay-filter="insertGather" id="test" >aaa</button> -->
 			</div>
 	</div>
 </div>
 <script type="text/javascript"
-		src="/sps-admin/page/layui/layui.js"></script>
+		src="<%=path%>/page/layui/layui.js"></script>
 <script type="text/javascript">
 	  var gatherListJson = []
 	layui.use(['form','table','element'], function(){
