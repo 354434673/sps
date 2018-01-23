@@ -65,7 +65,7 @@
         var layer = layui.layer
         var $ = layui.jquery
         $('#add').on('click', function() {
-            window.location.href="/sps-admin/brand/toAddOrEdit";
+            window.location.href="<%=path%>/brand/toAddOrEdit";
         });
         table.render({
             elem: '#brandList'
@@ -124,7 +124,7 @@
                     layer.close(
                         $.ajax({
                             data: {id: data.brandId},//提交的数据
-                            url: "/sps-admin/brand/delBrand",//提交连接
+                            url: "<%=path%>/brand/delBrand",//提交连接
                             type: 'post',
                             dataType: 'json',
                             success: function (result) {

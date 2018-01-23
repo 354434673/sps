@@ -1,10 +1,11 @@
 package org.sps.service.merchant.read;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.sps.entity.merchant.SpsChannelPic;
 
-public interface ChannelPicReadService {
+public interface ChannelPicReadService{
 	/**
 	 * 查询该商户不同类型的图片
 	 * @Title: getPicList   

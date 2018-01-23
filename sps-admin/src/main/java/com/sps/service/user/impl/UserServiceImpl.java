@@ -52,10 +52,11 @@ public class UserServiceImpl implements UserService{
 		Criteria createCriteria = example.createCriteria();
 		createCriteria.andUserStateEqualTo(0);
 		//如果查询条件不为空,则进入模糊查询
-		if(username != null){
+		if( !(username == null || username.equals(""))){
 			createCriteria.andUserUsernameLike("%"+username+"%");
-		}else if(name != null){
-			createCriteria.andUserUsernameLike("%"+name+"%");
+		}
+		if( !(name == null || name.equals(""))){
+			createCriteria.andUserNameLike("%"+name+"%");
 		}
 		//分页
 		PageHelper.startPage(page,limit);

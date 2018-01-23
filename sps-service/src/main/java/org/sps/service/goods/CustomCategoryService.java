@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public interface CustomCategoryService {
+public interface CustomCategoryService{
 
     /**
      * 新增或者修改

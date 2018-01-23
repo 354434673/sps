@@ -1,3 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
 <html>
@@ -9,9 +16,9 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
-	href="/sps-admin/page/static/plugins/layui/css/layui.css" media="all" />
+	href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all" />
 <link rel="stylesheet"
-	href="/sps-admin/page/static/css/style.css" media="all" />
+	href="<%=path%>/page/static/css/style.css" media="all" />
 <style type="text/css">
 </style>
 </head>
@@ -23,9 +30,9 @@
 		</div>
 </div>
 <script type="text/javascript"
-		src="/sps-admin/page/static/plugins/layui/layui.all.js"></script>
+		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 <script type="text/javascript"
-		src="/sps-admin/page/static/js/layui-xtree2.js"></script>
+		src="<%=path%>/page/static/js/layui-xtree2.js"></script>
 <script type="text/javascript">
 	 var ids = [];
 	 var children = [];
@@ -39,7 +46,7 @@
 	 ids = window.parent.businessProductArray;
 	 //获得树json
     $.post({
-		url:'/sps-admin/category/getChildrenCategorys',
+		url:'<%=path%>/category/getChildrenCategorys',
 		data:{ids:ids.toString()},
 		dataType:'json',
 		async:false,//同步,赋值给json,否则会找不到

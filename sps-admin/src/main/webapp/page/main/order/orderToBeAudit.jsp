@@ -114,14 +114,14 @@
 			    ,page:true
 			    ,cols: [[ //表头
 			      {title: '序号', type:'numbers',width:70,align:'center',sort:true}
-			      ,{field: 'orderid', title: '订单编号',width:110, align:'center',sort:true}
-			      ,{field: 'name', title: '店主名称',width:90, align:'center'}
-			      ,{field: 'shopkeeper', title: '核心商户名称',width:130, align:'center'}
-			      ,{field: 'money', title: '订单金额',width:90,align:'center'}
-			      ,{field: 'payment', title: '订单首付',width:90,align:'center'}
-			      ,{field: 'sumMoney',  title: '店付金额',width:90,align:'center'}
+			      ,{field: 'orderid', title: '订单编号',align:'center',sort:true}
+			      ,{field: 'name', title: '店主名称',align:'center'}
+			      ,{field: 'shopkeeper', title: '核心商户名称',align:'center'}
+			      ,{field: 'money', title: '订单金额',align:'center'}
+			      ,{field: 'payment', title: '订单首付',align:'center'}
+			      ,{field: 'sumMoney',  title: '店付金额',align:'center'}
 			      ,{field: 'createtime', title: '订单申请日期',templet:'#date', width:230, align:'center'}
-			      ,{field: 'flag', title: '订单状态',width:110, align:'center'}
+			      ,{field: 'flag', title: '订单状态',align:'center'}
 			      ,{field: 'tool', title: '操作', width:210,align:'center',toolbar:'#bar'}
 			    ]]
 			  });

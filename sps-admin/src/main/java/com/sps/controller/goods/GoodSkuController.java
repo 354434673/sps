@@ -19,7 +19,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/goodSku")
 public class GoodSkuController {
-    @Reference
+    @Reference(check=false,group="dianfu-dev")
     private GoodSkuService goodskuService;
 
     /**

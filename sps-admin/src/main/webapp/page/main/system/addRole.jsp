@@ -85,7 +85,7 @@
 	 var $ = layui.jquery;
 	 var json;
 	$.post({
-		url:'/sps-admin/menu/getSpecificMenu.json',
+		url:'<%=path%>/menu/getSpecificMenu.json',
 		dataType:'json',
 		async:false,//同步,赋值给json,否则会找不到
 		success:function(data){

@@ -77,7 +77,7 @@
         <table id="goodsList" lay-filter="goodsTables"></table>
     </div>
     <script type="text/javascript"
-            src="/sps-admin/page/layui/layui.js"></script>
+            src="<%=path%>/page/layui/layui.js"></script>
     <script type="text/html" id="bar">
         <a class="layui-btn layui-btn-mini" lay-event="detail">详情</a>
         <a class="layui-btn layui-btn-mini  force" lay-event="audit">强制下架</a>
@@ -95,7 +95,7 @@
         var seconds= da.getSeconds();
         console.log([year,month,date,hours,minutes,seconds].join('-'));
         var fn = function(){
-        return [year,month,date].join('-');
+        return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
         };
         }}
         {{ fn() }}
@@ -191,14 +191,14 @@
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 var tr = obj.tr; //获得当前行 tr 的DOM对象
                 if (layEvent === 'detail') { //查看
-                    window.location.href = "/sps-admin/forceGood/toGoodsDetail?id=" + data.gId;
+                    window.location.href = "<%=path%>/forceGood/toGoodsDetail?id=" + data.gId;
                 } else if (layEvent === 'del') { //删除
                     layer.confirm('真的删除行么', function (index) {
                         obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                         layer.close(
                             $.ajax({
                                 data: {id: data.gId},//提交的数据
-                                url: "/sps-admin/goods/delGoods",//提交连接
+                                url: "<%=path%>/goods/delGoods",//提交连接
                                 type: 'post',
                                 dataType: 'json',
                                 success: function (result) {
@@ -213,7 +213,7 @@
                         //向服务端发送删除指令
                     });
                 } else if (layEvent === 'audit') { //编辑
-                    window.location.href = "/sps-admin/forceGood/toAudit?id=" + data.gId;
+                    window.location.href = "<%=path%>/forceGood/toAudit?id=" + data.gId;
                 }
             });
         });

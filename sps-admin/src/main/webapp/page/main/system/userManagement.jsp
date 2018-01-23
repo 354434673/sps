@@ -132,7 +132,7 @@
 					      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 					      layer.close(index);
   					  			$.post({
-						 			 url:'/sps-admin/user/updateUserState',
+						 			 url:'/<%=path%>/user/updateUserState',
 						 			 dataType:'json',
 						 			 data:{
 						 				 userName:data.userUsername,

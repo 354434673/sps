@@ -1,5 +1,6 @@
 package org.sps.service.merchant.read;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import org.sps.entity.merchant.SpsChannel;
@@ -11,7 +12,7 @@ import org.sps.entity.merchant.SpsChannelGuarantee;
 import org.sps.entity.merchant.SpsChannelLogistics;
 import org.sps.entity.merchant.SpsChannelOpenAccount;
 
-public interface ChannelReadService {
+public interface ChannelReadService{
 	/**
 	 * 获得所有核心商户
 	 * @Title: getChannelList   

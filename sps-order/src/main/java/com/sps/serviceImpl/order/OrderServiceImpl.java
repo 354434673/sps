@@ -18,7 +18,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.order.OrderGoodsMapper;
 import com.sps.dao.order.OrderMapper;
-@Service
+@Service(timeout=2000,group="dianfu-dev")
 @Transactional
 public class OrderServiceImpl implements OrderService {
 

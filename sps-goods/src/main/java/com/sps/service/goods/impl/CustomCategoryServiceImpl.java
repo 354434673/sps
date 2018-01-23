@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service(timeout = 1200000)
+@Service(timeout = 1200000,group="dianfu-dev")
 public class CustomCategoryServiceImpl implements CustomCategoryService {
 
     @Resource

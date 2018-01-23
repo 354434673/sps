@@ -1,10 +1,11 @@
 package org.sps.service.merchant.write;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import org.sps.entity.merchant.SpsChannelSalesman;
 
-public interface ChannelSalesmanWriteService {
+public interface ChannelSalesmanWriteService{
 	/**
 	 * 添加业务员
 	 * @Title: insertSalesman   

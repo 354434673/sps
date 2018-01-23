@@ -127,14 +127,14 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if(layEvent === 'detail'){ //查看
-               window.location.href="/sps-admin/goods/toGoodsDetail?id="+data.gId;
+               window.location.href="<%=path%>/goods/toGoodsDetail?id="+data.gId;
             } else if(layEvent === 'del'){ //删除
                 layer.confirm('真的删除行么', function(index){
                     obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                     layer.close(
                         $.ajax({
                             data: {id: data.gId},//提交的数据
-                            url: "/sps-admin/goods/delGoods",//提交连接
+                            url: "<%=path%>/goods/delGoods",//提交连接
                             type: 'post',
                             dataType: 'json',
                             success: function (result) {
@@ -149,7 +149,7 @@
                     //向服务端发送删除指令
                 });
             } else if(layEvent === 'edit'){ //编辑
-                window.location.href="/sps-admin/goods/toAddOrEdit?id="+data.gId;
+                window.location.href="<%=path%>/goods/toAddOrEdit?id="+data.gId;
             }
         });
     });

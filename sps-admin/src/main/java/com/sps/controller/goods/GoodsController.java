@@ -23,13 +23,13 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/goods")
 public class GoodsController {
-    @Reference
+    @Reference(check=false,group="dianfu-dev")
     private GoodsService goodService;
-    @Reference
+    @Reference(check=false,group="dianfu-dev")
     private GoodSkuService goodSkuService;
-    @Reference
+    @Reference(check=false,group="dianfu-dev")
     private BrandService brandService;
-    @Reference
+    @Reference(check=false,group="dianfu-dev")
     private GoodsAlbumService goodsAlbumService;
 
 

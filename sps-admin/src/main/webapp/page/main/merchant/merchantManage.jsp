@@ -1,3 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
 <html>
@@ -9,7 +16,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
-	href="../../static/plugins/layui/css/layui.css" media="all" />
+	href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all" />
 <style type="text/css">
 </style>
 </head>
@@ -62,9 +69,9 @@
 		<table id="channelList" lay-filter="channelTables" class="layui-fluid"></table>
 	</div>
 <script type="text/javascript"
-		src="/sps-admin//page/static/plugins/layui/layui.all.js"></script>
+		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 <script type="text/javascript"
-		src="/sps-admin//page/static/datas/area_data.js"></script>
+		src="<%=path%>/page/static/datas/area_data.js"></script>
 <script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
@@ -88,11 +95,11 @@
 			  var form = layui.form
 			  var $ = layui.jquery
 			  $('#add').on('click', function() {
-				  location.href = '../../main/merchant/addMerchant.html'
+				  location.href = '<%=path%>/page/main/merchant/addMerchant.jsp'
 			  });
 			  table.render({
 			    elem: '#channelList'
-			    ,url: '/sps-admin/merchant/getChannelList.json' //数据接口
+			    ,url: '<%=path%>/merchant/getChannelList.json' //数据接口
 			    ,id:'enterpriseId'
 			    ,page:true
 			    ,cols: [[ //表头
@@ -133,9 +140,9 @@
 					  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 					  var tr = obj.tr; //获得当前行 tr 的DOM对象
 					  if(layEvent === 'detail'){ //查看
-						  location.href = '../../main/merchant/queryMerchant.html?channelNum='+data.channelNum+''
+						  location.href = '<%=path%>/page/main/merchant/queryMerchant.jsp?channelNum='+data.channelNum+''
 					  } else if(layEvent === 'del'){ //删除
-					    layer.confirm('真的删除行么', function(index){
+/* 					    layer.confirm('真的删除行么', function(index){
 					      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 					      layer.close(index);
 							$.get({
@@ -146,9 +153,9 @@
 								}
 							})
 					      //向服务端发送删除指令
-					    });
+					    }); */
 					  } else if(layEvent === 'edit'){ //编辑
-						  location.href = '../../main/merchant/updateMerchant.html'
+						  <%-- location.href = '<%=path%>/page/main/merchant/updateMerchant.jsp' --%>
 					  }
 				});
 			});

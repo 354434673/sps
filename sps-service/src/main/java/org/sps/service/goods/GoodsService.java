@@ -1,11 +1,12 @@
 package org.sps.service.goods;
 import org.sps.entity.goods.SpsGoods;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public interface GoodsService {
+public interface GoodsService extends Serializable{
 
     /**
      * 新增或者修改

@@ -25,7 +25,7 @@
     function initTree() {
         $.ajax({
             data: {},//提交的数据
-            url: "/sps-admin/category/getCategory",//提交连接
+            url: "<%=path%>/category/getCategory",//提交连接
             type: 'post',
             dataType: 'json',
             success: function (result) {

@@ -61,6 +61,9 @@
     </div>
   </li>
 </ul>
+			<div align="center">
+				<button onclick="javascript:history.back(-1)" class="layui-btn" >返回</button>
+			</div>
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>

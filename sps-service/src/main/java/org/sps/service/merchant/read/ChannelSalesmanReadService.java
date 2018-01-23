@@ -1,11 +1,12 @@
 package org.sps.service.merchant.read;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
 import org.sps.entity.merchant.SpsChannelSalesman;
 
-public interface ChannelSalesmanReadService {
+public interface ChannelSalesmanReadService{
 	/**
 	 * 获取业务员列表
 	 * @Title: getSalesmanList   

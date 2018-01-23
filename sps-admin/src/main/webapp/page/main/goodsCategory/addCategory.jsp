@@ -126,7 +126,7 @@
         if (f.length == 2 && (f[1] == 'jpg' || f[1] == 'jpeg' || f[1] == 'png')) {
             var formData = new FormData($('#upload')[0]);
             $.ajax({
-                url: '/sps-admin/common/file/upload',
+                url: '<%=path%>/common/file/upload',
                 type: 'POST',
                 dataType: 'json',
                 data: formData,
@@ -185,7 +185,7 @@
     function initTree() {
         $.ajax({
             data: {},//提交的数据
-            url: "/sps-admin/category/getTwoCategory",//提交连接
+            url: "<%=path%>/category/getTwoCategory",//提交连接
             type: 'post',
             dataType: 'json',
             success: function (result) {
@@ -237,7 +237,7 @@
                     categoryName: categoryName, categoryWeight: categoryWeight, categoryParentId: categoryParentId,
                     categoryDes: categoryDes, categoryUrl: categoryUrl, categoryId: categoryId
                 },
-                url: "/sps-admin/category/saveOrUpdate",//提交连接
+                url: "<%=path%>/category/saveOrUpdate",//提交连接
                 type: 'post',
                 dataType: 'json',
                 success: function (result) {
@@ -245,7 +245,7 @@
                     if (result.flag == '1') {
                         layer.msg("操作成功");
                         setTimeout(function () {
-                            window.location.href = "/sps-admin/category";
+                            window.location.href = "<%=path%>/category";
                         }, 1000);
                     } else {
                         post_flag = false; //在提交成功之后将标志标记为可提交状态
@@ -296,14 +296,14 @@
          layer.load(1, {shade: [0.5, '#000']});
          $.ajax({
              data: data,//提交的数据
-             url: "/sps-admin/category/saveOrUpdate",//提交连接
+             url: "<%=path%>/category/saveOrUpdate",//提交连接
              type: 'post',
              dataType: 'json',
              success: function (result) {
                  if (result.flag == '1') {
                      layer.msg("操作成功");
                      setTimeout(function () {
-                         window.location.href = "/sps-admin/category";
+                         window.location.href = "<%=path%>/category";
                      }, 1000);
                  } else {
                      layer.msg("操作失败");

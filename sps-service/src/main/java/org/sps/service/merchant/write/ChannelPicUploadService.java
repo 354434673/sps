@@ -1,8 +1,9 @@
 package org.sps.service.merchant.write;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public interface ChannelPicUploadService {
+public interface ChannelPicUploadService{
 	/**
 	 * 上传图片
 	 * @Title: uploadPic   

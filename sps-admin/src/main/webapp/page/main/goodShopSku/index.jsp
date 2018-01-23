@@ -78,7 +78,7 @@
     {{ fn() }}
 </script>
 <script type="text/javascript"
-        src="/sps-admin/page/layui/layui.js"></script>
+        src="<%=path%>/page/layui/layui.js"></script>
 <script>
     layui.use(['table', 'laypage', 'laydate', 'layer'], function () {
         var table = layui.table;

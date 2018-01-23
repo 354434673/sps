@@ -256,7 +256,7 @@
 	  	//获得省
 		 function getProvince(parentId){
 			$.getJSON({
-	 			 url:'/sps-admin/getAreasList.json',
+	 			 url:'/<%=path%>/getAreasList.json',
 	 			 dataType:'json',
 	 			 data:{parentId:parentId},
 	 			 success:function(data){
@@ -274,7 +274,7 @@
 		//获得城市
 		 function getCity(parentId){
 			$.getJSON({
-	 			 url:'/sps-admin/getAreasList.json',
+	 			 url:'/<%=path%>/getAreasList.json',
 	 			 dataType:'json',
 	 			 data:{parentId:parentId},
 	 			 success:function(data){
@@ -292,7 +292,7 @@
 		 //获得区
 		 function getArea(parentId){
 			$.getJSON({
-	 			 url:'/sps-admin/getAreasList.json',
+	 			 url:'/<%=path%>/getAreasList.json',
 	 			 dataType:'json',
 	 			 data:{parentId:parentId},
 	 			 success:function(data){

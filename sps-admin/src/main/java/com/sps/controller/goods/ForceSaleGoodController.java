@@ -17,17 +17,17 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/forceGood")
 public class ForceSaleGoodController {
-    @Reference
+    @Reference(check=false,group="dianfu-dev")
     private GoodShopService goodService;
-    @Reference
+    @Reference(check=false,group="dianfu-dev")
     private GoodCategoryService goodCategoryService;
-    @Reference
+    @Reference(check=false,group="dianfu-dev")
     private GoodShopSkuService goodSkuService;
-    @Reference
+    @Reference(check=false,group="dianfu-dev")
     private BrandService brandService;
-    @Reference
+    @Reference(check=false,group="dianfu-dev")
     private CustomCategoryService customCategoryService;
-    @Reference
+    @Reference(check=false,group="dianfu-dev")
     private GoodSkuService skuService;
 
 

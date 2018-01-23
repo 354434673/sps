@@ -6,8 +6,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<description>sps-api</description>
-
-
 	<dependencies>
 		<!-- spring -->
 		<dependency>

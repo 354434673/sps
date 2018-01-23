@@ -77,7 +77,7 @@
                         customName: customName,
                         customWide: customWide
                     },
-                    url: "/sps-admin/customCategory/saveOrUpdate",//提交连接
+                    url: "<%=path%>/customCategory/saveOrUpdate",//提交连接
                     type: 'post',
                     dataType: 'json',
                     success: function (result) {

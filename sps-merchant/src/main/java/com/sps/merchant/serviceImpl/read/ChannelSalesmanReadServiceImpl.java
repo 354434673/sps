@@ -16,7 +16,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.merchant.read.SpsChannelSalesmanReadMapper;
 
-@Service
+@Service(timeout=2000,group="dianfu-dev")
 @Transactional(readOnly = true)
 public class ChannelSalesmanReadServiceImpl implements ChannelSalesmanReadService{
 	@Resource

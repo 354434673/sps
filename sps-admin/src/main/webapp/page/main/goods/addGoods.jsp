@@ -233,7 +233,7 @@
                             updateDetailFlag: $("#updateDetailFlag").val(),
                             updatePicFlag: $("#updatePicFlag").val()
                         },
-                        url: "/sps-admin/goods/saveOrUpdate",//提交连接
+                        url: "<%=path%>/goods/saveOrUpdate",//提交连接
                         type: 'post',
                         dataType: 'json',
                         success: function (result) {
@@ -247,7 +247,7 @@
                                 SaveData()
                                 layer.msg("操作成功");
                                 setTimeout(function () {
-                                    /* window.location.href = "/sps-admin//page/main/goods/index.jsp";*/
+                                    window.location.href = "<%=path%>/page/main/goods/index.jsp";
                                 }, 1000);
                             } else {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
@@ -288,7 +288,7 @@
                             updateDetailFlag: $("#updateDetailFlag").val(),
                             updatePicFlag: $("#updatePicFlag").val()
                         },
-                        url: "/sps-admin/goods/saveOrUpdate",//提交连接
+                        url: "<%=path%>/goods/saveOrUpdate",//提交连接
                         type: 'post',
                         dataType: 'json',
                         success: function (result) {
@@ -302,7 +302,7 @@
                                 SaveData()
                                 layer.msg("操作成功");
                                 setTimeout(function () {
-                                    /* window.location.href = "/sps-admin//page/main/goods/index.jsp";*/
+                                   window.location.href = "<%=path%>/page/main/goods/index.jsp";
                                 }, 1000);
                             } else {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
@@ -343,7 +343,7 @@
             //批量上传图片
             $.ajaxFileUpload({
                 type: 'POST',
-                url: '/sps-admin/common/file/manyUpload',
+                url: '<%=path%>/common/file/manyUpload',
                 secureuri: false,
                 cache: false,
                 fileElementId: "logoFile2",//文件选择框的id属性  ,//文件选择框的id属性
@@ -403,7 +403,7 @@
             //批量上传图片
             $.ajaxFileUpload({
                 type: 'POST',
-                url: '/sps-admin/common/file/manyUpload',
+                url: '<%=path%>/common/file/manyUpload',
                 secureuri: false,
                 cache: false,
                 fileElementId: "logoFile1",//文件选择框的id属性  ,//文件选择框的id属性
@@ -438,7 +438,7 @@
         if ($("#gCategoryIds").val() != "") {
             $.ajax({
                 data:{categoryId:id},
-                url: "/sps-admin/brand/findBrandList",//提交连接
+                url: "<%=path%>/brand/findBrandList",//提交连接
                 type: 'post',
                 dataType: 'json',
                 success: function (result) {
@@ -463,7 +463,7 @@
     //修改获取数据
     function getDate(goodsId) {
         $.ajax({
-            url: "/sps-admin/goods/findEntity",//提交连接
+            url: "<%=path%>/goods/findEntity",//提交连接
             type: 'post',
             dataType: 'json',
             async: false,
@@ -568,7 +568,7 @@
         if ($("#goodsId").val() == "") {
             if ($("#gSpuNo").val() != undefined && $("#gSpuNo").val() != "" && $("#gSpuNo").val() != null) {
                 $.ajax({
-                    url: "/sps-admin/goods/checkGoodsNumber",//提交连接
+                    url: "<%=path%>/goods/checkGoodsNumber",//提交连接
                     type: 'post',
                     dataType: 'json',
                     async: false,
@@ -736,7 +736,7 @@
     function getCategoryName(pId, id) {
         $.ajax({
             data: {pId: pId, id: id},//提交的数据
-            url: "/sps-admin/category/getCategoryName",//提交连接
+            url: "<%=path%>/category/getCategoryName",//提交连接
             type: 'post',
             dataType: 'json',
             success: function (result) {
@@ -758,7 +758,7 @@
     function initTree() {
         $.ajax({
             data: {},//提交的数据
-            url: "/sps-admin/category/getCategory",//提交连接
+            url: "<%=path%>/category/getCategory",//提交连接
             type: 'post',
             dataType: 'json',
             success: function (result) {
@@ -790,7 +790,7 @@
 
     function initBrandList() {
         $.ajax({
-            url: "/sps-admin/brand/findBrandList",//提交连接
+            url: "<%=path%>/brand/findBrandList",//提交连接
             type: 'post',
             dataType: 'json',
             success: function (result) {
