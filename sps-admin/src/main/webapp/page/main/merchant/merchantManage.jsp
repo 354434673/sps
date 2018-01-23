@@ -142,7 +142,7 @@
 					  if(layEvent === 'detail'){ //查看
 						  location.href = '<%=path%>/page/main/merchant/queryMerchant.jsp?channelNum='+data.channelNum+''
 					  } else if(layEvent === 'del'){ //删除
-					    layer.confirm('真的删除行么', function(index){
+/* 					    layer.confirm('真的删除行么', function(index){
 					      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 					      layer.close(index);
 							$.get({
@@ -153,9 +153,9 @@
 								}
 							})
 					      //向服务端发送删除指令
-					    });
+					    }); */
 					  } else if(layEvent === 'edit'){ //编辑
-						  location.href = '<%=path%>/page/main/merchant/updateMerchant.jsp'
+						  <%-- location.href = '<%=path%>/page/main/merchant/updateMerchant.jsp' --%>
 					  }
 				});
 			});

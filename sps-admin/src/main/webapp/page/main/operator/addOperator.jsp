@@ -49,7 +49,7 @@
     </div>
     <label class="layui-form-label">*备注：</label>
     <div class="layui-input-inline">
-      <input id="email"  type="email" name="email" lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+      <input id=""  type="text" name="" lay-verify="" placeholder="" autocomplete="off" class="layui-input">
     </div>
   </div>
 

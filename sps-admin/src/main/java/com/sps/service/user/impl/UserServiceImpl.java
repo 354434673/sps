@@ -54,8 +54,9 @@ public class UserServiceImpl implements UserService{
 		//如果查询条件不为空,则进入模糊查询
 		if(username != null){
 			createCriteria.andUserUsernameLike("%"+username+"%");
-		}else if(name != null){
-			createCriteria.andUserUsernameLike("%"+name+"%");
+		}
+		if(name != null){
+			createCriteria.andUserNameEqualTo("%"+name+"%");
 		}
 		//分页
 		PageHelper.startPage(page,limit);

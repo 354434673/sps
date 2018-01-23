@@ -126,7 +126,7 @@
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:152px">主营商品类型：</label>
 		    <div class="layui-input-inline" style="width:600px" >
-		    	<span class="layui-form-mid layui-breadcrumb"  id="businessProduct">
+		    	<span class="layui-form-mid layui-breadcrumb" lay-separator="|"  id="businessProduct">
 				  <a href="javascript:;">首页</a>
 				  <a href="">国际新闻</a>
 				  <a href="">亚太地区</a>
