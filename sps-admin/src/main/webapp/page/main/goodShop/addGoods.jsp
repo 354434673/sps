@@ -300,7 +300,7 @@
                             gRecommend:$("input[name='gRecommend']:checked").val(),
                             gGroundingFlag:$("input[name='gGroundingFlag']:checked").val()
                         },
-                        url: "/sps-admin/goodShop/saveOrUpdate",//提交连接
+                        url: "<%=path%>/goodShop/saveOrUpdate",//提交连接
                         type: 'post',
                         dataType: 'json',
                         success: function (result) {
@@ -314,7 +314,7 @@
                                 SaveData()
                                 layer.msg("操作成功");
                                 setTimeout(function () {
-                                    /* window.location.href = "/sps-admin//page/main/goods/index.jsp";*/
+                                     window.location.href = "<%=path%>/page/main/goods/index.jsp";
                                 }, 1000);
                             } else {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
@@ -352,7 +352,7 @@
                             gRecommend:$("input[name='gRecommend']:checked").val(),
                             gGroundingFlag:$("input[name='gGroundingFlag']:checked").val()
                         },
-                        url: "/sps-admin/goodShop/saveOrUpdate",//提交连接
+                        url: "<%=path%>/goodShop/saveOrUpdate",//提交连接
                         type: 'post',
                         dataType: 'json',
                         success: function (result) {
@@ -366,7 +366,7 @@
                                 SaveData()
                                 layer.msg("操作成功");
                                 setTimeout(function () {
-                                    /* window.location.href = "/sps-admin//page/main/goods/index.jsp";*/
+                                    /* window.location.href = "<%=path%>/page/main/goods/index.jsp";*/
                                 }, 1000);
                             } else {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
@@ -384,7 +384,7 @@
 
     function initCustomCategory() {
         $.ajax({
-            url: "/sps-admin/customCategory/findCustomCategoryList",//提交连接
+            url: "<%=path%>/customCategory/findCustomCategoryList",//提交连接
             type: 'post',
             dataType: 'json',
             success: function (result) {
@@ -412,7 +412,7 @@
         $.ajax(
             {
                 type: 'post',
-                url: '/sps-admin/category/getNextCategory',
+                url: '<%=path%>/category/getNextCategory',
                 dataType: 'json',
                 data: {parentId: parentId},
                 success: function (data) {
@@ -430,7 +430,7 @@
         //获取品牌数据
         $.ajax({
             data: {categoryId: id},
-            url: "/sps-admin/brand/findBrandList",//提交连接
+            url: "<%=path%>/brand/findBrandList",//提交连接
             type: 'post',
             dataType: 'json',
             success: function (result) {
@@ -455,7 +455,7 @@
         //获取品牌数据
         $.ajax({
             data: {id: id},
-            url: "/sps-admin/goods/findBrandGoods",//提交连接
+            url: "<%=path%>/goods/findBrandGoods",//提交连接
             type: 'post',
             dataType: 'json',
             success: function (result) {
@@ -484,7 +484,7 @@
         var spuNo = name.split('-')[0];
         var spuName = name.split('-')[0];
         $.ajax({
-            url: "/sps-admin/goodShop/checkGoodsNumber",//提交连接
+            url: "<%=path%>/goodShop/checkGoodsNumber",//提交连接
             type: 'post',
             dataType: 'json',
             async: false,
@@ -513,7 +513,7 @@
         */
 
         $.ajax({
-            url: "/sps-admin/goods/findEntity",//提交连接
+            url: "<%=path%>/goods/findEntity",//提交连接
             type: 'post',
             dataType: 'json',
             async: false,
@@ -564,7 +564,7 @@
     function getDate(goodsId) {
         initCustomCategory()
         $.ajax({
-            url: "/sps-admin/goodShop/findEntity",//提交连接
+            url: "<%=path%>/goodShop/findEntity",//提交连接
             type: 'post',
             dataType: 'json',
             async: false,
@@ -648,7 +648,7 @@
         if ($("#goodsId").val() == "") {
             if ($("#gSpuNo").val() != undefined && $("#gSpuNo").val() != "" && $("#gSpuNo").val() != null) {
                 $.ajax({
-                    url: "/sps-admin/goodShop/checkGoodsNumber",//提交连接
+                    url: "<%=path%>/goodShop/checkGoodsNumber",//提交连接
                     type: 'post',
                     dataType: 'json',
                     async: false,
@@ -709,7 +709,7 @@
 
     function initBrandList() {
         $.ajax({
-            url: "/sps-admin/brand/findBrandList",//提交连接
+            url: "<%=path%>/brand/findBrandList",//提交连接
             type: 'post',
             dataType: 'json',
             success: function (result) {

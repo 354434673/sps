@@ -161,7 +161,7 @@
                             gId: $('#goodsId').val(),
                             gOpinion: $('#gOponion').val()
                         },
-                        url: "/sps-admin/auditGood/auditShopGood",//提交连接
+                        url: "<%=path%>/auditGood/auditShopGood",//提交连接
                         type: 'post',
                         dataType: 'json',
                         success: function (result) {
@@ -169,7 +169,7 @@
                             if (result.flag == '1') {
                                 layer.msg("操作成功");
                                 setTimeout(function () {
-                                    window.location.href = "/sps-admin//page/main/auditSale/index.jsp";
+                                    window.location.href = "<%=path%>/page/main/auditSale/index.jsp";
                                 }, 1000);
                             } else {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
@@ -192,7 +192,7 @@
                             gId: $('#goodsId').val(),
                             gOponion: $('#gOponion').val()
                         },
-                        url: "/sps-admin/auditGood/auditShopGood",//提交连接
+                        url: "<%=path%>/auditGood/auditShopGood",//提交连接
                         type: 'post',
                         dataType: 'json',
                         success: function (result) {
@@ -200,7 +200,7 @@
                             if (result.flag == '1') {
                                 layer.msg("操作成功");
                                 setTimeout(function () {
-                                    window.location.href = "/sps-admin//page/main/auditSale/index.jsp";
+                                    window.location.href = "<%=path%>/page/main/auditSale/index.jsp";
                                 }, 1000);
                             } else {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
@@ -215,7 +215,7 @@
     //获取数据
     function getDate(goodsId) {
         $.ajax({
-            url: "/sps-admin/goodShop/findEntity",//提交连接
+            url: "<%=path%>/goodShop/findEntity",//提交连接
             type: 'post',
             dataType: 'json',
             async: false,

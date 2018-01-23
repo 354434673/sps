@@ -100,7 +100,7 @@
                     layer.close(
                         $.ajax({
                             data: {id: data.customId},//提交的数据
-                            url: "/sps-admin/customCategory/delCustomCategory",//提交连接
+                            url: "<%=path%>/customCategory/delCustomCategory",//提交连接
                             type: 'post',
                             dataType: 'json',
                             success: function (result) {

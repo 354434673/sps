@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,7 +79,7 @@
     ];
     $.ajax({
         data: {},//提交的数据
-        url: "/sps-admin/category/getCategory",//提交连接
+        url: "<%=path%>/category/getCategory",//提交连接
         type: 'post',
         dataType: 'json',
         success: function (result) {
@@ -90,13 +95,13 @@
     });
     //进入新增页面
     $(document).on("click", "#add", function () {
-        window.location.href="/sps-admin/category/toAddOrEdit";
+        window.location.href="<%=path%>/category/toAddOrEdit";
     });
     function toUpdate(nodeId) {
-        window.location.href="/sps-admin/category/toAddOrEdit?id="+nodeId;
+        window.location.href="<%=path%>/category/toAddOrEdit?id="+nodeId;
     }
     function toDetail(nodeId) {
-        window.location.href="/sps-admin/category/findEntity?id="+nodeId;
+        window.location.href="<%=path%>/category/findEntity?id="+nodeId;
     }
 
 

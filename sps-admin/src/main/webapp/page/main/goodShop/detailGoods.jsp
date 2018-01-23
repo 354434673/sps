@@ -127,7 +127,7 @@
     //获取数据
     function getDate(goodsId) {
         $.ajax({
-            url: "/sps-admin/goodShop/findEntity",//提交连接
+            url: "<%=path%>/goodShop/findEntity",//提交连接
             type: 'post',
             dataType: 'json',
             async: false,

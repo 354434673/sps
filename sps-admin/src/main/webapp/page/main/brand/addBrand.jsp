@@ -131,7 +131,7 @@
         if (f.length == 2 && (f[1] == 'jpg' || f[1] == 'jpeg' || f[1] == 'png')) {
             var formData = new FormData($('#upload')[0]);
             $.ajax({
-                url: '/sps-admin/common/file/upload',
+                url: '<%=path%>/common/file/upload',
                 type: 'POST',
                 dataType: 'json',
                 data: formData,
@@ -159,7 +159,7 @@
         if (f.length == 2 && (f[1] == 'jpg' || f[1] == 'jpeg' || f[1] == 'png')) {
             var formData = new FormData($('#upload')[0]);
             $.ajax({
-                url: '/sps-admin/common/file/upload',
+                url: '<%=path%>/common/file/upload',
                 type: 'POST',
                 dataType: 'json',
                 data: formData,
@@ -218,7 +218,7 @@
     function getCategoryName(pId, id) {
         $.ajax({
             data: {pId: pId, id: id},//提交的数据
-            url: "/sps-admin/category/getCategoryName",//提交连接
+            url: "<%=path%>/category/getCategoryName",//提交连接
             type: 'post',
             dataType: 'json',
             success: function (result) {
@@ -237,7 +237,7 @@
     function initTree() {
         $.ajax({
             data: {},//提交的数据
-            url: "/sps-admin/category/getCategory",//提交连接
+            url: "<%=path%>/category/getCategory",//提交连接
             type: 'post',
             dataType: 'json',
             success: function (result) {
@@ -296,7 +296,7 @@
                         brandSmallUrl: brandSmallUrl,
                         brandBigUrl: brandBigUrl
                     },
-                    url: "/sps-admin/brand/saveOrUpdate",//提交连接
+                    url: "<%=path%>/brand/saveOrUpdate",//提交连接
                     type: 'post',
                     dataType: 'json',
                     success: function (result) {
@@ -304,7 +304,7 @@
                         if (result.flag == '1') {
                             layer.msg("操作成功");
                             setTimeout(function () {
-                                window.location.href = "/sps-admin//page/main/brand/index.jsp";
+                                window.location.href = "<%=path%>/page/main/brand/index.jsp";
                             }, 1000);
                         } else {
                             post_flag = false; //在提交成功之后将标志标记为可提交状态
