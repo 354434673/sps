@@ -99,7 +99,7 @@
 			  table.render({
 			    elem: '#orderList'
 			    ,url: '<%=path%>/order/show.json' //数据接口
-			    ,where:{flag:1} 
+			    ,where:{flag:12} 
 			    ,id:'orderToBeRejected'
 			    ,page:true
 			    ,cols: [[ //表头

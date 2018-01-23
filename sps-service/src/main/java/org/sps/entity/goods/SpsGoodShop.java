@@ -8,6 +8,7 @@ public class SpsGoodShop implements Serializable {
     private String categoryName;
     private String companyName;
     private String adminNum;
+    private String gForceOpinion;
 
     private String gOpinion;
 
@@ -39,6 +40,14 @@ public class SpsGoodShop implements Serializable {
 
     private Date gUpdateTime;
 
+
+    public String getgForceOpinion() {
+        return gForceOpinion;
+    }
+
+    public void setgForceOpinion(String gForceOpinion) {
+        this.gForceOpinion = gForceOpinion;
+    }
 
     public String getgOpinion() {
         return gOpinion;

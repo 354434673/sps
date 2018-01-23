@@ -101,7 +101,7 @@
 			  table.render({
 			    elem: '#orderList'
 			    ,url: '<%=path%>/order/show.json' //数据接口
-			    ,where:{flag:1} 
+			    ,where:{flag:17} 
 			    ,id:'orderToBeRecieved'
 			    ,page:true
 			    ,cols: [[ //表头

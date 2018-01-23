@@ -4,12 +4,14 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.goods.SpsGoodShopSkuMapper;
-import org.sps.entity.goods.SpsGoodShop;
+import org.springframework.util.NumberUtils;
 import org.sps.entity.goods.SpsGoodShopSku;
 import org.sps.entity.goods.SpsGoods;
 import org.sps.service.goods.GoodShopSkuService;
+import util.NumberUtil;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -83,6 +85,34 @@ public class GoodShopSkuServiceImpl implements GoodShopSkuService {
         hashMap.put("msg", "获取成功");
         hashMap.put("count", pageInfo.getTotal());
         hashMap.put("data", goodsList.size() != 0 ? goodsList : null);
+        return hashMap;
+    }
+
+    @Override
+    public HashMap<String, Object> updatePriceOrStock(List<SpsGoodShopSku> goodShopSku) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        if (goodShopSku != null && goodShopSku.size() > 0) {
+            for (SpsGoodShopSku sku : goodShopSku) {
+                SpsGoodShopSku shopSku = spsGoodShopSkuMapper.findById(sku.getgId());
+                //判断是否和原有库存价格相等 如果不等 修改 并修改代销服务费
+                if ((!shopSku.getgPrice().equals(sku.getgPrice())) && (!shopSku.getgStock().equals(sku.getgStock()))) {
+                    Double service = NumberUtil.mul(sku.getgPrice().doubleValue(), 0.007);
+                    sku.setgService(BigDecimal.valueOf(service));
+                    sku.setgUpdateTime(new Date());
+                    spsGoodShopSkuMapper.update(sku);
+                } else if (!shopSku.getgStock().equals(sku.getgStock()) ) {
+                    sku.setgUpdateTime(new Date());
+                    spsGoodShopSkuMapper.update(sku);
+                } else if (!shopSku.getgPrice().equals(sku.getgPrice())) {
+                    Double service = NumberUtil.mul(sku.getgPrice().doubleValue(), 0.007);
+                    sku.setgService(BigDecimal.valueOf(service));
+                    sku.setgUpdateTime(new Date());
+                    spsGoodShopSkuMapper.update(sku);
+                }
+            }
+        }
+        hashMap.put("msg", "修改成功");
+        hashMap.put("state", "success");
         return hashMap;
     }
 }

@@ -4,7 +4,6 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
-	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
@@ -12,13 +11,13 @@
 <head>
 <meta charset="UTF-8">
 <title>退货管理</title>
-<!-- 待退货申请详情-->
+<!-- 退款审核中去审核页面-->
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
-	href="<%=path%>/page/layui/css/layui.css" media="all"/>
+	href="<%=path%>/page/layui/css/layui.css" media="all" />
 <style type="text/css">
 	tr th{
 		text-align: center;
@@ -27,15 +26,6 @@
 </head>
 <body>
 	<div style="margin: 15px;">
-	 	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
- 			<legend>退款信息</legend>
-		</fieldset>
-		<div class="layui-form-item" >
-		    <label class="layui-form-label" style="width:152px">退款金额：</label>
-		    <div class="layui-input-inline">
-		    	<div class="layui-form-mid layui-word-aux" id="">1111</div>
-		    </div>
-		 </div>
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>订单信息</legend>
 		</fieldset>
@@ -89,14 +79,34 @@
 		    	<div class="layui-form-mid layui-word-aux" id="selfname"> </div>
 		    </div>
 		 </div>
-      	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+		<table id="orderBasic" lay-filter="orderBasic">
+		</table>
+     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>退货信息</legend>
+		</fieldset>
+		<div class="layui-form-item">
+		 <label class="layui-form-label">退货原因:</label>
+			    <div class="layui-input-inline">
+			      <input id="reson" type="text" name="reson"  lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+			    </div>
+		</div>
+		<div class="layui-form-item">
+		<div class="layui-form-item layui-form-text">
+			 <label class="layui-form-label">意见：</label>
+	   		 <div class="layui-input-block">
+	     	 	<textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+	   		 </div>
+		</div>	
+		</div>
+		 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>商品信息</legend>
 		</fieldset>
 		<table id="orderGoodsDetail" lay-filter="orderGoodsDetail">
 		</table>
-		<div align="center">
-			<button onclick="javascript:history.back(-1)" id="back" class="layui-btn layui-btn-normal" >返回</button>
-			<button id="refundment" class="layui-btn layui-btn-warm" >退款</button>
+		<div align="center" style="display: none" id="button">
+			<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-normal" >返回</button>
+			<button id="refuse" class="layui-btn layui-btn-danger" >拒绝</button>
+			<button id="agree" class="layui-btn layui-btn-warm" >同意</button>
 		</div>
 	</div>
 <script type="text/javascript"
@@ -107,6 +117,12 @@
 			  var laypage = layui.laypage;
 			  var layer = layui.layer;
 			  var $ = layui.jquery;
+			  var isSubmit = false;//按钮是否生效,默认不生效,只有入口为审核时才生效
+			  var isQuery = <%=request.getParameter("isQuery")%>
+			  if(isQuery == 1){//为1则为审核	
+				  isSubmit = true
+				  $('#button').show()
+			  }
 			  $.post({//获得信息
 				  url:'<%=path%>/order/showOrder.json'
 				  ,dataType:'json'
@@ -128,11 +144,11 @@
 			  table.render({
 				    elem: '#orderGoodsDetail'
 				    ,url: '<%=path%>/order/showOrderGoods.json'//数据接口
-				    ,where:{orderid:<%=request.getParameter("orderid")%>}  
+				    ,where:{orderid:<%=request.getParameter("orderid")%>} 
 				    ,id:'orderGoods'
 				    ,page:true
 				    ,cols: [[ //表头
-				       {field: 'sku', title: 'SKU编号', align:'center'}
+				       {field: 'sku', title: 'SKU编号', align:'center',sort:true}
 				      ,{field: 'skuname', title: '商品名称', align:'center'}
 				      ,{field: 'color', title: '规格', align:'center'}
 				      ,{field: 'price', title: '单价',align:'center'}
@@ -140,17 +156,44 @@
 				      ,{field: 'summation', title: '金额',align:'center',sort:true}
 				    ]]
 				  });
-			  //返回
-<%-- 			 $(document).on("click","#back",function(){
-				 window.location.href='<%=path%>/page/main/rejected/orderToBeRefundmentRejected.jsp';
-			 }); --%>
-			  
-			 //去退款
-			 //TODO
-			 //目前只是改状态,后期要去和核心进行数据对接,进行退货处理
-			 $(document).on("click","#refundment",function(){
-				 window.location.href='<%=path%>/page/main/rejected/refundment.jsp';
-			 });
+			  $(document).on("click","#refuse",function(){
+				  var remark = $('#reson').val()//拒绝理由
+				  if(remark == '' || remark == null){
+					  layer.msg('拒绝理由不可为空',{icon: 2});
+				  }else{
+					  //这里需要提交到后台处理，修改订单状态码为已拒绝，并将信息发送到风控
+					  update(15,remark,"退货拒绝成功,1秒后跳转")
+				  }
+			  });
+			  $(document).on("click","#agree",function(){
+				  //这里需要提交到后台处理，修改订单状态码为订单审核中，并将信息发送到风控
+				  //暂时这里不提交风控，只是修改状态，之后再进行提交风控
+				  update(16,null,"审核通过,1秒后跳转")
+			  });
+			  //更改状态方法
+			  function update(flag,remark,msg){
+				  if(isSubmit){
+					  $.post({
+						  url:'<%=path%>/order/updateConfirmOrderFlag',
+						  dataType:'json',
+						  data:{remark:remark,
+							  orderid:<%=request.getParameter("orderid")%>,
+							  flag:flag},
+						  success:function(data){
+							  layer.msg(msg,{icon: 1});
+							  setTimeout(function(){
+								  //跳转到上一页
+								  window.location.href='<%=path%>/page/main/rejected/orderToBeConfirmRejected.jsp'
+							  },1000);
+						  },
+						  error:function(){
+							  layer.msg('系统错误',{icon: 2});
+						  }
+					  })
+				  }else{
+					  layer.msg('按钮不合法',{icon: 2});
+				  }
+			  }
 			  //时间格式化
 			  function getDate(data){
 				    da = new Date(data);
