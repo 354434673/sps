@@ -13,6 +13,7 @@ import org.sps.service.goods.GoodSkuService;
 import org.sps.service.goods.GoodsService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -33,6 +34,17 @@ public class GoodSkuController {
     public HashMap<String, Object> userList(Integer page, Integer limit,String goodsName, String spuNo, String size) {
         HashMap<String, Object> goodSkuList = goodskuService.findGoodSkuList(page, limit, goodsName, spuNo,size);
         return goodSkuList;
+    }
+
+    /**
+     * 修改价格和库存
+     * @return
+     */
+    @RequestMapping(value="/updatePrice",method=RequestMethod.POST)
+    @ResponseBody
+    public HashMap<String, Object> updatePrice(@RequestBody List<SpsGoodSku> goodShopSku){
+        HashMap<String, Object> updatePriceOrStock = goodskuService.updatePrice(goodShopSku);
+        return  updatePriceOrStock;
     }
 
 

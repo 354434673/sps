@@ -17,7 +17,7 @@ public class SpsGoodShopSku implements Serializable {
 
     private String gSku;
 
-    private Long gPrice;
+    private BigDecimal gPrice;
 
     private Integer gQuantity;
 
@@ -115,11 +115,11 @@ public class SpsGoodShopSku implements Serializable {
         this.gSku = gSku == null ? null : gSku.trim();
     }
 
-    public Long getgPrice() {
+    public BigDecimal getgPrice() {
         return gPrice;
     }
 
-    public void setgPrice(Long gPrice) {
+    public void setgPrice(BigDecimal gPrice) {
         this.gPrice = gPrice;
     }
 

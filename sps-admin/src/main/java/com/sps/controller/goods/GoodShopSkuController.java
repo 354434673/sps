@@ -3,6 +3,7 @@ package com.sps.controller.goods;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,6 +11,7 @@ import org.sps.entity.goods.SpsGoodShopSku;
 import org.sps.service.goods.GoodShopSkuService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -31,6 +33,17 @@ public class GoodShopSkuController {
     public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName, String goodSku ,String spec, String endTime, String startTime) {
         HashMap<String, Object> goodsList = goodSkuService.findSkuList(page, limit, goodsName, spec, goodSku, endTime, startTime);
         return goodsList;
+    }
+
+    /**
+     * 修改价格和库存
+     * @return
+     */
+    @RequestMapping(value="/updatePriceOrStock",method=RequestMethod.POST)
+    @ResponseBody
+    public HashMap<String, Object> updatePriceOrStock(@RequestBody List<SpsGoodShopSku> goodShopSku){
+        HashMap<String, Object> updatePriceOrStock = goodSkuService.updatePriceOrStock(goodShopSku);
+        return  updatePriceOrStock;
     }
 
 

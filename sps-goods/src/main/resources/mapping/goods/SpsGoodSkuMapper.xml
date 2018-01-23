@@ -210,4 +210,28 @@
     delete from sps_good_sku
     where g_gid = #{goodsId,jdbcType=INTEGER}
   </delete>
+  <select id="findById" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_good_sku
+    where g_id = #{gId,jdbcType=INTEGER}
+  </select>
+
+  <select id="getGoodList" parameterType="map"  resultMap="BaseResultMap">
+    select
+    s.g_id, s.g_color, s.g_size, s.g_no, s.g_price, s.g_type, s.g_scale, s.g_bprice, s.g_aprice, s.g_gid,
+    s.g_create_time, s.g_update_time, s.g_delete_flag,g.g_spu_name as supName
+    from sps_good_sku s LEFT JOIN  sps_goods g on g.g_id=s.g_gid
+    where 1=1
+    <if test="size !=null and size != ''">
+      and (s.g_size LIKE CONCAT('%',#{spec,jdbcType=VARCHAR},'%')or s.g_color LIKE CONCAT('%',#{spec,jdbcType=VARCHAR},'%'))
+    </if>
+    <if test="spuNo !=null and spuNo != ''">
+      and s.g_no LIKE CONCAT('%',#{spuNo,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="goodsName !=null and goodsName != ''">
+      and g.g_spu_name LIKE CONCAT('%',#{goodsName,jdbcType=VARCHAR},'%')
+    </if>
+    AND g.g_delete_flag = 0
+  </select>
 </mapper>

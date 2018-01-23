@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class SpsGoodSku implements Serializable {
+
+    private String supName;
+
     private Integer gId;
 
     private String gColor;
@@ -134,5 +137,13 @@ public class SpsGoodSku implements Serializable {
 
     public void setgDeleteFlag(Integer gDeleteFlag) {
         this.gDeleteFlag = gDeleteFlag;
+    }
+
+    public String getSupName() {
+        return supName;
+    }
+
+    public void setSupName(String supName) {
+        this.supName = supName;
     }
 }

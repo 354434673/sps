@@ -74,4 +74,18 @@ public interface GoodShopService {
      * @param goods
      */
     void auditShopGood(SpsGoodShop goods);
+
+    /**
+     * 平台端强制下架商品
+     * @param page
+     * @param limit
+     * @param shopName
+     * @param goodsName
+     * @param shopNumber
+     * @param shopStatus
+     * @param endTime
+     * @param startTime
+     * @return
+     */
+    HashMap<String,Object> findForceGoodsList(Integer page, Integer limit, String shopName, String goodsName, String shopNumber, Integer shopStatus, String endTime, String startTime,String spuNo);
 }

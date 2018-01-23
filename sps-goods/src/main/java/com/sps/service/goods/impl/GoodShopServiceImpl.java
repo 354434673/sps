@@ -162,15 +162,36 @@ public class GoodShopServiceImpl implements GoodShopService {
 
     @Override
     public void auditShopGood(SpsGoodShop goods) {
-        if (goods.getgOpinion() != null) {
-            goods.setgUpdateTime(new Date());
-            goods.setgStatus(3);
-            spsGoodShopMapper.update(goods);
-        } else {
-            goods.setgOpinion("");
-            goods.setgUpdateTime(new Date());
-            goods.setgStatus(2);
-            spsGoodShopMapper.update(goods);
+        goods.setgUpdateTime(new Date());
+        goods.setgGroundingFlag("0");
+        goods.setgStatus(0);
+        spsGoodShopMapper.update(goods);
+    }
+
+    @Override
+    public HashMap<String, Object> findForceGoodsList(Integer page, Integer limit, String shopName, String goodsName, String shopNumber, Integer shopStatus, String endTime, String startTime, String spuNo) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("shopName", shopName);
+        map.put("shopNumber", shopNumber);
+        map.put("goodsName", goodsName);
+        map.put("spuNo", spuNo);
+        if (endTime != null && !"".equals(endTime)) {
+            map.put("endTime", endTime + " 23:59:59");
         }
+        if (startTime != null && !"".equals(startTime)) {
+            map.put("startTime", startTime + " 00:00:00");
+        }
+        map.put("shopStatus", shopStatus);
+        //分页
+        PageHelper.startPage(page, limit);
+        List<SpsGoodShop> goodsList = spsGoodShopMapper.findForceGoodsList(map);
+        PageInfo pageInfo = new PageInfo(goodsList);
+        //放入map
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("code", 0);
+        hashMap.put("msg", "获取成功");
+        hashMap.put("count", pageInfo.getTotal());
+        hashMap.put("data", goodsList.size() != 0 ? goodsList : null);
+        return hashMap;
     }
 }
