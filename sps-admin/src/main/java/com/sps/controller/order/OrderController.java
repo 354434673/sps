@@ -21,7 +21,7 @@ public class OrderController {
 
 	Logger logger=Logger.getLogger(this.getClass().getName());
 	
-	@Reference
+	@Reference(check=false)
 	OrderService orderService;
 	
 	

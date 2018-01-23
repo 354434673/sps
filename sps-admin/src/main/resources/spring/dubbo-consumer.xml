@@ -18,7 +18,7 @@
 	<!-- <dubbo:registry protocol="zookeeper" address="localhost:2181" /> -->
 	<dubbo:registry protocol="zookeeper" address="123.56.30.114:2181" />
 	<!-- 使用注解方式暴露接口 -->     
-    <dubbo:annotation package="com.sps.controller" />
+    <dubbo:annotation package="com.sps.controller"/>
 </beans>
  
  
