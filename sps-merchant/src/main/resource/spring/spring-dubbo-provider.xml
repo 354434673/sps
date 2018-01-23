@@ -18,7 +18,7 @@
 	<!-- 声明注册中心 -->
 	<dubbo:registry address="${dubbo.registry.address}" />
 	<!-- 声明协议 -->
-	<dubbo:protocol name="dubbo" port="${dubbo.port}" />
+	<dubbo:protocol name="dubbo" port="${dubbo.port}" host="192.168.2.122"/>
 	<!-- 暴露服务 -->
 	<!-- <dubbo:service interface="com.sps.service.IUserService" ref="testUserService" /> -->
 	    <!-- 使用注解方式暴露接口 -->     
