@@ -60,7 +60,7 @@
 	</div>
 		<div align="center" style="padding-top: 10px">
 			<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-normal" >返回</button>
-			<button id="agree" class="layui-btn layui-btn-warm" >导出PDF</button>
+			<button id="pdf" class="layui-btn layui-btn-warm" >导出PDF</button>
 		</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
@@ -116,16 +116,9 @@
 				    	  ,dataName: 'data' //数据列表的字段名称，默认：data
 				    	}  
 				  });
-			  //计算总订货量与总金额
-		 	 	var totalAmount=0;
-				$("#orderGoodsDetail tr").each(function(){
-		 	 	alert(0);
-					$(this).find('td:eq(4)').each(function(){
-						alert($(this).text());
-						totalAmount += parseFloat($(this).text());	
-						$("#totalAmount").val(totalAmount);
-					});
-				});  
+			  $('#pdf').click(function(){
+				  layer.msg('暂不可用')
+			  })
 			});
 	  
 	</script>

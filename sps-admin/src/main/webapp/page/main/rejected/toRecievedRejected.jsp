@@ -119,7 +119,7 @@
 			  $(document).on("click","#confirm",function(){//确认收货
 				  //这里需要提交到后台处理，修改订单状态码为订单审核中，并将信息发送到风控
 				  //暂时这里不提交风控，只是修改状态，之后再进行提交风控
-				  update(17,remark,"已确认收货,1秒后跳转")
+				  update(17,null,"已确认收货,1秒后跳转")
 			  });
 			  //更改状态方法
 			  function update(flag,remark,msg){

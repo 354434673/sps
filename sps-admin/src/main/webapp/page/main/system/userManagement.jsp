@@ -128,48 +128,56 @@
 								}  
 						  }); 
 					  } else if(layEvent === 'del'){ //删除
-					    layer.confirm('真的删除行么', function(index){
-					      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-					      layer.close(index);
-  					  			$.post({
-						 			 url:'/<%=path%>/user/updateUserState',
-						 			 dataType:'json',
-						 			 data:{
-						 				 userName:data.userUsername,
-						 				 state:1
-						 				 },
-						 			 success:function(data){
-						 				 if(data.state == 'success'){
-						 					layer.msg(data.msg,{icon: 1});
-						 				 }else{
-						 					layer.msg(data.msg,{icon: 1});
-						 				 }
-						 			 },
-						 			 error:function(){
-						 				layer.msg('系统错误',{icon: 2});
-						 			 }
-						 		 })
-					    });
+					    	if(data.userUsername == 'admin'){
+					    		layer.msg('管理员账号不可删除')
+					    	}else{
+							    layer.confirm('真的删除当前用户么', function(index){
+							      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+							      layer.close(index);
+		  					  			$.post({
+								 			 url:'/<%=path%>/user/updateUserState',
+								 			 dataType:'json',
+								 			 data:{
+								 				 userName:data.userUsername,
+								 				 state:1
+								 				 },
+								 			 success:function(data){
+								 				 if(data.state == 'success'){
+								 					layer.msg(data.msg,{icon: 1});
+								 				 }else{
+								 					layer.msg(data.msg,{icon: 1});
+								 				 }
+								 			 },
+								 			 error:function(){
+								 				layer.msg('系统错误',{icon: 2});
+								 			 }
+								 		 })
+							    });
+						    	}
 					  } else if(layEvent === 'edit'){ //编辑
-						  layer.open({
-							  type: 2, 
-							  area: ['70%', '80%'],//宽高
-							  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-							  success: function(layero, index){
-								    var body = layer.getChildFrame('body', index);
-								    body.find('#username').attr({"disabled":"disabled"});
-								    body.find('#username').val(data.userUsername)
-								    body.find('#name').val(data.userName)
-								    body.find('#phone').val(data.userPhone)
-								    body.find('#email').val(data.userEmail)
-								    body.find('#submit').hide();//显示重置密码按钮
-								    body.find('#submitUpdate').show();//显示重置密码按钮
-								},
-							  cancel: function(index, layero){ 
-								  table.reload('userId', {
-									});
-								}   
-						  }); 
+					    	if(data.userUsername == 'admin'){
+					    		layer.msg('管理员账号不可删除')
+					    	}else{
+							  layer.open({
+								  type: 2, 
+								  area: ['70%', '80%'],//宽高
+								  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+								  success: function(layero, index){
+									    var body = layer.getChildFrame('body', index);
+									    body.find('#username').attr({"disabled":"disabled"});
+									    body.find('#username').val(data.userUsername)
+									    body.find('#name').val(data.userName)
+									    body.find('#phone').val(data.userPhone)
+									    body.find('#email').val(data.userEmail)
+									    body.find('#submit').hide();//显示重置密码按钮
+									    body.find('#submitUpdate').show();//显示重置密码按钮
+									},
+								  cancel: function(index, layero){ 
+									  table.reload('userId', {
+										});
+									}   
+							  }); 
+					    	}
 					    
 					    //同步更新缓存对应的值
 /* 					    obj.update({

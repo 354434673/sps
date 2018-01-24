@@ -94,6 +94,33 @@
 }}
 {{ fn() }}
 </script>
+<script type="text/html" id="state">
+{{#  if(d.flag == 1){ }}
+  待确定
+{{#  } else if(d.flag == 2){ }}
+  已拒绝
+{{#  } else if(d.flag == 3){ }}
+  订单审核中
+{{#  } else if(d.flag == 4){ }}
+  订单审核不通过
+{{#  } else if(d.flag == 5){ }}
+  待支付
+{{#  } else if(d.flag == 6){ }}
+  代发货
+{{#  } else if(d.flag == 7){ }}
+  物流审核中
+{{#  } else if(d.flag == 8){ }}
+  物流审核不通过
+{{#  } else if(d.flag == 9){ }}
+ 已完成
+{{#  } else if(d.flag == 10){ }}
+  已退货
+{{#  } else if(d.flag == 11){ }}
+  已取消 
+{{#  } else { }}
+  {{d.flag}}
+{{#  } }}  
+</script>
 	<script>
 		layui.use(['table','laypage','layer','laydate','form'], function(){
 			  var laydate = layui.laydate;
@@ -128,7 +155,7 @@
 				      ,{field: 'servicemoney', title: '代销服务费',align:'center'}
 				      ,{field: 'sumMoney',  title: '实销金额',align:'center'}
 				      ,{field: 'createtime', title: '订单申请日期',templet:'#date',width:150, align:'center'}
-				      ,{field: 'flag', title: '订单状态',align:'center'}
+				      ,{field: 'flag', title: '订单状态',align:'center',templet:'#state'}
 				      ,{field: 'tool', title: '操作', width:300,align:'center',toolbar:'#bar'}
 		    ]]
 			  });

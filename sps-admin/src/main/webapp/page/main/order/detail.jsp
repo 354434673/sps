@@ -162,6 +162,9 @@
 		</fieldset>
 		<table id="orderGoodsDetail" lay-filter="orderGoodsDetail">
 		</table>
+			<div align="center">
+				<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" style="width: 100px" >返回</button>
+			</div>
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>

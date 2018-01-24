@@ -116,7 +116,6 @@
 				  var startTime = $('#startTime').val();
 				  var endTime = $('#endTime').val();
 				  var flag=$('#flag').val();
-				  //var flag=1;//待确认订单1，已拒绝2，订单审核中3，订单审核不通过4，待签约5，待发货6......默认如果不输入的话查询全部
 				  //待确认的退货申请，flag未确定
 				  table.reload('orderToBeRejected', {
 					  page:{

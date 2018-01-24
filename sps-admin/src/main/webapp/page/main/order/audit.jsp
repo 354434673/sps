@@ -115,6 +115,9 @@
 				<button id="agree" class="layui-btn layui-btn-warm" >同意</button>
 			</div>
 		</div>
+		<div id="back" style="display: none;" align="center">
+				<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" style="width: 100px">返回</button>
+		</div>
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
@@ -129,6 +132,8 @@
 			  if(isQuery == 1){//为1则为审核	
 				  isSubmit = true
 				  $('#button').show()
+			  }else{
+				  $('#back').show()
 			  }
 			  $.post({//获得信息
 				  url:'<%=path%>/order/showOrder.json'

@@ -128,7 +128,7 @@
 		   </div>
 		   <!-- 按钮 -->
     		 <div class="layui-form-item" align="center" id="btn" style="padding-top: 10px" >
-				<button class="layui-btn layui-btn-primary" id="last">返回</button>
+				<button onclick="javascript:history.back(-1)" class="layui-btn" >返回</button>
 				<button class="layui-btn layui-btn-primary" lay-filter="" lay-submit >提交</button>
 			</div>
 		</div>
@@ -189,7 +189,7 @@
 				  layer.open({
 					  type: 2, 
 					  area: ['75%', '70%'],//宽高
-					  content: ['../express/expressManage.html'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+					  content: ['../express/expressManage.jsp'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					  cancel: function(index, layero){
 						  var data = $(layero).find("iframe")[0].contentWindow.expressIds;
 						  $('#logisticsCooperationName').val(data.toString())
