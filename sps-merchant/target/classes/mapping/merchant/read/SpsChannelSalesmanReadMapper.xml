@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.read.SpsChannelSalesmanReadMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelSalesman" >
+    <id column="salesman_id" property="salesmanId" jdbcType="INTEGER" />
+    <result column="salesman_name" property="salesmanName" jdbcType="VARCHAR" />
+    <result column="salesman_idCard" property="salesmanIdcard" jdbcType="VARCHAR" />
+    <result column="salesman_phone" property="salesmanPhone" jdbcType="VARCHAR" />
+    <result column="salesman_email" property="salesmanEmail" jdbcType="VARCHAR" />
+    <result column="salesman_city" property="salesmanCity" jdbcType="VARCHAR" />
+    <result column="bei1" property="bei1" jdbcType="VARCHAR" />
+    <result column="bei2" property="bei2" jdbcType="VARCHAR" />
+    <result column="bei3" property="bei3" jdbcType="VARCHAR" />
+    <result column="bei4" property="bei4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    salesman_id, salesman_name, salesman_idCard, salesman_phone, salesman_email, salesman_city, 
+    bei1, bei2, bei3, bei4
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelSalesmanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_channel_salesman
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_channel_salesman
+    where salesman_id = #{salesmanId,jdbcType=INTEGER}
+  </select>
+</mapper>

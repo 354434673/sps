@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelEnterpriseWriteMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelEnterprise" >
+    <id column="enterprise_id" property="enterpriseId" jdbcType="INTEGER" />
+    <result column="enterprise_businesslicense_no" property="enterpriseBusinesslicenseNo" jdbcType="VARCHAR" />
+    <result column="enterprise_company_name" property="enterpriseCompanyName" jdbcType="VARCHAR" />
+    <result column="enterprise_company_register_addr" property="enterpriseCompanyRegisterAddr" jdbcType="VARCHAR" />
+    <result column="enterprise_company_realit_addr" property="enterpriseCompanyRealitAddr" jdbcType="VARCHAR" />
+    <result column="enterprise_corp" property="enterpriseCorp" jdbcType="VARCHAR" />
+    <result column="enterprise_corp_idCard" property="enterpriseCorpIdcard" jdbcType="VARCHAR" />
+    <result column="enterprise_operatio_time" property="enterpriseOperatioTime" jdbcType="INTEGER" />
+    <result column="enterprise_employee_num" property="enterpriseEmployeeNum" jdbcType="INTEGER" />
+    <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_channel_enterprise
+    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.merchant.SpsChannelEnterpriseExample" >
+    delete from sps_channel_enterprise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannelEnterprise">
+    insert into sps_channel_enterprise (enterprise_id, enterprise_businesslicense_no, 
+      enterprise_company_name, enterprise_company_abbreviation, 
+      enterprise_company_register_addr, enterprise_company_realit_addr, 
+      enterprise_corp, enterprise_corp_idCard, enterprise_operatio_time, 
+      enterprise_employee_num, channel_num)
+    values (#{enterpriseId,jdbcType=INTEGER}, #{enterpriseBusinesslicenseNo,jdbcType=VARCHAR}, 
+      #{enterpriseCompanyName,jdbcType=VARCHAR}, #{enterpriseCompanyAbbreviation,jdbcType=VARCHAR}, 
+      #{enterpriseCompanyRegisterAddr,jdbcType=VARCHAR}, #{enterpriseCompanyRealitAddr,jdbcType=VARCHAR}, 
+      #{enterpriseCorp,jdbcType=VARCHAR}, #{enterpriseCorpIdcard,jdbcType=VARCHAR}, #{enterpriseOperatioTime,jdbcType=INTEGER}, 
+      #{enterpriseEmployeeNum,jdbcType=INTEGER}, #{channelNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelEnterprise" >
+    insert into sps_channel_enterprise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="enterpriseBusinesslicenseNo != null" >
+        enterprise_businesslicense_no,
+      </if>
+      <if test="enterpriseCompanyName != null" >
+        enterprise_company_name,
+      </if>
+       <if test="enterpriseCompanyAbbreviation != null">
+        enterprise_company_abbreviation,
+      </if>
+      <if test="enterpriseCompanyRegisterAddr != null" >
+        enterprise_company_register_addr,
+      </if>
+      <if test="enterpriseCompanyRealitAddr != null" >
+        enterprise_company_realit_addr,
+      </if>
+      <if test="enterpriseCorp != null" >
+        enterprise_corp,
+      </if>
+      <if test="enterpriseCorpIdcard != null" >
+        enterprise_corp_idCard,
+      </if>
+      <if test="enterpriseOperatioTime != null" >
+        enterprise_operatio_time,
+      </if>
+      <if test="enterpriseEmployeeNum != null" >
+        enterprise_employee_num,
+      </if>
+      <if test="channelNum != null" >
+        channel_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseBusinesslicenseNo != null" >
+        #{enterpriseBusinesslicenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCompanyName != null" >
+        #{enterpriseCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCompanyAbbreviation != null">
+        #{enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCompanyRegisterAddr != null" >
+        #{enterpriseCompanyRegisterAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCompanyRealitAddr != null" >
+        #{enterpriseCompanyRealitAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCorp != null" >
+        #{enterpriseCorp,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCorpIdcard != null" >
+        #{enterpriseCorpIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseOperatioTime != null" >
+        #{enterpriseOperatioTime,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseEmployeeNum != null" >
+        #{enterpriseEmployeeNum,jdbcType=INTEGER},
+      </if>
+      <if test="channelNum != null" >
+        #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_channel_enterprise
+    <set >
+      <if test="record.enterpriseId != null" >
+        enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseBusinesslicenseNo != null" >
+        enterprise_businesslicense_no = #{record.enterpriseBusinesslicenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterpriseCompanyName != null" >
+        enterprise_company_name = #{record.enterpriseCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterpriseCompanyAbbreviation != null">
+        enterprise_company_abbreviation = #{record.enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterpriseCompanyRegisterAddr != null" >
+        enterprise_company_register_addr = #{record.enterpriseCompanyRegisterAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterpriseCompanyRealitAddr != null" >
+        enterprise_company_realit_addr = #{record.enterpriseCompanyRealitAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterpriseCorp != null" >
+        enterprise_corp = #{record.enterpriseCorp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterpriseCorpIdcard != null" >
+        enterprise_corp_idCard = #{record.enterpriseCorpIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterpriseOperatioTime != null" >
+        enterprise_operatio_time = #{record.enterpriseOperatioTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseEmployeeNum != null" >
+        enterprise_employee_num = #{record.enterpriseEmployeeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.channelNum != null" >
+        channel_num = #{record.channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_channel_enterprise
+    set enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      enterprise_businesslicense_no = #{record.enterpriseBusinesslicenseNo,jdbcType=VARCHAR},
+      enterprise_company_name = #{record.enterpriseCompanyName,jdbcType=VARCHAR},
+      enterprise_company_abbreviation = #{record.enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
+      enterprise_company_register_addr = #{record.enterpriseCompanyRegisterAddr,jdbcType=VARCHAR},
+      enterprise_company_realit_addr = #{record.enterpriseCompanyRealitAddr,jdbcType=VARCHAR},
+      enterprise_corp = #{record.enterpriseCorp,jdbcType=VARCHAR},
+      enterprise_corp_idCard = #{record.enterpriseCorpIdcard,jdbcType=VARCHAR},
+      enterprise_operatio_time = #{record.enterpriseOperatioTime,jdbcType=INTEGER},
+      enterprise_employee_num = #{record.enterpriseEmployeeNum,jdbcType=INTEGER},
+      channel_num = #{record.channelNum,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.merchant.SpsChannelEnterprise" >
+    update sps_channel_enterprise
+    <set >
+      <if test="enterpriseBusinesslicenseNo != null" >
+        enterprise_businesslicense_no = #{enterpriseBusinesslicenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCompanyName != null" >
+        enterprise_company_name = #{enterpriseCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCompanyAbbreviation != null">
+        enterprise_company_abbreviation = #{enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCompanyRegisterAddr != null" >
+        enterprise_company_register_addr = #{enterpriseCompanyRegisterAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCompanyRealitAddr != null" >
+        enterprise_company_realit_addr = #{enterpriseCompanyRealitAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCorp != null" >
+        enterprise_corp = #{enterpriseCorp,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseCorpIdcard != null" >
+        enterprise_corp_idCard = #{enterpriseCorpIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseOperatioTime != null" >
+        enterprise_operatio_time = #{enterpriseOperatioTime,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseEmployeeNum != null" >
+        enterprise_employee_num = #{enterpriseEmployeeNum,jdbcType=INTEGER},
+      </if>
+      <if test="channelNum != null" >
+        channel_num = #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.merchant.SpsChannelEnterprise" >
+    update sps_channel_enterprise
+    set enterprise_businesslicense_no = #{enterpriseBusinesslicenseNo,jdbcType=VARCHAR},
+      enterprise_company_name = #{enterpriseCompanyName,jdbcType=VARCHAR},
+      enterprise_company_abbreviation = #{enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
+      enterprise_company_register_addr = #{enterpriseCompanyRegisterAddr,jdbcType=VARCHAR},
+      enterprise_company_realit_addr = #{enterpriseCompanyRealitAddr,jdbcType=VARCHAR},
+      enterprise_corp = #{enterpriseCorp,jdbcType=VARCHAR},
+      enterprise_corp_idCard = #{enterpriseCorpIdcard,jdbcType=VARCHAR},
+      enterprise_operatio_time = #{enterpriseOperatioTime,jdbcType=INTEGER},
+      enterprise_employee_num = #{enterpriseEmployeeNum,jdbcType=INTEGER},
+      channel_num = #{channelNum,jdbcType=VARCHAR}
+    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+  </update>
+</mapper>

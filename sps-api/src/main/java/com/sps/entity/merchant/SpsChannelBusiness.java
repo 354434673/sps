@@ -1,6 +1,9 @@
 package com.sps.entity.merchant;
 
 import java.io.Serializable;
+import java.util.List;
+
+import com.sps.entity.goods.SpsGoodShop;
 
 public class SpsChannelBusiness implements Serializable{
     /**   
@@ -19,8 +22,22 @@ public class SpsChannelBusiness implements Serializable{
     private String businessScope;
 
     private String channelNum;
+    
+    private List<SpsGoodShop> goodShops;
+    
+    
+    
+    
 
-    public Integer getBusinessId() {
+    public List<SpsGoodShop> getGoodShops() {
+		return goodShops;
+	}
+
+	public void setGoodShops(List<SpsGoodShop> goodShops) {
+		this.goodShops = goodShops;
+	}
+
+	public Integer getBusinessId() {
         return businessId;
     }
 

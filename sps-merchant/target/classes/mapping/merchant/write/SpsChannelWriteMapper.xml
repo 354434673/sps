@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelWriteMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannel" >
+    <id column="channel_id" property="channelId" jdbcType="INTEGER" />
+    <result column="channel_city" property="channelCity" jdbcType="VARCHAR" />
+    <result column="channel_salesman_num" property="channelSalesmanNum" jdbcType="VARCHAR" />
+    <result column="channel_salesman_name" property="channelSalesmanName" jdbcType="VARCHAR" />
+    <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+    <result column="channel_state" property="channelState" jdbcType="INTEGER" />
+    <result column="channel_flow_state" jdbcType="INTEGER" property="channelFlowState" />
+    <result column="channel_up_time" property="channelUpTime" jdbcType="TIMESTAMP" />
+    <result column="channel_freeze_time" property="channelFreezeTime" jdbcType="TIMESTAMP" />
+    <result column="standby1" property="standby1" jdbcType="VARCHAR" />
+    <result column="standby2" property="standby2" jdbcType="VARCHAR" />
+    <result column="standby3" property="standby3" jdbcType="VARCHAR" />
+    <result column="standby4" property="standby4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_channel
+    where channel_id = #{channelId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.merchant.SpsChannelExample" >
+    delete from sps_channel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannel" >
+    insert into sps_channel (channel_id, channel_city, channel_salesman_num, 
+      channel_salesman_name, channel_num, channel_state, 
+      channel_flow_state, channel_up_time, channel_freeze_time, standby1, 
+      standby2, standby3, standby4
+      )
+    values (#{channelId,jdbcType=INTEGER}, #{channelCity,jdbcType=VARCHAR}, #{channelSalesmanNum,jdbcType=VARCHAR}, 
+      #{channelSalesmanName,jdbcType=VARCHAR}, #{channelNum,jdbcType=VARCHAR}, #{channelState,jdbcType=INTEGER}, 
+      #{channelFlowState,jdbcType=INTEGER}, #{channelUpTime,jdbcType=TIMESTAMP}, #{channelFreezeTime,jdbcType=TIMESTAMP}, #{standby1,jdbcType=VARCHAR}, 
+      #{standby2,jdbcType=VARCHAR}, #{standby3,jdbcType=VARCHAR}, #{standby4,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannel" useGeneratedKeys="true" keyProperty="channelId">
+    insert into sps_channel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="channelId != null" >
+        channel_id,
+      </if>
+      <if test="channelCity != null" >
+        channel_city,
+      </if>
+      <if test="channelSalesmanNum != null" >
+        channel_salesman_num,
+      </if>
+      <if test="channelSalesmanName != null" >
+        channel_salesman_name,
+      </if>
+      <if test="channelNum != null" >
+        channel_num,
+      </if>
+      <if test="channelState != null" >
+        channel_state,
+      </if>
+      <if test="channelFlowState != null">
+        channel_flow_state,
+      </if>
+      <if test="channelUpTime != null" >
+        channel_up_time,
+      </if>
+      <if test="channelFreezeTime != null" >
+        channel_freeze_time,
+      </if>
+      <if test="standby1 != null" >
+        standby1,
+      </if>
+      <if test="standby2 != null" >
+        standby2,
+      </if>
+      <if test="standby3 != null" >
+        standby3,
+      </if>
+      <if test="standby4 != null" >
+        standby4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="channelId != null" >
+        #{channelId,jdbcType=INTEGER},
+      </if>
+      <if test="channelCity != null" >
+        #{channelCity,jdbcType=VARCHAR},
+      </if>
+      <if test="channelSalesmanNum != null" >
+        #{channelSalesmanNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channelSalesmanName != null" >
+        #{channelSalesmanName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNum != null" >
+        #{channelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channelState != null" >
+        #{channelState,jdbcType=INTEGER},
+      </if>
+      <if test="channelFlowState != null">
+        #{channelFlowState,jdbcType=INTEGER},
+      </if>
+      <if test="channelUpTime != null" >
+        #{channelUpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="channelFreezeTime != null" >
+        #{channelFreezeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="standby1 != null" >
+        #{standby1,jdbcType=VARCHAR},
+      </if>
+      <if test="standby2 != null" >
+        #{standby2,jdbcType=VARCHAR},
+      </if>
+      <if test="standby3 != null" >
+        #{standby3,jdbcType=VARCHAR},
+      </if>
+      <if test="standby4 != null" >
+        #{standby4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_channel
+    <set >
+      <if test="record.channelId != null" >
+        channel_id = #{record.channelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.channelCity != null" >
+        channel_city = #{record.channelCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelSalesmanNum != null" >
+        channel_salesman_num = #{record.channelSalesmanNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelSalesmanName != null" >
+        channel_salesman_name = #{record.channelSalesmanName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelNum != null" >
+        channel_num = #{record.channelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelState != null" >
+        channel_state = #{record.channelState,jdbcType=INTEGER},
+      </if>
+      <if test="record.channelFlowState != null">
+        channel_flow_state = #{record.channelFlowState,jdbcType=INTEGER},
+      </if>
+      <if test="record.channelUpTime != null" >
+        channel_up_time = #{record.channelUpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.channelFreezeTime != null" >
+        channel_freeze_time = #{record.channelFreezeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.standby1 != null" >
+        standby1 = #{record.standby1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standby2 != null" >
+        standby2 = #{record.standby2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standby3 != null" >
+        standby3 = #{record.standby3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standby4 != null" >
+        standby4 = #{record.standby4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_channel
+    set channel_id = #{record.channelId,jdbcType=INTEGER},
+      channel_city = #{record.channelCity,jdbcType=VARCHAR},
+      channel_salesman_num = #{record.channelSalesmanNum,jdbcType=VARCHAR},
+      channel_salesman_name = #{record.channelSalesmanName,jdbcType=VARCHAR},
+      channel_num = #{record.channelNum,jdbcType=VARCHAR},
+      channel_state = #{record.channelState,jdbcType=INTEGER},
+      channel_flow_state = #{record.channelFlowState,jdbcType=INTEGER},
+      channel_up_time = #{record.channelUpTime,jdbcType=TIMESTAMP},
+      channel_freeze_time = #{record.channelFreezeTime,jdbcType=TIMESTAMP},
+      standby1 = #{record.standby1,jdbcType=VARCHAR},
+      standby2 = #{record.standby2,jdbcType=VARCHAR},
+      standby3 = #{record.standby3,jdbcType=VARCHAR},
+      standby4 = #{record.standby4,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.merchant.SpsChannel" >
+    update sps_channel
+    <set >
+      <if test="channelCity != null" >
+        channel_city = #{channelCity,jdbcType=VARCHAR},
+      </if>
+      <if test="channelSalesmanNum != null" >
+        channel_salesman_num = #{channelSalesmanNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channelSalesmanName != null" >
+        channel_salesman_name = #{channelSalesmanName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNum != null" >
+        channel_num = #{channelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channelState != null" >
+        channel_state = #{channelState,jdbcType=INTEGER},
+      </if>
+      <if test="channelFlowState != null">
+        channel_flow_state = #{channelFlowState,jdbcType=INTEGER},
+      </if>
+      <if test="channelUpTime != null" >
+        channel_up_time = #{channelUpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="channelFreezeTime != null" >
+        channel_freeze_time = #{channelFreezeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="standby1 != null" >
+        standby1 = #{standby1,jdbcType=VARCHAR},
+      </if>
+      <if test="standby2 != null" >
+        standby2 = #{standby2,jdbcType=VARCHAR},
+      </if>
+      <if test="standby3 != null" >
+        standby3 = #{standby3,jdbcType=VARCHAR},
+      </if>
+      <if test="standby4 != null" >
+        standby4 = #{standby4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where channel_id = #{channelId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.merchant.SpsChannel" >
+    update sps_channel
+    set channel_city = #{channelCity,jdbcType=VARCHAR},
+      channel_salesman_num = #{channelSalesmanNum,jdbcType=VARCHAR},
+      channel_salesman_name = #{channelSalesmanName,jdbcType=VARCHAR},
+      channel_num = #{channelNum,jdbcType=VARCHAR},
+      channel_state = #{channelState,jdbcType=INTEGER},
+      channel_flow_state = #{channelFlowState,jdbcType=INTEGER},
+      channel_up_time = #{channelUpTime,jdbcType=TIMESTAMP},
+      channel_freeze_time = #{channelFreezeTime,jdbcType=TIMESTAMP},
+      standby1 = #{standby1,jdbcType=VARCHAR},
+      standby2 = #{standby2,jdbcType=VARCHAR},
+      standby3 = #{standby3,jdbcType=VARCHAR},
+      standby4 = #{standby4,jdbcType=VARCHAR}
+    where channel_id = #{channelId,jdbcType=INTEGER}
+  </update>
+</mapper>

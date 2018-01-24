@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelBusinessWriteMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelBusiness" >
+    <id column="business_id" property="businessId" jdbcType="INTEGER" />
+    <result column="business_product" property="businessProduct" jdbcType="VARCHAR" />
+    <result column="business_type" property="businessType" jdbcType="VARCHAR" />
+    <result column="business_brand" property="businessBrand" jdbcType="VARCHAR" />
+    <result column="business_scope" property="businessScope" jdbcType="VARCHAR" />
+    <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    business_id, business_product, business_type, business_brand, business_scope, channel_num
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_channel_business
+    where business_id = #{businessId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.merchant.SpsChannelBusinessExample" >
+    delete from sps_channel_business
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannelBusiness" >
+    insert into sps_channel_business (business_id, business_product, business_type, 
+      business_brand, business_scope, channel_num
+      )
+    values (#{businessId,jdbcType=INTEGER}, #{businessProduct,jdbcType=VARCHAR}, #{businessType,jdbcType=VARCHAR}, 
+      #{businessBrand,jdbcType=VARCHAR}, #{businessScope,jdbcType=VARCHAR}, #{channelNum,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelBusiness" >
+    insert into sps_channel_business
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="businessProduct != null" >
+        business_product,
+      </if>
+      <if test="businessType != null" >
+        business_type,
+      </if>
+      <if test="businessBrand != null" >
+        business_brand,
+      </if>
+      <if test="businessScope != null" >
+        business_scope,
+      </if>
+      <if test="channelNum != null" >
+        channel_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="businessId != null" >
+        #{businessId,jdbcType=INTEGER},
+      </if>
+      <if test="businessProduct != null" >
+        #{businessProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null" >
+        #{businessType,jdbcType=VARCHAR},
+      </if>
+      <if test="businessBrand != null" >
+        #{businessBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="businessScope != null" >
+        #{businessScope,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNum != null" >
+        #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_channel_business
+    <set >
+      <if test="record.businessId != null" >
+        business_id = #{record.businessId,jdbcType=INTEGER},
+      </if>
+      <if test="record.businessProduct != null" >
+        business_product = #{record.businessProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessType != null" >
+        business_type = #{record.businessType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessBrand != null" >
+        business_brand = #{record.businessBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessScope != null" >
+        business_scope = #{record.businessScope,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelNum != null" >
+        channel_num = #{record.channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_channel_business
+    set business_id = #{record.businessId,jdbcType=INTEGER},
+      business_product = #{record.businessProduct,jdbcType=VARCHAR},
+      business_type = #{record.businessType,jdbcType=VARCHAR},
+      business_brand = #{record.businessBrand,jdbcType=VARCHAR},
+      business_scope = #{record.businessScope,jdbcType=VARCHAR},
+      channel_num = #{record.channelNum,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.merchant.SpsChannelBusiness" >
+    update sps_channel_business
+    <set >
+      <if test="businessProduct != null" >
+        business_product = #{businessProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null" >
+        business_type = #{businessType,jdbcType=VARCHAR},
+      </if>
+      <if test="businessBrand != null" >
+        business_brand = #{businessBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="businessScope != null" >
+        business_scope = #{businessScope,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNum != null" >
+        channel_num = #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where business_id = #{businessId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.merchant.SpsChannelBusiness" >
+    update sps_channel_business
+    set business_product = #{businessProduct,jdbcType=VARCHAR},
+      business_type = #{businessType,jdbcType=VARCHAR},
+      business_brand = #{businessBrand,jdbcType=VARCHAR},
+      business_scope = #{businessScope,jdbcType=VARCHAR},
+      channel_num = #{channelNum,jdbcType=VARCHAR}
+    where business_id = #{businessId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.read.SpsChannelReadMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannel" >
+    <id column="channel_id" property="channelId" jdbcType="INTEGER" />
+    <result column="channel_city" property="channelCity" jdbcType="VARCHAR" />
+    <result column="channel_salesman_num" property="channelSalesmanNum" jdbcType="VARCHAR" />
+    <result column="channel_salesman_name" property="channelSalesmanName" jdbcType="VARCHAR" />
+    <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+    <result column="channel_state" property="channelState" jdbcType="INTEGER" />
+    <result column="channel_flow_state" jdbcType="INTEGER" property="channelFlowState" />
+    <result column="channel_up_time" property="channelUpTime" jdbcType="TIMESTAMP" />
+    <result column="channel_freeze_time" property="channelFreezeTime" jdbcType="TIMESTAMP" />
+    <result column="standby1" property="standby1" jdbcType="VARCHAR" />
+    <result column="standby2" property="standby2" jdbcType="VARCHAR" />
+    <result column="standby3" property="standby3" jdbcType="VARCHAR" />
+    <result column="standby4" property="standby4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    channel_id, channel_city, channel_salesman_num, channel_salesman_name, channel_num, 
+    channel_state, channel_flow_state, channel_up_time, channel_freeze_time, standby1, 
+    standby2, standby3, standby4
+  </sql>
+  <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelStatisticsExample" resultType="java.lang.Integer" >
+    select count(*) from sps_channel_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_channel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_channel
+    where channel_id = #{channelId,jdbcType=INTEGER}
+  </select>
+</mapper>

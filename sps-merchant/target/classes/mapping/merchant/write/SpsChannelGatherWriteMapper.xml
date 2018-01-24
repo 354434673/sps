@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelGatherWriteMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelGather" >
+    <id column="gather_id" property="gatherId" jdbcType="INTEGER" />
+    <result column="gather_bank_id" property="gatherBankId" jdbcType="VARCHAR" />
+    <result column="gather_owner_name" property="gatherOwnerName" jdbcType="VARCHAR" />
+    <result column="gather_idCard" property="gatherIdcard" jdbcType="VARCHAR" />
+    <result column="gather_phone" property="gatherPhone" jdbcType="VARCHAR" />
+    <result column="gather_deposit_bank" property="gatherDepositBank" jdbcType="VARCHAR" />
+    <result column="gather_bank_branch" property="gatherBankBranch" jdbcType="VARCHAR" />
+    <result column="gather_bank_subBranch" property="gatherBankSubbranch" jdbcType="VARCHAR" />
+    <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    gather_id, gather_bank_id, gather_owner_name, gather_idCard, gather_phone, gather_deposit_bank, 
+    gather_bank_branch, gather_bank_subBranch, channel_num
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_channel_gather
+    where gather_id = #{gatherId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.merchant.SpsChannelGatherExample" >
+    delete from sps_channel_gather
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannelGather" >
+    insert into sps_channel_gather (gather_id, gather_bank_id, gather_owner_name, 
+      gather_idCard, gather_phone, gather_deposit_bank, 
+      gather_bank_branch, gather_bank_subBranch, 
+      channel_num)
+    values (#{gatherId,jdbcType=INTEGER}, #{gatherBankId,jdbcType=VARCHAR}, #{gatherOwnerName,jdbcType=VARCHAR}, 
+      #{gatherIdcard,jdbcType=VARCHAR}, #{gatherPhone,jdbcType=VARCHAR}, #{gatherDepositBank,jdbcType=VARCHAR}, 
+      #{gatherBankBranch,jdbcType=VARCHAR}, #{gatherBankSubbranch,jdbcType=VARCHAR}, 
+      #{channelNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelGather" 
+  							useGeneratedKeys="true" keyProperty="gatherId">
+    insert into sps_channel_gather
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gatherId != null" >
+        gather_id,
+      </if>
+      <if test="gatherBankId != null" >
+        gather_bank_id,
+      </if>
+      <if test="gatherOwnerName != null" >
+        gather_owner_name,
+      </if>
+      <if test="gatherIdcard != null" >
+        gather_idCard,
+      </if>
+      <if test="gatherPhone != null" >
+        gather_phone,
+      </if>
+      <if test="gatherDepositBank != null" >
+        gather_deposit_bank,
+      </if>
+      <if test="gatherBankBranch != null" >
+        gather_bank_branch,
+      </if>
+      <if test="gatherBankSubbranch != null" >
+        gather_bank_subBranch,
+      </if>
+      <if test="channelNum != null" >
+        channel_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gatherId != null" >
+        #{gatherId,jdbcType=INTEGER},
+      </if>
+      <if test="gatherBankId != null" >
+        #{gatherBankId,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherOwnerName != null" >
+        #{gatherOwnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherIdcard != null" >
+        #{gatherIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherPhone != null" >
+        #{gatherPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherDepositBank != null" >
+        #{gatherDepositBank,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherBankBranch != null" >
+        #{gatherBankBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherBankSubbranch != null" >
+        #{gatherBankSubbranch,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNum != null" >
+        #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_channel_gather
+    <set >
+      <if test="record.gatherId != null" >
+        gather_id = #{record.gatherId,jdbcType=INTEGER},
+      </if>
+      <if test="record.gatherBankId != null" >
+        gather_bank_id = #{record.gatherBankId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gatherOwnerName != null" >
+        gather_owner_name = #{record.gatherOwnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gatherIdcard != null" >
+        gather_idCard = #{record.gatherIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gatherPhone != null" >
+        gather_phone = #{record.gatherPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gatherDepositBank != null" >
+        gather_deposit_bank = #{record.gatherDepositBank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gatherBankBranch != null" >
+        gather_bank_branch = #{record.gatherBankBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gatherBankSubbranch != null" >
+        gather_bank_subBranch = #{record.gatherBankSubbranch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelNum != null" >
+        channel_num = #{record.channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_channel_gather
+    set gather_id = #{record.gatherId,jdbcType=INTEGER},
+      gather_bank_id = #{record.gatherBankId,jdbcType=VARCHAR},
+      gather_owner_name = #{record.gatherOwnerName,jdbcType=VARCHAR},
+      gather_idCard = #{record.gatherIdcard,jdbcType=VARCHAR},
+      gather_phone = #{record.gatherPhone,jdbcType=VARCHAR},
+      gather_deposit_bank = #{record.gatherDepositBank,jdbcType=VARCHAR},
+      gather_bank_branch = #{record.gatherBankBranch,jdbcType=VARCHAR},
+      gather_bank_subBranch = #{record.gatherBankSubbranch,jdbcType=VARCHAR},
+      channel_num = #{record.channelNum,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.merchant.SpsChannelGather" >
+    update sps_channel_gather
+    <set >
+      <if test="gatherBankId != null" >
+        gather_bank_id = #{gatherBankId,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherOwnerName != null" >
+        gather_owner_name = #{gatherOwnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherIdcard != null" >
+        gather_idCard = #{gatherIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherPhone != null" >
+        gather_phone = #{gatherPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherDepositBank != null" >
+        gather_deposit_bank = #{gatherDepositBank,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherBankBranch != null" >
+        gather_bank_branch = #{gatherBankBranch,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherBankSubbranch != null" >
+        gather_bank_subBranch = #{gatherBankSubbranch,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNum != null" >
+        channel_num = #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gather_id = #{gatherId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.merchant.SpsChannelGather" >
+    update sps_channel_gather
+    set gather_bank_id = #{gatherBankId,jdbcType=VARCHAR},
+      gather_owner_name = #{gatherOwnerName,jdbcType=VARCHAR},
+      gather_idCard = #{gatherIdcard,jdbcType=VARCHAR},
+      gather_phone = #{gatherPhone,jdbcType=VARCHAR},
+      gather_deposit_bank = #{gatherDepositBank,jdbcType=VARCHAR},
+      gather_bank_branch = #{gatherBankBranch,jdbcType=VARCHAR},
+      gather_bank_subBranch = #{gatherBankSubbranch,jdbcType=VARCHAR},
+      channel_num = #{channelNum,jdbcType=VARCHAR}
+    where gather_id = #{gatherId,jdbcType=INTEGER}
+  </update>
+</mapper>

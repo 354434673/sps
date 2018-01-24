@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.GoodShopDao">
+
+	<sql id="columns">
+		g_id, g_category_ids, g_brand_id, g_spu_no, g_spu_name, g_category_self, g_recommend, g_unit,
+		g_grounding_flag, g_create_time, g_shop_id, g_delete_flag, g_status, g_update_time, g_opinion
+	</sql>
+
+
+	<!-- select -->
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM sps_good_shop
+	</select>
+
+	<select id="countByEntity" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM sps_good_shop
+		<if test="entity != null">
+			<where>
+				<if test="entity.gId != null">
+					AND g_id = #{entity.gId}
+				</if>
+				<if test="entity.gShopId != null">
+					AND g_shop_id = #{entity.gShopId}
+				</if>
+				<if test="entity.gDeleteFlag != null">
+					AND g_delete_flag = #{entity.gDeleteFlag}
+				</if>
+				<if test="entity.gStatus != null">
+					AND g_status = #{entity.gStatus}
+				</if>
+				<if test="entity.gCategoryIds != null and entity.gCategoryIds != ''">
+					AND g_category_ids = #{entity.gCategoryIds}
+				</if>
+				<if test="entity.gBrandId != null">
+					AND g_brand_id = #{entity.gBrandId}
+				</if>
+				<if test="entity.gSpuNo != null and entity.gSpuNo != ''">
+					AND g_spu_no = #{entity.gSpuNo}
+				</if>
+				<if test="entity.gRecommend != null and entity.gRecommend != ''">
+					AND g_recommend = #{entity.gRecommend}
+				</if>
+				<if test="entity.gUnit != null and entity.gUnit != ''">
+					AND g_unit = #{entity.gUnit}
+				</if>
+				<if test="entity.gGroundingFlag != null and entity.gGroundingFlag != ''">
+					AND g_grounding_flag = #{entity.gGroundingFlag}
+				</if>
+				<if test="entity.gSpuName != null and entity.gSpuName != ''">
+					AND g_spu_name = #{entity.gSpuName}
+				</if>
+				<if test="entity.gCategorySelf != null">
+					AND g_category_self = #{entity.gCategorySelf}
+				</if>
+			</where>
+		</if>
+	</select>
+
+	<select id="get" resultType="com.sps.entity.goods.SpsGoodShop">
+		SELECT * FROM sps_good_shop
+		WHERE g_id = #{gId}
+	</select>
+
+	<select id="find" resultType="com.sps.entity.goods.SpsGoodShop">
+		SELECT * FROM sps_good_shop
+		<if test="entity != null">
+			<where>
+				<if test="entity.gId != null">
+					AND g_id = #{entity.gId}
+				</if>
+				<if test="entity.gShopId != null">
+					AND g_shop_id = #{entity.gShopId}
+				</if>
+				<if test="entity.gDeleteFlag != null">
+					AND g_delete_flag = #{entity.gDeleteFlag}
+				</if>
+				<if test="entity.gStatus != null">
+					AND g_status = #{entity.gStatus}
+				</if>
+				<if test="entity.gCategoryIds != null and entity.gCategoryIds != ''">
+					AND g_category_ids = #{entity.gCategoryIds}
+				</if>
+				<if test="entity.gBrandId != null">
+					AND g_brand_id = #{entity.gBrandId}
+				</if>
+				<if test="entity.gSpuNo != null and entity.gSpuNo != ''">
+					AND g_spu_no = #{entity.gSpuNo}
+				</if>
+				<if test="entity.gRecommend != null and entity.gRecommend != ''">
+					AND g_recommend = #{entity.gRecommend}
+				</if>
+				<if test="entity.gUnit != null and entity.gUnit != ''">
+					AND g_unit = #{entity.gUnit}
+				</if>
+				<if test="entity.gGroundingFlag != null and entity.gGroundingFlag != ''">
+					AND g_grounding_flag = #{entity.gGroundingFlag}
+				</if>
+				<if test="entity.gSpuName != null and entity.gSpuName != ''">
+					AND g_spu_name = #{entity.gSpuName}
+				</if>
+				<if test="entity.gCategorySelf != null">
+					AND g_category_self = #{entity.gCategorySelf}
+				</if>
+			</where>
+		</if>
+	</select>
+
+	<select id="query" resultType="com.sps.entity.goods.SpsGoodShop">
+		SELECT * FROM sps_good_shop
+		<if test="entity != null">
+			<where>
+				<if test="entity.gId != null">
+					AND g_id = #{entity.gId}
+				</if>
+				<if test="entity.gShopId != null">
+					AND g_shop_id = #{entity.gShopId}
+				</if>
+				<if test="entity.gDeleteFlag != null">
+					AND g_delete_flag = #{entity.gDeleteFlag}
+				</if>
+				<if test="entity.gStatus != null">
+					AND g_status = #{entity.gStatus}
+				</if>
+				<if test="entity.gCategoryIds != null and entity.gCategoryIds != ''">
+					AND g_category_ids = #{entity.gCategoryIds}
+				</if>
+				<if test="entity.gBrandId != null">
+					AND g_brand_id = #{entity.gBrandId}
+				</if>
+				<if test="entity.gSpuNo != null and entity.gSpuNo != ''">
+					AND g_spu_no = #{entity.gSpuNo}
+				</if>
+				<if test="entity.gRecommend != null and entity.gRecommend != ''">
+					AND g_recommend = #{entity.gRecommend}
+				</if>
+				<if test="entity.gUnit != null and entity.gUnit != ''">
+					AND g_unit = #{entity.gUnit}
+				</if>
+				<if test="entity.gGroundingFlag != null and entity.gGroundingFlag != ''">
+					AND g_grounding_flag = #{entity.gGroundingFlag}
+				</if>
+				<if test="entity.gSpuName != null and entity.gSpuName != ''">
+					AND g_spu_name = #{entity.gSpuName}
+				</if>
+				<if test="entity.gCategorySelf != null">
+					AND g_category_self = #{entity.gCategorySelf}
+				</if>
+			</where>
+		</if>
+		ORDER BY g_id DESC
+	</select>
+
+	<select id="queryByPage" resultType="com.sps.entity.goods.SpsGoodShop">
+		SELECT * FROM sps_good_shop
+		<if test="entity != null">
+			<where>
+				<if test="entity.gId != null">
+					AND g_id = #{entity.gId}
+				</if>
+				<if test="entity.gShopId != null">
+					AND g_shop_id = #{entity.gShopId}
+				</if>
+				<if test="entity.gDeleteFlag != null">
+					AND g_delete_flag = #{entity.gDeleteFlag}
+				</if>
+				<if test="entity.gStatus != null">
+					AND g_status = #{entity.gStatus}
+				</if>
+				<if test="entity.gCategoryIds != null and entity.gCategoryIds != ''">
+					AND g_category_ids = #{entity.gCategoryIds}
+				</if>
+				<if test="entity.gBrandId != null">
+					AND g_brand_id = #{entity.gBrandId}
+				</if>
+				<if test="entity.gSpuNo != null and entity.gSpuNo != ''">
+					AND g_spu_no = #{entity.gSpuNo}
+				</if>
+				<if test="entity.gRecommend != null and entity.gRecommend != ''">
+					AND g_recommend = #{entity.gRecommend}
+				</if>
+				<if test="entity.gUnit != null and entity.gUnit != ''">
+					AND g_unit = #{entity.gUnit}
+				</if>
+				<if test="entity.gGroundingFlag != null and entity.gGroundingFlag != ''">
+					AND g_grounding_flag = #{entity.gGroundingFlag}
+				</if>
+				<if test="entity.gSpuName != null and entity.gSpuName != ''">
+					AND g_spu_name = #{entity.gSpuName}
+				</if>
+				<if test="entity.gCategorySelf != null">
+					AND g_category_self = #{entity.gCategorySelf}
+				</if>
+			</where>
+		</if>
+		ORDER BY g_id DESC
+		<if test="page != null">
+			LIMIT #{page.start}, #{page.pagesize}
+		</if>
+	</select>
+
+</mapper>
