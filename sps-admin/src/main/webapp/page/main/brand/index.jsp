@@ -32,7 +32,7 @@
             <div class="layui-input-inline">
                 <input id="brandEnglishName" type="text" name="name"  lay-verify="" placeholder="请输入英文名称" autocomplete="off" class="layui-input">
             </div>
-            <button class="layui-btn layui-btn-primary" id="queryUser">查询</button>
+            <button class="layui-btn layui-btn-primary"  id="queryUser">查询</button>
             <button class="layui-btn layui-btn-primary" id="resetUser">重置</button>
         </div>
     </div>
@@ -45,6 +45,7 @@
     </div>
     <table id="brandList" lay-filter="brandTables"></table>
 </div>
+<script src="<%=path%>/page/static/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript"
         src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
@@ -59,6 +60,10 @@
     {{#  }); }}
 </script>
 <script>
+  /*  $(function () {
+        $('#queryUser').html("查询");
+        $('#brandEnglishName').val(" ")
+    })*/
     layui.use(['table','laypage','layer'], function(){
         var table = layui.table;
         var laypage = layui.laypage;
@@ -115,6 +120,7 @@
                         body.find('#brandEnglishName').val(data.brandEnglishName)
                         body.find('#brandAbbreviation').val(data.brandAbbreviation)
                         body.find('#brandCategoryNames').val(data.brandCategoryNames)
+                        body.find('#categoryParentId').val(data.categoryParentId)
                         body.find('#brandDes').val(data.brandDes)
                     }
                 });
@@ -153,6 +159,7 @@
                         body.find('#brandSmallUrl').val(data.brandSmallUrl)
                         body.find('#brandBigUrl').val(data.brandBigUrl)
                         body.find('#brandEnglishName').val(data.brandEnglishName)
+                        body.find('#brandCategoryNames').val(data.brandCategoryNames)
                         body.find('#brandAbbreviation').val(data.brandAbbreviation)
                         body.find('button').eq(0).html(data.brandCategoryNames)
                         body.find('#brandDes').val(data.brandDes)

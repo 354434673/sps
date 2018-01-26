@@ -102,6 +102,7 @@ public class GoodShopController {
                 resultMap.put("flag", 0);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             String errorMsg = "操作失败";
             resultMap.put("msg", errorMsg);
             resultMap.put("flag", 0);
@@ -174,25 +175,11 @@ public class GoodShopController {
                     }
                 }
                 String[] idList = skuIds.split(",");
-                //List<Long> sdf = convertStringArrayToLong(idList);
                 Map<String, Object> map1 = new HashMap<>();
-                map1.put("gNo", goods.getgSpuName());
+                map1.put("gNo", goods.getgSpuNo());
                 map1.put("list", idList);
+                //查询不在核心商户表中的平台sku
                 List<SpsGoodSku> spsGoodSkuList = skuService.findList(map1);
-                //这里明天该
-               /* List list1 = new ArrayList();
-                //排除掉核心商户sku表中的ids
-                if (spsGoodSkuList != null && spsGoodSkuList.size() > 0) {
-                    String[] idList = skuIds.split(",");
-                    for (String ids : idList) {
-                        for (SpsGoodSku list : spsGoodSkuList) {
-                            if (!list.getgId().equals(Integer.valueOf(ids))) {
-                                list1.add(list);
-                            }
-                        }
-                    }
-                }
-                resultMap.put("newList", list1);*/
                 resultMap.put("newList", spsGoodSkuList);
                 resultMap.put("skuList", skuList);
                 resultMap.put("goods", goods);

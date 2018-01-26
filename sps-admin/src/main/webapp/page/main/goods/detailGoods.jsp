@@ -75,6 +75,7 @@
                     <th>波动方式</th>
                     <th>波动值</th>
                     <th>波动区间</th>
+                    <th>审核状态</th>
                 </tr>
                 </thead>
                 <tbody id="content">
@@ -185,6 +186,18 @@
                                 }else if(val.gType=="1"){
                                     val.gType="按比例"
                                 }
+                                if(val.gAuditStatus=="0"){
+                                    val.gAuditStatus="待提交"
+                                }else if(val.gAuditStatus=="1"){
+                                    val.gAuditStatus="审核中"
+                                }else if(val.gAuditStatus=="2"){
+                                    val.gAuditStatus="审核不通过"
+                                }else if(val.gAuditStatus=="3"){
+                                    val.gAuditStatus="审核通过"
+                                }else if(val.gAuditStatus==undefined){
+                                    val.gAuditStatus="-"
+                                }
+
                                 $('#content').append(
                                     "<tr >" +
                                     "<input type='hidden'  value=''></td>" +
@@ -195,6 +208,7 @@
                                     "<td >" + val.gType + "</td>" +
                                     "<td >" + val.gScale + "</td>" +
                                     "<td >" + val.gAprice + "-" + val.gBprice + "</td>" +
+                                    "<td >" + val.gAuditStatus + "</td>" +
                                     "</tr>");
                             })
                         }

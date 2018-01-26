@@ -162,10 +162,16 @@ public class GoodShopServiceImpl implements GoodShopService {
 
     @Override
     public void auditShopGood(SpsGoodShop goods) {
-        goods.setgUpdateTime(new Date());
-        goods.setgGroundingFlag("0");
-        goods.setgStatus(0);
-        spsGoodShopMapper.update(goods);
+        if (goods.getgOpinion() != null) {
+            goods.setgUpdateTime(new Date());
+            goods.setgStatus(3);
+            spsGoodShopMapper.update(goods);
+        } else {
+            goods.setgOpinion("");
+            goods.setgUpdateTime(new Date());
+            goods.setgStatus(2);
+            spsGoodShopMapper.update(goods);
+        }
     }
 
     @Override
@@ -193,5 +199,13 @@ public class GoodShopServiceImpl implements GoodShopService {
         hashMap.put("count", pageInfo.getTotal());
         hashMap.put("data", goodsList.size() != 0 ? goodsList : null);
         return hashMap;
+    }
+
+    @Override
+    public void forceShopGood(SpsGoodShop goods) {
+        goods.setgUpdateTime(new Date());
+        goods.setgGroundingFlag("0");
+        goods.setgStatus(0);
+        spsGoodShopMapper.update(goods);
     }
 }

@@ -88,4 +88,10 @@ public interface GoodShopService {
      * @return
      */
     HashMap<String,Object> findForceGoodsList(Integer page, Integer limit, String shopName, String goodsName, String shopNumber, Integer shopStatus, String endTime, String startTime,String spuNo);
+
+    /**
+     * 强制下架
+     * @param goods
+     */
+    void forceShopGood(SpsGoodShop goods);
 }

@@ -23,17 +23,20 @@
     <h3>分类信息</h3>
     <hr>
     <div class="layui-form layui-form-pane">
+
+        <input type="hidden" name="parentFlag" id="parentFlag" value="">
         <input type="hidden" name="categoryParentName" id="categoryParentName" value="${categoryParentName}">
         <input type="hidden" name="categoryId" id="categoryId" value="${spsGoodCategory.categoryId}">
         <div class="layui-form-item ">
             <label class="layui-form-label">*分类名称：</label>
             <div class="layui-input-inline">
-                <input id="categoryName" type="text" name="categoryName" lay-verify="required" placeholder="请输入分类名称"
+                <input id="categoryName" type="text" name="categoryName" lay-verify="required|categoryName"
+                       placeholder="请输入分类名称"
                        autocomplete="off" class="layui-input" value="${spsGoodCategory.categoryName}">
             </div>
             <label class="layui-form-label">*权重：</label>
             <div class="layui-input-inline">
-                <input id="categoryWeight" name="categoryWeight" type="text" lay-verify="required"
+                <input id="categoryWeight" name="categoryWeight" type="text" lay-verify=”required|number|categoryWeight”
                        placeholder="请输入权重" autocomplete="off" class="layui-input"
                        value="${spsGoodCategory.categoryWeight}">
             </div>
@@ -57,17 +60,17 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">*描述：</label>
+            <label class="layui-form-label">描述：</label>
             <div class="layui-input-inline">
-                <input id="categoryDes" type="text" name="categoryDes" lay-verify="required"
-                       placeholder="请输入姓名"
+                <input id="categoryDes" type="text" name="categoryDes" lay-verify="categoryDes"
+                       placeholder="请输入描述"
                        autocomplete="off" class="layui-input" value="${spsGoodCategory.categoryDes}">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">*图片：</label>
+            <label class="layui-form-label">图片：</label>
             <div class="layui-input-inline">
-                <input type="text" id="categoryUrl"  lay-verify="required" name="categoryUrl" value="${spsGoodCategory.categoryUrl}"
+                <input type="text" id="categoryUrl" name="categoryUrl" value="${spsGoodCategory.categoryUrl}"
                        placeholder="图片" class="layui-input"/>
                 <button onclick="checkImgType()">上传图片</button>
                 <%--  <input id="categoryUrl" type="hidden" name="categoryUrl"
@@ -81,7 +84,7 @@
         <div class="layui-form-item" align="center">
             <button class="layui-btn" lay-filter="submitCategory" lay-submit lay-filter="demo1" id="submit">立即提交
             </button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary">返回</button>
         </div>
     </div>
 
@@ -123,6 +126,16 @@
     function validateFile() {
         var filename = $('#imgupl').val();
         var f = filename.split(".");
+        if ($('#categoryParentId').val() == '') {
+            layer.msg("请先选择分类")
+            return false;
+        }
+        if ($('#parentFlag').val() == '0') {
+            layer.msg("只有三级分类才可以上传图片")
+            return false;
+        }
+
+
         if (f.length == 2 && (f[1] == 'jpg' || f[1] == 'jpeg' || f[1] == 'png')) {
             var formData = new FormData($('#upload')[0]);
             $.ajax({
@@ -200,6 +213,11 @@
                         checkboxStyle: "",              //设置复选框的样式，必须为字符串，css样式怎么写就怎么写
                         click: function (item) {          //节点点击事件
                             $("#showCategory").html(item.name)
+                            console.log(item);
+                            if (item.name == '无') {
+                                $("#parentFlag").val("0")
+                            }
+
                             $("#categoryParentId").val(item.id)
                             $("#tree").hide()
                             layer.closeAll()
@@ -220,11 +238,17 @@
         var form = layui.form;
         var $ = layui.jquery;
         var table = layui.table;
+
         //提交
         var post_flag = false; //设置一个对象来控制是否进入AJAX过程
         form.on('submit(submitCategory)', function (data) {
+            if ($("#categoryParentId").val() == "") {
+                layer.msg("请选择上级分类！");
+                return false;
+            }
+            var type = true;
             if (post_flag) return; //如果正在提交则直接返回，停止执行
-            post_flag = true;//标记当前状态为正在提交状态
+            post_flag = true;//标记当前状态为正在提交状态\
             var categoryName = $('#categoryName').val()
             var categoryWeight = $('#categoryWeight').val()
             var categoryParentId = $('#categoryParentId').val()
@@ -232,27 +256,29 @@
             var categoryUrl = $('#categoryUrl').val()
             var categoryId = $('#categoryId').val()
             //layer.load(1, {shade: [0.5, '#000']});
-            $.ajax({
-                data: {
-                    categoryName: categoryName, categoryWeight: categoryWeight, categoryParentId: categoryParentId,
-                    categoryDes: categoryDes, categoryUrl: categoryUrl, categoryId: categoryId
-                },
-                url: "<%=path%>/category/saveOrUpdate",//提交连接
-                type: 'post',
-                dataType: 'json',
-                success: function (result) {
-                    post_flag = false; //在提交成功之后将标志标记为可提交状态
-                    if (result.flag == '1') {
-                        layer.msg("操作成功");
-                        setTimeout(function () {
-                            window.location.href = "<%=path%>/category";
-                        }, 1000);
-                    } else {
-                        post_flag = false; //在提交成功之后将标志标记为可提交状态
-                        layer.msg("操作失败");
-                    }
-                }//回调方法
-            });
+            if (type) {
+                $.ajax({
+                    data: {
+                        categoryName: categoryName, categoryWeight: categoryWeight, categoryParentId: categoryParentId,
+                        categoryDes: categoryDes, categoryUrl: categoryUrl, categoryId: categoryId
+                    },
+                    url: "<%=path%>/category/saveOrUpdate",//提交连接
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (result) {
+                        post_flag = true; //在提交成功之后将标志标记为可提交状态
+                        if (result.flag == '1') {
+                            layer.msg("操作成功");
+                            setTimeout(function () {
+                                window.location.href = "<%=path%>/category";
+                            }, 1000);
+                        } else {
+                            post_flag = false; //在提交成功之后将标志标记为可提交状态
+                            layer.msg("操作失败");
+                        }
+                    }//回调方法
+                });
+            }
 
         })
         $(document).on("click", "#showCategory", function () {
@@ -269,24 +295,19 @@
 
         //自定义验证规则
         form.verify({
-            //验证只包含汉字
-            IsChineseCharacter: function (value) {
-                var regex = /^[\u4e00-\u9fa5]+$/;
-                if (!value.match(regex)) {
-                    return '请输入正确的姓名';
+            categoryName: function (value) {
+                if (value.length > 20) {
+                    return '分类名称最多输入20个字符';
                 }
-            },
-            minLength: function (value) {
-                if (value.length < 6) {
-                    return '最少为6位';
+            }, categoryWeight: function (value) {
+                if (value > 9999 || value == 0) {
+                    return '权重必须为0-9999的数字';
                 }
-            },
-            verify: function (value) {
-                var repass = $('#password').val();
-                if (value != repass) {
-                    return '两次输入的密码不一致!';
+            }, categoryDes: function (value) {
+                if (value.length > 20) {
+                    return '描述最多输入20个字符';
                 }
-            },
+            }
         });
     });
 

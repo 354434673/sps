@@ -54,10 +54,9 @@
 
 
     var layout = [
-        { name: '菜单名称', treeNodes: true, headerClass: 'value_col', colClass: 'value_col', style: 'width: 40%' },
+        { name: '分类名称', treeNodes: true, headerClass: 'value_col', colClass: 'value_col', style: 'width: 60%' },
         {name: '权重', field: 'categoryWeight', headerClass: 'value_col', colClass: 'value_col', style: 'width: 10%'},
         {name: '描述', field: 'categoryDes', headerClass: 'value_col', colClass: 'value_col', style: 'width: 20%'},
-        {name: '图片', field: 'categoryUrl', headerClass: 'value_col', colClass: 'value_col', style: 'width: 20%'},
         {
             name: '操作',
             headerClass: 'value_col',

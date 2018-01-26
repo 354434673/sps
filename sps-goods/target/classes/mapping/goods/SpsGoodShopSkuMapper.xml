@@ -238,4 +238,12 @@
     </if>
 
   </select>
+
+
+  <select id="findById" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_good_shop_sku
+    where g_id = #{gId,jdbcType=INTEGER}
+  </select>
 </mapper>

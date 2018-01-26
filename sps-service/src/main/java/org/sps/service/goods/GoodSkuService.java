@@ -35,7 +35,7 @@ public interface GoodSkuService {
      * @param
      * @return
      */
-    HashMap<String,Object> findGoodSkuList(Integer page, Integer limit, String goodsName, String spuNo, String size);
+    HashMap<String,Object> findGoodSkuList(Integer page, Integer limit, String goodsName, String spuNo, String size ,Integer auditStatus);
 
     /**
      * 参考价格列表批量修改基准价 基准方式 波动值
@@ -43,4 +43,10 @@ public interface GoodSkuService {
      * @return
      */
     HashMap<String,Object> updatePrice(List<SpsGoodSku> goodShopSku);
+
+    /**
+     * 修改波动方式
+     * @param goodSku
+     */
+    void updateType(SpsGoodSku goodSku);
 }

@@ -72,6 +72,7 @@
 <script>
     layui.use(['table','laypage','layer'], function(){
         var table = layui.table;
+        var form = layui.form;
         var laypage = layui.laypage;
         var layer = layui.layer
         var $ = layui.jquery
@@ -112,14 +113,17 @@
         $('#queryGoods').on('click',function(){
             var goodsNo = $('#goodsNo').val();
             var goodsName = $('#goodsName').val();
+            var status =$('#status').val();
             table.reload('gId', {
-                where: {goodsNo:goodsNo, goodsName:goodsName}
+                where: {goodsNo:goodsNo, goodsName:goodsName,flowStatus:status}
             });
         })
         //重置
         $('#resetGoods').on('click',function(){
             $('#goodsName').val('')
-            $('#skuNo').val('')
+            $('#goodsNo').val('')
+            $('#status').val('')
+            form.render('select');
         })
         //监听工作条
         table.on('tool(goodsTables)', function(obj){

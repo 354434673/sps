@@ -22,6 +22,7 @@
 		<typeAlias alias="SpsCustomCategory" type="org.sps.entity.goods.SpsCustomCategory" />
 		<typeAlias alias="SpsGoodShop" type="org.sps.entity.goods.SpsGoodShop" />
 		<typeAlias alias="SpsGoodShopSku" type="org.sps.entity.goods.SpsGoodShopSku" />
+		<typeAlias alias="SpsGoodSkuLog" type="org.sps.entity.goods.SpsGoodSkuLog" />
 	</typeAliases>
 
 	<mappers>
@@ -33,5 +34,6 @@
 		<mapper resource="mapping/goods/SpsCustomCategoryMapper.xml" />
 		<mapper resource="mapping/goods/SpsGoodShopMapper.xml" />
 		<mapper resource="mapping/goods/SpsGoodShopSkuMapper.xml" />
+		<mapper resource="mapping/goods/SpsGoodSkuLogMapper.xml" />
 	</mappers>
 </configuration>

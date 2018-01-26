@@ -171,10 +171,16 @@
       sps_order
     <where>
       <if test="name!=null and name!='' ">
-        name=#{name,jdbcType=VARCHAR}
+        name like CONCAT('%','${name}','%' )
       </if>
       <if test="orderid!=null and orderid!='' ">
-        and orderid=#{orderid,jdbcType=VARCHAR}
+        and orderid like CONCAT('%','${orderid}','%' )
+      </if>
+      <if test="channelName!=null and channelName!='' ">
+        and shopkeepername like CONCAT('%','${channelName}','%' )
+      </if>
+      <if test="selfname!=null and selfname!='' ">
+        and selfname like CONCAT('%','${selfname}','%' )
       </if>
        <if test="startTime != null and startTime !='' ">
         <![CDATA[ and createtime >= #{startTime,jdbcType=TIMESTAMP } ]]>
@@ -183,7 +189,7 @@
         <![CDATA[ and  createtime <= #{endTime,jdbcType=TIMESTAMP }]]>
       </if>
       <if test="flag != null and flag != '' ">
-        and flag=#{flag,jdbcType=VARCHAR}
+        and flag = #{flag,jdbcType=VARCHAR}
       </if>
     </where>
     order by createtime desc,money asc

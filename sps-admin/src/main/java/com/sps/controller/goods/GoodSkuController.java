@@ -31,8 +31,8 @@ public class GoodSkuController {
      */
     @RequestMapping("/goodSkuList")
     @ResponseBody
-    public HashMap<String, Object> userList(Integer page, Integer limit,String goodsName, String spuNo, String size) {
-        HashMap<String, Object> goodSkuList = goodskuService.findGoodSkuList(page, limit, goodsName, spuNo,size);
+    public HashMap<String, Object> userList(Integer page, Integer limit,String goodsName, String spuNo,Integer auditStatus, String size) {
+        HashMap<String, Object> goodSkuList = goodskuService.findGoodSkuList(page, limit, goodsName, spuNo,size,auditStatus);
         return goodSkuList;
     }
 
@@ -134,4 +134,26 @@ public class GoodSkuController {
         }
         return resultMap;
     }
+
+    /**
+     * 添加或者修改
+     *
+     * @return
+     */
+
+    @RequestMapping(value = "/updateType", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updateType( SpsGoodSku goodSku) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            goodskuService.updateType(goodSku);
+            resultMap.put("flag", 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("flag", 0);
+            resultMap.put("msg", "操作失败");
+        }
+        return resultMap;
+    }
+
 }

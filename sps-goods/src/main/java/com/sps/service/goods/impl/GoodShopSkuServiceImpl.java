@@ -3,8 +3,10 @@ package com.sps.service.goods.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sps.dao.goods.SpsGoodShopMapper;
 import com.sps.dao.goods.SpsGoodShopSkuMapper;
 import org.springframework.util.NumberUtils;
+import org.sps.entity.goods.SpsGoodShop;
 import org.sps.entity.goods.SpsGoodShopSku;
 import org.sps.entity.goods.SpsGoods;
 import org.sps.service.goods.GoodShopSkuService;
@@ -21,15 +23,26 @@ import java.util.Map;
 public class GoodShopSkuServiceImpl implements GoodShopSkuService {
     @Resource
     private SpsGoodShopSkuMapper spsGoodShopSkuMapper;
+    @Resource
+    private SpsGoodShopMapper spsGoodShopMapper;
+
     @Override
     public void saveOrUpdate(SpsGoodShopSku goods) {
-        if(goods.getgId()!=null){
+        if (goods.getgId() != null) {
             goods.setgUpdateTime(new Date());
             spsGoodShopSkuMapper.update(goods);
-        }else{
-            goods.setgCreateTime(new Date());
-            goods.setgDeleteFlag(0);
-            spsGoodShopSkuMapper.insert(goods);
+        } else {
+            SpsGoodShop spsGoodShop = spsGoodShopMapper.findById(goods.getgGid());
+            if (!"".equals(spsGoodShop.getgSkuIds())) {
+                String[] ids = spsGoodShop.getgSkuIds().split(",");
+                for (String id : ids) {
+                    if (Integer.valueOf(id).equals(goods.getgSkuId())) {
+                        goods.setgCreateTime(new Date());
+                        goods.setgDeleteFlag(0);
+                        spsGoodShopSkuMapper.insert(goods);
+                    }
+                }
+            }
         }
     }
 
@@ -95,15 +108,15 @@ public class GoodShopSkuServiceImpl implements GoodShopSkuService {
             for (SpsGoodShopSku sku : goodShopSku) {
                 SpsGoodShopSku shopSku = spsGoodShopSkuMapper.findById(sku.getgId());
                 //判断是否和原有库存价格相等 如果不等 修改 并修改代销服务费
-                if ((!shopSku.getgPrice().equals(sku.getgPrice())) && (!shopSku.getgStock().equals(sku.getgStock()))) {
+                if ((!shopSku.getgPrice().setScale(4).equals(sku.getgPrice().setScale(4))) && (!shopSku.getgStock().equals(sku.getgStock()))) {
                     Double service = NumberUtil.mul(sku.getgPrice().doubleValue(), 0.007);
                     sku.setgService(BigDecimal.valueOf(service));
                     sku.setgUpdateTime(new Date());
                     spsGoodShopSkuMapper.update(sku);
-                } else if (!shopSku.getgStock().equals(sku.getgStock()) ) {
+                } else if (!shopSku.getgStock().equals(sku.getgStock())) {
                     sku.setgUpdateTime(new Date());
                     spsGoodShopSkuMapper.update(sku);
-                } else if (!shopSku.getgPrice().equals(sku.getgPrice())) {
+                } else if (!shopSku.getgPrice().setScale(4).equals(sku.getgPrice().setScale(4))) {
                     Double service = NumberUtil.mul(sku.getgPrice().doubleValue(), 0.007);
                     sku.setgService(BigDecimal.valueOf(service));
                     sku.setgUpdateTime(new Date());

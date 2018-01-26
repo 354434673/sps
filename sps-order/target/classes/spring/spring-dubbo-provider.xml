@@ -15,9 +15,9 @@
 	<!--提供方应用信息，用于计算依赖关系 -->
 	<dubbo:application name="sps-order" />
 	<!-- 声明注册中心 -->
-	<dubbo:registry address="zookeeper://localhost:2181" />
+	<dubbo:registry address="${dubbo.registry.address}" />
 	<!-- 声明协议 -->
-	<dubbo:protocol name="dubbo" port="20883" />
+	<dubbo:protocol name="dubbo" port="${dubbo.port}" />
 	<!-- 暴露服务 -->
 	<!-- <dubbo:service interface="com.sps.service.IUserService" ref="testUserService" /> -->
 	    <!-- 使用注解方式暴露接口 -->     

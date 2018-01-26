@@ -196,7 +196,6 @@ public class GoodCategoryController {
             //先查父类
             List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
             resultMap.put("categoryList", categoryList);
-
         }else {
             List list = new ArrayList<>();
             String [] idList = ids.split(",");

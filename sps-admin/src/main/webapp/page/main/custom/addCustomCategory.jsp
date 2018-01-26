@@ -43,7 +43,7 @@
         <div class="layui-form-item" align="center">
             <button class="layui-btn" lay-filter="submitCategory" lay-submit  id="submit">立即提交
             </button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
         </div>
     </div>
 </div>
@@ -84,9 +84,9 @@
                         post_flag = false; //在提交成功之后将标志标记为可提交状态
                         if (result.flag == '1') {
                             layer.msg("操作成功",{icon: 1});
-                            layer.closeAll();
                             setTimeout(function () {
-                                layer.closeAll();
+                                parent.layer.closeAll();
+                               /* window.location.href = "<%=path%>/page/main/custom/index.jsp";*/
                             }, 1000);
                         } else {
                             layer.msg("操作失败");

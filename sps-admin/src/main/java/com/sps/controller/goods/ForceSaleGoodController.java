@@ -324,7 +324,7 @@ public class ForceSaleGoodController {
     public Map<String, Object> auditShopGood(SpsGoodShop goods) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            goodService.auditShopGood(goods);
+            goodService.forceShopGood(goods);
             resultMap.put("flag", 1);
         } catch (Exception e) {
             e.printStackTrace();

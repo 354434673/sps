@@ -230,10 +230,10 @@
       and g.g_spu_name LIKE CONCAT('%',#{goodsName,jdbcType=VARCHAR},'%')
     </if>
     <if test="goodsNo !=null and goodsNo != ''">
-      and g.g_spu_no = #{goodsNo,jdbcType=VARCHAR}
+      and g.g_spu_no LIKE CONCAT('%',#{goodsNo,jdbcType=VARCHAR},'%')
     </if>
     <if test="flowStatus !=null and flowStatus != ''">
-      and g.flow_status = #{flowStatus,jdbcType=INTEGER}
+      and g.flow_status = #{flowStatus,jdbcType=VARCHAR}
     </if>
     <if test="brandId !=null and brandId != ''">
       and  FIND_IN_SET(#{brandId,jdbcType=INTEGER}, g.g_brand_id)

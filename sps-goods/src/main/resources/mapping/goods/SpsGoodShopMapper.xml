@@ -18,10 +18,11 @@
         <result column="g_update_time" jdbcType="TIMESTAMP" property="gUpdateTime"/>
         <result column="g_opinion" jdbcType="VARCHAR" property="gOpinion"/>
         <result column="g_force_opinion" jdbcType="VARCHAR" property="gForceOpinion"/>
+        <result column="g_sku_ids" jdbcType="VARCHAR" property="gSkuIds"/>
     </resultMap>
     <sql id="Base_Column_List">
     g_id, g_category_ids, g_brand_id, g_spu_no, g_spu_name, g_category_self, g_recommend, 
-    g_unit, g_grounding_flag, g_create_time, g_shop_id, g_delete_flag, g_status, g_update_time,g_opinion,g_force_opinion
+    g_unit, g_grounding_flag, g_create_time, g_shop_id, g_delete_flag, g_status, g_update_time,g_opinion,g_force_opinion,g_sku_ids
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -38,12 +39,12 @@
       g_spu_no, g_spu_name, g_category_self, 
       g_recommend, g_unit, g_grounding_flag, 
       g_create_time, g_shop_id, g_delete_flag, 
-      g_status, g_update_time,g_opinion,g_force_opinion)
+      g_status, g_update_time,g_opinion,g_force_opinion,g_sku_ids)
     values (#{gId,jdbcType=INTEGER}, #{gCategoryIds,jdbcType=VARCHAR}, #{gBrandId,jdbcType=INTEGER}, 
       #{gSpuNo,jdbcType=VARCHAR}, #{gSpuName,jdbcType=VARCHAR}, #{gCategorySelf,jdbcType=INTEGER}, 
       #{gRecommend,jdbcType=VARCHAR}, #{gUnit,jdbcType=VARCHAR}, #{gGroundingFlag,jdbcType=VARCHAR}, 
       #{gCreateTime,jdbcType=TIMESTAMP}, #{gShopId,jdbcType=INTEGER}, #{gDeleteFlag,jdbcType=INTEGER}, 
-      #{gStatus,jdbcType=INTEGER}, #{gUpdateTime,jdbcType=TIMESTAMP}, #{gOpinion,jdbcType=VARCHAR}, #{gForceOpinion,jdbcType=VARCHAR})
+      #{gStatus,jdbcType=INTEGER}, #{gUpdateTime,jdbcType=TIMESTAMP}, #{gOpinion,jdbcType=VARCHAR}, #{gForceOpinion,jdbcType=VARCHAR}, #{gSkuIds,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="SpsGoodShop">
         insert into sps_good_shop
@@ -190,6 +191,9 @@
             <if test="gForceOpinion != null">
                 g_force_opinion =  #{gForceOpinion,jdbcType=VARCHAR},
             </if>
+            <if test="gSkuIds != null">
+                g_sku_ids =  #{gSkuIds,jdbcType=VARCHAR},
+            </if>
         </set>
         where g_id = #{gId,jdbcType=INTEGER}
     </update>
@@ -216,7 +220,7 @@
     <select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">
         select
         g.g_id, g.g_category_ids, g.g_brand_id, g.g_spu_no, g.g_spu_name, g.g_category_self, g.g_recommend,
-        g.g_unit, g.g_grounding_flag, g.g_create_time, g.g_shop_id, g.g_delete_flag, g.g_status, g.g_update_time,g.g_opinion,g.g_force_opinion,
+        g.g_unit, g.g_grounding_flag, g.g_create_time, g.g_shop_id, g.g_delete_flag, g.g_status, g.g_update_time,g.g_opinion,g.g_force_opinion,g.g_sku_ids,
         b.category_name as categoryName
         from sps_good_shop g LEFT JOIN sps_good_category b on b.category_id=g.g_category_self
         where 1=1
@@ -293,6 +297,7 @@
         g.g_update_time,
         g.g_opinion,
         g.g_force_opinion,
+        g.g_sku_ids,
         b.category_name AS categoryName,
         ce.enterprise_company_name as companyName,
         co.open_admin_num as adminNum
@@ -347,6 +352,7 @@
         g.g_status,
         g.g_update_time,
         g.g_opinion,
+        g.g_sku_ids,
         g.g_force_opinion,
         b.category_name AS categoryName,
         ce.enterprise_company_name as companyName,

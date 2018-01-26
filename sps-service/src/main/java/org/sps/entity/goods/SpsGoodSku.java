@@ -34,6 +34,37 @@ public class SpsGoodSku implements Serializable {
 
     private Integer gDeleteFlag;
 
+
+    private BigDecimal gBeforePrice;
+
+    private Date gAuditTime;
+
+    private Integer gAuditStatus;
+
+    public BigDecimal getgBeforePrice() {
+        return gBeforePrice;
+    }
+
+    public void setgBeforePrice(BigDecimal gBeforePrice) {
+        this.gBeforePrice = gBeforePrice;
+    }
+
+    public Date getgAuditTime() {
+        return gAuditTime;
+    }
+
+    public void setgAuditTime(Date gAuditTime) {
+        this.gAuditTime = gAuditTime;
+    }
+
+    public Integer getgAuditStatus() {
+        return gAuditStatus;
+    }
+
+    public void setgAuditStatus(Integer gAuditStatus) {
+        this.gAuditStatus = gAuditStatus;
+    }
+
     public Integer getgId() {
         return gId;
     }
