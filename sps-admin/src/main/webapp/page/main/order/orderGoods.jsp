@@ -60,7 +60,7 @@
 				    ,id:'orderGoodsUpdate'
 				    ,page:true
 				    ,cols: [[ //表头
-				      {title: '序号', align:'center',type:'nubmers'} 
+				      {title: '序号', align:'center',type:'numbers'} 
 				      ,{field: 'sku', title: 'SKU编号', width:100,edit: 'text',align:'center',sort:true}
 				      ,{field: 'skuname', title: '商品名称',  width:90,align:'center'}
 				      ,{field: 'color', title: '规格', width:90, align:'center'}
@@ -89,16 +89,6 @@
 			  
 			  
 			  table.on('tool(orderGoodsDetailUpdate)',function(obj){
-				/*   var value=obj.value,//得到修改后的值
-				  data=obj.data,//得到所在行所有键值
-				  field=obj.field,//得到字段
-				  price=data.price,//得到price字段
-				  amount=data.amount;//得到amount字段 */
-				  //var summation=price*amount;//计算总金额
-				  //console.log(data.LAY_TABLE_INDEX);
-				  
-				  //$("table td").eq(8).html(summation); 
-				  
 				  var data = obj.data;
 				  if(obj.event == 'setPrice'){
 				      layer.prompt({
@@ -133,26 +123,16 @@
 				        });
 				      });
 				    }
-				  
 				  //layer.msg('[sku: '+ data.sku +'] ' + field + ' 字段更改为：'+ value+'更改后的summation为：'+summation);
-			  });
-			  
-			  
+			  });		  
 			  //关闭当前iframe，并设置超时时间为1毫秒
 			  $(document).on('click',"#closeWindow",function(){
 				  var index=parent.layer.getFrameIndex(window.name);
 				  setTimeout(function(){
 					  parent.layer.close(index)
 				  },1);
-			  });
-			  
-		  	 
-			  
+			  });		  
 			  $("#submit").click(function(){
-				  //获取table的值
-				  //console.log(table.cache.orderGoodsUpdate);
-				 /* var tableSer=$("#orderGoodsDetailUpdate").serializeArray(); */
-				 //var orderGoods=JSON.stringify(table.cache.orderGoodsUpdate);
  				var orderGoods = table.cache.orderGoodsUpdate;
 				 $.ajax({
 					  type:'POST',

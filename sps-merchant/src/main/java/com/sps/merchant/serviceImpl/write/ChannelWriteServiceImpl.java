@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.merchant.SpsChannel;
 import org.sps.entity.merchant.SpsChannelBusiness;
 import org.sps.entity.merchant.SpsChannelEnterprise;
+import org.sps.entity.merchant.SpsChannelExample;
 import org.sps.entity.merchant.SpsChannelFinanceTarget;
 import org.sps.entity.merchant.SpsChannelGather;
 import org.sps.entity.merchant.SpsChannelGuarantee;
@@ -17,6 +18,7 @@ import org.sps.entity.merchant.SpsChannelOpenAccount;
 import org.sps.service.merchant.read.ChannelReadService;
 import org.sps.service.merchant.write.ChannelWriteService;
 import org.sps.util.DateUtil;
+import org.sps.util.FinalData;
 import org.sps.util.RuleUtil;
 
 import com.alibaba.dubbo.config.annotation.Service;
@@ -179,5 +181,24 @@ public class ChannelWriteServiceImpl implements ChannelWriteService{
 		account.setChannelNum(channelNum);
 		openAccountWrite.insertSelective(account);
 		return null;
+	}
+	@Override
+	public HashMap<String, String> deleteChannel(String channelNum, Integer state) {
+		SpsChannel record = new SpsChannel();
+		
+		record.setChannelState(state);
+		
+		SpsChannelExample example = new SpsChannelExample();
+		
+		example.createCriteria().andChannelNumEqualTo(channelNum);
+		
+		int updateByExampleSelective = channelWrite.updateByExampleSelective(record, example);
+		
+		HashMap<String, String> hashMap = new HashMap<String,String>();
+		
+		hashMap.put("msg", "删除成功");
+		hashMap.put("state", FinalData.STATE_SUCCESS);
+		
+		return hashMap;
 	}
 }

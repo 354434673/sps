@@ -47,9 +47,9 @@
     <div class="layui-input-inline">
       <input id="email"  type="email" name="email" lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
     </div>
-    <label class="layui-form-label">*备注：</label>
+    <label class="layui-form-label">备注：</label>
     <div class="layui-input-inline">
-      <input id=""  type="text" name="" lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+      <input id="remark"  type="text" name="remark" lay-verify="" placeholder="" autocomplete="off" class="layui-input">
     </div>
   </div>
 
@@ -63,7 +63,7 @@
  	<div class="layui-form-item" align="center" id="btn" >
 		<button class="layui-btn" lay-filter="submitAddUser" lay-submit id="submit">立即提交</button>
 		<button style="display: none" class="layui-btn" lay-filter="submitUpdate" lay-submit id="submitUpdate">提交修改</button>
-		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		<button id="reset" class="layui-btn layui-btn-primary">重置</button>
 	</div>
 </div>
 </div>
@@ -100,6 +100,9 @@
 					})
 			    });
 	  })
+	  $('#reset').click(function(){
+		  $('input').val('')
+	  })
 	  //添加
 	  form.on('submit(submitAddUser)', function(data){
 	 		 var username = $('#username').val()
@@ -107,6 +110,11 @@
 	 		 var name = $('#name').val()
 	 		 var phone = $('#phone').val()
 	 		 var email = $('#email').val()
+	 		 var remark = $('#remark').val()
+	 		 if(remark.length > 50){
+	 			layer.msg('备注信息最多为50个字',{icon: 2});
+	 			return;
+	 		 }
 	 		 if(array.length != 0){
 		 		 $.post({
 		 			 url:'<%=path%>/user/insertUser',

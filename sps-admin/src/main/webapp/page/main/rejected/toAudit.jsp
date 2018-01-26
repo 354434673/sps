@@ -87,7 +87,7 @@
 		<div class="layui-form-item">
 		 <label class="layui-form-label">退货原因:</label>
 			    <div class="layui-input-inline">
-			      <input id="reson" type="text" name="reson"  lay-verify="" placeholder="" autocomplete="off" class="layui-input">
+					<div class="layui-form-mid layui-word-aux" id=""> 拒绝还需要理由?</div>	
 			    </div>
 		</div>
 		<div class="layui-form-item">

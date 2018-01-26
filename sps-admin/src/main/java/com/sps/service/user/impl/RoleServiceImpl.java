@@ -57,28 +57,40 @@ public class RoleServiceImpl implements RoleService{
 	@Override
 	public HashMap<String, String> insertRole(
 			String roleName, String describe, List<Integer> menuList) {
+		
+		SpsRoleExample example = new SpsRoleExample();
+		
+		example.createCriteria().andRoleNameEqualTo(roleName);
+		
+		List<SpsRole> selectByExample = spsRoleMapper.selectByExample(example);
+		
 		HashMap<String, String> map = new HashMap<String, String>();
-		String creater = (String) SecurityUtils.getSubject().getPrincipal();
-		SpsRole role = new SpsRole();
-		role.setRoleName(roleName);
-		role.setRoleDescribe(describe);
-		role.setRoleCreater(creater);
-		role.setRoleCreattime(new Date());
-		role.setRoleUpdatetime(new Date());
-		role.setRoleState(0);
-		int insertSelective = spsRoleMapper.insertSelective(role);
-		if(insertSelective == 1){
-			int insertRoleAndMenu = insertRoleAndMenu(role.getRoleId(), menuList);
-			if(insertRoleAndMenu == 1){
-				map.put("msg", "角色添加成功");
-				map.put("state", "success");
-			}else{
-				map.put("msg", "角色权限添加失败");
-				map.put("state", "menuError");
-			}
+		if(selectByExample.get(0) == null){
+				String creater = (String) SecurityUtils.getSubject().getPrincipal();
+				SpsRole role = new SpsRole();
+				role.setRoleName(roleName);
+				role.setRoleDescribe(describe);
+				role.setRoleCreater(creater);
+				role.setRoleCreattime(new Date());
+				role.setRoleUpdatetime(new Date());
+				role.setRoleState(0);
+				int insertSelective = spsRoleMapper.insertSelective(role);
+				if(insertSelective == 1){
+					int insertRoleAndMenu = insertRoleAndMenu(role.getRoleId(), menuList);
+					if(insertRoleAndMenu == 1){
+						map.put("msg", "角色添加成功");
+						map.put("state", "success");
+					}else{
+						map.put("msg", "角色权限添加失败");
+						map.put("state", "menuError");
+					}
+				}else{
+					map.put("msg", "添加失败,联系管理员");
+					map.put("state", "error");
+				}
 		}else{
-			map.put("msg", "添加失败,联系管理员");
-			map.put("state", "error");
+			map.put("msg", "角色重复");
+			map.put("state", "exist");
 		}
 		return map;
 	}

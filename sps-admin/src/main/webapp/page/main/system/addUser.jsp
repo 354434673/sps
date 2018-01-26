@@ -69,7 +69,7 @@
  	<div class="layui-form-item" align="center" id="btn" >
 		<button class="layui-btn" lay-filter="submitAddUser" lay-submit id="submit">立即提交</button>
 		<button style="display: none" class="layui-btn" lay-filter="submitUpdate" lay-submit id="submitUpdate">提交修改</button>
-		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		<button id="reset"type="reset" class="layui-btn layui-btn-primary">重置</button>
 	</div>
 </div>
 </div>
@@ -135,6 +135,9 @@
 	 		 }else{
 	 			layer.msg('请选择该用户权限',{icon: 2});
 	 		 }
+	  })
+	  $('#reset').click(function(){
+		  $('input').val('')
 	  })
 	  //修改
 	  form.on('submit(submitUpdate)', function(data){

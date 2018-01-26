@@ -23,7 +23,7 @@ public interface ChannelReadService{
 	 * @return: HashMap<String,Object>      
 	 * @throws
 	 */
-	HashMap<String, Object> getChannelList(String channelNum, Integer channelState, 
+	HashMap<String, Object> getChannelList(String channelNum, String name, Integer channelState, 
 			Integer channelFlowState, Integer page, Integer limit);
 	/**
 	 * 根据营业执照编号查询

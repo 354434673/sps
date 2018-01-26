@@ -26,6 +26,8 @@ public interface OrderMapper {
      */
     List<Order> selectByParameters(
     		@Param(value="name") String name,
+    		@Param(value="channelName") String channelName,
+    		@Param(value="selfname") String selfname,
     		@Param(value="orderid") String orderid,
     		@Param(value="startTime") String startTime, 
     		@Param(value="endTime") String endTime,

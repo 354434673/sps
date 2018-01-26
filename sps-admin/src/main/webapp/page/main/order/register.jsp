@@ -99,7 +99,7 @@
 		</table>
 		<div class="layui-form" >
 			<div class="layui-form-item">
-		    <label class="layui-form-label" style="width:130px">*合作物流名称：</label>
+		    <label class="layui-form-label" style="width:130px">*物流公司：</label>
 		    <div class="layui-input-inline">
 		      <input disabled="disabled" id="logisticsCooperationName" type="logisticsCooperationName" name="name" lay-verify="required" placeholder="合作物流" autocomplete="off" class="layui-input">
 		    </div>
@@ -121,7 +121,7 @@
 			<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:130px">*物流单据：</label>
 		    <div class="layui-input-inline">
-		      <input  id="logisticsOther" type="text" name="logisticsOther" placeholder="物流单据" autocomplete="off" class="layui-input">
+		    	<button type="button" class="layui-btn layui-btn-normal" id="testList">选择多文件</button> 
 		    </div>
 		   </div>
 		   <div class="layui-form-item">
@@ -129,7 +129,7 @@
 		   <!-- 按钮 -->
     		 <div class="layui-form-item" align="center" id="btn" style="padding-top: 10px" >
 				<button onclick="javascript:history.back(-1)" class="layui-btn" >返回</button>
-				<button class="layui-btn layui-btn-primary" lay-filter="" lay-submit >提交</button>
+				<button class="layui-btn layui-btn-primary" lay-filter="submit" lay-submit id="submit">提交</button>
 			</div>
 		</div>
 	</div>
@@ -139,9 +139,10 @@
     {{d.LAY_TABLE_INDEX+1}}
 </script>
 	<script>
-		layui.use(['laydate','table','laypage','layer','upload'], function(){
+		layui.use(['laydate','table','form','layer','upload'], function(){
 			  var table = layui.table;
 			  var laypage = layui.laypage;
+			  var form = layui.form;
 			  var layer = layui.layer;
 			  var $ = layui.jquery;
 			  var upload=layui.upload;
@@ -181,15 +182,42 @@
 				    ]]
 				  });
 			//点击提交按钮，则提交至风控，改变状态为待审核
-			  $(document).on("click","#submit",function(){
+<%-- 			  $(document).on("click","#submit",function(){
 				 window.location.href='<%=path%>/order/updateDeliveryOrderFlag?flag=7&orderid='+<%=request.getParameter("orderid")%>;
-			  });
+			  }); --%>
+			  form.on('submit(submit)', function(data){
+				  
+				  
+				  //绑定原始文件域
+				  upload.render({
+				    elem: '#testList'
+				    ,accept:'images'
+				    ,url: '/upload/'
+				    ,auto: false
+				    ,multiple: true
+				    ,bindAction:'#submit'
+	 			    ,data:{type:'forms',types:3,channelNum:'111',status:'channel',accept:'images'}
+				    ,url: '<%=path%>/merchant/uploadPic' //上传接口
+				    ,done: function(res){
+				    	if(res.state == 'success'){
+		 			    	layer.msg(res.msg,{icon: 1});
+				    	}else if(res.state == 'error'){
+				    		layer.msg(res.msg,{icon: 2});
+				    	}else if(res.state == 'max'){
+				    		layer.msg(res.msg,{icon: 2});
+				    	}
+				    }
+				    ,error: function(){
+				    	layer.msg('图片失败',{icon: 2});
+				    }
+				  });
+			  })
 			//物流信息
 			  $('#openExpress').on('click', function() {
 				  layer.open({
 					  type: 2, 
 					  area: ['75%', '70%'],//宽高
-					  content: ['../express/expressManage.jsp'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+					  content: ['<%=path%>/page/main/express/expressManage.jsp?type=2'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					  cancel: function(index, layero){
 						  var data = $(layero).find("iframe")[0].contentWindow.expressIds;
 						  $('#logisticsCooperationName').val(data.toString())

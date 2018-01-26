@@ -26,15 +26,13 @@
 		    <div class="layui-form-item">
 			    <label class="layui-form-label" style="width: 200px">物流公司:</label>
 			    <div class="layui-input-inline">
-			      <input id="name" type="text" name="name"  lay-verify="" placeholder="请输入公司名称" autocomplete="off" class="layui-input">
+			      <input id="name" type="text" name="name"  lay-verify="" placeholder="物流公司" autocomplete="off" class="layui-input">
 			    </div>
 			    	<button class="layui-btn layui-btn-primary" id="queryName">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="reset">重置</button>
 	        </div>  
         </div>
 		<table id="expressList" lay-filter="expressTables" class="layui-fluid"></table>
-	 <button class="layui-btn layui-btn-primary" id="queryName">查询</button>
-		
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>

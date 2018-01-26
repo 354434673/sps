@@ -18,7 +18,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.order.OrderGoodsMapper;
 import com.sps.dao.order.OrderMapper;
-@Service(timeout=2000,group="dianfu-dev")
+@Service(timeout=2000)
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
@@ -75,8 +75,8 @@ public class OrderServiceImpl implements OrderService {
 	 * @return
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public HashMap<String, Object> selectByParameters(Integer page, Integer limit, String name, String orderid,
-			String startTime, String endTime, String flag) {
+	public HashMap<String, Object> selectByParameters(Integer page, Integer limit, String name, String channelName, 
+			String selfname, String orderid, String startTime, String endTime, String flag) {
 
 		if (page == null) {
 			page = 1;
@@ -85,8 +85,9 @@ public class OrderServiceImpl implements OrderService {
 			limit = 10;
 		}
 		PageHelper.startPage(page, limit);
-
-		List<Order> orders = orderMapper.selectByParameters(name, orderid, startTime, endTime, flag);
+		
+		List<Order> orders = orderMapper.selectByParameters(
+				name, channelName, selfname, orderid, startTime, endTime, flag);
 
 		PageInfo pageInfo = new PageInfo(orders);
 
@@ -125,7 +126,7 @@ public class OrderServiceImpl implements OrderService {
 		List<OrderGoods> orderGoods = this.getOrderGoods(orderid,sku);
 		for (OrderGoods goods : orderGoods) {
 			amountTotl += goods.getAmount();
-			priceTotle = priceTotle.add(goods.getPrice());
+			priceTotle = priceTotle.add(new BigDecimal(goods.getSummation()));
 		}
 		// 转为pageinfo
 		PageInfo pageInfo = new PageInfo(orderGoods);
@@ -293,10 +294,6 @@ public class OrderServiceImpl implements OrderService {
 //		return hashMap;
 //	}
 
-	
-	
-	
-@SuppressWarnings("unchecked")
 public HashMap<String, Object> updatePriceBatch(List<OrderGoods> goods) {
 		
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
@@ -334,9 +331,9 @@ public HashMap<String, Object> updatePriceBatch(List<OrderGoods> goods) {
 			//设置修改前的价格，将从数据库中查询到的价格设置到新对象中
 			orderGoods.setPrePrice(prePrice);
 			
-			orderGoodsList.add(orderGoods);
+			//orderGoodsList.add(orderGoods);
+			orderGoodsMapper.updatePriceBatch(orderGoods);
 		}
-		orderGoodsMapper.updatePriceBatch(orderGoodsList);
 		hashMap.put("msg", "修改成功");
 		hashMap.put("state", "success");
 		return hashMap;

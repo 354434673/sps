@@ -56,7 +56,7 @@ public interface OrderGoodsMapper {
     
     int updatePrice(@Param("orderGoods") OrderGoods orderGoods);
     
-    int updatePriceBatch(List<OrderGoods> list);
+    int updatePriceBatch(OrderGoods orderGoods);
     
     int updateByPrimaryKey(OrderGoods record);
     

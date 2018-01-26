@@ -162,6 +162,12 @@
 		</fieldset>
 		<table id="orderGoodsDetail" lay-filter="orderGoodsDetail">
 		</table>
+			<div class="layui-form-item" >
+			    <label class="layui-form-label" style="width:152px">说明  ：</label>
+			    <div class="layui-input-inline">
+			    	<div class="layui-form-mid layui-word-aux" id="state"> </div>
+			    </div>
+		    </div>
 			<div align="center">
 				<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" style="width: 100px" >返回</button>
 			</div>
@@ -179,6 +185,7 @@
 				  ,dataType:'json'
 				  ,data:{orderid:<%=request.getParameter("orderid")%>}
 				  ,success:function(result){
+					  console.log(result.data[0])
 					  $('#orderid').html(result.data[0].orderid)//订单编号
 					  $('#money').html(result.data[0].money)//订单金额
 					  $('#servicescale').html(result.data[0].servicescale)//代销服务费率
@@ -191,6 +198,7 @@
 					  $('#phone').html(result.data[0].phone)//联系电话
 					  $('#selfname').html(result.data[0].selfname)//店铺名称
 					  $('#address').html(result.data[0].address)//收货信息
+					  $('#state').html(result.data[0].remark)
 				  }
 			  })
 			  table.render({
@@ -227,7 +235,6 @@
 						  "<span>店主下单"+i+"</span><br>"+
 						  "<span>2017.11.29  12:00</span>"+
 						  "</li>"
-				  console.log(i)
 			  }
 			 $('#flow').html(list)
 			});

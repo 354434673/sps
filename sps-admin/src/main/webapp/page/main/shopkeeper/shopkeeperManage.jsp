@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>用户管理</title>
+<title>店主信息维护</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -24,47 +24,35 @@
 	<div style="margin: 15px;">
 		<div class="layui-form layui-form-pane"  >
 		    <div class="layui-form-item">
-			    <label class="layui-form-label" style="width: 200px">核心商户编号:</label>
+			    <label class="layui-form-label" style="width: 200px">店主账号:</label>
 			    <div class="layui-input-inline">
-			      <input id="channelNum" type="text" name="username"  lay-verify="" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+			      <input id="channelNum" type="text" name="username"  lay-verify="" placeholder="店主账号" autocomplete="off" class="layui-input">
 			    </div>
-			    <label class="layui-form-label" style="width: 200px" >核心商户名称:</label>
+			    <label class="layui-form-label" style="width: 200px" >店主名称:</label>
 			    <div class="layui-input-inline">
-			      <input id="queryName" type="text" name="name"  lay-verify="" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+			      <input id="queryName" type="text" name="name"  lay-verify="" placeholder="店主名称" autocomplete="off" class="layui-input">
 			    </div>
 			    	<button class="layui-btn layui-btn-primary" id="queryChannelNum">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="reset">重置</button>
 	        </div>  
 		    <div class="layui-form-item">
-			    <label class="layui-form-label" style="width: 200px">核心商户状态:</label>
+			    <label class="layui-form-label" style="width: 200px">状态:</label>
 			    <div class="layui-input-inline" >
 			    <select lay-filter="channelState"> 
-				  <option value=""></option>
-				  <option value="0">未激活</option>
-				  <option value="1">正常</option>
-				  <option value="2">冻结</option>
-				  <option value="3">激活失败</option>
-		      	</select>
-			    </div>
-			    <label class="layui-form-label" style="width: 200px">流程状态:</label>
-			    <div class="layui-input-inline" >
-			    <select lay-filter="channelFlowState"> 
-				  <option value=""></option>
-				  <option value="0">待提交</option>
-				  <option value="1">风控审核中</option>
-				  <option value="2">风控审核通过</option>
-				  <option value="3">风控审核失败</option>
+				  <option value="">全部</option>
+				  <option value="0">邀请中</option>
+				  <option value="1">待激活</option>
+				  <option value="2">运管审核中</option>
+				  <option value="3">运管审核不通过</option>
+				  <option value="4">风控审核中</option>
+				  <option value="5">风控审核不通过</option>
+				  <option value="6">已激活</option>
+				  <option value="7">冻结</option>
 		      	</select>
 			    </div>
 	        </div>  
         </div>
 		<div>
-			<blockquote class="layui-elem-quote">
-				<a href="javascript:;" class="layui-btn layui-btn-warm" id="add">
-					<i class="layui-icon">&#xe608;</i> 新增用户
-				</a>
-
-			</blockquote>
 		</div>
 		<table id="channelList" lay-filter="channelTables" class="layui-fluid"></table>
 	</div>
@@ -73,18 +61,28 @@
 <script type="text/javascript"
 		src="<%=path%>/page/static/datas/area_data.js"></script>
 <script type="text/html" id="bar">
-  <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
-  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
+  <a class="layui-btn layui-btn-mini" lay-event="detail">详情</a>
+  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="audit">审核</a>
 </script>
 <!-- 进行数据渲染 -->
 <script type="text/html" id="channelTpl">
   {{}}
   {{#  if(d.channel.channelState == 0){ }}
-    	未激活
+    	邀请中
   {{#  } else if(d.channel.channelState == 1){ }}
-    	正常
+    	待激活
   {{#  } else if(d.channel.channelState == 2){ }}
+    	运管审核中
+  {{#  } else if(d.channel.channelState == 3){ }}
+    	运管审核不通过
+  {{#  } else if(d.channel.channelState == 4){ }}
+    	风控审核中
+  {{#  } else if(d.channel.channelState == 5){ }}
+    	风控审核不通过
+  {{#  } else if(d.channel.channelState == 6){ }}
+    	已激活
+  {{#  } else if(d.channel.channelState == 7){ }}
     	冻结
   {{#  } }}
 </script>
@@ -104,11 +102,14 @@
 			    ,page:true
 			    ,cols: [[ //表头
 			      {field: 'enterpriseId', type:'numbers', title: '序号',align:'center'}
-			      ,{field: 'channelNum', title: '核心账户编号',align:'center'}
-			      ,{field: 'enterpriseCompanyName', title: '公司名称',width:240,align:'center'}
-			      ,{field: 'enterpriseEmployeeNum', title: '营业执照编号', width:230, align:'center'}
-			      ,{field: 'channel', title: '核心商户状态', align:'center',templet: '#channelTpl'} 
-			      ,{field: 'tool', title: '操作',align:'center',toolbar:'#bar'}
+			      ,{field: 'channelNum', title: '店主账号',width:230,align:'center'}
+			      ,{field: 'enterpriseCompanyName', title: '店主名称',align:'center'}
+			      ,{field: 'enterpriseEmployeeNum', title: '店铺名称',align:'center'}
+			      ,{field: '1', title: '默认核心商户名称', width:230, align:'center'}
+			      ,{field: '2', title: '邀请时间', width:230, align:'center'}
+			      ,{field: '3', title: '店付业务员姓名', width:230, align:'center'}
+			      ,{field: 'channel', title: '状态', width:140,align:'center',templet: '#channelTpl'} 
+			      ,{field: 'tool', title: '操作',width:270,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
 			  //查询
@@ -140,26 +141,11 @@
 					  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 					  var tr = obj.tr; //获得当前行 tr 的DOM对象
 					  if(layEvent === 'detail'){ //查看
-						  location.href = '<%=path%>/page/main/merchant/queryMerchant.jsp?channelNum='+data.channelNum+''
-					  } else if(layEvent === 'del'){ //删除
- 					    layer.confirm('真的删除该商户么', function(index){
-					      layer.close(index);
-							$.post({
-								url:'<%=path%>/merchant/deleteChannel',
-								dataType:'json',
-								data:{
-									state:3,
-									channelNum:data.channelNum
-								},
-								success:function(result){
-									layer.msg(result.msg)
-									table.reload('enterpriseId', {})
-								}
-							})
-					      //向服务端发送删除指令
-					    }); 
-					  } else if(layEvent === 'edit'){ //编辑
-						  location.href = '<%=path%>/page/main/merchant/updateMerchant.jsp'
+						  location.href = '<%=path%>/page/main/shopkeeper/info.jsp?queryType=1'
+					  } else if(layEvent === 'audit'){//审核
+						  location.href = '<%=path%>/page/main/shopkeeper/info.jsp?queryType=2'
+					  } else if(layEvent === 'edit'){ //修改
+						  location.href = '<%=path%>/page/main/shopkeeper/info.jsp?queryType=3'
 					  }
 				});
 			});

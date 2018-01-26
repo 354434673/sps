@@ -36,16 +36,17 @@
 			    <div class="layui-input-inline">
 			      <input id="orderid" type="text" name="orderid"  lay-verify="" placeholder="请输入订单编号" autocomplete="off" class="layui-input">
 			    </div>
+			    <label class="layui-form-label" style="width: 150px">核心商户名称:</label>
+			    <div class="layui-input-inline">
+			      <input id="channelName" type="text" name="channelName"  lay-verify="" placeholder="请输入核心商户名称" autocomplete="off" class="layui-input">
+			    </div>
 			</div>
 			<div class="layui-form-item">
 			     <div class="layui-inline">
-				     <label class="layui-form-label">订单申请日期:</label>
+				     <label class="layui-form-label">申请日期:</label>
 					    <div class="layui-input-inline">
-					      <input id="startTime" type="text" name="startTime"  lay-verify="" placeholder="起始日期" autocomplete="off" class="layui-input">
+					      <input id="time" readonly="" type="text" name="time"  lay-verify="" placeholder="选择范围" autocomplete="off" class="layui-input">
 					    </div>
-					     <div class="layui-input-inline">
-					     <input id="endTime" type="text" name="endTime"  lay-verify="" placeholder="截止日期" autocomplete="off" class="layui-input">
-				    	</div>
 				</div>
 			</div> 
 			<div class="layui-form-item">
@@ -53,9 +54,9 @@
 				    <div class="layui-input-inline">
 				      <select name="flag" lay-filter="flag" id="flag">
 				        <option value="" selected="selected">全部</option>
-				        <option value="3">订单审核中</option>
-				        <option value="4">订单审核不通过</option>
-				        <option value="6">待发货</option>
+				        <option value="3">待审核</option>
+				        <option value="6">审核通过</option>
+				        <option value="4">审核不通过</option>
 				      </select>
 				    </div>
 				  </div>
@@ -77,7 +78,6 @@
     var year = da.getFullYear();
     var month = da.getMonth()+1;
     var date = da.getDate();
-    console.log([year,month,date].join('-'));
   var fn = function(){
     return [year,month,date].join('-');
   }; 
@@ -91,21 +91,15 @@
 			  var layer = layui.layer;
 			  var laydate = layui.laydate;
 			  var $ = layui.jquery;
+			  var newDate = new Date().setDate(new Date().getDate() - 60)//60天以前的日期
 				//执行一个laydate实例
 				  laydate.render({
-				    elem: '#startTime', //指定元素
-				  /*   event:'click',//触发事件 */
-				    type:'datetime'
-				  /*   ,format:'yyyy-MM-dd HH:mm:ss' */
+				    elem: '#time', //指定元素
+				    type:'date',
+				    range: '至',
+				    min: getDate(newDate),
+				    max: getDate()
 				  });
-				  //执行一个laydate实例
-				  laydate.render({
-				    elem: '#endTime', //指定元素
-				  /*   event:'click',//触发事件 */
-				    type:'datetime'/* ,
-				    format:'yyyy-MM-dd HH:mm:ss' */
-				  }); 
-			  
 			  table.render({
 			    elem: '#orderList'
 			    ,url: '<%=path%>/order/show.json' //数据接口
@@ -128,24 +122,23 @@
 			  
 			  //查询
 			  $('#queryOrders').on('click',function(){
-				  var name = $('#name').val();
+				  var date= $('#time').val().split('至')
+			  	  var name = $('#name').val();
+			  	  var channelName = $('#channelName').val();
 				  var orderid = $('#orderid').val();
-				  var startTime = $('#startTime').val();
-				  var endTime = $('#endTime').val();
+				  var startTime = date[0];
+				  var endTime = date[1];
 				  var flag=$('#flag').val();
 				  table.reload('orderToBeAudit', {
 					  page:{
 						  curr:1//重新从第一页开始
 					  },
-					  where: {name:name,orderid:orderid,startTime:startTime,endTime:endTime,flag:flag}
+					  where: {name:name,orderid:orderid,startTime:startTime,endTime:endTime,flag:flag,channelName:channelName}
 					});
 			  })
 			  //重置
 			  $('#resetInput').on('click',function(){
-				  $('#name').val('');
-				  $('#orderid').val('');
-				  $('#startTime').val('');
-				  $('#endTime').val('');
+				  $('input').val('');
 			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){
@@ -157,6 +150,18 @@
 						 window.location.href="<%=path%>/page/main/order/audit.jsp?orderid="+data.orderid;
 					 } 
 				});
+			  //时间格式化
+			  function getDate(data){
+				  	if(data == null || data == ""){
+					    da = new Date();
+				  	}else{
+				  		 da = new Date(data);
+				  	}
+				    var year = da.getFullYear();
+				    var month = da.getMonth()+1;
+				    var date = da.getDate();
+				    return [year,month,date].join('-');
+			  }
 			});
 	</script>
 	

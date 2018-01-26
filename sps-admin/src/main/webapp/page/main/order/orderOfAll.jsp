@@ -39,12 +39,9 @@
 			 </div>
 			 <div class="layui-form-item">
 			     <div class="layui-inline">
-			     	<label class="layui-form-label">订单申请日期:</label>
+			     	<label class="layui-form-label">申请日期:</label>
 			    	<div class="layui-input-inline">
-			      		<input id="startTime" type="text" name="startTime"  lay-verify="" placeholder="起始日期 " autocomplete="off" class="layui-input">
-			    	</div>
-			     	<div class="layui-input-inline">
-			      		<input id="endTime" type="text" name="endTime"  lay-verify="" placeholder="截止日期 " autocomplete="off" class="layui-input">
+			      		<input id="time" readonly="" type="text" name="startTime"  lay-verify="" placeholder="选择范围 " autocomplete="off" class="layui-input">
 			    	</div>
 			    </div>
 			 </div>
@@ -59,10 +56,10 @@
 				        <option value="4">订单审核不通过</option>
 				        <option value="5">待支付</option>
 				        <option value="6">待发货</option>
-				        <option value="7">物流审核中</option>
-				        <option value="8">物流审核不通过</option>
+				        <option value="7">发货审核中</option>
+				        <option value="8">发货审核不通过</option>
 				        <!-- <option value="9">待还款</option> -->
-				        <option value="9">已完成</option>
+				        <option value="9">已放款</option>
 				        <option value="10">已退货</option>
 				        <option value="11">已取消</option>
 				      </select>
@@ -96,7 +93,7 @@
 </script>
 <script type="text/html" id="state">
 {{#  if(d.flag == 1){ }}
-  待确定
+  待确认
 {{#  } else if(d.flag == 2){ }}
   已拒绝
 {{#  } else if(d.flag == 3){ }}
@@ -106,13 +103,13 @@
 {{#  } else if(d.flag == 5){ }}
   待支付
 {{#  } else if(d.flag == 6){ }}
-  代发货
+  待发货
 {{#  } else if(d.flag == 7){ }}
-  物流审核中
+  发货审核中
 {{#  } else if(d.flag == 8){ }}
-  物流审核不通过
+  发货审核不通过
 {{#  } else if(d.flag == 9){ }}
- 已完成
+ 已放款
 {{#  } else if(d.flag == 10){ }}
   已退货
 {{#  } else if(d.flag == 11){ }}
@@ -129,19 +126,15 @@
 			  var layer = layui.layer;
 			  var form = layui.form;
 			  var $ = layui.jquery;
-			  
-			  //执行一个laydate实例
-			  laydate.render({
-			    elem: '#startTime' //指定元素
-			    , type:'datetime'
-			    /* ,format:'yyyy-MM-dd HH:mm:ss' */
-			  });
-			  //执行一个laydate实例
-			  laydate.render({
-			    elem: '#endTime' //指定元素
-			    , type:'datetime'
-			  /*   , format:'yyyy-MM-dd HH:mm:ss' */
-			  });
+			  var newDate = new Date().setDate(new Date().getDate() - 60)//60天以前的日期
+				//执行一个laydate实例
+				  laydate.render({
+				    elem: '#time', //指定元素
+				    type:'date',
+				    range: '至',
+				    min: getDate(newDate),
+				    max: getDate()
+				  });
 			  table.render({
 			    elem: '#orderList'
 			    ,url: '<%=path%>/order/show.json' //数据接口
@@ -150,7 +143,6 @@
 			    ,cols: [[ //表头
 		              {field: 'orderid', title: '订单编号',align:'center',sort:true}
 				      ,{field: 'name', title: '店主名称', align:'center'}
-				      ,{field: 'selfname', title: '店铺名称',align:'center'}
 				      ,{field: 'money', title: '订单金额',align:'center'}
 				      ,{field: 'servicemoney', title: '代销服务费',align:'center'}
 				      ,{field: 'sumMoney',  title: '实销金额',align:'center'}
@@ -161,10 +153,11 @@
 			  });
 			  //查询
 			  $('#queryOrders').on('click',function(){
-				  var name = $ ('#name').val();
+				  var date= $('#time').val().split('至')
+			  	  var name = $('#name').val();
 				  var orderid = $('#orderid').val();
-				  var startTime = $('#startTime').val();
-				  var endTime = $('#endTime').val();
+				  var startTime = date[0];
+				  var endTime = date[1];
 				  var flag=$('#flag').val();
 				  table.reload('orderOfAll', {
 					  page:{
@@ -176,7 +169,29 @@
 			  //重置
 			  $('#resetInput').on('click',function(){
 				  $('input').val('');
+				  $('select').val('');
+				  
 			  });
+			  var data = {
+					  "application":"dianfu",
+					  "totalQuota":20000,
+					  "monthQuota":20000,
+					  "firstMonthQuota":20000,
+					  "businessId":"DF20180136191770",
+					  "approvedDate":"2018-01-24 17:32:27",
+					  "signDateStart":"2018-01-24 17:32:27"
+					 }
+			  $.ajax({
+				  type: "post",  
+				  url:'http://dev.app.chezhubaitiao.com/api/business/init',
+				  dataType:'jsonp',
+				  contentType:"application/json; charset=utf-8",
+				  data:JSON.stringify(data),
+				  success:function(data){
+					  
+				  }
+				  
+			  })
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){
 					 var data = obj.data,  //获得当前行数据
@@ -189,6 +204,18 @@
 						 window.location.href="<%=path%>/page/main/order/queryExpress.jsp?orderid="+data.orderid;
 					 }
 				});
+			  //时间格式化
+			  function getDate(data){
+				  	if(data == null || data == ""){
+					    da = new Date();
+				  	}else{
+				  		 da = new Date(data);
+				  	}
+				    var year = da.getFullYear();
+				    var month = da.getMonth()+1;
+				    var date = da.getDate();
+				    return [year,month,date].join('-');
+			  }
 			});
 	</script>
 	

@@ -26,7 +26,7 @@
 <hr>
 <div class="layui-form layui-form-pane" >
 	<div >
-	  <div class="layui-form-item" id="passwordDiv">
+	  <div class="layui-form-item " id="passwordDiv">
 	   <label class="layui-form-label">*业务员姓名：</label>
 	    <div class="layui-input-inline">
 	      <input id="salesmanName" name="salesmanName" type="text"  lay-verify="required|IsChineseCharacter" placeholder="请输入业务员姓名" autocomplete="off" class="layui-input">
@@ -66,7 +66,7 @@
   </div>
  	<div class="layui-form-item" align="center" id="btn" style="padding-top: 40px">
 		<button class="layui-btn" lay-filter="submitSalesMan" lay-submit id="submit">立即提交</button>
-		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		<button id="reset" class="layui-btn layui-btn-primary">重置</button>
 	</div>
 </div>
 </div>
@@ -98,6 +98,9 @@
 						}
 					})
 			    });
+	  })
+	  $('#reset').click(function(){
+		  $('input').val('')
 	  })
 	  //添加
 	  form.on('submit(submitSalesMan)', function(data){

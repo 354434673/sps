@@ -124,4 +124,16 @@ public interface ChannelWriteService{
 	 * @throws
 	 */
 	HashMap<String, String> insertOpenAccount(SpsChannelOpenAccount account, String channelNum);
+	/**
+	 * 删除商户(逻辑删除)
+	 * @Title: deleteChannel   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param state
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年1月25日 下午5:07:26
+	 * @return: HashMap<String,String>      
+	 * @throws
+	 */
+	HashMap<String, String> deleteChannel(String channelNum, Integer state);
 }

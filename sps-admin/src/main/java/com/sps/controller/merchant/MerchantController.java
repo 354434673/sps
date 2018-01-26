@@ -138,11 +138,11 @@ public class MerchantController {
 	 */
 	@RequestMapping(value="/getChannelList")
 	@ResponseBody
-	public HashMap<String, Object> getChannelList(String channelNum, Integer channelState,  
+	public HashMap<String, Object> getChannelList(String channelNum, String name, Integer channelState,  
 			Integer channelFlowState, Integer page, Integer limit){
 		
 		HashMap<String, Object> channelList = channelReadService.getChannelList(
-				channelNum, channelState, channelFlowState, page, limit);
+				channelNum, name, channelState, channelFlowState, page, limit);
 		
 		return channelList;
 		
@@ -257,6 +257,14 @@ public class MerchantController {
 		SpsChannelBusiness business = channelReadService.getBusiness(channelNum);
 		
 		return business;
+	}
+	@RequestMapping(value="/deleteChannel")
+	@ResponseBody
+	public HashMap<String, String> deleteChannel(String channelNum, Integer state){
+		
+		HashMap<String, String> deleteChannel = chanelWriteService.deleteChannel(channelNum, state);
+		
+		return deleteChannel;
 	}
 	@RequestMapping("/getPicList")
 	@ResponseBody

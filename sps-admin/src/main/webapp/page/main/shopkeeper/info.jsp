@@ -18,427 +18,174 @@
 <link rel="stylesheet"
 	href="<%=path%>/page/layui/css/layui.css" media="all" />
 <style type="text/css">
+	.layui-form-label{
+		width: 150px
+	}
 </style>
 </head>
 <body>
 <div class="layui-tab layui-tab-brie" lay-filter ="tab" style="padding:10px;" >
   <ul class="layui-tab-title">
     <li lay-id="channelInfo" class="layui-this">基本信息</li>
-    <li lay-id="picInfo" style="display: none" id="picInfo" >图片资料</li>
+    <li lay-id="picInfo" id="picInfo" >图片资料</li>
   </ul>
   <div class="layui-tab-content">
     <div class="layui-tab-item layui-show">
-	<div class="layui-form layui-form-pane" style="margin-left: 100px;margin-right: 100px">
-		<h3>属性信息</h3>
-		<hr>
-		  <!-- 属性信息开始 -->
-<!-- 		  <div class="layui-form-item " >
-		    <label class="layui-form-label" style="width:200px">*所在城市：</label>
-		    <div class="layui-input-inline" >
-		      <select name="province" lay-filter="province"  id="province" lay-verify="required"> 
-		      </select>
-		    </div>
-		    <div class="layui-input-inline" >
-		      <select name="city" lay-filter="city"   id="city" lay-verify="required"> 
-				  <option value="" >市</option>
-		      </select>
-		    </div>
-		    <div class="layui-input-inline" >
-		      <select name="area" lay-filter="area"   id="area" lay-verify=""> 				  
-		      	  <option value="">区</option>
-		      </select>
-		    </div>
-		  </div> -->
-		  <div class="layui-form-item" >
-		    <label class="layui-form-label" style="width:200px">*店付业务员姓名：</label>
-		    <div class="layui-input-inline">
-		      <select lay-search name="channelSalesmanName" lay-filter="channelSalesmanName"  id="channelSalesmanName" lay-verify="required"> 
-		      </select>
-		    </div>
-		    <label class="layui-form-label" style="width:200px">*店付业务员身份证：</label>
-		    <div class="layui-input-inline">
-		      <input disabled="disabled" id="channelSalesmanNum" type="text" name="channelSalesmanNum"  placeholder="店付业务员身份证" autocomplete="off" class="layui-input">
-		    </div>
-		  </div>
-		  <div class="layui-form-item" id="passwordDiv">
-		   <label class="layui-form-label" style="width:200px">核心商户编号：</label>
-		    <div class="layui-input-inline">
-		      <input  id="channelNum" name="channelNum" disabled type="text" autocomplete="off" class="layui-input">
-		    </div>
-		    <label class="layui-form-label" style="width:200px">核心商户状态：</label>
-		    <div class="layui-input-inline">
-		    </div>
-		     <div class="layui-form-mid layui-word-aux">&nbsp&nbsp&nbsp 未激活</div>
-		  </div>
-		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">上线时间：</label>
-		    <div class="layui-input-inline">
-		      <input id="channelUpTime" type="text"  disabled name="channelUpTime"   autocomplete="off" class="layui-input">
-		    </div>
-		    <label class="layui-form-label" style="width:200px">冻结时间：</label>
-		    <div class="layui-input-inline">
-		      <input id="channelFreezeTime"  type="text" disabled name="channelFreezeTime"  autocomplete="off" class="layui-input">
-		    </div>
-		  </div>
-		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*营业执照编号：</label>
-		    <div class="layui-input-inline">
-		      <input  id="enterpriseBusinesslicenseNo" type="text" name="enterpriseBusinesslicenseNo"  lay-verify="required|length" placeholder="请输入营业执照编号" autocomplete="off" class="layui-input">
-		    </div>
-		    <label class="layui-form-label" style="width:200px">*公司名称：</label>
-		    <div class="layui-input-inline">
-		      <input  id="enterpriseCompanyName" type="text" name="enterpriseCompanyName" lay-verify="required" placeholder="请输入公司名称" autocomplete="off" class="layui-input">
-		    </div>
-		  </div>
-		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">公司注册地址：</label>
-		    <div class="layui-input-inline" >
-		      <select id="registerProvince"name="registerProvince" lay-filter="registerProvince" lay-verify="required"> 
-		      </select>
-		    </div>
-		    <div class="layui-input-inline" >
-		      <select name="registerCity" lay-filter="registerCity" id="registerCity" lay-verify="required"> 
-				  <option value="">市</option>
-		      </select>
-		    </div>
-		    <div class="layui-input-inline" >
-		      <select name="registerArea" lay-filter="registerArea" id="registerArea" lay-verify="required"> 
-				  <option value="">区</option>
-		      </select>
-		    </div>
-		    <div class="layui-input-inline" >
-		      <input id="registerAddress" type="text" name="registerAddress"  lay-verify="required" placeholder="请输入详细地址" autocomplete="off" class="layui-input">
-		    </div>
-		  </div>
-		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">公司实际地址：</label>
-		    <div class="layui-input-inline" >
-		      <select name="realProvince" lay-filter="realProvince" id="realProvince" lay-verify="required"> 
-		      </select>
-		    </div>
-		    <div class="layui-input-inline" >
-		      <select name="realCity" lay-filter="realCity" id="realCity" lay-verify="required"> 
-				  <option value="">市</option>
-		      </select>
-		    </div>
-		    <div class="layui-input-inline" >
-		      <select name="realArea" lay-filter="realArea" id="realArea" lay-verify=""> 
-				  <option value="">区</option>
-		      </select>
-		    </div>
-		    <div class="layui-input-inline" >
-		      <input id="realAddress" type="text" name="realAddress" lay-verify="required"  placeholder="请输入详细地址" autocomplete="off" class="layui-input">
-		    </div>
-		  </div>
-		 <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*法人代表姓名：</label>
-		    <div class="layui-input-inline">
-		      <input id="enterpriseCorp" type="text" name="enterpriseCorp"  lay-verify="required|IsChineseCharacter" placeholder="请输入法人代表姓名" autocomplete="off" class="layui-input">
-		    </div>
-		    <label class="layui-form-label" style="width:200px">*法人代表身份证号：</label>
-		    <div class="layui-input-inline">
-		      <input id="enterpriseCorpIdcard" type="text" name="enterpriseCorpIdcard"  lay-verify="required|IsIDCard" placeholder="请输入法人身份证号" autocomplete="off" class="layui-input">
-		    </div>
-		  </div>
-		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*经营年限(年)：</label>
-		    <div class="layui-input-inline">
-		      <input   id="enterpriseOperatioTime" type="text" name="enterpriseOperatioTime" lay-verify="required" placeholder="请输入经营年限(年)" autocomplete="off" class="layui-input">
-		    </div>
-		    <label class="layui-form-label" style="width:200px">*员工数量(人)：</label>
-		    <div class="layui-input-inline">
-		      <input  id="enterpriseEmployeeNum" type="text" name="enterpriseEmployeeNum"  lay-verify="required" placeholder="请输入员工数量" autocomplete="off" class="layui-input">
-		    </div>
-		  </div>
-		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*公司简称：</label>
-		    <div class="layui-input-inline">
-		      <input  id="enterpriseCompanyAbbreviation" type="text" name="enterpriseCompanyAbbreviation"  lay-verify="required" placeholder="请输入公司简称" autocomplete="off" class="layui-input">
-		    </div>
-		  </div>
-		<!-- 属性信息结束 -->
-		<h3>业务信息</h3>
-		<hr>
-		<!-- 业务信息开始 -->
-		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">主营业务：</label>
-		    <div class="layui-input-inline" style="width:600px" id="businessProduct" >
-		    </div>
-		  </div>
-		  <div class="layui-form-item"><!-- 树 -->
-		    <label class="layui-form-label" style="width:200px">主营商品类型：</label>
-		    <div class="layui-input-inline" id="businessType">
-			    <button class="layui-btn layui-btn-primary" lay-filter="businessType" id="businessType">
-			    <i class="layui-icon">&#xe608;</i> 新增选择商品类型</button>
-		    </div>
-		  </div>
-		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">主营品牌：</label>
-		    <div class="layui-input-inline" style="width:600px" id="businessBrand">
-		    <div class="layui-form-mid layui-word-aux">&nbsp&nbsp&nbsp选择商品类型后可见</div>
-		    </div>
-		  </div>
-		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px	">业务覆盖地域范围：</label>
-		    <div class="layui-input-inline">
-		     <select lay-verify="required" name="businessScope" lay-filter="businessScope" id="businessScope"> 
-				  <option value="">请选择</option>
-				  <option value="1">全国</option>
-				  <option value="2">本省</option>
-				  <option value="3">本市</option>
-				  <option value="4">本县</option>
-		      </select>
-		    </div>
-		  </div>
-		<!-- 业务信息结束 -->
-		<h3>担保信息</h3>
-		<hr>
-		<!-- 担保信息开始 -->
-		 <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*担保形式：</label>
-		    <div class="layui-input-inline">
-		     <select lay-verify="" name="guaranteeSituation" lay-filter="guaranteeSituation" id="guaranteeSituation"> 
-				  <option value="">请选择担保形式</option>
-				  <option value="1">保证金担保</option>
-				  <option value="2">信用担保</option>
-				  <option value="3">无担保</option>
-		      </select>
-		    </div>
-		    <div id="deposit" style="display: none">
-		    <label class="layui-form-label" style="width:200px">*保证金金额：</label>
-			    <div class="layui-input-inline">
-			      <input  id="guaranteeDeposit" type="text" name="guaranteeDeposit" placeholder="请输入保证金金额" autocomplete="off" class="layui-input">
+	<div class="layui-form " >
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>店主信息</legend>
+		</fieldset>
+			  <div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >*城市：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
 			    </div>
-		    </div>
-		  </div>
-		 <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*法人代表手机号：</label>
-		    <div class="layui-input-inline">
-		      <input id="guaranteeCorpPhone" type="text" name="guaranteeCorpPhone"  lay-verify="required|phone" placeholder="请输入法人手机号" autocomplete="off" class="layui-input">
-		    </div>
-		    <label class="layui-form-label" style="width:200px">*财务联系人姓名：</label>
-		    <div class="layui-input-inline">
-		      <input id="guaranteeFinanceContactname" type="text" name="guaranteeFinanceContactname" lay-verify="required|IsChineseCharacter" placeholder="请输入财务联系人姓名" autocomplete="off" class="layui-input">
-		    </div>
-		  </div>
-		 <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*财务联系人手机号：</label>
-		    <div class="layui-input-inline">
-		      <input id="guaranteeFinanceContactphone" type="text" name="guaranteeFinanceContactphone"  lay-verify="required|phone" placeholder="财务联系人手机号" autocomplete="off" class="layui-input">
-		    </div>
-		    <label class="layui-form-label" style="width:200px">*业务负责人姓名：</label>
-		    <div class="layui-input-inline">
-		      <input id="guaranteeBusinessLeadername" type="text" name="guaranteeBusinessLeadername" lay-verify="required|IsChineseCharacter" placeholder="业务负责人姓名" autocomplete="off" class="layui-input">
-		    </div>
-		  </div>
-		 <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*业务负责人手机号：</label>
-		    <div class="layui-input-inline">
-		      <input  id="guaranteeBusinessLeaderphone" type="text" name="guaranteeBusinessLeaderphone"  lay-verify="required|phone" placeholder="业务负责人手机号" autocomplete="off" class="layui-input">
-		    </div>
-		    <label class="layui-form-label" style="width:200px">*业务负责人手机服务密码：</label>
-		    <div class="layui-input-inline">
-		      <input id="guaranteeBusinessPhonePassword" type="password" name="guaranteeBusinessPhonePassword"  lay-verify="required|minLength" placeholder="服务密码" autocomplete="off" class="layui-input">
-		    </div>
-		  </div>
-		<!-- 担保信息结束 -->
-		<h3>收款信息</h3>
-		<hr>
-		<!-- 收款信息开始 -->
-		<div>
-			<blockquote class="layui-elem-quote">
-				<a href="javascript:;" class="layui-btn layui-btn-warm" id="addBank">
-					<i class="layui-icon">&#xe608;</i> 新增
-				</a>
-			</blockquote>
-		</div>
-		<table id="gatherList" lay-filter="gatherTables"></table>
-		<!-- 收款信息结束 -->
-		<h3>财务指标</h3>
-		<hr>
-		<!-- 财务指标开始 -->
-		 <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*上年销售额(万元)：</label>
-		    <div class="layui-input-inline">
-		      <input id="targetLastSale" type="text" name="targetLastSale"  lay-verify="required" placeholder="请输入上年销售额" autocomplete="off" class="layui-input">
-		    </div>
-		  </div>
-		<!-- 财务指标结束 -->
-		<h3>物流配送</h3>
-		<hr>
-		<!-- 物流配送开始 -->
-		 <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px	">发货方式：</label>
-		    <div class="layui-input-inline" style="width:400px" id= "logisticsWay">
-		      <input type="checkbox" title="物流" value="物流" lay-skin="primary" lay-filter="logisticsWay">
-		      <input type="checkbox" title="自主派送" value="自主派送" lay-skin="primary" lay-filter="logisticsWay">
-		      <input type="checkbox" title="上门取货" value="上门取货" lay-skin="primary" lay-filter="logisticsWay">
-		    </div>
-		  </div>
-		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*合作物流名称：</label>
-		    <div class="layui-input-inline">
-		      <input disabled="disabled" id="logisticsCooperationName" type="logisticsCooperationName" name="name" lay-verify="required" placeholder="合作物流" autocomplete="off" class="layui-input">
-		    </div>
-		   		<button class="layui-btn layui-btn-primary" lay-filter="openExpress" id="openExpress">
-			    <i class="layui-icon">&#xe608;</i> 搜索</button>
-		   </div>
-		   <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*其他：</label>
-		    <div class="layui-input-inline">
-		      <input  id="logisticsOther" type="text" name="logisticsOther" placeholder="其他" autocomplete="off" class="layui-input">
-		    </div>
-		    </div>
-		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*年物流总费用(万元)：</label>
-		    <div class="layui-input-inline">
-		      <input  id="logisticsAllCost" type="text" name="logisticsAllCost" lay-verify="required" placeholder="请输入年物流总费用" autocomplete="off" class="layui-input">
-		    </div>
-		   </div>
-		<!-- 物流配送结束 -->
-		<h3>开户信息</h3>
-		<hr>
-		<!-- 开户信息开始 -->
-<!-- 		<div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*管理员账号：</label>
-		    <div class="layui-input-inline">
-		      <input value = "18513967345" id="adminNum" type="text" name="adminNum" lay-verify="required" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
-		    </div>
-		    <div class="layui-form-mid layui-word-aux"> lili@juzifenqi</div>
-		</div>
-		<div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*管理员手机号：</label>
-		    <div class="layui-input-inline">
-		      <input value = "18513967345" id="adminNum" type="text" name="adminNum" lay-verify="required" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
-		    </div>
-		    <div class="layui-form-mid layui-word-aux"> lili@juzifenqi</div>
-		</div> -->
-		<div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*签约开始日期：</label>
-		    <div class="layui-input-inline">
-			 <input readonly="" type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required" >	    
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >*客户编号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >*城市：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >*客户编号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="layui-row layui-col-space10" >
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >*店付业务员姓名：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >*店付业务员身份证号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >*业务类型：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >*客户来源：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="layui-row layui-col-space10">
+			    <div class=layui-col-md3>
+			      	<label class="layui-form-label" >*默认核心商户编号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >*默认核心商户名称：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
 			 </div>
-		</div>
-		<div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*签约结束日期：</label>
-		    <div class="layui-input-inline">
-			 <input readonly="" type="text" class="layui-input" id="endTime" placeholder="年-月-日" lay-verify="required" >		    
+			  <table id="gatherList" lay-filter="gatherTables"></table>
+		<!-- 个人信息开始 -->
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>个人信息</legend>
+		</fieldset>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >*城市：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >*客户编号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >*城市：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >*客户编号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="layui-row layui-col-space10" >
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >*店付业务员姓名：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >*店付业务员身份证号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >*业务类型：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >*客户来源：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="layui-row layui-col-space10">
+			    <div class=layui-col-md3>
+			      	<label class="layui-form-label" >*默认核心商户编号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >*默认核心商户名称：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
 			 </div>
-		</div>
-<!-- 		<div class="layui-form-item" >
-		    <label class="layui-form-label" style="width:200px	">适用产品：</label>
-		    <div class="layui-input-inline" style="width:300px">
-		      <input type="checkbox" title="7天包息" value="0" lay-skin="primary" lay-filter="openApplyProduct" >
-		      <input type="checkbox" title="7天不包息" value="1" lay-skin="primary" lay-filter="openApplyProduct">
-		    </div>
-		  </div> -->
-<!-- 		<div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*代销手续费率（%）：</label>
-		    <div class="layui-input-inline">
-		      <input   id="sell" type="text" name="sell" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-		    </div>
-		</div> -->
-		<!-- 开户信息结束 -->
-		 	<div class="layui-form-item" align="center" id="btn" >
-				<button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">返回</button>
-				<button class="layui-btn layui-btn-primary" lay-filter="submitAddChanel" lay-submit >保存并进入下一步</button>
-				<!--  <button class="layui-btn layui-btn-primary" id="next" >下一步</button>  -->
-			</div>
+		
 	</div>
     </div>
+    <!-- 额度信息开始 -->
     <div class="layui-tab-item">
-   			<div align="center" id="uploadList">
-   				<div class="layui-row layui-col-space10">
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="businesslicense" style="width: 250px">
-						  <p>*营业执照</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="statement" style="width: 250px">
-						  <p>*近12个月的对公流水或法人名下流水</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="corpIdCardFront" style="width: 250px">
-						  <p>*法人身份证正面</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-				</div>
-   				<div class="layui-row layui-col-space10">
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="corpIdCardReverse" style="width: 250px">
-						  <p>*法人身份证反面</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="salesmanIdCardFront" style="width: 250px">
-						  <p>*业务负责人身份证正面</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="salesmanIdCardReverse" style="width: 250px">
-						  <p>业务负责人身份证反面</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-				</div>
-   				<div class="layui-row layui-col-space10">
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="companyPanorama" style="width: 250px">
-						  <p>*公司全景照</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="companyGate" style="width: 250px">
-						  <p>*公司大门照</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="contract" style="width: 250px">
-						  <p>*核心商户合作合同（必须加盖公司公章）</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-				</div>
-   				<div class="layui-row layui-col-space10">
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="signed" style="width: 250px">
-						  <p>*签约合影照片</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-   					<div class="layui-col-md4">
-					    <div class="layui-upload-drag" id="lease" style="width: 250px">
-						  <p>*经营地租赁协议</p>
-						  <i class="layui-icon"></i>
-						  <p>点击上传，或将文件拖拽到此处</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 按钮 -->
-    		 <div class="layui-form-item" align="center" id="btn" style="padding-top: 10px" >
-				<button class="layui-btn layui-btn-primary" id="last">返回</button>
-				<button class="layui-btn layui-btn-primary" lay-filter="" lay-submit >保存</button>
-			</div>
+    	<table id="gatherList" lay-filter="gatherTables"></table>
     </div>
   </div>
 <script type="text/javascript"
@@ -448,6 +195,7 @@
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
 </script>
 <script type="text/javascript">
+	  var a = <%=request.getParameter("orderid")%>
 	  var channelNum ;//外键,很多地方能用到
 	  var businessProductArray = [];//主营业务数组,设为全局变量
 	layui.use(['form','table','laydate','flow','element','upload'], function(){
@@ -492,15 +240,6 @@
 	  });  
 	  form.on('select(channelSalesmanName)', function(data){//选省
 		  $('#channelSalesmanNum').val(data.value)
-	  });  
-	  form.on('select(guaranteeSituation)', function(data){//担保形式为保证金时候显示
-		  if(data.value == 1){
-			  $('#deposit').show();
-			  $("#guaranteeDeposit").attr("lay-verify","required|money");
-		  }else{
-			  $('#deposit').hide();
-			  $("#guaranteeDeposit").removeAttr("lay-verify","required");
-		  }
 	  });  
 	  //加载日期框
 	  laydate.render({
@@ -561,25 +300,28 @@
 			}
 		  }
 		}); 	
+/* 	  form.on('checkbox(openApplyProduct)', function(data){
+		  console.log(data.value)
+		  if(data.elem.checked){
+			  openApplyProduct.push(data.value)
+		  }else{
+			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
+			for(var i=0; i<openApplyProduct.length; i++) {
+				if(openApplyProduct[i] == data.value){
+					openApplyProduct.splice(i, 1);
+					break;
+				}
+			}
+		  }
+		});  */	
 	  $('#next').on('click',function(){
+		  
 		  intoNext()
+
 	  })
 	  $('#last').on('click',function(){
 		  element.tabChange('tab','channelInfo')
 
-	  })
-	  //失去焦点
-	  $('#logisticsOther').blur(function(){
-		  var logisticsOther = $('#logisticsOther').val()
-		  if(logisticsOther != ""){
-			  $("#logisticsCooperationName").removeAttr("lay-verify","required");
-			  $("#openExpress").attr("disabled","disabled");//不为空则说明其他有值,禁用物流按钮
-			  $("#openExpress").addClass("layui-disabled");
-		  }else{
-			  $("#guaranteeDeposit").attr("lay-verify","required");
-			  $("#openExpress").removeAttr("disabled")//为空则说明其他项没有填,恢复选择物流按钮
-			  $("#openExpress").removeClass("layui-disabled");
-		  }
 	  })
 	  //收款信息
 	  table.render({
@@ -618,13 +360,11 @@
 			  //公司注册地址
 			  var registerAddress = $('#registerProvince').find("option:selected").text()+
 			 				 $('#registerCity').find("option:selected").text()+
-			 				 $('#registerArea').find("option:selected").text()+
-			 				 $('#registerAddress').val();
+			 				 $('#registerArea').find("option:selected").text();
 			  //公司实际地址
 			  var realAddress = $('#realProvince').find("option:selected").text()+
 			 				 $('#realCity').find("option:selected").text()+
-			 				 $('#realArea').find("option:selected").text()+
-			 				 $('#realAddress').val();;
+			 				 $('#realArea').find("option:selected").text();
 			  var enterpriseCorp = $('#enterpriseCorp').val();//法人名称
 			  var enterpriseCorpIdcard = $('#enterpriseCorpIdcard').val();//法人名称
 			  var enterpriseOperatioTime = $('#enterpriseOperatioTime').val();//经营年限(年)
@@ -757,26 +497,13 @@
 					return '请输入正确的姓名';
 				}
 			},
-			//验证只包含汉字  
-			money: function(value) {
-				var regex = /^[0-9]+([.]{1}[0-9]{1,2})?$/;
-				if(!value.match(regex)) {
-					return '请输入正确的金额';
-				}
-			},
 			minLength: function(value) {
 				if(value.length<6) {
 					return '最少为6位';
 				}
 			},
-			length: function(value) {
-				var regex = /(^\d{15}$)|(^\d{18}$)/;
-				if(!value.match(regex)) {
-					return '只能是15位或18位';
-				}
-			},
 			IsIDCard: function(input) {
-				input = input.toUpperCase();		
+				input = input.toUpperCase();
 				//验证身份证号码格式 [一代身份证号码为15位的数字；二代身份证号码为18位的数字或17位的数字加字母X]  
 				if(!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/i.test(input))) {
 					return '请输入正确的身份证';
@@ -890,24 +617,21 @@
 					  var body = layer.getChildFrame('body', index);
 					  var childrens = $(layero).find("iframe")[0].contentWindow.getCheck() 
 					  businessTypeArray = childrens;
+					  console.log(businessTypeArray.toString())
 				 	  $.post({//获取主营业务
 						  url:'<%=path%>/brand/getBrandList',
 						  dataType:'json',
 						  data:{categoryIds:businessTypeArray.toString()},
 						  success:function(data){
+							  console.log(data)
   				 			  var list = "";
-							  if(data.data.length == 0){
-								  layer.msg('当前商品类型无主营品牌')
-							  }else{
-								  $.each(data.data,function(i,item){
-									  list +='<input type="checkbox" name="businessBrand" lay-filter="businessBrand" title="'+item.brandName+'" value ="'+item.brandId+'">';
-									  $('#businessBrand').html(list)
-								  })  
-								  form.render('checkbox');
-							  }
+							  $.each(data.data,function(i,item){
+								  list +='<input type="checkbox" name="businessBrand" lay-filter="businessBrand" title="'+item.brandName+'" value ="'+item.brandId+'">';
+								  $('#businessBrand').html(list)
+							  })  
+							  form.render('checkbox');
 						  }
 					  }) 
-					 layer.close(layer.index);
 				  },
 	 			  cancel: function(index, layero){ 
 					}  
@@ -918,14 +642,10 @@
 		  layer.open({
 			  type: 2, 
 			  area: ['75%', '70%'],//宽高
-			  content: ['<%=path%>/page/main/express/expressManage.jsp?type=1'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+			  content: ['../express/expressManage.jsp'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 			  cancel: function(index, layero){
 				  var data = $(layero).find("iframe")[0].contentWindow.expressIds;
-				  if(data.length != 0){
-				  	$('#logisticsCooperationName').val(data.toString())
-				  	$("#logisticsOther").attr("disabled","disabled");//不为空则说明其他有值,禁用物流按钮
-				  }
-				  
+				  $('#logisticsCooperationName').val(data.toString())
 				}    
 		  }); 
 	  });
@@ -1024,35 +744,13 @@
  		 /*
  		 图片上传
  		 */
- 		  var isId= $('#uploadList div div div')//可以获得id,动态加载
- 		  console.log(isId)
+		  
 		  function intoNext(){
 			  $('#picInfo').removeAttr('style')
 			  element.tabChange('tab','picInfo')
 			  layui.use(['upload'], function(){
 			  var upload = layui.upload;
-			   $.each(isId,function(i,data){
-			  		  upload.render({//营业执照
-			 			    elem: '#'+data.id //绑定元素
-			 			    ,accept:'images'
-			 			    ,multiple:true//多文件上传
-			 			    ,data:{type:data.id,types:i,channelNum:channelNum,status:'channel',accept:'images'}
-			 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-			 			    ,done: function(res){
-			 			    	if(res.state == 'success'){
-				 			    	layer.msg(res.msg,{icon: 1});
-			 			    	}else if(res.state == 'error'){
-			 			    		layer.msg(res.msg,{icon: 2});
-			 			    	}else if(res.state == 'max'){
-			 			    		layer.msg(res.msg,{icon: 2});
-			 			    	}
-			 			    } 
-			 			    ,error: function(){
-			 			    	layer.msg('图片失败',{icon: 2});
-			 			    }
-			 			  }); 
-				   })
-<%-- 	  		  upload.render({//营业执照
+	  		  upload.render({//营业执照
 	 			    elem: '#businesslicense' //绑定元素
 	 			    ,accept:'images'
 	 			    ,multiple:true//多文件上传
@@ -1260,7 +958,7 @@
 	 			    ,error: function(){
 	 			    	layer.msg('图片失败',{icon: 2});
 	 			    }
-	 			  });   --%>
+	 			  });  
 			  })
 		  }
 	});

@@ -91,7 +91,7 @@
     from sps_channel_enterprise
     where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
   </select>
-  <select id="selectChannel" resultMap="BaseResultMap" >
+  <select id="selectChannel" resultMap="BaseResultMap" parameterType="String">
     select 
     <include refid="ChannelAndEnterprise" />
     from 
@@ -101,8 +101,9 @@
     on 
     c1.channel_num = e1.channel_num
 	<where> 
+		 channel_state != 3
 		 <if test="channelState != null">
-		    c1.channel_state = #{channelState}
+		    AND c1.channel_state = #{channelState}
 		 </if> 
 		 <if test="channelFlowState != null">
 		    AND c1.channel_flow_state = #{channelFlowState}

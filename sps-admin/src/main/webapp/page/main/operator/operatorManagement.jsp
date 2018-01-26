@@ -30,9 +30,13 @@
 			    </div>
 			    <label class="layui-form-label">姓名:</label>
 			    <div class="layui-input-inline">
-			      <input id="queryName" type="text" name="name"  lay-verify="" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+			      <input id="queryName" type="text" name="name"  lay-verify="IsChineseCharacter"  placeholder="请输入姓名" autocomplete="off" class="layui-input">
 			    </div>
-			    	<button class="layui-btn layui-btn-primary" id="queryUser">查询</button>
+			    <label class="layui-form-label">联系电话:</label>
+			    <div class="layui-input-inline">
+			      <input id="queryPhone" type="text" name="phone"  lay-verify="IsChineseCharacter"  placeholder="请输入电话" autocomplete="off" class="layui-input">
+			    </div>
+			    	<button class="layui-btn layui-btn-primary"  lay-filter="queryUser" id="queryUser">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="resetUser">重置</button>
 	        </div>  
         </div>
@@ -57,9 +61,10 @@
   无
 </script>
 	<script>
-		layui.use(['table','laypage','layer'], function(){
+		layui.use(['table','laypage','layer','form'], function(){
 			  var table = layui.table;
 			  var laypage = layui.laypage;
+			  var form = layui.form;
 			  var layer = layui.layer
 			  var $ = layui.jquery
 			  $('#add').on('click', function() {
@@ -92,15 +97,30 @@
 			  //查询
 			  $('#queryUser').on('click',function(){
 				  var username = $('#queryUsername').val()
-				  var name = $('#queryName').val()
+				  var name = $('#queryName').val();
+				  var phone = $('#queryPhone').val();
+				  var regex;
+				  if(name != ""){
+					  regex = /^[\u4e00-\u9fa5]+$/;//中文
+					  if(!regex.test(name)){
+						  layer.msg('请输入正确的姓名')
+						  return;
+					  }
+				  }
+				  if(phone != ""){
+					  regex = /^((\+)?86|((\+)?86)?)0?1[3458]\d{9}$|^(((0\d2|0\d{2})[- ]?)?\d{8}|((0\d3|0\d{3})[- ]?)?\d{7})(-\d{3})?$/;
+					  if(!regex.test(phone)){
+						  layer.msg('请输入正确的手机号')
+						  return;
+					  }
+				  }
 				  table.reload('userId', {
 					  where: {username:username, name:name}
 					});
 			  })
 			  //重置
 			  $('#resetUser').on('click',function(){
-				  $('#queryUsername').val('')
-				  $('#queryName').val('')
+				  $('input').val('')
 			  })
 			  //监听工作条
 				table.on('tool(userTables)', function(obj){
@@ -166,12 +186,6 @@
 									});
 								}   
 						  }); 
-					    
-					    //同步更新缓存对应的值
-/* 					    obj.update({
-					      username: '123'
-					      ,title: 'xxx'
-					    }); */
 					  }
 				});
 			});

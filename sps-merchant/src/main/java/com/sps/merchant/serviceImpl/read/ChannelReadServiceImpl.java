@@ -54,7 +54,7 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 	@Resource
 	private SpsChannelBusinessReadMapper businessRead;
 	@Override
-	public HashMap<String, Object> getChannelList(String channelNum, Integer channelState, 
+	public HashMap<String, Object> getChannelList(String channelNum, String name, Integer channelState, 
 			Integer channelFlowState, Integer page, Integer limit) {
 		
 		HashMap<String, Object> hashMap = new HashMap<String,Object>();

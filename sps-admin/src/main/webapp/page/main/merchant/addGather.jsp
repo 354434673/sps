@@ -142,7 +142,7 @@
 				}
 			},
 			IsBank: function(value) {
-				var regex = /^([1-9]{1})(\d{14}|\d{18})$/;
+				var regex = /^([1-9]{1})(\d{18})$/;
 				if(!value.match(regex)) {
 					return '请输入正确的银行卡';
 				}
@@ -152,12 +152,6 @@
 					return '最少为6位';
 				}
 			},
-			verify: function(value) {
-				var repass = $('#password').val();
-				if(value != repass) {
-					return '两次输入的密码不一致!';
-				}
-			},		//验证身份证号 [可验证一代或二代身份证]  
 			IsIDCard: function(input) {
 				input = input.toUpperCase();
 				//验证身份证号码格式 [一代身份证号码为15位的数字；二代身份证号码为18位的数字或17位的数字加字母X]  

@@ -79,31 +79,26 @@
 
 <!-- 批量修改商品的价格和订货数量，并重新计算总金额 -->
 <update id="updatePriceBatch" parameterType="org.sps.entity.order.OrderGoods" >
- <foreach collection="list" separator=";" item="item">  
         update 
         	sps_order_goods 
-        <set>  
-	        <if test="item.price !=null ">
-	        	price = #{item.price}
+       	<set> 
+        	 <if test="price !=null ">
+	        	price = #{price}
 	        </if>
-	         <if test="item.amount !=null ">
-	        	,amount = #{item.amount}
+	         <if test="amount !=null ">
+	        	,amount = #{amount}
 	        </if>
-	         <if test="item.prePrice !=null ">
-	        	,pre_price = #{item.prePrice}
+	         <if test="prePrice !=null ">
+	        	,pre_price = #{prePrice}
 	        </if>
-	         <if test="item.preAmount !=null ">
-	        	,pre_amount = #{item.preAmount}
+	         <if test="preAmount !=null ">
+	        	,pre_amount = #{preAmount}
 	        </if>
-	         <if test="item.summation !=null ">
-	        	,summation = #{item.summation}
+	         <if test="summation !=null ">
+	        	,summation = #{summation}
 	        </if>
         </set>
-        <where>
-         	sku = #{item.sku}
-        </where> 
-    </foreach>  
-
+        WHERE sku = #{sku}
 </update>
 
 
