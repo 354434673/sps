@@ -72,7 +72,7 @@
     var seconds= da.getSeconds();
     console.log([year,month,date,hours,minutes,seconds].join('-'));
     var fn = function(){
-    return [year,month,date].join('-');
+    return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
     };
     }}
     {{ fn() }}
@@ -123,9 +123,9 @@
                     }
                 })
                 $("[data-field='gUpdateTime']").children().each(function () {
-                    if ($(this).text() == 'NaN-NaN-NaN') {
-                        $(this).text("未修改")
-                    }
+                 /*   if(isNaN($(this).text())){
+                        $(this).text("--")
+                    }*/
                 })
             }
         });

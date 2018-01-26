@@ -116,7 +116,7 @@
                 });
             } else if(layEvent === 'edit'){ //编辑
                 //window.location.href="/sps-admin/brand/toAddOrEdit?id="+data.brandId;
-                layer.open({
+               var index =layer.open({
                     type: 2,
                     area: ['50%', '80%'],//宽高
                     content: '<%=path%>/page/main/custom/addCustomCategory.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']

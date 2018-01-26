@@ -52,7 +52,7 @@
             <div class="layui-input-inline">
                 <input id="brandName" type="text" name="gSpuName" class="layui-input" style="display: none">
                 <div id="brandId">
-                    <select id="gBrandId" name="gBrandId" lay-filter="selFilter">
+                    <select id="gBrandId" name="gBrandId" lay-filter="selFilter" lay-verify="required" >
 
                     </select>
                 </div>
@@ -62,7 +62,7 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">*SPU名称：</label>
             <div class="layui-input-inline">
-                <input id="gSpuName" type="text" name="gSpuName" lay-verify="required" placeholder="请输入SPU名称"
+                <input id="gSpuName" type="text" name="gSpuName" lay-verify="required|gSpuName" placeholder="请输入SPU名称"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -70,7 +70,7 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">*SPU编号：</label>
             <div class="layui-input-inline">
-                <input id="gSpuNo" type="text" name="gSpuNo" lay-verify="required" placeholder="请输入SPU编号"
+                <input id="gSpuNo" type="text" name="gSpuNo" lay-verify="required|gSpuNo" placeholder="请输入SPU编号"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -86,6 +86,7 @@
                     <th>波动方式</th>
                     <th>波动值</th>
                     <th>波动区间</th>
+                    <th>审核状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -98,6 +99,7 @@
                     <td width="208px"><input lay-filter="scale" type="radio" name="gType" value="1" title="按比例" class="type" checked>
                         <input type="radio" lay-filter="money" name="gType" value="0" title="按金额" class="type"></td>
                     <td><input type="text" name="gSpuName" id="gScale" class="tdStyle"><span id="number">%</span></td>
+                    <td></td>
                     <td></td>
                     <td><a href="#" style="text-decoration: underline " id="adGoodSku">添加</a></td>
                 </tr>
@@ -117,13 +119,13 @@
             <label class="layui-form-label">*商品描述</label>
             <div class="layui-input-block">
                 <input value="" type="hidden" id="detail">
-                <textarea placeholder="请输入内容" name="gDetails" id="gDetails" class="layui-textarea"></textarea>
+                <textarea   placeholder="请输入内容" name="gDetails"   lay-verify="gDetails" id="gDetails" class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">包装清单</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入内容" name="gRemark" id="gRemark" class="layui-textarea"></textarea>
+                <textarea placeholder="请输入内容" name="gRemark"   lay-verify="gRemark"  id="gRemark" class="layui-textarea"></textarea>
             </div>
         </div>
 
@@ -150,7 +152,7 @@
             </button>
             <button class="layui-btn" lay-filter="saveGoods" lay-submit id="saveGoods">保存
             </button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
         </div>
     </div>
 </div>
@@ -210,7 +212,12 @@
             var type = true;
             if ($('#goodsNumberFlag').val() == "1") {
                 layer.msg("SKU编号已经存在！");
-                type = false;
+                return false;
+            }
+            var names= $('#gCategoryNames').val().split('>')
+            if(names.length<3){
+                layer.msg("请选择到三级分类！");
+                return false;
             }
             if (post_flag) return; //如果正在提交则直接返回，停止执行
             post_flag = true;//标记当前状态为正在提交状态\
@@ -244,7 +251,7 @@
                                     $('#goodsId').val(result.goodsId)
                                 }
                                 //插入sku商品
-                                SaveData()
+                                waitSaveData()
                                 layer.msg("操作成功");
                                 setTimeout(function () {
                                     window.location.href = "<%=path%>/page/main/goods/index.jsp";
@@ -265,7 +272,12 @@
             var type = true;
             if ($('#goodsNumberFlag').val() == "1") {
                 layer.msg("SKU编号已经存在！");
-                type = false;
+                return false;
+            }
+            var names= $('#gCategoryNames').val().split('>')
+            if(names.length<3){
+                layer.msg("请选择到三级分类！");
+                return false;
             }
             if (post_flag) return; //如果正在提交则直接返回，停止执行
             post_flag = true;//标记当前状态为正在提交状态\
@@ -313,6 +325,18 @@
             }
 
         })
+        //自定义验证规则
+        form.verify({
+            gSpuName: function (value) {
+                if (value.length > 20) {
+                    return 'spu名称最多输入20个字符';
+                }
+            }, gSpuNo: function (value) {
+                if (value.length > 20) {
+                    return 'spu编号最多输入20个字符';
+                }
+            }
+        });
     });
     /*  layui.use(['form'], function () {
           var form = layui.form;
@@ -539,6 +563,17 @@
                                 } else if (val.gType == "1") {
                                     val.gType = "按比例"
                                 }
+                                if(val.gAuditStatus=="0"){
+                                    val.gAuditStatus="待提交"
+                                }else if(val.gAuditStatus=="1"){
+                                    val.gAuditStatus="审核中"
+                                }else if(val.gAuditStatus=="2"){
+                                    val.gAuditStatus="审核不通过"
+                                }else if(val.gAuditStatus=="3"){
+                                    val.gAuditStatus="审核通过"
+                                }else if(val.gAuditStatus==undefined){
+                                    val.gAuditStatus="-"
+                                }
                                 $('#content').append(
                                     "<tr >" +
                                     "<td > " + val.gColor + "</td>" +
@@ -548,6 +583,7 @@
                                     "<td >" + val.gType + "</td>" +
                                     "<td >" + val.gScale + "</td>" +
                                     "<td >" + val.gAprice + "-" + val.gBprice + "</td>" +
+                                    "<td >" + val.gAuditStatus + "</td>" +
                                     "<td >" +
                                     "<span onclick='remove_line(this);'>删除</span> " +
                                     "</td>" +
@@ -601,7 +637,7 @@
                 return false;
             }
             if ($("#gNo").val() == "") {
-                layer.msg("尺寸不能为空！")
+                layer.msg("编号不能为空！")
                 $("#gNo").focus()
                 return false;
             }
@@ -643,6 +679,7 @@
                 "<td >" + gType + "</td>" +
                 "<td >" + gScale + "</td>" +
                 "<td >" + gAprice + "-" + gBprice + "</td>" +
+                "<td ></td>" +
                 "<td >" +
                 "<span onclick='remove_line(this);'>删除</span> " +
                 "</td>" +
@@ -685,7 +722,14 @@
 
     //删除选择记录
     function remove_line(index) {
-        $(index).parent().parent().remove();
+        layer.confirm('真的删除行么？', {
+            btn: ['删除','取消'], //按钮
+            shade: false //不显示遮罩
+        }, function(index1){
+            $(index).parent().parent().remove();
+            // 提交表单的代码，需要你自己写，然后用 layer.close 关闭就可以了，取消可以省略
+            layer.close(index1);
+        });
     }
 
     //保存sku数据
@@ -707,6 +751,51 @@
             }
             $.ajax({
                 data: {
+                    gAuditStatus:1,
+                    gType: waveType,
+                    gBprice: bprice,
+                    gAprice: aprice,
+                    gGid: $("#goodsId").val(),
+                    gColor: $(this).find("td:eq(0)").html(),
+                    gSize: $(this).find("td:eq(1)").html(),
+                    gNo: $(this).find("td:eq(2)").html(),
+                    gPrice: $(this).find("td:eq(3)").html(),
+                    gScale: scale
+                },//提交的数据
+                url: "<%=path%>/goodSku/saveOrUpdate",//提交连接
+                type: 'post',
+                dataType: 'json',
+                success: function (result) {
+                    if (result.flag == '1') {
+
+                    } else {
+                        layer.msg("操作失败");
+                    }
+                }
+            });
+        });
+
+    }
+    //保存sku数据
+    function waitSaveData() {
+
+        $('#content tr').each(function () {
+            var aprice = $(this).find("td:eq(6)").html().split('-')[0];
+            var bprice = $(this).find("td:eq(6)").html().split('-')[1];
+            var scale = $(this).find("td:eq(5)").html();
+            var tag='%';
+            if(scale.indexOf(tag)!=-1){
+                scale=scale.split('%')[0];
+            }
+            var waveType;
+            if ($(this).find("td:eq(4)").html() == "按比例") {
+                waveType = "1";
+            } else if ($(this).find("td:eq(4)").html() == "按金额") {
+                waveType = "0";
+            }
+            $.ajax({
+                data: {
+                    gAuditStatus:0,
                     gType: waveType,
                     gBprice: bprice,
                     gAprice: aprice,
@@ -829,23 +918,17 @@
         //自定义验证规则
         form.verify({
             //验证只包含汉字
-            IsChineseCharacter: function (value) {
-                var regex = /^[\u4e00-\u9fa5]+$/;
-                if (!value.match(regex)) {
-                    return '请输入正确的姓名';
+            gSpuName: function (value) {
+                if (value.length >20) {
+                    return 'SPU名称最多为20位';
                 }
             },
-            minLength: function (value) {
-                if (value.length < 6) {
-                    return '最少为6位';
+            gSpuNo: function (value) {
+                if (value.length > 20) {
+                    return 'SPU编号最多为20位';
                 }
             },
-            verify: function (value) {
-                var repass = $('#password').val();
-                if (value != repass) {
-                    return '两次输入的密码不一致!';
-                }
-            },
+
         });
     });
 

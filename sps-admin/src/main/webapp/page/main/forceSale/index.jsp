@@ -95,7 +95,7 @@
         var seconds= da.getSeconds();
         console.log([year,month,date,hours,minutes,seconds].join('-'));
         var fn = function(){
-        return [year,month,date].join('-');
+        return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
         };
         }}
         {{ fn() }}

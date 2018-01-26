@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsGoodSkuLog">
+  <resultMap id="BaseResultMap" type="SpsGoodSkuLog">
+    <id column="g_id" jdbcType="INTEGER" property="gId" />
+    <result column="g_create_time" jdbcType="TIMESTAMP" property="gCreateTime" />
+    <result column="g_update_time" jdbcType="TIMESTAMP" property="gUpdateTime" />
+    <result column="g_before_price" jdbcType="DECIMAL" property="gBeforePrice" />
+    <result column="g_after_price" jdbcType="DECIMAL" property="gAfterPrice" />
+    <result column="g_sku_no" jdbcType="VARCHAR" property="gSkuNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    g_id, g_create_time, g_update_time, g_before_price, g_after_price, g_sku_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_good_sku_log
+    where g_id = #{gId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_good_sku_log
+    where g_id = #{gId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsGoodSkuLog">
+    insert into sps_good_sku_log (g_id, g_create_time, g_update_time, 
+      g_before_price, g_after_price, g_sku_no
+      )
+    values (#{gId,jdbcType=INTEGER}, #{gCreateTime,jdbcType=TIMESTAMP}, #{gUpdateTime,jdbcType=TIMESTAMP}, 
+      #{gBeforePrice,jdbcType=DECIMAL}, #{gAfterPrice,jdbcType=DECIMAL}, #{gSkuNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="SpsGoodSkuLog">
+    insert into sps_good_sku_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gId != null">
+        g_id,
+      </if>
+      <if test="gCreateTime != null">
+        g_create_time,
+      </if>
+      <if test="gUpdateTime != null">
+        g_update_time,
+      </if>
+      <if test="gBeforePrice != null">
+        g_before_price,
+      </if>
+      <if test="gAfterPrice != null">
+        g_after_price,
+      </if>
+      <if test="gSkuNo != null">
+        g_sku_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gId != null">
+        #{gId,jdbcType=INTEGER},
+      </if>
+      <if test="gCreateTime != null">
+        #{gCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gUpdateTime != null">
+        #{gUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gBeforePrice != null">
+        #{gBeforePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gAfterPrice != null">
+        #{gAfterPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gSkuNo != null">
+        #{gSkuNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="SpsGoodSkuLog">
+    update sps_good_sku_log
+    <set>
+      <if test="gCreateTime != null">
+        g_create_time = #{gCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gUpdateTime != null">
+        g_update_time = #{gUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gBeforePrice != null">
+        g_before_price = #{gBeforePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gAfterPrice != null">
+        g_after_price = #{gAfterPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gSkuNo != null">
+        g_sku_no = #{gSkuNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where g_id = #{gId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsGoodSkuLog">
+    update sps_good_sku_log
+    set g_create_time = #{gCreateTime,jdbcType=TIMESTAMP},
+      g_update_time = #{gUpdateTime,jdbcType=TIMESTAMP},
+      g_before_price = #{gBeforePrice,jdbcType=DECIMAL},
+      g_after_price = #{gAfterPrice,jdbcType=DECIMAL},
+      g_sku_no = #{gSkuNo,jdbcType=VARCHAR}
+    where g_id = #{gId,jdbcType=INTEGER}
+  </update>
+</mapper>

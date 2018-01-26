@@ -28,12 +28,12 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">*品牌名称：</label>
             <div class="layui-input-inline">
-                <input id="brandName" type="text" name="brandName"  lay-verify="required" placeholder="请输入品牌名称"
+                <input id="brandName" type="text" name="brandName"   lay-verify="brandName" placeholder="请输入品牌名称"
                        autocomplete="off" class="layui-input" >
             </div>
             <label class="layui-form-label">*英文名称：</label>
             <div class="layui-input-inline">
-                <input id="brandEnglishName" name="brandEnglishName" type="text" lay-verify="required"
+                <input id="brandEnglishName" name="brandEnglishName" lay-verify="brandEnglishName" type="text"
                        placeholder="请输入英文名称" autocomplete="off" class="layui-input"
                        >
             </div>
@@ -41,14 +41,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">*简称：</label>
             <div class="layui-input-inline">
-                <input id="brandAbbreviation" name="brandAbbreviation" type="text" lay-verify="required"
+                <input id="brandAbbreviation" name="brandAbbreviation" type="text" lay-verify="brandAbbreviation"
                        placeholder="请输入简称" autocomplete="off" class="layui-input">
             </div>
             <label class="layui-form-label">*关联分类：</label>
             <div class="layui-input-inline">
                 <input type="hidden" id="brandCategoryIds" name="categoryParentId"  lay-verify="required"
                        autocomplete="off" class="layui-input">
-                <input type="hidden" id="brandCategoryNames" name="brandCategoryNames" lay-verify="required"
+                <input type="hidden" id="brandCategoryNames" name="brandCategoryNames"
                        autocomplete="off" class="layui-input">
                 <button class="layui-btn layui-btn-primary" id="showCategory">
                 </button>
@@ -57,15 +57,15 @@
         <div class="layui-form-item">
             <label class="layui-form-label">*小图标：</label>
             <div class="layui-input-inline">
-                <input type="text" id="brandSmallUrl" name="brandSmallUrl"
-                       placeholder="图片" class="layui-input"/>
+                <input type="text" id="brandSmallUrl" name="brandSmallUrl" lay-verify="required"
+                       placeholder="小图标" class="layui-input"/>
                 <button onclick="checkImgType()">上传图片</button>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*大图标：</label>
             <div class="layui-input-inline">
-                <input type="text" id="brandBigUrl" name="brandBigUrl"  placeholder="图片"
+                <input type="text" id="brandBigUrl" name="brandBigUrl"  placeholder="大图标" lay-verify="required"
                        class="layui-input"/>
                 <button onclick="checkImgType1()">上传图片</button>
             </div>
@@ -73,13 +73,13 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">品牌描述</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入内容" id="brandDes" class="layui-textarea"></textarea>
+                <textarea placeholder="请输入品牌描述" id="brandDes" class="layui-textarea" lay-verify="brandDes"></textarea>
             </div>
         </div>
         <div class="layui-form-item" align="center">
             <button class="layui-btn" lay-filter="submitCategory" lay-submit  id="submit">立即提交
             </button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
         </div>
     </div>
 </div>
@@ -110,7 +110,6 @@
         }else {
             $("#showCategory").html($("#brandCategoryNames").val())
         }
-
 
     })
 
@@ -271,6 +270,11 @@
         //提交
         var post_flag = false; //设置一个对象来控制是否进入AJAX过程
         form.on('submit(submitCategory)', function (data) {
+            var names= $('#brandCategoryNames').val().split('>')
+            if(names.length<3){
+                layer.msg("请选择到三级分类！");
+                return false;
+            }
             if (post_flag) return; //如果正在提交则直接返回，停止执行
             post_flag = true;//标记当前状态为正在提交状态
             var brandId = $('#brandId').val()
@@ -305,6 +309,8 @@
                             layer.msg("操作成功");
                             setTimeout(function () {
                                 window.location.href = "<%=path%>/page/main/brand/index.jsp";
+                                //parent.layer.closeAll();
+
                             }, 1000);
                         } else {
                             post_flag = false; //在提交成功之后将标志标记为可提交状态
@@ -328,24 +334,19 @@
 
         //自定义验证规则
         form.verify({
-            //验证只包含汉字
-            IsChineseCharacter: function (value) {
-                var regex = /^[\u4e00-\u9fa5]+$/;
-                if (!value.match(regex)) {
-                    return '请输入正确的姓名';
+            brandName: function(value){
+                if(value.length > 20){
+                    return '品牌名称最多输入20个字符';
                 }
-            },
-            minLength: function (value) {
-                if (value.length < 6) {
-                    return '最少为6位';
+            }, brandEnglishName: function(value){
+                if(value.length > 50){
+                    return '英文名称最多输入50个字符';
                 }
-            },
-            verify: function (value) {
-                var repass = $('#password').val();
-                if (value != repass) {
-                    return '两次输入的密码不一致!';
+            }, brandAbbreviation: function(value){
+                if(value.length > 20){
+                    return '简称最多输入20个字符';
                 }
-            },
+            }
         });
     });
 </script>

@@ -68,7 +68,7 @@
             src="<%=path%>/page/layui/layui.js"></script>
     <script type="text/html" id="bar">
         <a class="layui-btn layui-btn-mini" lay-event="detail">详情</a>
-        <a class="layui-btn layui-btn-mini" lay-event="audit">审核</a>
+        <a class="layui-btn layui-btn-mini audit" lay-event="audit">审核</a>
     </script>
 
     <script type="text/html" id="date">
@@ -83,7 +83,7 @@
         var seconds= da.getSeconds();
         console.log([year,month,date,hours,minutes,seconds].join('-'));
         var fn = function(){
-        return [year,month,date].join('-');
+        return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
         };
         }}
         {{ fn() }}
@@ -130,11 +130,15 @@
                     $("[data-field='gStatus']").children().each(function () {
                         if ($(this).text() == '0') {
                             $(this).text("待提交")
+                            $(this).parent().parent().find(".audit").hide();
                         } else if ($(this).text() == '1') {
                             $(this).text("审核中")
+                            $(this).parent().parent().find(".audit").hide();
                         } else if ($(this).text() == '2') {
                             $(this).text("审核通过")
+                            $(this).parent().parent().find(".audit").show();
                         } else if ($(this).text() == '3') {
+                            $(this).parent().parent().find(".audit").hide();
                             $(this).text("审核不通过")
                         }
                     })

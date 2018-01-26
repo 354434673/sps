@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class SpsGoodShop implements Serializable {
-
     private String categoryName;
     private String companyName;
     private String adminNum;
     private String gForceOpinion;
+
+    private String gSkuIds;
 
     private String gOpinion;
 
@@ -40,6 +41,14 @@ public class SpsGoodShop implements Serializable {
 
     private Date gUpdateTime;
 
+
+    public String getgSkuIds() {
+        return gSkuIds;
+    }
+
+    public void setgSkuIds(String gSkuIds) {
+        this.gSkuIds = gSkuIds;
+    }
 
     public String getgForceOpinion() {
         return gForceOpinion;

@@ -39,9 +39,23 @@
                 <input id="size" type="text" name="spec" lay-verify="" placeholder="请输入尺寸或颜色" autocomplete="off"
                        class="layui-input">
             </div>
+            <label class="layui-form-label">流程状态:</label>
+            <div class="layui-input-inline">
+                <select   id="status" lay-filter="channelFlowState">
+                    <option value=""></option>
+                    <option value="1">审核中</option>
+                    <option value="2">审核不通过</option>
+                    <option value="3">审核通过</option>
+                </select>
+
+            </div>
+
+        </div>
+        <div class="layui-form-item">
             <button class="layui-btn layui-btn-primary" id="queryGoods">查询</button>
             <button class="layui-btn layui-btn-primary" id="resetGoods">重置</button>
         </div>
+
     </div>
     <div>
         <button class="layui-btn" id="submit" data-type="getCheckData">
@@ -50,8 +64,9 @@
     </div>
     <table id="goodList" lay-filter="goodList"></table>
 </div>
-<div id="div" style="   padding-top: 40px;padding-left: 45px;"> <input type="radio" name="gType" value="1" checked>按比例
-    <input type="radio" name="gType" value="0"  >按金额</div>
+<%--<div id="div" style="   padding-top: 40px;padding-left: 45px;"><input type="radio" name="gType" value="1" checked>按比例
+    <input type="radio" name="gType" value="0">按金额
+</div>--%>
 <script type="text/html" id="date">
     {{#
     var da = d.gUpdateTime;
@@ -64,25 +79,76 @@
     var seconds= da.getSeconds();
     console.log([year,month,date,hours,minutes,seconds].join('-'));
     var fn = function(){
-    return [year,month,date].join('-');
+    return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
     };
     }}
     {{ fn() }}
 </script>
-<%--<script type="text/html" id="switchTpl">
-    <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="按金額|按比例" lay-filter="sexDemo" {{ d.id == 10003 ? 'checked' : '' }}>
-</script>--%>
+<script type="text/html" id="date1">
+    {{#
+    var da = d.gAuditTime;
+    da = new Date(da);
+    var year = da.getFullYear();
+    var month = da.getMonth()+1;
+    var date = da.getDate();
+    var hours= da.getHours();
+    var minutes= da.getMinutes();
+    var seconds= da.getSeconds();
+    console.log([year,month,date,hours,minutes,seconds].join('-'));
+    var fn = function(){
+    return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
+    };
+    }}
+    {{ fn() }}
+</script>
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="gType" class="switch"  value="{{d.gType}}" lay-skin="switch" lay-filter="gType" lay-text="金额|比例"  {{ d.gType == 0 ? 'checked' : '' }}>
+   <%-- <input type="checkbox" name="gType" value="{{d.gType}}" lay-skin="switch" lay-text="金额|比例" lay-filter="gType" {{ d.gType == 0 ? 'checked' : '' }}>--%>
+</script>
 <script type="text/javascript"
         src="<%=path%>/page/layui/layui.all.js"></script>
 <script>
-    layui.use(['table', 'laypage', 'laydate', 'layer'], function () {
+    layui.use(['form', 'table', 'laypage', 'laydate', 'layer'], function () {
         var table = layui.table;
         var laypage = layui.laypage;
         var layer = layui.layer
         var laydate = layui.laydate;
         var $ = layui.jquery
+        var form = layui.form;
+        //监听指定开关
+        form.on('switch(gType)', function(data){
+            layer.msg( (this.checked ? '按金额' : '按比例'), {
+                offset: '400px'
+            });
+            if(this.checked){
+                $(this).val("0");
+            }else{
+                $(this).val("1");
+            }
 
+            //开关状态判断，是否添加或更新数据
+            switchStatus($(this));
 
+        });
+        //开关状态判断，是否是第一次点击开关
+
+        function switchStatus(ele){
+            var gId=ele.next().parent().parent().prev().text();
+            var gType=ele.val();
+            $.ajax({
+                url : "<%=path%>/goodSku/updateType",//按照类型插入
+                type:"post",
+                dataType:"json",
+                data : {gId:gId,gType:gType},
+                success: function (result) {
+                    if (result.flag == '1') {
+                      /*  layer.msg("操作成功",{icon: 1});*/
+                    } else {
+                        /*layer.msg("操作失败");*/
+                    }
+                }//回调方法
+            });
+        }
 
 
         //加载日期框
@@ -99,135 +165,90 @@
             , id: 'gId'
             , page: true
             , cols: [[ //表头
-                {type:'numbers'}
+                {type: 'numbers'}
                 , {field: 'gNo', title: 'SPU编号', width: 150, align: 'center'}
                 , {field: 'supName', title: '商品名称', width: 150, align: 'center'}
                 , {field: 'gSize', title: '尺寸', align: 'center', width: 150}
                 , {field: 'gColor', title: '颜色', align: 'center', width: 150}
-                , {field: 'gPrice', title: '基准价', width: 150, align: 'center',edit: 'text',event: 'setPrice', style:'cursor: pointer;' }
-              /*  ,{field:'gType', title:'波动方式', width:185, templet: '#switchTpl', unresize: true}*/
-                , {field: 'gType', title: '波动方式', width: 150, align: 'center',event: 'setType', style:'cursor: pointer;' }
-                , {field: 'gScale', title: '波动值', width: 150, align: 'center',edit: 'text',event: 'setStock', style:'cursor: pointer;'},
-                {field: 'gScale', title: '波动区间', width: 230, align: 'center'}
+                , {field: 'gPrice', title: '基准价', width: 150, align: 'center', edit: 'text', style: 'cursor: pointer;'}
+                , {field: 'gId', title: '颜色', align: 'center', width: 150}
+                  ,{field:'gType', title:'波动方式', width:185, templet: '#switchTpl', unresize: true}
+                /*, {field: 'gType', title: '波动方式', width: 150, align: 'center', edit: 'text', style: 'cursor: pointer;'}*/
+                , {field: 'gScale', title: '波动值', width: 150, align: 'center', edit: 'text', style: 'cursor: pointer;'},
+                {field: 'gAprice', title: '波动起', width: 130, align: 'center'}
+                ,{field: 'gBprice', title: '波动末', width: 130, align: 'center'}
+                ,{field: 'gAuditStatus', title: '状态', width: 130, align: 'center'}
                 , {field: 'gUpdateTime', templet: '#date', title: '最后修改时间', width: 230, align: 'center'}
+                , {field: 'gAuditTime', templet: '#date1', title: '最后审核时间', width: 230, align: 'center'}
             ]], done: function (res, page, count) {
                 $("[data-field='gType']").children().each(function () {
                     if ($(this).text() == '0') {
                         $(this).text("按金额")
                     } else if ($(this).text() == '1') {
                         $(this).text("按比例")
+                        $(this).next().text().append("%")
                     }
                 })
-              /*  $("[data-field='gColor']").css('display','none');
-                $("[data-field='gSize']").css('display','none');*/
-                /*$("[data-field='spec']").children().each(function () {
+                $("[data-field='gAuditStatus']").children().each(function () {
+                    if ($(this).text() == '0') {
+                        $(this).text("待提交")
+                    } else if ($(this).text() == '1') {
+                        $(this).text("审核中")
+                    } else if ($(this).text() == '2') {
+                        $(this).text("审核不通过")
+                    } else if ($(this).text() == '3') {
+                        $(this).text("审核通过")
+                    }
+                })
+                  $("[data-field='gId']").css('display','none');
+               /*   $("[data-field='gSize']").css('display','none');
+                $("[data-field='spec']").children().each(function () {
                         $(this).text($(this).parents().find(".layui-table-cell laytable-cell-1-gSize").text()+$(this).parents().find(".layui-table-cell laytable-cell-1-gColor").text())
                 })*/
             }
         });
-        //监听单元格事件
-        table.on('tool(goodList)', function(obj){
-            var data = obj.data;
-            /*if(obj.event === 'setType'){
-                layer.open({
-                    type: 1,
-                    area: ['340px', '150px'],
-                    shade: false,
-                    title: '修改商品名为 ['+ data.supName +'] 的波动方式',
-                    skin: 'yourclass',
-                    content: $('#div'),
-                    value: data.gType
-                });*/
-                layer.prompt({
-                    formType: 1
-                    ,title: '修改商品名为 ['+ data.supName +'] 的波动方式'
-                    ,value: data.sign
-                }, function(value, index){
-                    layer.close(index);
-
-                    //这里一般是发送修改的Ajax请求
-
-                    //同步更新表格和缓存对应的值
-                    obj.update({
-                        sign: value
-                    });
-                });
-        });
-
-
-
         //查询
         $('#queryGoods').on('click', function () {
             var spuNo = $('#spuNo').val();
+            var status = $('#status').val();
             var goodsName = $('#goodsName').val();
             var size = $('#size').val();
             table.reload('gId', {
-                where: {spuNo: spuNo, goodsName: goodsName, size: size}
+                where: {spuNo: spuNo, goodsName: goodsName, size: size,auditStatus:status}
             });
         })
         //重置
         $('#resetGoods').on('click', function () {
             $('#goodsName').val('')
             $('#skuNo').val('')
+            $('#size').val('')
+            $('#status').val('');
+            form.render('select');
         });
-        $("#submit").click(function(){
+        $("#submit").click(function () {
             var goods = table.cache.gId;
             $.ajax({
-                type:'POST',
-                url:"<%=path%>/goodSku/updatePrice",
-                dataType:"json",
+                type: 'POST',
+                url: "<%=path%>/goodSku/updatePrice",
+                dataType: "json",
                 contentType: 'application/json;charset=utf-8',
-                data: JSON.stringify(goods),
-                success:function(data){
-                    if(data.state == 'success'){
-                        layer.msg(data.msg,{icon: 1});
-                    }else{
-                        layer.msg('修改失败',{icon: 2});
+                data: JSON.stringify(goods),
+                success: function (data) {
+                    if (data.state == 'success') {
+                        layer.msg(data.msg, {icon: 1});
+                        setTimeout(function () {
+                            window.location.href = "<%=path%>/page/main/goodSku/index.jsp";
+                        }, 1000);
+
+                    } else {
+                        layer.msg('修改失败', {icon: 2});
                     }
                 },
-                error:function(request){
-                    layer.msg('系统异常',{icon: 2});
+                error: function (request) {
+                    layer.msg('系统异常', {icon: 2});
                 }
             });
         });
-
-        /*  table.on('tool(goodsList)',function(obj){
-              var data = obj.data;
-              if(obj.event == 'setPrice'){
-                  layer.prompt({
-                      formType: 2
-                      ,title: '修改价格'
-                      ,value: data.price
-                  }, function(value, index){
-                      layer.close(index);
-                      var aaa= value*data.amount;
-                      //这里一般是发送修改的Ajax请求
-                      //console.log(aaa);
-                      //同步更新表格和缓存对应的值
-                      obj.update({
-                          price:value,
-                          summation: aaa
-                      });
-                  });
-              }
-              if(obj.event == 'setStock'){
-                  layer.prompt({
-                      formType: 2
-                      ,title: '修改库存'
-                      ,value: data.amount
-                  }, function(value, index){
-                      layer.close(index);
-                      var aaa= data.price*value;
-                      //这里一般是发送修改的Ajax请求
-                      //同步更新表格和缓存对应的值
-                      obj.update({
-                          amount:value,
-                          summation: aaa
-                      });
-                  });
-              }
-
-          });*/
     });
 </script>
 </body>
