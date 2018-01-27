@@ -170,7 +170,7 @@
 						  layer.open({
 							  type: 2, 
 							  area: ['70%', '80%'],//宽高
-							  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+							  content: '<%=path%>/page/main/operator/addOperator.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 							  success: function(layero, index){
 								    var body = layer.getChildFrame('body', index);
 								    body.find('#username').attr({"disabled":"disabled"});

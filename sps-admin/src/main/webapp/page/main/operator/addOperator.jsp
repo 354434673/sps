@@ -28,14 +28,14 @@
   <div class="layui-form-item ">
     <label class="layui-form-label">*用户名：</label>
     <div class="layui-input-inline">
-      <input id="username" type="text" name="username"  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+      <input id="username" type="text" name="username"  lay-verify="required|IsEnglishCharacter|max20Length" placeholder="请输入用户名" autocomplete="off" class="layui-input">
     </div>
     <button style="display:none" class="layui-btn layui-btn-primary" id="resetPasssword">重置密码</button>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">*姓名：</label>
     <div class="layui-input-inline">
-      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter|maxLength" placeholder="请输入姓名" autocomplete="off" class="layui-input">
     </div>
     <label class="layui-form-label">*联系电话：</label>
     <div class="layui-input-inline">
@@ -101,7 +101,10 @@
 			    });
 	  })
 	  $('#reset').click(function(){
-		  $('input').val('')
+		  $('#name').val('')
+		  $('#phone').val('')
+		  $('#email').val('')
+		  $('#remark').val('')
 	  })
 	  //添加
 	  form.on('submit(submitAddUser)', function(data){
@@ -185,6 +188,22 @@
 				var regex = /^[\u4e00-\u9fa5]+$/;
 				if(!value.match(regex)) {
 					return '请输入正确的姓名';
+				}
+			},
+			IsEnglishCharacter: function(value) {
+				var regex = /^[0-9A-Za-z]+$/;
+				if(!value.match(regex)) {
+					return '只能包含英文和数字';
+				}
+			},
+			max20Length: function(value) {
+				if(value.length>20) {
+					return '最多为20位';
+				}
+			},
+			maxLength: function(value) {
+				if(value.length>50) {
+					return '最多为50位';
 				}
 			},
 			minLength: function(value) {
