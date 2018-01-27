@@ -195,6 +195,8 @@
 <%-- 			  $(document).on("click","#submit",function(){
 				 window.location.href='<%=path%>/order/updateDeliveryOrderFlag?flag=7&orderid='+<%=request.getParameter("orderid")%>;
 			  }); --%>
+			  form.on('submit(submit)', function(data){
+				  update(7,null,"提交成功,1秒后跳转")
 				  //绑定原始文件域
 				  upload.render({
 				    elem: '#testList'
@@ -218,6 +220,8 @@
 				    	layer.msg('图片失败',{icon: 2});
 				    }
 				  });
+				  
+			  })
 			//物流信息
 			  $('#openExpress').on('click', function() {
 				  layer.open({
@@ -236,6 +240,26 @@
 				  		},  
 				  }); 
 			  });
+			  //更改状态方法
+			  function update(flag,remark,msg){
+				  $.post({
+					  url:'<%=path%>/order/updateConfirmOrderFlag',
+					  dataType:'json',
+					  data:{remark:remark,
+						  orderid:<%=request.getParameter("orderid")%>,
+						  flag:flag},
+					  success:function(data){
+						  layer.msg(msg,{icon: 1});
+						  setTimeout(function(){
+							  //跳转到上一页
+							  window.location.href='<%=path%>/page/main/order/orderToBeDelivery.jsp'
+						  },1000);
+					  },
+					  error:function(){
+						  layer.msg('系统错误',{icon: 2});
+					  }
+				  })
+			  }
 			  function getDate(data){
 				    da = new Date(data);
 				    var year = da.getFullYear();

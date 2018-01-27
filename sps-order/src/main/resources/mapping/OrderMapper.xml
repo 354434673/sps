@@ -199,8 +199,9 @@
   <update id="updateOrderFlag" parameterType="org.sps.entity.order.Order">
   	update sps_order
   	<set>
+			modifytime = sysdate()
   		<if test="flag != null and flag != '' ">
-  			flag=#{flag}
+  			,flag=#{flag}
   		</if>
   		<if test="remark != null and remark != '' ">
   			,remark=#{remark}
