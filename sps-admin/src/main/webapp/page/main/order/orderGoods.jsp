@@ -96,15 +96,19 @@
 				        ,title: '修改价格'
 				        ,value: data.price
 				      }, function(value, index){
-				        layer.close(index);
-				      	var aaa= value*data.amount;
-				        //这里一般是发送修改的Ajax请求
-				       //console.log(aaa);
-				        //同步更新表格和缓存对应的值
-				        obj.update({
-				        	price:value,
-				        	summation: aaa
-				        });
+				    	  if(value<0){
+					      		layer.msg('价格需为正数',{icon: 2});
+					      	}else{
+					      		layer.close(index);
+						      	var aaa= value*data.amount;
+					      	//这里一般是发送修改的Ajax请求
+							       //console.log(aaa);
+							        //同步更新表格和缓存对应的值
+							        obj.update({
+							        	price:value,
+							        	summation: aaa
+							        });
+					      	}
 				      });
 				    }
 				  if(obj.event == 'setAmount'){
@@ -113,14 +117,18 @@
 				        ,title: '修改订货量'
 				        ,value: data.amount
 				      }, function(value, index){
-				        layer.close(index);
-				        var aaa= data.price*value;
-				        //这里一般是发送修改的Ajax请求
-				        //同步更新表格和缓存对应的值
-				        obj.update({
-				        	amount:value,
-				        	summation: aaa
-				        });
+				    	  if(value<0){
+					      		layer.msg('订货量需为正数',{icon: 2});
+					      	}else{
+					      		 layer.close(index);
+							        var aaa= data.price*value;
+							        //这里一般是发送修改的Ajax请求
+							        //同步更新表格和缓存对应的值
+							        obj.update({
+							        	amount:value,
+							        	summation: aaa
+							        });
+					      	}
 				      });
 				    }
 				  //layer.msg('[sku: '+ data.sku +'] ' + field + ' 字段更改为：'+ value+'更改后的summation为：'+summation);

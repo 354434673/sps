@@ -159,12 +159,16 @@
 				  var startTime = date[0];
 				  var endTime = date[1];
 				  var flag=$('#flag').val();
-				  table.reload('orderOfAll', {
-					  page:{
-						  curr:1//重新从第一页开始
-					  },
-					  where: {name:name,orderid:orderid,startTime:startTime,endTime:endTime,flag:flag}
-					});
+				  if(orderid.length>50){
+					  layer.msg('订单编号字数不能超过50字',{icon: 2});
+				  }else{
+					  table.reload('orderOfAll', {
+						  page:{
+							  curr:1//重新从第一页开始
+						  },
+						  where: {name:name,orderid:orderid,startTime:startTime,endTime:endTime,flag:flag}
+						});
+				  }
 			  });
 			  //重置
 			  $('#resetInput').on('click',function(){
