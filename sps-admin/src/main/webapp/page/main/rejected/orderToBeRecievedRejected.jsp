@@ -129,7 +129,7 @@
 			  })
 			  //重置
 			  $('#resetInput').on('click',function(){
-				  $('#name').val('');
+				  $('input').val('');
 			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){

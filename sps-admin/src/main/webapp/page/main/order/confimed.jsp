@@ -188,6 +188,8 @@
 				  var remark = $('#remark').val()//拒绝理由
 				  if(remark == '' || remark == null){
 					  layer.msg('拒绝理由不可为空',{icon: 2});
+				  }else if(remark.length >50){
+					  layer.msg('最多为50字意见,请修改 ',{icon: 2});
 				  }else{
 					  //这里需要提交到后台处理，修改订单状态码为已拒绝，并将信息发送到风控
 					  update(2,remark,"订单拒绝成功,1秒后跳转")

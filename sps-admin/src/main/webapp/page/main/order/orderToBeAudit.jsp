@@ -19,9 +19,6 @@
 <link rel="stylesheet"
 	href="<%=path%>/page/layui/css/layui.css" media="all" />
 <style type="text/css">
-	tr th{
-		text-align: center;
-	}
 </style>
 </head>
 <body>
@@ -84,6 +81,17 @@
 }}
 {{ fn() }}
 </script>
+<script type="text/html" id="state">
+{{#  if(d.flag == 3){ }}
+待审核
+{{#  } else if(d.flag == 6){ }}
+审核通过
+{{#  } else if(d.flag == 4){ }}
+审核不通过
+{{#  } else { }}
+  {{d.flag}}
+{{#  } }}  
+</script>
 	<script>
 		layui.use(['laydate','table','laypage','layer'], function(){
 			  var table = layui.table;
@@ -115,7 +123,7 @@
 			      ,{field: 'payment', title: '订单首付',align:'center'}
 			      ,{field: 'sumMoney',  title: '店付金额',align:'center'}
 			      ,{field: 'createtime', title: '订单申请日期',templet:'#date', width:230, align:'center'}
-			      ,{field: 'flag', title: '订单状态',align:'center'}
+			      ,{field: 'flag', title: '订单状态',align:'center',templet:'#state'}
 			      ,{field: 'tool', title: '操作', width:210,align:'center',toolbar:'#bar'}
 			    ]]
 			  });

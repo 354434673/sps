@@ -74,7 +74,7 @@
 		<table id="orderGoodsDetail" lay-filter="orderGoodsDetail">
 		</table>
 		<div align="center">
-			<button onclick="javascript:history.back(-1)" id="back" class="layui-btn layui-btn-normal" >返回</button>
+			<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-normal" >返回</button>
 			<button id="confirm" class="layui-btn layui-btn-warm" >确认收货</button>
 		</div>
 	</div>
@@ -133,7 +133,7 @@
 						  layer.msg(msg,{icon: 1});
 						  setTimeout(function(){
 							  //跳转到上一页
-							  window.location.href='<%=path%>/page/main/rejected/orderToBeConfirmRejected.jsp'
+							  window.location.href='<%=path%>/page/main/rejected/orderToBeRecievedRejected.jsp'
 						  },1000);
 					  },
 					  error:function(){

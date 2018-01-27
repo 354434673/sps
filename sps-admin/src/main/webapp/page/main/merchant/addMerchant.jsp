@@ -924,8 +924,8 @@
 				  if(data.length != 0){
 				  	$('#logisticsCooperationName').val(data.toString())
 				  	$("#logisticsOther").attr("disabled","disabled");//不为空则说明其他有值,禁用物流按钮
+				  	$('#logisticsOther').addClass("layui-disabled")
 				  }
-				  
 				}    
 		  }); 
 	  });

@@ -127,11 +127,7 @@
 			  })
 			  //重置
 			  $('#resetInput').on('click',function(){
-				  $('#name').val('');
-				  $('#selfname').val('');
-				  $('#orderid').val('');
-				  $('#startTime').val('');
-				  $('#endTime').val('');
+				  $('input').val('');
 			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){

@@ -119,9 +119,9 @@
 		    </div>
 		   </div>
 			<div class="layui-form-item">
-		    <label class="layui-form-label" style="width:130px">*物流单据：</label>
+		    <label class="layui-form-label" style="width:130px">物流单据：</label>
 		    <div class="layui-input-inline">
-		    	<button type="button" class="layui-btn layui-btn-normal" id="testList">选择多文件</button> 
+		    	<button type="button" class="layui-btn layui-btn-primary" id="testList" style="width: 190px">选择多文件</button> 
 		    </div>
 		   </div>
 		   <div class="layui-form-item">
@@ -135,10 +135,7 @@
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
-<script type="text/html" id="indexTpl">
-    {{d.LAY_TABLE_INDEX+1}}
-</script>
-	<script>
+<script>
 		layui.use(['laydate','table','form','layer','upload'], function(){
 			  var table = layui.table;
 			  var laypage = layui.laypage;
@@ -165,6 +162,19 @@
 					  $('#address').html(result.data[0].address)//收货信息
 				  }
 			  })
+			  	  //失去焦点
+			  $('#logisticsOther').blur(function(){
+				  var logisticsOther = $('#logisticsOther').val()
+				  if(logisticsOther != ""){
+					  $("#logisticsCooperationName").removeAttr("lay-verify","required");
+					  $("#openExpress").attr("disabled","disabled");//不为空则说明其他有值,禁用物流按钮
+					  $("#openExpress").addClass("layui-disabled");
+				  }else{
+					  $("#guaranteeDeposit").attr("lay-verify","required");
+					  $("#openExpress").removeAttr("disabled")//为空则说明其他项没有填,恢复选择物流按钮
+					  $("#openExpress").removeClass("layui-disabled");
+				  }
+			  })
 			  table.render({
 				    elem: '#orderGoodsDetail'
 				    ,url: '<%=path%>/order/showOrderGoods.json'//数据接口
@@ -172,7 +182,7 @@
 				    ,id:'orderGoods'
 				    ,page:true
 				    ,cols: [[ //表头
-				       {title: '序号', align:'center',templet:'#indexTpl'} 
+				       {title: '序号', align:'center',type:'numbers'} 
 				      ,{field: 'sku', title: 'SKU编号', align:'center'}
 				      ,{field: 'skuname', title: '商品名称', align:'center'}
 				      ,{field: 'color', title: '规格', align:'center'}
@@ -185,9 +195,6 @@
 <%-- 			  $(document).on("click","#submit",function(){
 				 window.location.href='<%=path%>/order/updateDeliveryOrderFlag?flag=7&orderid='+<%=request.getParameter("orderid")%>;
 			  }); --%>
-			  form.on('submit(submit)', function(data){
-				  
-				  
 				  //绑定原始文件域
 				  upload.render({
 				    elem: '#testList'
@@ -211,33 +218,24 @@
 				    	layer.msg('图片失败',{icon: 2});
 				    }
 				  });
-			  })
 			//物流信息
 			  $('#openExpress').on('click', function() {
 				  layer.open({
 					  type: 2, 
 					  area: ['75%', '70%'],//宽高
-					  content: ['<%=path%>/page/main/express/expressManage.jsp?type=2'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-					  cancel: function(index, layero){
+					  content: ['<%=path%>/page/main/express/expressRedio.jsp'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+					  btn: ['确定','取消'],
+				      yes: function(index, layero){
+					  	  layer.close(layer.index);
 						  var data = $(layero).find("iframe")[0].contentWindow.expressIds;
-						  $('#logisticsCooperationName').val(data.toString())
-						}    
+						  if(data.length != 0 || data != ""){
+							  $('#logisticsCooperationName').val(data.name)
+							  $('#logisticsOther').attr("disabled","disabled")
+							  $('#logisticsOther').addClass("layui-disabled")
+						  }
+				  		},  
 				  }); 
 			  });
-			  upload.render({//签约合影照片
-	 			    elem: '#test1' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    //,data:{type:'signed',types:9,id:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '/sps-admin/common/file/manyUpload' //上传接口
-	 			    ,done: function(res){
-	 			    	if(res.state == 'success'){
-		 			    	layer.msg('图片上传成功',{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg('图片失败',{icon: 2});
-	 			    	}
-	 			    }
-				});
 			  function getDate(data){
 				    da = new Date(data);
 				    var year = da.getFullYear();
