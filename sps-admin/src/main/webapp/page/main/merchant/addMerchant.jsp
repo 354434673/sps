@@ -626,7 +626,7 @@
 			 				 $('#realArea').find("option:selected").text()+
 			 				 $('#realAddress').val();;
 			  var enterpriseCorp = $('#enterpriseCorp').val();//法人名称
-			  var enterpriseCorpIdcard = $('#enterpriseCorpIdcard').val();//法人名称
+			  var enterpriseCorpIdcard = $('#enterpriseCorpIdcard').val();//法人身份证
 			  var enterpriseOperatioTime = $('#enterpriseOperatioTime').val();//经营年限(年)
 			  var enterpriseEmployeeNum = $('#enterpriseEmployeeNum').val();//员工数量(人)
 			  var enterpriseCompanyAbbreviation = $('#enterpriseCompanyAbbreviation').val();//公司简称
@@ -682,7 +682,7 @@
 		 				enterpriseCompanyRegisterAddr:registerAddress,
 		 				enterpriseCompanyRealitAddr:realAddress,
 		 				enterpriseCorp:enterpriseCorp,
-		 				enterpriseCorpIdcard:'123423',
+		 				enterpriseCorpIdcard:enterpriseCorpIdcard,
 		 				enterpriseOperatioTime:enterpriseOperatioTime,
 		 				enterpriseEmployeeNum:enterpriseEmployeeNum,
 		 				//业务信息

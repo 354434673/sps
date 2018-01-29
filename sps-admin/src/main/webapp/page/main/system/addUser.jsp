@@ -200,8 +200,8 @@
 				}
 			},
 			minLength: function(value) {
-				if(value.length<6) {
-					return '最少为6位';
+				if(value.length<8 || value.length>12) {
+					return '密码为8-12位';
 				}
 			},
 			maxLength: function(value) {

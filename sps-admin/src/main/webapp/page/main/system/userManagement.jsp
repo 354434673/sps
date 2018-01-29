@@ -67,6 +67,7 @@
 			  $('#add').on('click', function() {
 				  layer.open({
 					  type: 2, 
+					  title:'用户新增',
 					  area: ['70%', '80%'],//宽高
 					  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					  cancel: function(index, layero){ 
@@ -112,6 +113,7 @@
 					  if(layEvent === 'detail'){ //查看
 						  layer.open({
 							  type: 2, 
+							  title:'查看用户',
 							  area: ['70%', '80%'],//宽高
 							  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 							  success: function(layero, index){
@@ -122,8 +124,8 @@
 								    body.find('#phone').val(data.userPhone)
 								    body.find('#email').val(data.userEmail)
 								    body.find('#btn').hide();//隐藏提交按钮
-								    body.find('#passwordDiv').hide();//隐藏密码输入框
-								    body.find('#resetPasssword').show();//显示重置密码按钮
+								    body.find('#passwordDiv').hide();//显示重置密码按钮
+								  
 
 								}  
 						  }); 
@@ -135,7 +137,7 @@
 							      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 							      layer.close(index);
 		  					  			$.post({
-								 			 url:'/<%=path%>/user/updateUserState',
+								 			 url:'<%=path%>/user/updateUserState',
 								 			 dataType:'json',
 								 			 data:{
 								 				 userName:data.userUsername,
@@ -156,10 +158,11 @@
 						    	}
 					  } else if(layEvent === 'edit'){ //编辑
 					    	if(data.userUsername == 'admin'){
-					    		layer.msg('管理员账号不可删除')
+					    		layer.msg('管理员账号不可修改')
 					    	}else{
 							  layer.open({
 								  type: 2, 
+								  title:'用户修改',
 								  area: ['70%', '80%'],//宽高
 								  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 								  success: function(layero, index){
@@ -170,7 +173,11 @@
 									    body.find('#phone').val(data.userPhone)
 									    body.find('#email').val(data.userEmail)
 									    body.find('#submit').hide();//显示重置密码按钮
+									    body.find('#passwordDiv').hide();//显示重置密码按钮
 									    body.find('#submitUpdate').show();//显示重置密码按钮
+									    body.find('#resetPasssword').show();//显示重置密码按钮
+									    body.find('#password').removeAttr("lay-verify","required");//显示重置密码按钮
+									    body.find('#verifyPwd').removeAttr("lay-verify","required");//显示重置密码按钮
 									},
 								  cancel: function(index, layero){ 
 									  table.reload('userId', {
@@ -178,7 +185,6 @@
 									}   
 							  }); 
 					    	}
-					    
 					    //同步更新缓存对应的值
 /* 					    obj.update({
 					      username: '123'

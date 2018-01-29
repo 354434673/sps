@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>商户信息修改</title>
+<title>用户添加</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -18,22 +18,13 @@
 <link rel="stylesheet"
 	href="<%=path%>/page/layui/css/layui.css" media="all" />
 <style type="text/css">
- .spsImages{
- 	height: 200px;
- 	width: 400px;
- 	background-color: #eee;
- }
- .imageSize{
-  	height: 200px;
- 	width: 400px;
- }
 </style>
 </head>
 <body>
 <div class="layui-tab layui-tab-brie" lay-filter ="tab" style="padding:10px;" >
   <ul class="layui-tab-title">
     <li lay-id="channelInfo" class="layui-this">基本信息</li>
-    <li lay-id="picInfo" id="picInfo" >图片资料</li>
+    <li lay-id="picInfo" style="display: none" id="picInfo" >图片资料</li>
   </ul>
   <div class="layui-tab-content">
     <div class="layui-tab-item layui-show">
@@ -41,7 +32,7 @@
 		<h3>属性信息</h3>
 		<hr>
 		  <!-- 属性信息开始 -->
-		  <div class="layui-form-item " >
+<!-- 		  <div class="layui-form-item " >
 		    <label class="layui-form-label" style="width:200px">*所在城市：</label>
 		    <div class="layui-input-inline" >
 		      <select name="province" lay-filter="province"  id="province" lay-verify="required"> 
@@ -57,33 +48,34 @@
 		      	  <option value="">区</option>
 		      </select>
 		    </div>
-		  </div>
+		  </div> -->
 		  <div class="layui-form-item" >
 		    <label class="layui-form-label" style="width:200px">*店付业务员姓名：</label>
 		    <div class="layui-input-inline">
-		      <input  id="channelSalesmanName" type="text" name="channelSalesmanName"  lay-verify="required|IsChineseCharacter" placeholder="请输入店付业务员姓名" autocomplete="off" class="layui-input">
+		      <select lay-search name="channelSalesmanName" lay-filter="channelSalesmanName"  id="channelSalesmanName" lay-verify="required"> 
+		      </select>
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*店付业务员身份证：</label>
 		    <div class="layui-input-inline">
-		      <input  id="channelSalesmanNum" type="text" name="channelSalesmanNum"  lay-verify="required" placeholder="请输入店付业务员身份证" autocomplete="off" class="layui-input">
+		      <input disabled="disabled" id="channelSalesmanNum" type="text" name="channelSalesmanNum"  placeholder="店付业务员身份证" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		  <div class="layui-form-item" id="passwordDiv">
-		   <label class="layui-form-label" style="width:200px">*核心商户编号：</label>
+		   <label class="layui-form-label" style="width:200px">核心商户编号：</label>
 		    <div class="layui-input-inline">
 		      <input  id="channelNum" name="channelNum" disabled type="text" autocomplete="off" class="layui-input">
 		    </div>
-		    <label class="layui-form-label" style="width:200px">*核心商户状态：</label>
+		    <label class="layui-form-label" style="width:200px">核心商户状态：</label>
 		    <div class="layui-input-inline">
 		    </div>
-		     <div class="layui-form-mid layui-word-aux">&nbsp&nbsp&nbsp 未激活</div>
+		     <div class="layui-form-mid layui-word-aux" id="channelState"></div>
 		  </div>
 		  <div class="layui-form-item">
-		    <label class="layui-form-label" style="width:200px">*上线时间：</label>
+		    <label class="layui-form-label" style="width:200px">上线时间：</label>
 		    <div class="layui-input-inline">
 		      <input id="channelUpTime" type="text"  disabled name="channelUpTime"   autocomplete="off" class="layui-input">
 		    </div>
-		    <label class="layui-form-label" style="width:200px">*冻结时间：</label>
+		    <label class="layui-form-label" style="width:200px">冻结时间：</label>
 		    <div class="layui-input-inline">
 		      <input id="channelFreezeTime"  type="text" disabled name="channelFreezeTime"  autocomplete="off" class="layui-input">
 		    </div>
@@ -91,7 +83,7 @@
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*营业执照编号：</label>
 		    <div class="layui-input-inline">
-		      <input  id="enterpriseBusinesslicenseNo" type="text" name="enterpriseBusinesslicenseNo"  lay-verify="required" placeholder="请输入营业执照编号" autocomplete="off" class="layui-input">
+		      <input  id="enterpriseBusinesslicenseNo" type="text" name="enterpriseBusinesslicenseNo"  lay-verify="required|length" placeholder="请输入营业执照编号" autocomplete="off" class="layui-input">
 		    </div>
 		    <label class="layui-form-label" style="width:200px">*公司名称：</label>
 		    <div class="layui-input-inline">
@@ -114,6 +106,9 @@
 				  <option value="">区</option>
 		      </select>
 		    </div>
+		    <div class="layui-input-inline" >
+		      <input id="registerAddress" type="text" name="registerAddress"  lay-verify="required" placeholder="请输入详细地址" autocomplete="off" class="layui-input">
+		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">公司实际地址：</label>
@@ -131,21 +126,34 @@
 				  <option value="">区</option>
 		      </select>
 		    </div>
+		    <div class="layui-input-inline" >
+		      <input id="realAddress" type="text" name="realAddress" lay-verify="required"  placeholder="请输入详细地址" autocomplete="off" class="layui-input">
+		    </div>
 		  </div>
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*法人代表姓名：</label>
 		    <div class="layui-input-inline">
 		      <input id="enterpriseCorp" type="text" name="enterpriseCorp"  lay-verify="required|IsChineseCharacter" placeholder="请输入法人代表姓名" autocomplete="off" class="layui-input">
 		    </div>
+		    <label class="layui-form-label" style="width:200px">*法人代表身份证号：</label>
+		    <div class="layui-input-inline">
+		      <input id="enterpriseCorpIdcard" type="text" name="enterpriseCorpIdcard"  lay-verify="required|IsIDCard" placeholder="请输入法人身份证号" autocomplete="off" class="layui-input">
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*经营年限(年)：</label>
 		    <div class="layui-input-inline">
 		      <input   id="enterpriseOperatioTime" type="text" name="enterpriseOperatioTime" lay-verify="required" placeholder="请输入经营年限(年)" autocomplete="off" class="layui-input">
 		    </div>
-		  </div>
-		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*员工数量(人)：</label>
 		    <div class="layui-input-inline">
 		      <input  id="enterpriseEmployeeNum" type="text" name="enterpriseEmployeeNum"  lay-verify="required" placeholder="请输入员工数量" autocomplete="off" class="layui-input">
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px">*公司简称：</label>
+		    <div class="layui-input-inline">
+		      <input  id="enterpriseCompanyAbbreviation" type="text" name="enterpriseCompanyAbbreviation"  lay-verify="required" placeholder="请输入公司简称" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		<!-- 属性信息结束 -->
@@ -154,23 +162,20 @@
 		<!-- 业务信息开始 -->
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">主营业务：</label>
-		    <div class="layui-input-inline" style="width:600px" id="businessProduct">
-		      <input type="checkbox"  title="一级分类名称1" value="1" lay-filter = "businessProduct">
-		      <input type="checkbox"  title="一级分类名称2" value="2" lay-filter = "businessProduct">
+		    <div class="layui-input-inline" style="width:600px" id="businessProduct" >
 		    </div>
 		  </div>
 		  <div class="layui-form-item"><!-- 树 -->
 		    <label class="layui-form-label" style="width:200px">主营商品类型：</label>
-		    <div class="layui-input-inline" style="width:600px" id="businessType">
-		      <input type="checkbox" title="三级分类名称1" value="1" lay-filter = "businessType" >
-		      <input type="checkbox" title="三级分类名称2" value="2" lay-filter = "businessType">
+		    <div class="layui-input-inline" id="businessType">
+			    <button class="layui-btn layui-btn-primary" lay-filter="businessType" id="businessType">
+			    <i class="layui-icon">&#xe608;</i> 新增选择商品类型</button>
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">主营品牌：</label>
 		    <div class="layui-input-inline" style="width:600px" id="businessBrand">
-		      <input type="checkbox"  title="品牌名称1" value="1" lay-filter = "businessBrand">
-		      <input type="checkbox"  title="品牌名称2" value="2" lay-filter = "businessBrand">
+		    <div class="layui-form-mid layui-word-aux">&nbsp&nbsp&nbsp选择商品类型后可见</div>
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
@@ -199,9 +204,11 @@
 				  <option value="3">无担保</option>
 		      </select>
 		    </div>
+		    <div id="deposit" style="display: none">
 		    <label class="layui-form-label" style="width:200px">*保证金金额：</label>
-		    <div class="layui-input-inline">
-		      <input  id="guaranteeDeposit" type="text" name="guaranteeDeposit" lay-verify="required" placeholder="请输入保证金金额" autocomplete="off" class="layui-input">
+			    <div class="layui-input-inline">
+			      <input  id="guaranteeDeposit" type="text" name="guaranteeDeposit" placeholder="请输入保证金金额" autocomplete="off" class="layui-input">
+			    </div>
 		    </div>
 		  </div>
 		 <div class="layui-form-item">
@@ -263,21 +270,25 @@
 		 <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px	">发货方式：</label>
 		    <div class="layui-input-inline" style="width:400px" id= "logisticsWay">
-		      <input type="checkbox" title="物流" value="0" lay-skin="primary" lay-filter="logisticsWay">
-		      <input type="checkbox" title="自主派送" value="1" lay-skin="primary" lay-filter="logisticsWay">
-		      <input type="checkbox" title="上门取货" value="2" lay-skin="primary" lay-filter="logisticsWay">
+		      <input type="checkbox" title="物流" value="物流" lay-skin="primary" lay-filter="logisticsWay">
+		      <input type="checkbox" title="自主派送" value="自主派送" lay-skin="primary" lay-filter="logisticsWay">
+		      <input type="checkbox" title="上门取货" value="上门取货" lay-skin="primary" lay-filter="logisticsWay">
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*合作物流名称：</label>
 		    <div class="layui-input-inline">
-		      <input id="logisticsCooperationName" type="logisticsCooperationName" name="name" lay-verify="required" placeholder="搜索" autocomplete="off" class="layui-input">
+		      <input disabled="disabled" id="logisticsCooperationName" type="logisticsCooperationName" name="name" lay-verify="required" placeholder="合作物流" autocomplete="off" class="layui-input">
 		    </div>
-		    <label class="layui-form-label" >*其他：</label>
-		    <div class="layui-input-inline">
-		      <input  id="logisticsOther" type="text" name="logisticsOther" lay-verify="required" placeholder="其他" autocomplete="off" class="layui-input">
-		    </div>
+		   		<button class="layui-btn layui-btn-primary" lay-filter="openExpress" id="openExpress">
+			    <i class="layui-icon">&#xe608;</i> 搜索</button>
 		   </div>
+		   <div class="layui-form-item">
+		    <label class="layui-form-label" style="width:200px">*其他：</label>
+		    <div class="layui-input-inline">
+		      <input  id="logisticsOther" type="text" name="logisticsOther" placeholder="其他" autocomplete="off" class="layui-input">
+		    </div>
+		    </div>
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*年物流总费用(万元)：</label>
 		    <div class="layui-input-inline">
@@ -305,13 +316,13 @@
 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*签约开始日期：</label>
 		    <div class="layui-input-inline">
-			 <input type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required" >	    
+			 <input readonly="" type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required" >	    
 			 </div>
 		</div>
 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*签约结束日期：</label>
 		    <div class="layui-input-inline">
-			 <input type="text" class="layui-input" id="endTime" placeholder="年-月-日" lay-verify="required" >		    
+			 <input readonly="" type="text" class="layui-input" id="endTime" placeholder="年-月-日" lay-verify="required" >		    
 			 </div>
 		</div>
 <!-- 		<div class="layui-form-item" >
@@ -321,41 +332,107 @@
 		      <input type="checkbox" title="7天不包息" value="1" lay-skin="primary" lay-filter="openApplyProduct">
 		    </div>
 		  </div> -->
-		<div class="layui-form-item">
+<!-- 		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*代销手续费率（%）：</label>
 		    <div class="layui-input-inline">
 		      <input   id="sell" type="text" name="sell" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
 		    </div>
-		</div>
+		</div> -->
 		<!-- 开户信息结束 -->
 		 	<div class="layui-form-item" align="center" id="btn" >
 				<button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">返回</button>
 				<button class="layui-btn layui-btn-primary" lay-filter="submitAddChanel" lay-submit >保存并进入下一步</button>
-				<button class="layui-btn layui-btn-primary" id="next" >下一步</button>
+				<!--  <button class="layui-btn layui-btn-primary" id="next" >下一步</button>  -->
 			</div>
 	</div>
     </div>
     <div class="layui-tab-item">
-   			<div align="center">
+   			<div align="center" id="uploadList">
    				<div class="layui-row layui-col-space10">
-   				<ul>
-	   				<li>
-	   					<div class="layui-col-md4">
-		   					<a href="javascript:void(0)" class="spsImages" >
-		   						<img alt="" src="<%=path%>/page/static/images/404.png" class="imageSize">
-		   					</a>
-		   					<p>营业执照</p>
-	   					</div>
-	   				</li>
-	   				<li>
-	   					<div class="layui-col-md4">
-		   					<a href="javascript:void(0)" class="spsImages" >
-		   						<img alt="" src="<%=path%>/page/static/images/404.png" class="imageSize">
-		   					</a>
-		   					<p>营业执照</p>
-	   					</div>
-	   				</li>
-   				</ul>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="businesslicense" style="width: 250px">
+						  <p>*营业执照</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="statement" style="width: 250px">
+						  <p>*近12个月的对公流水或法人名下流水</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="corpIdCardFront" style="width: 250px">
+						  <p>*法人身份证正面</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+				</div>
+   				<div class="layui-row layui-col-space10">
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="corpIdCardReverse" style="width: 250px">
+						  <p>*法人身份证反面</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="salesmanIdCardFront" style="width: 250px">
+						  <p>*业务负责人身份证正面</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="salesmanIdCardReverse" style="width: 250px">
+						  <p>业务负责人身份证反面</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+				</div>
+   				<div class="layui-row layui-col-space10">
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="companyPanorama" style="width: 250px">
+						  <p>*公司全景照</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="companyGate" style="width: 250px">
+						  <p>*公司大门照</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="contract" style="width: 250px">
+						  <p>*核心商户合作合同（必须加盖公司公章）</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+				</div>
+   				<div class="layui-row layui-col-space10">
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="signed" style="width: 250px">
+						  <p>*签约合影照片</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+   					<div class="layui-col-md4">
+					    <div class="layui-upload-drag" id="lease" style="width: 250px">
+						  <p>*经营地租赁协议</p>
+						  <i class="layui-icon"></i>
+						  <p>点击上传，或将文件拖拽到此处</p>
+						</div>
+					</div>
+				</div>
 			</div>
 			<!-- 按钮 -->
     		 <div class="layui-form-item" align="center" id="btn" style="padding-top: 10px" >
@@ -379,14 +456,13 @@
 	  var laydate = layui.laydate;
 	  var flow = layui.flow;
 	  var upload = layui.upload;
-	  var businessProductArray = [];//主营业务数组
 	  var businessTypeArray = [];//主营商品类型数组
 	  var businessBrandArray = [];//主营品牌数组
 	  var logisticsWay = [];//发货方式
 	  var openApplyProduct = ['0'];//适用产品
-	  var gatherListJson = null;
-	  var channelNum ;//外键,很多地方能用到
+	  var channelNum = getUrlParam("channelNum");//外键,很多地方能用到
 	  getProvince(100000)//先加载省
+	  getSalesman();
 	  form.render(); 
 	  //选择城市
 	  form.on('select(province)', function(data){//选省
@@ -411,14 +487,106 @@
 	  });    
 	  form.on('select(realCity)', function(data){//选省
 		  getArea(data.value,'realArea')
-	  });   
-	  //加载日期框
-	  laydate.render({
-		    elem: '#startTime'
-		  });
-	  laydate.render({
-		    elem: '#endTime'
-		  });
+	  });  
+	  form.on('select(channelSalesmanName)', function(data){//选省
+		  $('#channelSalesmanNum').val(data.value)
+	  });  
+	  form.on('select(guaranteeSituation)', function(data){//担保形式为保证金时候显示
+		  if(data.value == 1){
+			  $('#deposit').show();
+			  $("#guaranteeDeposit").attr("lay-verify","required|money");
+		  }else{
+			  $('#deposit').hide();
+			  $("#guaranteeDeposit").removeAttr("lay-verify","required");
+		  }
+	  });  
+	  $.post({//获得物流配送信息
+		  url:'<%=path%>/merchant/getLogistics'
+		  ,dataType:'json'
+		  ,data:{channelNum:channelNum}
+		  ,success:function(result){
+			  $('#logisticsWay').val(result.logisticsWay)//地址
+			  $('#logisticsCooperationName').val(result.logisticsCooperationName)
+			  $('#logisticsOther').val(result.logisticsOther)//业务员名称
+			  $('#logisticsAllCost').val(result.logisticsAllCost)//业务员身份证
+		  }
+	  })
+	  $.post({//获得属性信息和基本信息
+		  url:'<%=path%>/merchant/getChannel'
+		  ,dataType:'json'
+		  ,data:{channelNum:channelNum}
+		  ,success:function(result){
+			  $('#address').val(result.channel.channelCity)//地址
+			  $('#channelNum').val(result.channel.channelNum)
+			  $('#channelSalesmanName').val(result.channel.channelSalesmanName)//业务员名称
+			  $('#channelSalesmanNum').val(result.channel.channelSalesmanNum)//业务员身份证
+			  $('#channelUpTime').val(result.channel.channelUpTime)//上线时间
+			  var state ;
+			  var channelState = result.channel.channelState
+			  if(channelState == 0){
+				  state = '未激活'
+			  }else if(channelState == 1){
+				  state = '正常'
+			  }else if(channelState == 2){
+				  state = '冻结'
+			  }
+			  $('#channelState').html("&nbsp&nbsp&nbsp"+state)//状态
+			  $('#channelFreezeTime').val(result.channel.channelFreezeTime)//冻结时间
+			  $('#enterpriseBusinesslicenseNo').val(result.enterpriseBusinesslicenseNo)//营业执照
+			  $('#enterpriseCompanyName').val(result.enterpriseCompanyName)//公司名称
+			  $('#realAddress').val(result.enterpriseCompanyRealitAddr)//实际地址
+			  $('#registerAddress').val(result.enterpriseCompanyRegisterAddr)//注册地址
+			  $('#enterpriseCompanyAbbreviation').val(result.enterpriseCompanyAbbreviation)//公司简称
+			  $('#enterpriseCorp').val(result.enterpriseBusinesslicenseNo)//法人代表
+			  $('#enterpriseOperatioTime').val(result.enterpriseOperatioTime)//经营年限
+			  $('#enterpriseEmployeeNum').val(result.enterpriseEmployeeNum)//员工人数
+		  }
+	  })
+	  $.post({//获得担保信息
+		  url:'<%=path%>/merchant/getGuarantee'
+		  ,dataType:'json'
+		  ,data:{channelNum:channelNum}
+		  ,success:function(result){
+			  $('#guaranteeSituation').val(result.guaranteeSituation)//担保形式
+			  $('#guaranteeDeposit').val(result.guaranteeDeposit)//担保形式
+			  $('#guaranteeCorpPhone').val(result.guaranteeCorpPhone)//担保形式
+			  $('#guaranteeFinanceContactname').val(result.guaranteeFinanceContactname)//担保形式
+			  $('#guaranteeFinanceContactphone').val(result.guaranteeFinanceContactphone)//担保形式
+			  $('#guaranteeBusinessLeadername').val(result.guaranteeBusinessLeadername)//担保形式
+			  $('#guaranteeBusinessLeaderphone').val(result.guaranteeBusinessLeaderphone)//担保形式
+			  $('#guaranteeBusinessPhonePassword').val(result.guaranteeBusinessPhonePassword)//担保形式
+		  }
+	  })
+	  $.post({//获得财务指标
+		  url:'<%=path%>/merchant/getFinanceTarget'
+		  ,dataType:'json'
+		  ,data:{channelNum:channelNum}
+		  ,success:function(result){
+			  $('#targetLastSale').val(result.targetLastSale)//上年销售额(万元)
+		  }
+	  })
+	  $.post({//获得开户信息
+		  url:'<%=path%>/merchant/getOpenAccount'
+		  ,dataType:'json'
+		  ,data:{channelNum:channelNum}
+		  ,success:function(result){
+			  $('#openAdminNum').val(result.openAdminNum)//管理员账号
+			  $('#openAdminPhone').val(result.openAdminPhone)//管理员手机
+			  var start = result.openStartTime;
+			  var end = result.openEndTime;
+			  $('#openEndTime').val(result.openEndTime)//签约开始日期
+			  //$('#openSellRate').html(result.openSellRate)//代销手续费率
+			  //加载日期框
+			  laydate.render({
+				    elem: '#startTime',
+				    value:start.split(" ")[0]
+				  });
+			  laydate.render({
+				    elem: '#endTime',
+				    value:end.split(" ")[0]
+				  });
+		  }
+	  })
 	  form.on('checkbox(businessProduct)', function(data){
  		  if(data.elem.checked){
 			  businessProductArray.push(data.value)
@@ -459,7 +627,6 @@
 		  }
 		}); 	
 	  form.on('checkbox(logisticsWay)', function(data){
-		  console.log(data.value)
 		  if(data.elem.checked){
 			  logisticsWay.push(data.value)
 		  }else{
@@ -472,108 +639,31 @@
 			}
 		  }
 		}); 	
-/* 	  form.on('checkbox(openApplyProduct)', function(data){
-		  console.log(data.value)
-		  if(data.elem.checked){
-			  openApplyProduct.push(data.value)
-		  }else{
-			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
-			for(var i=0; i<openApplyProduct.length; i++) {
-				if(openApplyProduct[i] == data.value){
-					openApplyProduct.splice(i, 1);
-					break;
-				}
-			}
-		  }
-		});  */	
 	  $('#next').on('click',function(){
- /* 			  $.post({
-				  url:'<%=path%>/merchant/insertGather.html',
-				  dataType:'json',
-				  data:{
-					  gathers:gatherListJson,
-					  }
-				  });  */
-				  $('#picInfo').removeAttr('style')
-	     //addGather(gatherListJson,'1')
-		  element.tabChange('tab','picInfo')
-
+		  intoNext()
 	  })
 	  $('#last').on('click',function(){
 		  element.tabChange('tab','channelInfo')
 
 	  })
-	  	  $.post({//获得物流配送信息
-		  url:'<%=path%>/merchant/getLogistics'
-		  ,dataType:'json'
-		  ,data:{channelNum:channelNum}
-		  ,success:function(result){
-			  $('#logisticsWay').html(result.logisticsWay)//地址
-			  $('#logisticsCooperationName').html(result.logisticsCooperationName)
-			  $('#logisticsOther').html(result.logisticsOther)//业务员名称
-			  $('#logisticsAllCost').html(result.logisticsAllCost)//业务员身份证
-		  }
-	  })
-	  $.post({//获得属性信息和基本信息
-		  url:'<%=path%>/merchant/getChannel'
-		  ,dataType:'json'
-		  ,data:{channelNum:channelNum}
-		  ,success:function(result){
-			  $('#address').html(result.channel.channelCity)//地址
-			  $('#channelNum').html(result.channel.channelNum)
-			  $('#channelSalesmanName').html(result.channel.channelSalesmanName)//业务员名称
-			  $('#channelSalesmanNum').html(result.channel.channelSalesmanNum)//业务员身份证
-			  $('#channelUpTime').html(result.channel.channelUpTime)//上线时间
-			  $('#channelFreezeTime').html(result.channel.channelFreezeTime)//冻结时间
-			  $('#enterpriseBusinesslicenseNo').html(result.enterpriseBusinesslicenseNo)//营业执照
-			  $('#enterpriseCompanyName').html(result.enterpriseCompanyName)//公司名称
-			  $('#realAddress').html(result.enterpriseCompanyRealitAddr)//实际地址
-			  $('#registerAddress').html(result.enterpriseCompanyRegisterAddr)//注册地址
-			  $('#enterpriseCompanyAbbreviation').html(result.enterpriseCompanyAbbreviation)//公司简称
-			  $('#enterpriseCorp').html(result.enterpriseBusinesslicenseNo)//法人代表
-			  $('#enterpriseOperatioTime').html(result.enterpriseOperatioTime)//经营年限
-			  $('#enterpriseEmployeeNum').html(result.enterpriseEmployeeNum)//员工人数
-		  }
-	  })
-	  $.post({//获得担保信息
-		  url:'<%=path%>/merchant/getGuarantee'
-		  ,dataType:'json'
-		  ,data:{channelNum:channelNum}
-		  ,success:function(result){
-			  $('#guaranteeSituation').html(result.guaranteeSituation)//担保形式
-			  $('#guaranteeDeposit').html(result.guaranteeDeposit)//担保形式
-			  $('#guaranteeCorpPhone').html(result.guaranteeCorpPhone)//担保形式
-			  $('#guaranteeFinanceContactname').html(result.guaranteeFinanceContactname)//担保形式
-			  $('#guaranteeFinanceContactphone').html(result.guaranteeFinanceContactphone)//担保形式
-			  $('#guaranteeBusinessLeadername').html(result.guaranteeBusinessLeadername)//担保形式
-			  $('#guaranteeBusinessLeaderphone').html(result.guaranteeBusinessLeaderphone)//担保形式
-			  $('#guaranteeBusinessPhonePassword').html(result.guaranteeBusinessPhonePassword)//担保形式
-		  }
-	  })
-	  $.post({//获得财务指标
-		  url:'<%=path%>/merchant/getFinanceTarget'
-		  ,dataType:'json'
-		  ,data:{channelNum:channelNum}
-		  ,success:function(result){
-			  $('#targetLastSale').html(result.targetLastSale)//上年销售额(万元)
-		  }
-	  })
-	  $.post({//获得开户信息
-		  url:'<%=path%>/merchant/getOpenAccount'
-		  ,dataType:'json'
-		  ,data:{channelNum:channelNum}
-		  ,success:function(result){
-			  $('#openAdminNum').html(result.openAdminNum)//管理员账号
-			  $('#openAdminPhone').html(result.openAdminPhone)//管理员手机
-			  $('#openStartTime').html(result.openStartTime)//签约开始日期
-			  $('#openEndTime').html(result.openEndTime)//签约开始日期
-			  //$('#openSellRate').html(result.openSellRate)//代销手续费率
+	  //失去焦点
+	  $('#logisticsOther').blur(function(){
+		  var logisticsOther = $('#logisticsOther').val()
+		  if(logisticsOther != ""){
+			  $("#logisticsCooperationName").removeAttr("lay-verify","required");
+			  $("#openExpress").attr("disabled","disabled");//不为空则说明其他有值,禁用物流按钮
+			  $("#openExpress").addClass("layui-disabled");
+		  }else{
+			  $("#guaranteeDeposit").attr("lay-verify","required");
+			  $("#openExpress").removeAttr("disabled")//为空则说明其他项没有填,恢复选择物流按钮
+			  $("#openExpress").removeClass("layui-disabled");
 		  }
 	  })
 	  //收款信息
 	  table.render({
 		    elem: '#gatherList'
-		    //,url: '<%=path%>/merchant/getGatherList.html' //数据接口
+		    ,url: '<%=path%>/merchant/getGatherList.json' //数据接口
+		    ,where:{channelNum:channelNum}
 		    ,id:'gather'
 		    ,page:true
 		    ,limit:5
@@ -587,7 +677,6 @@
 		      ,{field: 'gatherDepositBank', title: '开户银行', width:170,align:'center'} 
 		      ,{field: 'gatherBankBranch', title: '开户行分行', width:170,align:'center'} 
 		      ,{field: 'gatherBankSubbranch', title: '开户行支行', width:170,align:'center'} 
-		      ,{field: 'tool', title: '操作', width:200,align:'center',toolbar:'#bar'}
 		    ]]
 		  });
  	  form.on('submit(submitAddChanel)', function(data){
@@ -598,7 +687,7 @@
 			  var address = $('#province').find("option:selected").text()+
 			 				 $('#city').find("option:selected").text()+
 			 				 $('#area').find("option:selected").text();
-		  	  var channelSalesmanName = $('#channelSalesmanName').val();//店付业务员姓名
+		  	  var channelSalesmanName = $('#channelSalesmanName').find("option:selected").text();//店付业务员姓名
 		  	  var channelSalesmanNum = $('#channelSalesmanNum').val();//店付业务员编号
 		  	  /*
 		  	   	企业基本信息
@@ -608,14 +697,18 @@
 			  //公司注册地址
 			  var registerAddress = $('#registerProvince').find("option:selected").text()+
 			 				 $('#registerCity').find("option:selected").text()+
-			 				 $('#registerArea').find("option:selected").text();
+			 				 $('#registerArea').find("option:selected").text()+
+			 				 $('#registerAddress').val();
 			  //公司实际地址
 			  var realAddress = $('#realProvince').find("option:selected").text()+
 			 				 $('#realCity').find("option:selected").text()+
-			 				 $('#realArea').find("option:selected").text();
+			 				 $('#realArea').find("option:selected").text()+
+			 				 $('#realAddress').val();;
 			  var enterpriseCorp = $('#enterpriseCorp').val();//法人名称
+			  var enterpriseCorpIdcard = $('#enterpriseCorpIdcard').val();//法人身份证
 			  var enterpriseOperatioTime = $('#enterpriseOperatioTime').val();//经营年限(年)
 			  var enterpriseEmployeeNum = $('#enterpriseEmployeeNum').val();//员工数量(人)
+			  var enterpriseCompanyAbbreviation = $('#enterpriseCompanyAbbreviation').val();//公司简称
 		  	  /*
 		  	   	业务信息
 		  	  */
@@ -654,11 +747,11 @@
 			  var openSellRate = $('#sell').val();//费率
 			  
  			  $.post({
-				  url:'<%=path%>/merchant/insertChannel.html',
+				  url:'<%=path%>/merchant/insertChannel',
 				  dataType:'json',
 				  data:{
 					  	//渠道信息
- 		 				channelCity:address,
+ 		 				channelCity:realAddress,
 		 				channelSalesmanName:channelSalesmanName,
 		 				channelSalesmanNum:channelSalesmanNum,
 		 				channelState:0,
@@ -668,7 +761,7 @@
 		 				enterpriseCompanyRegisterAddr:registerAddress,
 		 				enterpriseCompanyRealitAddr:realAddress,
 		 				enterpriseCorp:enterpriseCorp,
-		 				enterpriseCorpIdcard:'123423',
+		 				enterpriseCorpIdcard:enterpriseCorpIdcard,
 		 				enterpriseOperatioTime:enterpriseOperatioTime,
 		 				enterpriseEmployeeNum:enterpriseEmployeeNum,
 		 				//业务信息
@@ -693,15 +786,16 @@
 		 				logisticsAllCost:logisticsAllCost,
 		 				logisticsOther:logisticsOther, 
 		 				//开户
-		 				//管理员账户为业务负责人手机号
- 		 				openAdminNum:guaranteeBusinessLeaderphone,
+		 				//管理员账户为业务负责人手机号+@+公司简称
+ 		 				openAdminNum:guaranteeBusinessLeaderphone+'@'+enterpriseCompanyAbbreviation,
 		 				//管理员手机号为业务负责人手机号
 		 				openAdminPhone:guaranteeBusinessLeaderphone,
 		 				openStartTime:openStartTime,
 		 				openEndTime:openEndTime,
 		 				//openApplyProduct:openApplyProduct.toString(),
 		 				openApplyProduct:openApplyProduct.toString(),
-		 				openSellRate:openSellRate, 
+		 				//openSellRate:openSellRate, 
+		 				openSellRate:7, 
 				  },
 				  success:function(result){
 					  if(result.state == 'success'){
@@ -709,6 +803,7 @@
 						var state = addGather(gatherListJson,result.channelNum)
 						layer.msg(result.msg,{icon: result.icon});
 						channelNum = result.channelNum
+						intoNext();//添加成功后进入
 					  }else if(result.state == 'error'){
 						  layer.msg(result.msg,{icon: result.icon});
 					  }else if(result.state == 'exit'){
@@ -720,18 +815,18 @@
 				  }
 			  }) 
 	  }) 
-/* 	  $.post({//获取角色列表
-		  url:'<%=path %>/role/roleList.html',
+ 	  $.post({//获取主营业务
+		  url:'<%=path%>/category/getFistCategory',
 		  dataType:'json',
 		  success:function(data){
 			  var list = "";
-			  $.each(data.data,function(i,item){
-				  list +='<input type="checkbox" name="check" lay-filter="encrypt" title="'+item.roleName+'" value ="'+item.roleId+'">';
-				  $('#checkList').html(list)
+			  $.each(data.categoryList,function(i,item){
+				  list +='<input type="checkbox" name="businessProduct" lay-filter="businessProduct" title="'+item.categoryName+'" value ="'+item.categoryId+'">';
+				  $('#businessProduct').html(list)
 			  })
 			  form.render('checkbox');
 		  }
-	  }) */
+	  }) 
 	  //自定义验证规则  
 	  form.verify({  
 			//验证只包含汉字  
@@ -741,20 +836,117 @@
 					return '请输入正确的姓名';
 				}
 			},
+			//验证只包含汉字  
+			money: function(value) {
+				var regex = /^[0-9]+([.]{1}[0-9]{1,2})?$/;
+				if(!value.match(regex)) {
+					return '请输入正确的金额';
+				}
+			},
 			minLength: function(value) {
 				if(value.length<6) {
 					return '最少为6位';
 				}
 			},
+			length: function(value) {
+				var regex = /(^\d{15}$)|(^\d{18}$)/;
+				if(!value.match(regex)) {
+					return '只能是15位或18位';
+				}
+			},
+			IsIDCard: function(input) {
+				input = input.toUpperCase();		
+				//验证身份证号码格式 [一代身份证号码为15位的数字；二代身份证号码为18位的数字或17位的数字加字母X]  
+				if(!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/i.test(input))) {
+					return '请输入正确的身份证';
+				}
+				//验证省份  
+				var arrCity = {
+					11: '北京',
+					12: '天津',
+					13: '河北',
+					14: '山西',
+					15: '内蒙古',
+					21: '辽宁',
+					22: '吉林',
+					23: '黑龙江 ',
+					31: '上海',
+					32: '江苏',
+					33: '浙江',
+					34: '安徽',
+					35: '福建',
+					36: '江西',
+					37: '山东',
+					41: '河南',
+					42: '湖北',
+					43: '湖南',
+					44: '广东',
+					45: '广西',
+					46: '海南',
+					50: '重庆',
+					51: '四川',
+					52: '贵州',
+					53: '云南',
+					54: '西藏',
+					61: '陕西',
+					62: '甘肃',
+					63: '青海',
+					64: '宁夏',
+					65: '新疆',
+					71: '台湾',
+					81: '香港',
+					82: '澳门',
+					91: '国外'
+				};
+				if(arrCity[parseInt(input.substr(0, 2))] == null) {
+					return '请输入正确的身份证';
+				}
+				//验证出生日期  
+				var regBirth, birthSplit, birth;
+				var len = input.length;
+				if(len == 15) {
+					regBirth = new RegExp(/^(\d{6})(\d{2})(\d{2})(\d{2})(\d{3})$/);
+					birthSplit = input.match(regBirth);
+					birth = new Date('19' + birthSplit[2] + '/' + birthSplit[3] + '/' + birthSplit[4]);
+					if(!(birth.getYear() == Number(birthSplit[2]) && (birth.getMonth() + 1) == Number(birthSplit[3]) && birth.getDate() == Number(birthSplit[4]))) {
+						console.log('3')
+						return '请输入正确的身份证';
+					}
+					return false;
+				} else if(len == 18) {
+					regBirth = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/i);
+					birthSplit = input.match(regBirth);
+					birth = new Date(birthSplit[2] + '/' + birthSplit[3] + '/' + birthSplit[4]);
+					if(!(birth.getFullYear() == Number(birthSplit[2]) && (birth.getMonth() + 1) == Number(birthSplit[3]) && birth.getDate() == Number(birthSplit[4]))) {
+						console.log('4')
+						return '请输入正确的身份证';
+					}
+					//验证校验码  
+					var valnum;
+					var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+					var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+					var nTemp = 0,
+						i;
+					for(i = 0; i < 17; i++) {
+						nTemp += input.substr(i, 1) * arrInt[i];
+					}
+					valnum = arrCh[nTemp % 11];
+					if(valnum != input.substr(17, 1)) {
+						console.log('5')
+						return '请输入正确的身份证';
+					}
+					return false;
+				}
+				return '请输入正确的身份证';
+			}
 	  });  
 	  $('#addBank').on('click', function() {
 		  layer.open({
 			  type: 2, 
 			  area: ['75%', '70%'],//宽高
-			  content: ['addGather.html'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+			  content: ['addGather.jsp'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 			  cancel: function(index, layero){ 
 				  var data = $(layero).find("iframe")[0].contentWindow.gatherListJson;
-				  console.log(data)
 				  gatherListJson = data;
 				  table.reload('gather', {
 					  data:gatherListJson
@@ -762,10 +954,64 @@
 				}    
 		  }); 
 	  });
+	  $('#businessType').on('click', function() {
+		  var html = '<div class="layui-form-mid layui-word-aux">&nbsp&nbsp&nbsp选择商品类型后可见</div>'
+		  $('#businessBrand').html(html)
+		  if(businessProductArray.length == 0){
+			  layer.msg('请选择主营业务',{icon: 2});
+		  }else{
+			  layer.open({
+				  type: 2, 
+				  area: ['25%', '70%'],//宽高
+				  content: ['addBusinessType.jsp'] ,
+				  btn: ['确定','取消']
+				  ,yes: function(index, layero){
+					  var body = layer.getChildFrame('body', index);
+					  var childrens = $(layero).find("iframe")[0].contentWindow.getCheck() 
+					  businessTypeArray = childrens;
+				 	  $.post({//获取主营业务
+						  url:'<%=path%>/brand/getBrandList',
+						  dataType:'json',
+						  data:{categoryIds:businessTypeArray.toString()},
+						  success:function(data){
+  				 			  var list = "";
+							  if(data.data.length == 0){
+								  layer.msg('当前商品类型无主营品牌')
+							  }else{
+								  $.each(data.data,function(i,item){
+									  list +='<input type="checkbox" name="businessBrand" lay-filter="businessBrand" title="'+item.brandName+'" value ="'+item.brandId+'">';
+									  $('#businessBrand').html(list)
+								  })  
+								  form.render('checkbox');
+							  }
+						  }
+					  }) 
+					 layer.close(layer.index);
+				  },
+	 			  cancel: function(index, layero){ 
+					}  
+			  }); 
+		  }
+	  });
+	  $('#openExpress').on('click', function() {
+		  layer.open({
+			  type: 2, 
+			  area: ['75%', '70%'],//宽高
+			  content: ['<%=path%>/page/main/express/expressManage.jsp?type=1'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+			  cancel: function(index, layero){
+				  var data = $(layero).find("iframe")[0].contentWindow.expressIds;
+				  if(data.length != 0){
+				  	$('#logisticsCooperationName').val(data.toString())
+				  	$("#logisticsOther").attr("disabled","disabled");//不为空则说明其他有值,禁用物流按钮
+				  	$('#logisticsOther').addClass("layui-disabled")
+				  }
+				}    
+		  }); 
+	  });
 	  	function addGather(gatherListJson,channelNum){
 	  		$.each(gatherListJson,function(i,data){
 	  			$.post({
-	  				url:'<%=path%>/merchant/insertGather.html',
+	  				url:'<%=path%>/merchant/insertGather',
 	  				dataType:'json',
 	  				data:{
 	  					gatherBankId:data.gatherBankId,
@@ -836,196 +1082,63 @@
 	 			 }
 	 		 })
 		}
+ 		 //获得业务员
+ 		 function getSalesman(){
+			$.getJSON({
+	 			 url:'<%=path%>/salesman/getSalesmanList.json',
+	 			 dataType:'json',
+	 			 data:{bei1:0},
+	 			 success:function(data){
+	 				 console.log(data)
+			 		 var list = "<option value='' >请选择业务员</option>";
+			 		 $.each(data.data,function(i,item){
+			 			 console.log(item)
+					  list +='<option value="'+item.salesmanIdcard+'" title="'+item.salesmanName+'">'+item.salesmanName+'</option>';
+					  $('#channelSalesmanName').html(list)
+				  	})
+				  	form.render('select');
+	 			 }
+	 		 })
+		}
+ 	 	  //获得url参数
+ 	     function getUrlParam(name) {
+ 	          var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+ 	          var r = window.location.search.substr(1).match(reg);
+ 	          if (r != null) return unescape(r[2]); return null;
+ 	      }
  		 /*
  		 图片上传
  		 */
-  		  upload.render({//营业执照
- 			    elem: '#businesslicense' //绑定元素
- 			    ,accept:'images'
- 			    ,multiple:true//多文件上传
- 			    ,data:{type:'businesslicense',types:0,id:channelNum,status:'channel',accept:'images'}
- 			    ,url: '<%=path%>/common/file/manyUpload' //上传接口
- 			    ,done: function(res){
- 			    	if(res.state == 'success'){
-	 			    	layer.msg('图片上传成功',{icon: 1});
- 			    	}else if(res.state == 'error'){
- 			    		layer.msg('图片失败',{icon: 2});
- 			    	}
- 			    }
- 			    ,error: function(){
- 			    	layer.msg('图片失败',{icon: 2});
- 			    }
- 			  }); 
-  		  upload.render({//近12月对公流水法人流水
- 			    elem: '#statement' //绑定元素
- 			    ,accept:'images'
- 			    ,multiple:true//多文件上传
- 			    ,data:{type:'statement',types:0,id:channelNum,status:'channel',accept:'images'}
- 			    ,url: '<%=path%>/common/file/manyUpload' //上传接口
- 			    ,done: function(res){
- 			    	if(res.state == 'success'){
-	 			    	layer.msg('图片上传成功',{icon: 1});
- 			    	}else if(res.state == 'error'){
- 			    		layer.msg('图片失败',{icon: 2});
- 			    	}
- 			    }
- 			    ,error: function(){
- 			    	layer.msg('图片失败',{icon: 2});
- 			    }
- 			  }); 
-  		  upload.render({//法人身份证正面
- 			    elem: '#corpIdCardFront' //绑定元素
- 			    ,accept:'images'
- 			    ,multiple:true//多文件上传
- 			    ,data:{type:'corpIdCardFront',types:0,id:channelNum,status:'channel',accept:'images'}
- 			    ,url: '<%=path%>/common/file/manyUpload' //上传接口
- 			    ,done: function(res){
- 			    	if(res.state == 'success'){
-	 			    	layer.msg('图片上传成功',{icon: 1});
- 			    	}else if(res.state == 'error'){
- 			    		layer.msg('图片失败',{icon: 2});
- 			    	}
- 			    }
- 			    ,error: function(){
- 			    	layer.msg('图片失败',{icon: 2});
- 			    }
- 			  }); 
-  		  upload.render({//法人身份证反面
- 			    elem: '#corpIdCardReverse' //绑定元素
- 			    ,accept:'images'
- 			    ,multiple:true//多文件上传
- 			    ,data:{type:'corpIdCardReverse',types:0,id:channelNum,status:'channel',accept:'images'}
- 			    ,url: '<%=path%>/common/file/manyUpload' //上传接口
- 			    ,done: function(res){
- 			    	if(res.state == 'success'){
-	 			    	layer.msg('图片上传成功',{icon: 1});
- 			    	}else if(res.state == 'error'){
- 			    		layer.msg('图片失败',{icon: 2});
- 			    	}
- 			    }
- 			    ,error: function(){
- 			    	layer.msg('图片失败',{icon: 2});
- 			    }
- 			  }); 
-  		  upload.render({//业务负责人身份证正面
- 			    elem: '#salesmanIdCardFront' //绑定元素
- 			    ,accept:'images'
- 			    ,multiple:true//多文件上传
- 			    ,data:{type:'salesmanIdCardFront',types:0,id:channelNum,status:'channel',accept:'images'}
- 			    ,url: '<%=path%>/common/file/manyUpload' //上传接口
- 			    ,done: function(res){
- 			    	if(res.state == 'success'){
-	 			    	layer.msg('图片上传成功',{icon: 1});
- 			    	}else if(res.state == 'error'){
- 			    		layer.msg('图片失败',{icon: 2});
- 			    	}
- 			    }
- 			    ,error: function(){
- 			    	layer.msg('图片失败',{icon: 2});
- 			    }
- 			  }); 
-  		  upload.render({//业务负责人身份证反面
- 			    elem: '#salesmanIdCardReverse' //绑定元素
- 			    ,accept:'images'
- 			    ,multiple:true//多文件上传
- 			    ,data:{type:'salesmanIdCardReverse',types:0,id:channelNum,status:'channel',accept:'images'}
- 			    ,url: '<%=path%>/common/file/manyUpload' //上传接口
- 			    ,done: function(res){
- 			    	if(res.state == 'success'){
-	 			    	layer.msg('图片上传成功',{icon: 1});
- 			    	}else if(res.state == 'error'){
- 			    		layer.msg('图片失败',{icon: 2});
- 			    	}
- 			    }
- 			    ,error: function(){
- 			    	layer.msg('图片失败',{icon: 2});
- 			    }
- 			  }); 
-  		  upload.render({//公司全景照
- 			    elem: '#companyPanorama' //绑定元素
- 			    ,accept:'images'
- 			    ,multiple:true//多文件上传
- 			    ,data:{type:'companyPanorama',types:0,id:channelNum,status:'channel',accept:'images'}
- 			    ,url: '<%=path%>/common/file/manyUpload' //上传接口
- 			    ,done: function(res){
- 			    	if(res.state == 'success'){
-	 			    	layer.msg('图片上传成功',{icon: 1});
- 			    	}else if(res.state == 'error'){
- 			    		layer.msg('图片失败',{icon: 2});
- 			    	}
- 			    }
- 			    ,error: function(){
- 			    	layer.msg('图片失败',{icon: 2});
- 			    }
- 			  }); 
-  		  upload.render({//公司大门照
- 			    elem: '#companyGate' //绑定元素
- 			    ,accept:'images'
- 			    ,multiple:true//多文件上传
- 			    ,data:{type:'companyGate',types:0,id:channelNum,status:'channel',accept:'images'}
- 			    ,url: '<%=path%>/common/file/manyUpload' //上传接口
- 			    ,done: function(res){
- 			    	if(res.state == 'success'){
-	 			    	layer.msg('图片上传成功',{icon: 1});
- 			    	}else if(res.state == 'error'){
- 			    		layer.msg('图片失败',{icon: 2});
- 			    	}
- 			    }
- 			    ,error: function(){
- 			    	layer.msg('图片失败',{icon: 2});
- 			    }
- 			  }); 
-  		  upload.render({//核心商户合作合同
- 			    elem: '#contract' //绑定元素
- 			    ,accept:'images'
- 			    ,multiple:true//多文件上传
- 			    ,data:{type:'contract',types:0,id:channelNum,status:'channel',accept:'images'}
- 			    ,url: '<%=path%>/common/file/manyUpload' //上传接口
- 			    ,done: function(res){
- 			    	if(res.state == 'success'){
-	 			    	layer.msg('图片上传成功',{icon: 1});
- 			    	}else if(res.state == 'error'){
- 			    		layer.msg('图片失败',{icon: 2});
- 			    	}
- 			    }
- 			    ,error: function(){
- 			    	layer.msg('图片失败',{icon: 2});
- 			    }
- 			  }); 
-  		  upload.render({//签约合影照片
- 			    elem: '#signed' //绑定元素
- 			    ,accept:'images'
- 			    ,multiple:true//多文件上传
- 			    ,data:{type:'signed',types:0,id:channelNum,status:'channel',accept:'images'}
- 			    ,url: '<%=path%>/common/file/manyUpload' //上传接口
- 			    ,done: function(res){
- 			    	if(res.state == 'success'){
-	 			    	layer.msg('图片上传成功',{icon: 1});
- 			    	}else if(res.state == 'error'){
- 			    		layer.msg('图片失败',{icon: 2});
- 			    	}
- 			    }
- 			    ,error: function(){
- 			    	layer.msg('图片失败',{icon: 2});
- 			    }
- 			  }); 
-  		  upload.render({//经营地租赁协议
- 			    elem: '#lease' //绑定元素
- 			    ,accept:'images'
- 			    ,multiple:true//多文件上传
- 			    ,data:{type:'lease',types:0,id:channelNum,status:'channel',accept:'images'}
- 			    ,url: '<%=path%>/common/file/manyUpload' //上传接口
- 			    ,done: function(res){
- 			    	if(res.state == 'success'){
-	 			    	layer.msg('图片上传成功',{icon: 1});
- 			    	}else if(res.state == 'error'){
- 			    		layer.msg('图片失败',{icon: 2});
- 			    	}
- 			    }
- 			    ,error: function(){
- 			    	layer.msg('图片失败',{icon: 2});
- 			    }
- 			  });  
+ 		  var isId= $('#uploadList div div div')//可以获得id,动态加载
+ 		  console.log(isId)
+		  function intoNext(){
+			  $('#picInfo').removeAttr('style')
+			  element.tabChange('tab','picInfo')
+			  layui.use(['upload'], function(){
+			  var upload = layui.upload;
+			   $.each(isId,function(i,data){
+			  		  upload.render({//营业执照
+			 			    elem: '#'+data.id //绑定元素
+			 			    ,accept:'images'
+			 			    ,multiple:true//多文件上传
+			 			    ,data:{type:data.id,types:i,channelNum:channelNum,status:'channel',accept:'images'}
+			 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
+			 			    ,done: function(res){
+			 			    	if(res.state == 'success'){
+				 			    	layer.msg(res.msg,{icon: 1});
+			 			    	}else if(res.state == 'error'){
+			 			    		layer.msg(res.msg,{icon: 2});
+			 			    	}else if(res.state == 'max'){
+			 			    		layer.msg(res.msg,{icon: 2});
+			 			    	}
+			 			    } 
+			 			    ,error: function(){
+			 			    	layer.msg('图片失败',{icon: 2});
+			 			    }
+			 			  }); 
+				   })
+			  })
+		  }
 	});
 </script>
 </body>

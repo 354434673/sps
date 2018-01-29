@@ -32,7 +32,7 @@ public interface OrderMapper {
     		@Param(value="orderid") String orderid,
     		@Param(value="startTime") String startTime, 
     		@Param(value="endTime") String endTime,
-    		@Param(value="flag") String flag
+    		@Param(value="flagList") List<String> flagList
     		);
 
     /**
@@ -43,7 +43,8 @@ public interface OrderMapper {
 	int updateOrderFlag(
 			@Param(value="orderid") String orderid,
 			@Param(value="flag") String flag,
-			@Param(value="remark") String remark
+			@Param(value="remark") String remark, 
+			@Param(value="modifytime") Date modifytime
 			);
     
    

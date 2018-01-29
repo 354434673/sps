@@ -36,7 +36,7 @@
 			    <div class="layui-input-inline">
 			      <input id="orderid" type="text" name="orderid"  lay-verify="" placeholder="请输入订单编号" autocomplete="off" class="layui-input">
 			    </div>
-			    <label class="layui-form-label">核心商户名称:</label>
+			    <label class="layui-form-label" style="width: 180px">核心商户名称:</label>
 			    <div class="layui-input-inline">
 			      <input id="orderid" type="text" name="orderid"  lay-verify="" placeholder="核心商户名称" autocomplete="off" class="layui-input">
 			    </div>
@@ -146,7 +146,7 @@
 			    ,cols: [[ //表头
 		              {field: 'orderid', title: '订单编号', align:'center',sort:true}
 				      ,{field: 'name', title: '店主名称', align:'center'}
-				      ,{field: 'selfname', title: '店铺名称',align:'center'}
+				      ,{field: 'selfname', title: '核心商户名称',align:'center'}
 				      ,{field: 'money', title: '订单金额',align:'center'}
 				      ,{field: 'servicemoney', title: '代销服务费',align:'center'}
 				      ,{field: 'sumMoney',  title: '实销金额',align:'center'}

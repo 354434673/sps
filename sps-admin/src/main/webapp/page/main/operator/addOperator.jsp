@@ -122,8 +122,9 @@
 		 		 $.post({
 		 			 url:'<%=path%>/user/insertUser',
 		 			 dataType:'json',
-		 			 data:{username:username, password:password, 
-		 				 name:name,phone:phone, email:email,
+		 			 data:{
+		 				 userUsername:username,userPassword:password, 
+		 				 userName:name,userPhone:phone, userEmail:email,
 		 				 mark:3,roleList:array
 		 			 },
 		 			 success:function(data){
@@ -151,7 +152,8 @@
 		 		 $.post({
 		 			 url:'<%=path%>/user/updateUser',
 		 			 dataType:'json',
-		 			 data:{userUsername:username,userPassword:password, 
+		 			 data:{
+		 				 userUsername:username,userPassword:password, 
 		 				 userName:name,userPhone:phone, userEmail:email,
 		 				 roleList:array
 		 			 },

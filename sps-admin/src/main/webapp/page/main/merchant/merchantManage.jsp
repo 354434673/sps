@@ -106,7 +106,7 @@
 			      {field: 'enterpriseId', type:'numbers', title: '序号',align:'center'}
 			      ,{field: 'channelNum', title: '核心账户编号',align:'center'}
 			      ,{field: 'enterpriseCompanyName', title: '公司名称',width:240,align:'center'}
-			      ,{field: 'enterpriseEmployeeNum', title: '营业执照编号', width:230, align:'center'}
+			      ,{field: 'enterpriseBusinesslicenseNo', title: '营业执照编号', width:230, align:'center'}
 			      ,{field: 'channel', title: '核心商户状态', align:'center',templet: '#channelTpl'} 
 			      ,{field: 'tool', title: '操作',align:'center',toolbar:'#bar'}
 			    ]]
@@ -140,7 +140,7 @@
 					  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 					  var tr = obj.tr; //获得当前行 tr 的DOM对象
 					  if(layEvent === 'detail'){ //查看
-						  location.href = '<%=path%>/page/main/merchant/queryMerchant.jsp?channelNum='+data.channelNum+''
+						  location.href = '<%=path%>/page/main/merchant/queryMerchant.jsp?channelNum='+data.channelNum
 					  } else if(layEvent === 'del'){ //删除
  					    layer.confirm('真的删除该商户么', function(index){
 					      layer.close(index);
@@ -159,7 +159,7 @@
 					      //向服务端发送删除指令
 					    }); 
 					  } else if(layEvent === 'edit'){ //编辑
-						  location.href = '<%=path%>/page/main/merchant/updateMerchant.jsp'
+						  location.href = '<%=path%>/page/main/merchant/updateMerchant.jsp?channelNum='+data.channelNum
 					  }
 				});
 			});

@@ -27,6 +27,7 @@
 <div class="layui-tab layui-tab-brie" lay-filter ="tab" style="padding:10px;" >
   <ul class="layui-tab-title">
     <li lay-id="channelInfo" class="layui-this">基本信息</li>
+    <li lay-id="limitInfo" id="limitInfo" >额度信息</li>
     <li lay-id="picInfo" id="picInfo" >图片资料</li>
   </ul>
   <div class="layui-tab-content">
@@ -37,13 +38,13 @@
 		</fieldset>
 			  <div class="layui-row layui-col-space10">
 			    <div class="layui-col-md3">
-			      	<label class="layui-form-label" >*城市：</label>
+			      	<label class="layui-form-label" >城市：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
 				    </div>
 			    </div>
 			    <div class="layui-col-md9">
-			     	<label class="layui-form-label" >*客户编号：</label>
+			     	<label class="layui-form-label" >客户编号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
@@ -51,13 +52,13 @@
 			  </div>
 			  <div class="layui-row layui-col-space10">
 			    <div class="layui-col-md3">
-			      	<label class="layui-form-label" >*城市：</label>
+			      	<label class="layui-form-label" >店付业务员姓名：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
 			    </div>
 			    <div class="layui-col-md9">
-			     	<label class="layui-form-label" >*客户编号：</label>
+			     	<label class="layui-form-label" >店付业务员身份证号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
@@ -65,13 +66,13 @@
 			  </div>
 			  <div class="layui-row layui-col-space10" >
 			    <div class="layui-col-md3">
-			      	<label class="layui-form-label" >*店付业务员姓名：</label>
+			      	<label class="layui-form-label" >业务类型：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
 			    </div>
 			    <div class="layui-col-md9">
-			     	<label class="layui-form-label" >*店付业务员身份证号：</label>
+			     	<label class="layui-form-label" >客户来源：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
@@ -79,32 +80,18 @@
 			  </div>
 			  <div class="layui-row layui-col-space10">
 			    <div class="layui-col-md3">
-			      	<label class="layui-form-label" >*业务类型：</label>
+			      	<label class="layui-form-label" >默认核心商户编号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
 			    </div>
 			    <div class="layui-col-md9">
-			     	<label class="layui-form-label" >*客户来源：</label>
+			     	<label class="layui-form-label" >默认核心商户名称：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
 			    </div>
 			  </div>
-			  <div class="layui-row layui-col-space10">
-			    <div class=layui-col-md3>
-			      	<label class="layui-form-label" >*默认核心商户编号：</label>
-				    <div class="layui-input-inline">
-				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
-				    </div>
-			    </div>
-			    <div class="layui-col-md9">
-			     	<label class="layui-form-label" >*默认核心商户名称：</label>
-				    <div class="layui-input-inline">
-				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
-				    </div>
-			    </div>
-			 </div>
 			  <table id="gatherList" lay-filter="gatherTables"></table>
 		<!-- 个人信息开始 -->
 		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
@@ -112,13 +99,13 @@
 		</fieldset>
 			<div class="layui-row layui-col-space10">
 			    <div class="layui-col-md3">
-			      	<label class="layui-form-label" >*城市：</label>
+			      	<label class="layui-form-label" >姓名：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
 				    </div>
 			    </div>
 			    <div class="layui-col-md9">
-			     	<label class="layui-form-label" >*客户编号：</label>
+			     	<label class="layui-form-label" >身份证号码：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
@@ -126,13 +113,13 @@
 			  </div>
 			  <div class="layui-row layui-col-space10">
 			    <div class="layui-col-md3">
-			      	<label class="layui-form-label" >*城市：</label>
+			      	<label class="layui-form-label" >性别：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
 			    </div>
 			    <div class="layui-col-md9">
-			     	<label class="layui-form-label" >*客户编号：</label>
+			     	<label class="layui-form-label" >年龄：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
@@ -140,13 +127,13 @@
 			  </div>
 			  <div class="layui-row layui-col-space10" >
 			    <div class="layui-col-md3">
-			      	<label class="layui-form-label" >*店付业务员姓名：</label>
+			      	<label class="layui-form-label" >婚姻状况：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
 			    </div>
 			    <div class="layui-col-md9">
-			     	<label class="layui-form-label" >*店付业务员身份证号：</label>
+			     	<label class="layui-form-label" >手机号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
@@ -154,13 +141,13 @@
 			  </div>
 			  <div class="layui-row layui-col-space10">
 			    <div class="layui-col-md3">
-			      	<label class="layui-form-label" >*业务类型：</label>
+			      	<label class="layui-form-label" >户籍地址：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
 			    </div>
 			    <div class="layui-col-md9">
-			     	<label class="layui-form-label" >*客户来源：</label>
+			     	<label class="layui-form-label" >现居住状况：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
@@ -168,24 +155,422 @@
 			  </div>
 			  <div class="layui-row layui-col-space10">
 			    <div class=layui-col-md3>
-			      	<label class="layui-form-label" >*默认核心商户编号：</label>
+			      	<label class="layui-form-label" >现居住地址：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
 			    </div>
 			    <div class="layui-col-md9">
-			     	<label class="layui-form-label" >*默认核心商户名称：</label>
+			     	<label class="layui-form-label" >是否为法人代表：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
 				    </div>
 			    </div>
 			 </div>
+		<!-- 公司信息开始 -->
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>公司信息</legend>
+		</fieldset>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >公司名称：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >店铺名称：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >实际经营地址：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >法人姓名：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="layui-row layui-col-space10" >
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >经营年限(年)：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >经营场地所有权：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >经营面积（m2）：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >员工数量(人)：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+		<!-- 业务信息开始 -->
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>业务信息</legend>
+		</fieldset>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >主营业务：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >主营商品类型：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			  <div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >经营模式：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >主营品牌：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+		<!-- 营业收入开始 -->
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>营业收入</legend>
+		</fieldset>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >月均营业额：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			  </div>
+		<!-- 联系人信息开始 -->
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>联系人信息</legend>
+		</fieldset>
+			<div class="layui-row layui-col-space10">
+				<table id="contactList" lay-filter="contactTables"></table>
+			  </div>
+		<!-- 房产资产开始 -->
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>房产资产</legend>
+		</fieldset>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >面积：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >房屋地址：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+		
+		<!-- 车产资产开始 -->
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>车产资产</legend>
+		</fieldset>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >车架号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >车牌号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >号牌种类：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			</div>
+		<!-- 还款卡号开始 -->
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>还款卡号</legend>
+		</fieldset>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >银行卡账号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >开户银行：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >绑定手机号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >服务密码：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			</div>
+		<!-- 征信授权开始 -->
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>征信授权</legend>
+		</fieldset>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >账号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			    <div class="layui-col-md9">
+			     	<label class="layui-form-label" >密码：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123 </div>
+				    </div>
+			    </div>
+			  </div>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >身份验证码：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			</div>
+		<!-- 账户信息开始 -->
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>账户信息</legend>
+		</fieldset>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >最低首付比例（%）：</label>
+				    <div class="layui-input-inline">
+				   	<select lay-verify="required" name="businessScope" lay-filter="businessScope" id="businessScope"> 
+						  <option value="">0</option>
+						  <option value="1">10</option>
+						  <option value="2">20</option>
+						  <option value="3">30</option>
+						  <option value="4">40</option>
+						  <option value="5">50</option>
+						  <option value="6">60</option>
+						  <option value="7">70</option>
+						  <option value="8">80</option>
+						  <option value="9">90</option>
+				      </select>
+				    </div>
+			    </div>
+			  </div>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >账号：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			</div>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >账户开通日期：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			  </div>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >账户到期日期：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			</div>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >授信有效期：</label>
+				    <div class="layui-input-inline">
+				    	<div class="layui-form-mid layui-word-aux" id="">123123</div>
+				    </div>
+			    </div>
+			</div>
+			<div class="layui-row layui-col-space10">
+			    <div class="layui-col-md3">
+			      	<label class="layui-form-label" >账户状态：</label>
+				    <div class="layui-input-inline">
+				    	<select lay-verify="required" name="businessScope" lay-filter="businessScope" id="businessScope"> 
+							  <option value="">请选择</option>
+							  <option value="1">激活</option>
+							  <option value="2">冻结</option>
+					      </select>
+				    </div>
+			    </div>
+			</div>
 		
 	</div>
     </div>
     <!-- 额度信息开始 -->
     <div class="layui-tab-item">
-    	<table id="gatherList" lay-filter="gatherTables"></table>
+				<table id="limitList" lay-filter="limitTables"></table>
+    </div>
+    <!-- 图片资料开始 -->
+    <div class="layui-tab-item">
+     	<div align="center">
+   				<div class="layui-row layui-col-space10">
+    				<ul id='imageList'>
+	   				<li>
+	   					<div class="layui-col-md4">
+		   					<a href="javascript:void(0)" class="spsImages" >
+		   					<div class="layui-carousel" id="business" lay-filter="business">
+							  <div carousel-item id="businessList">
+							  	<img alt="" lay-src="<%=path%>/page/static/images/404.png">
+							  </div>
+							</div>
+							</a>
+		   					<p>房本照片</p>
+	   					</div>
+	   				</li>
+	   				<li>
+	   					<div class="layui-col-md4">
+		   					<a href="javascript:void(0)" class="spsImages" >
+		   					<div class="layui-carousel" id="corpIdCard-front" lay-filter="corpIdCard-front">
+							  <div carousel-item id="corpIdCard-frontList">	
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
+							  </div>
+							</div>
+							</a>
+		   					<p>行驶证正本照片</p>
+	   					</div>
+	   				</li>
+	   				<li>
+	   					<div class="layui-col-md4">
+		   					<a href="javascript:void(0)" class="spsImages" >
+		   					<div class="layui-carousel" id="corpIdCard-reverse" lay-filter="corpIdCard-reverse">
+							  <div carousel-item id="corpIdCard-reverseList">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
+							  </div>
+							</div>
+							</a>
+		   					<p>法人身份证反面</p>
+	   					</div>
+	   				</li>
+	   				<li>
+	   					<div class="layui-col-md4">
+		   					<a href="javascript:void(0)" class="spsImages" >
+		   					<div class="layui-carousel" id="businessIdCard-front" lay-filter="businessIdCard-front">
+							  <div carousel-item id="businessIdCard-frontList">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
+							  </div>
+							</div>
+							</a>
+		   					<p>业务负责人身份证正面</p>
+	   					</div>
+	   				</li>
+	   				<li>
+	   					<div class="layui-col-md4">
+		   					<a href="javascript:void(0)" class="spsImages" >
+		   					<div class="layui-carousel" id="businessIdCard-reverse" lay-filter="businessIdCard-reverse">
+							  <div carousel-item id="businessIdCard-reverseList">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
+							  </div>
+							</div>
+							</a>
+		   					<p>业务负责人身份证反面</p>
+	   					</div>
+	   				</li>
+	   				<li>
+	   					<div class="layui-col-md4">
+		   					<a href="javascript:void(0)" class="spsImages" >
+		   					<div class="layui-carousel" id="panorama" lay-filter="panorama">
+							  <div carousel-item id="panoramaList">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
+							  </div>
+							</div>
+							</a>
+		   					<p>公司全景照</p>
+	   					</div>
+	   				</li>
+	   				<li>
+	   					<div class="layui-col-md4">
+		   					<a href="javascript:void(0)" class="spsImages" >
+		   					<div class="layui-carousel" id="gate" lay-filter="gate">
+							  <div carousel-item id="gateList">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
+							  </div>
+							</div>
+							</a>
+		   					<p>公司大门照</p>
+	   					</div>
+	   				</li>
+	   				<li>
+	   					<div class="layui-col-md4">
+		   					<a href="javascript:void(0)" class="spsImages" >
+		   					<div class="layui-carousel" id="contract" lay-filter="contract">
+							  <div carousel-item id="contractList">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
+							  </div>
+							</div>
+							</a>
+		   					<p>合作合同（必须加盖公司公章</p>
+	   					</div>
+	   				</li>
+	   				<li>
+	   					<div class="layui-col-md4">
+		   					<a href="javascript:void(0)" class="spsImages" >
+		   					<div class="layui-carousel" id="photo" lay-filter="photo">
+							  <div carousel-item id="photoList">
+							    <img alt="" lay-src="<%=path%>/page/static/images/404.png">
+							  </div>
+							</div>
+							</a>
+		   					<p>签约合影照片</p>
+	   					</div>
+	   				</li>
+   				</ul>
+   				</div>
+			</div>
     </div>
   </div>
 <script type="text/javascript"
@@ -198,265 +583,75 @@
 	  var a = <%=request.getParameter("orderid")%>
 	  var channelNum ;//外键,很多地方能用到
 	  var businessProductArray = [];//主营业务数组,设为全局变量
-	layui.use(['form','table','laydate','flow','element','upload'], function(){
+	layui.use(['form','table','laydate','flow','element','upload','carousel'], function(){
 	  var element = layui.element;
 	  var form = layui.form;
 	  var $ = layui.jquery;
+	  var carousel = layui.carousel;
 	  var table = layui.table;
 	  var laydate = layui.laydate;
 	  var flow = layui.flow;
 	  var upload = layui.upload;
-	  var businessTypeArray = [];//主营商品类型数组
-	  var businessBrandArray = [];//主营品牌数组
-	  var logisticsWay = [];//发货方式
-	  var openApplyProduct = ['0'];//适用产品
-	  var gatherListJson = null;
-	  getProvince(100000)//先加载省
-	  getSalesman();
 	  form.render(); 
-	  //选择城市
-	  form.on('select(province)', function(data){//选省
-		  getCity(data.value,'city')
-		  $('#area').html('')
-	  });    
-	  form.on('select(city)', function(data){//选省
-		  getArea(data.value,'area')
-	  });    
-	  //公司注册地址
-	  form.on('select(registerProvince)', function(data){//选省
-		  getCity(data.value,'registerCity')
-		  $('#registerArea').html('')
-	  });    
-	  form.on('select(registerCity)', function(data){//选省
-		  getArea(data.value,'registerArea')
-	  });   
-	  //公司实际地址
-	  form.on('select(realProvince)', function(data){//选省
-		  getCity(data.value,'realCity')
-		  $('#realArea').html('')
-	  });    
-	  form.on('select(realCity)', function(data){//选省
-		  getArea(data.value,'realArea')
-	  });  
-	  form.on('select(channelSalesmanName)', function(data){//选省
-		  $('#channelSalesmanNum').val(data.value)
-	  });  
-	  //加载日期框
-	  laydate.render({
-		    elem: '#startTime'
-		  });
-	  laydate.render({
-		    elem: '#endTime'
-		  });
-	  form.on('checkbox(businessProduct)', function(data){
- 		  if(data.elem.checked){
-			  businessProductArray.push(data.value)
-		  }else{
-			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
-			for(var i=0; i<businessProductArray.length; i++) {
-				if(businessProductArray[i] == data.value){
-					businessProductArray.splice(i, 1);
-					break;
-				}
-			}
-		  } 
-		}); 	
-	  form.on('checkbox(businessType)', function(data){
-		  if(data.elem.checked){
-			  businessTypeArray.push(data.value)
-		  }else{
-			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
-			for(var i=0; i<businessTypeArray.length; i++) {
-				if(businessTypeArray[i] == data.value){
-					businessTypeArray.splice(i, 1);
-					break;
-				}
-			}
-		  }
-		}); 	
-	  form.on('checkbox(businessBrand)', function(data){
-		  if(data.elem.checked){
-			  businessBrandArray.push(data.value)
-		  }else{
-			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
-			for(var i=0; i<businessBrandArray.length; i++) {
-				if(array[i] == data.value){
-					businessBrandArray.splice(i, 1);
-					break;
-				}
-			}
-		  }
-		}); 	
-	  form.on('checkbox(logisticsWay)', function(data){
-		  if(data.elem.checked){
-			  logisticsWay.push(data.value)
-		  }else{
-			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
-			for(var i=0; i<logisticsWay.length; i++) {
-				if(logisticsWay[i] == data.value){
-					logisticsWay.splice(i, 1);
-					break;
-				}
-			}
-		  }
-		}); 	
-/* 	  form.on('checkbox(openApplyProduct)', function(data){
-		  console.log(data.value)
-		  if(data.elem.checked){
-			  openApplyProduct.push(data.value)
-		  }else{
-			//防止多次添加同一个元素,很鸡肋的,其实在后台控制也可以
-			for(var i=0; i<openApplyProduct.length; i++) {
-				if(openApplyProduct[i] == data.value){
-					openApplyProduct.splice(i, 1);
-					break;
-				}
-			}
-		  }
-		});  */	
+	  flow.lazyimg();
 	  $('#next').on('click',function(){
-		  
 		  intoNext()
-
 	  })
 	  $('#last').on('click',function(){
 		  element.tabChange('tab','channelInfo')
-
 	  })
 	  //收款信息
 	  table.render({
 		    elem: '#gatherList'
+		    ,url: '<%=path%>/merchant/getGatherList.json' //数据接口
 		    ,id:'gather'
 		    ,page:true
 		    ,limit:5
 		    ,limits:[5,10,15]
 		    ,cols: [[ //表头
-		      {field: 'gatherId', title: '序号', align:'center'}
-		      ,{field: 'gatherBankId', title: '收款银行卡账号',width:230,align:'center'}
-		      ,{field: 'gatherOwnerName', title: '所有人姓名',width:230,align:'center'}
-		      ,{field: 'gatherIdcard', title: '身份证号', width:230, align:'center'}
-		      ,{field: 'gatherPhone', title: '银行卡绑定手机号码', width:130,align:'center'} 
-		      ,{field: 'gatherDepositBank', title: '开户银行', width:170,align:'center'} 
-		      ,{field: 'gatherBankBranch', title: '开户行分行', width:170,align:'center'} 
-		      ,{field: 'gatherBankSubbranch', title: '开户行支行', width:170,align:'center'} 
-		      ,{field: 'tool', title: '操作', width:200,align:'center',toolbar:'#bar'}
+		      {type:'numbers', title: '序号', align:'center'}
+		      ,{field: 'gatherBankId', title: '已合作核心商户编号',align:'center'}
+		      ,{field: 'gatherOwnerName', title: '已合作核心商户名称',align:'center'}
+		    ]]
+		  });
+	  //联系人信息
+	  table.render({
+		    elem: '#contactList'
+		    ,url: '<%=path%>/merchant/getGatherList.json' //数据接口
+		    ,id:'gather'
+		    ,page:true
+		    ,limit:5
+		    ,limits:[5,10,15]
+		    ,cols: [[ //表头
+		      {type:'numbers', title: '序号', align:'center'}
+		      ,{field: 'gatherBankId', title: '姓名',align:'center'}
+		      ,{field: 'gatherOwnerName', title: '手机号',align:'center'}
+		      ,{field: 'gatherIdcard', title: '关系', align:'center'}
+		    ]]
+		  });
+	  //收款信息
+	  table.render({
+		    elem: '#limitList'
+		    ,url: '<%=path%>/merchant/getGatherList.json' //数据接口
+		    ,id:'gather'
+		    ,page:true
+		    ,limit:5
+		    ,limits:[5,10,15]
+		    ,cols: [[ //表头
+		      {field: 'gatherBankId3', title: '额度类型', align:'center'}
+		      ,{field: 'gatherBankId', title: '额度起始日',align:'center'}
+		      ,{field: 'gatherOwnerName', title: '额度到期日',align:'center'}
+		      ,{field: 'gatherIdcard', title: '总授信额', align:'center'}
+		      ,{field: 'gatherBankId1', title: '当前可用额度',align:'center'}
+		      ,{field: 'gatherOwnerNam2e', title: '已用额度',align:'center'}
+		      ,{field: 'gatherIdcard3', title: '额度状态', align:'center'}
 		    ]]
 		  });
  	  form.on('submit(submitAddChanel)', function(data){
-		  	  /*
-		  	   	渠道属性
-		  	  */
-			  //地址
-			  var address = $('#province').find("option:selected").text()+
-			 				 $('#city').find("option:selected").text()+
-			 				 $('#area').find("option:selected").text();
-		  	  var channelSalesmanName = $('#channelSalesmanName').find("option:selected").text();//店付业务员姓名
-		  	  var channelSalesmanNum = $('#channelSalesmanNum').val();//店付业务员编号
-		  	  /*
-		  	   	企业基本信息
-		  	  */
-			  var enterpriseBusinesslicenseNo = $('#enterpriseBusinesslicenseNo').val();//营业执照编号
-			  var enterpriseCompanyName = $('#enterpriseCompanyName').val();//公司名称
-			  //公司注册地址
-			  var registerAddress = $('#registerProvince').find("option:selected").text()+
-			 				 $('#registerCity').find("option:selected").text()+
-			 				 $('#registerArea').find("option:selected").text();
-			  //公司实际地址
-			  var realAddress = $('#realProvince').find("option:selected").text()+
-			 				 $('#realCity').find("option:selected").text()+
-			 				 $('#realArea').find("option:selected").text();
-			  var enterpriseCorp = $('#enterpriseCorp').val();//法人名称
-			  var enterpriseCorpIdcard = $('#enterpriseCorpIdcard').val();//法人名称
-			  var enterpriseOperatioTime = $('#enterpriseOperatioTime').val();//经营年限(年)
-			  var enterpriseEmployeeNum = $('#enterpriseEmployeeNum').val();//员工数量(人)
-			  var enterpriseCompanyAbbreviation = $('#enterpriseCompanyAbbreviation').val();//公司简称
-		  	  /*
-		  	   	业务信息
-		  	  */
-			  businessScope = $('#businessScope').find("option:selected").text();//业务覆盖地域范围
-		  	  /*
-		  	   	担保信息
-		  	  */
-			  var guaranteeSituation = $('#guaranteeSituation').find("option:selected").text();//担保形式
-			  var guaranteeDeposit = $('#guaranteeDeposit').val();//保证金金额
-			  var guaranteeCorpPhone = $('#guaranteeCorpPhone').val();//法人手机
-			  var guaranteeFinanceContactname = $('#guaranteeFinanceContactname').val();//财务联系人姓名
-			  var guaranteeFinanceContactphone = $('#guaranteeFinanceContactphone').val();//财务联系人手机号
-			  var guaranteeBusinessLeadername = $('#guaranteeBusinessLeadername').val();//业务负责人姓名
-			  var guaranteeBusinessLeaderphone = $('#guaranteeBusinessLeaderphone').val();//业务负责人手机
-			  var guaranteeBusinessPhonePassword = $('#guaranteeBusinessPhonePassword').val();//服务密码
-			  /*
-		  	   	收款账号:窗口添加
-		  	  */
-		  	  //TODO:
-		  	  /*
-		  	   	财务指标
-		  	  */
-		  	  var targetLastSale = $('#targetLastSale').val();//保证金金额
-		  	  /*
-		  	   	物流配送
-		  	  */
-		  	  var logisticsCooperationName = $('#logisticsCooperationName').val();//合作物流：
-		  	  var logisticsOther = $('#logisticsOther').val();//其他：
-		  	  var logisticsAllCost = $('#logisticsAllCost').val();//年物流总费用(万元)：
-		  	  /*
-		  	   	开户信息
-		  	  */
-			  //var openAdminNum = $('#adminNum').val();//管理员账号
-			  var openStartTime = $('#startTime').val();//起始时间
-			  var openEndTime = $('#endTime').val();//结束时间
-			  var openSellRate = $('#sell').val();//费率
-			  
  			  $.post({
 				  url:'<%=path%>/merchant/insertChannel',
 				  dataType:'json',
 				  data:{
-					  	//渠道信息
- 		 				channelCity:realAddress,
-		 				channelSalesmanName:channelSalesmanName,
-		 				channelSalesmanNum:channelSalesmanNum,
-		 				channelState:0,
-		 				//企业信息
-  		 				enterpriseBusinesslicenseNo:enterpriseBusinesslicenseNo,
-		 				enterpriseCompanyName:enterpriseCompanyName,
-		 				enterpriseCompanyRegisterAddr:registerAddress,
-		 				enterpriseCompanyRealitAddr:realAddress,
-		 				enterpriseCorp:enterpriseCorp,
-		 				enterpriseCorpIdcard:'123423',
-		 				enterpriseOperatioTime:enterpriseOperatioTime,
-		 				enterpriseEmployeeNum:enterpriseEmployeeNum,
-		 				//业务信息
-		 				businessProduct:businessProductArray.toString(),
-		 				businessType:businessTypeArray.toString(),
-		 				businessBrand:businessBrandArray.toString(),
-		 				businessScope:businessScope,
-		 				//担保信息
-		 				guaranteeSituation:guaranteeSituation,
-		 				guaranteeDeposit:guaranteeDeposit,
-		 				guaranteeCorpPhone:guaranteeCorpPhone,
-		 				guaranteeFinanceContactname:guaranteeFinanceContactname,
-		 				guaranteeFinanceContactphone:guaranteeFinanceContactphone,
-		 				guaranteeBusinessLeadername:guaranteeBusinessLeadername,
-		 				guaranteeBusinessLeaderphone:guaranteeBusinessLeaderphone,
-		 				guaranteeBusinessPhonePassword:guaranteeBusinessPhonePassword,
-		 				//财务指标
-		 				targetLastSale:targetLastSale,
-		 				//物流配送
-		 				logisticsWay:logisticsWay.toString(),
-		 				logisticsCooperationName:logisticsCooperationName,
-		 				logisticsAllCost:logisticsAllCost,
-		 				logisticsOther:logisticsOther, 
-		 				//开户
-		 				//管理员账户为业务负责人手机号+@+公司简称
- 		 				openAdminNum:guaranteeBusinessLeaderphone+'@'+enterpriseCompanyAbbreviation,
-		 				//管理员手机号为业务负责人手机号
-		 				openAdminPhone:guaranteeBusinessLeaderphone,
-		 				openStartTime:openStartTime,
-		 				openEndTime:openEndTime,
-		 				//openApplyProduct:openApplyProduct.toString(),
-		 				openApplyProduct:openApplyProduct.toString(),
-		 				//openSellRate:openSellRate, 
-		 				openSellRate:7, 
 				  },
 				  success:function(result){
 					  if(result.state == 'success'){
@@ -488,241 +683,6 @@
 			  form.render('checkbox');
 		  }
 	  }) 
-	  //自定义验证规则  
-	  form.verify({  
-			//验证只包含汉字  
-			IsChineseCharacter: function(value) {
-				var regex = /^[\u4e00-\u9fa5]+$/;
-				if(!value.match(regex)) {
-					return '请输入正确的姓名';
-				}
-			},
-			minLength: function(value) {
-				if(value.length<6) {
-					return '最少为6位';
-				}
-			},
-			IsIDCard: function(input) {
-				input = input.toUpperCase();
-				//验证身份证号码格式 [一代身份证号码为15位的数字；二代身份证号码为18位的数字或17位的数字加字母X]  
-				if(!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/i.test(input))) {
-					return '请输入正确的身份证';
-				}
-				//验证省份  
-				var arrCity = {
-					11: '北京',
-					12: '天津',
-					13: '河北',
-					14: '山西',
-					15: '内蒙古',
-					21: '辽宁',
-					22: '吉林',
-					23: '黑龙江 ',
-					31: '上海',
-					32: '江苏',
-					33: '浙江',
-					34: '安徽',
-					35: '福建',
-					36: '江西',
-					37: '山东',
-					41: '河南',
-					42: '湖北',
-					43: '湖南',
-					44: '广东',
-					45: '广西',
-					46: '海南',
-					50: '重庆',
-					51: '四川',
-					52: '贵州',
-					53: '云南',
-					54: '西藏',
-					61: '陕西',
-					62: '甘肃',
-					63: '青海',
-					64: '宁夏',
-					65: '新疆',
-					71: '台湾',
-					81: '香港',
-					82: '澳门',
-					91: '国外'
-				};
-				if(arrCity[parseInt(input.substr(0, 2))] == null) {
-					return '请输入正确的身份证';
-				}
-				//验证出生日期  
-				var regBirth, birthSplit, birth;
-				var len = input.length;
-				if(len == 15) {
-					regBirth = new RegExp(/^(\d{6})(\d{2})(\d{2})(\d{2})(\d{3})$/);
-					birthSplit = input.match(regBirth);
-					birth = new Date('19' + birthSplit[2] + '/' + birthSplit[3] + '/' + birthSplit[4]);
-					if(!(birth.getYear() == Number(birthSplit[2]) && (birth.getMonth() + 1) == Number(birthSplit[3]) && birth.getDate() == Number(birthSplit[4]))) {
-						console.log('3')
-						return '请输入正确的身份证';
-					}
-					return false;
-				} else if(len == 18) {
-					regBirth = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/i);
-					birthSplit = input.match(regBirth);
-					birth = new Date(birthSplit[2] + '/' + birthSplit[3] + '/' + birthSplit[4]);
-					if(!(birth.getFullYear() == Number(birthSplit[2]) && (birth.getMonth() + 1) == Number(birthSplit[3]) && birth.getDate() == Number(birthSplit[4]))) {
-						console.log('4')
-						return '请输入正确的身份证';
-					}
-					//验证校验码  
-					var valnum;
-					var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
-					var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
-					var nTemp = 0,
-						i;
-					for(i = 0; i < 17; i++) {
-						nTemp += input.substr(i, 1) * arrInt[i];
-					}
-					valnum = arrCh[nTemp % 11];
-					if(valnum != input.substr(17, 1)) {
-						console.log('5')
-						return '请输入正确的身份证';
-					}
-					return false;
-				}
-				return '请输入正确的身份证';
-			}
-	  });  
-	  $('#addBank').on('click', function() {
-		  layer.open({
-			  type: 2, 
-			  area: ['75%', '70%'],//宽高
-			  content: ['addGather.jsp'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-			  cancel: function(index, layero){ 
-				  var data = $(layero).find("iframe")[0].contentWindow.gatherListJson;
-				  gatherListJson = data;
-				  table.reload('gather', {
-					  data:gatherListJson
-					});
-				}    
-		  }); 
-	  });
-	  $('#businessType').on('click', function() {
-		  var html = '<div class="layui-form-mid layui-word-aux">&nbsp&nbsp&nbsp选择商品类型后可见</div>'
-		  $('#businessBrand').html(html)
-		  if(businessProductArray.length == 0){
-			  layer.msg('请选择主营业务',{icon: 2});
-		  }else{
-			  layer.open({
-				  type: 2, 
-				  area: ['25%', '70%'],//宽高
-				  content: ['addBusinessType.jsp'] ,
-				  btn: ['确定','取消']
-				  ,yes: function(index, layero){
-					  var body = layer.getChildFrame('body', index);
-					  var childrens = $(layero).find("iframe")[0].contentWindow.getCheck() 
-					  businessTypeArray = childrens;
-					  console.log(businessTypeArray.toString())
-				 	  $.post({//获取主营业务
-						  url:'<%=path%>/brand/getBrandList',
-						  dataType:'json',
-						  data:{categoryIds:businessTypeArray.toString()},
-						  success:function(data){
-							  console.log(data)
-  				 			  var list = "";
-							  $.each(data.data,function(i,item){
-								  list +='<input type="checkbox" name="businessBrand" lay-filter="businessBrand" title="'+item.brandName+'" value ="'+item.brandId+'">';
-								  $('#businessBrand').html(list)
-							  })  
-							  form.render('checkbox');
-						  }
-					  }) 
-				  },
-	 			  cancel: function(index, layero){ 
-					}  
-			  }); 
-		  }
-	  });
-	  $('#openExpress').on('click', function() {
-		  layer.open({
-			  type: 2, 
-			  area: ['75%', '70%'],//宽高
-			  content: ['../express/expressManage.jsp'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-			  cancel: function(index, layero){
-				  var data = $(layero).find("iframe")[0].contentWindow.expressIds;
-				  $('#logisticsCooperationName').val(data.toString())
-				}    
-		  }); 
-	  });
-	  	function addGather(gatherListJson,channelNum){
-	  		$.each(gatherListJson,function(i,data){
-	  			$.post({
-	  				url:'<%=path%>/merchant/insertGather',
-	  				dataType:'json',
-	  				data:{
-	  					gatherBankId:data.gatherBankId,
-	  					gatherOwnerName:data.gatherOwnerName,
-	  					gatherPhone:data.gatherPhone,
-	  					gatherIdcard:data.gatherIdcard,
-	  					gatherDepositBank:data.gatherDepositBank,
-	  					gatherBankBranch:data.gatherBankBranch,
-	  					gatherBankSubbranch:data.gatherBankSubbranch,
-	  					channelNum:channelNum
-	  				},
-	  				success:function(result){},
-	  				error:function(){
-	  					layer.msg('收款信息添加异常',{icon: 2});
-	  				}
-	  			})
-	  		})
-
-	  	}
-	  	//获得省
- 		 function getProvince(parentId){
-			$.getJSON({
-	 			 url:'<%=path%>/getAreasList.json',
-	 			 dataType:'json',
-	 			 data:{parentId:parentId},
-	 			 success:function(data){
-			 		 var list = "";
-			 		 $.each(data,function(i,item){
-					  list +='<option value="'+item.areaId+'">'+item.name+'</option>';
-					  $('#province').html(list)
-					  $('#registerProvince').html(list)
-					  $('#realProvince').html(list)
-				  	})
-				  	form.render('select');
-	 			 }
-	 		 })
-		}
- 		//获得城市
- 		 function getCity(parentId,Id){
-			$.getJSON({
-	 			 url:'<%=path%>/getAreasList.json',
-	 			 dataType:'json',
-	 			 data:{parentId:parentId},
-	 			 success:function(data){
-			 		 var list = "";
-			 		 $.each(data,function(i,item){
-					  list +='<option value="'+item.areaId+'">'+item.name+'</option>';
-					  $('#'+Id).html(list)
-				  	})
-				  	form.render('select');
-	 			 }
-	 		 })
-		}
- 		 
- 		 //获得区
- 		 function getArea(parentId,Id){
-			$.getJSON({
-	 			 url:'<%=path%>/getAreasList.json',
-	 			 dataType:'json',
-	 			 data:{parentId:parentId},
-	 			 success:function(data){
-			 		 var list = "";
-			 		 $.each(data,function(i,item){
-					  list +='<option value="'+item.areaId+'" title="'+item.name+'">'+item.name+'</option>';
-					  $('#'+Id).html(list)
-				  	})
-				  	form.render('select');
-	 			 }
-	 		 })
-		}
  		 //获得业务员
  		 function getSalesman(){
 			$.getJSON({
@@ -741,226 +701,70 @@
 	 			 }
 	 		 })
 		}
- 		 /*
- 		 图片上传
- 		 */
-		  
-		  function intoNext(){
-			  $('#picInfo').removeAttr('style')
-			  element.tabChange('tab','picInfo')
-			  layui.use(['upload'], function(){
-			  var upload = layui.upload;
-	  		  upload.render({//营业执照
-	 			    elem: '#businesslicense' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'businesslicense',types:0,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-	 			    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    } 
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//近12月对公流水法人流水
-	 			    elem: '#statement' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'statement',types:1,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//法人身份证正面
-	 			    elem: '#corpIdCardFront' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'corpIdCardFront',types:2,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//法人身份证反面
-	 			    elem: '#corpIdCardReverse' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'corpIdCardReverse',types:3,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//业务负责人身份证正面
-	 			    elem: '#salesmanIdCardFront' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'salesmanIdCardFront',types:4,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//业务负责人身份证反面
-	 			    elem: '#salesmanIdCardReverse' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'salesmanIdCardReverse',types:5,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//公司全景照
-	 			    elem: '#companyPanorama' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'companyPanorama',types:6,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//公司大门照
-	 			    elem: '#companyGate' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'companyGate',types:7,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//核心商户合作合同
-	 			    elem: '#contract' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'contract',types:8,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//签约合影照片
-	 			    elem: '#signed' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'signed',types:9,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//经营地租赁协议
-	 			    elem: '#lease' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'lease',types:10,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  });  
-			  })
-		  }
+ 		  $.post({//获得图片
+ 			  url:'<%=path%>/merchant/getPicList'
+ 			  ,dataType:'json'
+ 			  ,async:false//同步,赋值给json,否则会找不到
+ 			  ,data:{channelNum:'DF20180134589040'}
+ 			  ,success:function(result){
+ 				  var businessList = '';
+ 				  var corpIdCardfrontList = '';
+ 				  var corpIdCardreverseList = '';
+ 				  var businessIdCardfrontList = '';
+ 				  var businessIdCardreverseList = '';
+ 				  var panoramaList = '';
+ 				  var gateList = '';
+ 				  var contractList = '';
+ 				  var photoList = '';
+ 					  $.each(result,function(i,data){
+ 						  if(data.picType == 0){
+ 							  businessList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
+ 				  			$('#businessList').html(businessList)
+ 						  }else if(data.picType == 1){
+ 							  corpIdCardfrontList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
+ 				  			$('#corpIdCard-frontList').html(corpIdCardfrontList)
+ 						  }else if(data.picType == 2){
+ 							  corpIdCardreverseList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
+ 				  			$('#corpIdCard-reverseList').html(corpIdCardreverseList)
+ 						  }else if(data.picType == 3){
+ 							  businessIdCardfrontList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
+ 				  			$('#businessIdCard-frontList').html(businessIdCardfrontList)
+ 						  }else if(data.picType == 4){
+ 							  businessIdCardreverseList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
+ 				  			$('#businessIdCard-reverseList').html(businessIdCardreverseList)
+ 						  }else if(data.picType == 5){
+ 							  panoramaList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
+ 				  			$('#panoramaList').html(panoramaList)
+ 						  }else if(data.picType == 6){
+ 							  gateList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
+ 				  			$('#gateList').html(gateList)
+ 						  }else if(data.picType == 7){
+ 							  contractList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
+ 				  			$('#contractList').html(contractList)
+ 						  }else if(data.picType == 8){
+ 							  photoList += '<img alt="" src="<%=path%>/upload/'+data.picSrc+data.picNewName+'">'
+ 				  			$('#photoList').html(photoList)
+ 						  }
+ 					  })
+ 			  }
+ 		  })
+ 		  var isId= $('#imageList li div.layui-carousel')//可以获得id,动态加载
+ 		  var listId= $('#imageList li div[carousel-item]')//可以获得id,动态加载
+ 		   $.each(isId,function(i,data){
+ 		 	  carousel.render({//轮播初始化
+ 				    elem: '#'+data.id
+ 				    ,height:'152'
+ 				    ,width: '312' //设置容器宽度
+ 				    ,arrow: 'always' //始终显示箭头
+ 				    //,anim: 'updown' //切换动画方式
+ 				  });
+ 		 	 $('#'+listId[i].id).on('click',function(){//点击图片出现相册查看
+ 				  layer.photos({
+ 					  photos: '#'+data.id
+ 					  ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+ 					}); 
+ 			  })
+ 		   })
 	});
 </script>
 </body>

@@ -117,8 +117,9 @@
 				        ,title: '修改订货量'
 				        ,value: data.amount
 				      }, function(value, index){
-				    	  if(value<0){
-					      		layer.msg('订货量需为正数',{icon: 2});
+				    	  var regex = /^[0-9]*[1-9][0-9]*$/;
+				    	  if(!regex.test(value)){
+					      		layer.msg('订货量需为正整数',{icon: 2});
 					      	}else{
 					      		 layer.close(index);
 							        var aaa= data.price*value;

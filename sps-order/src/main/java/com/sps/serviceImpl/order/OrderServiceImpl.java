@@ -77,17 +77,28 @@ public class OrderServiceImpl implements OrderService {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public HashMap<String, Object> selectByParameters(Integer page, Integer limit, String name, String channelName, 
 			String selfname, String orderid, String startTime, String endTime, String flag) {
-
-		if (page == null) {
-			page = 1;
-		}
-		if (limit == null) {
-			limit = 10;
+		page = page == null ? null : 1;
+		
+		limit = limit == null ? null : 10;
+		
+		startTime = startTime == null ? null : startTime+" 00:00:00";
+		
+		endTime = endTime == null ? null : endTime+" 23:59:59";
+		
+		List<String> flagList = null;
+		
+		if(flag == null || flag.equals("")){
+			flagList = new ArrayList<String>();
+		}else{
+			flagList = new ArrayList<String>();
+			String[] split = flag.split(",");
+			for (int i = 0; i < split.length; i++) {
+				flagList.add(split[i]);
+			}
 		}
 		PageHelper.startPage(page, limit);
-		
 		List<Order> orders = orderMapper.selectByParameters(
-				name, channelName, selfname, orderid, startTime, endTime, flag);
+				name, channelName, selfname, orderid, startTime, endTime, flagList);
 
 		PageInfo pageInfo = new PageInfo(orders);
 
@@ -313,7 +324,7 @@ public HashMap<String, Object> updatePriceBatch(List<OrderGoods> goods) {
 			//orderGoods.getAmount()为当前传入的订货量
 			Integer amount=orderGoods.getAmount();
 			//orderGoo.getPrePrice()为从数据库查询的之前的价格
-			BigDecimal prePrice=orderGoo.getPrePrice();
+			BigDecimal prePrice=orderGoo.getPrice();
 			//orderGoods.getPrice()为当前传入的价格
 			BigDecimal price=orderGoods.getPrice();
 			//orderGoo.getPrePrice()为从数据库查询的之前的订货量
@@ -325,6 +336,7 @@ public HashMap<String, Object> updatePriceBatch(List<OrderGoods> goods) {
 			//设置修改前的订货量,将未修改前的订货量设置到新对象中
 			orderGoods.setPreAmount(preAmount);
 			orderGoods.setPrice(price);
+			orderGoods.setPrePrice(prePrice);
 			//最新的价格和订货量对应的总金额
 			Double summation=amount.doubleValue()*price.doubleValue();
 			orderGoods.setSummation(summation);
@@ -365,7 +377,7 @@ public HashMap<String, Object> updatePriceBatch(List<OrderGoods> goods) {
 	 		 case "16"://待收货退款
 	 		 case "17"://待退款退货
 				 //这里处理的逻辑，需要更新数据库的状态，如果有说明则将remark添加入说明中
-	 			 result=orderMapper.updateOrderFlag(orderid,flag,remark);
+	 			 result=orderMapper.updateOrderFlag(orderid,flag,remark,new Date());
 				 hashMap.put("count", result);
 				 hashMap.put("state", "success");
 				 break;

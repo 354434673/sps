@@ -97,6 +97,9 @@
 	         <if test="summation !=null ">
 	        	,summation = #{summation}
 	        </if>
+	         <if test="modifytime !=null ">
+	        	,modifytime = #{modifytime}
+	        </if>
         </set>
         WHERE sku = #{sku}
 </update>

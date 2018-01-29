@@ -74,6 +74,15 @@
 }}
 {{ fn() }}
 </script>
+<script type="text/html" id="state">
+{{#  if(d.flag == 14){ }}
+  待审核
+{{#  } else if(d.flag == 16){ }}
+  审核通过
+{{#  } else if(d.flag == 15){ }}
+  审核不通过
+{{#  } }} 
+</script>
 	<script>
 		layui.use(['laydate','table','laypage','layer'], function(){
 			  var table = layui.table;
@@ -102,8 +111,8 @@
 	 			  ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
 			      ,{field: 'name', title: '店主名称', align:'center'}
 			      ,{field: 'selfname', title: '店铺名称', align:'center'}
-			      ,{field: 'money', title: '退款金额',align:'center'}
 			      ,{field: 'createtime', title: '退货申请日期', templet:'#date', width:230, align:'center'}
+			      ,{field: 'flag', title: '流程状态', templet:'#state', width:230, align:'center'}
 			      ,{field: 'tool', title: '操作', width:160,align:'center',toolbar:'#bar'}
 			    ]]
 			  });

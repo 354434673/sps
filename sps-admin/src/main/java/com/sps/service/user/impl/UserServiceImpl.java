@@ -46,17 +46,20 @@ public class UserServiceImpl implements UserService{
 	}
 	@Override
 	public HashMap<String, Object> userList(Integer page, Integer limit, 
-			String username, String name) {
+			String username, String name,String phone) {
 		SpsUserExample example = new SpsUserExample();
 		
 		Criteria createCriteria = example.createCriteria();
-		createCriteria.andUserStateEqualTo(0);
+		createCriteria.andUserStateNotEqualTo(1);
 		//如果查询条件不为空,则进入模糊查询
 		if( !(username == null || username.equals(""))){
 			createCriteria.andUserUsernameLike("%"+username+"%");
 		}
 		if( !(name == null || name.equals(""))){
 			createCriteria.andUserNameLike("%"+name+"%");
+		}
+		if( !(phone == null || phone.equals(""))){
+			createCriteria.andUserPhoneLike("%"+phone+"%");
 		}
 		//分页
 		PageHelper.startPage(page,limit);
@@ -83,7 +86,13 @@ public class UserServiceImpl implements UserService{
 				
 				user.setUserSalt(salt);
 				
-				user.setUserPassword(Md5Util.getMd5(user.getUserPassword(), salt));
+				String password = null;
+				
+				password = user.getUserPassword() == null ? "123456" : user.getUserPassword();
+				
+				String Md5Password = Md5Util.getMd5(password, salt);
+				
+				user.setUserPassword(Md5Password);
 				
 				user.setUserState(0);
 				
@@ -102,7 +111,7 @@ public class UserServiceImpl implements UserService{
 				map.put("msg", "用户重复");
 				map.put("state", "exist");
 			}
-		} catch (NumberFormatException e) {
+		} catch (Exception e) {
 			map.put("msg", "程序错误");
 			map.put("state", "error");
 			e.printStackTrace();

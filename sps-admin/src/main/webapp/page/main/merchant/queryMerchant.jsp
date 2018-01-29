@@ -59,7 +59,7 @@
 		    </div>
 		    <label class="layui-form-label" style="width:152px">*核心商户状态：</label>
 		    <div class="layui-input-inline">
-		     <div class="layui-form-mid layui-word-aux">未激活</div>
+		     <div class="layui-form-mid layui-word-aux" id="channelState"></div>
 		    </div>
 		  </div>
 		  <div class="layui-form-item">
@@ -485,6 +485,17 @@
 			  $('#channelSalesmanName').html(result.channel.channelSalesmanName)//业务员名称
 			  $('#channelSalesmanNum').html(result.channel.channelSalesmanNum)//业务员身份证
 			  $('#channelUpTime').html(result.channel.channelUpTime)//上线时间
+			  
+			  var state ;
+			  var channelState = result.channel.channelState
+			  if(channelState == 0){
+				  state = '未激活'
+			  }else if(channelState == 1){
+				  state = '正常'
+			  }else if(channelState == 2){
+				  state = '冻结'
+			  }
+			  $('#channelState').html(state)//状态
 			  $('#channelFreezeTime').html(result.channel.channelFreezeTime)//冻结时间
 			  $('#enterpriseBusinesslicenseNo').html(result.enterpriseBusinesslicenseNo)//营业执照
 			  $('#enterpriseCompanyName').html(result.enterpriseCompanyName)//公司名称

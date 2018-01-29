@@ -128,6 +128,7 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 		example.createCriteria().andEnterpriseBusinesslicenseNoEqualTo(enterprise.getEnterpriseBusinesslicenseNo());
 		
 		List<SpsChannelEnterprise> selectByExample = enterpriseRead.selectByExample(example);
+		
 		return selectByExample.size() == 0 ? null : selectByExample.get(0);
 	}
 	@Override
@@ -136,8 +137,6 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 		SpsChannel channel = new SpsChannel();
 		
 		channel.setChannelNum(channelNum);
-		
-		channel.setChannelState(0);
 		
 		List<SpsChannelEnterprise> selectChannel = enterpriseRead.selectChannel(channel);
 		
@@ -167,6 +166,7 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 	}
 	@Override
 	public SpsChannelLogistics getLogistics(String channelNum) {
+		
 		SpsChannelLogisticsExample example = new SpsChannelLogisticsExample();
 		
 		example.createCriteria().andChannelNumEqualTo(channelNum);

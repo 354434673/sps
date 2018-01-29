@@ -112,12 +112,16 @@
 				  var startTime = date[0];
 				  var endTime = date[1];
 				  var flag=1;//待确认订单1，已拒绝2，订单审核中3，订单审核不通过4，待签约5，待发货6......默认如果不输入的话查询全部
-				  table.reload('orderToBeConfirmed', {
-					  page:{
-						  curr:1//重新从第一页开始
-					  },
-					  where: {name:name,orderid:orderid,startTime:startTime,endTime:endTime,flag:flag}
-					});
+				  if(name.length>50){
+					  layer.msg('字数不能超过50字',{icon: 2});
+				  }else{
+					  table.reload('orderToBeConfirmed', {
+						  page:{
+							  curr:1//重新从第一页开始
+						  },
+						  where: {name:name,orderid:orderid,startTime:startTime,endTime:endTime,flag:flag}
+						});
+				  }
 			  })
 			  //重置
 			  $('#resetInput').on('click',function(){

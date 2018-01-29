@@ -26,15 +26,15 @@
 		    <div class="layui-form-item">
 			    <label class="layui-form-label">用户名:</label>
 			    <div class="layui-input-inline">
-			      <input id="queryUsername" type="text" name="username"  lay-verify="" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+			      <input id="queryUsername" type="text" name="username"  laceholder="请输入用户名" autocomplete="off" class="layui-input">
 			    </div>
 			    <label class="layui-form-label">姓名:</label>
 			    <div class="layui-input-inline">
-			      <input id="queryName" type="text" name="name"  lay-verify="IsChineseCharacter"  placeholder="请输入姓名" autocomplete="off" class="layui-input">
+			      <input id="queryName" type="text" name="name"   placeholder="请输入姓名" autocomplete="off" class="layui-input">
 			    </div>
 			    <label class="layui-form-label">联系电话:</label>
 			    <div class="layui-input-inline">
-			      <input id="queryPhone" type="text" name="phone"  lay-verify="IsChineseCharacter"  placeholder="请输入电话" autocomplete="off" class="layui-input">
+			      <input id="queryPhone" type="text" name="phone"  placeholder="请输入电话" autocomplete="off" class="layui-input">
 			    </div>
 			    	<button class="layui-btn layui-btn-primary"  lay-filter="queryUser" id="queryUser">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="resetUser">重置</button>
@@ -55,10 +55,26 @@
   <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
+{{#  if(d.userState == 0){ }}
+  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="blockUp">停用</a>
+{{#  } else if(d.userState == 2){ }}
+  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="recover">恢复</a>
+{{#  } }} 
 </script>
 <!-- 进行数据渲染 -->
 <script type="text/html" id="roleTpl">
   无
+</script>
+<script type="text/html" id="state">
+{{#  if(d.userState == 0){ }}
+可用
+{{#  } else if(d.userState == 1){ }}
+  已删除
+{{#  } else if(d.userState == 2){ }}
+  已停用
+{{#  } else { }}
+  {{d.userState}}
+{{#  } }}  
 </script>
 	<script>
 		layui.use(['table','laypage','layer','form'], function(){
@@ -85,13 +101,13 @@
 			    ,page:true
 			    ,cols: [[ //表头
 			      {field: 'userId',type:'numbers', title: 'ID', align:'center'}
-			      ,{field: 'userUsername', title: '登录名',width:140, align:'center'}
-			      ,{field: 'userName', title: '姓名',width:100,align:'center'}
-			      ,{field: 'userPhone', title: '联系电话', width:230, align:'center'}
-			      ,{field: 'userEmail', title: '电子邮箱', width:230,align:'center'} 
+			      ,{field: 'userUsername', title: '登录名', align:'center'}
+			      ,{field: 'userName', title: '姓名',align:'center'}
+			      ,{field: 'userPhone', title: '联系电话', align:'center'}
+			      ,{field: 'userEmail', title: '电子邮箱', align:'center'} 
 			      ,{field: 'backups', title: '备注', width:100,align:'center',templet:'#roleTpl'} 
-			      ,{field: 'userState', title: '状态', align:'center'}
-			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
+			      ,{field: 'userState', title: '状态',width:150, align:'center',templet:'#state'}
+			      ,{field: 'tool', title: '操作', width:350,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
 			  //查询
@@ -108,14 +124,14 @@
 					  }
 				  }
 				  if(phone != ""){
-					  regex = /^((\+)?86|((\+)?86)?)0?1[3458]\d{9}$|^(((0\d2|0\d{2})[- ]?)?\d{8}|((0\d3|0\d{3})[- ]?)?\d{7})(-\d{3})?$/;
+					  regex = /^[0-9]*[1-9][0-9]*$/;;
 					  if(!regex.test(phone)){
 						  layer.msg('请输入正确的手机号')
 						  return;
 					  }
 				  }
 				  table.reload('userId', {
-					  where: {username:username, name:name}
+					  where: {username:username, name:name,phone:phone}
 					});
 			  })
 			  //重置
@@ -157,16 +173,29 @@
 						 				 state:1
 						 				 },
 						 			 success:function(data){
-								 		 var list = "";
-								 		 $.each(data,function(i,item){
-										  list +='<option value="'+item.areaId+'" title="'+item.name+'">'+item.name+'</option>';
-										  $('#'+Id).html(list)
-									  	})
-									  	form.render('select');
+										  table.reload('userId', {
+											});
 						 			 }
 						 		 })
 					    });
-					  } else if(layEvent === 'edit'){ //编辑
+					  } else if(layEvent === 'blockUp'){ //停用
+						    layer.confirm('确定停用该操作员么', function(index){
+							      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+							      layer.close(index);
+		  					  			$.post({
+								 			 url:'/sps-admin/user/updateUserState',
+								 			 dataType:'json',
+								 			 data:{
+								 				 userName:data.userUsername,
+								 				 state:2
+								 				 },
+								 			 success:function(data){
+												  table.reload('userId', {
+													});
+								 			 }
+								 		 })
+							    });
+						} else if(layEvent === 'edit'){ //编辑
 						  layer.open({
 							  type: 2, 
 							  area: ['70%', '80%'],//宽高
@@ -186,6 +215,23 @@
 									});
 								}   
 						  }); 
+					  } else if(layEvent === 'recover'){ //恢复
+						    layer.confirm('恢复该操作员么', function(index){
+							      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+							      layer.close(index);
+		  					  			$.post({
+								 			 url:'/sps-admin/user/updateUserState',
+								 			 dataType:'json',
+								 			 data:{
+								 				 userName:data.userUsername,
+								 				 state:0
+								 				 },
+								 			 success:function(data){
+												  table.reload('userId', {
+													});
+								 			 }
+								 		 })
+							    });
 					  }
 				});
 			});

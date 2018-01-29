@@ -79,9 +79,11 @@
 		    	<div class="layui-form-mid layui-word-aux" id="selfname"> </div>
 		    </div>
 		 </div>
-		<table id="orderBasic" lay-filter="orderBasic">
-		</table>
-     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ 			<legend>商品信息</legend>
+		</fieldset>
+		<table id="orderGoodsDetail" lay-filter="orderGoodsDetail"></table>
+    	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>退货信息</legend>
 		</fieldset>
 		<div class="layui-form-item">
@@ -91,18 +93,20 @@
 			    </div>
 		</div>
 		<div class="layui-form-item">
+		 <label class="layui-form-label">核心商户意见:</label>
+			    <div class="layui-input-inline">
+					<div class="layui-form-mid layui-word-aux" id=""> 同意</div>	
+			    </div>
+		</div>
+		<div class="layui-form-item">
 		<div class="layui-form-item layui-form-text">
 			 <label class="layui-form-label">意见：</label>
 	   		 <div class="layui-input-block">
-	     	 	<textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+	     	 	<textarea placeholder="请输入内容" class="layui-textarea" id="reson"></textarea>
 	   		 </div>
 		</div>	
 		</div>
-		 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
- 			<legend>商品信息</legend>
-		</fieldset>
-		<table id="orderGoodsDetail" lay-filter="orderGoodsDetail">
-		</table>
+
 		<div align="center" style="display: none" id="button">
 			<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-normal" >返回</button>
 			<button id="refuse" class="layui-btn layui-btn-danger" >拒绝</button>
@@ -183,7 +187,7 @@
 							  layer.msg(msg,{icon: 1});
 							  setTimeout(function(){
 								  //跳转到上一页
-								  window.location.href='<%=path%>/page/main/rejected/orderToBeConfirmRejected.jsp'
+								  window.location.href='<%=path%>/page/main/rejected/rejectedAudit.jsp'
 							  },1000);
 						  },
 						  error:function(){

@@ -58,8 +58,11 @@ public class OrderController {
 	}
 	@RequestMapping("/show.json")
 	@ResponseBody
-	public HashMap<String,Object> selectByParameters(Integer page, Integer limit,String name, String channelName, String selfname, String orderid, String startTime,String endTime, String flag){
-		HashMap<String,Object> orders=orderService.selectByParameters(page, limit, name, channelName, selfname, orderid, startTime, endTime, flag);
+	public HashMap<String,Object> selectByParameters(Integer page, Integer limit,String name, 
+			String channelName, String selfname, String orderid, 
+			String startTime,String endTime, String flag){
+		HashMap<String,Object> orders=orderService.selectByParameters(page, limit, name, channelName, 
+				selfname, orderid, startTime, endTime, flag);
 		return orders;
 	}
 		

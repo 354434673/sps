@@ -31,7 +31,7 @@ public interface UserService {
 	 * @throws
 	 */
 	HashMap<String, Object> userList(Integer page, Integer limit, 
-					String username, String name);
+					String username, String name, String phone);
 	/**
 	 * 添加用户
 	 * @Title: insertUser   

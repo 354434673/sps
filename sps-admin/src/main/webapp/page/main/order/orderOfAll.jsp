@@ -143,6 +143,7 @@
 			    ,cols: [[ //表头
 		              {field: 'orderid', title: '订单编号',align:'center',sort:true}
 				      ,{field: 'name', title: '店主名称', align:'center'}
+				      ,{field: 'selfname', title: '店铺名称', align:'center'}
 				      ,{field: 'money', title: '订单金额',align:'center'}
 				      ,{field: 'servicemoney', title: '代销服务费',align:'center'}
 				      ,{field: 'sumMoney',  title: '实销金额',align:'center'}
@@ -161,6 +162,8 @@
 				  var flag=$('#flag').val();
 				  if(orderid.length>50){
 					  layer.msg('订单编号字数不能超过50字',{icon: 2});
+				  }else if(name.length>50){
+					  layer.msg('字数不能超过50字',{icon: 2});
 				  }else{
 					  table.reload('orderOfAll', {
 						  page:{
