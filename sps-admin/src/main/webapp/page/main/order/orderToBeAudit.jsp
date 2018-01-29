@@ -65,8 +65,14 @@
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
+{{#  if(d.flag == 6){ }}
+<a class="layui-btn layui-btn-mini" lay-event="query" id="query">查看</a>
+{{#  } else if(d.flag == 4){ }}
+<a class="layui-btn layui-btn-mini" lay-event="query" id="query">查看</a>
+{{#  } else { }}
   <a class="layui-btn layui-btn-mini" lay-event="audit" id="audit">审核</a>
-  <a class="layui-btn layui-btn-mini" lay-event="query" id="query">查看</a>
+ <a class="layui-btn layui-btn-mini" lay-event="query" id="query">查看</a>
+  {{#  } }} 
 </script>
 <script type="text/html" id="date">
 {{#  
