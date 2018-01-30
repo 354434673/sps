@@ -55,7 +55,7 @@
 	<!-- read -->
 	<bean id="readSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="readDataSource" />
-		<property name="mapperLocations" value="classpath:mapping/merchant/read/*.xml"></property>
+		<property name="mapperLocations" value="classpath:mapping/*/read/*.xml"></property>
 		<property name="plugins">
 		    <array>
 		      <bean class="com.github.pagehelper.PageInterceptor">
@@ -71,14 +71,14 @@
 	<!-- write -->
 	<bean id="writeSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="writeDataSource" />
-		<property name="mapperLocations" value="classpath:mapping/merchant/write/*.xml"></property>
+		<property name="mapperLocations" value="classpath:mapping/*/write/*.xml"></property>
 	</bean>
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.sps.dao.merchant.write" />
+		<property name="basePackage" value="com.sps.dao.*.write" />
 		<property name="sqlSessionFactoryBeanName" value="writeSqlSessionFactory"></property>
 	</bean>
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.sps.dao.merchant.read" />
+		<property name="basePackage" value="com.sps.dao.*.read" />
 		<property name="sqlSessionFactoryBeanName" value="readSqlSessionFactory"></property>
 	</bean>
 

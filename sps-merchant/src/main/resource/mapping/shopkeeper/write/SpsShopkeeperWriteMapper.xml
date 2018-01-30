@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.write.SpsShopkeeperWriteMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.shopkeeper.SpsShopkeeper" >
+    <id column="shopkeeper_id" property="shopkeeperId" jdbcType="INTEGER" />
+    <result column="shopkeeper_city" property="shopkeeperCity" jdbcType="VARCHAR" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+    <result column="shopkeeper_approve_type" property="shopkeeperApproveType" jdbcType="VARCHAR" />
+    <result column="shopkeeper_approve_no" property="shopkeeperApproveNo" jdbcType="VARCHAR" />
+    <result column="shopkeeper_product" property="shopkeeperProduct" jdbcType="VARCHAR" />
+    <result column="shopkeeper_register_source" property="shopkeeperRegisterSource" jdbcType="VARCHAR" />
+    <result column="shopkeeper_client_source" property="shopkeeperClientSource" jdbcType="VARCHAR" />
+    <result column="shopkeeper_channel_type" property="shopkeeperChannelType" jdbcType="VARCHAR" />
+    <result column="shopkeeper_default_channel_num" property="shopkeeperDefaultChannelNum" jdbcType="VARCHAR" />
+    <result column="shopkeeper_default_channel_name" property="shopkeeperDefaultChannelName" jdbcType="VARCHAR" />
+    <result column="shopkeeper_salesman_name" property="shopkeeperSalesmanName" jdbcType="VARCHAR" />
+    <result column="shopkeeper_salesman_idcard" property="shopkeeperSalesmanIdcard" jdbcType="VARCHAR" />
+    <result column="shopkeeper_commodity_type" property="shopkeeperCommodityType" jdbcType="VARCHAR" />
+    <result column="shopkeeper_business_model" property="shopkeeperBusinessModel" jdbcType="VARCHAR" />
+    <result column="shopkeeper_brand" property="shopkeeperBrand" jdbcType="VARCHAR" />
+    <result column="shopkeeper_business_type" property="shopkeeperBusinessType" jdbcType="VARCHAR" />
+    <result column="shopkeeper_referrer" property="shopkeeperReferrer" jdbcType="VARCHAR" />
+    <result column="shopkeeper_username" property="shopkeeperUsername" jdbcType="VARCHAR" />
+    <result column="shopkeeper_creat_time" property="shopkeeperCreatTime" jdbcType="TIMESTAMP" />
+    <result column="shopkeeper_update_time" property="shopkeeperUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_shopkeeper
+    where shopkeeper_id = #{shopkeeperId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperExample" >
+    delete from sps_shopkeeper
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.shopkeeper.SpsShopkeeper" >
+    insert into sps_shopkeeper (shopkeeper_id, shopkeeper_city, shopkeeper_customerId, 
+      shopkeeper_approve_type, shopkeeper_approve_no, 
+      shopkeeper_product, shopkeeper_register_source, 
+      shopkeeper_client_source, shopkeeper_channel_type, 
+      shopkeeper_default_channel_num, shopkeeper_default_channel_name, 
+      shopkeeper_salesman_name, shopkeeper_salesman_idcard, 
+      shopkeeper_commodity_type, shopkeeper_business_model, 
+      shopkeeper_brand, shopkeeper_business_type, 
+      shopkeeper_referrer, shopkeeper_username, 
+      shopkeeper_creat_time, shopkeeper_update_time
+      )
+    values (#{shopkeeperId,jdbcType=INTEGER}, #{shopkeeperCity,jdbcType=VARCHAR}, #{shopkeeperCustomerid,jdbcType=VARCHAR}, 
+      #{shopkeeperApproveType,jdbcType=VARCHAR}, #{shopkeeperApproveNo,jdbcType=VARCHAR}, 
+      #{shopkeeperProduct,jdbcType=VARCHAR}, #{shopkeeperRegisterSource,jdbcType=VARCHAR}, 
+      #{shopkeeperClientSource,jdbcType=VARCHAR}, #{shopkeeperChannelType,jdbcType=VARCHAR}, 
+      #{shopkeeperDefaultChannelNum,jdbcType=VARCHAR}, #{shopkeeperDefaultChannelName,jdbcType=VARCHAR}, 
+      #{shopkeeperSalesmanName,jdbcType=VARCHAR}, #{shopkeeperSalesmanIdcard,jdbcType=VARCHAR}, 
+      #{shopkeeperCommodityType,jdbcType=VARCHAR}, #{shopkeeperBusinessModel,jdbcType=VARCHAR}, 
+      #{shopkeeperBrand,jdbcType=VARCHAR}, #{shopkeeperBusinessType,jdbcType=VARCHAR}, 
+      #{shopkeeperReferrer,jdbcType=VARCHAR}, #{shopkeeperUsername,jdbcType=VARCHAR}, 
+      #{shopkeeperCreatTime,jdbcType=TIMESTAMP}, #{shopkeeperUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeper" >
+    insert into sps_shopkeeper
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shopkeeperId != null" >
+        shopkeeper_id,
+      </if>
+      <if test="shopkeeperCity != null" >
+        shopkeeper_city,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
+      </if>
+      <if test="shopkeeperApproveType != null" >
+        shopkeeper_approve_type,
+      </if>
+      <if test="shopkeeperApproveNo != null" >
+        shopkeeper_approve_no,
+      </if>
+      <if test="shopkeeperProduct != null" >
+        shopkeeper_product,
+      </if>
+      <if test="shopkeeperRegisterSource != null" >
+        shopkeeper_register_source,
+      </if>
+      <if test="shopkeeperClientSource != null" >
+        shopkeeper_client_source,
+      </if>
+      <if test="shopkeeperChannelType != null" >
+        shopkeeper_channel_type,
+      </if>
+      <if test="shopkeeperDefaultChannelNum != null" >
+        shopkeeper_default_channel_num,
+      </if>
+      <if test="shopkeeperDefaultChannelName != null" >
+        shopkeeper_default_channel_name,
+      </if>
+      <if test="shopkeeperSalesmanName != null" >
+        shopkeeper_salesman_name,
+      </if>
+      <if test="shopkeeperSalesmanIdcard != null" >
+        shopkeeper_salesman_idcard,
+      </if>
+      <if test="shopkeeperCommodityType != null" >
+        shopkeeper_commodity_type,
+      </if>
+      <if test="shopkeeperBusinessModel != null" >
+        shopkeeper_business_model,
+      </if>
+      <if test="shopkeeperBrand != null" >
+        shopkeeper_brand,
+      </if>
+      <if test="shopkeeperBusinessType != null" >
+        shopkeeper_business_type,
+      </if>
+      <if test="shopkeeperReferrer != null" >
+        shopkeeper_referrer,
+      </if>
+      <if test="shopkeeperUsername != null" >
+        shopkeeper_username,
+      </if>
+      <if test="shopkeeperCreatTime != null" >
+        shopkeeper_creat_time,
+      </if>
+      <if test="shopkeeperUpdateTime != null" >
+        shopkeeper_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shopkeeperId != null" >
+        #{shopkeeperId,jdbcType=INTEGER},
+      </if>
+      <if test="shopkeeperCity != null" >
+        #{shopkeeperCity,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperApproveType != null" >
+        #{shopkeeperApproveType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperApproveNo != null" >
+        #{shopkeeperApproveNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperProduct != null" >
+        #{shopkeeperProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperRegisterSource != null" >
+        #{shopkeeperRegisterSource,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperClientSource != null" >
+        #{shopkeeperClientSource,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperChannelType != null" >
+        #{shopkeeperChannelType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperDefaultChannelNum != null" >
+        #{shopkeeperDefaultChannelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperDefaultChannelName != null" >
+        #{shopkeeperDefaultChannelName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperSalesmanName != null" >
+        #{shopkeeperSalesmanName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperSalesmanIdcard != null" >
+        #{shopkeeperSalesmanIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCommodityType != null" >
+        #{shopkeeperCommodityType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperBusinessModel != null" >
+        #{shopkeeperBusinessModel,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperBrand != null" >
+        #{shopkeeperBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperBusinessType != null" >
+        #{shopkeeperBusinessType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperReferrer != null" >
+        #{shopkeeperReferrer,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperUsername != null" >
+        #{shopkeeperUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCreatTime != null" >
+        #{shopkeeperCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopkeeperUpdateTime != null" >
+        #{shopkeeperUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperExample" resultType="java.lang.Integer" >
+    select count(*) from sps_shopkeeper
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_shopkeeper
+    <set >
+      <if test="record.shopkeeperId != null" >
+        shopkeeper_id = #{record.shopkeeperId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopkeeperCity != null" >
+        shopkeeper_city = #{record.shopkeeperCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperApproveType != null" >
+        shopkeeper_approve_type = #{record.shopkeeperApproveType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperApproveNo != null" >
+        shopkeeper_approve_no = #{record.shopkeeperApproveNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperProduct != null" >
+        shopkeeper_product = #{record.shopkeeperProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperRegisterSource != null" >
+        shopkeeper_register_source = #{record.shopkeeperRegisterSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperClientSource != null" >
+        shopkeeper_client_source = #{record.shopkeeperClientSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperChannelType != null" >
+        shopkeeper_channel_type = #{record.shopkeeperChannelType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperDefaultChannelNum != null" >
+        shopkeeper_default_channel_num = #{record.shopkeeperDefaultChannelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperDefaultChannelName != null" >
+        shopkeeper_default_channel_name = #{record.shopkeeperDefaultChannelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperSalesmanName != null" >
+        shopkeeper_salesman_name = #{record.shopkeeperSalesmanName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperSalesmanIdcard != null" >
+        shopkeeper_salesman_idcard = #{record.shopkeeperSalesmanIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperCommodityType != null" >
+        shopkeeper_commodity_type = #{record.shopkeeperCommodityType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperBusinessModel != null" >
+        shopkeeper_business_model = #{record.shopkeeperBusinessModel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperBrand != null" >
+        shopkeeper_brand = #{record.shopkeeperBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperBusinessType != null" >
+        shopkeeper_business_type = #{record.shopkeeperBusinessType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperReferrer != null" >
+        shopkeeper_referrer = #{record.shopkeeperReferrer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperUsername != null" >
+        shopkeeper_username = #{record.shopkeeperUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperCreatTime != null" >
+        shopkeeper_creat_time = #{record.shopkeeperCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.shopkeeperUpdateTime != null" >
+        shopkeeper_update_time = #{record.shopkeeperUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_shopkeeper
+    set shopkeeper_id = #{record.shopkeeperId,jdbcType=INTEGER},
+      shopkeeper_city = #{record.shopkeeperCity,jdbcType=VARCHAR},
+      shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      shopkeeper_approve_type = #{record.shopkeeperApproveType,jdbcType=VARCHAR},
+      shopkeeper_approve_no = #{record.shopkeeperApproveNo,jdbcType=VARCHAR},
+      shopkeeper_product = #{record.shopkeeperProduct,jdbcType=VARCHAR},
+      shopkeeper_register_source = #{record.shopkeeperRegisterSource,jdbcType=VARCHAR},
+      shopkeeper_client_source = #{record.shopkeeperClientSource,jdbcType=VARCHAR},
+      shopkeeper_channel_type = #{record.shopkeeperChannelType,jdbcType=VARCHAR},
+      shopkeeper_default_channel_num = #{record.shopkeeperDefaultChannelNum,jdbcType=VARCHAR},
+      shopkeeper_default_channel_name = #{record.shopkeeperDefaultChannelName,jdbcType=VARCHAR},
+      shopkeeper_salesman_name = #{record.shopkeeperSalesmanName,jdbcType=VARCHAR},
+      shopkeeper_salesman_idcard = #{record.shopkeeperSalesmanIdcard,jdbcType=VARCHAR},
+      shopkeeper_commodity_type = #{record.shopkeeperCommodityType,jdbcType=VARCHAR},
+      shopkeeper_business_model = #{record.shopkeeperBusinessModel,jdbcType=VARCHAR},
+      shopkeeper_brand = #{record.shopkeeperBrand,jdbcType=VARCHAR},
+      shopkeeper_business_type = #{record.shopkeeperBusinessType,jdbcType=VARCHAR},
+      shopkeeper_referrer = #{record.shopkeeperReferrer,jdbcType=VARCHAR},
+      shopkeeper_username = #{record.shopkeeperUsername,jdbcType=VARCHAR},
+      shopkeeper_creat_time = #{record.shopkeeperCreatTime,jdbcType=TIMESTAMP},
+      shopkeeper_update_time = #{record.shopkeeperUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeper" >
+    update sps_shopkeeper
+    <set >
+      <if test="shopkeeperCity != null" >
+        shopkeeper_city = #{shopkeeperCity,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperApproveType != null" >
+        shopkeeper_approve_type = #{shopkeeperApproveType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperApproveNo != null" >
+        shopkeeper_approve_no = #{shopkeeperApproveNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperProduct != null" >
+        shopkeeper_product = #{shopkeeperProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperRegisterSource != null" >
+        shopkeeper_register_source = #{shopkeeperRegisterSource,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperClientSource != null" >
+        shopkeeper_client_source = #{shopkeeperClientSource,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperChannelType != null" >
+        shopkeeper_channel_type = #{shopkeeperChannelType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperDefaultChannelNum != null" >
+        shopkeeper_default_channel_num = #{shopkeeperDefaultChannelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperDefaultChannelName != null" >
+        shopkeeper_default_channel_name = #{shopkeeperDefaultChannelName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperSalesmanName != null" >
+        shopkeeper_salesman_name = #{shopkeeperSalesmanName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperSalesmanIdcard != null" >
+        shopkeeper_salesman_idcard = #{shopkeeperSalesmanIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCommodityType != null" >
+        shopkeeper_commodity_type = #{shopkeeperCommodityType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperBusinessModel != null" >
+        shopkeeper_business_model = #{shopkeeperBusinessModel,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperBrand != null" >
+        shopkeeper_brand = #{shopkeeperBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperBusinessType != null" >
+        shopkeeper_business_type = #{shopkeeperBusinessType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperReferrer != null" >
+        shopkeeper_referrer = #{shopkeeperReferrer,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperUsername != null" >
+        shopkeeper_username = #{shopkeeperUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCreatTime != null" >
+        shopkeeper_creat_time = #{shopkeeperCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopkeeperUpdateTime != null" >
+        shopkeeper_update_time = #{shopkeeperUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where shopkeeper_id = #{shopkeeperId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.shopkeeper.SpsShopkeeper" >
+    update sps_shopkeeper
+    set shopkeeper_city = #{shopkeeperCity,jdbcType=VARCHAR},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      shopkeeper_approve_type = #{shopkeeperApproveType,jdbcType=VARCHAR},
+      shopkeeper_approve_no = #{shopkeeperApproveNo,jdbcType=VARCHAR},
+      shopkeeper_product = #{shopkeeperProduct,jdbcType=VARCHAR},
+      shopkeeper_register_source = #{shopkeeperRegisterSource,jdbcType=VARCHAR},
+      shopkeeper_client_source = #{shopkeeperClientSource,jdbcType=VARCHAR},
+      shopkeeper_channel_type = #{shopkeeperChannelType,jdbcType=VARCHAR},
+      shopkeeper_default_channel_num = #{shopkeeperDefaultChannelNum,jdbcType=VARCHAR},
+      shopkeeper_default_channel_name = #{shopkeeperDefaultChannelName,jdbcType=VARCHAR},
+      shopkeeper_salesman_name = #{shopkeeperSalesmanName,jdbcType=VARCHAR},
+      shopkeeper_salesman_idcard = #{shopkeeperSalesmanIdcard,jdbcType=VARCHAR},
+      shopkeeper_commodity_type = #{shopkeeperCommodityType,jdbcType=VARCHAR},
+      shopkeeper_business_model = #{shopkeeperBusinessModel,jdbcType=VARCHAR},
+      shopkeeper_brand = #{shopkeeperBrand,jdbcType=VARCHAR},
+      shopkeeper_business_type = #{shopkeeperBusinessType,jdbcType=VARCHAR},
+      shopkeeper_referrer = #{shopkeeperReferrer,jdbcType=VARCHAR},
+      shopkeeper_username = #{shopkeeperUsername,jdbcType=VARCHAR},
+      shopkeeper_creat_time = #{shopkeeperCreatTime,jdbcType=TIMESTAMP},
+      shopkeeper_update_time = #{shopkeeperUpdateTime,jdbcType=TIMESTAMP}
+    where shopkeeper_id = #{shopkeeperId,jdbcType=INTEGER}
+  </update>
+</mapper>

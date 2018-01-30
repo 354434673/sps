@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.write.SpsShopkeeperPicWriteMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.shopkeeper.SpsShopkeeperPic" >
+    <id column="pic_id" property="picId" jdbcType="INTEGER" />
+    <result column="pic_src" property="picSrc" jdbcType="VARCHAR" />
+    <result column="pic_type" property="picType" jdbcType="INTEGER" />
+    <result column="pic_upload_time" property="picUploadTime" jdbcType="TIMESTAMP" />
+    <result column="pic_old_name" property="picOldName" jdbcType="VARCHAR" />
+    <result column="pic_new_name" property="picNewName" jdbcType="VARCHAR" />
+    <result column="pic_state" property="picState" jdbcType="INTEGER" />
+    <result column="pic_creat_time" property="picCreatTime" jdbcType="TIMESTAMP" />
+    <result column="pic_update_time" property="picUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_shopkeeper_pic
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPicExample" >
+    delete from sps_shopkeeper_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPic" >
+    insert into sps_shopkeeper_pic (pic_id, pic_src, pic_type, 
+      pic_upload_time, pic_old_name, pic_new_name, 
+      pic_state, pic_creat_time, pic_update_time, 
+      shopkeeper_customerId)
+    values (#{picId,jdbcType=INTEGER}, #{picSrc,jdbcType=VARCHAR}, #{picType,jdbcType=INTEGER}, 
+      #{picUploadTime,jdbcType=TIMESTAMP}, #{picOldName,jdbcType=VARCHAR}, #{picNewName,jdbcType=VARCHAR}, 
+      #{picState,jdbcType=INTEGER}, #{picCreatTime,jdbcType=TIMESTAMP}, #{picUpdateTime,jdbcType=TIMESTAMP}, 
+      #{shopkeeperCustomerid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPic" >
+    insert into sps_shopkeeper_pic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="picId != null" >
+        pic_id,
+      </if>
+      <if test="picSrc != null" >
+        pic_src,
+      </if>
+      <if test="picType != null" >
+        pic_type,
+      </if>
+      <if test="picUploadTime != null" >
+        pic_upload_time,
+      </if>
+      <if test="picOldName != null" >
+        pic_old_name,
+      </if>
+      <if test="picNewName != null" >
+        pic_new_name,
+      </if>
+      <if test="picState != null" >
+        pic_state,
+      </if>
+      <if test="picCreatTime != null" >
+        pic_creat_time,
+      </if>
+      <if test="picUpdateTime != null" >
+        pic_update_time,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="picId != null" >
+        #{picId,jdbcType=INTEGER},
+      </if>
+      <if test="picSrc != null" >
+        #{picSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="picType != null" >
+        #{picType,jdbcType=INTEGER},
+      </if>
+      <if test="picUploadTime != null" >
+        #{picUploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picOldName != null" >
+        #{picOldName,jdbcType=VARCHAR},
+      </if>
+      <if test="picNewName != null" >
+        #{picNewName,jdbcType=VARCHAR},
+      </if>
+      <if test="picState != null" >
+        #{picState,jdbcType=INTEGER},
+      </if>
+      <if test="picCreatTime != null" >
+        #{picCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picUpdateTime != null" >
+        #{picUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_shopkeeper_pic
+    <set >
+      <if test="record.picId != null" >
+        pic_id = #{record.picId,jdbcType=INTEGER},
+      </if>
+      <if test="record.picSrc != null" >
+        pic_src = #{record.picSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picType != null" >
+        pic_type = #{record.picType,jdbcType=INTEGER},
+      </if>
+      <if test="record.picUploadTime != null" >
+        pic_upload_time = #{record.picUploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.picOldName != null" >
+        pic_old_name = #{record.picOldName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picNewName != null" >
+        pic_new_name = #{record.picNewName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picState != null" >
+        pic_state = #{record.picState,jdbcType=INTEGER},
+      </if>
+      <if test="record.picCreatTime != null" >
+        pic_creat_time = #{record.picCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.picUpdateTime != null" >
+        pic_update_time = #{record.picUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_shopkeeper_pic
+    set pic_id = #{record.picId,jdbcType=INTEGER},
+      pic_src = #{record.picSrc,jdbcType=VARCHAR},
+      pic_type = #{record.picType,jdbcType=INTEGER},
+      pic_upload_time = #{record.picUploadTime,jdbcType=TIMESTAMP},
+      pic_old_name = #{record.picOldName,jdbcType=VARCHAR},
+      pic_new_name = #{record.picNewName,jdbcType=VARCHAR},
+      pic_state = #{record.picState,jdbcType=INTEGER},
+      pic_creat_time = #{record.picCreatTime,jdbcType=TIMESTAMP},
+      pic_update_time = #{record.picUpdateTime,jdbcType=TIMESTAMP},
+      shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPic" >
+    update sps_shopkeeper_pic
+    <set >
+      <if test="picSrc != null" >
+        pic_src = #{picSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="picType != null" >
+        pic_type = #{picType,jdbcType=INTEGER},
+      </if>
+      <if test="picUploadTime != null" >
+        pic_upload_time = #{picUploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picOldName != null" >
+        pic_old_name = #{picOldName,jdbcType=VARCHAR},
+      </if>
+      <if test="picNewName != null" >
+        pic_new_name = #{picNewName,jdbcType=VARCHAR},
+      </if>
+      <if test="picState != null" >
+        pic_state = #{picState,jdbcType=INTEGER},
+      </if>
+      <if test="picCreatTime != null" >
+        pic_creat_time = #{picCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picUpdateTime != null" >
+        pic_update_time = #{picUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPic" >
+    update sps_shopkeeper_pic
+    set pic_src = #{picSrc,jdbcType=VARCHAR},
+      pic_type = #{picType,jdbcType=INTEGER},
+      pic_upload_time = #{picUploadTime,jdbcType=TIMESTAMP},
+      pic_old_name = #{picOldName,jdbcType=VARCHAR},
+      pic_new_name = #{picNewName,jdbcType=VARCHAR},
+      pic_state = #{picState,jdbcType=INTEGER},
+      pic_creat_time = #{picCreatTime,jdbcType=TIMESTAMP},
+      pic_update_time = #{picUpdateTime,jdbcType=TIMESTAMP},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR}
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </update>
+</mapper>

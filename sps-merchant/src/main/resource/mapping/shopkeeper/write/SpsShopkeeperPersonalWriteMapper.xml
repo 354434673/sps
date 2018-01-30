@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.write.SpsShopkeeperPersonalWriteMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.shopkeeper.SpsShopkeeperPersonal" >
+    <id column="personal_id" property="personalId" jdbcType="INTEGER" />
+    <result column="personal_client_name" property="personalClientName" jdbcType="VARCHAR" />
+    <result column="personal_sex" property="personalSex" jdbcType="VARCHAR" />
+    <result column="personal_idCard" property="personalIdcard" jdbcType="VARCHAR" />
+    <result column="personal_idCard_validity_start" property="personalIdcardValidityStart" jdbcType="VARCHAR" />
+    <result column="personal_idCard_validity_end" property="personalIdcardValidityEnd" jdbcType="VARCHAR" />
+    <result column="personal_licence_issuing_authority" property="personalLicenceIssuingAuthority" jdbcType="VARCHAR" />
+    <result column="personal_age" property="personalAge" jdbcType="INTEGER" />
+    <result column="personal_marital_status" property="personalMaritalStatus" jdbcType="VARCHAR" />
+    <result column="personal_phone" property="personalPhone" jdbcType="VARCHAR" />
+    <result column="personal_phone_password" property="personalPhonePassword" jdbcType="VARCHAR" />
+    <result column="personal_placeOfDomicile" property="personalPlaceofdomicile" jdbcType="VARCHAR" />
+    <result column="personal_living_condition" property="personalLivingCondition" jdbcType="VARCHAR" />
+    <result column="personal_living_condition_other" property="personalLivingConditionOther" jdbcType="VARCHAR" />
+    <result column="personal_living_address" property="personalLivingAddress" jdbcType="VARCHAR" />
+    <result column="personal_none_corp" property="personalNoneCorp" jdbcType="VARCHAR" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+    <result column="personal_username" property="personalUsername" jdbcType="VARCHAR" />
+    <result column="personal_creat_time" property="personalCreatTime" jdbcType="TIMESTAMP" />
+    <result column="personal_update_time" property="personalUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_shopkeeper_personal
+    where personal_id = #{personalId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPersonalExample" >
+    delete from sps_shopkeeper_personal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPersonal" >
+    insert into sps_shopkeeper_personal (personal_id, personal_client_name, personal_sex, 
+      personal_idCard, personal_idCard_validity_start, 
+      personal_idCard_validity_end, personal_licence_issuing_authority, 
+      personal_age, personal_marital_status, personal_phone, 
+      personal_phone_password, personal_placeOfDomicile, 
+      personal_living_condition, personal_living_condition_other, 
+      personal_living_address, personal_none_corp, 
+      shopkeeper_customerId, personal_username, 
+      personal_creat_time, personal_update_time
+      )
+    values (#{personalId,jdbcType=INTEGER}, #{personalClientName,jdbcType=VARCHAR}, #{personalSex,jdbcType=VARCHAR}, 
+      #{personalIdcard,jdbcType=VARCHAR}, #{personalIdcardValidityStart,jdbcType=VARCHAR}, 
+      #{personalIdcardValidityEnd,jdbcType=VARCHAR}, #{personalLicenceIssuingAuthority,jdbcType=VARCHAR}, 
+      #{personalAge,jdbcType=INTEGER}, #{personalMaritalStatus,jdbcType=VARCHAR}, #{personalPhone,jdbcType=VARCHAR}, 
+      #{personalPhonePassword,jdbcType=VARCHAR}, #{personalPlaceofdomicile,jdbcType=VARCHAR}, 
+      #{personalLivingCondition,jdbcType=VARCHAR}, #{personalLivingConditionOther,jdbcType=VARCHAR}, 
+      #{personalLivingAddress,jdbcType=VARCHAR}, #{personalNoneCorp,jdbcType=VARCHAR}, 
+      #{shopkeeperCustomerid,jdbcType=VARCHAR}, #{personalUsername,jdbcType=VARCHAR}, 
+      #{personalCreatTime,jdbcType=TIMESTAMP}, #{personalUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPersonal" >
+    insert into sps_shopkeeper_personal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="personalId != null" >
+        personal_id,
+      </if>
+      <if test="personalClientName != null" >
+        personal_client_name,
+      </if>
+      <if test="personalSex != null" >
+        personal_sex,
+      </if>
+      <if test="personalIdcard != null" >
+        personal_idCard,
+      </if>
+      <if test="personalIdcardValidityStart != null" >
+        personal_idCard_validity_start,
+      </if>
+      <if test="personalIdcardValidityEnd != null" >
+        personal_idCard_validity_end,
+      </if>
+      <if test="personalLicenceIssuingAuthority != null" >
+        personal_licence_issuing_authority,
+      </if>
+      <if test="personalAge != null" >
+        personal_age,
+      </if>
+      <if test="personalMaritalStatus != null" >
+        personal_marital_status,
+      </if>
+      <if test="personalPhone != null" >
+        personal_phone,
+      </if>
+      <if test="personalPhonePassword != null" >
+        personal_phone_password,
+      </if>
+      <if test="personalPlaceofdomicile != null" >
+        personal_placeOfDomicile,
+      </if>
+      <if test="personalLivingCondition != null" >
+        personal_living_condition,
+      </if>
+      <if test="personalLivingConditionOther != null" >
+        personal_living_condition_other,
+      </if>
+      <if test="personalLivingAddress != null" >
+        personal_living_address,
+      </if>
+      <if test="personalNoneCorp != null" >
+        personal_none_corp,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
+      </if>
+      <if test="personalUsername != null" >
+        personal_username,
+      </if>
+      <if test="personalCreatTime != null" >
+        personal_creat_time,
+      </if>
+      <if test="personalUpdateTime != null" >
+        personal_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="personalId != null" >
+        #{personalId,jdbcType=INTEGER},
+      </if>
+      <if test="personalClientName != null" >
+        #{personalClientName,jdbcType=VARCHAR},
+      </if>
+      <if test="personalSex != null" >
+        #{personalSex,jdbcType=VARCHAR},
+      </if>
+      <if test="personalIdcard != null" >
+        #{personalIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="personalIdcardValidityStart != null" >
+        #{personalIdcardValidityStart,jdbcType=VARCHAR},
+      </if>
+      <if test="personalIdcardValidityEnd != null" >
+        #{personalIdcardValidityEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLicenceIssuingAuthority != null" >
+        #{personalLicenceIssuingAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="personalAge != null" >
+        #{personalAge,jdbcType=INTEGER},
+      </if>
+      <if test="personalMaritalStatus != null" >
+        #{personalMaritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="personalPhone != null" >
+        #{personalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="personalPhonePassword != null" >
+        #{personalPhonePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="personalPlaceofdomicile != null" >
+        #{personalPlaceofdomicile,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingCondition != null" >
+        #{personalLivingCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingConditionOther != null" >
+        #{personalLivingConditionOther,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingAddress != null" >
+        #{personalLivingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="personalNoneCorp != null" >
+        #{personalNoneCorp,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="personalUsername != null" >
+        #{personalUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="personalCreatTime != null" >
+        #{personalCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personalUpdateTime != null" >
+        #{personalUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_shopkeeper_personal
+    <set >
+      <if test="record.personalId != null" >
+        personal_id = #{record.personalId,jdbcType=INTEGER},
+      </if>
+      <if test="record.personalClientName != null" >
+        personal_client_name = #{record.personalClientName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalSex != null" >
+        personal_sex = #{record.personalSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalIdcard != null" >
+        personal_idCard = #{record.personalIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalIdcardValidityStart != null" >
+        personal_idCard_validity_start = #{record.personalIdcardValidityStart,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalIdcardValidityEnd != null" >
+        personal_idCard_validity_end = #{record.personalIdcardValidityEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalLicenceIssuingAuthority != null" >
+        personal_licence_issuing_authority = #{record.personalLicenceIssuingAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalAge != null" >
+        personal_age = #{record.personalAge,jdbcType=INTEGER},
+      </if>
+      <if test="record.personalMaritalStatus != null" >
+        personal_marital_status = #{record.personalMaritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalPhone != null" >
+        personal_phone = #{record.personalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalPhonePassword != null" >
+        personal_phone_password = #{record.personalPhonePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalPlaceofdomicile != null" >
+        personal_placeOfDomicile = #{record.personalPlaceofdomicile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalLivingCondition != null" >
+        personal_living_condition = #{record.personalLivingCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalLivingConditionOther != null" >
+        personal_living_condition_other = #{record.personalLivingConditionOther,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalLivingAddress != null" >
+        personal_living_address = #{record.personalLivingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalNoneCorp != null" >
+        personal_none_corp = #{record.personalNoneCorp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalUsername != null" >
+        personal_username = #{record.personalUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalCreatTime != null" >
+        personal_creat_time = #{record.personalCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.personalUpdateTime != null" >
+        personal_update_time = #{record.personalUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_shopkeeper_personal
+    set personal_id = #{record.personalId,jdbcType=INTEGER},
+      personal_client_name = #{record.personalClientName,jdbcType=VARCHAR},
+      personal_sex = #{record.personalSex,jdbcType=VARCHAR},
+      personal_idCard = #{record.personalIdcard,jdbcType=VARCHAR},
+      personal_idCard_validity_start = #{record.personalIdcardValidityStart,jdbcType=VARCHAR},
+      personal_idCard_validity_end = #{record.personalIdcardValidityEnd,jdbcType=VARCHAR},
+      personal_licence_issuing_authority = #{record.personalLicenceIssuingAuthority,jdbcType=VARCHAR},
+      personal_age = #{record.personalAge,jdbcType=INTEGER},
+      personal_marital_status = #{record.personalMaritalStatus,jdbcType=VARCHAR},
+      personal_phone = #{record.personalPhone,jdbcType=VARCHAR},
+      personal_phone_password = #{record.personalPhonePassword,jdbcType=VARCHAR},
+      personal_placeOfDomicile = #{record.personalPlaceofdomicile,jdbcType=VARCHAR},
+      personal_living_condition = #{record.personalLivingCondition,jdbcType=VARCHAR},
+      personal_living_condition_other = #{record.personalLivingConditionOther,jdbcType=VARCHAR},
+      personal_living_address = #{record.personalLivingAddress,jdbcType=VARCHAR},
+      personal_none_corp = #{record.personalNoneCorp,jdbcType=VARCHAR},
+      shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      personal_username = #{record.personalUsername,jdbcType=VARCHAR},
+      personal_creat_time = #{record.personalCreatTime,jdbcType=TIMESTAMP},
+      personal_update_time = #{record.personalUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPersonal" >
+    update sps_shopkeeper_personal
+    <set >
+      <if test="personalClientName != null" >
+        personal_client_name = #{personalClientName,jdbcType=VARCHAR},
+      </if>
+      <if test="personalSex != null" >
+        personal_sex = #{personalSex,jdbcType=VARCHAR},
+      </if>
+      <if test="personalIdcard != null" >
+        personal_idCard = #{personalIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="personalIdcardValidityStart != null" >
+        personal_idCard_validity_start = #{personalIdcardValidityStart,jdbcType=VARCHAR},
+      </if>
+      <if test="personalIdcardValidityEnd != null" >
+        personal_idCard_validity_end = #{personalIdcardValidityEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLicenceIssuingAuthority != null" >
+        personal_licence_issuing_authority = #{personalLicenceIssuingAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="personalAge != null" >
+        personal_age = #{personalAge,jdbcType=INTEGER},
+      </if>
+      <if test="personalMaritalStatus != null" >
+        personal_marital_status = #{personalMaritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="personalPhone != null" >
+        personal_phone = #{personalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="personalPhonePassword != null" >
+        personal_phone_password = #{personalPhonePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="personalPlaceofdomicile != null" >
+        personal_placeOfDomicile = #{personalPlaceofdomicile,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingCondition != null" >
+        personal_living_condition = #{personalLivingCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingConditionOther != null" >
+        personal_living_condition_other = #{personalLivingConditionOther,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingAddress != null" >
+        personal_living_address = #{personalLivingAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="personalNoneCorp != null" >
+        personal_none_corp = #{personalNoneCorp,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="personalUsername != null" >
+        personal_username = #{personalUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="personalCreatTime != null" >
+        personal_creat_time = #{personalCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="personalUpdateTime != null" >
+        personal_update_time = #{personalUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where personal_id = #{personalId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPersonal" >
+    update sps_shopkeeper_personal
+    set personal_client_name = #{personalClientName,jdbcType=VARCHAR},
+      personal_sex = #{personalSex,jdbcType=VARCHAR},
+      personal_idCard = #{personalIdcard,jdbcType=VARCHAR},
+      personal_idCard_validity_start = #{personalIdcardValidityStart,jdbcType=VARCHAR},
+      personal_idCard_validity_end = #{personalIdcardValidityEnd,jdbcType=VARCHAR},
+      personal_licence_issuing_authority = #{personalLicenceIssuingAuthority,jdbcType=VARCHAR},
+      personal_age = #{personalAge,jdbcType=INTEGER},
+      personal_marital_status = #{personalMaritalStatus,jdbcType=VARCHAR},
+      personal_phone = #{personalPhone,jdbcType=VARCHAR},
+      personal_phone_password = #{personalPhonePassword,jdbcType=VARCHAR},
+      personal_placeOfDomicile = #{personalPlaceofdomicile,jdbcType=VARCHAR},
+      personal_living_condition = #{personalLivingCondition,jdbcType=VARCHAR},
+      personal_living_condition_other = #{personalLivingConditionOther,jdbcType=VARCHAR},
+      personal_living_address = #{personalLivingAddress,jdbcType=VARCHAR},
+      personal_none_corp = #{personalNoneCorp,jdbcType=VARCHAR},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      personal_username = #{personalUsername,jdbcType=VARCHAR},
+      personal_creat_time = #{personalCreatTime,jdbcType=TIMESTAMP},
+      personal_update_time = #{personalUpdateTime,jdbcType=TIMESTAMP}
+    where personal_id = #{personalId,jdbcType=INTEGER}
+  </update>
+</mapper>

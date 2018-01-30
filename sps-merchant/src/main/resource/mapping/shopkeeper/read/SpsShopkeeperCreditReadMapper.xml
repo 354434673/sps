@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.read.SpsShopkeeperCreditReadMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.shopkeeper.SpsShopkeeperCredit" >
+    <id column="credit_id" property="creditId" jdbcType="INTEGER" />
+    <result column="credit_username" property="creditUsername" jdbcType="VARCHAR" />
+    <result column="credit_password" property="creditPassword" jdbcType="VARCHAR" />
+    <result column="credit_verify" property="creditVerify" jdbcType="VARCHAR" />
+    <result column="credit_creat_time" property="creditCreatTime" jdbcType="TIMESTAMP" />
+    <result column="credit_update_time" property="creditUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    credit_id, credit_username, credit_password, credit_verify, credit_creat_time, credit_update_time, 
+    shopkeeper_customerId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperCreditExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_credit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_credit
+    where credit_id = #{creditId,jdbcType=INTEGER}
+  </select>
+  <select id="countByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperCreditExample" resultType="java.lang.Integer" >
+    select count(*) from sps_shopkeeper_credit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

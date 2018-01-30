@@ -36,6 +36,19 @@
 		 11.sps_channel_salesman 业务员信息
 		 12.sps_channel_pic 商户上传图片表
 		 
+		 店主:
+		 1.sps_shopkeeper 申请信息
+		 2.sps_shopkeeper_business 
+		 3.sps_shopkeeper_car_property 车产信息
+		 4.sps_shopkeeper_company 公司信息
+		 5.sps_shopkeeper_contact 联系人信息
+		 6.sps_shopkeeper_house_property 房产信息
+		 7.sps_shopkeeper_personal 个人信息
+		 8.sps_shopkeeper_pic 图片资料
+		 9.sps_shopkeeper_repayment 收入信息
+		 10.sps_shopkeeper_credit 征信
+		 
+		 
 
 
 ## 注意:

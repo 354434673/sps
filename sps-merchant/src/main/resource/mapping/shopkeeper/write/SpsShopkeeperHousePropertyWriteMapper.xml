@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.write.SpsShopkeeperHousePropertyWriteMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.shopkeeper.SpsShopkeeperHouseProperty" >
+    <id column="house_id" property="houseId" jdbcType="INTEGER" />
+    <result column="house_is_have" property="houseIsHave" jdbcType="INTEGER" />
+    <result column="house_area" property="houseArea" jdbcType="DOUBLE" />
+    <result column="house_addr" property="houseAddr" jdbcType="VARCHAR" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+    <result column="house_username" property="houseUsername" jdbcType="VARCHAR" />
+    <result column="house_creat_time" property="houseCreatTime" jdbcType="TIMESTAMP" />
+    <result column="house_update_time" property="houseUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_shopkeeper_house_property
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperHousePropertyExample" >
+    delete from sps_shopkeeper_house_property
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperHouseProperty" >
+    insert into sps_shopkeeper_house_property (house_id, house_is_have, house_area, 
+      house_addr, shopkeeper_customerId, house_username, 
+      house_creat_time, house_update_time)
+    values (#{houseId,jdbcType=INTEGER}, #{houseIsHave,jdbcType=INTEGER}, #{houseArea,jdbcType=DOUBLE}, 
+      #{houseAddr,jdbcType=VARCHAR}, #{shopkeeperCustomerid,jdbcType=VARCHAR}, #{houseUsername,jdbcType=VARCHAR}, 
+      #{houseCreatTime,jdbcType=TIMESTAMP}, #{houseUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperHouseProperty" >
+    insert into sps_shopkeeper_house_property
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="houseId != null" >
+        house_id,
+      </if>
+      <if test="houseIsHave != null" >
+        house_is_have,
+      </if>
+      <if test="houseArea != null" >
+        house_area,
+      </if>
+      <if test="houseAddr != null" >
+        house_addr,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
+      </if>
+      <if test="houseUsername != null" >
+        house_username,
+      </if>
+      <if test="houseCreatTime != null" >
+        house_creat_time,
+      </if>
+      <if test="houseUpdateTime != null" >
+        house_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="houseId != null" >
+        #{houseId,jdbcType=INTEGER},
+      </if>
+      <if test="houseIsHave != null" >
+        #{houseIsHave,jdbcType=INTEGER},
+      </if>
+      <if test="houseArea != null" >
+        #{houseArea,jdbcType=DOUBLE},
+      </if>
+      <if test="houseAddr != null" >
+        #{houseAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="houseUsername != null" >
+        #{houseUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCreatTime != null" >
+        #{houseCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="houseUpdateTime != null" >
+        #{houseUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_shopkeeper_house_property
+    <set >
+      <if test="record.houseId != null" >
+        house_id = #{record.houseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.houseIsHave != null" >
+        house_is_have = #{record.houseIsHave,jdbcType=INTEGER},
+      </if>
+      <if test="record.houseArea != null" >
+        house_area = #{record.houseArea,jdbcType=DOUBLE},
+      </if>
+      <if test="record.houseAddr != null" >
+        house_addr = #{record.houseAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseUsername != null" >
+        house_username = #{record.houseUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseCreatTime != null" >
+        house_creat_time = #{record.houseCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.houseUpdateTime != null" >
+        house_update_time = #{record.houseUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_shopkeeper_house_property
+    set house_id = #{record.houseId,jdbcType=INTEGER},
+      house_is_have = #{record.houseIsHave,jdbcType=INTEGER},
+      house_area = #{record.houseArea,jdbcType=DOUBLE},
+      house_addr = #{record.houseAddr,jdbcType=VARCHAR},
+      shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      house_username = #{record.houseUsername,jdbcType=VARCHAR},
+      house_creat_time = #{record.houseCreatTime,jdbcType=TIMESTAMP},
+      house_update_time = #{record.houseUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperHouseProperty" >
+    update sps_shopkeeper_house_property
+    <set >
+      <if test="houseIsHave != null" >
+        house_is_have = #{houseIsHave,jdbcType=INTEGER},
+      </if>
+      <if test="houseArea != null" >
+        house_area = #{houseArea,jdbcType=DOUBLE},
+      </if>
+      <if test="houseAddr != null" >
+        house_addr = #{houseAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="houseUsername != null" >
+        house_username = #{houseUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCreatTime != null" >
+        house_creat_time = #{houseCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="houseUpdateTime != null" >
+        house_update_time = #{houseUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperHouseProperty" >
+    update sps_shopkeeper_house_property
+    set house_is_have = #{houseIsHave,jdbcType=INTEGER},
+      house_area = #{houseArea,jdbcType=DOUBLE},
+      house_addr = #{houseAddr,jdbcType=VARCHAR},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      house_username = #{houseUsername,jdbcType=VARCHAR},
+      house_creat_time = #{houseCreatTime,jdbcType=TIMESTAMP},
+      house_update_time = #{houseUpdateTime,jdbcType=TIMESTAMP}
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </update>
+</mapper>

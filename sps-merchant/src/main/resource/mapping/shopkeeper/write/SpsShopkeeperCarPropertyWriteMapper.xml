@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.write.SpsShopkeeperCarPropertyWriteMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.shopkeeper.SpsShopkeeperCarProperty" >
+    <id column="car_id" property="carId" jdbcType="INTEGER" />
+    <result column="car_is_have" property="carIsHave" jdbcType="INTEGER" />
+    <result column="car_chassis_num" property="carChassisNum" jdbcType="VARCHAR" />
+    <result column="car_plate_num" property="carPlateNum" jdbcType="VARCHAR" />
+    <result column="car_brand" property="carBrand" jdbcType="VARCHAR" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+    <result column="car_username" property="carUsername" jdbcType="VARCHAR" />
+    <result column="car_creat_time" property="carCreatTime" jdbcType="TIMESTAMP" />
+    <result column="car_update_time" property="carUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_shopkeeper_car_property
+    where car_id = #{carId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperCarPropertyExample" >
+    delete from sps_shopkeeper_car_property
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperCarProperty" >
+    insert into sps_shopkeeper_car_property (car_id, car_is_have, car_chassis_num, 
+      car_plate_num, car_brand, shopkeeper_customerId, 
+      car_username, car_creat_time, car_update_time
+      )
+    values (#{carId,jdbcType=INTEGER}, #{carIsHave,jdbcType=INTEGER}, #{carChassisNum,jdbcType=VARCHAR}, 
+      #{carPlateNum,jdbcType=VARCHAR}, #{carBrand,jdbcType=VARCHAR}, #{shopkeeperCustomerid,jdbcType=VARCHAR}, 
+      #{carUsername,jdbcType=VARCHAR}, #{carCreatTime,jdbcType=TIMESTAMP}, #{carUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperCarProperty" >
+    insert into sps_shopkeeper_car_property
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="carId != null" >
+        car_id,
+      </if>
+      <if test="carIsHave != null" >
+        car_is_have,
+      </if>
+      <if test="carChassisNum != null" >
+        car_chassis_num,
+      </if>
+      <if test="carPlateNum != null" >
+        car_plate_num,
+      </if>
+      <if test="carBrand != null" >
+        car_brand,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
+      </if>
+      <if test="carUsername != null" >
+        car_username,
+      </if>
+      <if test="carCreatTime != null" >
+        car_creat_time,
+      </if>
+      <if test="carUpdateTime != null" >
+        car_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="carId != null" >
+        #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="carIsHave != null" >
+        #{carIsHave,jdbcType=INTEGER},
+      </if>
+      <if test="carChassisNum != null" >
+        #{carChassisNum,jdbcType=VARCHAR},
+      </if>
+      <if test="carPlateNum != null" >
+        #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="carBrand != null" >
+        #{carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="carUsername != null" >
+        #{carUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="carCreatTime != null" >
+        #{carCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carUpdateTime != null" >
+        #{carUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_shopkeeper_car_property
+    <set >
+      <if test="record.carId != null" >
+        car_id = #{record.carId,jdbcType=INTEGER},
+      </if>
+      <if test="record.carIsHave != null" >
+        car_is_have = #{record.carIsHave,jdbcType=INTEGER},
+      </if>
+      <if test="record.carChassisNum != null" >
+        car_chassis_num = #{record.carChassisNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carPlateNum != null" >
+        car_plate_num = #{record.carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carBrand != null" >
+        car_brand = #{record.carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carUsername != null" >
+        car_username = #{record.carUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carCreatTime != null" >
+        car_creat_time = #{record.carCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.carUpdateTime != null" >
+        car_update_time = #{record.carUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_shopkeeper_car_property
+    set car_id = #{record.carId,jdbcType=INTEGER},
+      car_is_have = #{record.carIsHave,jdbcType=INTEGER},
+      car_chassis_num = #{record.carChassisNum,jdbcType=VARCHAR},
+      car_plate_num = #{record.carPlateNum,jdbcType=VARCHAR},
+      car_brand = #{record.carBrand,jdbcType=VARCHAR},
+      shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      car_username = #{record.carUsername,jdbcType=VARCHAR},
+      car_creat_time = #{record.carCreatTime,jdbcType=TIMESTAMP},
+      car_update_time = #{record.carUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperCarProperty" >
+    update sps_shopkeeper_car_property
+    <set >
+      <if test="carIsHave != null" >
+        car_is_have = #{carIsHave,jdbcType=INTEGER},
+      </if>
+      <if test="carChassisNum != null" >
+        car_chassis_num = #{carChassisNum,jdbcType=VARCHAR},
+      </if>
+      <if test="carPlateNum != null" >
+        car_plate_num = #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="carBrand != null" >
+        car_brand = #{carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="carUsername != null" >
+        car_username = #{carUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="carCreatTime != null" >
+        car_creat_time = #{carCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carUpdateTime != null" >
+        car_update_time = #{carUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where car_id = #{carId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperCarProperty" >
+    update sps_shopkeeper_car_property
+    set car_is_have = #{carIsHave,jdbcType=INTEGER},
+      car_chassis_num = #{carChassisNum,jdbcType=VARCHAR},
+      car_plate_num = #{carPlateNum,jdbcType=VARCHAR},
+      car_brand = #{carBrand,jdbcType=VARCHAR},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      car_username = #{carUsername,jdbcType=VARCHAR},
+      car_creat_time = #{carCreatTime,jdbcType=TIMESTAMP},
+      car_update_time = #{carUpdateTime,jdbcType=TIMESTAMP}
+    where car_id = #{carId,jdbcType=INTEGER}
+  </update>
+</mapper>

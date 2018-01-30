@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.write.SpsShopkeeperRepaymentWriteMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.shopkeeper.SpsShopkeeperRepayment" >
+    <id column="repayment_id" property="repaymentId" jdbcType="INTEGER" />
+    <result column="repayment_bankId" property="repaymentBankid" jdbcType="VARCHAR" />
+    <result column="repayment_deposit_bank" property="repaymentDepositBank" jdbcType="VARCHAR" />
+    <result column="repayment_phone" property="repaymentPhone" jdbcType="VARCHAR" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+    <result column="repayment_username" property="repaymentUsername" jdbcType="VARCHAR" />
+    <result column="repayment_creat_time" property="repaymentCreatTime" jdbcType="TIMESTAMP" />
+    <result column="repayment_update_time" property="repaymentUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_shopkeeper_repayment
+    where repayment_id = #{repaymentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperRepaymentExample" >
+    delete from sps_shopkeeper_repayment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperRepayment" >
+    insert into sps_shopkeeper_repayment (repayment_id, repayment_bankId, repayment_deposit_bank, 
+      repayment_phone, shopkeeper_customerId, repayment_username, 
+      repayment_creat_time, repayment_update_time
+      )
+    values (#{repaymentId,jdbcType=INTEGER}, #{repaymentBankid,jdbcType=VARCHAR}, #{repaymentDepositBank,jdbcType=VARCHAR}, 
+      #{repaymentPhone,jdbcType=VARCHAR}, #{shopkeeperCustomerid,jdbcType=VARCHAR}, #{repaymentUsername,jdbcType=VARCHAR}, 
+      #{repaymentCreatTime,jdbcType=TIMESTAMP}, #{repaymentUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperRepayment" >
+    insert into sps_shopkeeper_repayment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="repaymentId != null" >
+        repayment_id,
+      </if>
+      <if test="repaymentBankid != null" >
+        repayment_bankId,
+      </if>
+      <if test="repaymentDepositBank != null" >
+        repayment_deposit_bank,
+      </if>
+      <if test="repaymentPhone != null" >
+        repayment_phone,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
+      </if>
+      <if test="repaymentUsername != null" >
+        repayment_username,
+      </if>
+      <if test="repaymentCreatTime != null" >
+        repayment_creat_time,
+      </if>
+      <if test="repaymentUpdateTime != null" >
+        repayment_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="repaymentId != null" >
+        #{repaymentId,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentBankid != null" >
+        #{repaymentBankid,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentDepositBank != null" >
+        #{repaymentDepositBank,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentPhone != null" >
+        #{repaymentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentUsername != null" >
+        #{repaymentUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentCreatTime != null" >
+        #{repaymentCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repaymentUpdateTime != null" >
+        #{repaymentUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_shopkeeper_repayment
+    <set >
+      <if test="record.repaymentId != null" >
+        repayment_id = #{record.repaymentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.repaymentBankid != null" >
+        repayment_bankId = #{record.repaymentBankid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repaymentDepositBank != null" >
+        repayment_deposit_bank = #{record.repaymentDepositBank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repaymentPhone != null" >
+        repayment_phone = #{record.repaymentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repaymentUsername != null" >
+        repayment_username = #{record.repaymentUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repaymentCreatTime != null" >
+        repayment_creat_time = #{record.repaymentCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.repaymentUpdateTime != null" >
+        repayment_update_time = #{record.repaymentUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_shopkeeper_repayment
+    set repayment_id = #{record.repaymentId,jdbcType=INTEGER},
+      repayment_bankId = #{record.repaymentBankid,jdbcType=VARCHAR},
+      repayment_deposit_bank = #{record.repaymentDepositBank,jdbcType=VARCHAR},
+      repayment_phone = #{record.repaymentPhone,jdbcType=VARCHAR},
+      shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      repayment_username = #{record.repaymentUsername,jdbcType=VARCHAR},
+      repayment_creat_time = #{record.repaymentCreatTime,jdbcType=TIMESTAMP},
+      repayment_update_time = #{record.repaymentUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperRepayment" >
+    update sps_shopkeeper_repayment
+    <set >
+      <if test="repaymentBankid != null" >
+        repayment_bankId = #{repaymentBankid,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentDepositBank != null" >
+        repayment_deposit_bank = #{repaymentDepositBank,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentPhone != null" >
+        repayment_phone = #{repaymentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentUsername != null" >
+        repayment_username = #{repaymentUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentCreatTime != null" >
+        repayment_creat_time = #{repaymentCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repaymentUpdateTime != null" >
+        repayment_update_time = #{repaymentUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where repayment_id = #{repaymentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperRepayment" >
+    update sps_shopkeeper_repayment
+    set repayment_bankId = #{repaymentBankid,jdbcType=VARCHAR},
+      repayment_deposit_bank = #{repaymentDepositBank,jdbcType=VARCHAR},
+      repayment_phone = #{repaymentPhone,jdbcType=VARCHAR},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      repayment_username = #{repaymentUsername,jdbcType=VARCHAR},
+      repayment_creat_time = #{repaymentCreatTime,jdbcType=TIMESTAMP},
+      repayment_update_time = #{repaymentUpdateTime,jdbcType=TIMESTAMP}
+    where repayment_id = #{repaymentId,jdbcType=INTEGER}
+  </update>
+</mapper>
