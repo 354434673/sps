@@ -38,7 +38,7 @@
 			    </div>
 			    <label class="layui-form-label" style="width: 180px">核心商户名称:</label>
 			    <div class="layui-input-inline">
-			      <input id="orderid" type="text" name="orderid"  lay-verify="" placeholder="核心商户名称" autocomplete="off" class="layui-input">
+			      <input id="selfname" type="text" name="orderid"  lay-verify="" placeholder="核心商户名称" autocomplete="off" class="layui-input">
 			    </div>
 			 </div>
 			 <div class="layui-form-item">
@@ -160,6 +160,7 @@
 				  var date= $('#time').val().split('至')
 			  	  var name = $('#name').val();
 				  var orderid = $('#orderid').val();
+				  var selfname = $('#selfname').val();
 				  var startTime = date[0];
 				  var endTime = date[1];
 				  var flag=$('#flag').val();
@@ -167,7 +168,7 @@
 					  page:{
 						  curr:1//重新从第一页开始
 					  },
-					  where: {name:name,orderid:orderid,startTime:startTime,endTime:endTime,flag:flag}
+					  where: {name:name,orderid:orderid,startTime:startTime,endTime:endTime,flag:flag,selfname:selfname}
 					});
 			  });
 			  //重置
