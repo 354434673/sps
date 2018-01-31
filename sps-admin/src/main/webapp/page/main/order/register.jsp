@@ -226,6 +226,7 @@
 			  $('#openExpress').on('click', function() {
 				  layer.open({
 					  type: 2, 
+					  title:'选择物流',
 					  area: ['75%', '70%'],//宽高
 					  content: ['<%=path%>/page/main/express/expressRedio.jsp'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					  btn: ['确定','取消'],
