@@ -76,7 +76,7 @@
 					  area: ['65%', '65%'],//宽高
 					  content: '<%=path%>/page/main/salesman/addSales.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					  cancel: function(index, layero){ 
-						  table.reload('userId', {
+						  table.reload('salesmanId', {
 							});
 						}    
 				  }); 
@@ -112,7 +112,7 @@
 				  $('input').val('')
 			  })
 			  //监听工作条
-				table.on('tool(userTables)', function(obj){
+				table.on('tool(salesmanTables)', function(obj){
 					 var data = obj.data;
 					  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 					  var tr = obj.tr; //获得当前行 tr 的DOM对象
@@ -121,18 +121,17 @@
 						  layer.open({
 							  type: 2, 
 							  area: ['70%', '80%'],//宽高
-							  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+							  content: '<%=path%>/page/main/salesman/addSales.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 							  success: function(layero, index){
 								    var body = layer.getChildFrame('body', index);
 								    body.find('input').attr({"disabled":"disabled"});
-								    body.find('#username').val(data.userUsername)
-								    body.find('#name').val(data.userName)
-								    body.find('#phone').val(data.userPhone)
-								    body.find('#email').val(data.userEmail)
+								    body.find('#salesmanName').val(data.salesmanName)
+								    body.find('#salesmanIdcard').val(data.salesmanIdcard)
+								    body.find('#salesmanPhone').val(data.salesmanPhone)
+								    body.find('#salesmanEmail').val(data.salesmanEmail)
 								    body.find('#btn').hide();//隐藏提交按钮
 								    body.find('#passwordDiv').hide();//隐藏密码输入框
 								    body.find('#resetPasssword').show();//显示重置密码按钮
-
 								}  
 						  }); 
 					  } else if(layEvent === 'del'){ //删除
@@ -147,19 +146,19 @@
 						  layer.open({
 							  type: 2, 
 							  area: ['70%', '80%'],//宽高
-							  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+							  content: '<%=path%>/page/main/salesman/addSales.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 							  success: function(layero, index){
 								    var body = layer.getChildFrame('body', index);
-								    body.find('#username').attr({"disabled":"disabled"});
-								    body.find('#username').val(data.userUsername)
-								    body.find('#name').val(data.userName)
-								    body.find('#phone').val(data.userPhone)
-								    body.find('#email').val(data.userEmail)
+								    body.find('#salesmanName').val(data.salesmanName)
+								    body.find('#salesmanIdcard').val(data.salesmanIdcard)
+								    body.find('#salesmanPhone').val(data.salesmanPhone)
+								    body.find('#salesmanEmail').val(data.salesmanEmail)
+								    //body.find('#submit').hide();//显示重置密码按钮
 								    body.find('#submit').hide();//显示重置密码按钮
 								    body.find('#submitUpdate').show();//显示重置密码按钮
 								},
 							  cancel: function(index, layero){ 
-								  table.reload('userId', {
+								  table.reload('salesmanId', {
 									});
 								}   
 						  }); 

@@ -47,7 +47,7 @@
 		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 		<script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-mini" lay-event="edit">修改</a>
   <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
 </script>
 	<script>
@@ -59,6 +59,7 @@
 			$('#add').on('click', function() {
 				  layer.open({
 					  type: 2, 
+					  title:'新增角色',
 					  area: ['80%', '80%'],//宽高
 					  content: '<%=path%>/page/main/system/addRole.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					  cancel: function(index, layero){ 
@@ -90,6 +91,66 @@
 		  $('#resetRole').on('click',function(){
 			  $('#queryRoleName').val('')
 		  })
+		  
+		//监听工作条
+			table.on('tool(roleTables)', function(obj){
+				 var data = obj.data;
+				  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+				  var tr = obj.tr; //获得当前行 tr 的DOM对象
+				  if(layEvent === 'detail'){ //查看
+					  layer.open({
+						  type: 2, 
+						  title:'查看角色',
+						  area: ['70%', '80%'],//宽高
+						  content: '<%=path%>/page/main/system/addRole.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+						  success: function(layero, index){
+							    var body = layer.getChildFrame('body', index);
+							    body.find('input').attr({"disabled":"disabled"});
+							    body.find('#roleName').val(data.userUsername)
+							    body.find('#roleDescribe').val(data.userName)
+							}  
+					  }); 
+				  } else if(layEvent === 'del'){ //删除
+						    layer.confirm('确认删除该角色', function(index){
+						      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+						      layer.close(index);
+	  					  			$.post({
+							 			 url:'<%=path%>/user/updateUserState',
+							 			 dataType:'json',
+							 			 data:{
+							 				 userName:data.userUsername,
+							 				 state:1
+							 				 },
+							 			 success:function(data){
+							 				 if(data.state == 'success'){
+							 					layer.msg(data.msg,{icon: 1});
+							 				 }else{
+							 					layer.msg(data.msg,{icon: 1});
+							 				 }
+							 			 },
+							 			 error:function(){
+							 				layer.msg('系统错误',{icon: 2});
+							 			 }
+							 		 })
+						    });
+				  } else if(layEvent === 'edit'){ //编辑
+						  layer.open({
+							  type: 2, 
+							  title:'角色修改',
+							  area: ['70%', '80%'],//宽高
+							  content: '<%=path%>/page/main/system/addRole.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+							  success: function(layero, index){
+								    var body = layer.getChildFrame('body', index);
+								    body.find('#roleName').val(data.userUsername)
+								    body.find('#roleDescribe').val(data.userName)
+								},
+							  cancel: function(index, layero){ 
+								  table.reload('roleID', {
+									});
+								}   
+						  }); 
+				  }
+			});
 		});
 	</script>
 

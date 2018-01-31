@@ -30,4 +30,6 @@ public interface RoleService {
 	 * @throws
 	 */
 	HashMap<String, String> insertRole(String roleName, String describe, List<Integer> menuList);
+	
+	HashMap<String, Object> getRoleByID(String roleid);
 }

@@ -99,16 +99,66 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>基本信息</legend>
 		</fieldset>
+		<div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">店主账号：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="account"> </div>
+		    </div>
+		    <label class="layui-form-label" style="width:152px">店主姓名：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="name"> </div>
+		    </div>
+		 </div>
+		 <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">收货人：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="consignee"> </div>
+		    </div>
+		    <label class="layui-form-label" style="width:152px">收货人电话：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="phone"> </div>
+		    </div>
+		 </div>
+		  <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">收货信息：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="address"> </div>
+		    </div>
+		 </div>
+		 
+		 <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">核心商户账号：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="c_acccount"> </div>
+		    </div>
+		    <label class="layui-form-label" style="width:152px">核心商户名称：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="selfname"> </div>
+		    </div>
+		 </div>
+		 
 				<div class="layui-form-item" >
 		    <label class="layui-form-label" style="width:152px">订单编号：</label>
 		    <div class="layui-input-inline">
 		    	<div class="layui-form-mid layui-word-aux" id="orderid"> </div>
 		    </div>
-		    <label class="layui-form-label" style="width:152px">订单金额：</label>
+		    <label class="layui-form-label" style="width:152px">订单首付：</label>
 		    <div class="layui-input-inline">
 		    	<div class="layui-form-mid layui-word-aux" id="money"> </div>
 		    </div>
 		 </div>
+		 
+		  <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">店付金额：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="d_money"> </div>
+		    </div>
+		    <label class="layui-form-label" style="width:152px">账期（天）：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="date"> </div>
+		    </div>
+		 </div>
+		 
 		 <div class="layui-form-item" >
 		    <label class="layui-form-label" style="width:152px">代销服务费率：</label>
 		    <div class="layui-input-inline">
@@ -119,44 +169,7 @@
 		    	<div class="layui-form-mid layui-word-aux" id="servicemoney"> </div>
 		    </div>
 		 </div>
-		 <div class="layui-form-item" >
-		    <label class="layui-form-label" style="width:152px">单位：</label>
-		    <div class="layui-input-inline">
-		    	<div class="layui-form-mid layui-word-aux" id="sumMoney"> </div>
-		    </div>
-		    <label class="layui-form-label" style="width:152px">订单申请日期：</label>
-		    <div class="layui-input-inline">
-		    	<div class="layui-form-mid layui-word-aux" id="createtime"> </div>
-		    </div>
-		 </div>
-		 <div class="layui-form-item" >
-		    <label class="layui-form-label" style="width:152px">店主名称：</label>
-		    <div class="layui-input-inline">
-		    	<div class="layui-form-mid layui-word-aux" id="name"> </div>
-		    </div>
-		    <label class="layui-form-label" style="width:152px">联系电话：</label>
-		    <div class="layui-input-inline">
-		    	<div class="layui-form-mid layui-word-aux" id="phone"> </div>
-		    </div>
-		 </div>
-		 <div class="layui-form-item" >
-		    <label class="layui-form-label" style="width:152px">店铺名称：</label>
-		    <div class="layui-input-inline">
-		    	<div class="layui-form-mid layui-word-aux" id="selfname"> </div>
-		    </div>
-		 </div>
-		 <div class="layui-form-item" >
-		    <label class="layui-form-label" style="width:152px">收货信息：</label>
-		    <div class="layui-input-inline">
-		    	<div class="layui-form-mid layui-word-aux" id="address"> </div>
-		    </div>
-		 </div>
-		 <div class="layui-form-item" >
-		    <label class="layui-form-label" style="width:152px">订单备注：</label>
-		    <div class="layui-input-inline">
-		    	<div class="layui-form-mid layui-word-aux" id=""> </div>
-		    </div>
-		 </div>
+		
       	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>合同文本</legend>
 		</fieldset>
@@ -188,17 +201,20 @@
 				  ,data:{orderid:<%=request.getParameter("orderid")%>}
 				  ,success:function(result){
 					  $('#orderid').html(result.data[0].orderid)//订单编号
-					  $('#money').html(result.data[0].money)//订单金额
+					  $('#money').html(result.data[0].payment)//订单首付
 					  $('#servicescale').html(result.data[0].servicescale)//代销服务费率
 					  $('#servicemoney').html(result.data[0].servicemoney)//代销服务费
-					  $('#sumMoney').html(result.data[0].sumMoney)//实销金额
-					  $('#unit').html(result.data[0].unit)//单位
-					  var date = getDate(result.data[0].createtime)
-					  $('#createtime').html(date)//订单申请日期
+					  //$('#sumMoney').html(result.data[0].sum_money)//实销金额
+					  $('#account').html(result.data[0].selfemployed)//店主账号
+					  //var date = getDate(result.data[0].createtime)
+					  $('#c_acccount').html(result.data[0].shopkeeper)//核心商户账号
 					  $('#name').html(result.data[0].name)//店主名称
 					  $('#phone').html(result.data[0].phone)//联系电话
-					  $('#selfname').html(result.data[0].selfname)//店铺名称
+					  $('#selfname').html(result.data[0].shopkeepername)//店铺名称
 					  $('#address').html(result.data[0].address)//收货信息
+					  $('#date').html("7")//账期
+					  $('#d_money').html(result.data[0].money)//店付金额
+					  $('#consignee').html(result.data[0].name)//店付金额
 				  }
 			  })
 			  table.render({

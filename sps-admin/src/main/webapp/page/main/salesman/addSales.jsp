@@ -6,7 +6,6 @@
 			+ path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -27,11 +26,11 @@
 <div class="layui-form layui-form-pane" >
 	<div >
 	  <div class="layui-form-item " id="passwordDiv">
-	   <label class="layui-form-label">*业务员姓名：</label>
+	   <label class="layui-form-label">*姓名：</label>
 	    <div class="layui-input-inline">
-	      <input id="salesmanName" name="salesmanName" type="text"  lay-verify="required|IsChineseCharacter" placeholder="请输入业务员姓名" autocomplete="off" class="layui-input">
+	      <input id="salesmanName" name="salesmanName" type="text"  lay-verify="required|IsChineseCharacter|max20Length" placeholder="请输入业务员姓名" autocomplete="off" class="layui-input">
 	    </div>
-	    <label class="layui-form-label">*身份证号码：</label>
+	    <label class="layui-form-label">*身份证号：</label>
 	    <div class="layui-input-inline">
 	      <input id="salesmanIdcard" name="salesmanIdcard" type="text"  lay-verify="required|IsIDCard" placeholder="请确认身份证号码" autocomplete="off" class="layui-input">
 	    </div>
@@ -39,7 +38,7 @@
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">*手机号：</label>
 	    <div class="layui-input-inline">
-	      <input id="salesmanPhone" type="text" name="salesmanPhone"  lay-verify="required|phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+	      <input id="salesmanPhone" type="text" name="salesmanPhone"  lay-verify="required|phone|max20Length" placeholder="请输入手机号" autocomplete="off" class="layui-input">
 	    </div>
 	    <label class="layui-form-label">*电子邮箱：</label>
 	    <div class="layui-input-inline">
@@ -65,13 +64,15 @@
 		  </div>
   </div>
  	<div class="layui-form-item" align="center" id="btn" style="padding-top: 40px">
-		<button class="layui-btn" lay-filter="submitSalesMan" lay-submit id="submit">立即提交</button>
+		<button class="layui-btn" lay-filter="submitSalesMan" lay-submit id="submit">提交</button>
+		<button style="display: none" class="layui-btn" lay-filter="submitUpdate" lay-submit id="submitUpdate">立即修改</button>
 		<button id="reset" class="layui-btn layui-btn-primary">重置</button>
 	</div>
 </div>
 </div>
-<script type="text/javascript"
-		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
+
+		<script type="text/javascript"
+		src="<%=path%>/page/layui/layui.js"></script>
 <script type="text/javascript">
 	layui.use(['form','table'], function(){
 	  var form = layui.form;
@@ -171,6 +172,29 @@
 					return '请输入正确的姓名';
 				}
 			},
+			
+			minLength: function(value) {
+				if(value.length<8 || value.length>12) {
+					return '密码为8-12位';
+				}
+			},
+			maxLength: function(value) {
+				if(value.length>50) {
+					return '最多为50位';
+				}
+			},
+			max20Length: function(value) {
+				if(value.length>20) {
+					return '最多为20位';
+				}
+			},
+			verify: function(value) {
+				var repass = $('#password').val();
+				if(value != repass) {
+					return '两次输入的密码不一致!';
+				}
+			},
+			
              //验证身份证号 [可验证一代或二代身份证]  
 			IsIDCard: function(input) {
 				input = input.toUpperCase();
@@ -259,7 +283,7 @@
 	  	//获得省
 		 function getProvince(parentId){
 			$.getJSON({
-	 			 url:'/<%=path%>/getAreasList.json',
+				url:'<%=path%>/getAreasList.json',
 	 			 dataType:'json',
 	 			 data:{parentId:parentId},
 	 			 success:function(data){
@@ -277,8 +301,8 @@
 		//获得城市
 		 function getCity(parentId){
 			$.getJSON({
-	 			 url:'/<%=path%>/getAreasList.json',
-	 			 dataType:'json',
+	 			url:'<%=path%>/getAreasList.json',
+	 			 dataType:'json', 
 	 			 data:{parentId:parentId},
 	 			 success:function(data){
 			 		 var list = "";
@@ -295,7 +319,7 @@
 		 //获得区
 		 function getArea(parentId){
 			$.getJSON({
-	 			 url:'/<%=path%>/getAreasList.json',
+				url:'<%=path%>/getAreasList.json',
 	 			 dataType:'json',
 	 			 data:{parentId:parentId},
 	 			 success:function(data){
