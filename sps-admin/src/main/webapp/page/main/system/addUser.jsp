@@ -137,7 +137,7 @@
 	 		 }
 	  })
 	  $('#reset').click(function(){
-		  $('#name').val('')
+		  $('#username').val('')
 		  $('#phone').val('')
 		  $('#email').val('')
 		  $('#verifyPwd').val('')
