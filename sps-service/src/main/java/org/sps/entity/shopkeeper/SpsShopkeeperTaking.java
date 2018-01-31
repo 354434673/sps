@@ -1,10 +1,16 @@
 package org.sps.entity.shopkeeper;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class SpsShopkeeperTaking {
-    private Integer takingId;
+public class SpsShopkeeperTaking implements Serializable{
+    /**   
+	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
+	 */   
+	private static final long serialVersionUID = 1L;
+
+	private Integer takingId;
 
     private BigDecimal takingMonthAvgTurnover;
 

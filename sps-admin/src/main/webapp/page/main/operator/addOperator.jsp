@@ -123,9 +123,9 @@
 		 			 url:'<%=path%>/user/insertUser',
 		 			 dataType:'json',
 		 			 data:{
-		 				 userUsername:username,userPassword:password, 
-		 				 userName:name,userPhone:phone, userEmail:email,
-		 				 mark:3,roleList:array
+		 				 userUsername:username,userName:name,
+		 				 userPhone:phone, userEmail:email,
+		 				 userMark:3,roleList:array
 		 			 },
 		 			 success:function(data){
 		 				 if(data.state == 'success'){

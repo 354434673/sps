@@ -1,9 +1,15 @@
 package org.sps.entity.shopkeeper;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SpsShopkeeper {
-    private Integer shopkeeperId;
+public class SpsShopkeeper implements Serializable{
+    /**   
+	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
+	 */   
+	private static final long serialVersionUID = 1L;
+
+	private Integer shopkeeperId;
 
     private String shopkeeperCity;
 
@@ -37,6 +43,8 @@ public class SpsShopkeeper {
 
     private String shopkeeperBusinessType;
 
+    private Integer shopkeeperState;
+
     private String shopkeeperReferrer;
 
     private String shopkeeperUsername;
@@ -45,6 +53,10 @@ public class SpsShopkeeper {
 
     private Date shopkeeperUpdateTime;
 
+    private SpsShopkeeperCompany company;
+    
+    private SpsShopkeeperPersonal personal;
+    
     public Integer getShopkeeperId() {
         return shopkeeperId;
     }
@@ -181,6 +193,14 @@ public class SpsShopkeeper {
         this.shopkeeperBusinessType = shopkeeperBusinessType == null ? null : shopkeeperBusinessType.trim();
     }
 
+    public Integer getShopkeeperState() {
+        return shopkeeperState;
+    }
+
+    public void setShopkeeperState(Integer shopkeeperState) {
+        this.shopkeeperState = shopkeeperState;
+    }
+
     public String getShopkeeperReferrer() {
         return shopkeeperReferrer;
     }
@@ -212,4 +232,21 @@ public class SpsShopkeeper {
     public void setShopkeeperUpdateTime(Date shopkeeperUpdateTime) {
         this.shopkeeperUpdateTime = shopkeeperUpdateTime;
     }
+
+	public SpsShopkeeperCompany getCompany() {
+		return company;
+	}
+
+	public void setCompany(SpsShopkeeperCompany company) {
+		this.company = company;
+	}
+
+	public SpsShopkeeperPersonal getPersonal() {
+		return personal;
+	}
+
+	public void setPersonal(SpsShopkeeperPersonal personal) {
+		this.personal = personal;
+	}
+    
 }

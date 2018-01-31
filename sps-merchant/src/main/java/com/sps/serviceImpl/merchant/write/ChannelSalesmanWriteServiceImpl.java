@@ -1,4 +1,4 @@
-package com.sps.merchant.serviceImpl.write;
+package com.sps.serviceImpl.merchant.write;
 
 import java.util.HashMap;
 import java.util.List;

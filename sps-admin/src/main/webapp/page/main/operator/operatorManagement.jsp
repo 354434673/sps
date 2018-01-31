@@ -97,6 +97,7 @@
 			  table.render({
 			    elem: '#userList'
 			    ,url: '<%=path%>/user/userList.json' //数据接口
+			    ,where:{mark:3}
 			    ,id:'userId'
 			    ,page:true
 			    ,cols: [[ //表头

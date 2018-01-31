@@ -9,6 +9,11 @@ public interface SpsShopkeeperReadMapper {
     int countByExample(SpsShopkeeperExample example);
 
     List<SpsShopkeeper> selectByExample(SpsShopkeeperExample example);
+    
+    List<SpsShopkeeper> selectListForJoin(
+    		@Param("account")String account, 
+    		@Param("shopkeeperName")String shopkeeperName, 
+    		@Param("shopkeeperState")Integer shopkeeperState);
 
     SpsShopkeeper selectByPrimaryKey(Integer shopkeeperId);
 }

@@ -1285,6 +1285,66 @@ public class SpsShopkeeperExample {
             return (Criteria) this;
         }
 
+        public Criteria andShopkeeperStateIsNull() {
+            addCriterion("shopkeeper_state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperStateIsNotNull() {
+            addCriterion("shopkeeper_state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperStateEqualTo(Integer value) {
+            addCriterion("shopkeeper_state =", value, "shopkeeperState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperStateNotEqualTo(Integer value) {
+            addCriterion("shopkeeper_state <>", value, "shopkeeperState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperStateGreaterThan(Integer value) {
+            addCriterion("shopkeeper_state >", value, "shopkeeperState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperStateGreaterThanOrEqualTo(Integer value) {
+            addCriterion("shopkeeper_state >=", value, "shopkeeperState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperStateLessThan(Integer value) {
+            addCriterion("shopkeeper_state <", value, "shopkeeperState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperStateLessThanOrEqualTo(Integer value) {
+            addCriterion("shopkeeper_state <=", value, "shopkeeperState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperStateIn(List<Integer> values) {
+            addCriterion("shopkeeper_state in", values, "shopkeeperState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperStateNotIn(List<Integer> values) {
+            addCriterion("shopkeeper_state not in", values, "shopkeeperState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperStateBetween(Integer value1, Integer value2) {
+            addCriterion("shopkeeper_state between", value1, value2, "shopkeeperState");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperStateNotBetween(Integer value1, Integer value2) {
+            addCriterion("shopkeeper_state not between", value1, value2, "shopkeeperState");
+            return (Criteria) this;
+        }
+
         public Criteria andShopkeeperReferrerIsNull() {
             addCriterion("shopkeeper_referrer is null");
             return (Criteria) this;

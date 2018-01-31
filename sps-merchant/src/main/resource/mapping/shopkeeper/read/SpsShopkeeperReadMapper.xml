@@ -19,10 +19,19 @@
     <result column="shopkeeper_business_model" property="shopkeeperBusinessModel" jdbcType="VARCHAR" />
     <result column="shopkeeper_brand" property="shopkeeperBrand" jdbcType="VARCHAR" />
     <result column="shopkeeper_business_type" property="shopkeeperBusinessType" jdbcType="VARCHAR" />
+    <result column="shopkeeper_state" property="shopkeeperState" jdbcType="INTEGER" />
     <result column="shopkeeper_referrer" property="shopkeeperReferrer" jdbcType="VARCHAR" />
     <result column="shopkeeper_username" property="shopkeeperUsername" jdbcType="VARCHAR" />
     <result column="shopkeeper_creat_time" property="shopkeeperCreatTime" jdbcType="TIMESTAMP" />
     <result column="shopkeeper_update_time" property="shopkeeperUpdateTime" jdbcType="TIMESTAMP" />
+    <association property="company" javaType="org.sps.entity.shopkeeper.SpsShopkeeperCompany">
+		<id column="company_id" property="companyId" jdbcType="INTEGER" />
+		<result column="company_shop_name" property="companyShopName" jdbcType="VARCHAR" />
+    </association>
+    <association property="personal" javaType="org.sps.entity.shopkeeper.SpsShopkeeperPersonal">
+    	<id column="personal_id" property="personalId" jdbcType="INTEGER" />
+    	<result column="personal_client_name" property="personalClientName" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -58,8 +67,8 @@
     shopkeeper_product, shopkeeper_register_source, shopkeeper_client_source, shopkeeper_channel_type, 
     shopkeeper_default_channel_num, shopkeeper_default_channel_name, shopkeeper_salesman_name, 
     shopkeeper_salesman_idcard, shopkeeper_commodity_type, shopkeeper_business_model, 
-    shopkeeper_brand, shopkeeper_business_type, shopkeeper_referrer, shopkeeper_username, 
-    shopkeeper_creat_time, shopkeeper_update_time
+    shopkeeper_brand, shopkeeper_business_type, shopkeeper_state, shopkeeper_referrer, 
+    shopkeeper_username, shopkeeper_creat_time, shopkeeper_update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperExample" >
     select
@@ -80,6 +89,36 @@
     <include refid="Base_Column_List" />
     from sps_shopkeeper
     where shopkeeper_id = #{shopkeeperId,jdbcType=INTEGER}
+  </select>
+    <sql id="join_list" >
+	s1.shopkeeper_default_channel_num,s1.shopkeeper_customerId,
+	s1.shopkeeper_username,s1.shopkeeper_state,
+	s1.shopkeeper_creat_time,s1.shopkeeper_salesman_name,
+	p1.personal_client_name,c1.company_shop_name FROM 
+  </sql>
+  <select id="selectListForJoin" resultMap="BaseResultMap">
+	SELECT 
+	<include refid="join_list" />
+	sps_shopkeeper s1 
+	join 
+	sps_shopkeeper_personal p1 
+	on 
+	s1.shopkeeper_customerId = p1.shopkeeper_customerId 
+	join 
+  	sps_shopkeeper_company c1 
+	on 
+	p1.shopkeeper_customerId = c1.shopkeeper_customerId
+	<where>
+		<if test="account != null and account != '' " >
+			s1.shopkeeper_username like CONCAT('%','${account}','%' )
+		</if>
+		<if test="shopkeeperName != null and shopkeeperName != '' " >
+			and p1.personal_client_name like CONCAT('%','${shopkeeperName}','%' )
+		</if>
+		<if test="shopkeeperState != null and shopkeeperState != '' " >
+			and s1.shopkeeper_state = #{shopkeeperName}
+		</if>
+	</where>
   </select>
   <select id="countByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperExample" resultType="java.lang.Integer" >
     select count(*) from sps_shopkeeper

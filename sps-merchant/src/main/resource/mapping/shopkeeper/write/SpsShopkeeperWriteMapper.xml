@@ -19,6 +19,7 @@
     <result column="shopkeeper_business_model" property="shopkeeperBusinessModel" jdbcType="VARCHAR" />
     <result column="shopkeeper_brand" property="shopkeeperBrand" jdbcType="VARCHAR" />
     <result column="shopkeeper_business_type" property="shopkeeperBusinessType" jdbcType="VARCHAR" />
+    <result column="shopkeeper_state" property="shopkeeperState" jdbcType="INTEGER" />
     <result column="shopkeeper_referrer" property="shopkeeperReferrer" jdbcType="VARCHAR" />
     <result column="shopkeeper_username" property="shopkeeperUsername" jdbcType="VARCHAR" />
     <result column="shopkeeper_creat_time" property="shopkeeperCreatTime" jdbcType="TIMESTAMP" />
@@ -101,7 +102,7 @@
       shopkeeper_salesman_name, shopkeeper_salesman_idcard, 
       shopkeeper_commodity_type, shopkeeper_business_model, 
       shopkeeper_brand, shopkeeper_business_type, 
-      shopkeeper_referrer, shopkeeper_username, 
+      shopkeeper_state, shopkeeper_referrer, shopkeeper_username, 
       shopkeeper_creat_time, shopkeeper_update_time
       )
     values (#{shopkeeperId,jdbcType=INTEGER}, #{shopkeeperCity,jdbcType=VARCHAR}, #{shopkeeperCustomerid,jdbcType=VARCHAR}, 
@@ -112,7 +113,7 @@
       #{shopkeeperSalesmanName,jdbcType=VARCHAR}, #{shopkeeperSalesmanIdcard,jdbcType=VARCHAR}, 
       #{shopkeeperCommodityType,jdbcType=VARCHAR}, #{shopkeeperBusinessModel,jdbcType=VARCHAR}, 
       #{shopkeeperBrand,jdbcType=VARCHAR}, #{shopkeeperBusinessType,jdbcType=VARCHAR}, 
-      #{shopkeeperReferrer,jdbcType=VARCHAR}, #{shopkeeperUsername,jdbcType=VARCHAR}, 
+      #{shopkeeperState,jdbcType=INTEGER}, #{shopkeeperReferrer,jdbcType=VARCHAR}, #{shopkeeperUsername,jdbcType=VARCHAR}, 
       #{shopkeeperCreatTime,jdbcType=TIMESTAMP}, #{shopkeeperUpdateTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -169,6 +170,9 @@
       </if>
       <if test="shopkeeperBusinessType != null" >
         shopkeeper_business_type,
+      </if>
+      <if test="shopkeeperState != null" >
+        shopkeeper_state,
       </if>
       <if test="shopkeeperReferrer != null" >
         shopkeeper_referrer,
@@ -234,6 +238,9 @@
       </if>
       <if test="shopkeeperBusinessType != null" >
         #{shopkeeperBusinessType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperState != null" >
+        #{shopkeeperState,jdbcType=INTEGER},
       </if>
       <if test="shopkeeperReferrer != null" >
         #{shopkeeperReferrer,jdbcType=VARCHAR},
@@ -309,6 +316,9 @@
       <if test="record.shopkeeperBusinessType != null" >
         shopkeeper_business_type = #{record.shopkeeperBusinessType,jdbcType=VARCHAR},
       </if>
+      <if test="record.shopkeeperState != null" >
+        shopkeeper_state = #{record.shopkeeperState,jdbcType=INTEGER},
+      </if>
       <if test="record.shopkeeperReferrer != null" >
         shopkeeper_referrer = #{record.shopkeeperReferrer,jdbcType=VARCHAR},
       </if>
@@ -345,6 +355,7 @@
       shopkeeper_business_model = #{record.shopkeeperBusinessModel,jdbcType=VARCHAR},
       shopkeeper_brand = #{record.shopkeeperBrand,jdbcType=VARCHAR},
       shopkeeper_business_type = #{record.shopkeeperBusinessType,jdbcType=VARCHAR},
+      shopkeeper_state = #{record.shopkeeperState,jdbcType=INTEGER},
       shopkeeper_referrer = #{record.shopkeeperReferrer,jdbcType=VARCHAR},
       shopkeeper_username = #{record.shopkeeperUsername,jdbcType=VARCHAR},
       shopkeeper_creat_time = #{record.shopkeeperCreatTime,jdbcType=TIMESTAMP},
@@ -404,6 +415,9 @@
       <if test="shopkeeperBusinessType != null" >
         shopkeeper_business_type = #{shopkeeperBusinessType,jdbcType=VARCHAR},
       </if>
+      <if test="shopkeeperState != null" >
+        shopkeeper_state = #{shopkeeperState,jdbcType=INTEGER},
+      </if>
       <if test="shopkeeperReferrer != null" >
         shopkeeper_referrer = #{shopkeeperReferrer,jdbcType=VARCHAR},
       </if>
@@ -437,6 +451,7 @@
       shopkeeper_business_model = #{shopkeeperBusinessModel,jdbcType=VARCHAR},
       shopkeeper_brand = #{shopkeeperBrand,jdbcType=VARCHAR},
       shopkeeper_business_type = #{shopkeeperBusinessType,jdbcType=VARCHAR},
+      shopkeeper_state = #{shopkeeperState,jdbcType=INTEGER},
       shopkeeper_referrer = #{shopkeeperReferrer,jdbcType=VARCHAR},
       shopkeeper_username = #{shopkeeperUsername,jdbcType=VARCHAR},
       shopkeeper_creat_time = #{shopkeeperCreatTime,jdbcType=TIMESTAMP},

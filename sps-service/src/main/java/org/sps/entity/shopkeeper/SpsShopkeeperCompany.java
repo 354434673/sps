@@ -1,9 +1,15 @@
 package org.sps.entity.shopkeeper;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SpsShopkeeperCompany {
-    private Integer companyId;
+public class SpsShopkeeperCompany implements Serializable{
+    /**   
+	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
+	 */   
+	private static final long serialVersionUID = 1L;
+
+	private Integer companyId;
 
     private String companyName;
 

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.write.SpsShopkeeperAccountWriteMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.shopkeeper.SpsShopkeeperAccount" >
+    <id column="account_id" property="accountId" jdbcType="INTEGER" />
+    <result column="account_num" property="accountNum" jdbcType="VARCHAR" />
+    <result column="account_start_time" property="accountStartTime" jdbcType="TIMESTAMP" />
+    <result column="account_end_time" property="accountEndTime" jdbcType="TIMESTAMP" />
+    <result column="account_validity" property="accountValidity" jdbcType="TIMESTAMP" />
+    <result column="account_down_payment" property="accountDownPayment" jdbcType="DOUBLE" />
+    <result column="account_state" property="accountState" jdbcType="INTEGER" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_shopkeeper_account
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperAccountExample" >
+    delete from sps_shopkeeper_account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperAccount" >
+    insert into sps_shopkeeper_account (account_id, account_num, account_start_time, 
+      account_end_time, account_validity, account_down_payment, 
+      account_state, shopkeeper_customerId)
+    values (#{accountId,jdbcType=INTEGER}, #{accountNum,jdbcType=VARCHAR}, #{accountStartTime,jdbcType=TIMESTAMP}, 
+      #{accountEndTime,jdbcType=TIMESTAMP}, #{accountValidity,jdbcType=TIMESTAMP}, #{accountDownPayment,jdbcType=DOUBLE}, 
+      #{accountState,jdbcType=INTEGER}, #{shopkeeperCustomerid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperAccount" >
+    insert into sps_shopkeeper_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="accountNum != null" >
+        account_num,
+      </if>
+      <if test="accountStartTime != null" >
+        account_start_time,
+      </if>
+      <if test="accountEndTime != null" >
+        account_end_time,
+      </if>
+      <if test="accountValidity != null" >
+        account_validity,
+      </if>
+      <if test="accountDownPayment != null" >
+        account_down_payment,
+      </if>
+      <if test="accountState != null" >
+        account_state,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="accountNum != null" >
+        #{accountNum,jdbcType=VARCHAR},
+      </if>
+      <if test="accountStartTime != null" >
+        #{accountStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountEndTime != null" >
+        #{accountEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountValidity != null" >
+        #{accountValidity,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountDownPayment != null" >
+        #{accountDownPayment,jdbcType=DOUBLE},
+      </if>
+      <if test="accountState != null" >
+        #{accountState,jdbcType=INTEGER},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_shopkeeper_account
+    <set >
+      <if test="record.accountId != null" >
+        account_id = #{record.accountId,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountNum != null" >
+        account_num = #{record.accountNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountStartTime != null" >
+        account_start_time = #{record.accountStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accountEndTime != null" >
+        account_end_time = #{record.accountEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accountValidity != null" >
+        account_validity = #{record.accountValidity,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accountDownPayment != null" >
+        account_down_payment = #{record.accountDownPayment,jdbcType=DOUBLE},
+      </if>
+      <if test="record.accountState != null" >
+        account_state = #{record.accountState,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_shopkeeper_account
+    set account_id = #{record.accountId,jdbcType=INTEGER},
+      account_num = #{record.accountNum,jdbcType=VARCHAR},
+      account_start_time = #{record.accountStartTime,jdbcType=TIMESTAMP},
+      account_end_time = #{record.accountEndTime,jdbcType=TIMESTAMP},
+      account_validity = #{record.accountValidity,jdbcType=TIMESTAMP},
+      account_down_payment = #{record.accountDownPayment,jdbcType=DOUBLE},
+      account_state = #{record.accountState,jdbcType=INTEGER},
+      shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperAccount" >
+    update sps_shopkeeper_account
+    <set >
+      <if test="accountNum != null" >
+        account_num = #{accountNum,jdbcType=VARCHAR},
+      </if>
+      <if test="accountStartTime != null" >
+        account_start_time = #{accountStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountEndTime != null" >
+        account_end_time = #{accountEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountValidity != null" >
+        account_validity = #{accountValidity,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountDownPayment != null" >
+        account_down_payment = #{accountDownPayment,jdbcType=DOUBLE},
+      </if>
+      <if test="accountState != null" >
+        account_state = #{accountState,jdbcType=INTEGER},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperAccount" >
+    update sps_shopkeeper_account
+    set account_num = #{accountNum,jdbcType=VARCHAR},
+      account_start_time = #{accountStartTime,jdbcType=TIMESTAMP},
+      account_end_time = #{accountEndTime,jdbcType=TIMESTAMP},
+      account_validity = #{accountValidity,jdbcType=TIMESTAMP},
+      account_down_payment = #{accountDownPayment,jdbcType=DOUBLE},
+      account_state = #{accountState,jdbcType=INTEGER},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR}
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
+</mapper>

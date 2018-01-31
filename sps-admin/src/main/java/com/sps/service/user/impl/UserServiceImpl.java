@@ -46,11 +46,12 @@ public class UserServiceImpl implements UserService{
 	}
 	@Override
 	public HashMap<String, Object> userList(Integer page, Integer limit, 
-			String username, String name,String phone) {
+			String username, String name,String phone,Integer mark) {
 		SpsUserExample example = new SpsUserExample();
 		
 		Criteria createCriteria = example.createCriteria();
-		createCriteria.andUserStateNotEqualTo(1);
+		createCriteria.andUserStateNotEqualTo(1)
+					.andUserMarkEqualTo(mark);
 		//如果查询条件不为空,则进入模糊查询
 		if( !(username == null || username.equals(""))){
 			createCriteria.andUserUsernameLike("%"+username+"%");
@@ -99,6 +100,7 @@ public class UserServiceImpl implements UserService{
 				user.setUserCreattime(new Date());
 				
 				user.setUserUpdatetime(new Date());
+				
 				int insertSelective = spsUserMapper.insertSelective(user);
 				if(insertSelective == 1){
 					map.put("msg", "添加成功");

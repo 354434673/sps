@@ -79,6 +79,7 @@
 			  table.render({
 			    elem: '#userList'
 			    ,url: '<%=path%>/user/userList.json' //数据接口
+			    ,where:{mark:0}
 			    ,id:'userId'
 			    ,page:true
 			    ,cols: [[ //表头
@@ -91,7 +92,6 @@
 			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
-			  console.log(table.cache)
 			  //查询
 			  $('#queryUser').on('click',function(){
 				  var username = $('#queryUsername').val()
