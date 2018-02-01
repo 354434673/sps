@@ -124,6 +124,10 @@
 		    <div class="layui-input-inline">
 		    	<div class="layui-form-mid layui-word-aux" id="address"> </div>
 		    </div>
+		     <label class="layui-form-label" style="width:152px">订单申请日期：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="createtime"> </div>
+		    </div>
 		 </div>
 		 
 		 <div class="layui-form-item" >
@@ -215,6 +219,8 @@
 					  $('#date').html("7")//账期
 					  $('#d_money').html(result.data[0].money)//店付金额
 					  $('#consignee').html(result.data[0].name)//店付金额
+					  var date = getDate(result.data[0].createtime)
+					  $('#createtime').html(date)//订单申请日期
 				  }
 			  })
 			  table.render({
