@@ -73,6 +73,7 @@
 			  $('#add').on('click', function() {
 				  layer.open({
 					  type: 2, 
+					  title:'新增业务员',
 					  area: ['65%', '65%'],//宽高
 					  content: '<%=path%>/page/main/salesman/addSales.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 					  cancel: function(index, layero){ 
@@ -120,6 +121,7 @@
 					  if(layEvent === 'detail'){ //查看
 						  layer.open({
 							  type: 2, 
+							  title:'查看业务员',
 							  area: ['70%', '80%'],//宽高
 							  content: '<%=path%>/page/main/salesman/addSales.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 							  success: function(layero, index){
@@ -145,6 +147,7 @@
 					  } else if(layEvent === 'edit'){ //编辑
 						  layer.open({
 							  type: 2, 
+							  title:'修改业务员',
 							  area: ['70%', '80%'],//宽高
 							  content: '<%=path%>/page/main/salesman/addSales.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 							  success: function(layero, index){

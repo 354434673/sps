@@ -58,6 +58,8 @@
 				        <option value="2">已拒绝</option>
 				        <option value="3">订单审核中</option>
 				        <option value="4">订单审核不通过</option>
+				        <option value="18">风控审核中</option>
+				        <option value="19">风控审核不通过</option>
 				        <option value="5">待支付</option>
 				        <option value="6">待发货</option>
 				        <option value="7">物流审核中</option>
@@ -117,6 +119,10 @@
   已退货
 {{#  } else if(d.flag == 11){ }}
   已取消 
+{{#  } else if(d.flag == 18){ }}
+  风控审核中
+{{#  } else if(d.flag == 19){ }}
+ 风控审核不通过
 {{#  } else { }}
   {{d.flag}}
 {{#  } }}  
