@@ -37,6 +37,11 @@ public class RoleController {
 		return roleService.getRoleByID(roleId);
 	}
 
+	@RequestMapping(value = "deleteRole")
+	public @ResponseBody HashMap<String, String> deleteRole(String roleID) {
+		return roleService.deleteRole(roleID);
+	}
+
 	/**
 	 * 添加角色 @Title: insertRole @Description:
 	 * TODO(这里用一句话描述这个方法的作用) @param: @param roleName @param: @param

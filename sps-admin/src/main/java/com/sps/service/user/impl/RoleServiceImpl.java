@@ -96,8 +96,8 @@ public class RoleServiceImpl implements RoleService {
 		return map;
 	}
 
-	public HashMap<String, Object> getRoleByID(String roleid) {
-		SpsRole role = spsRoleMapper.selectByPrimaryKey(Integer.getInteger(roleid));
+	public HashMap<String, Object> getRoleByID(String roleID) {
+		SpsRole role = spsRoleMapper.selectByPrimaryKey(Integer.getInteger(roleID));
 		List<SpsRole> list = new ArrayList<SpsRole>();
 		list.add(role);
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
@@ -107,6 +107,19 @@ public class RoleServiceImpl implements RoleService {
 		hashMap.put("count", 1);
 		return hashMap;
 
+	}
+
+	public HashMap<String, String> deleteRole(String roleId) {
+		int count = spsRoleMapper.deleteByPrimaryKey(Integer.getInteger(roleId));
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		if (count > 0) {
+			hashMap.put("msg", "删除成功");
+			hashMap.put("state", "success");
+		}else{
+			hashMap.put("msg", "删除失败");
+			hashMap.put("state", "error");
+		}
+		return hashMap;
 	}
 
 	/**

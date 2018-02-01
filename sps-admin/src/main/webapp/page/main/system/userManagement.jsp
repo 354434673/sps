@@ -133,7 +133,7 @@
 					    	if(data.userUsername == 'admin'){
 					    		layer.msg('管理员账号不可删除')
 					    	}else{
-							    layer.confirm('真的删除当前用户么', function(index){
+							    layer.confirm('确认删除当前用户？', function(index){
 							      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 							      layer.close(index);
 		  					  			$.post({

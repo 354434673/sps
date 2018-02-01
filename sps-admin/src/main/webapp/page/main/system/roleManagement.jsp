@@ -106,19 +106,19 @@
 						  success: function(layero, index){
 							    var body = layer.getChildFrame('body', index);
 							    body.find('input').attr({"disabled":"disabled"});
-							    body.find('#roleName').val(data.userUsername)
-							    body.find('#roleDescribe').val(data.userName)
+							    body.find('#roleName').val(data.roleName)
+							    body.find('#roleDescribe').val(data.roleDescribe)
 							}  
 					  }); 
 				  } else if(layEvent === 'del'){ //删除
-						    layer.confirm('确认删除该角色', function(index){
+						    layer.confirm('确认删除该角色？', function(index){
 						      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 						      layer.close(index);
 	  					  			$.post({
-							 			 url:'<%=path%>/user/updateUserState',
+	  					  				 url:'<%=path%>/role/deleteRole',
 							 			 dataType:'json',
 							 			 data:{
-							 				 userName:data.userUsername,
+							 				 roleID:index,
 							 				 state:1
 							 				 },
 							 			 success:function(data){
@@ -141,8 +141,8 @@
 							  content: '<%=path%>/page/main/system/addRole.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 							  success: function(layero, index){
 								    var body = layer.getChildFrame('body', index);
-								    body.find('#roleName').val(data.userUsername)
-								    body.find('#roleDescribe').val(data.userName)
+								    body.find('#roleName').val(data.roleName)
+								    body.find('#roleDescribe').val(data.roleDescribe)
 								},
 							  cancel: function(index, layero){ 
 								  table.reload('roleID', {
