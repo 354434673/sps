@@ -24,7 +24,7 @@
 	<div style="margin: 15px;">
 		<div class="layui-form layui-form-pane"  >
 		    <div class="layui-form-item">
-			    <label class="layui-form-label">业务员名称:</label>
+			    <label class="layui-form-label">业务员姓名:</label>
 			    <div class="layui-input-inline">
 			      <input id="salesmanName" type="text" name="salesmanName"  placeholder="请输入业务员名称" autocomplete="off" class="layui-input">
 			    </div>
@@ -36,6 +36,15 @@
 			    <div class="layui-input-inline">
 			      <input id="salesmanPhone" type="text" name="salesmanPhone"  placeholder="请输入手机" autocomplete="off" class="layui-input">
 			    </div>
+			    
+			    <label class="layui-form-label">状态:</label>
+			    <div class="layui-input-inline" >
+			    <select lay-filter="salesState" id="status"> 
+				  <option value=""></option>
+				  <option value="0">全部</option>
+				  <option value="1">正常</option>
+				  <option value="2">停用</option>
+		      	</select>
 	        </div>  
 	         <div class="layui-form-item">
 			    	<button class="layui-btn layui-btn-primary" id="queryUser">查询</button>
@@ -102,16 +111,25 @@
 				  var salesmanName = $('#salesmanName').val()
 				  var salesmanIdcard = $('#salesmanIdcard').val()
 				  var salesmanPhone = $('#salesmanPhone').val()
+				  var salesState = $('#status').val()
 				  table.reload('salesmanId', {
 					  where: {salesmanName:salesmanName,
 						  salesmanIdcard:salesmanIdcard,
-						  salesmanPhone:salesmanPhone}
+						  salesmanPhone:salesmanPhone,
+						  bei1:salesState}
 					});
 			  })
 			  //重置
 			  $('#resetUser').on('click',function(){
 				  $('input').val('')
 			  })
+			  
+ 			form.on('select(salesState)', function(data){
+				  table.reload('salesmanId', {
+					  where: {bei1:data.value}
+					}); 
+			  });  
+		
 			  //监听工作条
 				table.on('tool(salesmanTables)', function(obj){
 					 var data = obj.data;
