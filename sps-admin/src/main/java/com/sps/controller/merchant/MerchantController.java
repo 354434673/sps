@@ -246,7 +246,7 @@ public class MerchantController {
 	@ResponseBody
 	public SpsChannelOpenAccount getOpenAccount(String channelNum){
 		
-		SpsChannelOpenAccount openAccount = channelReadService.getOpenAccount(channelNum);
+		SpsChannelOpenAccount openAccount = channelReadService.getOpenAccount(channelNum, null);
 		
 		return openAccount;
 	}

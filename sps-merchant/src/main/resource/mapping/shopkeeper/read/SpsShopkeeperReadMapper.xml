@@ -116,7 +116,7 @@
 			and p1.personal_client_name like CONCAT('%','${shopkeeperName}','%' )
 		</if>
 		<if test="shopkeeperState != null and shopkeeperState != '' " >
-			and s1.shopkeeper_state = #{shopkeeperName}
+			and s1.shopkeeper_state = #{shopkeeperState}
 		</if>
 	</where>
   </select>

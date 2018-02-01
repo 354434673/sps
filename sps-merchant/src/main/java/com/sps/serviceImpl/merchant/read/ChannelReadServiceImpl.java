@@ -177,11 +177,17 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 
 	}
 	@Override
-	public SpsChannelOpenAccount getOpenAccount(String channelNum) {
+	public SpsChannelOpenAccount getOpenAccount(String channelNum, String username) {
 		SpsChannelOpenAccountExample example = new SpsChannelOpenAccountExample();
 		
-		example.createCriteria().andChannelNumEqualTo(channelNum);
+		org.sps.entity.merchant.SpsChannelOpenAccountExample.Criteria createCriteria = example.createCriteria();
 		
+		if(channelNum != null){
+			createCriteria.andChannelNumEqualTo(channelNum);
+		}
+		if(username != null){
+			createCriteria.andOpenAdminNumEqualTo(username);
+		}
 		List<SpsChannelOpenAccount> selectByExample = openAccountRead.selectByExample(example);
 		
 		return selectByExample.size() == 0 ? null : selectByExample.get(0);

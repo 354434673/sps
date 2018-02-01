@@ -123,7 +123,7 @@ public interface ChannelReadService{
 	 * @return: SpsChannelOpenAccount      
 	 * @throws
 	 */
-	SpsChannelOpenAccount getOpenAccount(String channelNum);
+	SpsChannelOpenAccount getOpenAccount(String channelNum,String username);
 	/**
 	 * 查询该商户的业务信息
 	 * @Title: getBusiness   

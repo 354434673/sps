@@ -14,11 +14,15 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.sps.entity.merchant.SpsChannelOpenAccount;
+import org.sps.service.merchant.read.ChannelReadService;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.sps.entity.user.SpsUser;
 import com.sps.service.user.UserAndRoleService;
 import com.sps.service.user.UserService;
@@ -30,6 +34,8 @@ public class UserController {
 	private UserService userService;
 	@Resource
 	private UserAndRoleService userAndRoleService;
+	@Reference(group="dianfu-dev")
+	private ChannelReadService readService;
 	/**
 	 * 用户列表
 	 * @Title: userList   
@@ -72,6 +78,8 @@ public class UserController {
 	    try {  
 	    	SecurityUtils.getSubject().login(usernamePasswordToken);
 	    	
+	    	String numForUserType = getNumForUserType();
+	    	System.out.println(numForUserType);
 	    } catch (UnknownAccountException ex) {  
 	    	ex.printStackTrace(); 
 	        System.out.println("用户不存在或者密码错误！");
@@ -196,5 +204,26 @@ public class UserController {
 		
 		return "login";
 	}
-	
+	private String getNumForUserType(){
+		 Subject subject = SecurityUtils.getSubject();
+		//获取当前token中的用户
+		String userName = (String) subject.getPrincipal();
+		
+		SpsUser user = userService.getUser(userName);
+		
+		Integer userMark = user.getUserMark();//用户类型
+		
+		String num = "";
+		switch (userMark) {
+			case 1:
+				SpsChannelOpenAccount openAccount = readService.getOpenAccount(null, userName);
+				
+				num = openAccount.getChannelNum();
+			case 2:
+			case 3:
+				
+		}
+		subject.getSession().setAttribute(userName, num);
+		return num;
+	}
 }
