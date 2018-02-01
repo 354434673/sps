@@ -41,7 +41,8 @@ public class MenuServiceImpl implements MenuService{
 			roleList.add(spsRole.getRoleId());
 		}
  		SpsMenuExample example = new SpsMenuExample();
-		
+ 		
+ 		example.setOrderByClause("m1.menu_sort");
 		example.createCriteria()
 						.andMenuNodetypeEqualTo(1)
 						.andMenuStateEqualTo(0)
@@ -60,6 +61,7 @@ public class MenuServiceImpl implements MenuService{
 				menuUtil.setMenuParentid(spsMenu.getMenuParentid());
 				menuUtil.setMenuNodetype(spsMenu.getMenuNodetype());
 				menuUtil.setHref(spsMenu.getMenuUrl());
+				menuUtil.setSort(spsMenu.getMenuSort());
 				menuUtil.setChildren(getSubMenu);
 			}
 			list.add(menuUtil);

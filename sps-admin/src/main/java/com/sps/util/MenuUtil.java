@@ -22,6 +22,8 @@ public class MenuUtil {
 
     private String href;
 
+    private Integer sort;
+    
     private Integer menuParentid;
     
     private List<SpsRoleandmenu> roleAndMeun;
@@ -32,16 +34,17 @@ public class MenuUtil {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
-	public MenuUtil(Integer id, String title, Integer menuNodetype, String href, Integer menuParentid,
-			List<MenuUtil> children) {
+	
+	public MenuUtil(Integer id, String title, Integer menuNodetype, String href, Integer sort, Integer menuParentid,
+			List<SpsRoleandmenu> roleAndMeun, List<MenuUtil> children) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.menuNodetype = menuNodetype;
 		this.href = href;
+		this.sort = sort;
 		this.menuParentid = menuParentid;
+		this.roleAndMeun = roleAndMeun;
 		this.children = children;
 	}
 
@@ -49,9 +52,9 @@ public class MenuUtil {
 	@Override
 	public String toString() {
 		return "MenuUtil [id=" + id + ", title=" + title + ", menuNodetype=" + menuNodetype + ", href=" + href
-				+ ", menuParentid=" + menuParentid + ", children=" + children + "]";
+				+ ", sort=" + sort + ", menuParentid=" + menuParentid + ", roleAndMeun=" + roleAndMeun + ", children="
+				+ children + "]";
 	}
-
 
 	public Integer getId() {
 		return id;
@@ -120,6 +123,14 @@ public class MenuUtil {
 
 	public void setRole(List<SpsRoleandmenu> roleAndMeun) {
 		this.roleAndMeun = roleAndMeun;
+	}
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
 	}
 	
 }

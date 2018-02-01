@@ -88,9 +88,9 @@ public class OrderServiceImpl implements OrderService {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public HashMap<String, Object> selectByParameters(Integer page, Integer limit, String name, String channelName,
 			String selfname, String orderid, String startTime, String endTime, String flag) {
-		page = page == null ? null : 1;
+		page = page == null ? 1 : page;
 
-		limit = limit == null ? null : 10;
+		limit = limit == null ? 10 : limit;
 
 		startTime = startTime == null ? null : startTime + " 00:00:00";
 
