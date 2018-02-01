@@ -3,7 +3,7 @@
 var tab;
 
 layui.config({
-    base: '../static/js/',
+    base: '/sps-admin/page/static/js/',
     version: new Date().getTime()
 }).use(['element', 'layer', 'navbar', 'tab'], function () {
     var element = layui.element(),
@@ -62,7 +62,7 @@ layui.config({
     navbar.set({
         spreadOne: true,
         elem: '#admin-navbar-side',
-        cached: false,
+        cached: true,
         //data: navs,
 		/*cached:true,*/
 		url: pathStr+'/menu/getMenu.json'
