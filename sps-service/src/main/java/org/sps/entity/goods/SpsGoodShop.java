@@ -12,7 +12,7 @@ public class SpsGoodShop implements Serializable {
     private String gSkuIds;
 
     private String gOpinion;
-
+    private Integer gGoodsId;
     private Integer gId;
 
     private String gCategoryIds;
@@ -41,6 +41,13 @@ public class SpsGoodShop implements Serializable {
 
     private Date gUpdateTime;
 
+    public Integer getgGoodsId() {
+        return gGoodsId;
+    }
+
+    public void setgGoodsId(Integer gGoodsId) {
+        this.gGoodsId = gGoodsId;
+    }
 
     public String getgSkuIds() {
         return gSkuIds;

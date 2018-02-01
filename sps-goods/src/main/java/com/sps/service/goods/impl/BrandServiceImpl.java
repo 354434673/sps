@@ -4,7 +4,11 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.goods.SpsBrandMapper;
+import com.sps.dao.goods.SpsGoodCategoryMapper;
+import com.sps.dao.goods.SpsGoodsMapper;
 import org.sps.entity.goods.SpsBrand;
+import org.sps.entity.goods.SpsGoodCategory;
+import org.sps.entity.goods.SpsGoods;
 import org.sps.service.goods.BrandService;
 
 import javax.annotation.Resource;
@@ -13,16 +17,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service(timeout = 1200000,group="dianfu-dev")
+@Service(timeout = 1200000, group = "dianfu-dev")
 public class BrandServiceImpl implements BrandService {
     @Resource
     private SpsBrandMapper spsBrandMapper;
+    @Resource
+    private SpsGoodsMapper SpsGoodsMapper;
+    @Resource
+    private SpsGoodCategoryMapper spsGoodCategoryMapper;
+
     @Override
     public void saveOrUpdate(SpsBrand brand) {
-        if(brand.getBrandId()!=null){
+        if (brand.getBrandId() != null) {
+
             brand.setBrandUpdateTime(new Date());
             spsBrandMapper.update(brand);
-        }else{
+        } else {
             brand.setBrandDeleteFlag(0);
             brand.setBrandCreateTime(new Date());
             spsBrandMapper.insert(brand);
@@ -47,14 +57,27 @@ public class BrandServiceImpl implements BrandService {
         map.put("brandName", brandName);
         map.put("brandEnglishName", brandEnglishName);
         //分页
-        PageHelper.startPage(page,limit);
+        PageHelper.startPage(page, limit);
         List<SpsBrand> brandList = spsBrandMapper.findListAllWithMap(map);
+        if (brandList != null && brandList.size() > 0) {
+            for (SpsBrand list : brandList) {
+                String[] ids = list.getBrandCategoryIds().split(",");
+                if (ids != null && ids.length > 0) {
+                    String categoryNames = "";
+                    for (String id : ids) {
+                        SpsGoodCategory category = spsGoodCategoryMapper.findById(Integer.valueOf(id));
+                        categoryNames += ">" + category.getCategoryName();
+                    }
+                    list.setBrandCategoryNames(categoryNames.substring(1));
+                }
+            }
+        }
         PageInfo pageInfo = new PageInfo(brandList);
         //放入map
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("code", 0);
         hashMap.put("msg", "获取成功");
-        hashMap.put("count",  pageInfo.getTotal());
+        hashMap.put("count", pageInfo.getTotal());
         hashMap.put("data", brandList.size() != 0 ? brandList : null);
         return hashMap;
     }

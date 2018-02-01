@@ -50,4 +50,11 @@ public interface GoodsService extends Serializable{
      * @return
      */
     Integer getEntityBySearchLimit(String gSpuNo);
+
+    /**
+     * 审核中的商品
+     * @param map
+     * @return
+     */
+    List<SpsGoods> findAuditList(Map<String, Object> map);
 }

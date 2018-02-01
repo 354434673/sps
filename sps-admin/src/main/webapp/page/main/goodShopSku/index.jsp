@@ -60,27 +60,49 @@
     </div>
     <table id="goodsList" lay-filter="goodsTables"></table>
 </div>
-<script type="text/html" id="date">
-    {{#
-    var da = d.gUpdateTime;
-    da = new Date(da);
-    var year = da.getFullYear();
-    var month = da.getMonth()+1;
-    var date = da.getDate();
-    var hours= da.getHours();
-    var minutes= da.getMinutes();
-    var seconds= da.getSeconds();
-    console.log([year,month,date,hours,minutes,seconds].join('-'));
-    var fn = function(){
-    return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
-    };
-    }}
-    {{ fn() }}
-</script>
 <script type="text/javascript"
         src="<%=path%>/page/layui/layui.js"></script>
 <script>
-    layui.use(['table', 'laypage', 'laydate', 'layer'], function () {
+    layui.use(['table','form', 'laypage', 'laydate', 'layer'], function () {
+        layui.laytpl.toDateString = function(d, format){
+            if(d!=null){
+                var date = new Date(d || new Date())
+                    ,ymd = [
+                    this.digit(date.getFullYear(), 4)
+                    ,this.digit(date.getMonth() + 1)
+                    ,this.digit(date.getDate())
+                ]
+                    ,hms = [
+                    this.digit(date.getHours())
+                    ,this.digit(date.getMinutes())
+                    ,this.digit(date.getSeconds())
+                ];
+                format = format || 'yyyy-MM-dd HH:mm:ss';
+                return format.replace(/yyyy/g, ymd[0])
+                    .replace(/MM/g, ymd[1])
+                    .replace(/dd/g, ymd[2])
+                    .replace(/HH/g, hms[0])
+                    .replace(/mm/g, hms[1])
+                    .replace(/ss/g, hms[2]);
+            }else {
+                return '--';
+            }
+        }
+        //数字前置补零
+        layui.laytpl.digit = function(num, length, end){
+            var str = '';
+            num = String(num);
+            length = length || 2;
+            for(var i = num.length; i < length; i++){
+                str += '0';
+            }
+            return num < Math.pow(10, length) ? str + (num|0) : num;
+        };
+
+
+
+
+        var form = layui.form;
         var table = layui.table;
         var laypage = layui.laypage;
         var layer = layui.layer
@@ -96,7 +118,7 @@
         });
         table.render({
             elem: '#goodsList'
-            , height: 350
+            , height: 500
             , url: '<%=path%>/goodShopSku/goodsList' //数据接口
             , id: 'gId'
             , page: true
@@ -106,9 +128,10 @@
                 , {field: 'spuName', title: '商品名称', align: 'center'}
                 , {field: 'gSize', title: '尺寸', align: 'center', width: 150}
                 , {field: 'gColor', title: '颜色', align: 'center', width: 150}
+                , {field: 'gQuantity', title: '起订量', align: 'center', width: 150}
                 , {field: 'gPrice', title: '价格', width: 230, align: 'center',edit: 'text',event: 'setPrice', style:'cursor: pointer;' }
                 , {field: 'gStock', title: '库存', width: 230, align: 'center',edit: 'text',event: 'setStock', style:'cursor: pointer;'}
-                , {field: 'gUpdateTime', templet: '#date', title: '最后修改时间', width: 230, align: 'center'}
+                , {field: 'gUpdateTime', title: '最后修改时间', templet: '<div>{{ layui.laytpl.toDateString(d.gUpdateTime) }}</div>'}
             ]], done: function (res, page, count) {
 
                 $("[data-field='flowStatus']").children().each(function () {
@@ -136,14 +159,24 @@
             var goodsNo = $('#goodsNo').val();
             var goodsName = $('#goodsName').val();
             var spec = $('#spec').val();
+            if(endTime!=''&&startTime!=''){
+                if(endTime<startTime){
+                    layer.msg("结束时间不能小于开始时间")
+                    return false;
+                }
+            }
             table.reload('gId', {
                 where: {goodSku: goodsNo, goodsName: goodsName, endTime: endTime, startTime: startTime, spec: spec}
             });
         })
         //重置
         $('#resetGoods').on('click', function () {
-            $('#goodsName').val('')
-            $('#skuNo').val('')
+            $('#endTime').val('');
+            $('#startTime').val('');
+            $('#goodsNo').val('');
+            $('#goodsName').val('');
+            $('#spec').val('');
+            form.render("select")
         });
         $("#submit").click(function(){
             var goods = table.cache.gId;

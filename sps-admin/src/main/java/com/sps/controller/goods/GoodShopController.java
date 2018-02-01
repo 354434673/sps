@@ -176,7 +176,7 @@ public class GoodShopController {
                 }
                 String[] idList = skuIds.split(",");
                 Map<String, Object> map1 = new HashMap<>();
-                map1.put("gNo", goods.getgSpuNo());
+                map1.put("gGoodNo", goods.getgSpuNo());
                 map1.put("list", idList);
                 //查询不在核心商户表中的平台sku
                 List<SpsGoodSku> spsGoodSkuList = skuService.findList(map1);
@@ -228,11 +228,19 @@ public class GoodShopController {
                 String[] idList = ids.split(",");
                 for (String id : idList) {
                     SpsGoodShop goods = goodService.findEntityById(Integer.valueOf(id));
+                    if("1".equals(state )){
+                        if ("1".equals(goods.getgGroundingFlag() )) {
+                            resultMap.put("msg", "已有商品为上架状态，请重新选择");
+                            resultMap.put("flag", 3);
+                            return resultMap;
+                        }
+                    }
                     if (goods.getgStatus() != 2) {
                         resultMap.put("msg", "请选择审核通过的商品");
                         resultMap.put("flag", 2);
                         return resultMap;
                     }
+
                 }
                 for (String id : idList) {
                     goodService.setSale(Integer.valueOf(id), state);
@@ -261,6 +269,12 @@ public class GoodShopController {
                 String[] idList = ids.split(",");
                 for (String id : idList) {
                     SpsGoodShop goods = goodService.findEntityById(Integer.valueOf(id));
+                    if("1".equals(state )) {
+                        if ("1".equals(goods.getgRecommend())) {
+                            resultMap.put("flag", 3);
+                            return resultMap;
+                        }
+                    }
                     if (goods.getgStatus() != 2) {
                         resultMap.put("msg", "请选择审核通过的商品");
                         resultMap.put("flag", 2);

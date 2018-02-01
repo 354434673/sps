@@ -8,7 +8,7 @@ public class SpsGoodShopSku implements Serializable {
     private String spuName;
 
     private Integer gId;
-
+    private Integer gGoodsId;
     private Integer gGid;
 
     private String gColor;
@@ -34,6 +34,14 @@ public class SpsGoodShopSku implements Serializable {
 
     private Date gUpdateTime;
 
+
+    public Integer getgGoodsId() {
+        return gGoodsId;
+    }
+
+    public void setgGoodsId(Integer gGoodsId) {
+        this.gGoodsId = gGoodsId;
+    }
 
     public String getSpuName() {
         return spuName;

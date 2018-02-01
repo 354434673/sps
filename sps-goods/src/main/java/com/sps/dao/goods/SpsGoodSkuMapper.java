@@ -3,6 +3,7 @@ package com.sps.dao.goods;
 
 import com.sps.dao.goods.base.BaseDaoImpl;
 import org.springframework.stereotype.Repository;
+import org.sps.entity.goods.SpsGoodShopSku;
 import org.sps.entity.goods.SpsGoodSku;
 
 import java.util.List;
@@ -22,5 +23,9 @@ public class SpsGoodSkuMapper extends BaseDaoImpl<SpsGoodSku, Integer> {
 
     public List<SpsGoodSku> findList(Map<String, Object> map) {
         return super.selectList("getGoodList", map);
+    }
+
+    public int updateByGoodsId(SpsGoodSku spsGoodSku) {
+        return super.updateByValue("updateGoodSkuDelete", spsGoodSku);
     }
 }

@@ -59,7 +59,7 @@ public class GoodSkuServiceImpl implements GoodSkuService {
         map.put("goodsName", goodsName);
         map.put("gAuditStatus", auditStatus);
         map.put("spuNo", spuNo);
-        map.put("size", size);
+        map.put("spec", size);
         //分页
         PageHelper.startPage(page, limit);
         List<SpsGoodSku> goodsList = spsGoodSkuMapper.findList(map);

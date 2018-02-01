@@ -34,12 +34,22 @@ public class SpsGoodSku implements Serializable {
 
     private Integer gDeleteFlag;
 
+    private String gGoodNo;
 
     private BigDecimal gBeforePrice;
 
     private Date gAuditTime;
 
     private Integer gAuditStatus;
+
+
+    public String getgGoodNo() {
+        return gGoodNo;
+    }
+
+    public void setgGoodNo(String gGoodNo) {
+        this.gGoodNo = gGoodNo;
+    }
 
     public BigDecimal getgBeforePrice() {
         return gBeforePrice;

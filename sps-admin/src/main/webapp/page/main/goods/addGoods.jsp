@@ -27,7 +27,7 @@
 </head>
 <body>
 <div style="padding: 40px">
-    <h3>品牌信息</h3>
+    <h3>商品信息</h3>
     <hr>
     <div class="layui-form layui-form-pane">
         <input type="hidden" name="goodsId" id="goodsId" value="${goodsId}">
@@ -123,7 +123,7 @@
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">包装清单</label>
+            <label class="layui-form-label">*包装清单</label>
             <div class="layui-input-block">
                 <textarea placeholder="请输入内容" name="gRemark"   lay-verify="gRemark"  id="gRemark" class="layui-textarea"></textarea>
             </div>
@@ -219,6 +219,33 @@
                 layer.msg("请选择到三级分类！");
                 return false;
             }
+            var i = 0;
+            $('#content tr').each(function () {
+                if($(this).find("td:eq(0)").html()!=''){
+                    i++
+                }
+            })
+            if(i == 0){
+                layer.msg("请填写规格信息");
+                return false;
+            }
+            if ($('#gDpic').val() == "") {
+                layer.msg("详情图不能为空！");
+                return false;
+            }
+            if ($('#gPic').val() == "") {
+                layer.msg("主图不能为空！");
+                return false;
+            }
+            if (layedit.getContent(index) == "") {
+                layer.msg("商品描述不能为空！");
+                return false;
+            }
+            if (layedits.getContent(indexes) == "") {
+                layer.msg("包装清单不能为空！");
+                return false;
+            }
+
             if (post_flag) return; //如果正在提交则直接返回，停止执行
             post_flag = true;//标记当前状态为正在提交状态\
             if (type) {
@@ -277,6 +304,32 @@
             var names= $('#gCategoryNames').val().split('>')
             if(names.length<3){
                 layer.msg("请选择到三级分类！");
+                return false;
+            }
+            var i = 0;
+            $('#content tr').each(function () {
+                if($(this).find("td:eq(0)").html()!=''){
+                    i++
+                }
+            })
+            if(i == 0){
+                layer.msg("请填写规格信息");
+                return false;
+            }
+            if ($('#gDpic').val() == "") {
+                layer.msg("详情图不能为空！");
+                return false;
+            }
+            if ($('#gPic').val() == "") {
+                layer.msg("主图不能为空！");
+                return false;
+            }
+            if (layedit.getContent(index) == "") {
+                layer.msg("商品描述不能为空！");
+                return false;
+            }
+            if (layedits.getContent(indexes) == "") {
+                layer.msg("包装清单不能为空！");
                 return false;
             }
             if (post_flag) return; //如果正在提交则直接返回，停止执行
@@ -498,7 +551,6 @@
                         $('#gCategoryIds').val(json.goods.gCategoryIds);
                         $('#gCategoryNames').val(json.goods.gCategoryNames);
                         $("#showCategory").html(json.goods.gCategoryNames);
-
                         /* $("#gBrandId").find("option[text="+json.goods.gBrandId+"]").attr("selected",true);*/
                         $('#gSpuName').val(json.goods.gSpuName);
                         $('#gSpuNo').val(json.goods.gSpuNo);
@@ -674,7 +726,7 @@
                 "<tr >" +
                 "<td > " + gColor + "</td>" +
                 "<td >" + gSize + "</td>" +
-                "<td >" + no + -+gNo + "</td>" +
+                "<td >" + no + '-'+gNo + "</td>" +
                 "<td >" + gPrice + "</td>" +
                 "<td >" + gType + "</td>" +
                 "<td >" + gScale + "</td>" +
@@ -749,8 +801,11 @@
             } else if ($(this).find("td:eq(4)").html() == "按金额") {
                 waveType = "0";
             }
+            var no = $(this).find("td:eq(2)").html();
+            var goodNo = no.split("-")[0];
             $.ajax({
                 data: {
+                    gGoodNo:goodNo,
                     gAuditStatus:1,
                     gType: waveType,
                     gBprice: bprice,
@@ -793,8 +848,11 @@
             } else if ($(this).find("td:eq(4)").html() == "按金额") {
                 waveType = "0";
             }
+            var no = $(this).find("td:eq(2)").html();
+            var goodNo = no.split("-")[0];
             $.ajax({
                 data: {
+                    gGoodNo:goodNo,
                     gAuditStatus:0,
                     gType: waveType,
                     gBprice: bprice,
@@ -831,8 +889,8 @@
             success: function (result) {
                 if (result.flag == '1') {
                     $("#showCategory").html(result.name);
-                    $("#gCategoryIds").val(id)
-                    $("#gCategoryNames").val(result.name)
+                    $("#gCategoryIds").val(result.ids);
+                    $("#gCategoryNames").val(result.name);
                     getBrand(id);
 
                 } else {

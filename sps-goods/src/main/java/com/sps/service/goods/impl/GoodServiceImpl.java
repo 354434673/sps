@@ -3,11 +3,8 @@ package com.sps.service.goods.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sps.dao.goods.SpsGoodSkuMapper;
-import com.sps.dao.goods.SpsGoodsAlbumMapper;
-import com.sps.dao.goods.SpsGoodsMapper;
-import org.sps.entity.goods.SpsGoods;
-import org.sps.entity.goods.SpsGoodsAlbum;
+import com.sps.dao.goods.*;
+import org.sps.entity.goods.*;
 import org.sps.service.goods.GoodsService;
 
 import javax.annotation.Resource;
@@ -24,6 +21,12 @@ public class GoodServiceImpl implements GoodsService {
     private SpsGoodSkuMapper spsGoodSkuMapper;
     @Resource
     private SpsGoodsAlbumMapper spsGoodsAlbumMapper;
+    @Resource
+    private SpsGoodCategoryMapper spsGoodCategoryMapper;
+    @Resource
+    private SpsGoodShopMapper spsGoodShopMapper;
+    @Resource
+    private SpsGoodShopSkuMapper spsGoodShopSkuMapper ;
 
     @Override
     public void saveOrUpdate(SpsGoods goods) {
@@ -60,16 +63,36 @@ public class GoodServiceImpl implements GoodsService {
 
     @Override
     public List<SpsGoods> findList(Map<String, Object> map) {
+        map.put("flowStatus", "3");
         return spsGoodsMapper.findListAllWithMap(map);
     }
 
     @Override
     public void falseDeletion(Integer id) {
+        //删除平台商品
         SpsGoods goods = new SpsGoods();
         goods.setgId(id);
         goods.setgDeleteFlag(1);
+        goods.setgUpdateTime(new Date());
         spsGoodsMapper.update(goods);
-
+        //逻辑删除平台sku下的sku
+        SpsGoodSku spsGoodSku = new SpsGoodSku();
+        spsGoodSku.setgDeleteFlag(1);
+        spsGoodSku.setgUpdateTime(new Date());
+        spsGoodSku.setgGid(id);
+        spsGoodSkuMapper.updateByGoodsId(spsGoodSku);
+        //逻辑删除核心商户的商品
+        SpsGoodShop spsGoodShop = new SpsGoodShop();
+        spsGoodShop.setgUpdateTime(new Date());
+        spsGoodShop.setgDeleteFlag(1);
+        spsGoodShop.setgGoodsId(id);
+        spsGoodShopMapper.updateByGoodsId(spsGoodShop);
+        //逻辑删除核心商户sku的商品sku
+        SpsGoodShopSku spsGoodShopSku = new SpsGoodShopSku();
+        spsGoodShopSku.setgUpdateTime(new Date());
+        spsGoodShopSku.setgDeleteFlag(1);
+        spsGoodShopSku.setgGoodsId(id);
+        spsGoodShopSkuMapper.updateByGoodsId(spsGoodShopSku);
     }
 
     @Override
@@ -81,6 +104,19 @@ public class GoodServiceImpl implements GoodsService {
         //分页
         PageHelper.startPage(page, limit);
         List<SpsGoods> goodsList = spsGoodsMapper.findListAllWithMap(map);
+        if (goodsList != null && goodsList.size() > 0) {
+            for (SpsGoods list : goodsList) {
+                String[] ids = list.getgCategoryIds().split(",");
+                if (ids != null && ids.length > 0) {
+                    String categoryNames = "";
+                    for (String id : ids) {
+                        SpsGoodCategory category = spsGoodCategoryMapper.findById(Integer.valueOf(id));
+                        categoryNames += ">" + category.getCategoryName();
+                    }
+                    list.setgCategoryNames(categoryNames.substring(1));
+                }
+            }
+        }
         PageInfo pageInfo = new PageInfo(goodsList);
         //放入map
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -99,5 +135,10 @@ public class GoodServiceImpl implements GoodsService {
     @Override
     public Integer getEntityBySearchLimit(String gSpuNo) {
         return spsGoodsMapper.getEntityBySearchLimit(gSpuNo);
+    }
+
+    @Override
+    public List<SpsGoods> findAuditList(Map<String, Object> map) {
+        return spsGoodsMapper.findListAllWithMap(map);
     }
 }

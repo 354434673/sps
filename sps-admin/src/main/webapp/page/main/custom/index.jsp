@@ -66,12 +66,12 @@
         });
         table.render({
             elem: '#customList'
-            ,height: 350
+            ,height: 500
             ,url: '<%=path%>/customCategory/customCategoryList' //数据接口
             ,id:'customId'
             ,page:true
             ,cols: [[ //表头
-                {field: 'customId', title: 'ID', sort: true,width:50,align:'center'}
+                {type: 'numbers'}
                 ,{field: 'customName', title: '分类名称',align:'center'}
                 ,{field: 'customWide', title: '优先级', width:230, align:'center'}
                 ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}

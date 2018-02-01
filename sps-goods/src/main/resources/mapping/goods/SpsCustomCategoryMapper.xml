@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="SpsCustomCategory">
     <id column="custom_id" jdbcType="INTEGER" property="customId" />
     <result column="custom_name" jdbcType="VARCHAR" property="customName" />
-    <result column="custom_wide" jdbcType="VARCHAR" property="customWide" />
+    <result column="custom_wide" jdbcType="INTEGER" property="customWide" />
     <result column="custom_delete_flag" jdbcType="INTEGER" property="customDeleteFlag" />
     <result column="custom_create_time" jdbcType="TIMESTAMP" property="customCreateTime" />
     <result column="custom_update_time" jdbcType="TIMESTAMP" property="customUpdateTime" />
@@ -26,7 +26,7 @@
     insert into sps_custom_category (custom_id, custom_name, custom_wide, 
       custom_delete_flag, custom_create_time, custom_update_time
       )
-    values (#{customId,jdbcType=INTEGER}, #{customName,jdbcType=VARCHAR}, #{customWide,jdbcType=VARCHAR}, 
+    values (#{customId,jdbcType=INTEGER}, #{customName,jdbcType=VARCHAR}, #{customWide,jdbcType=INTEGER},
       #{customDeleteFlag,jdbcType=INTEGER}, #{customCreateTime,jdbcType=TIMESTAMP}, #{customUpdateTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -80,7 +80,7 @@
         custom_name = #{customName,jdbcType=VARCHAR},
       </if>
       <if test="customWide != null">
-        custom_wide = #{customWide,jdbcType=VARCHAR},
+        custom_wide = #{customWide,jdbcType=INTEGER},
       </if>
       <if test="customDeleteFlag != null">
         custom_delete_flag = #{customDeleteFlag,jdbcType=INTEGER},
@@ -97,7 +97,7 @@
   <update id="updateByPrimaryKey" parameterType="spsCustomCategory">
     update sps_custom_category
     set custom_name = #{customName,jdbcType=VARCHAR},
-      custom_wide = #{customWide,jdbcType=VARCHAR},
+      custom_wide = #{customWide,jdbcType=INTEGER},
       custom_delete_flag = #{customDeleteFlag,jdbcType=INTEGER},
       custom_create_time = #{customCreateTime,jdbcType=TIMESTAMP},
       custom_update_time = #{customUpdateTime,jdbcType=TIMESTAMP}
@@ -113,6 +113,7 @@
       and custom_name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
     </if>
     AND custom_delete_flag = 0
+    order by custom_wide asc ,  custom_update_time desc
   </select>
   <select id="findById" parameterType="int" resultMap="BaseResultMap">
     select

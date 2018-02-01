@@ -60,8 +60,8 @@
         src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
     <a class="layui-btn layui-btn-mini" lay-event="detail">详情</a>
-    <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
-    <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-mini update"  lay-event="edit" >修改</a>
+    <a class="layui-btn layui-btn-mini layui-btn-danger delete " lay-event="del">删除</a>
 </script>
 <!-- 进行数据渲染 -->
 <script type="text/html" id="roleTpl">
@@ -81,7 +81,7 @@
         });
         table.render({
             elem: '#goodsList'
-            ,height: 350
+            ,height: 500
             ,url: '<%=path%>/goods/goodsList' //数据接口
             ,id:'gId'
             ,page:true
@@ -96,11 +96,19 @@
                 $("[data-field='flowStatus']").children().each(function () {
                     if ($(this).text() == '0') {
                         $(this).text("待提交")
+                        $(this).parent().parent().find(".delete").show();
+                        $(this).parent().parent().find(".update").show();
                     } else if ($(this).text() == '1') {
                         $(this).text("审核中")
+                        $(this).parent().parent().find(".update").hide();
+                        $(this).parent().parent().find(".delete").hide();
                     } else if ($(this).text() == '2') {
+                        $(this).parent().parent().find(".update").show();
+                        $(this).parent().parent().find(".delete").show();
                         $(this).text("审核不通过")
                     } else if ($(this).text() == '3') {
+                        $(this).parent().parent().find(".update").show();
+                        $(this).parent().parent().find(".delete").show();
                         $(this).text("审核通过")
                     }
                 })

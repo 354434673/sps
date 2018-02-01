@@ -28,14 +28,14 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">*分类名称：</label>
             <div class="layui-input-inline">
-                <input id="customName" type="text" name="customName"  lay-verify="required" placeholder="请输入分类名称"
+                <input id="customName" type="text" name="customName"  lay-verify="required|customName" placeholder="请输入分类名称"
                        autocomplete="off" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*优先级：</label>
             <div class="layui-input-inline">
-                <input id="customWide" name="customWide" type="text" lay-verify="required"
+                <input id="customWide" name="customWide" type="text" lay-verify="required|number|customWide"
                        placeholder="请输入优先级" autocomplete="off" class="layui-input">
             </div>
 
@@ -43,7 +43,7 @@
         <div class="layui-form-item" align="center">
             <button class="layui-btn" lay-filter="submitCategory" lay-submit  id="submit">立即提交
             </button>
-            <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
+            <button id="back" class="layui-btn layui-btn-primary" >返回</button>
         </div>
     </div>
 </div>
@@ -55,6 +55,9 @@
 <script type="text/javascript">
     $(function () {
 
+    })
+    $(document).on("click", "#back", function () {
+        parent.layer.closeAll();
     })
     layui.use(['form', 'table'], function () {
         var form = layui.form;
@@ -85,8 +88,9 @@
                         if (result.flag == '1') {
                             layer.msg("操作成功",{icon: 1});
                             setTimeout(function () {
-                                parent.layer.closeAll();
-                               /* window.location.href = "<%=path%>/page/main/custom/index.jsp";*/
+                                parent.window.location.href = "<%=path%>/page/main/custom/index.jsp";
+                                //parent.layer.closeAll();
+
                             }, 1000);
                         } else {
                             layer.msg("操作失败");
@@ -96,24 +100,18 @@
 
         })
 
+
         //自定义验证规则
         form.verify({
-            //验证只包含汉字
-            IsChineseCharacter: function (value) {
-                var regex = /^[\u4e00-\u9fa5]+$/;
-                if (!value.match(regex)) {
-                    return '请输入正确的姓名';
+
+            customWide: function (value) {
+                if (value.length >10) {
+                    return '优先级最多为10位';
                 }
             },
-            minLength: function (value) {
-                if (value.length < 6) {
-                    return '最少为6位';
-                }
-            },
-            verify: function (value) {
-                var repass = $('#password').val();
-                if (value != repass) {
-                    return '两次输入的密码不一致!';
+            customName: function (value) {
+                if (value.length > 50) {
+                    return '分类名称最多为50位';
                 }
             },
         });

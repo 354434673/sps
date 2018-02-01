@@ -106,6 +106,12 @@
                 </tbody>
             </table>
         </div>
+        <div id="showStatus" style="display: none">
+            <div class="layui-form-item   ">
+                <label class="layui-form-label">拒绝意见：</label>
+                    <span id="opinion"></span>
+            </div>
+        </div>
     </div>
 </div>
 </div>
@@ -170,6 +176,10 @@
                                     "</tr>");
                             })
                         }
+                    }
+                    if (json.goods.gOpinion !== undefined) {
+                        $('#opinion').html(json.goods.gOpinion);
+                        $('#showStatus').show();
                     }
                 } else {
                     //layer.msg("操作失败")

@@ -108,8 +108,8 @@
             <div class="layui-form-item ">
                 <label class="layui-form-label">意见：</label>
                 <div class="layui-input-inline">
-                    <input id="gOpinion" type="text" name="gOpinion" style="border-style:none ;margin-left: 10px;"
-                           class="layui-input">
+                    <textarea id="gOpinion" type="text" name="gOpinion" style="width: 1000px;height: 200px; border-style:none ;margin-left: 10px;"
+                              class="layui-input"></textarea>
                 </div>
             </div>
         </div>
@@ -144,6 +144,7 @@
                     if (json.goods != null) {
 
                         $('#gOpinion').val(json.goods.gOpinion);
+                        $('#gOpinion').attr({"disabled": "disabled"});
                         $('#firstCategoryName').val(json.firstCategory);
                         $('#twoCategoryName').val(json.twoCategory);
                         $('#threeCategoryName').val(json.threeCategory);

@@ -67,40 +67,6 @@
 <%--<div id="div" style="   padding-top: 40px;padding-left: 45px;"><input type="radio" name="gType" value="1" checked>按比例
     <input type="radio" name="gType" value="0">按金额
 </div>--%>
-<script type="text/html" id="date">
-    {{#
-    var da = d.gUpdateTime;
-    da = new Date(da);
-    var year = da.getFullYear();
-    var month = da.getMonth()+1;
-    var date = da.getDate();
-    var hours= da.getHours();
-    var minutes= da.getMinutes();
-    var seconds= da.getSeconds();
-    console.log([year,month,date,hours,minutes,seconds].join('-'));
-    var fn = function(){
-    return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
-    };
-    }}
-    {{ fn() }}
-</script>
-<script type="text/html" id="date1">
-    {{#
-    var da = d.gAuditTime;
-    da = new Date(da);
-    var year = da.getFullYear();
-    var month = da.getMonth()+1;
-    var date = da.getDate();
-    var hours= da.getHours();
-    var minutes= da.getMinutes();
-    var seconds= da.getSeconds();
-    console.log([year,month,date,hours,minutes,seconds].join('-'));
-    var fn = function(){
-    return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
-    };
-    }}
-    {{ fn() }}
-</script>
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="gType" class="switch"  value="{{d.gType}}" lay-skin="switch" lay-filter="gType" lay-text="金额|比例"  {{ d.gType == 0 ? 'checked' : '' }}>
    <%-- <input type="checkbox" name="gType" value="{{d.gType}}" lay-skin="switch" lay-text="金额|比例" lay-filter="gType" {{ d.gType == 0 ? 'checked' : '' }}>--%>
@@ -109,6 +75,46 @@
         src="<%=path%>/page/layui/layui.all.js"></script>
 <script>
     layui.use(['form', 'table', 'laypage', 'laydate', 'layer'], function () {
+        //时间戳的处理
+        layui.laytpl.toDateString = function(d, format){
+            if(d!=null){
+                var date = new Date(d || new Date())
+                    ,ymd = [
+                    this.digit(date.getFullYear(), 4)
+                    ,this.digit(date.getMonth() + 1)
+                    ,this.digit(date.getDate())
+                ]
+                    ,hms = [
+                    this.digit(date.getHours())
+                    ,this.digit(date.getMinutes())
+                    ,this.digit(date.getSeconds())
+                ];
+                format = format || 'yyyy-MM-dd HH:mm:ss';
+                return format.replace(/yyyy/g, ymd[0])
+                    .replace(/MM/g, ymd[1])
+                    .replace(/dd/g, ymd[2])
+                    .replace(/HH/g, hms[0])
+                    .replace(/mm/g, hms[1])
+                    .replace(/ss/g, hms[2]);
+            }else {
+                return '--';
+            }
+
+        }
+
+        //数字前置补零
+        layui.laytpl.digit = function(num, length, end){
+            var str = '';
+            num = String(num);
+            length = length || 2;
+            for(var i = num.length; i < length; i++){
+                str += '0';
+            }
+            return num < Math.pow(10, length) ? str + (num|0) : num;
+        };
+
+
+
         var table = layui.table;
         var laypage = layui.laypage;
         var layer = layui.layer
@@ -160,7 +166,7 @@
         });
         table.render({
             elem: '#goodList'
-            , height: 350
+            , height: 500
             , url: '<%=path%>/goodSku/goodSkuList' //数据接口
             , id: 'gId'
             , page: true
@@ -170,6 +176,7 @@
                 , {field: 'supName', title: '商品名称', width: 150, align: 'center'}
                 , {field: 'gSize', title: '尺寸', align: 'center', width: 150}
                 , {field: 'gColor', title: '颜色', align: 'center', width: 150}
+                , {field: 'gBeforePrice', title: '修改前的价格', align: 'center', width: 150}
                 , {field: 'gPrice', title: '基准价', width: 150, align: 'center', edit: 'text', style: 'cursor: pointer;'}
                 , {field: 'gId', title: '颜色', align: 'center', width: 150}
                   ,{field:'gType', title:'波动方式', width:185, templet: '#switchTpl', unresize: true}
@@ -177,9 +184,9 @@
                 , {field: 'gScale', title: '波动值', width: 150, align: 'center', edit: 'text', style: 'cursor: pointer;'},
                 {field: 'gAprice', title: '波动起', width: 130, align: 'center'}
                 ,{field: 'gBprice', title: '波动末', width: 130, align: 'center'}
-                ,{field: 'gAuditStatus', title: '状态', width: 130, align: 'center'}
-                , {field: 'gUpdateTime', templet: '#date', title: '最后修改时间', width: 230, align: 'center'}
-                , {field: 'gAuditTime', templet: '#date1', title: '最后审核时间', width: 230, align: 'center'}
+                ,{field: 'gAuditStatus', title: '状态', width: 130, align: 'center'},
+                {field: 'gUpdateTime', title: '最后修改时间', width: 220,templet: '<div>{{ layui.laytpl.toDateString(d.gUpdateTime) }}</div>'}
+                , {field: 'gAuditTime', templet: '<div>{{ layui.laytpl.toDateString(d.gAuditTime) }}</div>', title: '最后审核时间', width: 230, align: 'center'}
             ]], done: function (res, page, count) {
                 $("[data-field='gType']").children().each(function () {
                     if ($(this).text() == '0') {
@@ -219,6 +226,7 @@
         })
         //重置
         $('#resetGoods').on('click', function () {
+            $('#spuNo').val('');
             $('#goodsName').val('')
             $('#skuNo').val('')
             $('#size').val('')

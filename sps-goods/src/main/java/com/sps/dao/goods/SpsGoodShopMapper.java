@@ -32,4 +32,8 @@ public class SpsGoodShopMapper extends BaseDaoImpl<SpsGoodShop, Integer> {
     public List<SpsGoodShop> findForceGoodsList(Map<String, Object> map) {
         return super.selectList("findForceGoodsList", map);
     }
+
+    public int updateByGoodsId(SpsGoodShop spsGoodShop) {
+        return super.updateByValue("updateGoodShopDelete", spsGoodShop);
+    }
 }

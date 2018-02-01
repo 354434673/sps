@@ -97,7 +97,20 @@
         window.location.href="<%=path%>/category/toAddOrEdit";
     });
     function toUpdate(nodeId) {
-        window.location.href="<%=path%>/category/toAddOrEdit?id="+nodeId;
+        $.ajax({
+            data: {id:nodeId},//提交的数据
+            url: "<%=path%>/category/checkCategory",//提交连接
+            type: 'post',
+            dataType: 'json',
+            success: function (result) {
+                if (result.flag == '1') {
+                    window.location.href="<%=path%>/category/toAddOrEdit?id="+nodeId;
+                } else if (result.flag == '2') {
+                    layer.msg("已有审核中商品在使用该分类，请重新选择！");
+                }
+            }
+        })
+
     }
     function toDetail(nodeId) {
         window.location.href="<%=path%>/category/findEntity?id="+nodeId;

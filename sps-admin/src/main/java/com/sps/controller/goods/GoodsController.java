@@ -6,14 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.sps.entity.goods.SpsBrand;
-import org.sps.entity.goods.SpsGoodSku;
-import org.sps.entity.goods.SpsGoods;
-import org.sps.entity.goods.SpsGoodsAlbum;
-import org.sps.service.goods.BrandService;
-import org.sps.service.goods.GoodSkuService;
-import org.sps.service.goods.GoodsAlbumService;
-import org.sps.service.goods.GoodsService;
+import org.sps.entity.goods.*;
+import org.sps.service.goods.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +25,8 @@ public class GoodsController {
     private BrandService brandService;
     @Reference(check=false,group="dianfu-dev")
     private GoodsAlbumService goodsAlbumService;
+    @Reference(check=false,group="dianfu-dev")
+    private GoodCategoryService goodCategoryService;
 
 
     /**
@@ -144,6 +140,16 @@ public class GoodsController {
         try {
             if (id != null) {
                 SpsGoods goods = goodService.findEntityById(id);
+                //拼接分类名称
+                if(!"".equals(goods.getgCategoryIds())){
+                    String categoryNames = "";
+                    String[] ids = goods.getgCategoryIds().split(",");
+                    for (String categoryId : ids) {
+                        SpsGoodCategory category = goodCategoryService.findEntityById(Integer.valueOf(categoryId));
+                        categoryNames += ">" + category.getCategoryName();
+                    }
+                    goods.setgCategoryNames(categoryNames.substring(1));
+                }
                 if(goods.getgBrandId()!=null){
                     //查询商品品牌信息
                     SpsBrand spsBrand = brandService.findEntityById(goods.getgBrandId());
@@ -162,6 +168,7 @@ public class GoodsController {
                 List<SpsGoodsAlbum> albumList = goodsAlbumService.findList(map);
                 if(albumList!=null&&albumList.size()>0){
                     for(SpsGoodsAlbum list : albumList){
+                        //1为详情图 0为主图
                         if(list.getAlbumType()==1){
                             detailList.add(list);
                         }else if(list.getAlbumType()==0){
@@ -195,7 +202,9 @@ public class GoodsController {
     public Map<String, Object> delGoods(Integer id) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            goodService.falseDeletion(id);
+            if(id!=null){
+                goodService.falseDeletion(id);
+            }
             resultMap.put("flag", 1);
         } catch (Exception e) {
             e.printStackTrace();

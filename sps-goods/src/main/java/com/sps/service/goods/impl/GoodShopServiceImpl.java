@@ -180,6 +180,8 @@ public class GoodShopServiceImpl implements GoodShopService {
         map.put("shopName", shopName);
         map.put("shopNumber", shopNumber);
         map.put("goodsName", goodsName);
+        //只查询上架审核通过的
+        map.put("status", 2);
         map.put("spuNo", spuNo);
         if (endTime != null && !"".equals(endTime)) {
             map.put("endTime", endTime + " 23:59:59");

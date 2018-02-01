@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.sps.entity.goods.SpsBrand;
+import org.sps.entity.goods.SpsGoods;
 import org.sps.service.goods.BrandService;
+import org.sps.service.goods.GoodsService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +21,8 @@ import java.util.Map;
 public class BrandController {
     @Reference(check=false,group="dianfu-dev")
     private BrandService brandService;
+    @Reference(check=false,group="dianfu-dev")
+    private GoodsService goodsService;
 
     /**
      * 进入商品分类列表
@@ -101,12 +105,57 @@ public class BrandController {
 
 
     @RequestMapping(value = "/findEntity")
+    @ResponseBody
     public Map<String, Object> findEntity(Integer id) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
             if (id != null) {
+                //修改之前判断是否有审核中的品牌存在
+                Map<String, Object> map = new HashMap<>();
+                map.put("flowStatus", 1);
+                List<SpsGoods> goodsList = goodsService.findAuditList(map);
+                if(goodsList!=null&&goodsList.size()>0){
+                    for(SpsGoods  goods:goodsList){
+                        if(goods.getgBrandId().equals(id)){
+                            resultMap.put("flag", 2);
+                            return resultMap;
+                        }
+                    }
+                }
                 SpsBrand spsBrand = brandService.findEntityById(id);
                 resultMap.put("spsBrand", spsBrand);
+                resultMap.put("flag", 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("flag", 0);
+            resultMap.put("msg", "操作失败");
+        }
+        return resultMap;
+    }
+
+    /**
+     * 校验是否有使用中的品牌
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/checkBrand")
+    @ResponseBody
+    public Map<String, Object> checkBrand(Integer id) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            if (id != null) {
+                //删除之前判断是否有商品绑定的品牌存在
+                Map<String, Object> map = new HashMap<>();
+                List<SpsGoods> goodsList = goodsService.findAuditList(map);
+                if(goodsList!=null&&goodsList.size()>0){
+                    for(SpsGoods  goods:goodsList){
+                        if(goods.getgBrandId().equals(id)){
+                            resultMap.put("flag", 2);
+                            return resultMap;
+                        }
+                    }
+                }
                 resultMap.put("flag", 1);
             }
         } catch (Exception e) {

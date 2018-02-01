@@ -24,12 +24,12 @@
 <div style="margin: 15px;">
     <div class="layui-form layui-form-pane">
         <div class="layui-form-item">
-            <label class="layui-form-label">核心商户名称:</label>
+            <label class="layui-form-label" style="width: 125px">核心商户名称:</label>
             <div class="layui-input-inline">
                 <input id="shopName" type="text" name="shopName" lay-verify="" placeholder="请输入核心商户名称"
                        autocomplete="off" class="layui-input">
             </div>
-            <label class="layui-form-label">核心商户账号:</label>
+            <label class="layui-form-label" style="width: 125px">核心商户账号:</label>
             <div class="layui-input-inline">
                 <input id="shopNum" type="text" name="shopName" lay-verify="" placeholder="请输入核心商户账号"
                        autocomplete="off" class="layui-input">
@@ -101,7 +101,49 @@
         {{ fn() }}
     </script>
     <script>
-        layui.use(['table', 'laypage','laydate', 'layer'], function () {
+        layui.use(['table', 'form','laypage','laydate', 'layer'], function () {
+
+
+
+            //时间戳的处理
+            layui.laytpl.toDateString = function(d, format){
+                if(d!=null){
+                    var date = new Date(d || new Date())
+                        ,ymd = [
+                        this.digit(date.getFullYear(), 4)
+                        ,this.digit(date.getMonth() + 1)
+                        ,this.digit(date.getDate())
+                    ]
+                        ,hms = [
+                        this.digit(date.getHours())
+                        ,this.digit(date.getMinutes())
+                        ,this.digit(date.getSeconds())
+                    ];
+                    format = format || 'yyyy-MM-dd HH:mm:ss';
+                    return format.replace(/yyyy/g, ymd[0])
+                        .replace(/MM/g, ymd[1])
+                        .replace(/dd/g, ymd[2])
+                        .replace(/HH/g, hms[0])
+                        .replace(/mm/g, hms[1])
+                        .replace(/ss/g, hms[2]);
+                }else {
+                    return '--';
+                }
+
+            }
+
+            //数字前置补零
+            layui.laytpl.digit = function(num, length, end){
+                var str = '';
+                num = String(num);
+                length = length || 2;
+                for(var i = num.length; i < length; i++){
+                    str += '0';
+                }
+                return num < Math.pow(10, length) ? str + (num|0) : num;
+            };
+
+            var form = layui.form;
             var table = layui.table;
             var laypage = layui.laypage;
             var layer = layui.layer
@@ -116,7 +158,7 @@
             });
             table.render({
                 elem: '#goodsList'
-                , height: 350
+                , height: 500
                 , url: '<%=path%>/forceGood/goodsList' //数据接口
                 , id: 'gId'
                 , page: true
@@ -126,10 +168,10 @@
                     ,{field: 'adminNum', title: '核心商户账号', width: 150, align: 'center'}
                     ,{field: 'companyName', title: '核心商户名称', width: 150, align: 'center'}
                     , {field: 'categoryName', title: '自定义分类', width: 100, align: 'center'}
-                    , {field: 'gRecommend', title: '是否推荐', width: 80, align: 'center',}
-                    , {field: 'gUpdateTime',  templet:'#date', title: '最后修改时间', width: 150, align: 'center'}
+                    , {field: 'gRecommend', title: '是否推荐', width: 110, align: 'center',}
+                    ,{field: 'gUpdateTime', title: '最后修改时间',width: 180, templet: '<div>{{ layui.laytpl.toDateString(d.gUpdateTime) }}</div>'}
                     , {field: 'gGroundingFlag', title: '商品状态', width: 150, align: 'center'}
-                    , {field: 'gStatus', title: '流程状态', width: 150, align: 'center'}
+                  /*  , {field: 'gStatus', title: '流程状态', width: 150, align: 'center'}*/
                  /*   , {field: 'gStatus', title: '流程状态', width: 150, align: 'center'}*/
                     ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
                 ]], done: function (res, page, count) {
@@ -176,14 +218,27 @@
                 var grounding = $('#grounding').val();
                 var spuNo = $('#spuNo').val();
                 var status = $('#status').val();
+                if(endTime!=''&&startTime!=''){
+                    if(endTime<startTime){
+                        layer.msg("结束时间不能小于开始时间")
+                        return false;
+                    }
+                }
                 table.reload('gId', {
                     where: { goodsName: goodsName,endTime:endTime,startTime:startTime,shopStatus:grounding,flowStatus:status,shopName:shopName,shopNumber:shopNum,spuNo:spuNo}
                 });
             })
             //重置
             $('#resetGoods').on('click', function () {
-                $('#goodsName').val('')
-                $('#skuNo').val('')
+                $('#shopName').val('');
+                $('#shopNum').val('');
+                $('#endTime').val('');
+                $('#startTime').val('');
+                $('#goodsName').val('');
+                $('#grounding').val('');
+                $('#spuNo').val('');
+                $('#status').val('');
+                form.render('select')
             })
             //监听工作条
             table.on('tool(goodsTables)', function (obj) {

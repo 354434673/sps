@@ -61,6 +61,7 @@
                        placeholder="小图标" class="layui-input"/>
                 <button onclick="checkImgType()">上传图片</button>
             </div>
+            <span style="color: red">提示:尺寸是1：1 大小200k以内</span>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*大图标：</label>
@@ -69,6 +70,7 @@
                        class="layui-input"/>
                 <button onclick="checkImgType1()">上传图片</button>
             </div>
+            <span style="color: red">提示:尺寸是1：1 大小200k以内</span>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">品牌描述</label>
@@ -79,7 +81,7 @@
         <div class="layui-form-item" align="center">
             <button class="layui-btn" lay-filter="submitCategory" lay-submit  id="submit">立即提交
             </button>
-            <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
+            <button id="back" class="layui-btn layui-btn-primary" >返回</button>
         </div>
     </div>
 </div>
@@ -232,6 +234,9 @@
         });
 
     }
+    $(document).on("click", "#back", function () {
+        parent.layer.closeAll();
+    })
 
     function initTree() {
         $.ajax({

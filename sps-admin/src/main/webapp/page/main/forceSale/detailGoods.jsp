@@ -105,11 +105,12 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="layui-form-item ">
-                <label class="layui-form-label">强制下架意见：</label>
+            <div class="layui-form-item" id="forceOpinion" style="display: none">
+                <label class="layui-form-label" style="width: 150px">强制下架意见：</label>
                 <div class="layui-input-inline">
-                    <input id="gForceOpinion" type="text" name="gForceOpinion" style="border-style:none ;margin-left: 10px;"
-                           class="layui-input">
+                    <textarea id="gForceOpinion" type="text" name="gForceOpinion"
+                              style="width: 1000px;height: 200px; border-style:none ;margin-left: 10px;padding-top: 10px;"
+                              class="layui-input"></textarea>
                 </div>
             </div>
         </div>
@@ -142,19 +143,22 @@
             success: function (json) {
                 if (json.flag == "1") {
                     if (json.goods != null) {
-
-                        $('#gForceOpinion').val(json.goods.gForceOpinion);
+                        if(json.goods.gForceOpinion!=null){
+                            $('#forceOpinion').show();
+                            $('#gForceOpinion').val(json.goods.gForceOpinion);
+                            $('#gForceOpinion').attr({"disabled": "disabled"});
+                        }
                         $('#firstCategoryName').val(json.firstCategory);
                         $('#twoCategoryName').val(json.twoCategory);
                         $('#threeCategoryName').val(json.threeCategory);
                         $('#gCategorySelf').val(json.customName);
-                        $('#gSpuName').val(json.goods.gSpuName+'-'+json.goods.gSpuNo);
-                       if(json.goods.gRecommend="1"){
-                           $('#recommendFlag').val("是");
-                       } else {
-                           $('#recommendFlag').val("否");
-                       }
-                        if(json.goods.gGroundingFlag="1"){
+                        $('#gSpuName').val(json.goods.gSpuName + '-' + json.goods.gSpuNo);
+                        if (json.goods.gRecommend = "1") {
+                            $('#recommendFlag').val("是");
+                        } else {
+                            $('#recommendFlag').val("否");
+                        }
+                        if (json.goods.gGroundingFlag = "1") {
                             $('#groundingFlag').val("是");
                         } else {
                             $('#groundingFlag').val("否");

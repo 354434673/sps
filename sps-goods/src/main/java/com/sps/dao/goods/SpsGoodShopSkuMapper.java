@@ -24,4 +24,8 @@ public class SpsGoodShopSkuMapper extends BaseDaoImpl<SpsGoodShopSku, Integer> {
     public List<SpsGoodShopSku> findList(Map<String, Object> map) {
         return super.selectList("findSkuList", map);
     }
+
+    public int updateByGoodsId(SpsGoodShopSku spsGoodShopSku) {
+        return super.updateByValue("updateGoodShopSkuDelete", spsGoodShopSku);
+    }
 }

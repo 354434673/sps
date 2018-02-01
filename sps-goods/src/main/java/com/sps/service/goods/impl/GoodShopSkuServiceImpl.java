@@ -80,6 +80,7 @@ public class GoodShopSkuServiceImpl implements GoodShopSkuService {
     public HashMap<String, Object> findSkuList(Integer page, Integer limit, String goodsName, String spec, String goodSku, String endTime, String startTime) {
         Map<String, Object> map = new HashMap<>();
         map.put("goodsName", goodsName);
+        map.put("spec", spec);
         map.put("goodSku", goodSku);
         if (endTime != null && !"".equals(endTime)) {
             map.put("endTime", endTime + " 23:59:59");

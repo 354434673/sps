@@ -242,7 +242,7 @@
         //提交
         var post_flag = false; //设置一个对象来控制是否进入AJAX过程
         form.on('submit(submitCategory)', function (data) {
-            if ($("#categoryParentId").val() == "") {
+            if ($("#showCategory").html() == "选择分类") {
                 layer.msg("请选择上级分类！");
                 return false;
             }

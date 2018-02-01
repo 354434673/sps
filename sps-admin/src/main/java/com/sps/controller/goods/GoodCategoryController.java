@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.sps.entity.goods.SpsGoodCategory;
+import org.sps.entity.goods.SpsGoods;
 import org.sps.service.goods.GoodCategoryService;
+import org.sps.service.goods.GoodsService;
 
 import java.util.*;
 
@@ -20,6 +22,11 @@ import java.util.*;
 public class GoodCategoryController {
     @Reference(check=false,group="dianfu-dev")
     GoodCategoryService goodCategoryService;
+    @Reference(check=false,group="dianfu-dev")
+    GoodsService goodsService;
+
+
+
 
 
     /**
@@ -126,6 +133,7 @@ public class GoodCategoryController {
     public String toUpdateProduct(Integer id, Model model) {
         try {
             if (id != null) {
+
                 SpsGoodCategory spsGoodCategory = goodCategoryService.findEntityById(id);
                 model.addAttribute("spsGoodCategory", spsGoodCategory);
                 if (spsGoodCategory != null && spsGoodCategory.getCategoryParentId() != null) {
@@ -138,6 +146,54 @@ public class GoodCategoryController {
             model.addAttribute("flag", 0);
         }
         return "goodsCategory/addCategory";
+    }
+
+    /**
+     * 校验是否有审核中的商品在使用该分类
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/checkCategory")
+    @ResponseBody
+    public Map<String, Object> checkCategory(Integer id) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            if (id != null) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("flowStatus", 1);
+                List<SpsGoods> goodsList = goodsService.findAuditList(map);
+                if(goodsList!=null&&goodsList.size()>0){
+                    for(SpsGoods  goods:goodsList){
+                        String[] ids = goods.getgCategoryIds().split(",");
+                        //判断数组是否包含id
+                        if(useLoop(ids,id.toString())){
+                            resultMap.put("flag", 2);
+                            return resultMap;
+                        }
+                    }
+                }
+                resultMap.put("flag", 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("flag", 0);
+            resultMap.put("msg", "操作失败");
+        }
+        return resultMap;
+    }
+
+    /**
+     * 判断数组中是否包含某一元素
+     * @param arr
+     * @param targetValue
+     * @return
+     */
+    public static boolean useLoop(String[] arr, String targetValue) {
+        for(String s: arr){
+            if(s.equals(targetValue))
+                return true;
+        }
+        return false;
     }
 
     /**

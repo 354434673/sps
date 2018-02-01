@@ -56,7 +56,7 @@
             </div>
             <label class="layui-form-label">流程状态:</label>
             <div class="layui-input-inline">
-                <select   id="status" lay-filter="channelFlowState">
+                <select id="status" lay-filter="channelFlowState">
                     <option value=""></option>
                     <option value="0">待提交</option>
                     <option value="1">审核中</option>
@@ -100,25 +100,46 @@
         <a class="layui-btn layui-btn-mini" lay-event="edit">修改</a>
         <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
     </script>
-    <script type="text/html" id="date">
-        {{#
-        var da = d.gUpdateTime;
-        da = new Date(da);
-        var year = da.getFullYear();
-        var month = da.getMonth()+1;
-        var date = da.getDate();
-        var hours= da.getHours();
-        var minutes= da.getMinutes();
-        var seconds= da.getSeconds();
-        console.log([year,month,date,hours,minutes,seconds].join('-'));
-        var fn = function(){
-        return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
-        };
-        }}
-        {{ fn() }}
-    </script>
     <script>
-        layui.use(['table', 'laypage','laydate', 'layer'], function () {
+        layui.use(['table','form', 'laypage', 'laydate', 'layer'], function () {
+            //时间戳的处理
+            layui.laytpl.toDateString = function(d, format){
+                if(d!=null){
+                    var date = new Date(d || new Date())
+                        ,ymd = [
+                        this.digit(date.getFullYear(), 4)
+                        ,this.digit(date.getMonth() + 1)
+                        ,this.digit(date.getDate())
+                    ]
+                        ,hms = [
+                        this.digit(date.getHours())
+                        ,this.digit(date.getMinutes())
+                        ,this.digit(date.getSeconds())
+                    ];
+                    format = format || 'yyyy-MM-dd HH:mm:ss';
+                    return format.replace(/yyyy/g, ymd[0])
+                        .replace(/MM/g, ymd[1])
+                        .replace(/dd/g, ymd[2])
+                        .replace(/HH/g, hms[0])
+                        .replace(/mm/g, hms[1])
+                        .replace(/ss/g, hms[2]);
+                }else {
+                    return '--';
+                }
+
+            }
+
+            //数字前置补零
+            layui.laytpl.digit = function(num, length, end){
+                var str = '';
+                num = String(num);
+                length = length || 2;
+                for(var i = num.length; i < length; i++){
+                    str += '0';
+                }
+                return num < Math.pow(10, length) ? str + (num|0) : num;
+            };
+            var form = layui.form;
             var table = layui.table;
             var laypage = layui.laypage;
             var layer = layui.layer
@@ -138,7 +159,7 @@
 
             table.render({
                 elem: '#goodsList'
-                , height: 350
+                , height: 500
                 , url: '<%=path%>/goodShop/goodsList' //数据接口
                 , id: 'gId'
                 , page: true
@@ -147,8 +168,9 @@
                     /*    ,{field:'id', width:80, title: '', sort: true}*/
                     , {field: 'gSpuName', title: '商品名称', width: 230, align: 'center'}
                     , {field: 'categoryName', title: '自定义分类', width: 230, align: 'center'}
-                    , {field: 'gRecommend', title: '是否推荐', width: 230, align: 'center',}
-                    , {field: 'gUpdateTime', templet:'#date', title: '最后修改时间', width: 230, align: 'center'}
+                    , {field: 'gRecommend', title: '是否推荐', width: 230, align: 'center'},
+                    {field: 'gUpdateTime', title: '最后修改时间', templet: '<div>{{ layui.laytpl.toDateString(d.gUpdateTime) }}</div>'}
+                 /*   , {field: 'gUpdateTime', templet: '#date', title: '最后修改时间', width: 230, align: 'center'}*/
                     , {field: 'gGroundingFlag', title: '商品状态', width: 163, align: 'center'}
                     , {field: 'gStatus', title: '流程状态', width: 164, align: 'center'}
                 ]], done: function (res, page, count) {
@@ -191,8 +213,6 @@
                             $(this).text("未生效")
                         }
                     })
-
-
                 }
             });
 
@@ -223,8 +243,13 @@
                             success: function (json) {
                                 if (json.flag == "1") {
                                     layer.msg("上架成功");
+                                    setTimeout(function () {
+                                        window.location.href = "<%=path%>/page/main/goodShop/index.jsp";
+                                    }, 1000);
                                 } else if (json.flag == "2") {
                                     layer.msg("请选择审核通过的商品");
+                                }else if (json.flag == "3") {
+                                    layer.msg("已有商品为上架状态，请重新选择");
                                 }
                             }
                         });
@@ -252,6 +277,9 @@
                             success: function (json) {
                                 if (json.flag == "1") {
                                     layer.msg("下架成功");
+                                    setTimeout(function () {
+                                        window.location.href = "<%=path%>/page/main/goodShop/index.jsp";
+                                    }, 1000);
                                 } else if (json.flag == "2") {
                                     layer.msg("请选择审核通过的商品");
                                 }
@@ -281,8 +309,13 @@
                             success: function (json) {
                                 if (json.flag == "1") {
                                     layer.msg("推荐成功");
+                                    setTimeout(function () {
+                                        window.location.href = "<%=path%>/page/main/goodShop/index.jsp";
+                                    }, 1000);
                                 } else if (json.flag == "2") {
                                     layer.msg("请选择审核通过的商品");
+                                }else if (json.flag == "3") {
+                                    layer.msg("已有商品为推荐状态，请重新选择");
                                 }
                             }
                         });
@@ -310,6 +343,9 @@
                             success: function (json) {
                                 if (json.flag == "1") {
                                     layer.msg("取消推荐成功");
+                                    setTimeout(function () {
+                                        window.location.href = "<%=path%>/page/main/goodShop/index.jsp";
+                                    }, 1000);
                                 } else if (json.flag == "2") {
                                     layer.msg("请选择审核通过的商品");
                                 }
@@ -340,6 +376,9 @@
                             success: function (json) {
                                 if (json.flag == "1") {
                                     layer.msg("取消推荐成功");
+                                    setTimeout(function () {
+                                        window.location.href = "<%=path%>/page/main/goodShop/index.jsp";
+                                    }, 1000);
                                 } else if (json.flag == "2") {
                                     layer.msg("请选择审核通过的商品");
                                 }
@@ -365,6 +404,10 @@
                 update: function () { //获取选中数据
                     var checkStatus = table.checkStatus('gId')
                         , data = checkStatus.data;
+                    if(data[0].gStatus==1){
+                        layer.msg("审核中商品不允许修改，请重新选择！");
+                        return false;
+                    }
                     list = "";
                     if (checkStatus.data.length > 1) {
                         layer.msg("请选择一条商品信息")
@@ -374,7 +417,6 @@
                     if (list != null && list != "") {
                         window.location.href = "<%=path%>/goodShop/toAddOrEdit?id=" + list;
                     }
-
                 }
 
 
@@ -402,15 +444,32 @@
                 var goodsName = $('#goodsName').val();
                 var grounding = $('#grounding').val();
                 var status = $('#status').val();
+                if(endTime!=''&&startTime!=''){
+                    if(endTime<startTime){
+                        layer.msg("结束时间不能小于开始时间")
+                        return false;
+                    }
+                }
+
 
                 table.reload('gId', {
-                    where: { goodsName: goodsName,endTime:endTime,startTime:startTime,shopStatus:grounding,flowStatus:status}
+                    where: {
+                        goodsName: goodsName,
+                        endTime: endTime,
+                        startTime: startTime,
+                        shopStatus: grounding,
+                        flowStatus: status
+                    }
                 });
             })
             //重置
             $('#resetGoods').on('click', function () {
-                $('#goodsName').val('')
-                $('#skuNo').val('')
+                $('#endTime').val('');
+                $('#startTime').val('');
+                $('#goodsName').val('');
+                $('#grounding').val('');
+                $('#status').val('');
+                form.render('select')
             })
             //监听工作条
             table.on('tool(goodsTables)', function (obj) {
