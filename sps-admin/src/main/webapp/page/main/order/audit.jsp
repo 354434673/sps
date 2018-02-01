@@ -54,10 +54,6 @@
 		    <div class="layui-input-inline">
 		    	<div class="layui-form-mid layui-word-aux" id="address"> </div>
 		    </div>
-		     <label class="layui-form-label" style="width:152px">订单申请日期：</label>
-		    <div class="layui-input-inline">
-		    	<div class="layui-form-mid layui-word-aux" id="createtime"> </div>
-		    </div>
 		 </div>
 		 <div class="layui-form-item" >
 		    <label class="layui-form-label" style="width:152px">核心商户账号：</label>
@@ -158,8 +154,6 @@
 					  $('#servicescale').html(result.data[0].servicescale)//代销服务费率
 					  $('#servicemoney').html(result.data[0].servicemoney)//代销服务费
 					  $('#name').html(result.data[0].name)//店主名称
-					  var date = getDate(result.data[0].createtime)
-					  $('#createtime').html(date)//订单申请日期
 				  }
 			  })
 			  table.render({
@@ -245,17 +239,6 @@
 				  }else{
 					  layer.msg('按钮不合法',{icon: 2});
 				  }
-			  }
-			  
-			  function getDate(data){
-				    da = new Date(data);
-				    var year = da.getFullYear();
-				    var month = da.getMonth()+1;
-				    var date = da.getDate();
-				    var hours = da.getHours();
-				    var minutes = da.getMinutes();
-				    var seconds = da.getSeconds();
-				    return [year,month,date].join('-')+"  "+[hours,minutes,seconds].join(':');
 			  }
 			});
 	</script>
