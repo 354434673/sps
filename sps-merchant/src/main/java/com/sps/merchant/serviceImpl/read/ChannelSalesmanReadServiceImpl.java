@@ -42,6 +42,9 @@ public class ChannelSalesmanReadServiceImpl implements ChannelSalesmanReadServic
 			if(!(salesmanEmail == null || salesmanEmail.equals(""))){
 				createCriteria.andSalesmanEmailLike("%"+salesmanEmail+"%");
 			}
+			if(!(bei1 == null || bei1.equals(""))){
+				createCriteria.andBei1EqualTo(bei1);
+			}
 			long count = 0;
 			List<SpsChannelSalesman> selectByExample = null;
 			if(page != null&&limit!=null){
