@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelBankWriteMapper" >
+  <!-- <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelBank" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="b_name" property="name" jdbcType="VARCHAR" />
+    <result column="b_accounts" property="accounts" jdbcType="VARCHAR" />
+    <result column="b_identity" property="identity" jdbcType="VARCHAR" />
+    <result column="b_phone" property="phone" jdbcType="VARCHAR" />
+    <result column="b_createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="b_updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="b_bank " property="bank" jdbcType="VARCHAR" />
+    <result column="b_state" property="state" jdbcType="VARCHAR" />
+    <result column="b_remark" property="remark" jdbcType="VARCHAR" />
+    <result column="b_user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="standby1" property="standby1" jdbcType="VARCHAR" />
+    <result column="standby2" property="standby2" jdbcType="VARCHAR" />
+    <result column="standby3" property="standby3" jdbcType="VARCHAR" />
+  </resultMap> -->
+  <insert id="insertBlank" parameterType="org.sps.entity.merchant.SpsChannelBank" >
+    insert into sps_bank (id, b_name, b_accounts, b_identity,
+    b_phone,b_createtime,b_updatetime,b_bank,b_state,b_remark,b_user_id,channl_num)
+    values (
+    		 #{id,jdbcType=INTEGER},
+    		 #{name,jdbcType=VARCHAR},
+     		 #{accounts,jdbcType=VARCHAR},
+      		 #{identity,jdbcType=VARCHAR},
+    		 #{phone,jdbcType=VARCHAR},
+    		 #{createtime,jdbcType=TIMESTAMP},
+    		 #{updatetime,jdbcType=TIMESTAMP},
+    		 #{bank,jdbcType=VARCHAR},
+  			 #{state,jdbcType=VARCHAR},
+   			 #{remark,jdbcType=VARCHAR},
+   			 #{userId,jdbcType=VARCHAR},
+   			 #{channlNum.channlNum,jdbcType=VARCHAR}
+   			 )
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="String">
+  	delete from  sps_bank where b_user_id=#{userId}
+  </delete>
+  
+  <update id="updateByChannelBanl" parameterType="org.sps.entity.merchant.SpsChannelBank">
+  	update sps_bank
+    <set >
+      
+      <if test="name!= null" >
+        b_name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="accounts != null" >
+        b_accounts= #{accounts,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null" >
+        b_identity = #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        b_phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        b_createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        b_updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bank != null" >
+        b_bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        b_state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        b_remark = #{remark,jdbcType=VARCHAR},
+      </if>
+     </set> 
+      where   b_user_id = #{userId,jdbcType=VARCHAR}
+    
+  </update>
+  
+</mapper>
