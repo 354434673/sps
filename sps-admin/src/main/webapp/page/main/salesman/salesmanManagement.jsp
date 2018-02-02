@@ -82,6 +82,7 @@
   {{d.bei1}}
 {{#  } }}  
 </script>
+
 	<script>
 		layui.use(['table','laypage','layer'], function(){
 			  var table = layui.table;
