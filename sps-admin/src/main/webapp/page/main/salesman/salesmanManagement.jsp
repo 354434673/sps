@@ -73,15 +73,6 @@
     {{item.roleName}},
   {{#  }); }}
 </script>
-<script type="text/html" id="state">
-{{#  if(d.bei1 == 1){ }}
- 正常
-{{#  } else if(d.bei1 == 2){ }}
- 停用
-{{#  } else { }}
-  {{d.bei1}}
-{{#  } }}  
-</script>
 	<script>
 		layui.use(['table','laypage','layer'], function(){
 			  var table = layui.table;
@@ -112,7 +103,6 @@
 			      ,{field: 'salesmanPhone', title: '手机号', width:230, align:'center'}
 			      ,{field: 'salesmanEmail', title: '电子邮箱', width:230,align:'center'} 
 			      ,{field: 'salesmanCity', title: '城市', align:'center'}
-			      ,{field: 'bei1', title: '状态', align:'center',templet:'#state'}
 			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
