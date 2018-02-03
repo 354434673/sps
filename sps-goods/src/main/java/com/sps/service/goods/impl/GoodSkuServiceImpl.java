@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service(timeout = 1200000,group="dianfu-dev")
+@Service(timeout = 2000,group="dianfu")
 public class GoodSkuServiceImpl implements GoodSkuService {
     @Resource
     private SpsGoodSkuMapper spsGoodSkuMapper;

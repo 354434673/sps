@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.sps.entity.order.OrderGoods;
 import org.sps.entity.order.OrderGoodsVo;
+import org.sps.entity.order.SpsOrderLogistics;
 
 public interface OrderService extends Serializable{
 
@@ -76,6 +77,17 @@ public interface OrderService extends Serializable{
 	 * @return
 	 */
 	HashMap<String, Object> updateOrderFlag(String orderid,String flag,String remark);
-	
+	/**
+	 * 添加物流相关
+	 * @Title: insertLogistics   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param logistics
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月2日 下午2:09:00
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	HashMap<String, Object> insertLogistics(String flag, SpsOrderLogistics logistics);
 	
 }

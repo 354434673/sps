@@ -196,6 +196,13 @@
 		<legend>收款信息</legend>
 		</fieldset>
 		<!-- 收款信息开始 -->
+		<div>
+			<blockquote class="layui-elem-quote">
+				<a href="javascript:;" class="layui-btn layui-btn-warm" id="addBank">
+					<i class="layui-icon">&#xe608;</i> 新增
+				</a>
+			</blockquote>
+		</div>
 		<table id="gatherList" lay-filter="gatherTables"></table>
 		<!-- 收款信息结束 -->
 		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
@@ -502,7 +509,7 @@
 			  $('#realAddress').html(result.enterpriseCompanyRealitAddr)//实际地址
 			  $('#registerAddress').html(result.enterpriseCompanyRegisterAddr)//注册地址
 			  $('#enterpriseCompanyAbbreviation').html(result.enterpriseCompanyAbbreviation)//公司简称
-			  $('#enterpriseCorp').html(result.enterpriseBusinesslicenseNo)//法人代表
+			  $('#enterpriseCorp').html(result.enterpriseCorp)//法人代表
 			  $('#enterpriseOperatioTime').html(result.enterpriseOperatioTime)//经营年限
 			  $('#enterpriseEmployeeNum').html(result.enterpriseEmployeeNum)//员工人数
 		  }
@@ -554,6 +561,20 @@
 					  getBrand(result.businessBrand);
 				  }
 		  }) 
+		$('#addBank').on('click', function() {
+		  layer.open({
+			  type: 2, 
+			  area: ['75%', '70%'],//宽高
+			  content: ['addGather.jsp?type=1'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+			  cancel: function(index, layero){ 
+				  var data = $(layero).find("iframe")[0].contentWindow.gatherListJson;
+				  gatherListJson = data;
+				  table.reload('gather', {
+					  data:gatherListJson
+					});
+				}    
+		  }); 
+	  });
 	  function getProduct(ids){
 		  $.post({//获取主营业务
 			  url:'<%=path%>/category/getFistCategory',

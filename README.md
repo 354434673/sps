@@ -6,7 +6,7 @@
 2. artifactId
 		
 		sps-service ##接口
-		sps-service-impl ##接口实现,dubbo-privoder
+		sps-service-impl ##接口实现,dubbo-privoder(没啥用了)
 		
 		sps-parent ##父pom
 		

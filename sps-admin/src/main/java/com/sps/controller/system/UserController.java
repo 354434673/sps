@@ -34,7 +34,7 @@ public class UserController {
 	private UserService userService;
 	@Resource
 	private UserAndRoleService userAndRoleService;
-	@Reference(group="dianfu-dev")
+	@Reference(group="dianfu")
 	private ChannelReadService readService;
 	/**
 	 * 用户列表
@@ -204,7 +204,7 @@ public class UserController {
 		
 		return "login";
 	}
-	private String getNumForUserType(){
+	public String getNumForUserType(){
 		 Subject subject = SecurityUtils.getSubject();
 		//获取当前token中的用户
 		String userName = (String) subject.getPrincipal();

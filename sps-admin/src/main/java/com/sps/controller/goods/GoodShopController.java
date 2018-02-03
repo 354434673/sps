@@ -14,17 +14,17 @@ import java.util.*;
 @Controller
 @RequestMapping(value = "/goodShop")
 public class GoodShopController {
-    @Reference(check=false,group="dianfu-dev")
+    @Reference(check=false,group="dianfu")
     private GoodShopService goodService;
-    @Reference(check=false,group="dianfu-dev")
+    @Reference(check=false,group="dianfu")
     private GoodCategoryService goodCategoryService;
-    @Reference(check=false,group="dianfu-dev")
+    @Reference(check=false,group="dianfu")
     private GoodShopSkuService goodSkuService;
-    @Reference(check=false,group="dianfu-dev")
+    @Reference(check=false,group="dianfu")
     private BrandService brandService;
-    @Reference(check=false,group="dianfu-dev")
+    @Reference(check=false,group="dianfu")
     private CustomCategoryService customCategoryService;
-    @Reference(check=false,group="dianfu-dev")
+    @Reference(check=false,group="dianfu")
     private GoodSkuService skuService;
 
 

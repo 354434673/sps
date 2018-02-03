@@ -18,4 +18,17 @@ public interface ShopkeeperWriteService {
 	 * @throws
 	 */
 	public HashMap<String, Object> updateAccount(String shopkeeperCustomerid, SpsShopkeeperAccount account);
+	/**
+	 * 修改店主状态
+	 * @Title: updateState   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param shopkeeperCustomerid
+	 * @param: @param state
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月2日 上午11:50:30
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	public HashMap<String, Object> updateState(String shopkeeperCustomerid, Integer state);
 }

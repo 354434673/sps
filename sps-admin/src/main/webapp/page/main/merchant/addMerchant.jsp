@@ -685,6 +685,7 @@
 		 				enterpriseCorpIdcard:enterpriseCorpIdcard,
 		 				enterpriseOperatioTime:enterpriseOperatioTime,
 		 				enterpriseEmployeeNum:enterpriseEmployeeNum,
+		 				enterpriseCompanyAbbreviation:enterpriseCompanyAbbreviation,
 		 				//业务信息
 		 				businessProduct:businessProductArray.toString(),
 		 				businessType:businessTypeArray.toString(),
@@ -755,6 +756,12 @@
 				var regex = /^[\u4e00-\u9fa5]+$/;
 				if(!value.match(regex)) {
 					return '请输入正确的姓名';
+				}
+			},
+			IsEnglish: function(value) {
+				var regex = /^[A-Za-z]+$/;
+				if(!value.match(regex)) {
+					return '公司简称只能为字母';
 				}
 			},
 			//验证只包含汉字  
@@ -865,7 +872,7 @@
 		  layer.open({
 			  type: 2, 
 			  area: ['75%', '70%'],//宽高
-			  content: ['addGather.jsp'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+			  content: ['addGather.jsp?type=1'] ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 			  cancel: function(index, layero){ 
 				  var data = $(layero).find("iframe")[0].contentWindow.gatherListJson;
 				  gatherListJson = data;

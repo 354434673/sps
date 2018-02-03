@@ -41,13 +41,13 @@ import com.sps.util.CommonUtil;
 @Controller
 @RequestMapping(value="/merchant")
 public class MerchantController {
-	@Reference(check=false,group="dianfu-dev")
+	@Reference(check=false,group="dianfu")
 	private ChannelWriteService chanelWriteService;
-	@Reference(check=false,group="dianfu-dev")
+	@Reference(check=false,group="dianfu")
 	private ChannelReadService channelReadService;
-	@Reference(check=false,group="dianfu-dev")
+	@Reference(check=false,group="dianfu")
 	private ChannelPicUploadService uploadService;
-	@Reference(check=false,group="dianfu-dev")
+	@Reference(check=false,group="dianfu")
 	private ChannelPicReadService picReadService;
 	@Resource
 	private UserService userService;
@@ -91,10 +91,9 @@ public class MerchantController {
 		if(result.get("state").equals("success")){
 			SpsUser spsUser = new SpsUser();
 			spsUser.setUserUsername(openAccount.getOpenAdminNum());
-			spsUser.setUserPassword("123456");
 			spsUser.setUserName(openAccount.getOpenAdminNum());
 			spsUser.setUserPhone(openAccount.getOpenAdminPhone());
-			spsUser.setUserMark(1);
+			spsUser.setUserMark(1);//1为商户
 			userService.insertUser(spsUser);
 		}
 		return result;

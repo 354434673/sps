@@ -99,6 +99,13 @@
 		    	<div class="layui-form-mid layui-word-aux" id="servicemoney"> </div>
 		    </div>
 		 </div>
+		 <div class="layui-form-item" >
+		    <label class="layui-form-label" style="width:152px">首付比例：</label>
+		    <div class="layui-input-inline">
+		    	<div class="layui-form-mid layui-word-aux" id="scale"> </div>
+		    </div>
+
+		 </div>
       	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>商品信息</legend>
 		</fieldset>
@@ -160,6 +167,7 @@
 					  $('#name').html(result.data[0].name)//店主名称
 					  var date = getDate(result.data[0].createtime)
 					  $('#createtime').html(date)//订单申请日期
+					  $('#scale').html(result.data[0].scale)//订单申请日期
 				  }
 			  })
 			  table.render({
@@ -171,12 +179,13 @@
 				    ,cols: [[ //表头
 				      {field: 'sku', title: 'SKU编号', align:'center',sort:true}
 				      ,{field: 'skuname', title: '商品名称', align:'center'}
-				      ,{field: 'color', title: '规格', align:'center'}
+				      ,{field: 'color', title: '颜色', align:'center'}
+				      ,{field: 'memory', title: '尺寸', align:'center'}
 				      ,{field: 'price', title: '单价',align:'center'}
 				      ,{field: 'amount', title: '订货量',align:'center'}
 				      ,{field: 'summation', title: '金额',align:'center',sort:true}
-				      ,{field: 'scale', title: '首付比例',align:'center',sort:true}
-				      ,{field: 'payment', title: '首付',align:'center',sort:true}
+/* 				      ,{field: 'scale', title: '首付比例',align:'center',sort:true}
+				      ,{field: 'payment', title: '首付',align:'center',sort:true} */
 				    ]]
 				  });
 			  

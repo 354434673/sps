@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
+import org.sps.util.FinalData;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -89,7 +90,7 @@ public class UserServiceImpl implements UserService{
 				
 				String password = null;
 				
-				password = user.getUserPassword() == null ? "123456" : user.getUserPassword();
+				password = user.getUserPassword() == null ? Md5Util.PASSWORD : user.getUserPassword();
 				
 				String Md5Password = Md5Util.getMd5(password, salt);
 				
@@ -104,18 +105,18 @@ public class UserServiceImpl implements UserService{
 				int insertSelective = spsUserMapper.insertSelective(user);
 				if(insertSelective == 1){
 					map.put("msg", "添加成功");
-					map.put("state", "success");
+					map.put("state", FinalData.STATE_SUCCESS);
 				}else{
 					map.put("msg", "添加失败,联系管理员");
-					map.put("state", "error");
+					map.put("state", FinalData.STATE_ERROR);
 				}
 			}else{
 				map.put("msg", "用户重复");
-				map.put("state", "exist");
+				map.put("state", FinalData.STATE_EXIST);
 			}
 		} catch (Exception e) {
 			map.put("msg", "程序错误");
-			map.put("state", "error");
+			map.put("state", FinalData.STATE_ERROR);
 			e.printStackTrace();
 		}
 		return map;
@@ -130,7 +131,7 @@ public class UserServiceImpl implements UserService{
 		
 		String salt = Md5Util.getSalt(4);//4位盐
 		if(oldPassword==null||newPassword==null){//如果为空则重置密码
-			user.setUserPassword(Md5Util.getMd5("123456", salt));
+			user.setUserPassword(Md5Util.getMd5(Md5Util.PASSWORD, salt));
 			
 			user.setUserSalt(salt);
 			
@@ -158,11 +159,11 @@ public class UserServiceImpl implements UserService{
 				
 				map.put("msg", "修改成功");
 				map.put("icon", "1");
-				map.put("state", "success");
+				map.put("state", FinalData.STATE_SUCCESS);
 			}else{
 				map.put("msg", "原始密码错误");
 				map.put("icon", "2");
-				map.put("state", "error");
+				map.put("state", FinalData.STATE_ERROR);
 			}
 		}
 		return map;
@@ -187,11 +188,11 @@ public class UserServiceImpl implements UserService{
 			
 			map.put("msg", "用户信息修改成功");
 			map.put("icon", "1");
-			map.put("state", "success");
+			map.put("state", FinalData.STATE_SUCCESS);
 		} catch (Exception e) {
 			map.put("msg", "用户信息修改失败");
 			map.put("icon", "2");
-			map.put("state", "error");
+			map.put("state", FinalData.STATE_ERROR);
 			e.printStackTrace();
 		}
 		return map;
@@ -207,11 +208,11 @@ public class UserServiceImpl implements UserService{
 			spsUserMapper.updateByExampleSelective(record, example);
 			map.put("msg", "用户删除成功");
 			map.put("icon", "1");
-			map.put("state", "success");
+			map.put("state", FinalData.STATE_SUCCESS);
 		} catch (Exception e) {
 			map.put("msg", "用户删除失败");
 			map.put("icon", "2");
-			map.put("state", "error");
+			map.put("state", FinalData.STATE_ERROR);
 			e.printStackTrace();
 		}
 		return map;

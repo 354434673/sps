@@ -4,16 +4,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.sps.entity.order.OrderGoods;
+import org.sps.entity.order.SpsOrderLogistics;
 import org.sps.service.order.OrderService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.sps.service.user.ExpressService;
+import com.sps.util.CommonUtil;
 
 @Controller
 @RequestMapping("/order")
@@ -21,9 +28,10 @@ public class OrderController {
 
 	Logger logger=Logger.getLogger(this.getClass().getName());
 	
-	@Reference
+	@Reference(group = "dianfu")
 	OrderService orderService;
-	
+	@Resource
+	private ExpressService expressService;
 	
 	@RequestMapping("/showOrder.json")
 	@ResponseBody
@@ -133,6 +141,33 @@ public class OrderController {
 	public HashMap<String, Object> updateOrderFlag(String orderid,String flag,String remark){
 		HashMap<String, Object> updateOrderFlag = orderService.updateOrderFlag(orderid, flag, remark);
 		return updateOrderFlag;
+	}
+	@RequestMapping("/insertLogistics")
+	@ResponseBody
+	public HashMap<String, Object> insertLogistics(SpsOrderLogistics logistics, String flag){
+		String otherName = logistics.getLogisticsOther();
+		if(!(otherName.equals("")||otherName == null)){//物流配送中其他字段如果填了选项,则插入数据
+			expressService.insertExpress(otherName);
+		}
+		HashMap<String, Object> insertLogistics = orderService.insertLogistics(flag, logistics);
+		
+		return insertLogistics;
+	}
+	@RequestMapping("/uploadLogistics")
+	@ResponseBody
+	public HashMap<String, Object> uploadLogistics(@RequestParam(value = "file", required = false) MultipartFile file,
+			SpsOrderLogistics logistics, String orderid,String flag, HttpServletRequest request){
+		
+		if(file != null){//文件不为空则上传图片
+			String realPath = request.getSession().getServletContext().getRealPath("upload/"); //项目路径
+			
+			String filePath ="order/"+logistics.getOrderId()+"/";
+			
+			CommonUtil.uploadPicture(file, realPath+filePath, file.getName());
+		}
+		HashMap<String, Object> insertLogistics = orderService.insertLogistics(flag, logistics);
+		
+		return insertLogistics;
 	}
 	
 	/**

@@ -13,7 +13,7 @@ import org.sps.service.merchant.write.ChannelPicUploadService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.read.SpsChannelPicReadMapper;
 import com.sps.dao.merchant.write.SpsChannelPicWriteMapper;
-@Service(timeout=2000,group="dianfu-dev")
+@Service(timeout=2000,group="dianfu")
 public class ChannelPicWirteServiceImpl implements ChannelPicUploadService{
 	@Resource
 	private SpsChannelPicWriteMapper picWrite;

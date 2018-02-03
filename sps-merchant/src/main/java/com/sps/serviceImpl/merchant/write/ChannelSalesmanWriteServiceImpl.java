@@ -15,7 +15,7 @@ import org.sps.util.FinalData;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.read.SpsChannelSalesmanReadMapper;
 import com.sps.dao.merchant.write.SpsChannelSalesmanWriteMapper;
-@Service(timeout=2000,group="dianfu-dev")
+@Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteService{
 	@Resource

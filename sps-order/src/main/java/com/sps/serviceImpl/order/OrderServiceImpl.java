@@ -11,15 +11,18 @@ import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.order.Order;
 import org.sps.entity.order.OrderGoods;
 import org.sps.entity.order.OrderGoodsVo;
+import org.sps.entity.order.SpsOrderLogistics;
 import org.sps.service.order.OrderService;
+import org.sps.util.FinalData;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.order.OrderGoodsMapper;
 import com.sps.dao.order.OrderMapper;
+import com.sps.dao.order.SpsOrderLogisticsMapper;
 
-@Service(timeout = 2000)
+@Service(timeout = 2000,group="dianfu")
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
@@ -28,6 +31,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderGoodsMapper orderGoodsMapper;
+	
+	@Autowired
+	private SpsOrderLogisticsMapper mapper;
 
 	/**
 	 * 根据orderid查询订单order,只返回order相关的信息，不包含关联的orderGoods相关信息
@@ -392,6 +398,24 @@ public class OrderServiceImpl implements OrderService {
 			hashMap.put("count", result);
 			hashMap.put("state", "success");
 			break;
+		}
+		return hashMap;
+	}
+
+	@Override
+	public HashMap<String, Object> insertLogistics(String flag, SpsOrderLogistics logistics) {
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		try {
+			logistics.setLogisticsCreatTime(new Date());
+			logistics.setLogisticsUpdateTime(new Date());
+			mapper.insertSelective(logistics);
+			updateOrderFlag(logistics.getOrderId(), flag, null);
+			hashMap.put("msg", "成功");
+			hashMap.put("state", FinalData.STATE_SUCCESS);
+		} catch (Exception e) {
+			hashMap.put("msg", "失败");
+			hashMap.put("state", FinalData.STATE_ERROR);
+			e.printStackTrace();
 		}
 		return hashMap;
 	}

@@ -30,7 +30,7 @@ import com.sps.dao.merchant.write.SpsChannelGuaranteeWriteMapper;
 import com.sps.dao.merchant.write.SpsChannelLogisticsWriteMapper;
 import com.sps.dao.merchant.write.SpsChannelOpenAccountWriteMapper;
 import com.sps.dao.merchant.write.SpsChannelWriteMapper;
-@Service(timeout=2000,group="dianfu-dev")
+@Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelWriteServiceImpl implements ChannelWriteService{
 	@Resource
