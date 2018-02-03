@@ -72,5 +72,5 @@ public class SalesmanController {
 						salesmanEmail, bei1, page, limit);
 		
 		return salesmanList;
-	};
+	}
 }
