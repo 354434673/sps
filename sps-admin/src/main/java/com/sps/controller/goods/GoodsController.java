@@ -25,7 +25,7 @@ public class GoodsController {
     private BrandService brandService;
     @Reference(check=false,group="dianfu")
     private GoodsAlbumService goodsAlbumService;
-    @Reference(check=false,group="dianfu-dev")
+    @Reference(check=false,group="dianfu")
     private GoodCategoryService goodCategoryService;
 
 

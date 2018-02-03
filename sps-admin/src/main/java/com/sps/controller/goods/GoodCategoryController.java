@@ -22,7 +22,7 @@ import java.util.*;
 public class GoodCategoryController {
     @Reference(check=false,group="dianfu")
     GoodCategoryService goodCategoryService;
-    @Reference(check=false,group="dianfu-dev")
+    @Reference(check=false,group="dianfu")
     GoodsService goodsService;
 
 

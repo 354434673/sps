@@ -21,7 +21,7 @@ import java.util.Map;
 public class BrandController {
     @Reference(check=false,group="dianfu")
     private BrandService brandService;
-    @Reference(check=false,group="dianfu-dev")
+    @Reference(check=false,group="dianfu")
     private GoodsService goodsService;
 
     /**
