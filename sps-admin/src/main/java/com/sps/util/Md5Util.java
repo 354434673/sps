@@ -5,6 +5,7 @@ import java.util.Random;
 import org.apache.shiro.crypto.hash.Md5Hash;
 
 public class Md5Util {
+	public static final String PASSWORD = "12345678";
 	/**
 	 * @Title: getMd5   
 	 * @Description: md5加密,散列1024次

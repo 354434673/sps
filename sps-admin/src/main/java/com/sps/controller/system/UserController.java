@@ -34,7 +34,7 @@ public class UserController {
 	private UserService userService;
 	@Resource
 	private UserAndRoleService userAndRoleService;
-	@Reference(group="dianfu-dev")
+	@Reference(group="dianfu")
 	private ChannelReadService readService;
 	/**
 	 * 用户列表

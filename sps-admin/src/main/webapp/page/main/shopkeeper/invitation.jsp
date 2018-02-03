@@ -150,7 +150,7 @@
 			    elem: '#upload' //绑定元素
 			    ,accept:'file'
 			    ,exts:'xls|xlsx'
-			    ,url: '/upload/' //上传接口
+			    ,url: '<%=path %>/shopkeeper/importExcel' //上传接口
 			    ,done: function(res){
 			      //上传完毕回调
 			    }

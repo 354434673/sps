@@ -38,7 +38,7 @@
 	  <div class="layui-form-item">
 	    <label class="layui-form-label">*手机号：</label>
 	    <div class="layui-input-inline">
-	      <input id="salesmanPhone" type="text" name="salesmanPhone"  lay-verify="required|phone|max20Length" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+	      <input id="salesmanPhone" type="text" name="salesmanPhone"  lay-verify="required|isPhone|max20Length" placeholder="请输入手机号" autocomplete="off" class="layui-input">
 	    </div>
 	    <label class="layui-form-label">*电子邮箱：</label>
 	    <div class="layui-input-inline">
@@ -192,6 +192,12 @@
 				var repass = $('#password').val();
 				if(value != repass) {
 					return '两次输入的密码不一致!';
+				}
+			},
+			isPhone: function(value) {
+				var regex = /^1[3|4|5|8][0-9]\d{4,8}$/;
+				if(!value.match(regex)) {
+					return '手机号格式不正确!';
 				}
 			},
 			

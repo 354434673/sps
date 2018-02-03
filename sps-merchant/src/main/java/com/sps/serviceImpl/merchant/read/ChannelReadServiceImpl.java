@@ -36,7 +36,7 @@ import com.sps.dao.merchant.read.SpsChannelLogisticsReadMapper;
 import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
 
 
-@Service(timeout=2000,group="dianfu-dev")
+@Service(timeout=2000,group="dianfu")
 @Transactional(readOnly = true)
 public class ChannelReadServiceImpl implements ChannelReadService{
 	@Resource

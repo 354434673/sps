@@ -46,7 +46,7 @@ import com.sps.dao.shopkeeper.read.SpsShopkeeperReadMapper;
 import com.sps.dao.shopkeeper.read.SpsShopkeeperRepaymentReadMapper;
 import com.sps.dao.shopkeeper.read.SpsShopkeeperTakingReadMapper;
 
-@Service(timeout=2000,group="dianfu-dev")
+@Service(timeout=2000,group="dianfu")
 @Transactional(readOnly = true)
 public class ShopkeeperReadServiceImpl implements ShopkeeperReadService{
 	@Resource

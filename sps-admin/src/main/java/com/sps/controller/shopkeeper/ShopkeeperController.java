@@ -4,8 +4,10 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,12 +26,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 import org.sps.entity.shopkeeper.SpsShopkeeperAccount;
 import org.sps.service.shopkeeper.read.ShopkeeperReadService;
 import org.sps.service.shopkeeper.write.ShopkeeperWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.sps.util.CommonUtil;
 import com.sps.util.ExcelUtil;
 
 /**
@@ -43,17 +47,25 @@ import com.sps.util.ExcelUtil;
 @Controller
 @RequestMapping("/shopkeeper")
 public class ShopkeeperController{
-	@Reference(group = "dianfu-dev")
+	@Reference(group = "dianfu")
 	private ShopkeeperReadService readService;
-	@Reference(group = "dianfu-dev")
+	@Reference(group = "dianfu")
 	private ShopkeeperWriteService writeService;
 
 	/**
-	 * 查询店主列表 @Title: getShopkeeperList @Description:
-	 * TODO(这里用一句话描述这个方法的作用) @param: @param page @param: @param
-	 * limit @param: @param account @param: @param shopkeeperName @param: @param
-	 * shopkeeperState @param: @return @author YangNingSheng @date 2018年1月30日
-	 * 下午5:37:00 @return: HashMap<String,Object> @throws
+	 * 查询店主列表
+	 * @Title: getShopkeeperList   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param page
+	 * @param: @param limit
+	 * @param: @param account
+	 * @param: @param shopkeeperName
+	 * @param: @param shopkeeperState
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月2日 下午4:32:46
+	 * @return: HashMap<String,Object>      
+	 * @throws
 	 */
 	@RequestMapping("/getShopkeeperList.json")
 	public @ResponseBody HashMap<String, Object> getShopkeeperList(Integer page, Integer limit, String account,
@@ -159,6 +171,15 @@ public class ShopkeeperController{
 
 		return updateAccount;
 	}
+	
+	@RequestMapping("/updateState")
+	public @ResponseBody HashMap<String, Object> updateState(String shopkeeperCustomerid,
+			Integer state) {
+		
+		HashMap<String, Object> updateState = writeService.updateState(shopkeeperCustomerid, state);
+		
+		return updateState;
+	}
 	/**
 	 * 导出模板
 	 * @Title: exportExcel   
@@ -175,44 +196,30 @@ public class ShopkeeperController{
 	@ResponseBody
 	public Map<String, Object> exportExcel(HttpServletResponse response)
 			throws IOException {
-		String fileName ="店主邀请模板" + ".xls";
-		// 填充projects数据
-		String columnNames[] = { "店主名称*", "联系电话*" };
-		String keys[] = { "name", "phone" };// map中的key
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		try {
-			ExcelUtil.createWorkBook(keys, columnNames).write(os);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		byte[] content = os.toByteArray();
-		InputStream is = new ByteArrayInputStream(content);
-		// 设置response参数，可以打开下载页面
-		response.reset();
-		response.setContentType("application/vnd.ms-excel;charset=utf-8");
-		response.setHeader("Content-Disposition",
-				"attachment;filename=" + new String(fileName.getBytes(), "iso-8859-1"));
-		ServletOutputStream out = response.getOutputStream();
-		BufferedInputStream bis = null;
-		BufferedOutputStream bos = null;
-		try {
-			bis = new BufferedInputStream(is);
-			bos = new BufferedOutputStream(out);
-			byte[] buff = new byte[2048];
-			int bytesRead;
-			// Simple read/write loop.
-			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
-				bos.write(buff, 0, bytesRead);
-			}
-		} catch (final IOException e) {
-			throw e;
-		} finally {
-			if (bis != null)
-				bis.close();
-			if (bos != null)
-				bos.close();
-		}
-	    out.close();  
+		
+		ExcelUtil.exportExcel(response);
+		
+		return null;
+	}
+	/**
+	 * 
+	 * @Title: importExcel   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param file
+	 * @param: @return
+	 * @param: @throws IOException  
+	 * @author YangNingSheng    
+	 * @date 2018年2月2日 下午8:40:31
+	 * @return: Map<String,Object>      
+	 * @throws
+	 */
+	@RequestMapping(value = "/importExcel")
+	@ResponseBody
+	public Map<String, Object> importExcel(@RequestParam(value = "file", required = false) MultipartFile file)
+			throws IOException {
+		
+		List<ArrayList<String>> importExcel = new ExcelUtil().importExcel(file);
+		
 		return null;
 	}
 }

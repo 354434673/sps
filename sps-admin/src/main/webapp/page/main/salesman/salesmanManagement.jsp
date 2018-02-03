@@ -46,11 +46,11 @@
 				  <option value="2">停用</option>
 		      	</select>
 	        </div>  
+        </div>
 	         <div class="layui-form-item">
 			    	<button class="layui-btn layui-btn-primary" id="queryUser">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="resetUser">重置</button>
 	         </div>
-        </div>
 		<div>
 			<blockquote class="layui-elem-quote">
 				<a href="javascript:;" class="layui-btn layui-btn-warm" id="add">

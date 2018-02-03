@@ -44,7 +44,7 @@
   <div class="layui-form-item">
     <div class="layui-input-block">
       <button class="layui-btn" lay-submit lay-filter="submitUpdatePwd" id="updatePassword">立即提交</button>
-      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+      <button id="reset" class="layui-btn layui-btn-primary">重置</button>
     </div>
   </div>
 </div>
@@ -69,6 +69,9 @@ layui.use(['form','table'], function(){
 				})
 			  return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
 			});
+		$('#reset').click(function(){
+			$('input').val('')
+		})
 	  //自定义验证规则  
 	  form.verify({  
 			//验证只包含汉字  

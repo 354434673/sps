@@ -115,7 +115,7 @@
 			<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:130px">*物流单号：</label>
 		    <div class="layui-input-inline">
-		      <input  id="logisticsOther" lay-verify="required" type="text" name="logisticsOther" placeholder="物流单号" autocomplete="off" class="layui-input">
+		      <input  id="logisticsNum" lay-verify="required" type="text" name="logisticsNum" placeholder="物流单号" autocomplete="off" class="layui-input">
 		    </div>
 		   </div>
 			<div class="layui-form-item">
@@ -195,18 +195,49 @@
 <%-- 			  $(document).on("click","#submit",function(){
 				 window.location.href='<%=path%>/order/updateDeliveryOrderFlag?flag=7&orderid='+<%=request.getParameter("orderid")%>;
 			  }); --%>
+			  var logisticsCooperationName = '';
+			  var logisticsOther = '';
+			  var logisticsNum = '';
 			  form.on('submit(submit)', function(data){
-				  update(7,null,"提交成功,1秒后跳转")
-				  //绑定原始文件域
+				  logisticsCooperationName = $('#logisticsCooperationName').val()
+				  logisticsOther = $('#logisticsOther').val()
+				  logisticsNum = $('#logisticsNum').val()
+				  $.post({
+					  url:'<%=path%>/order/insertLogistics',
+					  dataType:'json',
+					  data:{
+	 			          logisticsName:logisticsCooperationName,
+						  orderId:<%=request.getParameter("orderid")%>,
+						  logisticsOther:logisticsOther,
+						  logisticsNum:logisticsNum,
+						  flag:7
+						  },
+					  success:function(data){
+						  layer.msg(msg,{icon: 1});
+						  setTimeout(function(){
+							  //跳转到上一页
+							  window.location.href='<%=path%>/page/main/order/orderToBeDelivery.jsp'
+						  },1000);
+					  },
+					  error:function(){
+						  layer.msg('系统错误',{icon: 2});
+					  }
+				  })
+<%-- 				  //绑定原始文件域
 				  upload.render({
 				    elem: '#testList'
 				    ,accept:'images'
-				    ,url: '/upload/'
+				    ,url:'<%=path%>/order/insertLogistics'
 				    ,auto: false
 				    ,multiple: true
 				    ,bindAction:'#submit'
-	 			    ,data:{type:'forms',types:3,channelNum:'111',status:'channel',accept:'images'}
-				    ,url: '<%=path%>/merchant/uploadPic' //上传接口
+	 			    ,data:{
+	 			          logisticsName:logisticsCooperationName,
+						  orderId:<%=request.getParameter("orderid")%>,
+						  logisticsOther:logisticsOther,
+						  logisticsNum:logisticsNum,
+						  flag:4
+	 			    	}
 				    ,done: function(res){
 				    	if(res.state == 'success'){
 		 			    	layer.msg(res.msg,{icon: 1});
@@ -219,9 +250,12 @@
 				    ,error: function(){
 				    	layer.msg('图片失败',{icon: 2});
 				    }
-				  });
+				  }); --%>
 				  
 			  })
+			  function upload(){
+
+			  }
 			//物流信息
 			  $('#openExpress').on('click', function() {
 				  layer.open({
@@ -241,26 +275,6 @@
 				  		},  
 				  }); 
 			  });
-			  //更改状态方法
-			  function update(flag,remark,msg){
-				  $.post({
-					  url:'<%=path%>/order/updateConfirmOrderFlag',
-					  dataType:'json',
-					  data:{remark:remark,
-						  orderid:<%=request.getParameter("orderid")%>,
-						  flag:flag},
-					  success:function(data){
-						  layer.msg(msg,{icon: 1});
-						  setTimeout(function(){
-							  //跳转到上一页
-							  window.location.href='<%=path%>/page/main/order/orderToBeDelivery.jsp'
-						  },1000);
-					  },
-					  error:function(){
-						  layer.msg('系统错误',{icon: 2});
-					  }
-				  })
-			  }
 			  function getDate(data){
 				    da = new Date(data);
 				    var year = da.getFullYear();

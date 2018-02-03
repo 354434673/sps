@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service(timeout = 1200000)
+@Service(timeout = 2000,group = "dianfu")
 public class GoodSkuLogServiceImpl implements GoodSkuLogService {
     @Resource
     private SpsGoodSkuLogMapper spsGoodSkuLogMapper;

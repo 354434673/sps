@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.order.SpsOrderLogisticsMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.order.SpsOrderLogistics" >
+    <id column="logistics_id" property="logisticsId" jdbcType="INTEGER" />
+    <result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
+    <result column="logistics_other" property="logisticsOther" jdbcType="VARCHAR" />
+    <result column="logistics_num" property="logisticsNum" jdbcType="INTEGER" />
+    <result column="logistics_voucher" property="logisticsVoucher" jdbcType="VARCHAR" />
+    <result column="logistics_creat_time" property="logisticsCreatTime" jdbcType="TIMESTAMP" />
+    <result column="logistics_update_time" property="logisticsUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    logistics_id, logistics_name, logistics_other, logistics_num, logistics_voucher, 
+    logistics_creat_time, logistics_update_time, order_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.order.SpsOrderLogisticsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_order_logistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_order_logistics
+    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_order_logistics
+    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.order.SpsOrderLogisticsExample" >
+    delete from sps_order_logistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.order.SpsOrderLogistics" >
+    insert into sps_order_logistics (logistics_id, logistics_name, logistics_other, 
+      logistics_num, logistics_voucher, logistics_creat_time, 
+      logistics_update_time, order_id)
+    values (#{logisticsId,jdbcType=INTEGER}, #{logisticsName,jdbcType=VARCHAR}, #{logisticsOther,jdbcType=VARCHAR}, 
+      #{logisticsNum,jdbcType=INTEGER}, #{logisticsVoucher,jdbcType=VARCHAR}, #{logisticsCreatTime,jdbcType=TIMESTAMP}, 
+      #{logisticsUpdateTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.order.SpsOrderLogistics" >
+    insert into sps_order_logistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logisticsId != null" >
+        logistics_id,
+      </if>
+      <if test="logisticsName != null" >
+        logistics_name,
+      </if>
+      <if test="logisticsOther != null" >
+        logistics_other,
+      </if>
+      <if test="logisticsNum != null" >
+        logistics_num,
+      </if>
+      <if test="logisticsVoucher != null" >
+        logistics_voucher,
+      </if>
+      <if test="logisticsCreatTime != null" >
+        logistics_creat_time,
+      </if>
+      <if test="logisticsUpdateTime != null" >
+        logistics_update_time,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logisticsId != null" >
+        #{logisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsName != null" >
+        #{logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsOther != null" >
+        #{logisticsOther,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNum != null" >
+        #{logisticsNum,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsVoucher != null" >
+        #{logisticsVoucher,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCreatTime != null" >
+        #{logisticsCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logisticsUpdateTime != null" >
+        #{logisticsUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.sps.entity.order.SpsOrderLogisticsExample" resultType="java.lang.Integer" >
+    select count(*) from sps_order_logistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_order_logistics
+    <set >
+      <if test="record.logisticsId != null" >
+        logistics_id = #{record.logisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.logisticsName != null" >
+        logistics_name = #{record.logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logisticsOther != null" >
+        logistics_other = #{record.logisticsOther,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logisticsNum != null" >
+        logistics_num = #{record.logisticsNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.logisticsVoucher != null" >
+        logistics_voucher = #{record.logisticsVoucher,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logisticsCreatTime != null" >
+        logistics_creat_time = #{record.logisticsCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logisticsUpdateTime != null" >
+        logistics_update_time = #{record.logisticsUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_order_logistics
+    set logistics_id = #{record.logisticsId,jdbcType=INTEGER},
+      logistics_name = #{record.logisticsName,jdbcType=VARCHAR},
+      logistics_other = #{record.logisticsOther,jdbcType=VARCHAR},
+      logistics_num = #{record.logisticsNum,jdbcType=INTEGER},
+      logistics_voucher = #{record.logisticsVoucher,jdbcType=VARCHAR},
+      logistics_creat_time = #{record.logisticsCreatTime,jdbcType=TIMESTAMP},
+      logistics_update_time = #{record.logisticsUpdateTime,jdbcType=TIMESTAMP},
+      order_id = #{record.orderId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.order.SpsOrderLogistics" >
+    update sps_order_logistics
+    <set >
+      <if test="logisticsName != null" >
+        logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsOther != null" >
+        logistics_other = #{logisticsOther,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNum != null" >
+        logistics_num = #{logisticsNum,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsVoucher != null" >
+        logistics_voucher = #{logisticsVoucher,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCreatTime != null" >
+        logistics_creat_time = #{logisticsCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logisticsUpdateTime != null" >
+        logistics_update_time = #{logisticsUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.order.SpsOrderLogistics" >
+    update sps_order_logistics
+    set logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      logistics_other = #{logisticsOther,jdbcType=VARCHAR},
+      logistics_num = #{logisticsNum,jdbcType=INTEGER},
+      logistics_voucher = #{logisticsVoucher,jdbcType=VARCHAR},
+      logistics_creat_time = #{logisticsCreatTime,jdbcType=TIMESTAMP},
+      logistics_update_time = #{logisticsUpdateTime,jdbcType=TIMESTAMP},
+      order_id = #{orderId,jdbcType=VARCHAR}
+    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+  </update>
+</mapper>
