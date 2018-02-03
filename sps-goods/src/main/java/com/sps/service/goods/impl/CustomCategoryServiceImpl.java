@@ -50,9 +50,10 @@ public class CustomCategoryServiceImpl implements CustomCategoryService {
     }
 
     @Override
-    public HashMap<String, Object> findCustomCategoryList(Integer page, Integer limit, String name) {
+    public HashMap<String, Object> findCustomCategoryList(Integer page, Integer limit, String name,String shopNum) {
         Map<String, Object> map = new HashMap<>();
         map.put("name", name);
+        map.put("customShopNum", shopNum);
         //分页
         PageHelper.startPage(page,limit);
         List<SpsCustomCategory> customCategoryList = spsCustomCategoryMapper.findListAllWithMap(map);

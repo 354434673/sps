@@ -8,6 +8,8 @@ public class SpsCustomCategory  implements Serializable {
 
     private String customName;
 
+    private String customShopNum;
+
     private Integer customWide;
 
     private Integer customDeleteFlag;
@@ -16,6 +18,14 @@ public class SpsCustomCategory  implements Serializable {
 
     private Date customUpdateTime;
 
+
+    public String getCustomShopNum() {
+        return customShopNum;
+    }
+
+    public void setCustomShopNum(String customShopNum) {
+        this.customShopNum = customShopNum;
+    }
 
     public Integer getCustomWide() {
         return customWide;

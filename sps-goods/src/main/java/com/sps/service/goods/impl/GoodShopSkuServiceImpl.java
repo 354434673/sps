@@ -77,8 +77,9 @@ public class GoodShopSkuServiceImpl implements GoodShopSkuService {
     }
 
     @Override
-    public HashMap<String, Object> findSkuList(Integer page, Integer limit, String goodsName, String spec, String goodSku, String endTime, String startTime) {
+    public HashMap<String, Object> findSkuList(Integer page, Integer limit, String goodsName, String spec, String goodSku, String endTime, String startTime,String shopNum) {
         Map<String, Object> map = new HashMap<>();
+        map.put("shopNum", shopNum);
         map.put("goodsName", goodsName);
         map.put("spec", spec);
         map.put("goodSku", goodSku);

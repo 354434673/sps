@@ -235,7 +235,8 @@
 
     }
     $(document).on("click", "#back", function () {
-        parent.layer.closeAll();
+      /*layer.closeAll();*/
+        window.location.href = "<%=path%>/page/main/brand/index.jsp";
     })
 
     function initTree() {

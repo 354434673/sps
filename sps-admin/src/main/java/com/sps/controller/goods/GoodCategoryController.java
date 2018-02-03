@@ -236,6 +236,17 @@ public class GoodCategoryController {
         }
         return "goodsCategory/detail";
     }
+    @RequestMapping(value = "/findById")
+    @ResponseBody
+    public Map<String, Object> findById(Integer id) {
+        Map<String, Object> resultMap = new HashMap<>();
+        if (id != null) {
+            SpsGoodCategory spsGoodCategory = goodCategoryService.findEntityById(id);
+            resultMap.put("pId", spsGoodCategory.getCategoryParentId());
+            resultMap.put("flag", 1);
+        }
+        return resultMap;
+    }
 
 
     /**

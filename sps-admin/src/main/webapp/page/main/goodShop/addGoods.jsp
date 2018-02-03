@@ -202,6 +202,7 @@
             $("#threeCategory").attr({"disabled": "disabled"});
             $("#gBrandId").attr({"disabled": "disabled"});
             $("#spuNo").attr({"disabled": "disabled"});
+            initCustomCategory();
             getDate($("#goodsId").val());
 
         }
@@ -340,18 +341,18 @@
                 var gStock =  $(this).parent().parent().find("td:eq(6)").find("input").val()
                 var gPrice =  $(this).parent().parent().find("td:eq(4)").find("input").val()
                 if(gQuantity==''||gStock==''||gPrice==''){
-                    layer.msg("第" + i + "行规格参数不能为空！");
+                    layer.msg("选中规格第" + i + "行规格参数不能为空！");
                     flag= false;
                 } else if(!r.test(gQuantity)||!r.test(gStock)){
-                    layer.msg("第" + i + "请输入正整数！");
+                    layer.msg("选中规格第" + i + "请输入正整数！");
                     flag= false;
                 }else if(!p.test(gPrice)){
-                    layer.msg("第" + i + "价格输入正数且小数位不超过2位！");
+                    layer.msg("选中规格第" + i + "价格输入正数且小数位不超过2位！");
                     flag= false;
                 }
                 if (gQuantity != '' && gStock != '') {
                     if (parseInt(gQuantity) > parseInt(gStock)) {
-                        layer.msg("第" + i + "行起订量不能大于库存！");
+                        layer.msg("选中规格第" + i + "行起订量不能大于库存！");
                         flag= false;
                     }
                 }
@@ -423,18 +424,18 @@
                 var gStock =  $(this).parent().parent().find("td:eq(6)").find("input").val()
                 var gPrice =  $(this).parent().parent().find("td:eq(4)").find("input").val()
                 if(gQuantity==''||gStock==''||gPrice==''){
-                    layer.msg("第" + i + "行规格参数不能为空！");
+                    layer.msg("选中规格第" + i + "行规格参数不能为空！");
                     flag= false;
                 } else if(!r.test(gQuantity)||!r.test(gStock)){
-                    layer.msg("第" + i + "请输入正整数！");
+                    layer.msg("选中规格第" + i + "请输入正整数！");
                     flag= false;
                 }else if(!p.test(gPrice)){
-                    layer.msg("第" + i + "价格输入正数且小数位不超过2位！");
+                    layer.msg("选中规格第" + i + "价格输入正数且小数位不超过2位！");
                     flag= false;
                 }
                 if (gQuantity != '' && gStock != '') {
                     if (parseInt(gQuantity) > parseInt(gStock)) {
-                        layer.msg("第" + i + "行起订量不能大于库存！");
+                        layer.msg("选中规格第" + i + "行起订量不能大于库存！");
                         flag= false;
                     }
                 }
@@ -535,7 +536,7 @@
                         })
                         $("#customCategory").html(html);
                     }
-                    layui.form.render('select');
+                   /* layui.form.render('select');*/
                 } else {
                     $("#customCategory").html(html);
                 }
@@ -586,6 +587,13 @@
             }//回调方法
         });
 
+    }
+    function getSelect(numbers, data){
+        for (var j = 1; j < numbers.length; j++) {
+            if ($(numbers[j]).val() == data) {
+                $(numbers[j]).attr("selected", "selected");
+            }
+        }
     }
 
     function getSpuGoods(id) {
@@ -732,7 +740,12 @@
                         $('#firstCategoryName').val(json.firstCategory);
                         $('#twoCategoryName').val(json.twoCategory);
                         $('#threeCategoryName').val(json.threeCategory);
-                        $('#customCategory').val(json.goods.gCategorySelf);
+                   /*     $("#customCategory").val(option[json.goods.gCategorySelf]);
+                        layui.form().render('select')*/
+                        $("#customCategory option[value='"+json.goods.gCategorySelf+"']").attr("selected","selected");//根据值让option选中
+                        /*  $('#customCategory').val(json.goods.gCategorySelf);*/
+                       /* var customCategoryList = $("#customCategory").find("option"); //获取select下拉框的所有值
+                        getSelect(customCategoryList, json.goods.gCategorySelf)*/
                        // $("select[name=customCategory]").next().find("li[lay-value="+json.goods.gCategorySelf+"]").click();
                        // layer.select("customCategory").setValue(json.goods.gCategorySelf)
                         //$("#customCategory").find("option[text='1']").attr("selected",true);

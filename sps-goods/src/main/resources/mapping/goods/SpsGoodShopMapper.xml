@@ -12,7 +12,7 @@
         <result column="g_unit" jdbcType="VARCHAR" property="gUnit"/>
         <result column="g_grounding_flag" jdbcType="VARCHAR" property="gGroundingFlag"/>
         <result column="g_create_time" jdbcType="TIMESTAMP" property="gCreateTime"/>
-        <result column="g_shop_id" jdbcType="INTEGER" property="gShopId"/>
+        <result column="g_shop_id" jdbcType="VARCHAR" property="gShopId"/>
         <result column="g_delete_flag" jdbcType="INTEGER" property="gDeleteFlag"/>
         <result column="g_status" jdbcType="INTEGER" property="gStatus"/>
         <result column="g_update_time" jdbcType="TIMESTAMP" property="gUpdateTime"/>
@@ -44,7 +44,7 @@
     values (#{gId,jdbcType=INTEGER}, #{gCategoryIds,jdbcType=VARCHAR}, #{gBrandId,jdbcType=INTEGER}, 
       #{gSpuNo,jdbcType=VARCHAR}, #{gSpuName,jdbcType=VARCHAR}, #{gCategorySelf,jdbcType=INTEGER}, 
       #{gRecommend,jdbcType=VARCHAR}, #{gUnit,jdbcType=VARCHAR}, #{gGroundingFlag,jdbcType=VARCHAR}, 
-      #{gCreateTime,jdbcType=TIMESTAMP}, #{gShopId,jdbcType=INTEGER}, #{gDeleteFlag,jdbcType=INTEGER}, 
+      #{gCreateTime,jdbcType=TIMESTAMP}, #{gShopId,jdbcType=VARCHAR}, #{gDeleteFlag,jdbcType=INTEGER},
       #{gStatus,jdbcType=INTEGER}, #{gUpdateTime,jdbcType=TIMESTAMP}, #{gOpinion,jdbcType=VARCHAR}, #{gForceOpinion,jdbcType=VARCHAR},
        #{gSkuIds,jdbcType=VARCHAR},#{gGoodsId,jdbcType=INTEGER})
   </insert>
@@ -129,7 +129,7 @@
                 #{gCreateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="gShopId != null">
-                #{gShopId,jdbcType=INTEGER},
+                #{gShopId,jdbcType=VARCHAR},
             </if>
             <if test="gDeleteFlag != null">
                 #{gDeleteFlag,jdbcType=INTEGER},
@@ -176,7 +176,7 @@
                 g_create_time = #{gCreateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="gShopId != null">
-                g_shop_id = #{gShopId,jdbcType=INTEGER},
+                g_shop_id = #{gShopId,jdbcType=VARCHAR},
             </if>
             <if test="gDeleteFlag != null">
                 g_delete_flag = #{gDeleteFlag,jdbcType=INTEGER},
@@ -213,7 +213,7 @@
       g_unit = #{gUnit,jdbcType=VARCHAR},
       g_grounding_flag = #{gGroundingFlag,jdbcType=VARCHAR},
       g_create_time = #{gCreateTime,jdbcType=TIMESTAMP},
-      g_shop_id = #{gShopId,jdbcType=INTEGER},
+      g_shop_id = #{gShopId,jdbcType=VARCHAR},
       g_delete_flag = #{gDeleteFlag,jdbcType=INTEGER},
       g_status = #{gStatus,jdbcType=INTEGER},
       g_update_time = #{gUpdateTime,jdbcType=TIMESTAMP}
@@ -251,8 +251,8 @@
         <if test="endTime!=null and endTime != ''">
             and g.g_update_time <![CDATA[<=]]> #{endTime}
         </if>
-        <if test="gShopId != null">
-            g.g_shop_id = #{gShopId,jdbcType=INTEGER},
+        <if test="shopNum != null and shopNum!=''">
+            and  g.g_shop_id = #{shopNum,jdbcType=VARCHAR}
         </if>
         and g.g_delete_flag=0
         order by g.g_create_time desc
@@ -310,9 +310,8 @@
         cc.custom_name as categoryName
         FROM
         sps_good_shop g
-        LEFT JOIN sps_channel c ON c.channel_id = g.g_shop_id
-        LEFT JOIN sps_channel_enterprise ce ON c.channel_num = ce.channel_num
-        LEFT JOIN sps_channel_open_account co ON c.channel_num = co.channel_num
+        LEFT JOIN sps_channel_enterprise ce ON g.g_shop_id = ce.channel_num
+        LEFT JOIN sps_channel_open_account co ON g.g_shop_id = co.channel_num
         LEFT JOIN sps_custom_category cc on cc.custom_id=g.g_category_self
         WHERE
         1 = 1
@@ -335,7 +334,7 @@
             and g.g_update_time <![CDATA[<=]]> #{endTime}
         </if>
         <if test="gShopId != null">
-            g.g_shop_id = #{gShopId,jdbcType=INTEGER},
+            g.g_shop_id = #{gShopId,jdbcType=VARCHAR},
         </if>
         AND g.g_grounding_flag != 0
         AND g.g_grounding_flag != 2
@@ -361,18 +360,17 @@
         g.g_status,
         g.g_update_time,
         g.g_opinion,
+        g.g_force_opinion,
         g.g_sku_ids,
         g.g_goods_id,
-        g.g_force_opinion,
-        cc.custom_name as categoryName,
         ce.enterprise_company_name as companyName,
-        co.open_admin_num as adminNum
+        co.open_admin_num as adminNum,
+        cc.custom_name as categoryName
         FROM
         sps_good_shop g
+        LEFT JOIN sps_channel_enterprise ce ON g.g_shop_id = ce.channel_num
+        LEFT JOIN sps_channel_open_account co ON g.g_shop_id = co.channel_num
         LEFT JOIN sps_custom_category cc on cc.custom_id=g.g_category_self
-        LEFT JOIN sps_channel c ON c.channel_id = g.g_shop_id
-        LEFT JOIN sps_channel_enterprise ce ON c.channel_num = ce.channel_num
-        LEFT JOIN sps_channel_open_account co ON c.channel_num = co.channel_num
         WHERE
         1 = 1
         <if test="shopName !=null and shopName != ''">
@@ -394,7 +392,7 @@
             and g.g_update_time <![CDATA[<=]]> #{endTime}
         </if>
         <if test="gShopId != null">
-            g.g_shop_id = #{gShopId,jdbcType=INTEGER},
+            g.g_shop_id = #{gShopId,jdbcType=VARCHAR},
         </if>
         <if test="spuNo != null  and spuNo != ''">
             and g.g_spu_no LIKE CONCAT('%',#{spuNo,jdbcType=VARCHAR},'%')

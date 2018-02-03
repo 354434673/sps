@@ -35,5 +35,5 @@ public interface CustomCategoryService{
      * @param
      * @return
      */
-    HashMap<String,Object> findCustomCategoryList(Integer page, Integer limit, String name);
+    HashMap<String,Object> findCustomCategoryList(Integer page, Integer limit, String name,String shopNum);
 }

@@ -238,8 +238,8 @@
     <if test="endTime!=null and endTime != ''">
       and s.g_update_time<![CDATA[<=]]> #{endTime}
     </if>
-    <if test="gShopId != null">
-      g.g_shop_id = #{gShopId,jdbcType=INTEGER},
+    <if test="shopNum != null and shopNum!=''">
+      and  g.g_shop_id = #{shopNum,jdbcType=VARCHAR}
     </if>
     and g.g_status=2 and g.g_grounding_flag!=2
     AND s.g_delete_flag=0

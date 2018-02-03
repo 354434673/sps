@@ -131,11 +131,10 @@
             return false;
         }
         if ($('#parentFlag').val() == '0') {
-            layer.msg("只有三级分类才可以上传图片")
+            layer.msg("只有三级分类才可以上传图片");
+           /* $('#parentFlag').val('');*/
             return false;
         }
-
-
         if (f.length == 2 && (f[1] == 'jpg' || f[1] == 'jpeg' || f[1] == 'png')) {
             var formData = new FormData($('#upload')[0]);
             $.ajax({
@@ -213,12 +212,18 @@
                         checkboxStyle: "",              //设置复选框的样式，必须为字符串，css样式怎么写就怎么写
                         click: function (item) {          //节点点击事件
                             $("#showCategory").html(item.name)
+                            $("#categoryParentId").val(item.id)
                             console.log(item);
+                            if(item.pid==undefined){
+                                $("#parentFlag").val("0")
+                            }else {
+                                $("#parentFlag").val("1")
+                            }
                             if (item.name == '无') {
                                 $("#parentFlag").val("0")
+                                $("#categoryParentId").val('0')
                             }
 
-                            $("#categoryParentId").val(item.id)
                             $("#tree").hide()
                             layer.closeAll()
                             // layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
@@ -234,6 +239,25 @@
 
     }
 
+   /* function checkParent(id) {
+        $.ajax(
+            {
+                data: {id:id},
+                url: "<%=path%>/category/findEntity",//提交连接
+                type: 'post',
+                dataType: 'json',
+                success: function (result) {
+                    if (result.flag == '1') {
+                        if(result.pId=='0'){
+                            $("#parentFlag").val("0")
+                        }
+                    } else {
+                    }
+                }//回调方法
+            });
+
+    }*/
+
     layui.use(['form', 'table'], function () {
         var form = layui.form;
         var $ = layui.jquery;
@@ -242,6 +266,11 @@
         //提交
         var post_flag = false; //设置一个对象来控制是否进入AJAX过程
         form.on('submit(submitCategory)', function (data) {
+           /* if ( $("#categoryUrl").val()!=''&&$('#parentFlag').val() == '0') {
+                layer.msg("只有三级分类才可以上传图片");
+                $('#parentFlag').val('')
+                return false;
+            }*/
             if ($("#showCategory").html() == "选择分类") {
                 layer.msg("请选择上级分类！");
                 return false;

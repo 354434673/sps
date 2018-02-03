@@ -33,7 +33,7 @@ public class SpsGoodShop implements Serializable {
 
     private Date gCreateTime;
 
-    private Integer gShopId;
+    private String gShopId;
 
     private Integer gDeleteFlag;
 
@@ -177,11 +177,11 @@ public class SpsGoodShop implements Serializable {
         this.gCreateTime = gCreateTime;
     }
 
-    public Integer getgShopId() {
+    public String getgShopId() {
         return gShopId;
     }
 
-    public void setgShopId(Integer gShopId) {
+    public void setgShopId(String gShopId) {
         this.gShopId = gShopId;
     }
 

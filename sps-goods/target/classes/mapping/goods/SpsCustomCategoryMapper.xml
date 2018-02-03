@@ -8,9 +8,10 @@
     <result column="custom_delete_flag" jdbcType="INTEGER" property="customDeleteFlag" />
     <result column="custom_create_time" jdbcType="TIMESTAMP" property="customCreateTime" />
     <result column="custom_update_time" jdbcType="TIMESTAMP" property="customUpdateTime" />
+    <result column="custom_shop_num" jdbcType="VARCHAR" property="customShopNum" />
   </resultMap>
   <sql id="Base_Column_List">
-    custom_id, custom_name, custom_wide, custom_delete_flag, custom_create_time, custom_update_time
+    custom_id, custom_name, custom_wide, custom_delete_flag, custom_create_time, custom_update_time,custom_shop_num
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,10 +25,10 @@
   </delete>
   <insert id="insert" parameterType="SpsCustomCategory">
     insert into sps_custom_category (custom_id, custom_name, custom_wide, 
-      custom_delete_flag, custom_create_time, custom_update_time
+      custom_delete_flag, custom_create_time, custom_update_time,custom_shop_num
       )
     values (#{customId,jdbcType=INTEGER}, #{customName,jdbcType=VARCHAR}, #{customWide,jdbcType=INTEGER},
-      #{customDeleteFlag,jdbcType=INTEGER}, #{customCreateTime,jdbcType=TIMESTAMP}, #{customUpdateTime,jdbcType=TIMESTAMP}
+      #{customDeleteFlag,jdbcType=INTEGER}, #{customCreateTime,jdbcType=TIMESTAMP}, #{customUpdateTime,jdbcType=TIMESTAMP}, #{customShopNum,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="SpsCustomCategory">
@@ -91,6 +92,9 @@
       <if test="customUpdateTime != null">
         custom_update_time = #{customUpdateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="customShopNum != null">
+        custom_shop_num =  #{customShopNum,jdbcType=VARCHAR},
+      </if>
     </set>
     where custom_id = #{customId,jdbcType=INTEGER}
   </update>
@@ -111,6 +115,9 @@
     where 1=1
     <if test="name !=null and name != ''">
       and custom_name LIKE CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="customShopNum !=null and customShopNum != ''">
+      and custom_shop_num =#{customShopNum,jdbcType=VARCHAR}
     </if>
     AND custom_delete_flag = 0
     order by custom_wide asc ,  custom_update_time desc

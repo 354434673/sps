@@ -1,6 +1,7 @@
 package com.sps.controller.goods;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.sps.controller.system.UserController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.sps.entity.goods.SpsCustomCategory;
 import org.sps.service.goods.CustomCategoryService;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,8 @@ import java.util.Map;
 public class CustomCategoryController {
     @Reference(check=false,group="dianfu-dev")
     private CustomCategoryService customCategoryService;
+    @Resource
+    UserController userController;
 
     /**
      * @param page
@@ -27,7 +31,8 @@ public class CustomCategoryController {
     @RequestMapping("/customCategoryList")
     @ResponseBody
     public HashMap<String, Object> customCategoryList(Integer page, Integer limit, String name) {
-        HashMap<String, Object> customCategoryList = customCategoryService.findCustomCategoryList(page, limit, name);
+        String shopNum= userController.getNumForUserType();
+        HashMap<String, Object> customCategoryList = customCategoryService.findCustomCategoryList(page, limit, name,shopNum);
         return customCategoryList;
     }
 
@@ -64,6 +69,8 @@ public class CustomCategoryController {
     public Map<String, Object> saveOrUpdate(SpsCustomCategory customCategory, Model model) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
+            String shopId= userController.getNumForUserType();
+            customCategory.setCustomShopNum(shopId);
             customCategoryService.saveOrUpdate(customCategory);
             resultMap.put("flag", 1);
         } catch (Exception e) {
@@ -132,6 +139,8 @@ public class CustomCategoryController {
         Map<String, Object> resultMap = new HashMap<>();
         try {
             Map<String, Object> map = new HashMap<>();
+            String shopNum= userController.getNumForUserType();
+            map.put("customShopNum", shopNum);
             List<SpsCustomCategory> customCategoryList = customCategoryService.findList(map);
             resultMap.put("data", customCategoryList);
             resultMap.put("flag", 1);

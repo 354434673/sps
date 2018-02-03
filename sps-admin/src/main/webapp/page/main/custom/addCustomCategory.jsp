@@ -28,15 +28,13 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">*分类名称：</label>
             <div class="layui-input-inline">
-                <input id="customName" type="text" name="customName"  lay-verify="required|customName" placeholder="请输入分类名称"
-                       autocomplete="off" class="layui-input" >
+                <input id="customName" type="text" name="customName"  lay-verify="required|maxLength" placeholder="请输入分类名称" autocomplete="off" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*优先级：</label>
             <div class="layui-input-inline">
-                <input id="customWide" name="customWide" type="text" lay-verify="required|number|customWide"
-                       placeholder="请输入优先级" autocomplete="off" class="layui-input">
+                <input id="customWide" name="customWide" type="text" lay-verify="required|number|customWide" placeholder="请输入优先级" autocomplete="off" class="layui-input">
             </div>
 
         </div>
@@ -63,6 +61,8 @@
         var form = layui.form;
         var $ = layui.jquery;
         var table = layui.table;
+
+
         //提交
         var post_flag = false; //设置一个对象来控制是否进入AJAX过程
         form.on('submit(submitCategory)', function (data) {
@@ -72,7 +72,6 @@
             var customId = $('#customId').val()
             var customName = $('#customName').val()
             var customWide = $('#customWide').val();
-
             $.ajax(
                 {
                     data: {
@@ -99,21 +98,18 @@
                 });
 
         })
-
-
-        //自定义验证规则
+        //自定义验证规则收
         form.verify({
-
+            maxLength: function(value) {
+                if(value.length>50) {
+                    return '分类名称最多为50位';
+                }
+            },
             customWide: function (value) {
                 if (value.length >10) {
                     return '优先级最多为10位';
                 }
-            },
-            customName: function (value) {
-                if (value.length > 50) {
-                    return '分类名称最多为50位';
-                }
-            },
+            }
         });
     });
 </script>

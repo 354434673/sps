@@ -1,6 +1,7 @@
 package com.sps.controller.goods;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.sps.controller.system.UserController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.sps.entity.goods.SpsGoodShopSku;
 import org.sps.service.goods.GoodShopSkuService;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,8 @@ import java.util.Map;
 public class GoodShopSkuController {
     @Reference(check=false,group="dianfu-dev")
     private GoodShopSkuService goodSkuService;
+    @Resource
+    UserController userController;
 
 
 
@@ -31,7 +35,8 @@ public class GoodShopSkuController {
     @RequestMapping("/goodsList")
     @ResponseBody
     public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName, String goodSku ,String spec, String endTime, String startTime) {
-        HashMap<String, Object> goodsList = goodSkuService.findSkuList(page, limit, goodsName, spec, goodSku, endTime, startTime);
+        String shopNum= userController.getNumForUserType();
+        HashMap<String, Object> goodsList = goodSkuService.findSkuList(page, limit, goodsName, spec, goodSku, endTime, startTime,shopNum);
         return goodsList;
     }
 

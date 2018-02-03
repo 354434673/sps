@@ -51,7 +51,6 @@ public class GoodShopServiceImpl implements GoodShopService {
                     goods.setgStatus(1);
                 }
             }*/
-
             goods.setgDeleteFlag(0);
             goods.setgCreateTime(new Date());
             spsGoodShopMapper.insert(goods);
@@ -74,10 +73,10 @@ public class GoodShopServiceImpl implements GoodShopService {
     }
 
     @Override
-    public HashMap<String, Object> findGoodsList(Integer page, Integer limit, String goodsName, Integer shopStatus, Integer flowStatus, String endTime, String startTime) {
+    public HashMap<String, Object> findGoodsList(Integer page, Integer limit, String goodsName, Integer shopStatus, Integer flowStatus, String endTime, String startTime,String shopNum) {
         Map<String, Object> map = new HashMap<>();
         map.put("goodsName", goodsName);
-
+        map.put("shopNum", shopNum);
         map.put("flowStatus", flowStatus);
         if (endTime != null && !"".equals(endTime)) {
             map.put("endTime", endTime + " 23:59:59");

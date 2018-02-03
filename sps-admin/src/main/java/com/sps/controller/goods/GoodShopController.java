@@ -1,6 +1,7 @@
 package com.sps.controller.goods;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.sps.controller.system.UserController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.sps.entity.goods.*;
 import org.sps.service.goods.*;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 @Controller
@@ -26,6 +28,9 @@ public class GoodShopController {
     private CustomCategoryService customCategoryService;
     @Reference(check=false,group="dianfu-dev")
     private GoodSkuService skuService;
+    @Resource
+    UserController userController;
+
 
 
     /**
@@ -37,7 +42,8 @@ public class GoodShopController {
     @RequestMapping("/goodsList")
     @ResponseBody
     public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName, Integer shopStatus, Integer flowStatus, String endTime, String startTime) {
-        HashMap<String, Object> goodsList = goodService.findGoodsList(page, limit, goodsName, shopStatus, flowStatus, endTime, startTime);
+        String shopNum= userController.getNumForUserType();
+        HashMap<String, Object> goodsList = goodService.findGoodsList(page, limit, goodsName, shopStatus, flowStatus, endTime, startTime,shopNum);
         return goodsList;
     }
 
@@ -71,6 +77,8 @@ public class GoodShopController {
     public Map<String, Object> saveOrUpdate(SpsGoodShop goods) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
+            String shopId= userController.getNumForUserType();
+            goods.setgShopId(shopId);
             goodService.saveOrUpdate(goods);
             SpsGoodShop spsGoods = goodService.findLastId();
             if (spsGoods.getgId() != null) {

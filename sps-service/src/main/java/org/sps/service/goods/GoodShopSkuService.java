@@ -63,7 +63,7 @@ public interface GoodShopSkuService {
      * @param startTime
      * @return
      */
-    HashMap<String,Object> findSkuList(Integer page, Integer limit, String goodsName, String spec, String goodSku, String endTime, String startTime);
+    HashMap<String,Object> findSkuList(Integer page, Integer limit, String goodsName, String spec, String goodSku, String endTime, String startTime,String shopNum);
 
     /**
      * 批量修改价格和库存
