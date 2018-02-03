@@ -9,12 +9,14 @@ import org.sps.entity.shopkeeper.SpsShopkeeper;
 import org.sps.entity.shopkeeper.SpsShopkeeperAccount;
 import org.sps.entity.shopkeeper.SpsShopkeeperAccountExample;
 import org.sps.entity.shopkeeper.SpsShopkeeperExample;
+import org.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 import org.sps.service.shopkeeper.write.ShopkeeperWriteService;
 import org.sps.util.FinalData;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.write.SpsChannelWriteMapper;
 import com.sps.dao.shopkeeper.write.SpsShopkeeperAccountWriteMapper;
+import com.sps.dao.shopkeeper.write.SpsShopkeeperInvitationWriteMapper;
 import com.sps.dao.shopkeeper.write.SpsShopkeeperWriteMapper;
 @Service(timeout = 2000, group = "dianfu")
 public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
@@ -22,6 +24,8 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 	private SpsShopkeeperAccountWriteMapper accountWrite;
 	@Resource
 	private SpsShopkeeperWriteMapper write;
+	@Resource
+	private SpsShopkeeperInvitationWriteMapper invitationWrite;
 	@Override
 	public HashMap<String, Object> updateAccount(String shopkeeperCustomerid, SpsShopkeeperAccount account) {
 		HashMap<String, Object> hashMap = new HashMap<String,Object>();
@@ -70,6 +74,31 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 			e.printStackTrace();
 		}
 		return hashMap;
+	}
+	@Override
+	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation) throws Exception{
+		HashMap<String, Object> hashMap = new HashMap<String,Object>();
+		try {
+			invitation.setInvitationCreatTime(new Date());
+			invitation.setInvitationUpdateTime(new Date());
+			invitation.setInvitationTime(new Date());
+			invitation.setInvitationState("0");
+			invitationWrite.insert(invitation);
+			hashMap.put("code", 0);
+			hashMap.put("msg", "添加成功");
+			hashMap.put("state", FinalData.STATE_SUCCESS);
+		} catch (Exception e) {
+			hashMap.put("code", 0);
+			hashMap.put("msg", "添加失败");
+			hashMap.put("state", FinalData.STATE_ERROR);
+			e.printStackTrace();
+		}
+		return hashMap;
+	}
+	@Override
+	public HashMap<String, Object> insertManyInvitation(SpsShopkeeperInvitation invitation) throws Exception {
+		
+		return null;
 	}
 
 }

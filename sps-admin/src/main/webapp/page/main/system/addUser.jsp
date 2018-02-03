@@ -100,6 +100,7 @@
 					$.post({
 						url:'<%=path%>/user/updatePassword',
 						dataType:'json',
+						data:username:$('#username').val(),
 						success:function(data){
 							layer.msg(data.msg,{icon: data.icon});
 						}

@@ -161,9 +161,9 @@ public class UserController {
 	 */
 	@RequestMapping(value="updatePassword")
 	@ResponseBody
-	public  HashMap<String, Object> updatePassword(String oldPassword, String newPassword){
+	public  HashMap<String, Object> updatePassword(String username, String oldPassword, String newPassword){
 		
-		HashMap<String, Object> updatePassword = userService.updatePassword(oldPassword, newPassword);
+		HashMap<String, Object> updatePassword = userService.updatePassword(username,oldPassword, newPassword);
 		
 		return updatePassword;
 	}

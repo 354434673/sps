@@ -154,4 +154,20 @@ public interface ShopkeeperReadService {
 	 * @throws
 	 */
 	HashMap<String,Object> getShopkeeperAccount(String shopkeeperCustomerid);
+	/**
+	 * 查询店主邀请列表
+	 * @Title: queryInvitationList   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param name
+	 * @param: @param phone
+	 * @param: @param state
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月3日 下午2:58:38
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	HashMap<String,Object> queryInvitationList(Integer page, Integer limit, String name, String phone, String state);
+	
+	
 }

@@ -26,23 +26,23 @@
 		    <div class="layui-form-item">
 			    <label class="layui-form-label" style="width: 200px" >店主名称:</label>
 			    <div class="layui-input-inline">
-			      <input id="shopkeeperName" type="text" name="shopkeeperName"  lay-verify="" placeholder="店主名称" autocomplete="off" class="layui-input">
+			      <input id="name" type="text" name="name"  lay-verify="" placeholder="店主名称" autocomplete="off" class="layui-input">
 			    </div>
 			    <label class="layui-form-label" style="width: 200px" >联系电话:</label>
 			    <div class="layui-input-inline">
-			      <input id="shopkeeperName" type="text" name="shopkeeperName"  lay-verify="" placeholder="店主名称" autocomplete="off" class="layui-input">
+			      <input id="phone" type="text" name="phone"  lay-verify="" placeholder="联系电话" autocomplete="off" class="layui-input">
 			    </div>
 	        </div>  
 		    <div class="layui-form-item">
 			    <label class="layui-form-label" style="width: 200px">状态:</label>
 			    <div class="layui-input-inline" >
-			    <select lay-filter="shopkeeperState" id="shopkeeperState"> 
+			    <select lay-filter="state" id="state"> 
 				  <option value="">全部</option>
-				  <option value="1">待接受</option>
-				  <option value="2">已接收</option>
+				  <option value="0">待接受</option>
+				  <option value="1">已接收</option>
 		      	</select>
 			    </div>
-			    	<button class="layui-btn layui-btn-primary" id="queryShopkeeper">查询</button>
+			    	<button class="layui-btn layui-btn-primary" id="queryInvitation">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="reset">重置</button>
 	        </div>  
         </div>
@@ -59,7 +59,7 @@
 				</a>
 			</blockquote>
 		</div>
-		<table id="shopkeeperList" lay-filter="shopkeeperTables" class="layui-fluid"></table>
+		<table id="invitationList" lay-filter="invitationTables" class="layui-fluid"></table>
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
@@ -73,31 +73,11 @@
 <!-- 进行数据渲染 -->
 <script type="text/html" id="channelTpl">
   {{}}
-  {{#  if(d.shopkeeperState == 1){ }}
+  {{#  if(d.invitationState == 0){ }}
     	待接受
-  {{#  } else if(d.shopkeeperState == 2){ }}
+  {{#  } else if(d.invitationState == 1){ }}
     	已接收
   {{#  } }}
-</script>
-<script type="text/html" id="company">
-{{d.company.companyShopName}}
-</script>
-<script type="text/html" id="personal">
-{{d.personal.personalClientName}}
-</script>
-<script type="text/html" id="date">
-{{#  
-   var da = d.shopkeeperCreatTime;
-    da = new Date(da);
-    var year = da.getFullYear();
-    var month = da.getMonth()+1;
-    var date = da.getDate();
-    console.log([year,month,date].join('-'));
-  var fn = function(){
-    return [year,month,date].join('-');
-  }; 
-}}
-{{ fn() }}
 </script>
 	<script>
 	layui.use(['table','layer','form','upload'], function(){
@@ -107,31 +87,35 @@
 			  var $ = layui.jquery
 			  var upload = layui.upload;
 			  $('#add').on('click', function() {
-				  location.href = '<%=path%>/page/main/merchant/addMerchant.jsp'
+				  layer.open({
+					  type: 2, 
+					  title:'店主邀请新增',
+					  area: ['30%', '40%'],//宽高
+					  content: '<%=path%>/page/main/shopkeeper/addInvitation.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+				  }); 
 			  });
 			  table.render({
-			    elem: '#shopkeeperList'
-			    ,url: '<%=path%>/shopkeeper/getShopkeeperList.json' //数据接口
-			    ,id:'shopkeeper'
+			    elem: '#invitationList'
+			    ,url: '<%=path%>/shopkeeper/queryInvitationList.json' //数据接口
+			    ,id:'invitation'
 			    ,page:true
 			    ,cols: [[ //表头
 			      {type:'numbers', title: '序号',align:'center'}
-			      ,{field: 'personal', title: '店主名称',align:'center',templet: '#personal'}
-			      ,{field: 'company', title: '联系电话',align:'center' ,templet: '#company'}
-			      ,{field: 'shopkeeperState', title: '状态', width:140,align:'center',templet: '#channelTpl'} 
+			      ,{field: 'invitationName', title: '店主名称',align:'center'}
+			      ,{field: 'invitationPhone', title: '联系电话',align:'center' }
+			      ,{field: 'invitationState', title: '状态', width:140,align:'center',templet: '#channelTpl'} 
 			    ]]
 			  });
 			  //查询
-			  $('#queryShopkeeper').on('click',function(){
-				  var account = $('#account').val()
-				  var shopkeeperName = $('#shopkeeperName').val()
-				  var shopkeeperState = $('#shopkeeperState').val()
-				  alert(shopkeeperState)
-				  table.reload('shopkeeper', {
+			  $('#queryInvitation').on('click',function(){
+				  var name = $('#name').val()
+				  var phone = $('#phone').val()
+				  var state = $('#state').val()
+				  table.reload('invitation', {
 					  where: {
-						  account:account,
-						  shopkeeperName:shopkeeperName,
-						  shopkeeperState:shopkeeperState,
+						  name:name,
+						  phone:phone,
+						  state:state,
 						  }
 					});
 			  })
@@ -152,14 +136,18 @@
 			    ,exts:'xls|xlsx'
 			    ,url: '<%=path %>/shopkeeper/importExcel' //上传接口
 			    ,done: function(res){
-			      //上传完毕回调
+			    	if(res.state == "success"){
+			    		layer.msg(data.msg,{icon: 1});
+			    	}else{
+			    		layer.msg(data.msg,{icon: 2});
+			    	}
 			    }
 			    ,error: function(){
-			      //请求异常回调
+			    	layer.msg('系统异常',{icon: 2});
 			    }
 			  });
 			  //监听工作条
-				table.on('tool(shopkeeperTables)', function(obj){
+<%-- 				table.on('tool(shopkeeperTables)', function(obj){
 					 var data = obj.data;
 					 console.log(data.shopkeeperCustomerid)
 					  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
@@ -171,7 +159,7 @@
 					  } else if(layEvent === 'edit'){ //修改
 						  location.href = '<%=path%>/page/main/shopkeeper/info.jsp?queryType=3&shopkeeperCustomerid='+data.shopkeeperCustomerid
 					  }
-				});
+				}); --%>
 			});
 	</script>
 </body>

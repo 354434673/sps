@@ -122,12 +122,14 @@ public class UserServiceImpl implements UserService{
 		return map;
 	}
 	@Override
-	public HashMap<String, Object> updatePassword(String oldPassword, String newPassword) {
+	public HashMap<String, Object> updatePassword(String username, String oldPassword, String newPassword) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		//获取当前token中的用户
-		String userName = (String) SecurityUtils.getSubject().getPrincipal();
+		if(username == null || username.equals("")){
+			String userName = (String) SecurityUtils.getSubject().getPrincipal();
+		}
 		
-		SpsUser user = getUser(userName);
+		SpsUser user = getUser(username);
 		
 		String salt = Md5Util.getSalt(4);//4位盐
 		if(oldPassword==null||newPassword==null){//如果为空则重置密码

@@ -3,6 +3,7 @@ package org.sps.service.shopkeeper.write;
 import java.util.HashMap;
 
 import org.sps.entity.shopkeeper.SpsShopkeeperAccount;
+import org.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 
 public interface ShopkeeperWriteService {
 	/**
@@ -31,4 +32,30 @@ public interface ShopkeeperWriteService {
 	 * @throws
 	 */
 	public HashMap<String, Object> updateState(String shopkeeperCustomerid, Integer state);
+	/**
+	 * @throws Exception 
+	 * 店主邀请增加功能
+	 * @Title: insertInvitation   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param invitation
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月3日 下午2:32:11
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation) throws Exception;
+	/**
+	 * 添加多次店主
+	 * @Title: insertManyInvitation   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param invitation
+	 * @param: @return
+	 * @param: @throws Exception  
+	 * @author YangNingSheng    
+	 * @date 2018年2月3日 下午2:37:08
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	public HashMap<String, Object> insertManyInvitation(SpsShopkeeperInvitation invitation) throws Exception;
 }

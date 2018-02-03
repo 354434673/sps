@@ -29,8 +29,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 import org.sps.entity.shopkeeper.SpsShopkeeperAccount;
+import org.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 import org.sps.service.shopkeeper.read.ShopkeeperReadService;
 import org.sps.service.shopkeeper.write.ShopkeeperWriteService;
+import org.sps.util.FinalData;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sps.util.CommonUtil;
@@ -180,6 +182,7 @@ public class ShopkeeperController{
 		
 		return updateState;
 	}
+	//----------------------------------店主邀请------------------------------
 	/**
 	 * 导出模板
 	 * @Title: exportExcel   
@@ -194,7 +197,7 @@ public class ShopkeeperController{
 	 */
 	@RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> exportExcel(HttpServletResponse response)
+	public HashMap<String, Object> exportExcel(HttpServletResponse response)
 			throws IOException {
 		
 		ExcelUtil.exportExcel(response);
@@ -215,11 +218,51 @@ public class ShopkeeperController{
 	 */
 	@RequestMapping(value = "/importExcel")
 	@ResponseBody
-	public Map<String, Object> importExcel(@RequestParam(value = "file", required = false) MultipartFile file)
+	public HashMap<String, Object> importExcel(@RequestParam(value = "file", required = false) MultipartFile file)
 			throws IOException {
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		List<ArrayList<String>> importExcel = new ExcelUtil().importExcel(file);
 		
-		return null;
+		SpsShopkeeperInvitation spsShopkeeperInvitation = null;
+		try {
+			for (ArrayList<String> arrayList : importExcel) {
+					spsShopkeeperInvitation = new SpsShopkeeperInvitation();
+					spsShopkeeperInvitation.setInvitationName(arrayList.get(0));
+					spsShopkeeperInvitation.setInvitationPhone(arrayList.get(1));
+					writeService.insertInvitation(spsShopkeeperInvitation);
+			}
+			map.put("msg", "添加成功");
+			map.put("state", FinalData.STATE_SUCCESS);
+		} catch (Exception e) {
+			map.put("msg", "添加失败");
+			map.put("state", FinalData.STATE_ERROR);
+			e.printStackTrace();
+		}
+		return map;
+	}
+	@RequestMapping(value = "/insertInvitation")
+	@ResponseBody
+	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation)
+			throws IOException {
+		
+		HashMap<String, Object> insertInvitation = null;
+		try {
+			insertInvitation = writeService.insertInvitation(invitation);
+		} catch (Exception e) {
+			insertInvitation.put("msg", "添加失败,联系管理员");
+			insertInvitation.put("state", FinalData.STATE_ERROR);
+			e.printStackTrace();
+		}
+		
+		return insertInvitation;
+	}
+	@RequestMapping(value = "/queryInvitationList.json")
+	@ResponseBody
+	public HashMap<String, Object> queryInvitationList(Integer page, Integer limit, String name, String phone, String state) {
+		
+		HashMap<String, Object> queryInvitationList = readService.queryInvitationList(page, limit, name, phone, state);
+		
+		return queryInvitationList;
 	}
 }

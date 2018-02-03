@@ -20,6 +20,9 @@ import org.sps.entity.shopkeeper.SpsShopkeeperCreditExample;
 import org.sps.entity.shopkeeper.SpsShopkeeperExample;
 import org.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
 import org.sps.entity.shopkeeper.SpsShopkeeperHousePropertyExample;
+import org.sps.entity.shopkeeper.SpsShopkeeperInvitation;
+import org.sps.entity.shopkeeper.SpsShopkeeperInvitationExample;
+import org.sps.entity.shopkeeper.SpsShopkeeperInvitationExample.Criteria;
 import org.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import org.sps.entity.shopkeeper.SpsShopkeeperPersonalExample;
 import org.sps.entity.shopkeeper.SpsShopkeeperPic;
@@ -40,6 +43,7 @@ import com.sps.dao.shopkeeper.read.SpsShopkeeperCompanyReadMapper;
 import com.sps.dao.shopkeeper.read.SpsShopkeeperContactReadMapper;
 import com.sps.dao.shopkeeper.read.SpsShopkeeperCreditReadMapper;
 import com.sps.dao.shopkeeper.read.SpsShopkeeperHousePropertyReadMapper;
+import com.sps.dao.shopkeeper.read.SpsShopkeeperInvitationReadMapper;
 import com.sps.dao.shopkeeper.read.SpsShopkeeperPersonalReadMapper;
 import com.sps.dao.shopkeeper.read.SpsShopkeeperPicReadMapper;
 import com.sps.dao.shopkeeper.read.SpsShopkeeperReadMapper;
@@ -71,6 +75,8 @@ public class ShopkeeperReadServiceImpl implements ShopkeeperReadService{
 	private SpsShopkeeperPicReadMapper picRead;
 	@Resource
 	private SpsShopkeeperAccountReadMapper accountRead;
+	@Resource
+	private SpsShopkeeperInvitationReadMapper invitationRead;
 	@Override
 	public HashMap<String,Object> getShopkeeperList(Integer page, Integer limit, String account, String shopkeeperName,
 			Integer shopkeeperState) {
@@ -305,6 +311,36 @@ public class ShopkeeperReadServiceImpl implements ShopkeeperReadService{
 		hashMap.put("msg", "获取成功");
 		
 		hashMap.put("data", selectByExample.size() != 0 ? selectByExample.get(0) : null);
+		
+		return hashMap;
+	}
+	@Override
+	public HashMap<String, Object> queryInvitationList(Integer page, Integer limit, String name, String phone, String state) {
+
+		HashMap<String, Object> hashMap = new HashMap<String,Object>();
+		
+		SpsShopkeeperInvitationExample example = new SpsShopkeeperInvitationExample();
+		
+		Criteria createCriteria = example.createCriteria();
+		
+		if(!(name == null || name.equals(""))){
+			createCriteria.andInvitationNameEqualTo(name);
+		}
+		if(!(phone == null || phone.equals(""))){
+			createCriteria.andInvitationPhoneEqualTo(phone);
+		}
+		if(!(state == null || state.equals(""))){
+			createCriteria.andInvitationStateEqualTo(state);
+		}
+		
+		PageHelper.startPage(page, limit);
+		List<SpsShopkeeperInvitation> selectByExample = invitationRead.selectByExample(example );
+		PageInfo pageInfo = new PageInfo(selectByExample);
+		
+		hashMap.put("code", 0);
+		hashMap.put("msg", "获取成功");
+		hashMap.put("count", pageInfo.getTotal());
+		hashMap.put("data", selectByExample.size() != 0 ? selectByExample : null);
 		
 		return hashMap;
 	}

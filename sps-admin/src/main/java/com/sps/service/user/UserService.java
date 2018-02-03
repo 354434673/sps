@@ -55,7 +55,7 @@ public interface UserService {
 	 * @return: HashMap<String,Object>      
 	 * @throws
 	 */
-	HashMap<String, Object> updatePassword(String oldPassword, String newPassword);
+	HashMap<String, Object> updatePassword(String username, String oldPassword, String newPassword);
 	/**
 	 * 修改用户信息
 	 * @Title: updateUser   

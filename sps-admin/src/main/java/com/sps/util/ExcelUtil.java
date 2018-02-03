@@ -184,7 +184,7 @@ public class ExcelUtil{
 	     * @throws FileNotFoundException,IOException,InvalidFormatException
 	     * POI方式解析EXCEL表格(2007以上版本，xlsx)
 	     */
-	    private List<ArrayList<String>> poiReadXExcel(InputStream inputStream) throws FileNotFoundException, IOException, InvalidFormatException {
+	    public List<ArrayList<String>> poiReadXExcel(InputStream inputStream) throws FileNotFoundException, IOException, InvalidFormatException {
 	        //FileInputStream input = new FileInputStream(file); //读取的文件路径   
 	    	XSSFWorkbook wb = new XSSFWorkbook(new BufferedInputStream(inputStream));
 	        
@@ -205,7 +205,7 @@ public class ExcelUtil{
 	                XSSFCell cell = row.getCell(j);
 	                strList.add(getXCellVal(cell));
 	            }
-	            strLists.add(i, (ArrayList<String>) strList); //存储该行
+	            strLists.add((ArrayList<String>) strList); //存储该行
 	        }
 
 	        //打印
@@ -218,7 +218,7 @@ public class ExcelUtil{
 	        wb.close();
 	        return strLists;
 	    }
-	    private List<ArrayList<String>> poiReadHExcel(InputStream inputStream) throws FileNotFoundException, IOException, InvalidFormatException {
+	    public List<ArrayList<String>> poiReadHExcel(InputStream inputStream) throws FileNotFoundException, IOException, InvalidFormatException {
 	    	//FileInputStream input = new FileInputStream(file); //读取的文件路径   
 	    	HSSFWorkbook wb = new HSSFWorkbook(new BufferedInputStream(inputStream));
 	    	
@@ -229,7 +229,7 @@ public class ExcelUtil{
 	    	strLists.clear();
 	    	
 	    	//遍历行
-	    	for (int i = 0; i < rowNum; i++) 
+	    	for (int i = 1; i < rowNum; i++) 
 	    	{
 	    		List<String> strList = new ArrayList<String>();
 	    		HSSFRow row = sheet.getRow(i);
@@ -239,7 +239,7 @@ public class ExcelUtil{
 	    			HSSFCell cell = row.getCell(j);
 	    			strList.add(getHCellVal(cell));
 	    		}
-	    		strLists.add(i, (ArrayList<String>) strList); //存储该行
+	    		strLists.add((ArrayList<String>) strList); //存储该行
 	    	}
 	    	
 	    	//打印
