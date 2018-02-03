@@ -101,7 +101,7 @@
 		    <div class="layui-input-inline">
 		    	<div class="layui-form-mid layui-word-aux" id="modifytime"> </div>
 		    </div>
-		    <label class="layui-form-label" style="width:152px">店付名称：</label>
+		    <label class="layui-form-label" style="width:152px">店付日期：</label>
 		    <div class="layui-input-inline">
 		    	<div class="layui-form-mid layui-word-aux" id=createtime> </div>
 		    </div>
