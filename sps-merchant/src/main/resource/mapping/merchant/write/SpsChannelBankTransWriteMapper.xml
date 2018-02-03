@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelBankTransWriteMapper" >
+ <!--  <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelBankTrans" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="b_name" property="name" jdbcType="VARCHAR" />
+    <result column="b_accounts" property="accounts" jdbcType="VARCHAR" />
+    <result column="b_identity" property="identity" jdbcType="VARCHAR" />
+    <result column="b_phone" property="phone" jdbcType="VARCHAR" />
+    <result column="b_createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="b_updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="b_bank " property="bank" jdbcType="VARCHAR" />
+    <result column="b_state" property="state" jdbcType="VARCHAR" />
+    <result column="b_remark" property="remark" jdbcType="VARCHAR" />
+    <result column="b_user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="standby1" property="standby1" jdbcType="VARCHAR" />
+    <result column="standby2" property="standby2" jdbcType="VARCHAR" />
+    <result column="standby3" property="standby3" jdbcType="VARCHAR" />
+  </resultMap> -->
+  <insert id="insertBlankTrans" parameterType="org.sps.entity.merchant.SpsChannelBankTrans" >
+     insert into sps_bank_trans
+  		 (id,t_name,t_user_id, t_accounts, t_identity,t_phone,t_start_time,
+  		 t_stop_time,t_serial_sh,t_serial_yop,t_state,t_remark)
+   	 values (
+    		 #{id,jdbcType=INTEGER},
+    		 #{name,jdbcType=VARCHAR},
+     		 #{userId,jdbcType=VARCHAR},
+      		 #{accounts,jdbcType=VARCHAR},
+    		 #{identity,jdbcType=VARCHAR},
+    		 #{phone,jdbcType=VARCHAR},
+    		 #{startTime,jdbcType=TIMESTAMP},
+    		 #{stopTime,jdbcType=TIMESTAMP},
+  			 #{serialSh,jdbcType=VARCHAR},
+  			 #{serialYop,jdbcType=VARCHAR},
+  			 #{state,jdbcType=VARCHAR},
+   			 #{remark,jdbcType=VARCHAR} ) 
+  </insert>
+ <delete id="deleteByPrimaryKey" parameterType="String">
+  	delete from  sps_bank_trans where t_user_id=#{userId}
+  </delete>
+  
+  <update id="updateByChannelBank" parameterType="org.sps.entity.merchant.SpsChannelBankTrans">
+  	update sps_bank_trans
+    <set >
+      
+      <if test="name!= null" >
+        t_name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="accounts != null" >
+        t_accounts= #{accounts,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null" >
+        t_identity = #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        t_phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        t_start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stopTime != null" >
+        t_stop_time = #{stopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serialSh != null" >
+        t_serial_sh = #{serialSh,jdbcType=VARCHAR},
+      </if>
+      <if test="serialYop != null" >
+        t_serial_yop = #{serialYop,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        t_state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        t_remark = #{remark,jdbcType=VARCHAR},
+      </if>
+     </set> 
+      where   t_user_id = #{userId,jdbcType=VARCHAR}
+   
+    
+  </update> 
+  
+</mapper>
