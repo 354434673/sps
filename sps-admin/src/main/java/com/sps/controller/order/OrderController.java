@@ -19,7 +19,7 @@ import org.sps.entity.order.SpsOrderLogistics;
 import org.sps.service.order.OrderService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.sps.service.user.ExpressService;
+import com.sps.service.express.ExpressService;
 import com.sps.util.CommonUtil;
 
 @Controller
@@ -159,17 +159,18 @@ public class OrderController {
 			SpsOrderLogistics logistics, String orderid,String flag, HttpServletRequest request){
 		
 		if(file != null){//文件不为空则上传图片
-			String realPath = request.getSession().getServletContext().getRealPath("upload/"); //项目路径
+			//String realPath = request.getSession().getServletContext().getRealPath("upload/"); //项目路径
+			
+			String realPath = "C:\\development\\sps\\sps\\sps-admin\\src\\main\\webapp\\upload\\";
 			
 			String filePath ="order/"+logistics.getOrderId()+"/";
 			
-			CommonUtil.uploadPicture(file, realPath+filePath, file.getName());
+			CommonUtil.uploadPicture(file, realPath+filePath, file.getOriginalFilename());
 		}
 		HashMap<String, Object> insertLogistics = orderService.insertLogistics(flag, logistics);
 		
 		return insertLogistics;
 	}
-	
 	/**
 	 * 修改待发货订单状态，修改好后返回到待发货页面
 	 * @param orderid 订单id

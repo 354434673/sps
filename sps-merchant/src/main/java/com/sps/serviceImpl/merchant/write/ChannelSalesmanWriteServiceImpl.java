@@ -50,5 +50,30 @@ public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteServ
 		List<SpsChannelSalesman> selectByExample = salesmanRead.selectByExample(example);
 		
 		return selectByExample.size() == 0 ? null : selectByExample.get(0);
+	}
+	@Override
+	public HashMap<String, Object> updateSalesman(String state, Integer id) {
+		
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		
+		try {
+			SpsChannelSalesman record = new SpsChannelSalesman();
+			
+			record.setBei1(state);
+			
+			SpsChannelSalesmanExample example = new SpsChannelSalesmanExample();
+			
+			example.createCriteria().andSalesmanIdEqualTo(id);
+			
+			int updateByExampleSelective = salesmanWrite.updateByExampleSelective(record, example);
+			
+			hashMap.put("msg", "删除成功");
+			hashMap.put("state", FinalData.STATE_SUCCESS);
+		} catch (Exception e) {
+			hashMap.put("msg", "删除失败");
+			hashMap.put("state", FinalData.STATE_ERROR);
+			e.printStackTrace();
+		}
+		return hashMap;
 	};
 }

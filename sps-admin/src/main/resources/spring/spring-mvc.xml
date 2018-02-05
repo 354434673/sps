@@ -71,7 +71,4 @@
             </props>  
         </property>  
     </bean> 
-    
-	<!-- 通知spring识别@Aspect注解生效 -->
-	<aop:aspectj-autoproxy proxy-target-class="true" />
 </beans>

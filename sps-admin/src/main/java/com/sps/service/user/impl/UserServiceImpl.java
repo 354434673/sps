@@ -7,6 +7,10 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.stereotype.Service;
 import org.sps.util.FinalData;
 
@@ -218,5 +222,42 @@ public class UserServiceImpl implements UserService{
 			e.printStackTrace();
 		}
 		return map;
+	}
+	@Override
+	public String userLogin(String user, String pass, String code, boolean rememberMe) {
+		UsernamePasswordToken usernamePasswordToken = 
+				new UsernamePasswordToken(user, pass);
+		
+		usernamePasswordToken.setRememberMe(true);
+		HashMap<String, String> loginData = new HashMap<String,String>();
+	    try {  
+	    	SecurityUtils.getSubject().login(usernamePasswordToken);
+	    	
+	    } catch (UnknownAccountException ex) {  
+	    	ex.printStackTrace(); 
+	        System.out.println("用户不存在或者密码错误！");
+	        return "inexistence";
+	    } catch (IncorrectCredentialsException ex) { 
+	    	ex.printStackTrace(); 
+	    	System.out.println("用户不存在或者密码错误！");
+	    	return "inexistence";
+	    } catch (AuthenticationException ex) {  
+	    	ex.printStackTrace(); 
+	    	System.out.println("自定义");
+	    	return "inexistence";
+	    } catch (Exception ex) {  
+	        ex.printStackTrace();  
+	        System.out.println("内部错误，请重试！");
+	        return "error";
+	    }  
+	    
+		return "success";
+	}
+	@Override
+	public String userLogout() {
+		//清除令牌中的信息
+		SecurityUtils.getSubject().logout();
+		
+		return "login";
 	}
 }

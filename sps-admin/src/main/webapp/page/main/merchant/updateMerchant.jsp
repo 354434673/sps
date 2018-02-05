@@ -24,7 +24,7 @@
 <div class="layui-tab layui-tab-brie" lay-filter ="tab" style="padding:10px;" >
   <ul class="layui-tab-title">
     <li lay-id="channelInfo" class="layui-this">基本信息</li>
-    <li lay-id="picInfo" style="display: none" id="picInfo" >图片资料</li>
+    <li lay-id="picInfo" id="picInfo" >图片资料</li>
   </ul>
   <div class="layui-tab-content">
     <div class="layui-tab-item layui-show">

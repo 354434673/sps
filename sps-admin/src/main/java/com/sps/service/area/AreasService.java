@@ -1,4 +1,4 @@
-package com.sps.service.user;
+package com.sps.service.area;
 
 import java.util.List;
 

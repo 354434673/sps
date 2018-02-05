@@ -40,8 +40,7 @@
 			    <label class="layui-form-label">状态:</label>
 			    <div class="layui-input-inline" >
 			    <select lay-filter="salesState" id="status"> 
-				  <option value=""></option>
-				  <option value="0">全部</option>
+				  <option value="">全部</option>
 				  <option value="1">正常</option>
 				  <option value="2">停用</option>
 		      	</select>
@@ -133,20 +132,13 @@
 			  //重置
 			  $('#resetUser').on('click',function(){
 				  $('input').val('')
+				  $('select').val('')
 			  })
-			  
- 			form.on('select(salesState)', function(data){
-				  table.reload('salesmanId', {
-					  where: {bei1:data.value}
-					}); 
-			  });  
-		
 			  //监听工作条
 				table.on('tool(salesmanTables)', function(obj){
 					 var data = obj.data;
 					  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 					  var tr = obj.tr; //获得当前行 tr 的DOM对象
-					 	console.log(data)
 					  if(layEvent === 'detail'){ //查看
 						  layer.open({
 							  type: 2, 
@@ -169,7 +161,24 @@
 					    layer.confirm('真的删除行么', function(index){
 					      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 					      layer.close(
-
+	  					  			$.post({
+							 			 url:'<%=path%>/salesman/updateState',
+							 			 dataType:'json',
+							 			 data:{
+							 				 id:data.salesmanId,
+							 				 state:1
+							 				 },
+							 			 success:function(data){
+							 				 if(data.state == 'success'){
+							 					layer.msg(data.msg,{icon: 1});
+							 				 }else{
+							 					layer.msg(data.msg,{icon: 2});
+							 				 }
+							 			 },
+							 			 error:function(){
+							 				layer.msg('系统错误',{icon: 2});
+							 			 }
+							 		 })
 						  );
 					      //向服务端发送删除指令
 					    });

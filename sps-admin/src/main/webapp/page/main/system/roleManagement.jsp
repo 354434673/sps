@@ -95,6 +95,7 @@
 		//监听工作条
 			table.on('tool(roleTables)', function(obj){
 				 var data = obj.data;
+				 console.log(data)
 				  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 				  var tr = obj.tr; //获得当前行 tr 的DOM对象
 				  if(layEvent === 'detail'){ //查看
@@ -111,6 +112,9 @@
 							}  
 					  }); 
 				  } else if(layEvent === 'del'){ //删除
+				    	if(data.roleName == '管理员'){
+				    		layer.msg('管理员角色不可删除')
+				    	}else{
 						    layer.confirm('确认删除该角色？', function(index){
 						      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 						      layer.close(index);
@@ -133,7 +137,11 @@
 							 			 }
 							 		 })
 						    });
+				    	}
 				  } else if(layEvent === 'edit'){ //编辑
+				    	if(data.roleName == '管理员'){
+				    		layer.msg('管理员角色不可修改')
+				    	}else{
 						  layer.open({
 							  type: 2, 
 							  title:'角色修改',
@@ -149,6 +157,7 @@
 									});
 								}   
 						  }); 
+				    	}
 				  }
 			});
 		});

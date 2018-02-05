@@ -73,4 +73,12 @@ public class SalesmanController {
 		
 		return salesmanList;
 	}
+	@RequestMapping("/updateState")
+	@ResponseBody
+	public HashMap<String,Object>  updateSalesman(String state, Integer id){
+		
+		HashMap<String, Object> updateSalesman = salesmanWrite.updateSalesman(state, id);
+		
+		return updateSalesman;
+	}
 }

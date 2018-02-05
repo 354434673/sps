@@ -10,7 +10,7 @@ public class SpsOrderLogistics implements Serializable{
 
     private String logisticsOther;
 
-    private Integer logisticsNum;
+    private String logisticsNum;
 
     private String logisticsVoucher;
 
@@ -44,11 +44,11 @@ public class SpsOrderLogistics implements Serializable{
         this.logisticsOther = logisticsOther == null ? null : logisticsOther.trim();
     }
 
-    public Integer getLogisticsNum() {
+    public String getLogisticsNum() {
         return logisticsNum;
     }
 
-    public void setLogisticsNum(Integer logisticsNum) {
+    public void setLogisticsNum(String logisticsNum) {
         this.logisticsNum = logisticsNum;
     }
 

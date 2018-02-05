@@ -18,4 +18,19 @@ public interface ChannelSalesmanWriteService{
 	 * @throws
 	 */
 	HashMap<String, Object> insertSalesman(SpsChannelSalesman salesman);
+	/**
+	 * 更改业务员状态
+	 * @Title: updateSalesman   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param state
+	 * @param: @param id
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月3日 下午4:32:10
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	HashMap<String, Object> updateSalesman(String state, Integer id);
+	
+	
 }

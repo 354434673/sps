@@ -73,32 +73,11 @@ public class UserController {
 		UsernamePasswordToken usernamePasswordToken = 
 				new UsernamePasswordToken(user, pass);
 		
-		usernamePasswordToken.setRememberMe(true);
-		HashMap<String, String> loginData = new HashMap<String,String>();
-	    try {  
-	    	SecurityUtils.getSubject().login(usernamePasswordToken);
-	    	
-	    	String numForUserType = getNumForUserType();
-	    	System.out.println(numForUserType);
-	    } catch (UnknownAccountException ex) {  
-	    	ex.printStackTrace(); 
-	        System.out.println("用户不存在或者密码错误！");
-	        return "inexistence";
-	    } catch (IncorrectCredentialsException ex) { 
-	    	ex.printStackTrace(); 
-	    	System.out.println("用户不存在或者密码错误！");
-	    	return "inexistence";
-	    } catch (AuthenticationException ex) {  
-	    	ex.printStackTrace(); 
-	    	System.out.println("自定义");
-	    	return "inexistence";
-	    } catch (Exception ex) {  
-	        ex.printStackTrace();  
-	        System.out.println("内部错误，请重试！");
-	        return "error";
-	    }  
+		String userLogin = userService.userLogin(user, pass, code, rememberMe);
+		
+	    getNumForUserType();
 	    
-		return "success";
+		return userLogin;
 	}
 	/**
 	 * 添加用户
@@ -199,10 +178,8 @@ public class UserController {
 	 */
 	@RequestMapping(value="/logout")
 	public String logout(){
-		//清除令牌中的信息
-		SecurityUtils.getSubject().logout();
 		
-		return "login";
+		return userService.userLogout();
 	}
 	public String getNumForUserType(){
 		 Subject subject = SecurityUtils.getSubject();

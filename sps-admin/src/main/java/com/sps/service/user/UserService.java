@@ -9,6 +9,33 @@ import com.sps.entity.user.SpsUser;
 
 public interface UserService {
 	/**
+	 * 用户登录
+	 * @Title: userLogin   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param user
+	 * @param: @param pass
+	 * @param: @param code
+	 * @param: @param rememberMe
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月5日 下午1:51:54
+	 * @return: String      
+	 * @throws
+	 */
+	String userLogin(String user, String pass, String code, boolean rememberMe);
+	/**
+	 * 用户登出
+	 * @Title: userLogout   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param:   
+	 * @author YangNingSheng    
+	 * @date 2018年2月5日 下午1:52:19
+	 * @return: void      
+	 * @throws
+	 */
+	String userLogout();
+	
+	/**
 	 * 获得用户
 	 * @Title: getUser   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   

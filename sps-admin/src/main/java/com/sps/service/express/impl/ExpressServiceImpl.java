@@ -1,4 +1,4 @@
-package com.sps.service.user.impl;
+package com.sps.service.express.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,14 +6,13 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.express.SpsExpressMapper;
 import com.sps.entity.express.SpsExpress;
 import com.sps.entity.express.SpsExpressExample;
-import com.sps.service.user.ExpressService;
+import com.sps.service.express.ExpressService;
 @Service
 public class ExpressServiceImpl implements ExpressService{
 	@Resource

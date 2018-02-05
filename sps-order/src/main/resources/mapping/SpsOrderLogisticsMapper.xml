@@ -5,7 +5,7 @@
     <id column="logistics_id" property="logisticsId" jdbcType="INTEGER" />
     <result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
     <result column="logistics_other" property="logisticsOther" jdbcType="VARCHAR" />
-    <result column="logistics_num" property="logisticsNum" jdbcType="INTEGER" />
+    <result column="logistics_num" property="logisticsNum" jdbcType="VARCHAR" />
     <result column="logistics_voucher" property="logisticsVoucher" jdbcType="VARCHAR" />
     <result column="logistics_creat_time" property="logisticsCreatTime" jdbcType="TIMESTAMP" />
     <result column="logistics_update_time" property="logisticsUpdateTime" jdbcType="TIMESTAMP" />
@@ -108,7 +108,7 @@
       logistics_num, logistics_voucher, logistics_creat_time, 
       logistics_update_time, order_id)
     values (#{logisticsId,jdbcType=INTEGER}, #{logisticsName,jdbcType=VARCHAR}, #{logisticsOther,jdbcType=VARCHAR}, 
-      #{logisticsNum,jdbcType=INTEGER}, #{logisticsVoucher,jdbcType=VARCHAR}, #{logisticsCreatTime,jdbcType=TIMESTAMP}, 
+      #{logisticsNum,jdbcType=VARCHAR}, #{logisticsVoucher,jdbcType=VARCHAR}, #{logisticsCreatTime,jdbcType=TIMESTAMP}, 
       #{logisticsUpdateTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.sps.entity.order.SpsOrderLogistics" >
@@ -150,7 +150,7 @@
         #{logisticsOther,jdbcType=VARCHAR},
       </if>
       <if test="logisticsNum != null" >
-        #{logisticsNum,jdbcType=INTEGER},
+        #{logisticsNum,jdbcType=VARCHAR},
       </if>
       <if test="logisticsVoucher != null" >
         #{logisticsVoucher,jdbcType=VARCHAR},
@@ -185,7 +185,7 @@
         logistics_other = #{record.logisticsOther,jdbcType=VARCHAR},
       </if>
       <if test="record.logisticsNum != null" >
-        logistics_num = #{record.logisticsNum,jdbcType=INTEGER},
+        logistics_num = #{record.logisticsNum,jdbcType=VARCHAR},
       </if>
       <if test="record.logisticsVoucher != null" >
         logistics_voucher = #{record.logisticsVoucher,jdbcType=VARCHAR},
@@ -209,7 +209,7 @@
     set logistics_id = #{record.logisticsId,jdbcType=INTEGER},
       logistics_name = #{record.logisticsName,jdbcType=VARCHAR},
       logistics_other = #{record.logisticsOther,jdbcType=VARCHAR},
-      logistics_num = #{record.logisticsNum,jdbcType=INTEGER},
+      logistics_num = #{record.logisticsNum,jdbcType=VARCHAR},
       logistics_voucher = #{record.logisticsVoucher,jdbcType=VARCHAR},
       logistics_creat_time = #{record.logisticsCreatTime,jdbcType=TIMESTAMP},
       logistics_update_time = #{record.logisticsUpdateTime,jdbcType=TIMESTAMP},
@@ -228,7 +228,7 @@
         logistics_other = #{logisticsOther,jdbcType=VARCHAR},
       </if>
       <if test="logisticsNum != null" >
-        logistics_num = #{logisticsNum,jdbcType=INTEGER},
+        logistics_num = #{logisticsNum,jdbcType=VARCHAR},
       </if>
       <if test="logisticsVoucher != null" >
         logistics_voucher = #{logisticsVoucher,jdbcType=VARCHAR},
@@ -249,7 +249,7 @@
     update sps_order_logistics
     set logistics_name = #{logisticsName,jdbcType=VARCHAR},
       logistics_other = #{logisticsOther,jdbcType=VARCHAR},
-      logistics_num = #{logisticsNum,jdbcType=INTEGER},
+      logistics_num = #{logisticsNum,jdbcType=VARCHAR},
       logistics_voucher = #{logisticsVoucher,jdbcType=VARCHAR},
       logistics_creat_time = #{logisticsCreatTime,jdbcType=TIMESTAMP},
       logistics_update_time = #{logisticsUpdateTime,jdbcType=TIMESTAMP},

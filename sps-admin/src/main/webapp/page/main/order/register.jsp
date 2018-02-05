@@ -198,64 +198,68 @@
 			  var logisticsCooperationName = '';
 			  var logisticsOther = '';
 			  var logisticsNum = '';
+			  var orderId = '';
+			  var fileName = ''
 			  form.on('submit(submit)', function(data){
 				  logisticsCooperationName = $('#logisticsCooperationName').val()
 				  logisticsOther = $('#logisticsOther').val()
 				  logisticsNum = $('#logisticsNum').val()
-				  $.post({
+				  orderId = <%=request.getParameter("orderid")%>
+<%-- 				  $.post({
 					  url:'<%=path%>/order/insertLogistics',
 					  dataType:'json',
 					  data:{
 	 			          logisticsName:logisticsCooperationName,
-						  orderId:<%=request.getParameter("orderid")%>,
+						  orderId:orderId,
 						  logisticsOther:logisticsOther,
 						  logisticsNum:logisticsNum,
 						  flag:7
 						  },
 					  success:function(data){
-						  layer.msg(msg,{icon: 1});
-						  setTimeout(function(){
-							  //跳转到上一页
-							  window.location.href='<%=path%>/page/main/order/orderToBeDelivery.jsp'
-						  },1000);
+						  if(data.state == 'success'){
+							  layer.msg(data.msg,{icon: 1});
+							  setTimeout(function(){
+								  //跳转到上一页
+								  window.location.href='<%=path%>/page/main/order/orderToBeDelivery.jsp'
+							  },1000);
+						  }else{
+							  layer.msg(data.msg,{icon: 2});
+						  }
 					  },
 					  error:function(){
 						  layer.msg('系统错误',{icon: 2});
 					  }
-				  })
-<%-- 				  //绑定原始文件域
-				  upload.render({
-				    elem: '#testList'
-				    ,accept:'images'
-				    ,url:'<%=path%>/order/insertLogistics'
-				    ,auto: false
-				    ,multiple: true
-				    ,bindAction:'#submit'
-	 			    ,data:{
-	 			          logisticsName:logisticsCooperationName,
-						  orderId:<%=request.getParameter("orderid")%>,
-						  logisticsOther:logisticsOther,
-						  logisticsNum:logisticsNum,
-						  flag:4
-	 			    	}
-				    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-				    	}else if(res.state == 'error'){
-				    		layer.msg(res.msg,{icon: 2});
-				    	}else if(res.state == 'max'){
-				    		layer.msg(res.msg,{icon: 2});
-				    	}
-				    }
-				    ,error: function(){
-				    	layer.msg('图片失败',{icon: 2});
-				    }
-				  }); --%>
-				  
+				  }) --%>
 			  })
-			  function upload(){
-
+			  function uploadFile(name,id,other,num,flag){
 			  }
+				  upload.render({
+					    elem: '#testList'
+					    ,accept:'images'
+					    ,url:'<%=path%>/order/uploadLogistics'
+					    ,auto: false
+					    ,multiple: true
+					    ,bindAction:'#submit'
+		 			    ,data:{
+		 			          logisticsName:1,
+							  orderId:1,
+							  logisticsOther:1,
+							  logisticsNum:1,
+							  flag:1
+		 			    	}
+					    ,done: function(res){
+					    	if(res.state == 'success'){
+			 			    	layer.msg(res.msg,{icon: 1});
+					    	}else if(res.state == 'error'){
+					    		layer.msg(res.msg,{icon: 2});
+					    	}else if(res.state == 'max'){
+					    		layer.msg(res.msg,{icon: 2});
+					    	}
+					    }
+					    ,error: function(){
+					    	layer.msg('图片失败',{icon: 2});
+					    }
+					  }); 
 			//物流信息
 			  $('#openExpress').on('click', function() {
 				  layer.open({

@@ -27,7 +27,7 @@ import org.sps.service.merchant.write.ChannelWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sps.entity.user.SpsUser;
-import com.sps.service.user.ExpressService;
+import com.sps.service.express.ExpressService;
 import com.sps.service.user.UserService;
 import com.sps.util.CommonUtil;
 
@@ -294,7 +294,8 @@ public class MerchantController {
 		String type,String accept, String status, Integer types, String channelNum,  HttpServletRequest request){
 		
 		HashMap<String, Object> uploadPic = null;
-        String realPath = request.getSession().getServletContext().getRealPath("upload/"); //项目路径
+        //String realPath = request.getSession().getServletContext().getRealPath("upload/"); //项目路径
+		String realPath = System.getProperty("user.dir")+"/src/main/webapp/upload/";
         String filePath = status+"/"+type+"/"+channelNum+"/"+accept+"/";
         String path = "c:/sps/sps/sps-admin/src/main/webapp/upload/"+status+"/"+type+"/"+channelNum+"/"+accept+"/";
 		

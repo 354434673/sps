@@ -8,7 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sps.service.user.ExpressService;
+import com.sps.service.express.ExpressService;
+
 
 @Controller
 @RequestMapping("/express")

@@ -1,4 +1,4 @@
-package com.sps.service.user.impl;
+package com.sps.service.area.impl;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.sps.dao.areas.AreasMapper;
 import com.sps.entity.areas.Areas;
 import com.sps.entity.areas.AreasExample;
-import com.sps.service.user.AreasService;
+import com.sps.service.area.AreasService;
 @Service
 public class AreasServiceImpl implements AreasService{
 	@Resource

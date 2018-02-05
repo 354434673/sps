@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sps.entity.areas.Areas;
-import com.sps.service.user.AreasService;
+import com.sps.service.area.AreasService;
 
 @Controller
 public class AreasController {
