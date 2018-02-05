@@ -109,7 +109,9 @@
         <div id="showStatus" style="display: none">
             <div class="layui-form-item   ">
                 <label class="layui-form-label">拒绝意见：</label>
+                <div style="padding-top: 5px;padding-left: 10px">
                     <span id="opinion"></span>
+                </div>
             </div>
         </div>
     </div>

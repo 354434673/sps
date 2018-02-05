@@ -36,7 +36,6 @@
             <div class="layui-input-inline">
                 <input id="customWide" name="customWide" type="text" lay-verify="required|number|customWide" placeholder="请输入优先级" autocomplete="off" class="layui-input">
             </div>
-
         </div>
         <div class="layui-form-item" align="center">
             <button class="layui-btn" lay-filter="submitCategory" lay-submit  id="submit">立即提交
@@ -51,66 +50,67 @@
         src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 <script src="<%=path%>/page/static/treeTable/layui.js"></script>
 <script type="text/javascript">
-    $(function () {
 
-    })
-    $(document).on("click", "#back", function () {
-        parent.layer.closeAll();
-    })
     layui.use(['form', 'table'], function () {
         var form = layui.form;
         var $ = layui.jquery;
         var table = layui.table;
-
-
-        //提交
-        var post_flag = false; //设置一个对象来控制是否进入AJAX过程
+        var a_num =0;
         form.on('submit(submitCategory)', function (data) {
-            var layer = layui.layer;
-            if (post_flag) return; //如果正在提交则直接返回，停止执行
-            post_flag = true;//标记当前状态为正在提交状态
-            var customId = $('#customId').val()
-            var customName = $('#customName').val()
-            var customWide = $('#customWide').val();
-            $.ajax(
-                {
-                    data: {
-                        customId: customId,
-                        customName: customName,
-                        customWide: customWide
-                    },
-                    url: "<%=path%>/customCategory/saveOrUpdate",//提交连接
-                    type: 'post',
-                    dataType: 'json',
-                    success: function (result) {
-                        post_flag = false; //在提交成功之后将标志标记为可提交状态
-                        if (result.flag == '1') {
-                            layer.msg("操作成功",{icon: 1});
-                            setTimeout(function () {
-                                parent.window.location.href = "<%=path%>/page/main/custom/index.jsp";
-                                //parent.layer.closeAll();
+         /*   if($('#customWide').val().length>10){
+                layer.msg("sfsdfsdf")
+                return false;
+            }
+            if($('#customName').val().length>50){
+                layer.msg("sfsdfs22222222222df")
+                return false;
+            }*/
+            a_num+=1;
+            if(a_num==1){
 
-                            }, 1000);
-                        } else {
-                            layer.msg("操作失败");
-                        }
-                    }//回调方法
-                });
+                $.ajax(
+                    {
+                        data: {
+                            customId: $('#customId').val(),
+                            customName: $('#customName').val(),
+                            customWide: $('#customWide').val()
+                        },
+                        url: "<%=path%>/customCategory/saveOrUpdate",//提交连接
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (result) {
+                            if (result.flag == '1') {
+                                layer.msg("操作成功",{icon: 1});
+                                setTimeout(function () {
+                                    parent.window.location.href = "<%=path%>/page/main/custom/index.jsp";
+                                    //parent.layer.closeAll();
 
+                                }, 1000);
+                            } else {
+                                layer.msg("操作失败");
+                            }
+                        }//回调方法
+                    });
+            }
+            return false;
         })
         //自定义验证规则收
         form.verify({
+            customWide: function (value) {
+                if (value.length >10) {
+                    return '优先级最多为10位';
+                }
+            },
             maxLength: function(value) {
                 if(value.length>50) {
                     return '分类名称最多为50位';
                 }
             },
-            customWide: function (value) {
-                if (value.length >10) {
-                    return '优先级最多为10位';
-                }
-            }
+
         });
+        $(document).on("click", "#back", function () {
+            parent.layer.closeAll();
+        })
     });
 </script>
 </body>

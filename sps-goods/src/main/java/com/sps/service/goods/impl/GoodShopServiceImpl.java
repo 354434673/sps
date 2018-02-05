@@ -209,4 +209,31 @@ public class GoodShopServiceImpl implements GoodShopService {
         goods.setgStatus(0);
         spsGoodShopMapper.update(goods);
     }
+
+    @Override
+    public HashMap<String, Object> findShopGoodsList(Integer page, Integer limit, String goodsName, Integer shopStatus, Integer flowStatus, String endTime, String startTime, String shopNum, String spuNo) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("goodsName", goodsName);
+        map.put("shopNum", shopNum);
+        map.put("spuNo", spuNo);
+        map.put("flowStatus", flowStatus);
+        if (shopStatus != null && shopStatus == 3) {//未生效
+            map.put("noSignature", shopStatus);
+        } else if (shopStatus != null && shopStatus == 2) {//已删除
+            map.put("deleteFlag", shopStatus);
+        } else {
+            map.put("shopStatus", shopStatus);
+        }
+        //分页
+        PageHelper.startPage(page, limit);
+        List<SpsGoodShop> goodsList = spsGoodShopMapper.findListAllWithMap(map);
+        PageInfo pageInfo = new PageInfo(goodsList);
+        //放入map
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("code", 0);
+        hashMap.put("msg", "获取成功");
+        hashMap.put("count", pageInfo.getTotal());
+        hashMap.put("data", goodsList.size() != 0 ? goodsList : null);
+        return hashMap;
+    }
 }

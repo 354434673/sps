@@ -24,42 +24,59 @@
     <hr>
     <div class="layui-form layui-form-pane">
         <%--<input type="hidden" name="categoryParentName" id="categoryParentName" value="${categoryParentName}">--%>
-        <input type="hidden"  id="brandId" >
+        <input type="hidden" id="brandId">
         <div class="layui-form-item ">
             <label class="layui-form-label">品牌名称：</label>
-            <div class="layui-input-inline" >
-                <input id="brandName" type="text" style="border-style:none ;margin-left: 10px;" class="layui-input" >
+            <div class="layui-input-inline">
+                <input id="brandName" type="text" style="width:350px;border-style:none ;margin-left: 10px;"
+                       class="layui-input">
             </div>
+
+        </div>
+
+        <div class="layui-form-item ">
             <label class="layui-form-label">英文名称：</label>
-            <div class="layui-input-inline" >
-                <input id="brandEnglishName" type="text" style="border-style:none ;margin-left: 10px;" class="layui-input" >
+            <div class="layui-input-inline">
+                <input id="brandEnglishName" type="text" style="width:350px;border-style:none ;margin-left: 10px;"
+                       class="layui-input">
             </div>
         </div>
+
+
         <div class="layui-form-item">
             <label class="layui-form-label">简称：</label>
-            <div class="layui-input-inline" >
-                <input id="brandAbbreviation"type="text"  style="border-style:none ;margin-left: 10px;"class="layui-input" >
+            <div class="layui-input-inline">
+                <input id="brandAbbreviation" type="text" style="width:350px;border-style:none ;margin-left: 10px;"
+                       class="layui-input">
             </div>
+
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">关联分类：</label>
-            <div class="layui-input-inline" >
-                <input id="brandCategoryNames"type="text"  style="border-style:none ;margin-left: 10px;" class="layui-input" >
+            <div class="layui-input-inline">
+                <input id="brandCategoryNames" type="text" style="width:350px;border-style:none ;margin-left: 10px;"
+                       class="layui-input">
             </div>
         </div>
+
+
         <div class="layui-form-item">
             <label class="layui-form-label">小图标：</label>
             <div class="layui-input-inline">
-                <img class="img" src="D:/sps-ws/sps/sps-admin/src/main/webapp/upload/imgs/20171230/" style="max-height: 50px;max-width: 50px" />
+                <img class="img" src="D:/sps-ws/sps/sps-admin/src/main/webapp/upload/imgs/20171230/"
+                     style="padding-top: 10px;    padding-left: 8px; max-height: 50px;max-width: 50px"/>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">大图标：</label>
-            <img class="img" src="D:/sps-ws/sps/sps-admin/src/main/webapp/upload/imgs/20171230/" style="max-height: 50px;max-width: 50px" />
+            <img class="img" src="D:/sps-ws/sps/sps-admin/src/main/webapp/upload/imgs/20171230/"
+                 style="padding-top: 10px;    padding-left: 8px;max-height: 50px;max-width: 50px"/>
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">品牌描述：</label>
-        <div class="layui-input-block"  >
-            <input id="brandDes"type="text"  style="border-style:none" class="layui-input" >
+        <div class="layui-input-block">
+            <input id="brandDes" type="text" style="border-style:none" class="layui-input">
         </div>
     </div>
 </div>

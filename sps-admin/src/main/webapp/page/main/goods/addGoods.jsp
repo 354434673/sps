@@ -137,6 +137,7 @@
                 <input type="file" name="file" style="padding-left: 5px;padding-top: 5px;" id="logoFile2"
                        onchange="setImg2(this);" multiple="multiple"/>
             </div>
+            <div style="padding-top: 10px"> <span style="color: red">提示:最少一张，最多六张，单张大小不超过100K</span></div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*详情图：</label>
@@ -145,6 +146,7 @@
                 <input type="file" name="file" id="logoFile1" style="padding-left: 5px;padding-top: 5px;"
                        onchange="setImg1(this);" multiple="multiple">
             </div>
+            <div style="padding-top: 10px"> <span style="color: red">提示:最多十张，单张大小不超过300K</span></div>
         </div>
 
         <div class="layui-form-item" align="center">
@@ -210,6 +212,8 @@
 
         form.on('submit(saveGoods)', function (data) {
             var type = true;
+            var index= layedit.getContent(index)
+            console.log(index);
             if ($('#goodsNumberFlag').val() == "1") {
                 layer.msg("SKU编号已经存在！");
                 return false;
@@ -290,7 +294,7 @@
                         }//回调方法
                     });
             }
-
+            return false;
         })
 
 
@@ -369,14 +373,17 @@
                                 setTimeout(function () {
                                    window.location.href = "<%=path%>/page/main/goods/index.jsp";
                                 }, 1000);
-                            } else {
+                            } else if (result.flag == '2'){
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
-                                layer.msg("操作失败");
+                                layer.msg("详情图最多为10张");
+                            } else if (result.flag == '3'){
+                                post_flag = false; //在提交成功之后将标志标记为可提交状态
+                                layer.msg("主图最多为6张");
                             }
                         }//回调方法
                     });
             }
-
+            return false;
         })
         //自定义验证规则
         form.verify({
@@ -388,7 +395,12 @@
                 if (value.length > 20) {
                     return 'spu编号最多输入20个字符';
                 }
+            }, gDetails: function (value) {
+                if (value.length > 20) {
+                    return '商品描述最多输入9999个字符';
+                }
             }
+
         });
     });
     /*  layui.use(['form'], function () {
@@ -432,7 +444,6 @@
                         $("#gPic").val(data.fileName);
                         //如果重新调用过上传图片的方法 则表示商品主图修改过，后台删掉重新添加
                         $("#updatePicFlag").val(0);
-
                         // $("#pic").val(data.fileName);
                         // $("#brandSmallUrl").val(res.fileName);
                         // $("#imgShow").attr('src',data.data.avatar);
