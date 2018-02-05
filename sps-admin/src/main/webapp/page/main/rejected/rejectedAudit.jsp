@@ -111,6 +111,7 @@
 	 			  ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
 			      ,{field: 'name', title: '店主名称', align:'center'}
 			      ,{field: 'selfname', title: '店铺名称', align:'center'}
+			      ,{field: 'shopkeepername', title: '核心商户名称', align:'center'}
 			      ,{field: 'createtime', title: '退货申请日期', templet:'#date', width:230, align:'center'}
 			      ,{field: 'flag', title: '流程状态', templet:'#state', width:230, align:'center'}
 			      ,{field: 'tool', title: '操作', width:180,align:'center',toolbar:'#bar'}

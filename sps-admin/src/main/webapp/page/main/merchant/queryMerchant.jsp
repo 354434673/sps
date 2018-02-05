@@ -622,7 +622,6 @@
 			  }
 		  }) 
 	}
-	  console.log(channelNum)
 	  $.post({//获得图片
 		  url:'<%=path%>/merchant/getPicList'
 		  ,dataType:'json'

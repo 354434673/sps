@@ -79,6 +79,22 @@
     	已接收
   {{#  } }}
 </script>
+	<script type="text/html" id="dateTpl">
+{{#  
+   var da = d.invitationTime;
+    da = new Date(da);
+				    var year = da.getFullYear();
+				    var month = da.getMonth()+1;
+				    var date = da.getDate();
+				    var hours = da.getHours();
+				    var minutes = da.getMinutes();
+				    var seconds = da.getSeconds();
+  var fn = function(){
+    return [year,month,date].join('-')+"  "+[hours,minutes,seconds].join(':');
+  }; 
+}}
+{{ fn() }}
+</script>
 	<script>
 	layui.use(['table','layer','form','upload'], function(){
 			  var table = layui.table;
@@ -103,6 +119,7 @@
 			      {type:'numbers', title: '序号',align:'center'}
 			      ,{field: 'invitationName', title: '店主名称',align:'center'}
 			      ,{field: 'invitationPhone', title: '联系电话',align:'center' }
+			      ,{field: 'invitationTime', title: '邀请时间',align:'center',templet: '#dateTpl'}
 			      ,{field: 'invitationState', title: '状态', width:140,align:'center',templet: '#channelTpl'} 
 			    ]]
 			  });

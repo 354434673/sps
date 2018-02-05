@@ -21,7 +21,7 @@
 </head>
 <body>
 <div style="padding: 20px" >
-<h3>用户信息</h3>
+<h3>业务员信息</h3>
 <hr>
 <div class="layui-form layui-form-pane" >
 	<div >

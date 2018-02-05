@@ -145,11 +145,13 @@
 	   		 </div>
 		</div>	
 		</div>
-
 		<div align="center" style="display: none" id="button">
 			<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-normal" >返回</button>
 			<button id="refuse" class="layui-btn layui-btn-danger" >拒绝</button>
 			<button id="agree" class="layui-btn layui-btn-warm" >同意</button>
+		</div>
+		<div align="center" style="display: none;" id="back" >
+			<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-normal" style="width: 150px">返回</button>
 		</div>
 	</div>
 <script type="text/javascript"
@@ -165,6 +167,8 @@
 			  if(isQuery == 1){//为1则为审核	
 				  isSubmit = true
 				  $('#button').show()
+			  }else{
+				  $('#back').show()
 			  }
 			  $.post({//获得信息
 				  url:'<%=path%>/order/showOrder.json'

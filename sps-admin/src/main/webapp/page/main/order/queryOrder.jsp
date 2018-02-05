@@ -62,8 +62,8 @@
 				        <option value="19">风控审核不通过</option>
 				        <option value="5">待支付</option>
 				        <option value="6">待发货</option>
-				        <option value="7">物流审核中</option>
-				        <option value="8">物流审核不通过</option>
+				        <option value="7">发货审核中</option>
+				        <option value="8">发货审核不通过</option>
 				        <!-- <option value="9">待还款</option> -->
 				        <option value="9">已放款</option>
 				        <option value="10">已退货</option>
@@ -110,9 +110,9 @@
 {{#  } else if(d.flag == 6){ }}
   待发货
 {{#  } else if(d.flag == 7){ }}
-  物流审核中
+  发货审核中
 {{#  } else if(d.flag == 8){ }}
-  物流审核不通过
+  发货审核不通过
 {{#  } else if(d.flag == 9){ }}
  已放款
 {{#  } else if(d.flag == 10){ }}
@@ -147,6 +147,7 @@
 			  table.render({
 			    elem: '#orderList'
 			    ,url: '<%=path%>/order/show.json' //数据接口
+			    ,where:{flag:'1,2,3,4,5,6,7,8,9,10,11,18,19'}
 			    ,id:'orderOfAll'
 			    ,page:true
 			    ,cols: [[ //表头

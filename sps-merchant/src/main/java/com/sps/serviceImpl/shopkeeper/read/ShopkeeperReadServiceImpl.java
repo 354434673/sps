@@ -324,10 +324,10 @@ public class ShopkeeperReadServiceImpl implements ShopkeeperReadService{
 		Criteria createCriteria = example.createCriteria();
 		
 		if(!(name == null || name.equals(""))){
-			createCriteria.andInvitationNameEqualTo(name);
+			createCriteria.andInvitationNameLike("%"+name+"%");
 		}
 		if(!(phone == null || phone.equals(""))){
-			createCriteria.andInvitationPhoneEqualTo(phone);
+			createCriteria.andInvitationPhoneLike("%"+phone+"%");
 		}
 		if(!(state == null || state.equals(""))){
 			createCriteria.andInvitationStateEqualTo(state);
