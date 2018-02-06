@@ -1,5 +1,6 @@
 package com.sps.controller.merchant;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +29,7 @@ import org.sps.service.merchant.write.ChannelWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sps.entity.user.SpsUser;
+import com.sps.httpclient.merchant.MerchantService;
 import com.sps.service.express.ExpressService;
 import com.sps.service.user.UserService;
 import com.sps.util.CommonUtil;
@@ -53,6 +56,8 @@ public class MerchantController {
 	private UserService userService;
 	@Resource
 	private ExpressService expressService;
+	@Resource
+	private MerchantService merchantService;
 	/**
 	 * 插入核心商户,将channelNum返回回来
 	 * @Title: getChannel
@@ -119,6 +124,15 @@ public class MerchantController {
 		
 		return gatherList;
 		
+	}
+	@RequestMapping(value = "/init",method = RequestMethod.POST)
+	@ResponseBody
+	public String init(String businessId, Double totalQuota, 
+			Double monthQuota, Double firstMonthQuota){
+		
+		String result = merchantService.init(businessId, totalQuota, monthQuota, firstMonthQuota);
+		
+		return result;
 	}
 	/**
 	 * 获得所有商户列表

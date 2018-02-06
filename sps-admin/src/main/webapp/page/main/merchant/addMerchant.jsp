@@ -437,7 +437,7 @@
 			<!-- 按钮 -->
     		 <div class="layui-form-item" align="center" id="btn" style="padding-top: 10px" >
 				<button class="layui-btn layui-btn-primary" id="last">返回</button>
-				<button class="layui-btn layui-btn-primary" lay-filter="" lay-submit >保存</button>
+				<button class="layui-btn layui-btn-primary" id="submit">提交</button>
 			</div>
     </div>
   </div>
@@ -1032,7 +1032,6 @@
  		 图片上传
  		 */
  		  var isId= $('#uploadList div div div')//可以获得id,动态加载
- 		  console.log(isId)
 		  function intoNext(){
 			  $('#picInfo').removeAttr('style')
 			  element.tabChange('tab','picInfo')
@@ -1059,217 +1058,29 @@
 			 			    }
 			 			  }); 
 				   })
-<%-- 	  		  upload.render({//营业执照
-	 			    elem: '#businesslicense' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'businesslicense',types:0,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-	 			    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    } 
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//近12月对公流水法人流水
-	 			    elem: '#statement' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'statement',types:1,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//法人身份证正面
-	 			    elem: '#corpIdCardFront' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'corpIdCardFront',types:2,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//法人身份证反面
-	 			    elem: '#corpIdCardReverse' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'corpIdCardReverse',types:3,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//业务负责人身份证正面
-	 			    elem: '#salesmanIdCardFront' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'salesmanIdCardFront',types:4,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//业务负责人身份证反面
-	 			    elem: '#salesmanIdCardReverse' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'salesmanIdCardReverse',types:5,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//公司全景照
-	 			    elem: '#companyPanorama' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'companyPanorama',types:6,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//公司大门照
-	 			    elem: '#companyGate' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'companyGate',types:7,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//核心商户合作合同
-	 			    elem: '#contract' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'contract',types:8,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//签约合影照片
-	 			    elem: '#signed' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'signed',types:9,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  }); 
-	  		  upload.render({//经营地租赁协议
-	 			    elem: '#lease' //绑定元素
-	 			    ,accept:'images'
-	 			    ,multiple:true//多文件上传
-	 			    ,data:{type:'lease',types:10,channelNum:channelNum,status:'channel',accept:'images'}
-	 			    ,url: '<%=path%>/merchant/uploadPic' //上传接口
-	 			    ,done: function(res){
-				    	if(res.state == 'success'){
-		 			    	layer.msg(res.msg,{icon: 1});
-	 			    	}else if(res.state == 'error'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}else if(res.state == 'max'){
-	 			    		layer.msg(res.msg,{icon: 2});
-	 			    	}
-	 			    }
-	 			    ,error: function(){
-	 			    	layer.msg('图片失败',{icon: 2});
-	 			    }
-	 			  });   --%>
 			  })
 		  }
+ 		 $('#submit').click(function(){
+ 			$.post({
+	 			 url:'<%=path%>/merchant/init',
+	 			 dataType:'json',
+	 			 data:{businessId:channelNum,
+	 					totalQuota:20000,
+	 						monthQuota:20000,
+	 							firstMonthQuota:20000,
+	 				 },
+	 			 success:function(data){
+					if(JSON.parse(data).success){
+						layer.msg('审核成功',{icon: 1});
+					}else{
+						layer.msg('审核失败',{icon: 2});
+					}
+	 			 },
+	 			 error:function(){
+	 				layer.msg('系统异常',{icon: 2});
+	 			 }
+	 		 })
+ 		 })
 	});
 </script>
 </body>

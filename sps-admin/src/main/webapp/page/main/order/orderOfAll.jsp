@@ -177,28 +177,7 @@
 			  $('#resetInput').on('click',function(){
 				  $('input').val('');
 				  $('select').val('');
-				  
 			  });
-			  var data = {
-					  "application":"dianfu",
-					  "totalQuota":20000,
-					  "monthQuota":20000,
-					  "firstMonthQuota":20000,
-					  "businessId":"DF20180136191770",
-					  "approvedDate":"2018-01-24 17:32:27",
-					  "signDateStart":"2018-01-24 17:32:27"
-					 }
-			  $.ajax({
-				  type: "post",  
-				  url:'http://dev.app.chezhubaitiao.com/api/business/init',
-				  dataType:'jsonp',
-				  contentType:"application/json; charset=utf-8",
-				  data:JSON.stringify(data),
-				  success:function(data){
-					  
-				  }
-				  
-			  })
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){
 					 var data = obj.data,  //获得当前行数据
