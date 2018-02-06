@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.sps.entity.merchant.SpsChannel;
 import org.sps.entity.merchant.SpsChannelBusiness;
@@ -41,7 +42,7 @@ import com.sps.util.CommonUtil;
  * @author YangNingSheng
  * @date 2018年1月12日 下午4:15:29
  */
-@Controller
+@RestController
 @RequestMapping(value="/merchant")
 public class MerchantController {
 	@Reference(check=false,group="dianfu")
@@ -76,7 +77,6 @@ public class MerchantController {
 	 * @throws
 	 */
 	@RequestMapping(value="/insertChannel")
-	@ResponseBody
 	public HashMap<String, String> getChannel(
 			SpsChannel channel, 
 			SpsChannelEnterprise enterprise, 
@@ -117,7 +117,6 @@ public class MerchantController {
 	 * @throws
 	 */
 	@RequestMapping(value="/getGatherList.json")
-	@ResponseBody
 	public HashMap<String, Object> getGatherList(Integer page, Integer limit, String channelNum){
 		
 		HashMap<String, Object> gatherList = channelReadService.getGatherList(page, limit, channelNum);
@@ -126,7 +125,6 @@ public class MerchantController {
 		
 	}
 	@RequestMapping(value = "/init",method = RequestMethod.POST)
-	@ResponseBody
 	public String init(String businessId, Double totalQuota, 
 			Double monthQuota, Double firstMonthQuota){
 		
@@ -150,7 +148,6 @@ public class MerchantController {
 	 * @throws
 	 */
 	@RequestMapping(value="/getChannelList")
-	@ResponseBody
 	public HashMap<String, Object> getChannelList(String channelNum, String name, Integer channelState,  
 			Integer channelFlowState, Integer page, Integer limit){
 		
@@ -172,7 +169,6 @@ public class MerchantController {
 	 * @throws
 	 */
 	@RequestMapping(value="/insertGather")
-	@ResponseBody
 	public HashMap<String, Object> insertGather(SpsChannelGather gather){
 		
 		HashMap<String, Object> insertGather = chanelWriteService.insertGather(gather);
@@ -191,7 +187,6 @@ public class MerchantController {
 	 * @throws
 	 */
 	@RequestMapping(value="/getChannel")
-	@ResponseBody
 	public SpsChannelEnterprise getChannel(String channelNum){
 		
 		SpsChannelEnterprise channelOne = channelReadService.getChannelOne(channelNum, null);
@@ -210,7 +205,6 @@ public class MerchantController {
 	 * @throws
 	 */
 	@RequestMapping(value="/getFinanceTarget")
-	@ResponseBody
 	public SpsChannelFinanceTarget getFinanceTarget(String channelNum){
 		
 		SpsChannelFinanceTarget financeTarget = channelReadService.getFinanceTarget(channelNum);
@@ -229,7 +223,6 @@ public class MerchantController {
 	 * @throws
 	 */
 	@RequestMapping(value="/getGuarantee")
-	@ResponseBody
 	public SpsChannelGuarantee getGuarantee(String channelNum){
 		
 		SpsChannelGuarantee guarantee = channelReadService.getGuarantee(channelNum);
@@ -248,7 +241,6 @@ public class MerchantController {
 	 * @throws
 	 */
 	@RequestMapping(value="/getLogistics")
-	@ResponseBody
 	public SpsChannelLogistics getLogistics(String channelNum){
 		
 		SpsChannelLogistics logistics = channelReadService.getLogistics(channelNum);
@@ -256,7 +248,6 @@ public class MerchantController {
 		return logistics;
 	}
 	@RequestMapping(value="/getOpenAccount")
-	@ResponseBody
 	public SpsChannelOpenAccount getOpenAccount(String channelNum){
 		
 		SpsChannelOpenAccount openAccount = channelReadService.getOpenAccount(channelNum, null);
@@ -264,7 +255,6 @@ public class MerchantController {
 		return openAccount;
 	}
 	@RequestMapping(value="/getBusiness")
-	@ResponseBody
 	public SpsChannelBusiness getBusiness(String channelNum){
 		
 		SpsChannelBusiness business = channelReadService.getBusiness(channelNum);
@@ -272,7 +262,6 @@ public class MerchantController {
 		return business;
 	}
 	@RequestMapping(value="/deleteChannel")
-	@ResponseBody
 	public HashMap<String, String> deleteChannel(String channelNum, Integer state){
 		
 		HashMap<String, String> deleteChannel = chanelWriteService.deleteChannel(channelNum, state);
@@ -280,7 +269,6 @@ public class MerchantController {
 		return deleteChannel;
 	}
 	@RequestMapping("/getPicList")
-	@ResponseBody
 	public List<SpsChannelPic> getPicList(String channelNum, Integer type){
 		
 		return picReadService.getPicList(channelNum, type);
@@ -303,7 +291,6 @@ public class MerchantController {
 	 * @throws
 	 */
 	@RequestMapping(value="/uploadPic")
-	@ResponseBody
 	public HashMap<String, Object> uploadPic(@RequestParam(value = "file", required = false) MultipartFile[] file,
 		String type,String accept, String status, Integer types, String channelNum,  HttpServletRequest request){
 		
