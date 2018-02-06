@@ -3,6 +3,7 @@
 	<name>sps-admin</name>
 	<comment></comment>
 	<projects>
+		<project>sps-service</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
