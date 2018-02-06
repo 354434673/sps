@@ -1,7 +1,6 @@
 ##ignore this file##
 /target/ 
 .classpath
-.project
 .settings      
  ##filter databfile、sln file##
 *.mdb  
@@ -34,3 +33,4 @@
 Icon?  
 ehthumbs.db  
 Thumbs.db  
+/bin/
