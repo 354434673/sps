@@ -298,7 +298,7 @@ public class MerchantController {
         //String realPath = request.getSession().getServletContext().getRealPath("upload/"); //项目路径
 		String realPath = System.getProperty("user.dir")+"/src/main/webapp/upload/";
         String filePath = status+"/"+type+"/"+channelNum+"/"+accept+"/";
-        String path = "c:/sps/sps/sps-admin/src/main/webapp/upload/"+status+"/"+type+"/"+channelNum+"/"+accept+"/";
+        String path = "C:/development/sps/sps/sps-admin/src/main/webapp/upload/"+status+"/"+type+"/"+channelNum+"/"+accept+"/";
 		
 		for (MultipartFile multipartFile : file) {
 			String newName = CommonUtil.getFileName(multipartFile);

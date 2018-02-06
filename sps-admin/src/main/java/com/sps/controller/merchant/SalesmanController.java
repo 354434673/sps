@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.sps.entity.merchant.SpsChannelSalesman;
 import org.sps.service.merchant.read.ChannelSalesmanReadService;
 import org.sps.service.merchant.write.ChannelSalesmanWriteService;
@@ -19,7 +20,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
  * @author YangNingSheng
  * @date 2018年1月12日 下午4:14:48
  */
-@Controller
+@RestController
 @RequestMapping("/salesman")
 public class SalesmanController {
 	@Reference(check=false,group="dianfu")
@@ -38,7 +39,6 @@ public class SalesmanController {
 	 * @throws
 	 */
 	@RequestMapping("insertSalesman")
-	@ResponseBody
 	public HashMap<String,Object>  insertSalesman(SpsChannelSalesman salesman){
 		
 		HashMap<String, Object> insertSalesman = salesmanWrite.insertSalesman(salesman);
@@ -63,7 +63,6 @@ public class SalesmanController {
 	 * @throws
 	 */
 	@RequestMapping("/getSalesmanList.json")
-	@ResponseBody
 	public HashMap<String,Object>  getSalesmanList(String salesmanName, String salesmanIdcard, 
 			String salesmanPhone, String salesmanEmail, String bei1, Integer page, Integer limit){
 		
@@ -74,7 +73,6 @@ public class SalesmanController {
 		return salesmanList;
 	}
 	@RequestMapping("/updateState")
-	@ResponseBody
 	public HashMap<String,Object>  updateSalesman(String state, Integer id){
 		
 		HashMap<String, Object> updateSalesman = salesmanWrite.updateSalesman(state, id);
