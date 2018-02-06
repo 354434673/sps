@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -115,7 +116,7 @@
 							  type: 2, 
 							  title:'查看用户',
 							  area: ['70%', '80%'],//宽高
-							  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+							  content: '<%=path%>/page/main/system/addUser.jsp?type=1&id='+data.userId ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 							  success: function(layero, index){
 								    var body = layer.getChildFrame('body', index);
 								    body.find('input').attr({"disabled":"disabled"});
@@ -125,15 +126,13 @@
 								    body.find('#email').val(data.userEmail)
 								    body.find('#btn').hide();//隐藏提交按钮
 								    body.find('#passwordDiv').hide();//显示重置密码按钮
-								  
-
 								}  
 						  }); 
 					  } else if(layEvent === 'del'){ //删除
 					    	if(data.userUsername == 'admin'){
 					    		layer.msg('管理员账号不可删除')
 					    	}else{
-							    layer.confirm('确认删除当前用户？', function(index){
+							    layer.confirm('确认删除当前用户？', {title:'删除用户'}, function(index){
 							      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 							      layer.close(index);
 		  					  			$.post({
@@ -164,7 +163,7 @@
 								  type: 2, 
 								  title:'用户修改',
 								  area: ['70%', '80%'],//宽高
-								  content: '<%=path%>/page/main/system/addUser.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+								  content: '<%=path%>/page/main/system/addUser.jsp?type=2id='+data.userId,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 								  success: function(layero, index){
 									    var body = layer.getChildFrame('body', index);
 									    body.find('#username').attr({"disabled":"disabled"});
@@ -178,6 +177,9 @@
 									    body.find('#resetPasssword').show();//显示重置密码按钮
 									    body.find('#password').removeAttr("lay-verify","required");//显示重置密码按钮
 									    body.find('#verifyPwd').removeAttr("lay-verify","required");//显示重置密码按钮
+									    body.find('#resetAdd').hide();//隐藏提交按钮
+									    body.find('#resetUpdate').show();//隐藏提交按钮
+									    
 									},
 								  cancel: function(index, layero){ 
 									  table.reload('userId', {

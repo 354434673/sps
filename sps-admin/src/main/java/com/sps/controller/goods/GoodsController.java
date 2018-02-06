@@ -73,14 +73,24 @@ public class GoodsController {
     public Map<String, Object> saveOrUpdate(SpsGoods goods,String goodsDpic,String goodsPic, Model model) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
+            String[] dPic = goodsDpic.split(",");
+            String[] pic = goodsPic.split(",");
+            if(dPic.length>10){
+                resultMap.put("flag", 2);
+                return resultMap;
+            }
+            if(pic.length>6){
+                resultMap.put("flag", 3);
+                return resultMap;
+            }
             goodService.saveOrUpdate(goods);
             SpsGoods spsGoods = goodService.findLastId();
             if(spsGoods.getgId()!=null){
                 //处理商品相册逻辑
                 goodsAlbumService.saveGoodsDetailPic(goodsPic, goodsDpic,spsGoods.getgId());
                 resultMap.put("goodsId", spsGoods.getgId());
+                resultMap.put("flag", 1);
             }
-            resultMap.put("flag", 1);
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("flag", 0);

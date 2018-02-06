@@ -70,13 +70,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">图片：</label>
             <div class="layui-input-inline">
-                <input type="text" id="categoryUrl" name="categoryUrl" value="${spsGoodCategory.categoryUrl}"
+                <input type="text" id="categoryUrl" name="categoryUrl" value="${spsGoodCategory.categoryUrl}" readonly="readonly"
                        placeholder="图片" class="layui-input"/>
                 <button onclick="checkImgType()">上传图片</button>
                 <%--  <input id="categoryUrl" type="hidden" name="categoryUrl"
                          value="${spsGoodCategory.categoryUrl}">
                   <button type="button" class="layui-btn" id="test1">上传图片</button>
                   <div class="layui-upload-list">
+
                       <img class="layui-upload-img" id="demo1"    style="padding-left: 109px;"  >
                       <p id="demoText"></p>--%>
             </div>
@@ -271,8 +272,20 @@
                 $('#parentFlag').val('')
                 return false;
             }*/
+            if ($("#categoryName").val().length<2) {
+                layer.msg("分类名称最少输入2位！");
+                return false;
+            }
             if ($("#showCategory").html() == "选择分类") {
                 layer.msg("请选择上级分类！");
+                return false;
+            }
+            if (parseInt($("#categoryWeight").val()) >9999) {
+                layer.msg("权重不能大于9999！");
+                return false;
+            }
+            if ($("#categoryDes").val().length>20) {
+                layer.msg("描述不能大于20位！");
                 return false;
             }
             var type = true;
@@ -308,6 +321,7 @@
                     }//回调方法
                 });
             }
+            return false;
 
         })
         $(document).on("click", "#showCategory", function () {
@@ -335,6 +349,7 @@
             }, categoryDes: function (value) {
                 if (value.length > 20) {
                     return '描述最多输入20个字符';
+                    return false;
                 }
             }
         });

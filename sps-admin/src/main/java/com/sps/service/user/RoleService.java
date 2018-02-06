@@ -20,8 +20,40 @@ public interface RoleService {
 	 * 上午11:11:56 @return: HashMap<String,String> @throws
 	 */
 	HashMap<String, String> insertRole(String roleName, String describe, List<Integer> menuList);
-
+	/**
+	 * 获得当前角色
+	 * @Title: getRoleByID   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param roleID
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月5日 下午4:11:21
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	HashMap<String, Object> getRoleByID(String roleID);
-
+	/**
+	 * 删除角色
+	 * @Title: deleteRole   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param roleID
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月5日 下午4:11:15
+	 * @return: HashMap<String,String>      
+	 * @throws
+	 */
 	HashMap<String, String> deleteRole(String roleID);
+	/**
+	 * 获取当前用户的角色
+	 * @Title: getRoleForUserId   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param id
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月5日 下午4:11:02
+	 * @return: HashMap<String,String>      
+	 * @throws
+	 */
+	HashMap<String, Object> getRoleForUserId(Integer id);
 }

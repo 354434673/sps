@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sps.entity.user.SpsRole;
 import com.sps.service.user.RoleService;
 
 @Controller
@@ -40,6 +41,13 @@ public class RoleController {
 	@RequestMapping(value = "deleteRole")
 	public @ResponseBody HashMap<String, String> deleteRole(String roleID) {
 		return roleService.deleteRole(roleID);
+	}
+	@RequestMapping(value = "getRoleForUserId")
+	public @ResponseBody HashMap<String, Object> getRoleForUserId(Integer id) {
+		
+		HashMap<String, Object> roleForUserId = roleService.getRoleForUserId(id);
+		
+		return roleForUserId;
 	}
 
 	/**

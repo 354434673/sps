@@ -143,6 +143,9 @@
 				  var startTime = date[0];
 				  var endTime = date[1];
 				  var flag=$('#flag').val();
+				  if(flag == ''){
+					  flag = '1'
+				  }
 				  if(orderid.length>50){
 					  layer.msg('订单编号字数不能超过50字',{icon: 2});
 				  }else if(name.length>50){
@@ -159,6 +162,7 @@
 			  //重置
 			  $('#resetInput').on('click',function(){
 				  $('input').val('');
+				  $('select').val('');
 			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){

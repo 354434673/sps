@@ -236,6 +236,9 @@
         <if test="shopStatus !=null">
             and g.g_grounding_flag = #{shopStatus,jdbcType=INTEGER}
         </if>
+        <if test="spuNo !=null">
+            and g.g_spu_no LIKE CONCAT('%',#{spuNo,jdbcType=VARCHAR},'%')
+        </if>
         <if test="noSignature == 3">
             and g.g_status != 2
         </if>

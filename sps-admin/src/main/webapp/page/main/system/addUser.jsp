@@ -22,7 +22,7 @@
 </head>
 <body>
 <div style="padding: 40px" >
-<h3>用户信息</h3>
+<h3>*用户信息</h3>
 <hr>
 <div class="layui-form layui-form-pane"  >
   <div class="layui-form-item ">
@@ -49,7 +49,7 @@
     </div>
     <label class="layui-form-label">*联系电话：</label>
     <div class="layui-input-inline">
-      <input id="phone" type="text" name="phone" lay-verify="required|phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
+      <input id="phone" type="text" name="phone" lay-verify="required|isPhone" placeholder="请输入电话" autocomplete="off" class="layui-input">
     </div>
   </div>
   <div class="layui-form-item">
@@ -59,7 +59,7 @@
     </div>
   </div>
 
-<h3>角色信息</h3>
+<h3>*角色信息</h3>
 <hr>
   <div class="layui-form-item">
     <label class="layui-form-label">选择角色：</label>
@@ -69,7 +69,8 @@
  	<div class="layui-form-item" align="center" id="btn" >
 		<button class="layui-btn" lay-filter="submitAddUser" lay-submit id="submit">立即提交</button>
 		<button style="display: none" class="layui-btn" lay-filter="submitUpdate" lay-submit id="submitUpdate">提交修改</button>
-		<button id="reset"type="reset" class="layui-btn layui-btn-primary">重置</button>
+		<button id="resetUpdate" style="display: none" class="layui-btn layui-btn-primary">重置</button>
+		<button id="resetAdd" class="layui-btn layui-btn-primary">重置</button>
 	</div>
 </div>
 </div>
@@ -81,6 +82,18 @@
 	  var $ = layui.jquery;
 	  var table = layui.table;
 	  var array = [];//选择的角色id
+	  var type = getUrlParam('type')
+	  var id = getUrlParam('id');
+	  var url = null;
+	  var checked = ''
+	  if(type == 1){
+		  id = id;
+		  checked = 'checked'
+		  url = '<%=path %>/role/getRoleForUserId'
+	  }else if(type = 2){
+		  id = null;
+		  url = '<%=path %>/role/roleList.json'
+	  }
 	  form.on('checkbox(encrypt)', function(data){
 		  if(data.elem.checked){
 		  	array.push(data.value)
@@ -95,8 +108,19 @@
 		  }
 		}); 
 	  $('#resetPasssword').on('click',function(){
-		    layer.confirm('确认重置密码?', function(index){
-			      layer.close(index);
+<%-- 		  layer.confirm('确认重置密码？', {
+			  title:'重置密码',
+			}, function(){
+				$.post({
+					url:'<%=path%>/user/updatePassword',
+					dataType:'json',
+					data:{username:$('#username').val()},
+					success:function(data){
+						layer.msg(data.msg,{icon: data.icon});
+					}
+				})
+			}); --%>
+		    layer.confirm('确认重置密码?',{title:'重置密码'},function(index){
 					$.post({
 						url:'<%=path%>/user/updatePassword',
 						dataType:'json',
@@ -137,12 +161,17 @@
 	 			layer.msg('请选择该用户权限',{icon: 2});
 	 		 }
 	  })
-	  $('#reset').click(function(){
-		  $('#username').val('')
+	  $('#resetUpdate').click(function(){
 		  $('#phone').val('')
 		  $('#email').val('')
+		  $('#name').val('')
 		  $('#verifyPwd').val('')
 		  $('#password').val('')
+		  resetCheck();
+	  })
+	  $('#resetAdd').click(function(){
+		  $('input').val('')
+		  resetCheck();
 	  })
 	  //修改
 	  form.on('submit(submitUpdate)', function(data){
@@ -174,17 +203,30 @@
 	 		 }
 	  })
 	  $.post({//获取角色列表
-		  url:'<%=path %>/role/roleList.json',
+		  url:url,
 		  dataType:'json',
+		  data:{id:id},
 		  success:function(data){
 			  var list = "";
 			  $.each(data.data,function(i,item){
-				  list +='<input type="checkbox" name="check" lay-filter="encrypt" title="'+item.roleName+'" value ="'+item.roleId+'">';
+				  list +='<input type="checkbox" name="check" '+checked+' lay-filter="encrypt" title="'+item.roleName+'" value ="'+item.roleId+'">';
 				  $('#checkList').html(list)
 			  })
 			  form.render('checkbox');
 		  }
 	  })
+	        //获得url参数
+            function getUrlParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]);
+                return null;
+            }
+	  		function resetCheck(){
+	  		  $("input[type='checkbox']").removeAttr('checked')
+			  form.render('checkbox');
+	  		}
+
 	  //自定义验证规则  
 	  form.verify({  
 			//验证只包含汉字  
@@ -213,6 +255,12 @@
 			max20Length: function(value) {
 				if(value.length>20) {
 					return '最多为20位';
+				}
+			},
+			isPhone: function(value) {
+				var regex = /^1[3|4|5|8][0-9]\d{4,8}$/;
+				if(!value.match(regex)) {
+					return '手机号格式不正确!';
 				}
 			},
 			verify: function(value) {

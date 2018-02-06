@@ -17,6 +17,8 @@ public interface SpsRoleMapper {
     int insertSelective(SpsRole record);
 
     List<SpsRole> selectByExample(SpsRoleExample example);
+    
+    List<SpsRole> selectRoleForUserId(@Param("id")Integer id);
 
     SpsRole selectByPrimaryKey(Integer roleId);
 

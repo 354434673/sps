@@ -146,4 +146,17 @@ public class RoleServiceImpl implements RoleService {
 			return 0;
 		}
 	}
+
+	@Override
+	public HashMap<String, Object> getRoleForUserId(Integer id) {
+		
+		List<SpsRole> selectRoleForUserId = spsRoleMapper.selectRoleForUserId(id);
+		
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		
+		hashMap.put("code", 0);
+		hashMap.put("msg", "获取成功");
+		hashMap.put("data", selectRoleForUserId);
+		return hashMap;
+	}
 }

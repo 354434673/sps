@@ -217,7 +217,7 @@
                         if ($.isArray(json.detailList)) {
                             $.each(json.detailList, function (index, val) {
                                 $('#detailPic').append(
-                                "<img  src='D:/ws-juzi/sps/sps-admin/src/main/webapp/upload/imgs/" + val.albumUrl + "' />"
+                                "<img  src='<%=path%>/src/main/webapp/upload/imgs/" + val.albumUrl + "' />"
                                 )
                             })
                         }
@@ -226,7 +226,7 @@
                         if ($.isArray(json.picList)) {
                             $.each(json.picList, function (index, val) {
                                 $('#pic').append(
-                                    "<img  src='D:/ws-juzi/sps/sps-admin/src/main/webapp/upload/imgs/" + val.albumUrl + "' />"
+                                    "<img  src='<%=path%>/src/main/webapp/upload/imgs/" + val.albumUrl + "' />"
                                 )
 
                             })

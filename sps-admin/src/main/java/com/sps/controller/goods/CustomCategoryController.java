@@ -18,7 +18,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/customCategory")
 public class CustomCategoryController {
-    @Reference(check=false,group="dianfu")
+    @Reference(check=false,group="dianfu",timeout = 1200000)
     private CustomCategoryService customCategoryService;
     @Resource
     UserController userController;

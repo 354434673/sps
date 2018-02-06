@@ -57,7 +57,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">*小图标：</label>
             <div class="layui-input-inline">
-                <input type="text" id="brandSmallUrl" name="brandSmallUrl" lay-verify="required"
+                <input type="text" id="brandSmallUrl" name="brandSmallUrl" lay-verify="required" readonly="readonly"
                        placeholder="小图标" class="layui-input"/>
                 <button onclick="checkImgType()">上传图片</button>
             </div>
@@ -66,7 +66,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">*大图标：</label>
             <div class="layui-input-inline">
-                <input type="text" id="brandBigUrl" name="brandBigUrl"  placeholder="大图标" lay-verify="required"
+                <input type="text" id="brandBigUrl" name="brandBigUrl"  placeholder="大图标" lay-verify="required" readonly="readonly"
                        class="layui-input"/>
                 <button onclick="checkImgType1()">上传图片</button>
             </div>

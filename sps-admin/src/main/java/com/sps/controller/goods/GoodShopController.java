@@ -47,6 +47,19 @@ public class GoodShopController {
         return goodsList;
     }
 
+    /**
+     * @param page
+     * @param limit
+     * @param goodsName
+     * @return
+     */
+    @RequestMapping("/findShopGoodsList")
+    @ResponseBody
+    public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName, Integer shopStatus, Integer flowStatus, String endTime, String startTime,String shopNum,String spuNo) {
+        HashMap<String, Object> goodsList = goodService.findShopGoodsList(page, limit, goodsName, shopStatus, flowStatus, endTime, startTime,shopNum,spuNo);
+        return goodsList;
+    }
+
 
     /**
      * 进入商品分类新增页面

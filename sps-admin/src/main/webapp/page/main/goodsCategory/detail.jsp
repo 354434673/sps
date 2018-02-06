@@ -27,16 +27,16 @@
         <input type="hidden" name="categoryId" id="categoryId" value="${spsGoodCategory.categoryId}">
         <div class="layui-form-item ">
             <label class="layui-form-label">分类名称：</label>
-            <div class="layui-input-inline" style="padding-top: 10px;">${spsGoodCategory.categoryName}
+            <div class="layui-input-inline" style="    padding-left: 10px;    padding-top: 8px">${spsGoodCategory.categoryName}
             </div>
             <label class="layui-form-label">权重：</label>
-            <div class="layui-input-inline" style="padding-top: 10px;">
+            <div class="layui-input-inline" style="    padding-left: 10px;    padding-top: 8px">
                 ${spsGoodCategory.categoryWeight}
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">上级分类：</label>
-            <div class="layui-input-inline" style="padding-top: 10px;">
+            <div class="layui-input-inline" style="    padding-left: 10px;    padding-top: 8px">
                 <input type="hidden" id="categoryParentId" name="categoryParentId"
                        autocomplete="off" class="layui-input"
                        value="${spsGoodCategory.categoryParentId}">
@@ -52,15 +52,18 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">描述：</label>
-            <div class="layui-input-inline" style="padding-top: 10px;">
+            <div class="layui-input-inline" style="    padding-left: 10px;    padding-top: 8px">
                 ${spsGoodCategory.categoryDes}
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">图片：</label>
-            <div class="layui-input-inline">
-                <img class="img" src="D:/sps-ws/sps/sps-admin/src/main/webapp/upload/imgs/20171230/${spsGoodCategory.categoryUrl}" style="max-height: 50px;max-width: 50px" />
+            <div class="layui-input-inline" style="    padding-left: 10px;     padding-top: 8px">
+                <img class="img" src="D:\backups\1.11\ws-juzi\sps\sps-admin\target\sps-admin\upload\imgs/${spsGoodCategory.categoryUrl}" style="max-height: 50px;max-width: 50px" />
             </div>
+        </div>
+        <div class="layui-form-item" align="center">
+            <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary">返回</button>
         </div>
     </div>
 </div>

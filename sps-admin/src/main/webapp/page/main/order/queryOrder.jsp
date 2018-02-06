@@ -171,6 +171,9 @@
 				  var startTime = date[0];
 				  var endTime = date[1];
 				  var flag=$('#flag').val();
+				  if(flag == ''){
+					  flag = '1,2,3,4,5,6,7,8,9,10,11,18,19'
+				  }
 				  table.reload('orderOfAll', {
 					  page:{
 						  curr:1//重新从第一页开始
