@@ -117,7 +117,9 @@
     <div class="layui-form-item" align="center">
         <button class="layui-btn" lay-filter="submitAudit" lay-submit id="submit">提交
         </button>
+        <button id="back" onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
     </div>
+
 </div>
 </div>
 <script src="<%=path%>/page/static/js/jquery-1.10.2.min.js"></script>

@@ -59,7 +59,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">图片：</label>
             <div class="layui-input-inline" style="    padding-left: 10px;     padding-top: 8px">
-                <img class="img" src="D:\backups\1.11\ws-juzi\sps\sps-admin\target\sps-admin\upload\imgs/${spsGoodCategory.categoryUrl}" style="max-height: 50px;max-width: 50px" />
+                <img class="img" src="<%=path%>/upload/imgs/${spsGoodCategory.categoryUrl}"style="width: 400px"  />
             </div>
         </div>
         <div class="layui-form-item" align="center">

@@ -2,6 +2,7 @@ package com.sps.controller.goods;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sps.controller.system.UserController;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class CustomCategoryController {
     @ResponseBody
     public HashMap<String, Object> customCategoryList(Integer page, Integer limit, String name) {
         String shopNum= userController.getNumForUserType();
+        /*Object num=  SecurityUtils.getSubject().getSession().getAttribute(SecurityUtils.getSubject().getPrincipals());*/
         HashMap<String, Object> customCategoryList = customCategoryService.findCustomCategoryList(page, limit, name,shopNum);
         return customCategoryList;
     }

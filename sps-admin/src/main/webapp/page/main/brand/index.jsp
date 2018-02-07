@@ -118,6 +118,8 @@
                         var body = layer.getChildFrame('body', index);
                         body.find('input').attr({"disabled": "disabled"});
                         body.find('#brandId').val(data.brandId)
+                        body.find('#big').attr('src',"<%=path%>/upload/imgs/"+data.brandBigUrl);
+                        body.find('#small').attr('src',"<%=path%>/upload/imgs/"+data.brandSmallUrl);
                         body.find('#brandName').val(data.brandName)
                         body.find('#brandEnglishName').val(data.brandEnglishName)
                         body.find('#brandAbbreviation').val(data.brandAbbreviation)
@@ -175,6 +177,7 @@
                                 success: function (layero, index) {
                                     var body = layer.getChildFrame('body', index);
                                     //body.find('input').attr({"disabled":"disabled"});
+                                    body.find("#showCategory").attr({"disabled": "disabled"});
                                     body.find('#brandId').val(data.brandId)
                                     body.find('#brandCategoryIds').val(data.brandCategoryIds)
                                     body.find('#brandName').val(data.brandName)

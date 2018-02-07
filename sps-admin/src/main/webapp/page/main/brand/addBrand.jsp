@@ -28,12 +28,12 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">*品牌名称：</label>
             <div class="layui-input-inline">
-                <input id="brandName" type="text" name="brandName"   lay-verify="brandName" placeholder="请输入品牌名称"
+                <input id="brandName" type="text" name="brandName"   lay-verify="required|brandName" placeholder="请输入品牌名称"
                        autocomplete="off" class="layui-input" >
             </div>
             <label class="layui-form-label">*英文名称：</label>
             <div class="layui-input-inline">
-                <input id="brandEnglishName" name="brandEnglishName" lay-verify="brandEnglishName" type="text"
+                <input id="brandEnglishName" name="brandEnglishName" lay-verify="required|brandEnglishName" type="text"
                        placeholder="请输入英文名称" autocomplete="off" class="layui-input"
                        >
             </div>
@@ -41,7 +41,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">*简称：</label>
             <div class="layui-input-inline">
-                <input id="brandAbbreviation" name="brandAbbreviation" type="text" lay-verify="brandAbbreviation"
+                <input id="brandAbbreviation" name="brandAbbreviation" type="text" lay-verify="required|brandAbbreviation"
                        placeholder="请输入简称" autocomplete="off" class="layui-input">
             </div>
             <label class="layui-form-label">*关联分类：</label>
@@ -235,9 +235,16 @@
 
     }
     $(document).on("click", "#back", function () {
-      /*layer.closeAll();*/
-        window.location.href = "<%=path%>/page/main/brand/index.jsp";
+        if($("#brandId").val()!=""){
+            parent.layer.closeAll();
+        }else {
+           window.location.href = "<%=path%>/page/main/brand/index.jsp"
+        }
     })
+    /*$(document).on("click", "#back", function () {
+        parent.layer.closeAll();
+       /!* parent.window.location.href = "<%=path%>/page/main/brand/index.jsp";*!/
+    })*/
 
     function initTree() {
         $.ajax({

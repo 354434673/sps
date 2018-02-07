@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class SpsGoodSku implements Serializable {
 
+    private String scale;
+    private String waveInterval;
     private String supName;
 
     private Integer gId;
@@ -42,6 +44,22 @@ public class SpsGoodSku implements Serializable {
 
     private Integer gAuditStatus;
 
+
+    public String getScale() {
+        return scale;
+    }
+
+    public void setScale(String scale) {
+        this.scale = scale;
+    }
+
+    public String getWaveInterval() {
+        return waveInterval;
+    }
+
+    public void setWaveInterval(String waveInterval) {
+        this.waveInterval = waveInterval;
+    }
 
     public String getgGoodNo() {
         return gGoodNo;

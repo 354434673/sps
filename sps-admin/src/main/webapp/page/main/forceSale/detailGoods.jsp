@@ -114,6 +114,9 @@
                 </div>
             </div>
         </div>
+        <div class="layui-form-item" align="center">
+            <button id="back" onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
+        </div>
     </div>
 </div>
 </div>

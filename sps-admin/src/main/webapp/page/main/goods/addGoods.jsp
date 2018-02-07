@@ -52,7 +52,7 @@
             <div class="layui-input-inline">
                 <input id="brandName" type="text" name="gSpuName" class="layui-input" style="display: none">
                 <div id="brandId">
-                    <select id="gBrandId" name="gBrandId" lay-filter="selFilter" lay-verify="required" >
+                    <select id="gBrandId" name="gBrandId" lay-filter="selFilter" lay-verify="required">
 
                     </select>
                 </div>
@@ -96,7 +96,8 @@
                     <td><input type="text" name="gSpuName" id="gSize" class="tdStyle"></td>
                     <td><input type="text" name="gSpuName" id="gNo" class="tdStyle"></td>
                     <td><input type="text" name="gSpuName" id="gPrice" class="tdStyle"></td>
-                    <td width="208px"><input lay-filter="scale" type="radio" name="gType" value="1" title="按比例" class="type" checked>
+                    <td width="208px"><input lay-filter="scale" type="radio" name="gType" value="1" title="按比例"
+                                             class="type" checked>
                         <input type="radio" lay-filter="money" name="gType" value="0" title="按金额" class="type"></td>
                     <td><input type="text" name="gSpuName" id="gScale" class="tdStyle"><span id="number">%</span></td>
                     <td></td>
@@ -119,13 +120,15 @@
             <label class="layui-form-label">*商品描述</label>
             <div class="layui-input-block">
                 <input value="" type="hidden" id="detail">
-                <textarea   placeholder="请输入内容" name="gDetails"   lay-verify="gDetails" id="gDetails" class="layui-textarea"></textarea>
+                <textarea placeholder="请输入内容" name="gDetails" lay-verify="maxDetailsLength" id="gDetails"
+                          class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">*包装清单</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入内容" name="gRemark"   lay-verify="gRemark"  id="gRemark" class="layui-textarea"></textarea>
+                <textarea placeholder="请输入内容" name="gRemark" lay-verify="maxRemarkLength" id="gRemark"
+                          class="layui-textarea"></textarea>
             </div>
         </div>
 
@@ -137,7 +140,7 @@
                 <input type="file" name="file" style="padding-left: 5px;padding-top: 5px;" id="logoFile2"
                        onchange="setImg2(this);" multiple="multiple"/>
             </div>
-            <div style="padding-top: 10px"> <span style="color: red">提示:最少一张，最多六张，单张大小不超过100K</span></div>
+            <div style="padding-top: 10px"><span style="color: red">提示:最少一张，最多六张，单张大小不超过100K</span></div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*详情图：</label>
@@ -146,7 +149,7 @@
                 <input type="file" name="file" id="logoFile1" style="padding-left: 5px;padding-top: 5px;"
                        onchange="setImg1(this);" multiple="multiple">
             </div>
-            <div style="padding-top: 10px"> <span style="color: red">提示:最多十张，单张大小不超过300K</span></div>
+            <div style="padding-top: 10px"><span style="color: red">提示:最多十张，单张大小不超过300K</span></div>
         </div>
 
         <div class="layui-form-item" align="center">
@@ -154,7 +157,7 @@
             </button>
             <button class="layui-btn" lay-filter="saveGoods" lay-submit id="saveGoods">保存
             </button>
-            <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
+            <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary">返回</button>
         </div>
     </div>
 </div>
@@ -171,7 +174,7 @@
 <script src="<%=path%>/page/static/treeTable/layui.js"></script>
 <script type="text/javascript">
     $(function () {
-       // initBrandList();
+        // initBrandList();
         initTree();
         $("#tree").hide();
         $('input[type=radio][name=gType]').change(function () {
@@ -192,7 +195,7 @@
 
     })
 
-    layui.use(['form','table','layedit','flow','element'], function(){
+    layui.use(['form', 'table', 'layedit', 'flow', 'element'], function () {
         var form = layui.form;
         var $ = layui.jquery;
         var table = layui.table;
@@ -201,44 +204,34 @@
         var element = layui.element;
         var layedit = layui.layedit;
         var layedits = layui.layedit;
-        var index= layedit.build('gDetails');
-        var indexes= layedits.build('gRemark');
-        form.on('radio(scale)', function(){
+        var index = layedit.build('gDetails');
+        var indexes = layedits.build('gRemark');
+        form.on('radio(scale)', function () {
             $("#number").show();
         })
-        form.on('radio(money)', function(){
+        form.on('radio(money)', function () {
             $("#number").hide();
         })
 
         form.on('submit(saveGoods)', function (data) {
             var type = true;
-            var index= layedit.getContent(index)
-            console.log(index);
             if ($('#goodsNumberFlag').val() == "1") {
                 layer.msg("SKU编号已经存在！");
                 return false;
             }
-            var names= $('#gCategoryNames').val().split('>')
-            if(names.length<3){
+            var names = $('#gCategoryNames').val().split('>')
+            if (names.length < 3) {
                 layer.msg("请选择到三级分类！");
                 return false;
             }
             var i = 0;
             $('#content tr').each(function () {
-                if($(this).find("td:eq(0)").html()!=''){
+                if ($(this).find("td:eq(0)").html() != '') {
                     i++
                 }
             })
-            if(i == 0){
+            if (i == 0) {
                 layer.msg("请填写规格信息");
-                return false;
-            }
-            if ($('#gDpic').val() == "") {
-                layer.msg("详情图不能为空！");
-                return false;
-            }
-            if ($('#gPic').val() == "") {
-                layer.msg("主图不能为空！");
                 return false;
             }
             if (layedit.getContent(index) == "") {
@@ -249,7 +242,22 @@
                 layer.msg("包装清单不能为空！");
                 return false;
             }
-
+            if ($('#gDpic').val() == "") {
+                layer.msg("详情图不能为空！");
+                return false;
+            }
+            if ($('#gPic').val() == "") {
+                layer.msg("主图不能为空！");
+                return false;
+            }
+            if (layedit.getContent(index).length>1000) {
+                layer.msg("商品描述不能超过1000位！");
+                return false;
+            }
+            if (layedits.getContent(indexes).length>1000) {
+                layer.msg("包装清单不能超过1000位！");
+                return false;
+            }
             if (post_flag) return; //如果正在提交则直接返回，停止执行
             post_flag = true;//标记当前状态为正在提交状态\
             if (type) {
@@ -278,7 +286,7 @@
                             post_flag = false; //在提交成功之后将标志标记为可提交状态
                             if (result.flag == '1') {
                                 //如果为空则为新增  给goodsId赋值 不为空则为修改 不改变goodsId
-                                if($('#goodsId').val()==""){
+                                if ($('#goodsId').val() == "") {
                                     $('#goodsId').val(result.goodsId)
                                 }
                                 //插入sku商品
@@ -305,19 +313,28 @@
                 layer.msg("SKU编号已经存在！");
                 return false;
             }
-            var names= $('#gCategoryNames').val().split('>')
-            if(names.length<3){
+            var names = $('#gCategoryNames').val().split('>')
+            if (names.length < 3) {
                 layer.msg("请选择到三级分类！");
                 return false;
             }
             var i = 0;
             $('#content tr').each(function () {
-                if($(this).find("td:eq(0)").html()!=''){
+                if ($(this).find("td:eq(0)").html() != '') {
                     i++
                 }
             })
-            if(i == 0){
+            if (i == 0) {
                 layer.msg("请填写规格信息");
+                return false;
+            }
+
+            if (layedit.getContent(index) == "") {
+                layer.msg("商品描述不能为空！");
+                return false;
+            }
+            if (layedits.getContent(indexes) == "") {
+                layer.msg("包装清单不能为空！");
                 return false;
             }
             if ($('#gDpic').val() == "") {
@@ -328,12 +345,12 @@
                 layer.msg("主图不能为空！");
                 return false;
             }
-            if (layedit.getContent(index) == "") {
-                layer.msg("商品描述不能为空！");
+            if (layedit.getContent(index).length>1000) {
+                layer.msg("商品描述不能超过1000位！");
                 return false;
             }
-            if (layedits.getContent(indexes) == "") {
-                layer.msg("包装清单不能为空！");
+            if (layedits.getContent(indexes).length>1000) {
+                layer.msg("包装清单不能超过1000位！");
                 return false;
             }
             if (post_flag) return; //如果正在提交则直接返回，停止执行
@@ -364,19 +381,19 @@
                             post_flag = false; //在提交成功之后将标志标记为可提交状态
                             if (result.flag == '1') {
                                 //如果为空则为新增  给goodsId赋值 不为空则为修改 不改变goodsId
-                                if($('#goodsId').val()==""){
+                                if ($('#goodsId').val() == "") {
                                     $('#goodsId').val(result.goodsId)
                                 }
                                 //插入sku商品
                                 SaveData()
                                 layer.msg("操作成功");
                                 setTimeout(function () {
-                                   window.location.href = "<%=path%>/page/main/goods/index.jsp";
+                                    window.location.href = "<%=path%>/page/main/goods/index.jsp";
                                 }, 1000);
-                            } else if (result.flag == '2'){
+                            } else if (result.flag == '2') {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
                                 layer.msg("详情图最多为10张");
-                            } else if (result.flag == '3'){
+                            } else if (result.flag == '3') {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
                                 layer.msg("主图最多为6张");
                             }
@@ -396,8 +413,8 @@
                     return 'spu编号最多输入20个字符';
                 }
             }, gDetails: function (value) {
-                if (value.length > 20) {
-                    return '商品描述最多输入9999个字符';
+                if (value.length > 1000) {
+                    return '商品描述最多输入1000个字符';
                 }
             }
 
@@ -525,7 +542,7 @@
         //获取品牌数据
         if ($("#gCategoryIds").val() != "") {
             $.ajax({
-                data:{categoryId:id},
+                data: {categoryId: id},
                 url: "<%=path%>/brand/findBrandList",//提交连接
                 type: 'post',
                 dataType: 'json',
@@ -626,16 +643,16 @@
                                 } else if (val.gType == "1") {
                                     val.gType = "按比例"
                                 }
-                                if(val.gAuditStatus=="0"){
-                                    val.gAuditStatus="待提交"
-                                }else if(val.gAuditStatus=="1"){
-                                    val.gAuditStatus="审核中"
-                                }else if(val.gAuditStatus=="2"){
-                                    val.gAuditStatus="审核不通过"
-                                }else if(val.gAuditStatus=="3"){
-                                    val.gAuditStatus="审核通过"
-                                }else if(val.gAuditStatus==undefined){
-                                    val.gAuditStatus="-"
+                                if (val.gAuditStatus == "0") {
+                                    val.gAuditStatus = "待提交"
+                                } else if (val.gAuditStatus == "1") {
+                                    val.gAuditStatus = "审核中"
+                                } else if (val.gAuditStatus == "2") {
+                                    val.gAuditStatus = "审核不通过"
+                                } else if (val.gAuditStatus == "3") {
+                                    val.gAuditStatus = "审核通过"
+                                } else if (val.gAuditStatus == undefined) {
+                                    val.gAuditStatus = "-"
                                 }
                                 $('#content').append(
                                     "<tr >" +
@@ -737,7 +754,7 @@
                 "<tr >" +
                 "<td > " + gColor + "</td>" +
                 "<td >" + gSize + "</td>" +
-                "<td >" + no + '-'+gNo + "</td>" +
+                "<td >" + no + '-' + gNo + "</td>" +
                 "<td >" + gPrice + "</td>" +
                 "<td >" + gType + "</td>" +
                 "<td >" + gScale + "</td>" +
@@ -786,9 +803,9 @@
     //删除选择记录
     function remove_line(index) {
         layer.confirm('真的删除行么？', {
-            btn: ['删除','取消'], //按钮
+            btn: ['删除', '取消'], //按钮
             shade: false //不显示遮罩
-        }, function(index1){
+        }, function (index1) {
             $(index).parent().parent().remove();
             // 提交表单的代码，需要你自己写，然后用 layer.close 关闭就可以了，取消可以省略
             layer.close(index1);
@@ -802,9 +819,9 @@
             var aprice = $(this).find("td:eq(6)").html().split('-')[0];
             var bprice = $(this).find("td:eq(6)").html().split('-')[1];
             var scale = $(this).find("td:eq(5)").html();
-            var tag='%';
-            if(scale.indexOf(tag)!=-1){
-                scale=scale.split('%')[0];
+            var tag = '%';
+            if (scale.indexOf(tag) != -1) {
+                scale = scale.split('%')[0];
             }
             var waveType;
             if ($(this).find("td:eq(4)").html() == "按比例") {
@@ -816,8 +833,8 @@
             var goodNo = no.split("-")[0];
             $.ajax({
                 data: {
-                    gGoodNo:goodNo,
-                    gAuditStatus:1,
+                    gGoodNo: goodNo,
+                    gAuditStatus: 1,
                     gType: waveType,
                     gBprice: bprice,
                     gAprice: aprice,
@@ -842,6 +859,7 @@
         });
 
     }
+
     //保存sku数据
     function waitSaveData() {
 
@@ -849,9 +867,9 @@
             var aprice = $(this).find("td:eq(6)").html().split('-')[0];
             var bprice = $(this).find("td:eq(6)").html().split('-')[1];
             var scale = $(this).find("td:eq(5)").html();
-            var tag='%';
-            if(scale.indexOf(tag)!=-1){
-                scale=scale.split('%')[0];
+            var tag = '%';
+            if (scale.indexOf(tag) != -1) {
+                scale = scale.split('%')[0];
             }
             var waveType;
             if ($(this).find("td:eq(4)").html() == "按比例") {
@@ -863,8 +881,8 @@
             var goodNo = no.split("-")[0];
             $.ajax({
                 data: {
-                    gGoodNo:goodNo,
-                    gAuditStatus:0,
+                    gGoodNo: goodNo,
+                    gAuditStatus: 0,
                     gType: waveType,
                     gBprice: bprice,
                     gAprice: aprice,
@@ -988,13 +1006,23 @@
         form.verify({
             //验证只包含汉字
             gSpuName: function (value) {
-                if (value.length >20) {
+                if (value.length > 20) {
                     return 'SPU名称最多为20位';
                 }
             },
             gSpuNo: function (value) {
                 if (value.length > 20) {
                     return 'SPU编号最多为20位';
+                }
+            },
+            maxDetailsLength: function (value) {
+                if (value.length > 1000) {
+                    return '商品详情最多为1000位';
+                }
+            },
+            maxRemarkLength: function (value) {
+                if (value.length > 1000) {
+                    return '包装清单最多为1000位';
                 }
             },
 

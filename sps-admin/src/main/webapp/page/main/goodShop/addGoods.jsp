@@ -36,6 +36,7 @@
         <input type="hidden" name="goodsNumberFlag" id="goodsNumberFlag">
         <input type="hidden" id="skuIds">
         <input type="hidden" name="categoryIds" id="categoryIds">
+        <input type="hidden"  id="customId">
         <div class="layui-form-item ">
             <label class="layui-form-label">*一级分类：</label>
             <div class="layui-input-inline">
@@ -43,11 +44,6 @@
                        style="display: none;">
                 <div id="first">
                     <select id="firstCategory" name="firstCategory" lay-filter="firstFilter">
-                        <%--    <option value="">请选择</option>
-                            <option value="1">1212</option>
-                            <option value="47">父类</option>
-                            <option value="51">2323</option>
-                            <option value="82">手机</option>--%>
                     </select>
                 </div>
             </div>
@@ -103,15 +99,17 @@
         </div>
         <div class="layui-form-item" align="center">
             <button type="reset" id="next" class="layui-btn layui-btn-primary">下一步</button>
+            <button id="back" onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
         </div>
 
 
         <div id="two" style="display: none">
             <div class="layui-form-item ">
-                <label class="layui-form-label">自定义分类：</label>
+                <label class="layui-form-label" style="    width: 116px;">自定义分类：</label>
                 <div class="layui-input-inline">
-                    <select id="customCategory" name="customCategory" lay-filter="customFilter">
+                    <select id="customCategory" name="customCategory">
                     </select>
+
                 </div>
             </div>
             <div class="layui-form-item ">
@@ -177,8 +175,11 @@
 <script src="<%=path%>/page/static/treeTable/layui.js"></script>
 <script type="text/javascript">
     $(function () {
+        initCustomCategory()
         //修改时候获取数据
         if ($("#goodsId").val() != "") {
+            //获取自定义分类
+            initCustomCategory();
             $('#firstCategoryName').show()
             $('#twoCategoryName').show()
             $('#threeCategoryName').show()
@@ -190,7 +191,6 @@
             $('#three').hide();
             $('#spuName').hide();
             $("#brand").hide();
-
             $('#firstCategoryName').attr({"disabled": "disabled"});
             $('#twoCategoryName').attr({"disabled": "disabled"});
             $('#threeCategoryName').attr({"disabled": "disabled"});
@@ -202,14 +202,15 @@
             $("#threeCategory").attr({"disabled": "disabled"});
             $("#gBrandId").attr({"disabled": "disabled"});
             $("#spuNo").attr({"disabled": "disabled"});
-            initCustomCategory();
             getDate($("#goodsId").val());
 
+
         }
+
+        //获取一级分类
         initFirstCategory();
 
     })
-
     layui.use(['form', 'table', 'layedit', 'flow', 'element'], function () {
         var form = layui.form;
         var $ = layui.jquery;
@@ -292,6 +293,7 @@
         })
 
         $(document).on("click", "#next", function (e) {
+
             if ($("#goodsNumberFlag").val() == "1") {
                 layer.msg("当前sup已经存在,请重新选择！")
                 return false;
@@ -316,15 +318,18 @@
                 layer.msg("SPU不能为空！")
                 return false;
             }
-            initCustomCategory();
             $("#two").show();
             $("#next").hide();
+            $("#back").hide();
             $("#categoryIds").val($("#firstCategory").val() + ',' + $("#secondCategory").val() + ',' + $("#threeCategory").val());
             $("#firstCategory").attr({"disabled": "disabled"});
             $("#secondCategory").attr({"disabled": "disabled"});
             $("#threeCategory").attr({"disabled": "disabled"});
             $("#gBrandId").attr({"disabled": "disabled"});
             $("#spuNo").attr({"disabled": "disabled"});
+
+            //获取spu下的sku
+            getGoodSku();
         });
         var post_flag = false; //设置一个对象来控制是否进入AJAX过程
         form.on('submit(saveGoods)', function (data) {
@@ -532,11 +537,17 @@
                     if ($.isArray(result.data)) {
                         var html = '<option value="">请选择</option>';
                         $.each(result.data, function (index, val) {
-                            html += '<option value="' + val.customId + '">' + val.customName + '</option>';
+                            if($("#customId").val()!=''){
+                                if($("#customId").val()!=val.customId){
+                                    html += '<option value="' + val.customId + '">' + val.customName + '</option>';
+                                }
+                            }else {
+                                html += '<option value="' + val.customId + '">' + val.customName + '</option>';
+                            }
                         })
-                        $("#customCategory").html(html);
+                        $("#customCategory").append(html);
                     }
-                   /* layui.form.render('select');*/
+                    /*layui.form.render('select');*/
                 } else {
                     $("#customCategory").html(html);
                 }
@@ -624,31 +635,11 @@
 
     //判断spu是否存在
     function checkSpu(name, id) {
-        getGoodSku(id);
         //getGoodSku(id);
-        /* var spuNo = name.split('-')[0];
+         var spuNo = name.split('-')[0];
          var spuName = name.split('-')[1];
          $.ajax({
-             url: "
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <%=path%>/goodShop/checkGoodsNumber",//提交连接
+             url: "<%=path%>/goodShop/checkGoodsNumber",//提交连接
             type: 'post',
             dataType: 'json',
             async: false,
@@ -658,12 +649,10 @@
                     layer.msg("SPU编号已经存在！")
                     $('#goodsNumberFlag').val("1")
                 } else {
-                    //获取商品sku
-                    getGoodSku(id);
                     $('#goodsNumberFlag').val("0")
                 }
             }
-        });*/
+        });
 
     }
 
@@ -681,7 +670,7 @@
             type: 'post',
             dataType: 'json',
             async: false,
-            data: {id: id},
+            data: {id: $("#platformGoodId").val()},
             success: function (json) {
                 if (json.flag == "1") {
                     if (json.skuList != null) {
@@ -725,7 +714,7 @@
 
     //修改获取数据
     function getDate(goodsId) {
-        initCustomCategory()
+
         $.ajax({
             url: "<%=path%>/goodShop/findEntity",//提交连接
             type: 'post',
@@ -736,13 +725,18 @@
                 if (json.flag == "1") {
                     $("#two").show();
                     $("#next").hide();
+                    $("#back").hide();
                     if (json.goods != null) {
+                        $("#customId").val(json.goods.gCategorySelf)
+                        var custom = '<option value="' + json.goods.gCategorySelf+ '">' +json.customName + '</option>';
+                        $("#customCategory").append(custom)
                         $('#firstCategoryName').val(json.firstCategory);
                         $('#twoCategoryName').val(json.twoCategory);
                         $('#threeCategoryName').val(json.threeCategory);
-                   /*     $("#customCategory").val(option[json.goods.gCategorySelf]);
+
+                   /*     $("#customCategory").val(option[json.goods.gCategorySelf]) customName;
                         layui.form().render('select')*/
-                        $("#customCategory option[value='"+json.goods.gCategorySelf+"']").attr("selected","selected");//根据值让option选中
+                      /*  $("#customCategory option[value='"+json.goods.gCategorySelf+"']").attr("selected","selected");*///根据值让option选中
                         /*  $('#customCategory').val(json.goods.gCategorySelf);*/
                        /* var customCategoryList = $("#customCategory").find("option"); //获取select下拉框的所有值
                         getSelect(customCategoryList, json.goods.gCategorySelf)*/
@@ -806,11 +800,10 @@
                             })
 
                             $("input[name='sscale']").attr("checked","true");
-                            layui.form.render();
-
+                            layui.form.render('checkbox');
+                            layui.form.render('radio');
                         }
                     }
-
 
                 } else {
                     //layer.msg("操作失败")
