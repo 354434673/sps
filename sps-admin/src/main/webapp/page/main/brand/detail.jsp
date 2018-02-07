@@ -63,14 +63,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">小图标：</label>
             <div class="layui-input-inline">
-                <img class="img" src="D:/sps-ws/sps/sps-admin/src/main/webapp/upload/imgs/20171230/"
-                     style="padding-top: 10px;    padding-left: 8px; max-height: 50px;max-width: 50px"/>
+                <img class="img"  id="small"
+                     style="padding-top: 10px;    padding-left: 8px; max-height: 500px;max-width: 500px"/>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">大图标：</label>
-            <img class="img" src="D:/sps-ws/sps/sps-admin/src/main/webapp/upload/imgs/20171230/"
-                 style="padding-top: 10px;    padding-left: 8px;max-height: 50px;max-width: 50px"/>
+            <img class="img"  id="big"
+                 style="padding-top: 10px;    padding-left: 8px;max-height: 500px;max-width: 500px"/>
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
@@ -79,6 +79,9 @@
             <input id="brandDes" type="text" style="border-style:none" class="layui-input">
         </div>
     </div>
+    <div class="layui-form-item" align="center">
+        <button id="back" class="layui-btn layui-btn-primary" >返回</button>
+    </div>
 </div>
 </div>
 <script src="<%=request.getContextPath() %>/page/static/js/jquery-1.10.2.min.js"></script>
@@ -86,6 +89,9 @@
         src="<%=request.getContextPath() %>/page/static/treeTable/layui.all.js"></script>
 <script src="<%=request.getContextPath() %>/page/static/treeTable/layui.js"></script>
 <script type="text/javascript">
+    $(document).on("click", "#back", function () {
+        parent.layer.closeAll();
+    })
     /*$(function () {
         getData();
         alert($("#brandId").html())

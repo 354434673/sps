@@ -36,7 +36,7 @@
             <label class="layui-form-label">*三级分类：</label>
             <div class="layui-input-inline">
                 <input id="gCategoryNames" type="text" class="layui-input" name="gSpuName"
-                       style="border-style:none ;margin-left: 10px;">
+                       style="width: 1000px;border-style:none ;margin-left: 10px;">
             </div>
         </div>
 
@@ -44,7 +44,7 @@
             <label class="layui-form-label">*品牌：</label>
             <div class="layui-input-inline">
                 <input id="brandName" type="text" class="layui-input" name="gSpuName"
-                       style="border-style:none ;margin-left: 10px;">
+                       style="width: 1000px;border-style:none ;margin-left: 10px;">
             </div>
         </div>
 
@@ -52,14 +52,14 @@
             <label class="layui-form-label">*SPU名称：</label>
             <div class="layui-input-inline">
                 <input id="gSpuName" type="text" class="layui-input" name="gSpuName"
-                       style="border-style:none ;margin-left: 10px;">
+                       style="width: 1000px;border-style:none ;margin-left: 10px;">
             </div>
         </div>
 
         <div class="layui-form-item ">
             <label class="layui-form-label">*SPU编号：</label>
             <div class="layui-input-inline">
-                <input id="gSpuNo" type="text" name="gSpuNo" style="border-style:none ;margin-left: 10px;"
+                <input id="gSpuNo" type="text" name="gSpuNo" style="width: 1000px;border-style:none ;margin-left: 10px;"
                        class="layui-input">
             </div>
         </div>
@@ -102,14 +102,14 @@
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">*商品描述</label>
-            <div class="layui-input-block">
-                <input id="gDetails" type="text" style="border-style:none ; margin-top: 5px" class="layui-input">
+            <div class="layui-input-block" id="details">
+                <textarea id="gDetails" type="text" style="height: 200px;margin-top: 5px" class="layui-input" readonly="readonly"></textarea>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">包装清单</label>
             <div class="layui-input-block">
-                <input id="gRemark" type="text" style="border-style:none; margin-top: 5px" class="layui-input">
+                <textarea id="gRemark" type="text" style="height: 200px;  margin-top: 5px" class="layui-input" readonly="readonly"></textarea>
             </div>
         </div>
 
@@ -125,6 +125,9 @@
             <div class="layui-input-inline">
                 <div  id="detailPic"></div>
             </div>
+        </div>
+        <div class="layui-form-item" align="center">
+            <button id="back" onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
         </div>
     </div>
 </div>
@@ -152,6 +155,19 @@
 
     })
 
+    layui.use(['form', 'table', 'layedit', 'flow', 'element'], function () {
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var laydate = layui.laydate;
+        var flow = layui.flow;
+        var element = layui.element;
+        var layedit = layui.layedit;
+        var layedits = layui.layedit;
+        var index = layedit.build('gDetails');
+        var indexes = layedits.build('gRemark');
+    });
+
 
     //获取数据
     function getDate(goodsId) {
@@ -174,6 +190,7 @@
                         $('#gRemark').val(json.goods.gRemark);
                         $('#gDpic').val(json.goods.gDpic);
                         $('#gPic').val(json.goods.gPic);
+                        $("#details:has(p)").remove();
                     }
                     if (json.brandName != null) {
                         $('#brandName').val(json.brandName);
@@ -217,7 +234,7 @@
                         if ($.isArray(json.detailList)) {
                             $.each(json.detailList, function (index, val) {
                                 $('#detailPic').append(
-                                "<img  src='<%=path%>/src/main/webapp/upload/imgs/" + val.albumUrl + "' />"
+                                "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val.albumUrl + "' />"
                                 )
                             })
                         }
@@ -226,9 +243,8 @@
                         if ($.isArray(json.picList)) {
                             $.each(json.picList, function (index, val) {
                                 $('#pic').append(
-                                    "<img  src='<%=path%>/src/main/webapp/upload/imgs/" + val.albumUrl + "' />"
+                                    "<img  style='width: 300px;' src='<%=path%>/upload/imgs/" + val.albumUrl + "' />"
                                 )
-
                             })
                         }
                     }

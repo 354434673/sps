@@ -48,6 +48,7 @@ public class GoodShopController {
     }
 
     /**
+     * 商户详情查询商品列表
      * @param page
      * @param limit
      * @param goodsName
@@ -176,7 +177,7 @@ public class GoodShopController {
                     resultMap.put("threeCategory", threeCategory.getCategoryName());
                 }
                 if (goods.getgCategorySelf() != null) {
-                    //查询商品品牌信息
+                    //查询自定义分类信息
                     SpsCustomCategory category = customCategoryService.findEntityById(goods.getgCategorySelf());
                     resultMap.put("customName", category.getCustomName());
                 }

@@ -43,7 +43,7 @@
             <div class="layui-input-inline">
                 <select   id="status" lay-filter="channelFlowState">
                     <option value=""></option>
-                    <option value="1">审核中</option>
+                 <%--   <option value="1">审核中</option>--%>
                     <option value="2">审核不通过</option>
                     <option value="3">审核通过</option>
                 </select>
@@ -55,7 +55,6 @@
             <button class="layui-btn layui-btn-primary" id="queryGoods">查询</button>
             <button class="layui-btn layui-btn-primary" id="resetGoods">重置</button>
         </div>
-
     </div>
     <div>
         <button class="layui-btn" id="submit" data-type="getCheckData">
@@ -181,7 +180,7 @@
                 , {field: 'gId', title: '颜色', align: 'center', width: 150}
                   ,{field:'gType', title:'波动方式', width:185, templet: '#switchTpl', unresize: true}
                 /*, {field: 'gType', title: '波动方式', width: 150, align: 'center', edit: 'text', style: 'cursor: pointer;'}*/
-                , {field: 'gScale', title: '波动值', width: 150, align: 'center', edit: 'text', style: 'cursor: pointer;'},
+                , {field: 'gScale', title: '波动值(元/%)', width: 150, align: 'center', edit: 'text', style: 'cursor: pointer;'},
                 {field: 'gAprice', title: '波动起', width: 130, align: 'center'}
                 ,{field: 'gBprice', title: '波动末', width: 130, align: 'center'}
                 ,{field: 'gAuditStatus', title: '状态', width: 130, align: 'center'},
@@ -189,11 +188,11 @@
                 , {field: 'gAuditTime', templet: '<div>{{ layui.laytpl.toDateString(d.gAuditTime) }}</div>', title: '最后审核时间', width: 230, align: 'center'}
             ]], done: function (res, page, count) {
                 $("[data-field='gType']").children().each(function () {
-                    if ($(this).text() == '0') {
-                        $(this).text("按金额")
-                    } else if ($(this).text() == '1') {
-                        $(this).text("按比例")
-                        $(this).next().text().append("%")
+                    if ($(this).text() == " 金额 ") {
+                     /*   $(this).text("按金额")*/
+                    } else if ($(this).text() == " 比例 ") {
+                     /*   $(this).text("按比例")*/
+                     /*   $(this).parent().parent().find("[data-field='gScale']").text() + "%";*/
                     }
                 })
                 $("[data-field='gAuditStatus']").children().each(function () {

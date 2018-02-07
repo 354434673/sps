@@ -4,10 +4,13 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.goods.SpsCustomCategoryMapper;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.sps.entity.goods.SpsCustomCategory;
 import org.sps.service.goods.CustomCategoryService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +54,7 @@ public class CustomCategoryServiceImpl implements CustomCategoryService {
 
     @Override
     public HashMap<String, Object> findCustomCategoryList(Integer page, Integer limit, String name,String shopNum) {
+
         Map<String, Object> map = new HashMap<>();
         map.put("name", name);
         map.put("customShopNum", shopNum);

@@ -84,7 +84,7 @@ public class GoodServiceImpl implements GoodsService {
         //逻辑删除核心商户的商品
         SpsGoodShop spsGoodShop = new SpsGoodShop();
         spsGoodShop.setgUpdateTime(new Date());
-        spsGoodShop.setgDeleteFlag(1);
+        /*spsGoodShop.setgDeleteFlag(1);*/
         //2为已经删除
         spsGoodShop.setgGroundingFlag("2");
         spsGoodShop.setgGoodsId(id);

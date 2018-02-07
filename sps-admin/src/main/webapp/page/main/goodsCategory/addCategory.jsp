@@ -102,6 +102,9 @@
 
 <script type="text/javascript">
     $(function () {
+        if($("#categoryId").val()!=''){
+            $("#showCategory").attr({"disabled": "disabled"});
+        }
         $(".import").on("click", function () {
             $('#imgupl').click();
         });

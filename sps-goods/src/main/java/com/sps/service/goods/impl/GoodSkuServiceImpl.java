@@ -63,6 +63,18 @@ public class GoodSkuServiceImpl implements GoodSkuService {
         //分页
         PageHelper.startPage(page, limit);
         List<SpsGoodSku> goodsList = spsGoodSkuMapper.findList(map);
+       /* if(goodsList!=null&&goodsList.size()>0){
+            for(SpsGoodSku list:goodsList){
+                if("1".equals(list.getgType())){
+                    list.setScale(list.getgScale() + "%");
+                }else{
+                    list.setScale(list.getgScale().toString());
+                }
+                if(list.getgAprice()!=null&&list.getgBprice()!=null){
+                    list.setWaveInterval(list.getgAprice()+"-"+list.getgBprice());
+                }
+            }
+        }*/
         PageInfo pageInfo = new PageInfo(goodsList);
         //放入map
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -86,9 +98,9 @@ public class GoodSkuServiceImpl implements GoodSkuService {
                     if ("0".equals(shopSku.getgType())) {
                         Double aPrice = NumberUtil.add(sku.getgPrice().doubleValue(), sku.getgScale().doubleValue());
                         Double bPrice = NumberUtil.sub(sku.getgPrice().doubleValue(), sku.getgScale().doubleValue());
-                        sku.setgAprice(BigDecimal.valueOf(aPrice));
+                        sku.setgAprice(BigDecimal.valueOf(bPrice));
                         sku.setgBeforePrice(beforPrice);
-                        sku.setgBprice(BigDecimal.valueOf(bPrice));
+                        sku.setgBprice(BigDecimal.valueOf(aPrice));
                         sku.setgType("0");
                         sku.setgUpdateTime(new Date());
                         spsGoodSkuMapper.update(sku);
