@@ -6,7 +6,6 @@
 			+ path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -50,7 +49,7 @@
 				    <label class="layui-form-label">流程状态</label>
 				    <div class="layui-input-inline">
 				      <select name="flag" lay-filter="flag" id="flag">
-				        <option value="" selected="selected">全部</option>
+				        <option value="3,4,6" selected="selected">全部</option>
 				        <option value="3">待审核</option>
 				        <option value="6">审核通过</option>
 				        <option value="4">审核不通过</option>
@@ -162,7 +161,7 @@
 			  //重置
 			  $('#resetInput').on('click',function(){
 				  $('input').val('');
-				  $('select').val('');
+				  $('select').val('3,4,6');
 			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){
