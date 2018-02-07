@@ -15,6 +15,8 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +38,8 @@ public class UserController {
 	private UserAndRoleService userAndRoleService;
 	@Reference(group="dianfu")
 	private ChannelReadService readService;
+	
+	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	/**
 	 * 用户列表
 	 * @Title: userList   
@@ -99,10 +103,10 @@ public class UserController {
 	@RequestMapping(value="insertUser")
 	@ResponseBody
 	public  HashMap<String, Object> insertUser(SpsUser user, @RequestParam(value = "roleList[]") int[] roleList) {
-		HashMap<String, Object> insertUser = 
-				userService.insertUser(user);//用户添加
-		userAndRoleService.insertUserAndRole(user.getUserUsername(), roleList);//为该用户添加角色
-		return insertUser;
+			HashMap<String, Object> insertUser = 
+					userService.insertUser(user);//用户添加
+			userAndRoleService.insertUserAndRole(user.getUserUsername(), roleList);//为该用户添加角色
+			return insertUser;
 	}
 	/**
 	 * 修改用户

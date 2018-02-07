@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
+import org.sps.util.FinalData;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -80,18 +81,18 @@ public class RoleServiceImpl implements RoleService {
 				int insertRoleAndMenu = insertRoleAndMenu(role.getRoleId(), menuList);
 				if (insertRoleAndMenu == 1) {
 					map.put("msg", "角色添加成功");
-					map.put("state", "success");
+					map.put("state", FinalData.STATE_SUCCESS);
 				} else {
 					map.put("msg", "角色权限添加失败");
 					map.put("state", "menuError");
 				}
 			} else {
 				map.put("msg", "添加失败,联系管理员");
-				map.put("state", "error");
+				map.put("state", FinalData.STATE_ERROR);
 			}
 		} else {
 			map.put("msg", "角色重复");
-			map.put("state", "exist");
+			map.put("state", FinalData.STATE_EXIST);
 		}
 		return map;
 	}
@@ -114,10 +115,10 @@ public class RoleServiceImpl implements RoleService {
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		if (count > 0) {
 			hashMap.put("msg", "删除成功");
-			hashMap.put("state", "success");
+			hashMap.put("state", FinalData.STATE_SUCCESS);
 		}else{
 			hashMap.put("msg", "删除失败");
-			hashMap.put("state", "error");
+			hashMap.put("state", FinalData.STATE_ERROR);
 		}
 		return hashMap;
 	}

@@ -28,7 +28,7 @@ public class OrderController {
 
 	Logger logger=Logger.getLogger(this.getClass().getName());
 	
-	@Reference(group = "dianfu")
+	@Reference(timeout = 20000, group = "dianfu")
 	OrderService orderService;
 	@Resource
 	private ExpressService expressService;

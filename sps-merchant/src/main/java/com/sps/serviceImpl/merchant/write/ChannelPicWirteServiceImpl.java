@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.sps.entity.merchant.SpsChannelPic;
 import org.sps.entity.merchant.SpsChannelPicExample;
 import org.sps.service.merchant.write.ChannelPicUploadService;
+import org.sps.util.FinalData;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.read.SpsChannelPicReadMapper;
@@ -42,14 +43,14 @@ public class ChannelPicWirteServiceImpl implements ChannelPicUploadService{
 				record.setChannelNum(channelNum);
 				picWrite.insertSelective(record);
 				hashMap.put("msg", "图片上传成功");
-				hashMap.put("state", "success");
+				hashMap.put("state", FinalData.STATE_SUCCESS);
 			}else{
 				hashMap.put("msg", "该类型图片最多只可上传五张!");
 				hashMap.put("state", "max");
 			}
 		} catch (Exception e) {
 			hashMap.put("msg", "图片上传失败");
-			hashMap.put("state", "error");
+			hashMap.put("state", FinalData.STATE_ERROR);
 			e.printStackTrace();
 		}
 		return hashMap;
