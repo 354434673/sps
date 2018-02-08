@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 public class SpsUser implements Serializable{
     /**   
 	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
@@ -11,13 +13,13 @@ public class SpsUser implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Integer userId;
-
+	
     private String userUsername;
 
     private String userPassword;
-
+    
     private String userName;
-
+    
     private String userPhone;
 
     private String userEmail;

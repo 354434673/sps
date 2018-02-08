@@ -27,7 +27,7 @@
 	<mvc:resources location="/page/main/" mapping="/main/**" />
 	<mvc:resources location="/page/static/" mapping="/static/**" />
 	<mvc:resources location="/page/layer/" mapping="/layer/**" />
-
+	
 	<!-- 添加注解驱动 -->
 	<mvc:annotation-driven enable-matrix-variables="true">
         <mvc:message-converters>
@@ -71,4 +71,5 @@
             </props>  
         </property>  
     </bean> 
+
 </beans>

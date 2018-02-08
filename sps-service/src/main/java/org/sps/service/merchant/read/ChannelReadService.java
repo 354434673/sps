@@ -2,6 +2,7 @@ package org.sps.service.merchant.read;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 
 import org.sps.entity.merchant.SpsChannel;
 import org.sps.entity.merchant.SpsChannelBusiness;
@@ -136,4 +137,17 @@ public interface ChannelReadService{
 	 * @throws
 	 */
 	SpsChannelBusiness getBusiness(String channelNum);
+	/**
+	 * @throws Exception 
+	 * 根据登陆店主的主营业务,获得对应的业务的商户
+	 * @Title: queryBusinessForApi   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param businessProduct
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月8日 上午11:41:07
+	 * @return: List<SpsChannelBusiness>      
+	 * @throws
+	 */
+	HashMap<String, Object> queryBusinessForApi(List<String> businessProduct, Integer picType) throws Exception;
 }
