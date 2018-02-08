@@ -47,7 +47,7 @@
 				    <label class="layui-form-label">流程状态</label>
 				    <div class="layui-input-inline">
 				      <select name="flag" lay-filter="flag" id="flag">
-				        <option value="" selected="selected">全部</option>
+				        <option value="1,2,3,4,5,6,7,8,9,10,11,18,19" selected="selected">全部</option>
 				        <option value="1">待确认</option>
 				        <option value="2">已拒绝</option>
 				        <option value="3">订单审核中</option>
@@ -75,7 +75,10 @@
 <script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="detail"  id="detail">详情</a>
   <a class="layui-btn layui-btn-mini" lay-event="print" id="print">面单打印</a>
+{{#  if(d.flag == 9||d.flag == 10){ }}
   <a class="layui-btn layui-btn-mini" lay-event="express" id="express">查看物流</a>
+{{#  }  }}
+  
 </script>
 <script type="text/html" id="date">
 {{#  
@@ -130,6 +133,12 @@
 			  var layer = layui.layer;
 			  var form = layui.form;
 			  var $ = layui.jquery;
+			  
+			  var flag=$('#flag').val();
+			  if(flag==''){
+				  flag='1,2,3,4,5,6,7,8,9,10,11,18,19';
+			  }
+			  
 			  var newDate = new Date().setDate(new Date().getDate() - 60)//60天以前的日期
 				//执行一个laydate实例
 				  laydate.render({
@@ -164,6 +173,7 @@
 				  var startTime = date[0];
 				  var endTime = date[1];
 				  var flag=$('#flag').val();
+				 
 				  if(orderid.length>50){
 					  layer.msg('订单编号字数不能超过50字',{icon: 2});
 				  }else if(name.length>50){
