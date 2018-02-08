@@ -63,7 +63,6 @@
     var year = da.getFullYear();
     var month = da.getMonth()+1;
     var date = da.getDate();
-    console.log([year,month,date].join('-'));
   var fn = function(){
     return [year,month,date].join('-');
   }; 
@@ -105,11 +104,23 @@
 			  });
 			  //查询
 			  $('#queryOrders').on('click',function(){
-				  var date= $('#time').val().split('至')
+				  var time = $('#time').val()
+				  console.log(time)
+				  var startTime = null;
+				  var endTime = null;
+				  if(time != null || time != ''){
+					  var date= $('#time').val().split('至')
+					  startTime = date[0];
+					  endTime = date[1];
+				  }
+				  //会传一个endTime参数
 			  	  var name = $('#name').val();
 				  var orderid = $('#orderid').val();
 				  var startTime = date[0];
 				  var endTime = date[1];
+				  if(startTime==''||startTime==null){
+					  endTime='';
+				  }
 				  var flag=6;
 				  table.reload('orderToBeDelivery', {
 					  page:{
@@ -121,6 +132,7 @@
 			  //重置
 			  $('#resetInput').on('click',function(){
 				  $('input').val('');
+				  $('#time').val('');
 			  })
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){

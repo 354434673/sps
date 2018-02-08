@@ -10,6 +10,7 @@ import org.sps.entity.merchant.SpsChannelSalesman;
 import org.sps.entity.merchant.SpsChannelSalesmanExample;
 import org.sps.entity.merchant.SpsChannelSalesmanExample.Criteria;
 import org.sps.service.merchant.read.ChannelSalesmanReadService;
+import org.sps.util.StringUtil;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
@@ -30,19 +31,19 @@ public class ChannelSalesmanReadServiceImpl implements ChannelSalesmanReadServic
 			
 			Criteria createCriteria = example.createCriteria();
 			
-			if(!(salesmanName == null || salesmanName.equals(""))){
+			if(!StringUtil.isEmpty(salesmanName)){
 				createCriteria.andSalesmanNameLike("%"+salesmanName+"%");
 			}
-			if(!(salesmanIdcard == null || salesmanIdcard.equals(""))){
+			if(!StringUtil.isEmpty(salesmanIdcard)){
 				createCriteria.andSalesmanIdcardLike("%"+salesmanIdcard+"%");
 			}
-			if(!(salesmanPhone == null || salesmanPhone.equals(""))){
+			if(!StringUtil.isEmpty(salesmanPhone)){
 				createCriteria.andSalesmanPhoneLike("%"+salesmanPhone+"%");
 			}
-			if(!(salesmanEmail == null || salesmanEmail.equals(""))){
+			if(!StringUtil.isEmpty(salesmanEmail)){
 				createCriteria.andSalesmanEmailLike("%"+salesmanEmail+"%");
 			}
-			if(!(bei1 == null || bei1.equals(""))){
+			if(!StringUtil.isEmpty(bei1)){
 				createCriteria.andBei1EqualTo(bei1);
 			}
 			

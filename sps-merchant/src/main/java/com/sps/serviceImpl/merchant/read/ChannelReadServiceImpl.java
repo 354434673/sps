@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.merchant.SpsChannel;
 import org.sps.entity.merchant.SpsChannelBusiness;
@@ -23,6 +24,7 @@ import org.sps.entity.merchant.SpsChannelLogisticsExample;
 import org.sps.entity.merchant.SpsChannelOpenAccount;
 import org.sps.entity.merchant.SpsChannelOpenAccountExample;
 import org.sps.service.merchant.read.ChannelReadService;
+import org.sps.util.StringUtil;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
@@ -60,7 +62,7 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 		HashMap<String, Object> hashMap = new HashMap<String,Object>();
 		try {
 			SpsChannel channel = new SpsChannel();
-			if(!(channelNum == null||channelNum.equals(""))){
+			if(!StringUtil.isEmpty(channelNum)){
 				channel.setChannelNum("%"+channelNum+"%");
 			}
 			if(channelState != null){
@@ -105,7 +107,7 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 			hashMap.put("count", pageInfo.getTotal());
 			hashMap.put("data", selectByExample.size() != 0 ? selectByExample : null);
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace();		
 		}
 		return hashMap;
 	}
@@ -203,5 +205,18 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 		List<SpsChannelBusiness> selectByExample = businessRead.selectByExample(example);
 		
 		return selectByExample.size() == 0 ? null : selectByExample.get(0);
+	}
+	@Override
+	public HashMap<String, Object> queryBusinessForApi(List<String> businessProduct, Integer picType) throws Exception{
+		HashMap<String, Object> hashMap = new HashMap<String,Object>();
+		
+		List<SpsChannelBusiness> queryBusinessForApi = businessRead.queryBusinessForApi(businessProduct, picType);
+		
+		hashMap.put("code", 0);
+		hashMap.put("msg", "获取成功");
+		hashMap.put("count", queryBusinessForApi.size());
+		hashMap.put("data", queryBusinessForApi.size() != 0 ? queryBusinessForApi : null);
+		
+		return hashMap;
 	}
 }

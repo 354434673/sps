@@ -8,6 +8,10 @@
     <result column="business_brand" property="businessBrand" jdbcType="VARCHAR" />
     <result column="business_scope" property="businessScope" jdbcType="VARCHAR" />
     <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+    <association property="enterprise" javaType="org.sps.entity.merchant.SpsChannelEnterprise">
+    	<id column="enterprise_id" property="channelId" jdbcType="INTEGER" />
+	    <result column="enterprise_company_name" property="enterpriseCompanyName" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -39,7 +43,11 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    business_id, business_product, business_type, business_brand, business_scope, channel_num
+		business_id, business_product, business_type, business_brand, business_scope, channel_num
+  </sql>
+  <sql id="Column_List" >
+        b1.business_id, b1.business_product, b1.business_type, b1.business_brand, b1.business_scope, b1.channel_num,
+    	e1.enterprise_company_name
   </sql>
   <select id="countByExample" parameterType="org.sps.entity.merchant.SpsChannelBusinessExample" resultType="java.lang.Integer" >
     select count(*) from sps_channel_business
@@ -60,6 +68,28 @@
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
+  </select>
+  <select id="queryBusinessForApi" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	SELECT
+	 <include refid="Column_List" />
+	FROM
+		sps_channel_business b1
+	JOIN 
+		sps_channel_enterprise e1 
+	ON 
+		b1.channel_num = e1.channel_num
+	JOIN 
+		sps_channel_pic p1 
+	on 
+		b1.channel_num = p1.channel_num
+	<where>
+		<foreach collection="businessProduct" separator="and" item="item">
+			FIND_IN_SET(#{item}, b1.business_product)
+		</foreach>
+		<if test="picType !=null || picType != ''">
+			and p1.pic_type = #{picType} 
+		</if>
+	</where>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 

@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.sps.util.FinalData;
 
 import com.sps.common.Md5Util;
+import com.sps.common.Message;
 import com.sps.dao.SpsUserDao;
 import com.sps.entity.user.SpsUser;
 import com.sps.entity.user.SpsUserExample;
@@ -24,6 +26,26 @@ public class UserServiceImpl {
 	@Resource
 	private SpsUserDao dao;
 
+	@RequestMapping(value="/api/login", method=RequestMethod.POST)
+	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
+	public HashMap<String, Object> userLogin(String userName, String password){
+		
+		SpsUser user = getUser(userName);
+		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		if(userName == null){
+			result.put("msg", Message.USERNOT_REGIST_MSG);
+			result.put("state", Message.USERNOT_REGIST_CODE);
+		}else if(Md5Util.getMd5(password, user.getUserSalt()).equals(user.getUserPassword())){
+			//查询通过后,获取店主商户信息
+			result.put("msg", Message.SUCCESS_CODE);
+			result.put("state", Message.SUCCESS_MSG);
+		}else{
+			result.put("msg", Message.FAILURE_CODE);
+			result.put("state", Message.FAILURE_MSG);
+		}
+		return result;
+	}
 	@RequestMapping(value="/api/getUser", method=RequestMethod.POST)
 	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
 	public SpsUser getUser(String userName){
@@ -37,8 +59,6 @@ public class UserServiceImpl {
 
 		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
 	}
-
-
 	@RequestMapping(value="/api/add", method=RequestMethod.POST)
 	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
 	public HashMap<String, Object> insertUser(SpsUser user) {
@@ -68,7 +88,7 @@ public class UserServiceImpl {
 			}else{
 				map.put("msg", "用户重复");
 				map.put("state", "exist");
-			}
+			}	
 		} catch (NumberFormatException e) {
 			map.put("msg", "程序错误");
 			map.put("state", "error");
