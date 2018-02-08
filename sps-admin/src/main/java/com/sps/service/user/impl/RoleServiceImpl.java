@@ -66,7 +66,8 @@ public class RoleServiceImpl implements RoleService {
 		List<SpsRole> selectByExample = spsRoleMapper.selectByExample(example);
 
 		HashMap<String, String> map = new HashMap<String, String>();
-		if (selectByExample.get(0) == null) {
+		
+		if (selectByExample.size() ==0) {
 			String creater = (String) SecurityUtils.getSubject().getPrincipal();
 			SpsRole role = new SpsRole();
 			role.setRoleName(roleName);

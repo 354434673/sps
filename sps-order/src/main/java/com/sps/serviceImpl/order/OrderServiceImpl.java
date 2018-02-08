@@ -22,7 +22,7 @@ import com.sps.dao.order.OrderGoodsMapper;
 import com.sps.dao.order.OrderMapper;
 import com.sps.dao.order.SpsOrderLogisticsMapper;
 
-@Service(timeout = 2000,group="dianfu")
+@Service(timeout = 2000, group = "dianfu")
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderGoodsMapper orderGoodsMapper;
-	
+
 	@Autowired
 	private SpsOrderLogisticsMapper mapper;
 
@@ -98,9 +98,21 @@ public class OrderServiceImpl implements OrderService {
 
 		limit = limit == null ? 10 : limit;
 
-		startTime = startTime == null ? null : startTime + " 00:00:00";
+		// startTime = startTime == null ? null : startTime + " 00:00:00";
 
-		endTime = endTime == null ? null : endTime + " 23:59:59";
+		if (startTime != null) {
+			if(!startTime.equals("")){
+				startTime = startTime + " 00:00:00";
+			}
+		} 
+		
+		if (endTime != null) {
+			if(!endTime.equals("")){
+				endTime = endTime + " 23:59:59";
+			}
+		} 
+		
+		// endTime = endTime == null ? null : endTime + " 23:59:59";
 
 		List<String> flagList = null;
 
