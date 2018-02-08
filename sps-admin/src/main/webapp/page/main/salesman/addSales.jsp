@@ -294,6 +294,7 @@
 	 			 data:{parentId:parentId},
 	 			 success:function(data){
 			 		 var list = "";
+			 		list +='<option value="">请选择</option>';
 			 		 $.each(data,function(i,item){
 					  list +='<option value="'+item.areaId+'">'+item.name+'</option>';
 					  $('#province').html(list)
@@ -312,6 +313,7 @@
 	 			 data:{parentId:parentId},
 	 			 success:function(data){
 			 		 var list = "";
+			 		list +='<option value="">请选择</option>';
 			 		 $.each(data,function(i,item){
 					  list +='<option value="'+item.areaId+'">'+item.name+'</option>';
 					  $('#city').html(list)
@@ -330,6 +332,7 @@
 	 			 data:{parentId:parentId},
 	 			 success:function(data){
 			 		 var list = "";
+			 		list +='<option value="">请选择</option>';
 			 		 $.each(data,function(i,item){
 					  list +='<option value="'+item.areaId+'" title="'+item.name+'">'+item.name+'</option>';
 					  $('#area').html(list)
