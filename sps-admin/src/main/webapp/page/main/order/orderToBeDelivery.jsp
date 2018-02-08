@@ -110,6 +110,10 @@
 				  var orderid = $('#orderid').val();
 				  var startTime = date[0];
 				  var endTime = date[1];
+				  if(startTime==''||startTime==null){
+					  endTime='';
+				  }
+				  
 				  var flag=6;
 				  table.reload('orderToBeDelivery', {
 					  page:{
@@ -121,6 +125,7 @@
 			  //重置
 			  $('#resetInput').on('click',function(){
 				  $('input').val('');
+				  $('#time').val('');
 			  })
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){
