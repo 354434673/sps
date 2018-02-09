@@ -58,7 +58,9 @@
     {{d.LAY_TABLE_INDEX+1}}
 </script>
 <script type="text/html" id="bar">
+{{#  if(d.flag == 15||d.flag == 16){ }}
   <a class="layui-btn layui-btn-mini" lay-event="audit" id="audit">审核</a>
+{{#  } }} 
   <a class="layui-btn layui-btn-mini" lay-event="detail" id="detail">详情</a>
 </script>
 <script type="text/html" id="date">
