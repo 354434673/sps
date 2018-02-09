@@ -41,6 +41,7 @@
 				    <label class="layui-form-label">流程状态</label>
 				    <div class="layui-input-inline">
 				      <select name="flag" lay-filter="flag" id="flag">
+				      <option value="14,15,16" selected="selected">全部</option>
 				        <option value="14">待审核</option>
 				        <option value="16">审核通过</option>
 				        <option value="15">审核不通过</option>
