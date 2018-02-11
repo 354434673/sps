@@ -11,6 +11,8 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.sps.util.FinalData;
 
@@ -34,6 +36,7 @@ public class UserServiceImpl implements UserService {
 	@Resource
 	private SpsLogMapper logMapper;
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	/**
 	 * 获得用户 @Title: getUser @Description: TODO(这里用一句话描述这个方法的作用) @param: @param
 	 * userName @param: @return @author YangNingSheng @date 2017年12月23日
@@ -250,22 +253,17 @@ public class UserServiceImpl implements UserService {
 		HashMap<String, String> loginData = new HashMap<String, String>();
 		try {
 			SecurityUtils.getSubject().login(usernamePasswordToken);
-
 		} catch (UnknownAccountException ex) {
-			ex.printStackTrace();
-			System.out.println("用户不存在或者密码错误！");
+			logger.error("错误类型:UnknownAccountException");
 			return "inexistence";
 		} catch (IncorrectCredentialsException ex) {
-			ex.printStackTrace();
-			System.out.println("用户不存在或者密码错误！");
+			logger.error("错误类型:IncorrectCredentialsException");
 			return "inexistence";
 		} catch (AuthenticationException ex) {
-			ex.printStackTrace();
-			System.out.println("自定义");
+			logger.error("错误类型:AuthenticationException");
 			return "inexistence";
 		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.println("内部错误，请重试！");
+			logger.error("错误类型:Exception");
 			return "error";
 		}
 

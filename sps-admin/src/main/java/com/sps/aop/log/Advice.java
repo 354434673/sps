@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -30,8 +31,8 @@ public class Advice {
 	/*
 	 * 用户登录
 	 */
-	@After("execution(* com.sps.service.user.impl.UserServiceImpl.userLogin(..))")
-	public void afteruserLoginLog(JoinPoint point){
+	@AfterReturning("execution(* com.sps.service.user.impl.UserServiceImpl.userLogin(..))")
+	public void afteruserLoginLog(JoinPoint point,Object result){
 /*		System.out.println("当前执行的目标类:" +proceedingJoinPoint.getTarget());
     	System.out.println("当前目标方法的签名:" +proceedingJoinPoint.getSignature().getName());*/
 /*        System.out.println("@After：目标方法为：" + 
@@ -42,13 +43,14 @@ public class Advice {
         System.out.println("@After：参数为：" + Arrays.toString(point.getArgs()));
         System.out.println("@After：被织入的目标对象为：" + point.getTarget());*/
         
-        
-        SpsLog log = new SpsLog();
-        log.setLogName((String)point.getArgs()[0]);
-        log.setLogType(point.getSignature().getName());
-        log.setLogTime(new Date());
-        log.setLogRemark("用户登录");
-		logService.insertLog(log);
+        if(result.equals("success")){
+        	SpsLog log = new SpsLog();
+        	log.setLogName((String)point.getArgs()[0]);
+        	log.setLogType(point.getSignature().getName());
+        	log.setLogTime(new Date());
+        	log.setLogRemark("用户登录");
+        	logService.insertLog(log);
+        }
 	}
 	/*
 	 * 用户登出(前置通知)

@@ -192,12 +192,14 @@ public class UserController {
 		//获取当前token中的用户
 		String userName = (String) subject.getPrincipal();
 		
-		SpsUser user = userService.getUser(userName);
-		
-		Integer userMark = user.getUserMark();//用户类型
-		
 		String num = "";
-		switch (userMark) {
+		
+		if(userName != null){
+			SpsUser user = userService.getUser(userName);
+			
+			Integer userMark = user.getUserMark();//用户类型
+			
+			switch (userMark) {
 			case 1:
 				SpsChannelOpenAccount openAccount = readService.getOpenAccount(null, userName);
 				
@@ -205,8 +207,9 @@ public class UserController {
 			case 2:
 			case 3:
 				
+			}
+			subject.getSession().setAttribute(userName, num);
 		}
-		subject.getSession().setAttribute(userName, num);
 		return num;
 	}
 }
