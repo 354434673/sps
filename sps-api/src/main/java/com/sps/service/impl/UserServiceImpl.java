@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sps.common.Md5Util;
 import com.sps.common.Message;
+import com.sps.dao.SpsShopkeeperAccountDao;
 import com.sps.dao.SpsUserDao;
+import com.sps.entity.shopkeeper.SpsShopkeeperAccount;
+import com.sps.entity.shopkeeper.SpsShopkeeperAccountExample;
 import com.sps.entity.user.SpsUser;
 import com.sps.entity.user.SpsUserExample;
 import com.sps.entity.user.SpsUserExample.Criteria;
@@ -24,7 +27,9 @@ import com.sps.entity.user.SpsUserExample.Criteria;
 public class UserServiceImpl {
 	@Resource
 	private SpsUserDao dao;
-
+	@Resource
+	private SpsShopkeeperAccountDao accountDao;
+	
 	@RequestMapping(value="/api/login", method=RequestMethod.POST)
 	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
 	public HashMap<String, Object> userLogin(String userName, String password){
@@ -37,6 +42,12 @@ public class UserServiceImpl {
 			result.put("state", Message.USERNOT_REGIST_CODE);
 		}else if(Md5Util.getMd5(password, user.getUserSalt()).equals(user.getUserPassword())){
 			//查询通过后,获取店主商户信息
+			SpsShopkeeperAccountExample example = new SpsShopkeeperAccountExample();
+			
+			example.createCriteria().andAccountNumEqualTo(userName);
+			
+			List<SpsShopkeeperAccount> selectByExample = accountDao.selectByExample(example);
+			
 			result.put("msg", Message.SUCCESS_CODE);
 			result.put("state", Message.SUCCESS_MSG);
 		}else{
