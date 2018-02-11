@@ -521,7 +521,7 @@ to {
                         if(data == 'success'){
                             c.tips('登录成功！跳转中...');
                             setTimeout(function(){
-                                location.href = "<%=path%>/page/main/index.jsp";
+                                location.href = "<%=path%>/index.html";
                             },1000);
                         }else if(data == 'inexistence'){
                         	c.tips("用户名或密码错误")
