@@ -24,7 +24,7 @@
     <hr>
     <div class="layui-form layui-form-pane">
 
-        <input type="hidden" name="parentFlag" id="parentFlag" value="">
+        <input type="hidden" name="parentFlag" id="parentFlag" value="${parentFlag}">
         <input type="hidden" name="categoryParentName" id="categoryParentName" value="${categoryParentName}">
         <input type="hidden" name="categoryId" id="categoryId" value="${spsGoodCategory.categoryId}">
         <div class="layui-form-item ">
@@ -136,7 +136,7 @@
         }
         if ($('#parentFlag').val() == '0') {
             layer.msg("只有三级分类才可以上传图片");
-           /* $('#parentFlag').val('');*/
+            /* $('#parentFlag').val('');*/
             return false;
         }
         if (f.length == 2 && (f[1] == 'jpg' || f[1] == 'jpeg' || f[1] == 'png')) {
@@ -243,11 +243,11 @@
 
     }
 
-   /* function checkParent(id) {
-        $.ajax(
-            {
-                data: {id:id},
-                url: "<%=path%>/category/findEntity",//提交连接
+    /* function checkParent(id) {
+         $.ajax(
+             {
+                 data: {id:id},
+                 url: "<%=path%>/category/findEntity",//提交连接
                 type: 'post',
                 dataType: 'json',
                 success: function (result) {
@@ -267,16 +267,35 @@
         var $ = layui.jquery;
         var table = layui.table;
 
+
+        //自定义验证规则
+        form.verify({
+            /*  categoryName: function (value) {
+                  if (value.length > 8) {
+                      return '分类名称最多输入8个字符';
+                  }
+              }, categoryWeight: function (value) {
+                  if (value > 9999 || value == 0) {
+                      return '权重必须为0-9999的数字';
+                  }
+              }, categoryDes: function (value) {
+                  if (value.length > 20) {
+                      return '描述最多输入20个字符';
+                      return false;
+                  }
+              }*/
+        });
+
+
         //提交
         var post_flag = false; //设置一个对象来控制是否进入AJAX过程
         form.on('submit(submitCategory)', function (data) {
-           /* if ( $("#categoryUrl").val()!=''&&$('#parentFlag').val() == '0') {
-                layer.msg("只有三级分类才可以上传图片");
-                $('#parentFlag').val('')
-                return false;
-            }*/
             if ($("#categoryName").val().length<2) {
                 layer.msg("分类名称最少输入2位！");
+                return false;
+            }
+            if ($("#categoryName").val().length>8) {
+                layer.msg("分类名称最多输入8位！");
                 return false;
             }
             if ($("#showCategory").html() == "选择分类") {
@@ -324,8 +343,6 @@
                     }//回调方法
                 });
             }
-            return false;
-
         })
         $(document).on("click", "#showCategory", function () {
             layer.open({
@@ -339,23 +356,7 @@
         })
 
 
-        //自定义验证规则
-        form.verify({
-            categoryName: function (value) {
-                if (value.length > 20) {
-                    return '分类名称最多输入20个字符';
-                }
-            }, categoryWeight: function (value) {
-                if (value > 9999 || value == 0) {
-                    return '权重必须为0-9999的数字';
-                }
-            }, categoryDes: function (value) {
-                if (value.length > 20) {
-                    return '描述最多输入20个字符';
-                    return false;
-                }
-            }
-        });
+
     });
 
     //提交

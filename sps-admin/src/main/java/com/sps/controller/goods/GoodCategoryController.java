@@ -20,13 +20,10 @@ import java.util.*;
 @Controller
 @RequestMapping("/category")
 public class GoodCategoryController {
-    @Reference(check=false,group="dianfu")
+    @Reference(check = false, group = "dianfu")
     GoodCategoryService goodCategoryService;
-    @Reference(check=false,group="dianfu")
+    @Reference(check = false, group = "dianfu")
     GoodsService goodsService;
-
-
-
 
 
     /**
@@ -82,34 +79,35 @@ public class GoodCategoryController {
 
     /**
      * 根据id和Pid拼接分类名称 例如： 数码》手机》华为
-     *  这块逻辑有点乱 以后优化优化 写的比较急
+     * 这块逻辑有点乱 以后优化优化 写的比较急
+     *
      * @return
      */
     @RequestMapping(value = "/getCategoryName", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> saveOrUpdate(Integer pId, Integer id) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         try {
             String name = "";
             String ids = "";
             SpsGoodCategory smallCategory = goodCategoryService.findEntityById(id);
             SpsGoodCategory category = goodCategoryService.findEntityById(pId);
             if (pId != null && pId != 0) {
-                    SpsGoodCategory Pcategory = goodCategoryService.findEntityById(category.getCategoryParentId());
-                    if(Pcategory!=null){//选了三级
-                        name = Pcategory.getCategoryName() + ">" + category.getCategoryName() + ">" + smallCategory.getCategoryName();
-                        ids = Pcategory.getCategoryId() + "," + category.getCategoryId() + "," + smallCategory.getCategoryId();
-                        resultMap.put("name", name);
-                        resultMap.put("ids", ids);
-                    }else {//选了二级
-                        name = category.getCategoryName() + ">" + smallCategory.getCategoryName();
-                        ids = category.getCategoryId() + "," + smallCategory.getCategoryId();
-                        resultMap.put("name", name);
-                        resultMap.put("ids", ids);
-                    }
-            } else if(pId==null) {//说明只选了一级父类
-                name =  smallCategory.getCategoryName();
-                ids =  smallCategory.getCategoryId()+"";
+                SpsGoodCategory pCategory = goodCategoryService.findEntityById(category.getCategoryParentId());
+                if (pCategory != null) {//选了三级
+                    name = pCategory.getCategoryName() + ">" + category.getCategoryName() + ">" + smallCategory.getCategoryName();
+                    ids = pCategory.getCategoryId() + "," + category.getCategoryId() + "," + smallCategory.getCategoryId();
+                    resultMap.put("name", name);
+                    resultMap.put("ids", ids);
+                } else {//选了二级
+                    name = category.getCategoryName() + ">" + smallCategory.getCategoryName();
+                    ids = category.getCategoryId() + "," + smallCategory.getCategoryId();
+                    resultMap.put("name", name);
+                    resultMap.put("ids", ids);
+                }
+            } else if (pId == null) {//说明只选了一级父类
+                name = smallCategory.getCategoryName();
+                ids = smallCategory.getCategoryId() + "";
                 resultMap.put("name", name);
                 resultMap.put("ids", ids);
             }
@@ -133,10 +131,19 @@ public class GoodCategoryController {
     public String toUpdateProduct(Integer id, Model model) {
         try {
             if (id != null) {
-
                 SpsGoodCategory spsGoodCategory = goodCategoryService.findEntityById(id);
+                //判断是否为3级分类 用于是否可以上传图片
+                if(spsGoodCategory.getCategoryParentId().equals(0)){
+                    model.addAttribute("parentFlag", 0);
+                }else {
+                    SpsGoodCategory category = goodCategoryService.findEntityById(spsGoodCategory.getCategoryParentId());
+                    if(category.getCategoryParentId().equals(0)){
+                        model.addAttribute("parentFlag", 0);
+                    }
+                }
                 model.addAttribute("spsGoodCategory", spsGoodCategory);
                 if (spsGoodCategory != null && spsGoodCategory.getCategoryParentId() != null) {
+
                     model.addAttribute("categoryParentName", goodCategoryService.findEntityById(spsGoodCategory.getCategoryParentId()).getCategoryName());
                 }
             }
@@ -150,6 +157,7 @@ public class GoodCategoryController {
 
     /**
      * 校验是否有审核中的商品在使用该分类
+     *
      * @param id
      * @return
      */
@@ -162,11 +170,11 @@ public class GoodCategoryController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("flowStatus", 1);
                 List<SpsGoods> goodsList = goodsService.findAuditList(map);
-                if(goodsList!=null&&goodsList.size()>0){
-                    for(SpsGoods  goods:goodsList){
+                if (goodsList != null && goodsList.size() > 0) {
+                    for (SpsGoods goods : goodsList) {
                         String[] ids = goods.getgCategoryIds().split(",");
                         //判断数组是否包含id
-                        if(useLoop(ids,id.toString())){
+                        if (useLoop(ids, id.toString())) {
                             resultMap.put("flag", 2);
                             return resultMap;
                         }
@@ -184,13 +192,14 @@ public class GoodCategoryController {
 
     /**
      * 判断数组中是否包含某一元素
+     *
      * @param arr
      * @param targetValue
      * @return
      */
     public static boolean useLoop(String[] arr, String targetValue) {
-        for(String s: arr){
-            if(s.equals(targetValue))
+        for (String s : arr) {
+            if (s.equals(targetValue))
                 return true;
         }
         return false;
@@ -236,6 +245,7 @@ public class GoodCategoryController {
         }
         return "goodsCategory/detail";
     }
+
     @RequestMapping(value = "/findById")
     @ResponseBody
     public Map<String, Object> findById(Integer id) {
@@ -251,22 +261,23 @@ public class GoodCategoryController {
 
     /**
      * 查询一级
+     *
      * @return
      */
     @RequestMapping("/getFistCategory")
     @ResponseBody
-    public  Map<String, Object>  getFistCategory(String ids) {
+    public Map<String, Object> getFistCategory(String ids) {
         Map<String, Object> resultMap = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
-        if(ids==null){
+        if (ids == null) {
             map.put("isFirst", "0");
             //先查父类
             List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
             resultMap.put("categoryList", categoryList);
-        }else {
+        } else {
             List list = new ArrayList<>();
-            String [] idList = ids.split(",");
-            for( String id:idList){
+            String[] idList = ids.split(",");
+            for (String id : idList) {
                 map.put("id", id);
                 //先查父类
                 List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
@@ -277,13 +288,15 @@ public class GoodCategoryController {
         resultMap.put("code", 0);
         return resultMap;
     }
+
     /**
      * 查询二级三级
+     *
      * @return
      */
     @RequestMapping("/getChildrenCategory")
     @ResponseBody
-    public String getChildrenCategory( String ids) {
+    public String getChildrenCategory(String ids) {
         Map<String, Object> resultMap = new HashMap<>();
         List<SpsGoodCategory> childrenList = goodCategoryService.findLastCategory(ids);
         String jsonString = JSON.toJSONString(childrenList);
@@ -291,14 +304,16 @@ public class GoodCategoryController {
         resultMap.put("code", 0);
         return jsonString;
     }
+
     /**
      * 查询二级三级
+     *
      * @return
      */
     @RequestMapping("/getChildrenCategorys")
     @ResponseBody
     @JSONField(serialize = false)
-    public  String  getChildrenCategorys( String ids) {
+    public String getChildrenCategorys(String ids) {
         List<SpsGoodCategory> childrenList = goodCategoryService.findLastCategory(ids);
         String jsonString = JSON.toJSONString(childrenList, SerializerFeature.DisableCircularReferenceDetect);
         return jsonString;
@@ -306,11 +321,12 @@ public class GoodCategoryController {
 
     /**
      * 查询一级
+     *
      * @return
      */
     @RequestMapping("/getNextCategory")
     @ResponseBody
-    public  Map<String, Object>  getNextCategory(Integer parentId) {
+    public Map<String, Object> getNextCategory(Integer parentId) {
         Map<String, Object> resultMap = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
         map.put("categoryId", parentId);

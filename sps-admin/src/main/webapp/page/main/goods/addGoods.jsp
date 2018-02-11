@@ -204,8 +204,14 @@
         var element = layui.element;
         var layedit = layui.layedit;
         var layedits = layui.layedit;
-        var index = layedit.build('gDetails');
-        var indexes = layedits.build('gRemark');
+        var index=layedit.build('gDetails', {
+            tool: ['strong','italic','underline','del', '|', 'left', 'center', 'right']
+            ,height: 200
+        })
+        var indexes = layedits.build('gRemark', {
+            tool: ['strong','italic','underline','del', '|', 'left', 'center', 'right']
+            ,height: 200
+        })
         form.on('radio(scale)', function () {
             $("#number").show();
         })
@@ -234,11 +240,11 @@
                 layer.msg("请填写规格信息");
                 return false;
             }
-            if (layedit.getContent(index) == "") {
+            if (layedit.getText(index) == "") {
                 layer.msg("商品描述不能为空！");
                 return false;
             }
-            if (layedits.getContent(indexes) == "") {
+            if (layedits.getText(indexes) == "") {
                 layer.msg("包装清单不能为空！");
                 return false;
             }
@@ -250,11 +256,11 @@
                 layer.msg("主图不能为空！");
                 return false;
             }
-            if (layedit.getContent(index).length>1000) {
+            if (layedit.getText(index).length>1000) {
                 layer.msg("商品描述不能超过1000位！");
                 return false;
             }
-            if (layedits.getContent(indexes).length>1000) {
+            if (layedits.getText(indexes).length>1000) {
                 layer.msg("包装清单不能超过1000位！");
                 return false;
             }
@@ -295,9 +301,15 @@
                                 setTimeout(function () {
                                     window.location.href = "<%=path%>/page/main/goods/index.jsp";
                                 }, 1000);
-                            } else {
+                            } else if (result.flag == '2') {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
-                                layer.msg("操作失败");
+                                layer.msg("详情图最多为10张");
+                            } else if (result.flag == '3') {
+                                post_flag = false; //在提交成功之后将标志标记为可提交状态
+                                layer.msg("主图最多为6张");
+                            }else {
+                                post_flag = false; //在提交成功之后将标志标记为可提交状态
+                                layer.msg("操作失败")
                             }
                         }//回调方法
                     });
@@ -345,11 +357,11 @@
                 layer.msg("主图不能为空！");
                 return false;
             }
-            if (layedit.getContent(index).length>1000) {
+            if (layedit.getText(index).length>1000) {
                 layer.msg("商品描述不能超过1000位！");
                 return false;
             }
-            if (layedits.getContent(indexes).length>1000) {
+            if (layedits.getText(indexes).length>1000) {
                 layer.msg("包装清单不能超过1000位！");
                 return false;
             }
@@ -367,8 +379,8 @@
                             gBrandId: $('#gBrandId').val(),
                             gSpuName: $('#gSpuName').val(),
                             gSpuNo: $('#gSpuNo').val(),
-                            gDetails: layedit.getContent(index),
-                            gRemark: layedits.getContent(indexes),
+                            gDetails: layedit.getContext(index),
+                            gRemark: layedits.getContext(indexes),
                             goodsDpic: $('#gDpic').val(),
                             goodsPic: $('#gPic').val(),
                             updateDetailFlag: $("#updateDetailFlag").val(),
@@ -396,6 +408,9 @@
                             } else if (result.flag == '3') {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
                                 layer.msg("主图最多为6张");
+                            }else {
+                                post_flag = false; //在提交成功之后将标志标记为可提交状态
+                                layer.msg("操作失败")
                             }
                         }//回调方法
                     });
@@ -584,8 +599,6 @@
                         $('#gSpuNo').val(json.goods.gSpuNo);
                         $('#gDetails').val(json.goods.gDetails);
                         $('#gRemark').val(json.goods.gRemark);
-                        $('#gDpic').val(json.goods.gDpic);
-                        $('#gPic').val(json.goods.gPic);
                         $('#gBrandId').val(json.goods.gBrandId);
                     }
                     if (json.brandName != null) {
