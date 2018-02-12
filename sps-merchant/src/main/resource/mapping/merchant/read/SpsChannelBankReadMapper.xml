@@ -44,8 +44,6 @@
   	        b_user_name =#{userName}
     </select>
 
-
-<!--根据用户名查找手机号-->
     <select id="selectMobileByLoginUser" parameterType="String" resultType="String">
         select
            b_phone
