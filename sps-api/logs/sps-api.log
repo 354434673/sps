@@ -31,3 +31,12 @@
 2018-02-11 15:36:13.069 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==> Parameters: 1(Integer)
 2018-02-11 15:36:13.098 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - <==      Total: 1
 2018-02-11 15:36:13.286 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-11 16:46:14.827 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-11 16:46:21.984 [DEBUG] d.c.s.dao.ChannelEnterpriseDao.queryBusinessForApi - ==>  Preparing: SELECT e1.enterprise_id, e1.enterprise_businesslicense_no, e1.enterprise_company_name, e1.enterprise_company_abbreviation,e1.enterprise_company_register_addr, e1.enterprise_company_realit_addr, e1.enterprise_corp, e1.enterprise_corp_idCard, e1.enterprise_operatio_time, e1.enterprise_employee_num,b1.business_id,b1.business_product FROM sps_channel_business b1 JOIN sps_channel_enterprise e1 ON b1.channel_num = e1.channel_num WHERE 
+2018-02-11 16:46:22.090 [DEBUG] d.c.s.dao.ChannelEnterpriseDao.queryBusinessForApi - ==> Parameters: 
+2018-02-11 16:46:22.324 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-11 16:46:58.933 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-11 16:47:02.802 [DEBUG] d.c.s.dao.ChannelEnterpriseDao.queryBusinessForApi - ==>  Preparing: SELECT e1.enterprise_id, e1.enterprise_businesslicense_no, e1.enterprise_company_name, e1.enterprise_company_abbreviation,e1.enterprise_company_register_addr, e1.enterprise_company_realit_addr, e1.enterprise_corp, e1.enterprise_corp_idCard, e1.enterprise_operatio_time, e1.enterprise_employee_num,b1.business_id,b1.business_product FROM sps_channel_business b1 JOIN sps_channel_enterprise e1 ON b1.channel_num = e1.channel_num 
+2018-02-11 16:47:02.871 [DEBUG] d.c.s.dao.ChannelEnterpriseDao.queryBusinessForApi - ==> Parameters: 
+2018-02-11 16:47:02.943 [DEBUG] d.c.s.dao.ChannelEnterpriseDao.queryBusinessForApi - <==      Total: 27
+2018-02-11 16:47:03.187 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed

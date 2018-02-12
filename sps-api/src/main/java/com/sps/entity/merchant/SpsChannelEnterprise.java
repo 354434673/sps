@@ -30,9 +30,17 @@ public class SpsChannelEnterprise implements Serializable{
 
     private String channelNum;
     
-    private SpsChannel channel;
+    private SpsChannelBusiness business;
 
-    public Integer getEnterpriseId() {
+    public SpsChannelBusiness getBusiness() {
+		return business;
+	}
+
+	public void setBusiness(SpsChannelBusiness business) {
+		this.business = business;
+	}
+
+	public Integer getEnterpriseId() {
         return enterpriseId;
     }
 
@@ -119,13 +127,4 @@ public class SpsChannelEnterprise implements Serializable{
     public void setChannelNum(String channelNum) {
         this.channelNum = channelNum == null ? null : channelNum.trim();
     }
-
-	public SpsChannel getChannel() {
-		return channel;
-	}
-
-	public void setChannel(SpsChannel channel) {
-		this.channel = channel;
-	}
-    
 }

@@ -38,8 +38,8 @@ public class UserServiceImpl {
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		if(userName == null){
-			result.put("msg", Message.USERNOT_REGIST_MSG);
-			result.put("state", Message.USERNOT_REGIST_CODE);
+			result = Message.resultMap(Message.USERNOT_REGIST_CODE, Message.USERNOT_REGIST_MSG,
+					Message.USERNOT_REGIST_MSG, 0, null);
 		}else if(Md5Util.getMd5(password, user.getUserSalt()).equals(user.getUserPassword())){
 			//查询通过后,获取店主商户信息
 			SpsShopkeeperAccountExample example = new SpsShopkeeperAccountExample();
@@ -48,11 +48,11 @@ public class UserServiceImpl {
 			
 			List<SpsShopkeeperAccount> selectByExample = accountDao.selectByExample(example);
 			
-			result.put("msg", Message.SUCCESS_CODE);
-			result.put("state", Message.SUCCESS_MSG);
+			result = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
+					Message.SUCCESS_MSG, 1, selectByExample.get(0).getAccountNum());
 		}else{
-			result.put("msg", Message.FAILURE_CODE);
-			result.put("state", Message.FAILURE_MSG);
+			result = Message.resultMap(Message.FAILURE_CODE, Message.FAILURE_CODE,
+					Message.FAILURE_MSG, 0, null);
 		}
 		return result;
 	}

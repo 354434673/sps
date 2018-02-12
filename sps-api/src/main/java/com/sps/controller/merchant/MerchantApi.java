@@ -1,30 +1,33 @@
-/*package com.sps.service.merchant;
+package com.sps.controller.merchant;
 
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.sps.service.merchant.read.ChannelReadService;
-import org.sps.service.merchant.write.ChannelWriteService;
-import org.sps.util.FinalData;
 
-import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSON;
+import com.sps.common.Message;
+import com.sps.common.StringUtil;
 import com.sps.entity.merchant.SpsChannelBusiness;
-*//**
+import com.sps.service.merchant.EnterpriseService;
+/**
  * 商户相关api
  * @ClassName:  MerchantApi   
  * @Description:TODO(这里用一句话描述这个类的作用)   
  * @author YangNingSheng
  * @date 2018年2月8日 上午11:56:46
- *//*
+ */
 @RestController
 @RequestMapping("/api/merchant")
 public class MerchantApi{
-	@Reference
-	private ChannelReadService channelRead;
-	*//**
+	@Resource
+	private EnterpriseService enterpriseService;
+	/**
 	 * 获得商户列表(目前只有一个)
 	 * @Title: queryMerchant   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -34,21 +37,13 @@ public class MerchantApi{
 	 * @date 2018年2月8日 上午11:57:02
 	 * @return: HashMap<String,Object>      
 	 * @throws
-	 *//*
+	 */
 	@RequestMapping(value = "/queryMerchant", method = RequestMethod.POST)
-	public HashMap<String, Object> queryMerchant(List<String> businessProduct, Integer picType) {
-		HashMap<String, Object> queryBusinessForApi = new HashMap<String, Object>() ;
-		try {
-			queryBusinessForApi = channelRead.queryBusinessForApi(businessProduct, picType);
-		} catch (Exception e) {
-			queryBusinessForApi.put("code", 1);
-			queryBusinessForApi.put("msg", "异常");
-			queryBusinessForApi.put("state", FinalData.STATE_ERROR);
-			queryBusinessForApi.put("count", 0);
-			e.printStackTrace();
-		}
-		return queryBusinessForApi;
+	public HashMap<String, Object> queryMerchant(@RequestBody String data) {
+		
+		HashMap<String, Object> queryMerchantList = enterpriseService.queryMerchantList(data);
+		
+		return queryMerchantList;
 	}
 
 }
-*/
