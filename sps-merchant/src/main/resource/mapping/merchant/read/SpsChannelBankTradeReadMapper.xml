@@ -82,7 +82,6 @@
 		 and b.channl_num=#{channelNum}
 	</where>
   </select>
-<!--根据商户编号查询交易信息-->
 	<select id="selectBankTradeByUsername" parameterType="String" resultMap="BaseResultMap">
 		SELECT
 		<include refid="join_list" />
