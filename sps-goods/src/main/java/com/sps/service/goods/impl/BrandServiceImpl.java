@@ -1,21 +1,22 @@
 package com.sps.service.goods.impl;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.sps.entity.goods.SpsBrand;
+import org.sps.entity.goods.SpsGoodCategory;
+import org.sps.service.goods.BrandService;
+
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.goods.SpsBrandMapper;
 import com.sps.dao.goods.SpsGoodCategoryMapper;
 import com.sps.dao.goods.SpsGoodsMapper;
-import org.sps.entity.goods.SpsBrand;
-import org.sps.entity.goods.SpsGoodCategory;
-import org.sps.entity.goods.SpsGoods;
-import org.sps.service.goods.BrandService;
-
-import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service(timeout = 1200000,group="dianfu")
 public class BrandServiceImpl implements BrandService {

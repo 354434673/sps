@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.read.SpsChannelBankReadMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.merchant.SpsChannelBank" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="b_name" property="name" jdbcType="VARCHAR" />
+    <result column="b_accounts" property="accounts" jdbcType="VARCHAR" />
+    <result column="b_identity" property="identity" jdbcType="VARCHAR" />
+    <result column="b_phone" property="phone" jdbcType="VARCHAR" />
+    <result column="b_createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="b_updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="b_bank" property="bank" jdbcType="VARCHAR" />
+    <result column="b_state" property="state" jdbcType="INTEGER" />
+    <result column="b_remark" property="remark" jdbcType="VARCHAR" />
+    <result column="b_user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="b_user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="channl_num" property="channlNum" jdbcType="VARCHAR" />
+    <result column="b_available_balance" property="availableBalance" jdbcType="DECIMAL" />
+   
+  </resultMap>
+  <sql id="bankInfoSql">
+  		select 
+  			 b_name, b_accounts,b_identity,b_phone,b_bank,b_state,b_remark,b_user_id,b_available_balance
+  	    from 
+  	    	sps_bank
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="String" resultMap="BaseResultMap">
+  	<include refid="bankInfoSql"/>
+  	where  b_identity=#{identity}
+  </select>
+  
+  <select id="selectByChannelNum" parameterType="String" resultMap="BaseResultMap">
+  	<include refid="bankInfoSql"/>
+  	where
+       channl_num=#{channelNum}
+  </select>
+<!--根据用户名查询交易密码-->
+    <select id="selectByLoginUser" parameterType="String" resultType="String">
+       select
+  			b_trans_password
+  	    from
+  	    	sps_bank
+  	   WHERE
+  	        b_user_name =#{userName}
+    </select>
+
+
+<!--根据用户名查找手机号-->
+    <select id="selectMobileByLoginUser" parameterType="String" resultType="String">
+        select
+           b_phone
+        from
+            sps_bank
+        WHERE
+            b_user_name =#{userName}
+    </select>
+
+</mapper>

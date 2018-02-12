@@ -4,11 +4,8 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.goods.*;
-import org.springframework.util.StringUtils;
 import org.sps.entity.goods.SpsGoodShop;
-import org.sps.entity.goods.SpsGoods;
 import org.sps.service.goods.GoodShopService;
-import org.sps.service.goods.GoodsService;
 
 import javax.annotation.Resource;
 import java.util.Date;

@@ -12,4 +12,6 @@ public interface SpsChannelOpenAccountReadMapper {
     List<SpsChannelOpenAccount> selectByExample(SpsChannelOpenAccountExample example);
 
     SpsChannelOpenAccount selectByPrimaryKey(Integer openId);
+    String selectByOpenAdminNum(String openAdminNum);
+    
 }
