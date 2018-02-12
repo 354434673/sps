@@ -34,7 +34,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">*优先级：</label>
             <div class="layui-input-inline">
-                <input id="customWide" name="customWide" type="text" lay-verify="required|number|customWide" placeholder="请输入优先级" autocomplete="off" class="layui-input">
+                <input id="customWide" name="customWide" type="text" lay-verify="required|customWide|number" placeholder="请输入优先级" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item" align="center">
@@ -57,14 +57,14 @@
         var table = layui.table;
         var a_num =0;
         form.on('submit(submitCategory)', function (data) {
-         /*   if($('#customWide').val().length>10){
-                layer.msg("sfsdfsdf")
+            if($('#customName').val().length>8){
+                layer.msg("分类名称不能超过8位");
                 return false;
             }
-            if($('#customName').val().length>50){
-                layer.msg("sfsdfs22222222222df")
+            if($('#customWide').val().length>10){
+                layer.msg("优先级不能超过10位");
                 return false;
-            }*/
+            }
             a_num+=1;
             if(a_num==1){
 
@@ -92,22 +92,21 @@
                         }//回调方法
                     });
             }
-            return false;
         })
         //自定义验证规则收
-        form.verify({
-            customWide: function (value) {
-                if (value.length >10) {
-                    return '优先级最多为10位';
-                }
-            },
-            maxLength: function(value) {
-                if(value.length>50) {
-                    return '分类名称最多为50位';
-                }
-            },
+        /*   form.verify({
+               maxLength: function(value) {
+                   if(value.length>8) {
+                       return '分类名称最多为8位';
+                   }
+               },
+               customWide: function (value) {
+                   if (value.length >10) {
+                       return '优先级最多为10位';
+                   }
+               },
 
-        });
+           });*/
         $(document).on("click", "#back", function () {
             parent.layer.closeAll();
         })

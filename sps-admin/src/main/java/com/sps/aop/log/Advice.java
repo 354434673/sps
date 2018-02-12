@@ -31,7 +31,7 @@ public class Advice {
 	/*
 	 * 用户登录
 	 */
-	@AfterReturning("execution(* com.sps.service.user.impl.UserServiceImpl.userLogin(..))")
+	@AfterReturning(value="execution(* com.sps.service.user.impl.UserServiceImpl.userLogin(..))",returning="result")
 	public void afteruserLoginLog(JoinPoint point,Object result){
 /*		System.out.println("当前执行的目标类:" +proceedingJoinPoint.getTarget());
     	System.out.println("当前目标方法的签名:" +proceedingJoinPoint.getSignature().getName());*/

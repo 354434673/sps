@@ -151,7 +151,7 @@
             <div id="showStatus" style="display: none">
                 <div class="layui-form-item   ">
                     <label class="layui-form-label">拒绝意见：</label>
-                        <span id="opinion"></span>
+                    <span id="opinion"></span>
                 </div>
             </div>
 
@@ -295,7 +295,7 @@
         $(document).on("click", "#next", function (e) {
 
             if ($("#goodsNumberFlag").val() == "1") {
-                layer.msg("当前sup已经存在,请重新选择！")
+                layer.msg("当前spu已经存在,请重新选择！")
                 return false;
             }
             if ($("#firstCategory").val() == ""||$("#firstCategory").val() == null) {
@@ -327,7 +327,6 @@
             $("#threeCategory").attr({"disabled": "disabled"});
             $("#gBrandId").attr({"disabled": "disabled"});
             $("#spuNo").attr({"disabled": "disabled"});
-
             //获取spu下的sku
             getGoodSku();
         });
@@ -492,7 +491,7 @@
                                 SaveData()
                                 layer.msg("操作成功");
                                 setTimeout(function () {
-                                     window.location.href = "<%=path%>/page/main/goodShop/index.jsp";
+                                    window.location.href = "<%=path%>/page/main/goodShop/index.jsp";
                                 }, 1000);
                             } else {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
@@ -636,10 +635,10 @@
     //判断spu是否存在
     function checkSpu(name, id) {
         //getGoodSku(id);
-         var spuNo = name.split('-')[0];
-         var spuName = name.split('-')[1];
-         $.ajax({
-             url: "<%=path%>/goodShop/checkGoodsNumber",//提交连接
+        var spuNo = name.split('-')[0];
+        var spuName = name.split('-')[1];
+        $.ajax({
+            url: "<%=path%>/goodShop/checkGoodsNumber",//提交连接
             type: 'post',
             dataType: 'json',
             async: false,
@@ -728,20 +727,22 @@
                     $("#back").hide();
                     if (json.goods != null) {
                         $("#customId").val(json.goods.gCategorySelf)
-                        var custom = '<option value="' + json.goods.gCategorySelf+ '">' +json.customName + '</option>';
-                        $("#customCategory").append(custom)
+                        if(json.customName!=null&&json.goods.gCategorySelf!=null){
+                            var custom = '<option value="' + json.goods.gCategorySelf+ '">' +json.customName + '</option>';
+                            $("#customCategory").append(custom)
+                        }
                         $('#firstCategoryName').val(json.firstCategory);
                         $('#twoCategoryName').val(json.twoCategory);
                         $('#threeCategoryName').val(json.threeCategory);
 
-                   /*     $("#customCategory").val(option[json.goods.gCategorySelf]) customName;
-                        layui.form().render('select')*/
-                      /*  $("#customCategory option[value='"+json.goods.gCategorySelf+"']").attr("selected","selected");*///根据值让option选中
+                        /*     $("#customCategory").val(option[json.goods.gCategorySelf]) customName;
+                             layui.form().render('select')*/
+                        /*  $("#customCategory option[value='"+json.goods.gCategorySelf+"']").attr("selected","selected");*///根据值让option选中
                         /*  $('#customCategory').val(json.goods.gCategorySelf);*/
-                       /* var customCategoryList = $("#customCategory").find("option"); //获取select下拉框的所有值
-                        getSelect(customCategoryList, json.goods.gCategorySelf)*/
-                       // $("select[name=customCategory]").next().find("li[lay-value="+json.goods.gCategorySelf+"]").click();
-                       // layer.select("customCategory").setValue(json.goods.gCategorySelf)
+                        /* var customCategoryList = $("#customCategory").find("option"); //获取select下拉框的所有值
+                         getSelect(customCategoryList, json.goods.gCategorySelf)*/
+                        // $("select[name=customCategory]").next().find("li[lay-value="+json.goods.gCategorySelf+"]").click();
+                        // layer.select("customCategory").setValue(json.goods.gCategorySelf)
                         //$("#customCategory").find("option[text='1']").attr("selected",true);
                         $(":radio[name='gRecommend'][value='" + json.goods.gRecommend + "']").prop("checked", "checked");
                         $(":radio[name='gGroundingFlag'][value='" + json.goods.gGroundingFlag + "']").prop("checked", "checked");

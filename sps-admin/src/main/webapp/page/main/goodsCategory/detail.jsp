@@ -25,6 +25,7 @@
     <div class="layui-form layui-form-pane">
         <input type="hidden" name="categoryParentName" id="categoryParentName" value="${categoryParentName}">
         <input type="hidden" name="categoryId" id="categoryId" value="${spsGoodCategory.categoryId}">
+        <input type="hidden" name="categoryId" id="categoryUrl" value="${spsGoodCategory.categoryUrl}">
         <div class="layui-form-item ">
             <label class="layui-form-label">分类名称：</label>
             <div class="layui-input-inline" style="    padding-left: 10px;    padding-top: 8px">${spsGoodCategory.categoryName}
@@ -40,14 +41,14 @@
                 <input type="hidden" id="categoryParentId" name="categoryParentId"
                        autocomplete="off" class="layui-input"
                        value="${spsGoodCategory.categoryParentId}">
-                    <c:choose>
-                        <c:when test="${spsGoodCategory.categoryParentId eq 0}">
-                            无
-                        </c:when>
-                        <c:when test="${categoryParentName!= ''}">
-                            ${categoryParentName}
-                        </c:when>
-                    </c:choose>
+                <c:choose>
+                    <c:when test="${spsGoodCategory.categoryParentId eq 0}">
+                        无
+                    </c:when>
+                    <c:when test="${categoryParentName!= ''}">
+                        ${categoryParentName}
+                    </c:when>
+                </c:choose>
             </div>
         </div>
         <div class="layui-form-item">
@@ -85,6 +86,9 @@
         if ($("#categoryParentId").val() != "" && $("#categoryParentId").val() == 0) {
             $("#showCategory").html("无")
             $("#showCategory").attr("disabled", "true");
+        }
+        if($("#categoryUrl").val()==""||$("#categoryUrl").val()==null){
+            $(".img").hide();
         }
 
     })
