@@ -1,20 +1,16 @@
 package com.sps.service.goods.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.sps.dao.goods.SpsBrandMapper;
-import com.sps.dao.goods.SpsGoodsAlbumMapper;
-import org.sps.entity.goods.SpsBrand;
-import org.sps.entity.goods.SpsGoodsAlbum;
-import org.sps.service.goods.BrandService;
-import org.sps.service.goods.GoodsAlbumService;
-
-import javax.annotation.Resource;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.sps.entity.goods.SpsGoodsAlbum;
+import org.sps.service.goods.GoodsAlbumService;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.sps.dao.goods.SpsGoodsAlbumMapper;
 
 @Service(timeout = 1200000,group="dianfu")
 public class GoodsAlbumServiceImpl implements GoodsAlbumService {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.read.SpsChannelBankTransReadMapper" >
+  <select id="selectOne" resultType="org.sps.entity.merchant.SpsChannelBankTrans">
+  	select 
+  			 t_name        		name, 
+  			 t_bank_name    	bankName,
+  			 t_user_id     		userId,
+  			 t_identity         identity,
+  			 t_phone    		phone,
+  			 t_merchant_no	    merchantNo,
+  			 t_start_time    	startTime,
+  			 t_stop_time    	stopTime,
+  			 t_auth_type        authType,
+  			 t_serial_sh  		serialSh,
+  	    	 t_serial_yop 		serialYop,
+  	    	 t_bank_code  		bankCode,
+  	    	 t_state      		state,
+  	    	 t_remark    		 remark,
+  	    	 channl_num          channlNum
+  	    from 
+  	    	sps_bank_trans
+  
+  		where 
+  			 t_serial_sh=#{requestno} and  t_serial_yop=#{yborderid}
+  </select>
+  
+</mapper>
