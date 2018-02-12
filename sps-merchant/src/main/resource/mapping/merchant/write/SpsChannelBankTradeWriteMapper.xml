@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sps.dao.merchant.write.SpsChannelBankTradeWriteMapper" >
-  <!-- 根据用户id删除信息 -->
   <delete id="deleteBankTrade"  parameterType="String">
     delete from sps_bank_trade_info  where bt_trade_serial_num = #{tradeSerialNum,jdbcType=VARCHAR}
   </delete>

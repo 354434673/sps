@@ -40,3 +40,8 @@
 2018-02-11 16:47:02.871 [DEBUG] d.c.s.dao.ChannelEnterpriseDao.queryBusinessForApi - ==> Parameters: 
 2018-02-11 16:47:02.943 [DEBUG] d.c.s.dao.ChannelEnterpriseDao.queryBusinessForApi - <==      Total: 27
 2018-02-11 16:47:03.187 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-12 14:50:33.494 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-12 14:50:37.118 [DEBUG] d.c.s.dao.SpsShopkeeperAccountDao.selectByExample - ==>  Preparing: select account_id, account_num, account_start_time, account_end_time, account_validity, account_down_payment, account_state, shopkeeper_customerId from sps_shopkeeper_account WHERE ( account_num = ? ) 
+2018-02-12 14:50:37.166 [DEBUG] d.c.s.dao.SpsShopkeeperAccountDao.selectByExample - ==> Parameters: 18513967345(String)
+2018-02-12 14:50:37.197 [DEBUG] d.c.s.dao.SpsShopkeeperAccountDao.selectByExample - <==      Total: 0
+2018-02-12 14:50:37.262 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed

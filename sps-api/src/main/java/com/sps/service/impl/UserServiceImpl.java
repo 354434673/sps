@@ -29,7 +29,18 @@ public class UserServiceImpl {
 	private SpsUserDao dao;
 	@Resource
 	private SpsShopkeeperAccountDao accountDao;
-	
+	/**
+	 * 用户登录
+	 * @Title: userLogin   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param userName
+	 * @param: @param password
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月12日 下午2:57:58
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping(value="/api/login", method=RequestMethod.POST)
 	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
 	public HashMap<String, Object> userLogin(String userName, String password){
@@ -48,8 +59,13 @@ public class UserServiceImpl {
 			
 			List<SpsShopkeeperAccount> selectByExample = accountDao.selectByExample(example);
 			
-			result = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
-					Message.SUCCESS_MSG, 1, selectByExample.get(0).getAccountNum());
+			if(selectByExample.size() == 0){
+				result = Message.resultMap(Message.USERNOT_REGIST_CODE, Message.USERNOT_REGIST_MSG,
+						Message.USERNOT_REGIST_MSG, 0, null);
+			}else{
+				result = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
+						Message.SUCCESS_MSG, 1, selectByExample.get(0).getShopkeeperCustomerid());
+			}
 		}else{
 			result = Message.resultMap(Message.FAILURE_CODE, Message.FAILURE_CODE,
 					Message.FAILURE_MSG, 0, null);

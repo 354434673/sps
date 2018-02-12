@@ -375,6 +375,66 @@ public class SpsRoleExample {
             return (Criteria) this;
         }
 
+        public Criteria andRoleMarkIsNull() {
+            addCriterion("role_mark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleMarkIsNotNull() {
+            addCriterion("role_mark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleMarkEqualTo(Integer value) {
+            addCriterion("role_mark =", value, "roleMark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleMarkNotEqualTo(Integer value) {
+            addCriterion("role_mark <>", value, "roleMark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleMarkGreaterThan(Integer value) {
+            addCriterion("role_mark >", value, "roleMark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleMarkGreaterThanOrEqualTo(Integer value) {
+            addCriterion("role_mark >=", value, "roleMark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleMarkLessThan(Integer value) {
+            addCriterion("role_mark <", value, "roleMark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleMarkLessThanOrEqualTo(Integer value) {
+            addCriterion("role_mark <=", value, "roleMark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleMarkIn(List<Integer> values) {
+            addCriterion("role_mark in", values, "roleMark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleMarkNotIn(List<Integer> values) {
+            addCriterion("role_mark not in", values, "roleMark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleMarkBetween(Integer value1, Integer value2) {
+            addCriterion("role_mark between", value1, value2, "roleMark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleMarkNotBetween(Integer value1, Integer value2) {
+            addCriterion("role_mark not between", value1, value2, "roleMark");
+            return (Criteria) this;
+        }
+
         public Criteria andRoleCreattimeIsNull() {
             addCriterion("role_creatTime is null");
             return (Criteria) this;

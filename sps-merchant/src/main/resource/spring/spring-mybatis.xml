@@ -82,14 +82,11 @@
 		<property name="sqlSessionFactoryBeanName" value="readSqlSessionFactory"></property>
 	</bean>
 
-	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="writeDataSource" />
 	</bean>
-	<!-- 启用对事务的注解支持 -->
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 	
-	<!-- 通知spring识别@Aspect注解生效 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 </beans>
