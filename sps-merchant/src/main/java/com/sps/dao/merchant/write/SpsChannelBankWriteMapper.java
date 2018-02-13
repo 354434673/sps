@@ -4,7 +4,7 @@ import org.sps.entity.merchant.SpsChannelBank;
 
 public interface SpsChannelBankWriteMapper {
 
-	int deleteByPrimaryKey(String userId);
+	int deleteByPrimaryKey(String userName);
 
     int insertBank(SpsChannelBank bank);
 

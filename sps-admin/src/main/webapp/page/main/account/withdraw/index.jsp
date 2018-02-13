@@ -74,7 +74,7 @@
 </script>
 <script type="text/html" id="date">
     {{#
-    var da = d.applyTime;
+    var da = d.applicationStartDate;
     da = new Date(da);
     var year = da.getFullYear();
     var month = da.getMonth()+1;
@@ -112,24 +112,27 @@
         table.render({
             elem: '#withdrawList'
             ,url: '<%=path%>/withdraw/findBankTradeList' //数据接口
-            ,id:'id'
+            ,id:'tradeSerialNum'
             ,page:true
             ,cols: [[ //表头
                  {type:'numbers', title: '序号',align:'center'}
+                ,{field: 'tradeSerialNum', title: '序列号', width:230, align:'center'}
                 ,{field: 'applicationStartDate', title: '申请日期', width:230, align:'center',templet: '#date'}
                 ,{field: 'tradeBeforeBalanc', title: '提现前余额',width:230,align:'center'}
                 ,{field: 'tradeAfterBalanc', title: '提现后余额',align:'center' }
                 ,{field: 'tradeAmount', title: '提现额度',align:'center'  }
                 ,{field: 'tradeStatus', title: '状态', width:140,align:'center',templet: '#withDrawStateTpl'}
                 ,{field: 'tool', title: '操作',width:270,align:'center',toolbar:'#bar'}
-            ]]
+            ]] , done: function (res, page, count) {
+            	 $("[data-field='tradeSerialNum']").css('display','none'); 
+            }
         });
         //查询
         $('#search').on('click',function(){
             var startTime = $('#startTime').val();
             var endTime = $('#endTime').val();
             var withDrawState = $('#status').val();
-            table.reload('id', {
+            table.reload('tradeSerialNum', {
                 where: {
                 	applicationStartDate:startTime,
                 	applicationStopDate:endTime,
@@ -145,10 +148,11 @@
         //监听工作条
         table.on('tool(withdrawTables)', function(obj){
             var data = obj.data;
+            alert(data.tradeSerialNum);
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if(layEvent === 'detail'){ //查看
-                location.href = '<%=path%>/page/main/account/withdraw/withdrawDetail.jsp?withdrawId='+data.id;
+ 					location.href = '<%=path%>/page/main/account/withdraw/withdrawDetail.jsp?tradeSerialNum='+data.tradeSerialNum  ;
             }
         });
     });

@@ -1,6 +1,7 @@
 package com.sps.controller.account;
 
 import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,9 +35,7 @@ import org.sps.service.merchant.write.ChannelBankTradeWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageInfo;
-import com.sps.common.Account;
-import com.sps.common.Withdraw;
+
 
 @Controller
 @RequestMapping("/withdraw")
@@ -64,20 +63,17 @@ public class WithdrawController {
      }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> saveOrUpdate(SpsChannelBankTrade bankTrade, Model model) {
-  		String userName = (String)SecurityUtils.getSubject().getPrincipal();
-		
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        try {
-        	bankTradeWriteService.saveBankTradeInfo(bankTrade,userName);
-            resultMap.put("flag", 1);
-            resultMap.put("msg", "操作成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("flag", 0);
-            resultMap.put("msg", "操作失败");
-        }
-        return resultMap;
+    public Result<Boolean> saveOrUpdate(BigDecimal withdrawAmt,String type, Model model) {
+    	//未完善的地方，type类型要从页面动态获取
+		String userName = (String) SecurityUtils.getSubject().getPrincipal();
+		//从当前登录用户中获取用户银行卡信息
+		SpsChannelBank bankInfo = bankReadService.getBankInfoByUserName(userName);
+		Result<Boolean> result = new Result<Boolean>();
+		Boolean flag = bankTradeWriteService.saveBankTradeInfo(bankInfo, withdrawAmt);
+		result.setBody(flag);
+		result.success();
+		result.setMsg(flag ? "成功" : "未设置交易密码");
+		return result;
     }
 
     /**
@@ -89,44 +85,33 @@ public class WithdrawController {
     @ResponseBody
     public SpsChannelBank getAccount(HttpServletRequest request){
         String userName = (String)SecurityUtils.getSubject().getPrincipal();
-        SpsChannelBank bankInfo = bankReadService.getBankInfo(userName);
+        SpsChannelBank bankInfo = bankReadService.getBankInfoByUserName(userName);
         return bankInfo;
     }
 
-    /**
-     * 查询是否存在交易密码
-     * @return
-     */
-    @RequestMapping(value = "/findTradePwd")
-    public Map<String, String> findTradePwd() {
-        Map<String, String > resultMap = new HashMap<String,String>();
+    @RequestMapping("/queryTradePwd")
+    @ResponseBody
+    public Result findTradePwd(HttpServletRequest request) {
+		Result<Boolean> result = new Result<Boolean>();
         String userName = (String)SecurityUtils.getSubject().getPrincipal();
         Boolean flag = bankReadService.findTradePassword(userName);
-        if(flag==true){
-            resultMap.put("flag", "ok");
-            return resultMap;
-        }else{
-            resultMap.put("flag", "no");
-            return resultMap;
-        }
+        result.setBody(flag);
+		result.success();
+		result.setMsg(flag?"成功":"未设置交易密码");
+		return result;
     }
     /**
      * 获取交易详情
      * @return
      */
-    @RequestMapping(value = "/findTradeDetail")
+    @RequestMapping(value = "/withdrawDetail")
     @ResponseBody
-    public SpsChannelBankTrade findTradeDetail() {
+    public SpsChannelBankTrade findTradeDetail(String  tradeSerialNum) {
         Map<String, String > resultMap = new HashMap<String,String>();
         String userName = (String)SecurityUtils.getSubject().getPrincipal();
-        SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeDetail(userName);
+        SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeDetail(userName, tradeSerialNum);
         return tradeDetail;
     }
-
-
-
-
-
     @RequestMapping("/getVerifyCode")
     @ResponseBody
     public Result<String> getVerifyCode(HttpServletRequest request, String phone){

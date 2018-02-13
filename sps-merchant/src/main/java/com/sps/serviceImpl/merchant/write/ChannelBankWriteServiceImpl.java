@@ -38,10 +38,10 @@ public class ChannelBankWriteServiceImpl implements ChannelBankWriteService{
 	 * 删除绑卡信息
 	 */
 	@Override
-	public Boolean removeBankInfo(String userId) {
+	public Boolean removeBankInfo(String userName) {
 		
 		try {
-			bankWrite.deleteByPrimaryKey(userId);
+			bankWrite.deleteByPrimaryKey(userName);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,6 +59,7 @@ public class ChannelBankWriteServiceImpl implements ChannelBankWriteService{
 			bankInfo.setUserId(UUID.randomUUID().toString());
 			//绑卡
 			bankInfo.setState(1);
+			bankInfo.setUserName(loginName);
 			bankInfo.setChannlNum(num);
 			bankWrite.insertBank(bankInfo);
 			return true;
@@ -69,6 +70,7 @@ public class ChannelBankWriteServiceImpl implements ChannelBankWriteService{
 	}
 	@Override
 	public Boolean removeBankInfoOrNo(String userId) {
+		
 		return false;
 	}
 	

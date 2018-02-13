@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>新增页面</title>
+    <title>输入密码页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -21,7 +21,7 @@
 </head>
 <body>
 <div style="padding: 40px;width: 600px;">
-    <h3>新增</h3>
+    <h3>输入密码页面</h3>
     <hr>
     <div class="layui-form layui-form-pane">
         <input type="hidden" name="customId" id="customId" >
@@ -69,14 +69,13 @@
             ,dataType:'json'
             ,async:false
             ,success:function(result){
-                $('#withdrawAmt').val(result.withdrawAmt);
+                $('#withdrawAmt').val(withdrawAmt);
                 $("#name").val(result.bankCard.name);
                 $("#account").val(result.bankCard.bank+'('+result.bankCard.accounts+')');
             }
         });
     });
     $("#forgetPwd").on("click",function(){
-        alert('12334');
         //跳转至找回密码页面，即设置交易密码页面；
         var withdrawAmt = getUrlParam("withdrawAmt");
         location.href='<%=path%>/page/main/account/withdraw/setTradePwd.jsp?withdrawAmt='+withdrawAmt;
@@ -106,7 +105,7 @@
                     },
                     function(){
                         $.ajax({
-                            data: {withdrawAmt: amount},
+                            data:{withdrawAmt: amount},
                             url: "<%=path%>/withdraw/save",//保存交易记录，并提交提现申请调用易宝接口
                             type: 'post',
                             dataType: 'json',

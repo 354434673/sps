@@ -35,6 +35,6 @@ public interface ChannelBankTradeReadService{
 	 * @return
 	 */
 
-	public SpsChannelBankTrade getTradeDetail(String loginName);
+	public SpsChannelBankTrade getTradeDetail(String loginName,String tradeSerialNum);
 
 }

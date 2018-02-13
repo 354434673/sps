@@ -1,5 +1,6 @@
 package com.sps.serviceImpl.merchant.write;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +17,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.read.SpsChannelBankReadMapper;
 import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
 import com.sps.dao.merchant.write.SpsChannelBankTradeWriteMapper;
+import com.sps.dao.merchant.write.SpsChannelBankWriteMapper;
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteService{
@@ -24,36 +26,53 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 	@Resource
 	private SpsChannelBankReadMapper bankRead;
 	@Resource
+	private SpsChannelBankWriteMapper bankWrite;
+	@Resource
 	private SpsChannelOpenAccountReadMapper openAccount;
 	/**
 	 * 保存交易记录的方法
 	 */
 	@Override
-	public void  saveBankTradeInfo(SpsChannelBankTrade bankTrade,String userName) {
-		//登录用户的用户名进行查询
-		String channelNum = openAccount.selectByOpenAdminNum(userName);
-		SpsChannelBank bank = bankRead.selectByChannelNum(channelNum);
-		//保存交易信息
-		bankTrade.setIdentity(bank.getIdentity());
+	public Boolean  saveBankTradeInfo(SpsChannelBank bankInfo,BigDecimal amount) {
+		SpsChannelBankTrade bankTrandeInfo = new SpsChannelBankTrade();
+		bankTrandeInfo.setIdentity(bankInfo.getIdentity());
 		Date date = new Date();
 		DateFormat timeInstance = SimpleDateFormat.getDateTimeInstance();
 		String format = timeInstance.format(date);
-		bankTrade.setApplicationStartDate(format);
-		bankTrade.setTradeSerialNum(UUID.randomUUID().toString());
-		//1代表提现，2 代表充值
-		bankTrade.setTradeType("1");
-		bankTrade.setUserid(bank.getUserId());
+		bankTrandeInfo.setApplicationStartDate(format);
+		bankTrandeInfo.setTradeSerialNum(UUID.randomUUID().toString());
+		//0代表提现，0代表充值
+		bankTrandeInfo.setTradeType("0");
+		bankTrandeInfo.setUserid(bankInfo.getUserId());
 		//交易状态 0 代表审批中，1 审批通过，2 审批不通过
-		bankTrade.setTradeStatus("0");
-		bankTrade.setTradeBeforeBalanc(bank.getAvailableBalance());
-		bankTrade.setTradeName(channelNum);
+		bankTrandeInfo.setTradeStatus("0");
+		bankTrandeInfo.setTradeName(bankInfo.getUserName());;
+		bankTrandeInfo.setTradeAmount(amount);
+		bankTrandeInfo.setTradeBeforeBalanc(bankInfo.getAvailableBalance());
+		if(bankInfo.getAvailableBalance() != null   ){//记住在页面或controoler里一定要保证了 提现金额<=可用余额，只有
+			BigDecimal tradeAfter = bankInfo.getAvailableBalance().subtract(amount);
+			bankTrandeInfo.setTradeAfterBalanc(tradeAfter);
+			bankInfo.setAvailableBalance(tradeAfter);;
+		}
+		bankTrandeInfo.setTradeName(bankInfo.getChannlNum());
+		
 		/**
 		 * 支出类型1 为提现，2为退货
 		 */
-		bankTrade.setExpenditureType("1");
+		bankTrandeInfo.setExpenditureType("1");
 		
-		bankTrade.setStandby1("提现");
-		bankTradeWrite.insertBankTrade(bankTrade);
+		bankTrandeInfo.setStandby1("提现");
+		Boolean flag=true;
+		try {
+			bankTradeWrite.insertBankTrade(bankTrandeInfo);
+			bankWrite.updateBank(bankInfo);
+			return flag;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			flag=false;
+			return flag;
+		}
 	}
 
 

@@ -23,12 +23,9 @@ public class ChannelBankReadServiceImpl implements ChannelBankReadService {
 	 * 根据用户身份信息查询绑卡银行卡信息
 	 */
 	@Override
-	public SpsChannelBank getBankInfo(String userName) {
-		//获取档期那登录用户的用户名进行查询
-		String channelNum = accountRead.selectByOpenAdminNum(userName);
-		SpsChannelBank bank = bankRead.selectByChannelNum(channelNum);
-		return bank;
-			
+	public SpsChannelBank getBankInfo(String identify) {
+		SpsChannelBank bank=bankRead.selectByPrimaryKey(identify);
+			return bank;
 	}
 	
 	/***
@@ -37,7 +34,6 @@ public class ChannelBankReadServiceImpl implements ChannelBankReadService {
 	
 	@Override
 	public String generateRequestNo() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -60,6 +56,12 @@ public class ChannelBankReadServiceImpl implements ChannelBankReadService {
 	@Override
 	public String findMobileByUserName(String userName) {
 		return bankRead.selectMobileByLoginUser(userName);
+	}
+
+	@Override
+	public SpsChannelBank getBankInfoByUserName(String userName) {
+		
+		return bankRead.selectByLoginName(userName);
 	}
 
 }

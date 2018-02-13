@@ -32,6 +32,6 @@ public interface SpsChannelBankTradeReadMapper {
 	 * @param channelNum
 	 * @return
 	 */
-	SpsChannelBankTrade  selectBankTradeByUsername(String channelNum);
+	SpsChannelBankTrade  selectBankTradeByUsername(@Param("channelNum") String channelNum,@Param("tradeSerialNum") String tradeSerialNum);
 
 }

@@ -30,10 +30,7 @@
 		<result column="b_available_balance" property="availableBalance" jdbcType="DECIMAL" />
     </association>
     
-    <!-- <association property="channel" javaType="org.sps.entity.merchant.SpsChannel">
-		<id column="channel_id" property="channelId" jdbcType="INTEGER" />
-		<result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
-    </association> -->
+   
   </resultMap>
    <sql id="join_list" >
 	b.b_name,
@@ -42,6 +39,7 @@
 	b.b_phone,
 	b.b_bank,
 	b.b_available_balance,
+	bt.id,
 	bt.bt_trade_name,
 	bt.bt_trade_serial_num,
 	bt.bt_application_start_date,
@@ -82,7 +80,6 @@
 		 and b.channl_num=#{channelNum}
 	</where>
   </select>
-<!--根据商户编号查询交易信息-->
 	<select id="selectBankTradeByUsername" parameterType="String" resultMap="BaseResultMap">
 		SELECT
 		<include refid="join_list" />
@@ -92,6 +89,7 @@
 		on
 			bt.bt_identity = b.b_identity
 		where
-			b.channl_num=#{channelNum}
+			b.channl_num=#{channelNum} 
+			and bt.bt_trade_serial_num=#{tradeSerialNum}
 	</select>
 </mapper>

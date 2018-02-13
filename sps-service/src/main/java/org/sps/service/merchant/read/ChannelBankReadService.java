@@ -13,9 +13,13 @@ import org.sps.entity.merchant.SpsChannelBank;
 public interface ChannelBankReadService{
 	
 	/**
-	 *  根据用户名查询交易记录
+	 *  根据用户名身份證查询交易记录
 	 */
-	SpsChannelBank  getBankInfo(String userName);
+	SpsChannelBank  getBankInfo(String indentify);
+	/**
+	 *  根据用户名身份證查询交易记录
+	 */
+	SpsChannelBank  getBankInfoByUserName(String userName);
 	/**
 	 * 获取请求号
 	 * @return

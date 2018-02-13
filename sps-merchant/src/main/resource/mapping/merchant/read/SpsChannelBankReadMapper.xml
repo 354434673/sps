@@ -16,8 +16,7 @@
     <result column="b_user_name" property="userName" jdbcType="VARCHAR" />
     <result column="channl_num" property="channlNum" jdbcType="VARCHAR" />
     <result column="b_available_balance" property="availableBalance" jdbcType="DECIMAL" />
-   
-  </resultMap>
+</resultMap>
   <sql id="bankInfoSql">
   		select 
   			 b_name, b_accounts,b_identity,b_phone,b_bank,b_state,b_remark,b_user_id,b_available_balance
@@ -34,7 +33,6 @@
   	where
        channl_num=#{channelNum}
   </select>
-<!--根据用户名查询交易密码-->
     <select id="selectByLoginUser" parameterType="String" resultType="String">
        select
   			b_trans_password
@@ -52,5 +50,13 @@
         WHERE
             b_user_name =#{userName}
     </select>
+    
+    
+    <select id="selectByLoginName" parameterType="String" resultMap="BaseResultMap">
+       	<include refid="bankInfoSql"/>
+        WHERE
+            b_user_name =#{userName}
+    </select>
+
 
 </mapper>
