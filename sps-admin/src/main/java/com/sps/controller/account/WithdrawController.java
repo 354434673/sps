@@ -64,6 +64,7 @@ public class WithdrawController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public Result<Boolean> saveOrUpdate(BigDecimal withdrawAmt,String type, Model model) {
+
     	//未完善的地方，type类型要从页面动态获取
 		String userName = (String) SecurityUtils.getSubject().getPrincipal();
 		//从当前登录用户中获取用户银行卡信息
