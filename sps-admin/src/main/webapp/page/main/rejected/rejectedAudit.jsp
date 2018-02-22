@@ -106,7 +106,7 @@
 			  table.render({
 			    elem: '#orderList'
 			    ,url: '<%=path%>/order/show.json' //数据接口
-			    ,where:{flag:14} 
+			    ,where:{flag:'14,15,16'} 
 			    ,id:'orderToBeRejected'
 			    ,page:true
 			    ,cols: [[ //表头
@@ -140,6 +140,7 @@
 			  //重置
 			  $('#resetInput').on('click',function(){
 				  $('input').val('');
+				  $('select').val('14,15,16');
 			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){
