@@ -89,5 +89,20 @@
     </set>
      where  b_user_id=#{userId}
   </update>
+    <update id="updateAblance" >
+        update
+          sps_bank
+        set
+          b_available_balance = #{availableBalance,jdbcType=DECIMAL}
+        where    b_user_id=#{userId}
+    </update>
+
+    <update id="updateTradePsw" >
+        update
+        sps_bank
+        set
+       b_trans_password = #{psw,jdbcType=VARCHAR}
+        where    b_user_id=#{userId}
+    </update>
  
 </mapper>

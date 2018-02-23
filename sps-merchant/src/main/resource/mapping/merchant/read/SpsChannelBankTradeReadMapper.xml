@@ -67,7 +67,7 @@
   	sps_channel oc 
 	on 
 	oc.channel_num = b.channl_num -->
-	<where>
+	<!--<where>
 		<if test="applicationStartDate != null and applicationStartDate != '' " >
 			bt.bt_application_start_date like CONCAT('%','${applicationStartDate}','%' )
 		</if>
@@ -78,6 +78,20 @@
 			and bt.bt_trade_status = #{tradeStatus}
 		</if>
 		 and b.channl_num=#{channelNum}
+	</where>-->
+	<where>
+		b.channl_num=#{channelNum,jdbcType=VARCHAR}
+		<if test="applicationStartDate != null and applicationStartDate != '' " >
+			and bt.bt_application_start_date  <![CDATA[ >= ]]>    #{applicationStartDate,jdbcType=VARCHAR}
+		</if>
+		<if test="applicationStartDate != null and applicationStartDate != '' " >
+			and bt.bt_application_start_date  <![CDATA[ <= ]]>    #{paymentDate,jdbcType=VARCHAR}
+		</if>
+
+		<if test="tradeStatus != null and tradeStatus != '' " >
+			and bt.bt_trade_status = #{tradeStatus}
+		</if>
+
 	</where>
   </select>
 	<select id="selectBankTradeByUsername" parameterType="String" resultMap="BaseResultMap">

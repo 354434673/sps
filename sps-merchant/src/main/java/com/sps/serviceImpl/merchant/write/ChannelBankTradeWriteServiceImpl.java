@@ -33,6 +33,7 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 	 * 保存交易记录的方法
 	 */
 	@Override
+
 	public Boolean  saveBankTradeInfo(SpsChannelBank bankInfo,BigDecimal amount) {
 		SpsChannelBankTrade bankTrandeInfo = new SpsChannelBankTrade();
 		bankTrandeInfo.setIdentity(bankInfo.getIdentity());
@@ -41,19 +42,15 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 		String format = timeInstance.format(date);
 		bankTrandeInfo.setApplicationStartDate(format);
 		bankTrandeInfo.setTradeSerialNum(UUID.randomUUID().toString());
-		//0代表提现，0代表充值
+		//0代表提现，1代表充值
 		bankTrandeInfo.setTradeType("0");
 		bankTrandeInfo.setUserid(bankInfo.getUserId());
 		//交易状态 0 代表审批中，1 审批通过，2 审批不通过
 		bankTrandeInfo.setTradeStatus("0");
-		bankTrandeInfo.setTradeName(bankInfo.getUserName());;
+		bankTrandeInfo.setTradeName(bankInfo.getUserName());
 		bankTrandeInfo.setTradeAmount(amount);
 		bankTrandeInfo.setTradeBeforeBalanc(bankInfo.getAvailableBalance());
-		if(bankInfo.getAvailableBalance() != null   ){//记住在页面或controoler里一定要保证了 提现金额<=可用余额，只有
-			BigDecimal tradeAfter = bankInfo.getAvailableBalance().subtract(amount);
-			bankTrandeInfo.setTradeAfterBalanc(tradeAfter);
-			bankInfo.setAvailableBalance(tradeAfter);;
-		}
+
 		bankTrandeInfo.setTradeName(bankInfo.getChannlNum());
 		
 		/**
@@ -64,13 +61,17 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 		bankTrandeInfo.setStandby1("提现");
 		Boolean flag=true;
 		try {
+			BigDecimal tradeAfter = bankInfo.getAvailableBalance().subtract(amount);
+			bankTrandeInfo.setTradeAfterBalanc(tradeAfter);
 			bankTradeWrite.insertBankTrade(bankTrandeInfo);
-			bankWrite.updateBank(bankInfo);
-			return flag;
-			
+
+			bankWrite.updateAblance(bankInfo.getUserId(),tradeAfter);
+			//记住在页面或controoler里一定要保证了 提现金额<=可用余额，只有
 		} catch (Exception e) {
 			e.printStackTrace();
 			flag=false;
+
+		}finally{
 			return flag;
 		}
 	}

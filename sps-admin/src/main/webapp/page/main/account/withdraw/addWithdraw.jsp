@@ -89,11 +89,16 @@
         var form = layui.form();
 
         form.on('submit(next)', function (data) {
+
             if(!lock){    // 2.判断该锁是否打开，如果是关闭的，则直接返回
                 return false;
             }
             lock = false;  //3.进来后，立马把锁锁住
             var amount = $('#amount').val().trim();
+            if( $('#withdrawAmt').val() < amount){
+                layer.msg('可用余额不足');
+                return;
+            }
             layer.msg('处理中...',
                     {
                         icon: 16,
@@ -101,8 +106,10 @@
                         time:1200
                     },
                     function(){
-                        $.ajax({
-                            url:"<%=path%>/withdraw/queryTradePwd",
+                        location.href = '<%=path%>/page/main/account/withdraw/inputTradePwd.jsp?withdrawAmt='+amount;
+
+                        /* $.ajax({
+
                             type: 'post',
                             dataType: 'json',
                             async: false,
@@ -114,8 +121,8 @@
                                 layer.msg(msg);
                                 if(code == ok){
                                     if(result.body == true){
+
                                         //若已经设置交易密码，则跳转至输入交易密码页面
-                                        location.href = '<%=path%>/page/main/account/withdraw/inputTradePwd.jsp?withdrawAmt='+amount;
                                     }
                                     if(result.body == false){
                                         //则跳转至设置交易密码页面
@@ -123,11 +130,11 @@
                                 }
                                 if(code == result.fail){
                                   		layer.msg(msg);
-                                   
+
                                     lock = true;
                                 }
                             }
-                        });
+                        });*/
                     }
             );
             return false;

@@ -10,6 +10,11 @@ import org.sps.service.merchant.read.ChannelBankReadService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.read.SpsChannelBankReadMapper;
 import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
+import org.sps.util.StringUtil;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @Service(timeout=2000,group="dianfu")
 @Transactional(readOnly = true)
 public class ChannelBankReadServiceImpl implements ChannelBankReadService {
@@ -43,9 +48,9 @@ public class ChannelBankReadServiceImpl implements ChannelBankReadService {
 	 * @return
 	 */
 	@Override
-	public Boolean findTradePassword(String userName) {
-		String pwd = bankRead.selectByLoginUser(userName);
-		return StringUtils.isNumeric(pwd);
+	public String findTradePassword(String userName) {
+		return bankRead.selectByLoginUser(userName);
+
 	}
 
 	/**

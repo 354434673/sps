@@ -1,6 +1,7 @@
 package org.sps.service.merchant.read;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.sps.entity.merchant.SpsChannelBank;
 
@@ -31,7 +32,7 @@ public interface ChannelBankReadService{
 	 * @param userName
 	 * @return
 	 */
-	Boolean  findTradePassword(String userName);
+	String findTradePassword(String userName);
 
 	/***
 	 * 根据用户名查询手机号

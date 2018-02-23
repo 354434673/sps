@@ -43,6 +43,7 @@ public class ChannelBankTradeReadServiceImpl implements ChannelBankTradeReadServ
 			String paymentDate, String tradeStatus, String loginName) {
 		// 获取档期那登录用户的用户名进行查询
 		String channelNum = accountRead.selectByOpenAdminNum(loginName);
+
 		List<SpsChannelBankTrade> listBankTrade = bankTradeRead.selectListBankTrade(applicationStartDate, paymentDate,
 				tradeStatus, channelNum);
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();

@@ -161,6 +161,7 @@
                                         }
                                     }
                                     if(code == result.fail){//若异常，则提示
+                                        layer.msg(msg);
                                         lock = true;
                                     }
                                 }

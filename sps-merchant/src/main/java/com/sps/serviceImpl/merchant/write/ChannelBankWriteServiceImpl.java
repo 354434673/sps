@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import com.sps.dao.merchant.read.SpsChannelBankReadMapper;
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.merchant.SpsChannelBank;
 import org.sps.service.merchant.write.ChannelBankWriteService;
@@ -18,6 +19,8 @@ public class ChannelBankWriteServiceImpl implements ChannelBankWriteService{
 
 	@Resource
 	private SpsChannelBankWriteMapper bankWrite;
+	@Resource
+	private SpsChannelBankReadMapper bankRead;
 	@Resource
 	private SpsChannelOpenAccountReadMapper openAccount;
 	/**
@@ -73,5 +76,20 @@ public class ChannelBankWriteServiceImpl implements ChannelBankWriteService{
 		
 		return false;
 	}
-	
+
+	@Override
+	public Boolean modifyTradePsw(String userName, String psw) {
+		SpsChannelBank bank = bankRead.selectByLoginName(userName);
+		Boolean flag=true;
+		try{
+			bankWrite.updateTradePsw(bank.getUserId(), psw);
+		}catch(Exception e){
+			e.printStackTrace();
+			flag=false;
+		}finally{
+			return flag;
+		}
+	}
+
+
 }

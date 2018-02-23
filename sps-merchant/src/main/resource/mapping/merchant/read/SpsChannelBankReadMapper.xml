@@ -16,6 +16,7 @@
     <result column="b_user_name" property="userName" jdbcType="VARCHAR" />
     <result column="channl_num" property="channlNum" jdbcType="VARCHAR" />
     <result column="b_available_balance" property="availableBalance" jdbcType="DECIMAL" />
+
 </resultMap>
   <sql id="bankInfoSql">
   		select 

@@ -92,7 +92,7 @@
 <script type="text/javascript">
     $(function () {
  		var tradeSerialNum = getUrlParam("tradeSerialNum");
- 		alert(tradeSerialNum);
+
         $.ajax({
              url:'<%=path%>/withdraw/withdrawDetail'
             ,type: 'post'

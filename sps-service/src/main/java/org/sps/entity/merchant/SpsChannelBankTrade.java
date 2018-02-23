@@ -50,8 +50,31 @@ public class SpsChannelBankTrade implements Serializable {
 	
 	private SpsChannelBank cahnnelBank;
 	private SpsChannel  channel;
-	
-	
+
+	@Override
+	public String toString() {
+		return "SpsChannelBankTrade{" +
+				"id=" + id +
+				", tradeName='" + tradeName + '\'' +
+				", tradeSerialNum='" + tradeSerialNum + '\'' +
+				", identity='" + identity + '\'' +
+				", applicationStartDate='" + applicationStartDate + '\'' +
+				", applicationStopDate='" + applicationStopDate + '\'' +
+				", auditDate='" + auditDate + '\'' +
+				", paymentDate='" + paymentDate + '\'' +
+				", tradeType='" + tradeType + '\'' +
+				", incomeType='" + incomeType + '\'' +
+				", expenditureType='" + expenditureType + '\'' +
+				", tradeBeforeBalanc=" + tradeBeforeBalanc +
+				", tradeAfterBalanc=" + tradeAfterBalanc +
+				", tradeAmount=" + tradeAmount +
+				", tradeStatus='" + tradeStatus + '\'' +
+				", userid='" + userid + '\'' +
+				", standby1='" + standby1 + '\'' +
+				", cahnnelBank=" + cahnnelBank +
+				", channel=" + channel +
+				'}';
+	}
 
 	/**
 	 * @return the channel

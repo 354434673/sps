@@ -1,20 +1,8 @@
 package com.sps.controller.account;
 
-import java.awt.image.BufferedImage;
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import javax.servlet.ServletOutputStream;
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.alibaba.dubbo.common.utils.StringUtils;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Result;
 import com.sps.util.ValidateImageCodeUtils;
 import org.apache.shiro.SecurityUtils;
@@ -32,9 +20,18 @@ import org.sps.service.merchant.read.ChannelBankReadService;
 import org.sps.service.merchant.read.ChannelBankTradeReadService;
 import org.sps.service.merchant.read.ChannelReadService;
 import org.sps.service.merchant.write.ChannelBankTradeWriteService;
+import org.sps.service.merchant.write.ChannelBankWriteService;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.fastjson.JSONObject;
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Controller
@@ -44,16 +41,18 @@ public class WithdrawController {
     private ChannelBankTradeWriteService bankTradeWriteService;
 	@Reference(check=false,group="dianfu")
 	private ChannelBankReadService bankReadService;
+    @Reference(check=false,group="dianfu")
+    private ChannelBankWriteService bankWriteService;
 	@Reference(check=false,group="dianfu")
 	private ChannelReadService  readService;
 	@Reference(check=false,group="dianfu")
 	private ChannelBankTradeReadService  bankTradereadService;
-    @InitBinder
+   /*@InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));   //true:允许输入空值，false:不能为空值
-    }
+    }*/
     @RequestMapping("/findBankTradeList")
     @ResponseBody
      public HashMap<String, Object> userList( Integer page,Integer limit,String applicationStartDate,String paymentDate,String tradeStatus) {
@@ -73,9 +72,12 @@ public class WithdrawController {
 		Boolean flag = bankTradeWriteService.saveBankTradeInfo(bankInfo, withdrawAmt);
 		result.setBody(flag);
 		result.success();
-		result.setMsg(flag ? "成功" : "未设置交易密码");
+		result.setMsg(flag ? "成功" : "保存失败");
 		return result;
     }
+
+
+
 
     /**
      * 获取账户的方法
@@ -92,15 +94,31 @@ public class WithdrawController {
 
     @RequestMapping("/queryTradePwd")
     @ResponseBody
-    public Result findTradePwd(HttpServletRequest request) {
-		Result<Boolean> result = new Result<Boolean>();
+    public Result findTradePwd(HttpServletRequest request,String psw) {
+        Result<Map> result = new Result<Map>();//
+        Map<String, Object> body = new HashMap<String,Object>();
+        result.setBody(body);
         String userName = (String)SecurityUtils.getSubject().getPrincipal();
-        Boolean flag = bankReadService.findTradePassword(userName);
-        result.setBody(flag);
-		result.success();
-		result.setMsg(flag?"成功":"未设置交易密码");
-		return result;
+        String pwd = bankReadService.findTradePassword(userName);
+        if(StringUtils.isNotEmpty(pwd) ){
+            result.success();
+            if(psw.equals(pwd)){
+                result.setMsg("成功");
+                body.put("flag",0);
+            }else{
+                result.setMsg("输入密码不正确");
+                body.put("flag",1);
+            }
+
+        }else{
+            result.fail();
+            result.setMsg("未设置交易密码");
+            body.put("flag",2);
+        }
+        return result;
     }
+
+
     /**
      * 获取交易详情
      * @return
@@ -138,20 +156,27 @@ public class WithdrawController {
     }
     @RequestMapping("/setTradePwd")
     @ResponseBody
-    public Result<Boolean> setTradePwd(HttpServletRequest request, String phoneCode,String imgCode,String tradePwd){
+    public Result<Boolean> setTradePwd(HttpServletRequest request, String phoneCode,String imgCode,String tradePwd) {
         Result<Boolean> result = new Result<Boolean>();
-        String srcImgCode  = (String) request.getSession().getAttribute("imgCode");
+        String srcImgCode = (String) request.getSession().getAttribute("imgCode");
         String srcPhoneCode = (String) request.getSession().getAttribute("phoneCode");
-        if(imgCode.equals(srcImgCode) && phoneCode.equals(srcPhoneCode)){
+        if (imgCode.equals(srcImgCode) && phoneCode.equals(srcPhoneCode)) {
             //调用业务层进行更新账户中的交易密码
-            result.setBody(true);
+            String userName = (String) SecurityUtils.getSubject().getPrincipal();
+            Boolean flag = bankWriteService.modifyTradePsw(userName, tradePwd);
+            result.setBody(flag);
             result.success();
-            result.setMsg("成功");
+            result.setMsg(flag ? "设置密码成功" : "设置密码失败");
+
             request.getSession().removeAttribute("imgCode");
             request.getSession().removeAttribute("phoneCode");
         }
+        result.setMsg("输入验证信息错误");
         return result;
+
     }
+
+
     @RequestMapping(value = "/imageCode")
     public String imageCode(HttpServletRequest request, HttpServletResponse response){
         try {

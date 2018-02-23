@@ -62,13 +62,13 @@
     <a class="layui-btn layui-btn-mini" lay-event="detail">详情</a>
 </script>
 <script type="text/html" id="withDrawStateTpl">
-    {{#  if(d.withDrawState == 0){ }}
+    {{#    if(d.tradeStatus == '0'){  }}
     待提交
-    {{#  } else if(d.withDrawState == 1){ }}
+    {{#  } else if(d.tradeStatus == '1'){ }}
     审核中
-    {{#  } else if(d.withDrawState == 2){ }}
+    {{#  } else if(d.tradeStatus == '2'){ }}
     审核通过
-    {{#  } else if(d.withDrawState == 3){ }}
+    {{#  } else if(d.tradeStatus == '3'){ }}
     审核失败
     {{#  } }}
 </script>
@@ -127,6 +127,7 @@
             	 $("[data-field='tradeSerialNum']").css('display','none'); 
             }
         });
+
         //查询
         $('#search').on('click',function(){
             var startTime = $('#startTime').val();
@@ -135,7 +136,7 @@
             table.reload('tradeSerialNum', {
                 where: {
                 	applicationStartDate:startTime,
-                	applicationStopDate:endTime,
+                    paymentDate:endTime,
                 	tradeStatus:withDrawState
                 }
             });

@@ -26,10 +26,10 @@ public interface ChannelBankTradeReadService{
 	 * @return
 	 */
 	public HashMap<String,Object> getBankTradeList(Integer page, Integer limit,
-                                                   String applicationStartDate, String
+                                                  String applicationStartDate, String
                                                            paymentDate, String tradeStatus, String loginName);
 
-	/**
+	/**ate
 	 * 获取交易详情
 	 * @param loginName
 	 * @return
