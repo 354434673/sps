@@ -25,5 +25,11 @@ public interface ChannelBankTradeWriteService{
 	 * 删除交易记录信息
 	 */
 	void   removeBankTradeInfo(String tradeSerialNum);
-	
+
+	/**
+	 * 根据申请日期更新状态
+	 * @param applicationDate
+	 * @return
+	 */
+	Boolean  modifyBankTradeByApplicateDate(String applicationDate,String status);
 }

@@ -19,13 +19,13 @@
 	    <style type="text/css">
     </style>
 	</head>
-	<bod>
+<body>
 		<div style="margin: 15px;">
 			 <div class="layui-form layui-form-pane">
 			 	<div class="layui-form-item">
 			 			<label class="layui-form-label">提现金额:</label>
                     	<div class="layui-input-inline">
-                       	 	<input type="text" class="layui-input" id="drawAmount"  >
+                       	 	<input type="text" class="layui-input" id="amount"  >
                     	</div>
                     	
 			 		 	<label class="layui-form-label">银行卡号:</label>
@@ -40,13 +40,13 @@
                     	</div>
 			 		 	<label class="layui-form-label">客户名称:</label>
                         <div class="layui-input-inline">
-                       	 	<input type="text" class="layui-input" id="name">
+                       	 	<input type="text" class="layui-input" id="companyName">
                     	</div>
 			 	</div>
 			 	<div class="layui-form-item">
 			 			<label class="layui-form-label">客户账号:</label>
                     	<div class="layui-input-inline">
-                       	 	<input type="text" class="layui-input" id="account" >
+                       	 	<input type="text" class="layui-input" id="userName" >
                     	</div>
 			 		 	<label class="layui-form-label">余额:</label>
                         <div class="layui-input-inline">
@@ -56,26 +56,146 @@
 			 	<div class="layui-form-item">
 			 			<label class="layui-form-label">近30日提款合计金额:</label>
                     	<div class="layui-input-inline">
-                       	 	<input type="text" class="layui-input" id="ljAmount" >
+                       	 	<input type="text" class="layui-input" id="moneyAmount" >
                     	</div>
 			 		 	<label class="layui-form-label">累计提款合计金额:</label>
                         <div class="layui-input-inline">
                        	 	<input type="text" class="layui-input" id="totalAmount">
                     	</div>
 			 	</div>
+				 <div class="layui-form-item">
+
+					 <div class="layui-input-inline">
+						 <button class="layui-btn" lay-submit="" id="history">查看历史记录</button>					 </div>
+
+				 </div>
+				 <div class="layui-form-item layui-form-text">
+
+					 <div class="layui-input-block">
+						意见： <textarea placeholder="请输入内容" class="layui-textarea" id="content"></textarea></span>
+
+					 </div>
+				 </div>
+				 <div class="layui-form-item">
+					 <div class="layui-input-block">
+						 <button class="layui-btn" lay-submit="" lay-filter="submit1">同意</button>
+						 <button class="layui-btn" lay-submit="" id="refuse">拒绝</button>
+						 <button class="layui-btn" lay-submit="" id="back">返回</button>
+					 </div>
+				 </div>
 			 </div>
-			 <table id="drawAudioList" lay-filter="drawAudioTables"></table>
+
 	</div>
-<script type="text/javascript"  src="<%=path%>/page/layui/layui.js"></script>
-<script type="text/html" id="bar">
-		<a class="layui-btn layui-btn-mini" lay-event="edit">审核</a>
-    	<a class="layui-btn layui-btn-mini" lay-event="detail">查看历史记录</a>
-    	
-    	<a class="layui-btn layui-btn-mini" lay-event="detele">查看详情</a>
-</script>
+<script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/js/jquery-1.10.2.min.js"></script>
+<script language="JavaScript"   src="<%=request.getContextPath() %>/page/static/plugins/layui/lay/dest/layui.all.js"></script>
+<script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/plugins/layui/layui.js"></script>
 
 
-        
-</bod>
+		<script type="text/javascript">
+			$(function () {
+				var applicationDate=getUrlParam("applicationDate");
+				$.ajax({
+					url: '<%=path%>/cashAudit/findAuditDetailByApplicationDate'
+					,type:'post'
+					, dataType: 'json'
+					, async: false
+					,data:{applicationDate:applicationDate}
+					, success: function (result) {
+						$('#amount').val(result.amount);
+						$('#bankCard').val(result.bankCard);
+						$('#auditTime').val(result.applicationDate);
+						$('#companyName').val(result.companyName);
+						$('#userName').val(result.userName);
+						$('#balance').val(result.balance);
+						$('#moneyAmount').val(result.moneyAmount);
+						$('#totalAmount').val(result.totalAmount);
+					}
+				});
+			});
+			function getUrlParam(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null) return unescape(r[2]); return null;
+			}
+			var timer ;
+			var lock = true;
+			layui.use(['layer', 'form'], function () {
+				var $ = layui.jquery;
+				var layer = layui.layer ;
+				var form = layui.form();
+				var type;
+				var applicationDate=getUrlParam("applicationDate");
+				form.on('submit(submit1)',function (data) {
+					if(!lock){    // 2.判断该锁是否打开，如果是关闭的，则直接返回
+						return false;
+					}
+					lock = false;  //3.进来后，立马把锁锁住
+					layer.msg('处理中...',
+							{
+								icon: 16,
+								shade: 0.01,
+								time:1200
+							},
+							function(){
+								//发送一部请求到后台，保存审核状态
+								$.ajax({
+									url: '<%=path%>/cashAudit/saveAuditStatus'
+									,type:'post'
+									, dataType: 'json'
+									, async: false
+									,data:{applicationDate:applicationDate,type:'2'}
+									, success: function (result) {
+										var  msg = result.msg;
+										layer.msg(msg)
+										window.location.href = "<%=path%>/page/main/finance/cashAudit/index.jsp";
+									}
+								});
+
+
+							}
+					);
+
+					return false;
+				});
+
+				lock = true;
+
+                //返回
+                $('#back').on('click',function(){
+                    window.location.href = "<%=path%>/page/main/finance/cashAudit/index.jsp";
+                });
+				$('#history').on('click',function(){
+					var userName=$('#userName').val();
+					location.href = '<%=path%>/page/main/finance/cashAudit/historyInfo.jsp?userName='+userName;
+				});
+
+                //拒绝
+                $('#refuse').on('click',function(){
+                    //监听文本输入框是否有值
+                     var content= $("#content").val();
+                    if(content=='' || content==null){
+                        layer.alert('拒绝时意见不可为空', {
+                            icon: 5,
+                            title: "提示"
+                        });
+                    }else{
+						$.ajax({
+							url: '<%=path%>/cashAudit/saveAuditStatus'
+							,type:'post'
+							,dataType: 'json'
+							,async: false
+							,data:{applicationDate:applicationDate,type:'1'}
+							, success: function (result) {
+								window.location.href = "<%=path%>/page/main/finance/cashAudit/index.jsp";
+							}
+						});
+					}
+                });
+			});
+
+
+		</script>
+</body>
+
 	
 </html>

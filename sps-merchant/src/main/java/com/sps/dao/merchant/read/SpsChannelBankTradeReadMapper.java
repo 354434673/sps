@@ -1,5 +1,6 @@
 package com.sps.dao.merchant.read;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import org.sps.entity.shopkeeper.SpsShopkeeper;
  */
 public interface SpsChannelBankTradeReadMapper {
 	/**
-	 * 按條件查詢提現記錄
+	 * 按條件查詢查询所有提现记录
 	 * @param applicationStartDate
 	 * @param paymentDate
 	 * @param tradeStatus
@@ -34,4 +35,46 @@ public interface SpsChannelBankTradeReadMapper {
 	 */
 	SpsChannelBankTrade  selectBankTradeByUsername(@Param("channelNum") String channelNum,@Param("tradeSerialNum") String tradeSerialNum);
 
+	/**获取索索商户的提现申请记录信息
+	 *
+	 * @param applicationStartDate
+	 * @param paymentDate
+	 * @param tradeStatus
+	 * @param loginName
+	 * @return
+	 */
+	List<SpsChannelBankTrade>  selectListCashAudit(
+			@Param("applicationStartDate") String applicationStartDate,
+			@Param("paymentDate") String paymentDate,
+			@Param("tradeStatus") String tradeStatus,
+			@Param("enterpriseCompanyName") String enterpriseCompanyName,
+			@Param("loginName") String loginName);
+
+	/**
+	 * 根据用户名查询提现记录
+	 * @param loginName
+	 * @return
+	 */
+	List<SpsChannelBankTrade>  selectListCashAuditByUserName(String loginName);
+
+	/**
+	 * 根据当前用户获取近30天审批通过的所有提现金额
+	 * @param userName
+	 * @return
+	 */
+	BigDecimal  selectMoneyAmount(String userName);
+
+	/**
+	 * 根据用户名获取所有通过的审核通过的提现金额
+	 * @param userName
+	 * @return
+	 */
+	BigDecimal  selectTotalAmount(String userName);
+
+	/**
+	 * 根据申请日期查询提现交易信息
+	 * @param applicationDate
+	 * @return
+	 */
+	SpsChannelBankTrade selectBankTradeInfo(String  applicationDate);
 }

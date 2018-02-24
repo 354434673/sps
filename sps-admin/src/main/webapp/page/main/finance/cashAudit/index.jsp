@@ -46,9 +46,10 @@
 			 		 	<label class="layui-form-label">状态:</label>
                         <div class="layui-input-inline">
                             <select  id="status" lay-filter="withDrawState">
-                            <option value="0">全部</option>
-                            <option value="1">审核通过</option>
-                            <option value="2">审核不通过</option>
+                            <option value="0">待审核</option>
+							<option value="1">审核不通过</option>
+                            <option value="2">审核通过</option>
+							<option value="3">全部</option>
                             </select>
                         </div>
 			 	</div>
@@ -57,15 +58,31 @@
 	</div>
 <script type="text/javascript"  src="<%=path%>/page/layui/layui.js"></script>
 <script type="text/html" id="bar">
+	{{#    if(d.status != '2'){  }}
 		<a class="layui-btn layui-btn-mini" lay-event="edit">审核</a>
-    	<a class="layui-btn layui-btn-mini" lay-event="detail">查看历史记录</a>
-    	
-    	<a class="layui-btn layui-btn-mini" lay-event="detele">查看详情</a>
+		<a class="layui-btn layui-btn-mini" lay-event="delete">查看历史记录</a>
+
+		<%--<a class="layui-btn layui-btn-mini" lay-event="detail">查看详情</a>--%>
+	{{#  }  }}
+	{{#    if(d.status == '2'){  }}
+		<a class="layui-btn layui-btn-mini" lay-event="delete">查看历史记录</a>
+		<%--<a class="layui-btn layui-btn-mini" lay-event="detail">查看详情</a>--%>
+	{{#  }  }}
+
+</script>
+<script type="text/html" id="withDrawStateTpl">
+		{{#    if(d.status == '0'){  }}
+		待审核
+		{{#  } else if(d.status == '1'){ }}
+		审核不通过
+		{{#  } else if(d.status == '2'){ }}
+		审核通过
+		{{#  } }}
 </script>
 
 <script type="text/html" id="date">
     {{#
-    var da = d.applyTime;
+    var da = d.applicationDate;
     da = new Date(da);
     var year = da.getFullYear();
     var month = da.getMonth()+1;
@@ -99,19 +116,19 @@
         });
         table.render({
             elem: '#drawAudioList'
-            ,url: '<%=path%>/finance/findAudioList' //数据接口
+            ,url: '<%=path%>/cashAudit/findAudioList' //数据接口
             ,id:'id'
             ,page:true
             ,cols: [[ //表头
                  {type:'numbers', title: '序号',align:'center'}
-                ,{field: 'account', title: '客户账号',align:'center'  }
-                ,{field: 'name', title: '客户名称',align:'center'  }
-                ,{field: 'audioAmount', title: '提现金额',width:230,align:'center'}
-                ,{field: 'applicationStartDate', title: '提现申请日期', width:230, align:'center',templet: '#date'}
-                ,{field: 'ljAmount', title: '近30日提款合计金额',width:230,align:'center'}
+                ,{field: 'userName', title: '客户账号',align:'center'  }
+                ,{field: 'companyName', title: '客户名称',align:'center'  }
+                ,{field: 'amount', title: '提现金额',width:230,align:'center'}
+                ,{field: 'applicationDate', title: '提现申请日期', width:230, align:'center',templet: '#date'}
+                ,{field: 'moneyAmount', title: '近30日提款合计金额',width:230,align:'center'}
                 ,{field: 'totalAmount', title: '累计提款合计金额',align:'center' }
-                ,{field: 'tradeStatus', title: '流程状态', width:140,align:'center',templet: '#withDrawStateTpl'}
-                ,{field: 'tool', title: '操作',width:270,align:'center',toolbar:'#bar'}
+                ,{field: 'status', title: '流程状态',event: 'setStatus', width:140,align:'center',templet: '#withDrawStateTpl'}
+                ,{field: 'tool', title: '操作',width:270,align:'center', event: 'setSign' ,toolbar:'#bar'}
             ]]
         });
       //查询
@@ -123,11 +140,11 @@
             var account = $('#account').val();
             table.reload('id', {
                 where: {
-                	applicationStartDate:startTime,
-                	applicationStopDate:endTime,
-                	tradeStatus:withDrawState,
-                	name:name,
-                	account:account
+					applicationDate:startTime,
+					payDate:endTime,
+					status:withDrawState,
+					companyName:name,
+					userName:account
                 }
             });
         });
@@ -141,16 +158,18 @@
             var data = obj.data;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
-            if(layEvent === 'detail'){ //查看
-                location.href = '<%=path%>/page/main/account/withdraw/withdrawDetail.jsp?withdrawId='+data.id;
+			/*if(obj.event === 'setStatus'){
+				if(data.status==='2'){
+					var bar=$("#bar").find("a").get(0);
+					bar.attr("visible", false);
+
+				}*/
+            if(layEvent === 'delete'){ //查看
+                location.href = '<%=path%>/page/main/finance/cashAudit/historyInfo.jsp?userName='+data.userName;
             }
             if(layEvent === 'edit'){ //跳转至审核页面
-                location.href = '<%=path%>/page/main/account/withdraw/withdrawDetail.jsp?withdrawId='+data.id;
+                location.href = '<%=path%>/page/main/finance/cashAudit/drawAudit.jsp?applicationDate='+data.applicationDate;
             }
-            if(layEvent === 'detete'){ //查看
-                location.href = '<%=path%>/page/main/account/withdraw/withdrawDetail.jsp?withdrawId='+data.id;
-            }
-            
         });
     });
 </script>    	 

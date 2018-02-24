@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.merchant.SpsChannelBank;
 import org.sps.entity.merchant.SpsChannelBankTrade;
@@ -87,9 +88,20 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 		bankTradeWrite.deleteBankTrade(tradeSerialNum);
 	}
 
-	
-	
-	
-	
-	
+	@Override
+	public Boolean modifyBankTradeByApplicateDate(String applicationDate, String status) {
+		Boolean flag=true;
+		try{
+			int m = bankTradeWrite.updateStatus(applicationDate, status);
+
+		}catch(Exception e){
+			e.printStackTrace();
+			flag=false;
+		}finally{
+			return flag;
+		}
+
+	}
+
+
 }
