@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sps.dao.merchant.write.SpsChannelBankWriteMapper" >
   <delete id="deleteByPrimaryKey"  parameterType="String">
-    delete from sps_bank  where b_user_id = #{userId,jdbcType=VARCHAR}
+    delete from sps_bank  where b_user_name = #{userName,jdbcType=VARCHAR}
   </delete>
 
   <insert id="insertBank"  parameterType="org.sps.entity.merchant.SpsChannelBank"  useGeneratedKeys="true" keyProperty="id" >
@@ -89,5 +89,20 @@
     </set>
      where  b_user_id=#{userId}
   </update>
+    <update id="updateAblance" >
+        update
+          sps_bank
+        set
+          b_available_balance = #{availableBalance,jdbcType=DECIMAL}
+        where    b_user_id=#{userId}
+    </update>
+
+    <update id="updateTradePsw" >
+        update
+        sps_bank
+        set
+       b_trans_password = #{psw,jdbcType=VARCHAR}
+        where    b_user_id=#{userId}
+    </update>
  
 </mapper>

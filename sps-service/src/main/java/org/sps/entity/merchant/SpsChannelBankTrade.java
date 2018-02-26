@@ -50,8 +50,31 @@ public class SpsChannelBankTrade implements Serializable {
 	
 	private SpsChannelBank cahnnelBank;
 	private SpsChannel  channel;
-	
-	
+	private SpsChannelEnterprise  enterprise;
+	@Override
+	public String toString() {
+		return "SpsChannelBankTrade{" +
+				"id=" + id +
+				", tradeName='" + tradeName + '\'' +
+				", tradeSerialNum='" + tradeSerialNum + '\'' +
+				", identity='" + identity + '\'' +
+				", applicationStartDate='" + applicationStartDate + '\'' +
+				", applicationStopDate='" + applicationStopDate + '\'' +
+				", auditDate='" + auditDate + '\'' +
+				", paymentDate='" + paymentDate + '\'' +
+				", tradeType='" + tradeType + '\'' +
+				", incomeType='" + incomeType + '\'' +
+				", expenditureType='" + expenditureType + '\'' +
+				", tradeBeforeBalanc=" + tradeBeforeBalanc +
+				", tradeAfterBalanc=" + tradeAfterBalanc +
+				", tradeAmount=" + tradeAmount +
+				", tradeStatus='" + tradeStatus + '\'' +
+				", userid='" + userid + '\'' +
+				", standby1='" + standby1 + '\'' +
+				", cahnnelBank=" + cahnnelBank +
+				", channel=" + channel +
+				'}';
+	}
 
 	/**
 	 * @return the channel
@@ -197,6 +220,14 @@ public class SpsChannelBankTrade implements Serializable {
 	}
 	public void setUserid(String userid) {
 		this.userid = userid;
+	}
+
+	public SpsChannelEnterprise getEnterprise() {
+		return enterprise;
+	}
+
+	public void setEnterprise(SpsChannelEnterprise enterprise) {
+		this.enterprise = enterprise;
 	}
 	
 	

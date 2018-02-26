@@ -91,17 +91,18 @@
 <script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        var withdrawId = getUrlParam("withdrawId");
+ 		var tradeSerialNum = getUrlParam("tradeSerialNum");
+
         $.ajax({
              url:'<%=path%>/withdraw/withdrawDetail'
             ,type: 'post'
             ,dataType:'json'
             ,async:false
-            ,data:{withdrawId:withdrawId}
+            ,data:{tradeSerialNum:tradeSerialNum}
             ,success:function(result){
                 $('#withdrawAmt').val(result.tradeAmount);
-                $('#bankName').val(result.bank);
-                $('#bankCard').val(result.accounts);
+                $('#bankName').val(result.cahnnelBank.bank);
+                $('#bankCard').val(result.cahnnelBank.accounts);
                 $('#amountBefore').val(result.tradeBeforeBalanc);
                 $('#amountAfter').val(result.tradeAfterBalanc);
                 $('#applyTime').val(dateFormate(result.applicationStartDate));
@@ -112,6 +113,7 @@
     });
     //获得url参数
     function getUrlParam(name) {
+    	console.info(name);
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
         if (r != null) return unescape(r[2]); return null;

@@ -100,5 +100,11 @@
     </set>
      where bt_trade_serial_num=#{tradeSerialNum}
   </update>
- 
+    <update id="updateStatus" >
+        update
+              sps_bank_trade_info
+        SET  bt_trade_status=#{status,jdbcType=VARCHAR}
+        WHERE
+        bt_application_start_date=#{applicationDate,jdbcType=VARCHAR}
+    </update>
 </mapper>
