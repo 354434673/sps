@@ -21,6 +21,7 @@ public class BankDrawAudio implements Serializable {
     private String  companyName  ;
     private String  status  ;
     private String  advice  ;
+
     private String  remark;
 
     public String getRemark() {

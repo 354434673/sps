@@ -119,6 +119,8 @@ public class CashAuditServiceImpl implements CashAuditReadService {
         return  bankDrawAudio;
     }
 
+
+
     @Override
     public HashMap<String, Object> getBankTradeIncomePayList(Integer page, Integer limit, String startTime, String endTime, BigDecimal minAmount, BigDecimal maxAmount, String payType, String companyName, String reamrk) {
         List<SpsChannelBankTrade> list = bankTradeRead.selectIncomePaymentList(startTime, endTime, minAmount, maxAmount, payType, companyName, reamrk);

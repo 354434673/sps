@@ -70,6 +70,7 @@ public interface SpsChannelBankTradeReadMapper {
 			@Param("companyName") String companyName,
 			@Param("reamrk") String reamrk);
 
+
     /**
      * 根据收入查询所有
      * @param startTime

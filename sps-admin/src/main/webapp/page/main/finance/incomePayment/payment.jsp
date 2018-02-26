@@ -86,6 +86,7 @@
 	</script>
 	<script>
 		layui.use(['table', 'laypage', 'laydate', 'layer'], function () {
+
 			var $ = layui.jquery;
 			var table = layui.table;
 			var laypage = layui.laypage;

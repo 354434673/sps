@@ -119,6 +119,7 @@
 			});
 			//查询
 			$('#search').on('click',function(){
+
 				var startTime = $('#startTime').val();
 				var endTime = $('#endTime').val();
 				var minAmount = $('#minAmount').val();

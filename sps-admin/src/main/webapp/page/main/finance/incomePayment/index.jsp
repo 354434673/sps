@@ -56,6 +56,7 @@
 
 			</div>
 			<div class="layui-form-item">
+
 				<label class="layui-form-label">备注:</label>
 				<div class="layui-input-inline">
 					<input type="text" class="layui-input" id="beizhu" lay-verify="required">

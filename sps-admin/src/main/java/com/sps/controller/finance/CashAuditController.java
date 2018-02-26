@@ -60,6 +60,7 @@ public class CashAuditController {
     public Result saveAuditStatus(String  applicationDate,String type,String content){
 
         Boolean flag = bankTradeWriteService.modifyBankTradeByApplicateDate(applicationDate,type,content);
+
         Result<Boolean> result = new Result<Boolean>();
         result.setBody(flag);
         result.setMsg(flag ? "成功" : "保存失败");

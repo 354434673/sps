@@ -88,6 +88,7 @@ public HashMap<String, Object> findIncomeList(Integer page, Integer limit, Strin
     public HashMap<String, Object> findPayment(Integer page, Integer limit, String startTime, String endTime,
                                                   BigDecimal minAmount,BigDecimal maxAmount, String companyName, String reamrk) {
         HashMap<String, Object> list =cashAuditService.getBankTradePaymentList(page,limit,startTime,endTime,minAmount,maxAmount,"1",companyName,reamrk);
+
         return list;
     }
 }

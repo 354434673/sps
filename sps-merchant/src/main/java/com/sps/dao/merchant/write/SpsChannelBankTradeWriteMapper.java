@@ -27,6 +27,7 @@ public interface SpsChannelBankTradeWriteMapper {
 	 */
 	int deleteBankTrade(String tradeSerialNum);
 
+
 	/**
 	 * 根据申请日期与状态更新，审核状态
 	 * @param applicationDate

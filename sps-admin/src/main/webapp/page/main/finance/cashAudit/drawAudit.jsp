@@ -169,6 +169,7 @@
 					location.href = '<%=path%>/page/main/finance/cashAudit/historyInfo.jsp?userName='+userName;
 				});
 
+
                 //拒绝
                 $('#refuse').on('click',function(){
                     //监听文本输入框是否有值

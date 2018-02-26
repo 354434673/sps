@@ -109,6 +109,7 @@
 		from
 	</sql>
 
+
   <select id="selectListBankTrade" resultMap="BaseResultMap">
   	SELECT  bt.bt_payment_date,
 	<include refid="join_list" />
