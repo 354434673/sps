@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.goods.*;
 import org.sps.entity.goods.SpsGoodShop;
+import org.sps.entity.goods.SpsSaleLog;
 import org.sps.service.goods.GoodShopService;
 
 import javax.annotation.Resource;
@@ -19,6 +20,8 @@ public class GoodShopServiceImpl implements GoodShopService {
     private SpsGoodShopMapper spsGoodShopMapper;
     @Resource
     private SpsGoodShopSkuMapper spsGoodShopSkuMapper;
+    @Resource
+    private SpsSaleLogMapper spsSaleLogMapper;
 
     @Override
     public void saveOrUpdate(SpsGoodShop goods) {
@@ -200,11 +203,17 @@ public class GoodShopServiceImpl implements GoodShopService {
     }
 
     @Override
-    public void forceShopGood(SpsGoodShop goods) {
+    public void forceShopGood(SpsGoodShop goods,String forceOpinion) {
         goods.setgUpdateTime(new Date());
         goods.setgGroundingFlag("0");
         goods.setgStatus(0);
         spsGoodShopMapper.update(goods);
+        SpsSaleLog log = new SpsSaleLog();
+        log.setSaleGoodId(goods.getgId());
+        log.setSaleCreateTime(new Date());
+        log.setSaleContent(forceOpinion);
+        spsSaleLogMapper.insert(log);
+
     }
 
     @Override

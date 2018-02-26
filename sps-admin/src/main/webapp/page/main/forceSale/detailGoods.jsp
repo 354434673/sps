@@ -97,7 +97,7 @@
                     <th>起订量</th>
                     <th>库存</th>
                     <th>代销服务费率</th>
-                    <th>代销服务费(每件)</th>
+                    <th>代销服务费(每件/元)</th>
                 </tr>
                 </thead>
                 <tbody id="content">

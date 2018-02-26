@@ -219,6 +219,11 @@
       g_update_time = #{gUpdateTime,jdbcType=TIMESTAMP}
     where g_id = #{gId,jdbcType=INTEGER}
   </update>
+    <update id="updateCategorySelf" parameterType="SpsGoodShop">
+        update sps_good_shop
+        set g_category_self = #{gCategorySelf,jdbcType=INTEGER}
+        where g_id = #{gId,jdbcType=INTEGER}
+    </update>
 
 
     <!-- 查询所有 -->
@@ -230,6 +235,9 @@
         b.custom_name as categoryName
         from sps_good_shop g LEFT JOIN sps_custom_category b on b.custom_id=g.g_category_self
         where 1=1
+        <if test="customCategoryId != null and customCategoryId!=''">
+            and  g.g_category_self = #{customCategoryId,jdbcType=INTEGER}
+        </if>
         <if test="goodsName !=null and goodsName != ''">
             and g.g_spu_name LIKE CONCAT('%',#{goodsName,jdbcType=VARCHAR},'%')
         </if>

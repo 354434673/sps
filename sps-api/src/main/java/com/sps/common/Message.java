@@ -16,9 +16,16 @@ public class Message {
 	public static String SUCCESS_CODE = "1";
 	public static String SUCCESS_MSG = "success";
 
+
+	public static String API_SUCCESS_CODE = "100000";
+	public static String API_SUCCESS_MSG = "正常返回";
+	public static String API_SUCCESS_FLAG = "true";
+
 	//请求失败
 	public static String FAILURE_CODE = "0";
 	public static String FAILURE_MSG = "failure";
+	public static String ERROR_MSG = "缺少参数或参数为NUll";
+	public static String API_ERROR_FLAG = "false";
 
 	//系统错误
 	public static String SYSTEM_ERROR_CODE = "-1";

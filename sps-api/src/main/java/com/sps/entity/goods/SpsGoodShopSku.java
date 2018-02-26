@@ -8,7 +8,7 @@ public class SpsGoodShopSku implements Serializable {
     private String spuName;
 
     private Integer gId;
-
+    private Integer gGoodsId;
     private Integer gGid;
 
     private String gColor;
@@ -17,7 +17,7 @@ public class SpsGoodShopSku implements Serializable {
 
     private String gSku;
 
-    private Long gPrice;
+    private BigDecimal gPrice;
 
     private Integer gQuantity;
 
@@ -34,6 +34,14 @@ public class SpsGoodShopSku implements Serializable {
 
     private Date gUpdateTime;
 
+
+    public Integer getgGoodsId() {
+        return gGoodsId;
+    }
+
+    public void setgGoodsId(Integer gGoodsId) {
+        this.gGoodsId = gGoodsId;
+    }
 
     public String getSpuName() {
         return spuName;
@@ -115,11 +123,11 @@ public class SpsGoodShopSku implements Serializable {
         this.gSku = gSku == null ? null : gSku.trim();
     }
 
-    public Long getgPrice() {
+    public BigDecimal getgPrice() {
         return gPrice;
     }
 
-    public void setgPrice(Long gPrice) {
+    public void setgPrice(BigDecimal gPrice) {
         this.gPrice = gPrice;
     }
 

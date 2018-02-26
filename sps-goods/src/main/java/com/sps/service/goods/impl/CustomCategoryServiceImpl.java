@@ -4,9 +4,11 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.goods.SpsCustomCategoryMapper;
+import com.sps.dao.goods.SpsGoodShopMapper;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.sps.entity.goods.SpsCustomCategory;
+import org.sps.entity.goods.SpsGoodShop;
 import org.sps.service.goods.CustomCategoryService;
 
 import javax.annotation.Resource;
@@ -21,6 +23,8 @@ public class CustomCategoryServiceImpl implements CustomCategoryService {
 
     @Resource
     private SpsCustomCategoryMapper spsCustomCategoryMapper;
+    @Resource
+    private SpsGoodShopMapper spsGoodShopMapper;
     @Override
     public void saveOrUpdate(SpsCustomCategory customCategory) {
         if(customCategory.getCustomId()!=null){
@@ -49,6 +53,18 @@ public class CustomCategoryServiceImpl implements CustomCategoryService {
         customCategory.setCustomId(id);
         customCategory.setCustomDeleteFlag(1);
         spsCustomCategoryMapper.update(customCategory);
+        //删除商品中的自定义分类
+        Map<String, Object> map = new HashMap<>();
+        map.put("customCategoryId", id);
+        List<SpsGoodShop> list = spsGoodShopMapper.findListAllWithMap(map);
+        if(list!=null&&list.size()>0){
+            for(SpsGoodShop goodsList : list){
+                SpsGoodShop spsGoodShop = new SpsGoodShop();
+                spsGoodShop.setgId(goodsList.getgId());
+                spsGoodShop.setgCategorySelf(null);
+                spsGoodShopMapper.updateCustomCategory(spsGoodShop);
+            }
+        }
 
     }
 

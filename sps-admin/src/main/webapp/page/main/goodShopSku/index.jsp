@@ -189,6 +189,10 @@
                 success:function(data){
                     if(data.state == 'success'){
                         layer.msg(data.msg,{icon: 1});
+                        setTimeout(function () {
+                            window.location.href = "<%=path%>/page/main/goodShopSku/index.jsp";
+                        }, 1000);
+
                     }else{
                         layer.msg('修改失败',{icon: 2});
                     }

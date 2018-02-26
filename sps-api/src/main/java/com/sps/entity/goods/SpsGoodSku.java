@@ -5,6 +5,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class SpsGoodSku implements Serializable {
+
+    private String scale;
+    private String waveInterval;
+    private String supName;
+
     private Integer gId;
 
     private String gColor;
@@ -30,6 +35,63 @@ public class SpsGoodSku implements Serializable {
     private Date gUpdateTime;
 
     private Integer gDeleteFlag;
+
+    private String gGoodNo;
+
+    private BigDecimal gBeforePrice;
+
+    private Date gAuditTime;
+
+    private Integer gAuditStatus;
+
+
+    public String getScale() {
+        return scale;
+    }
+
+    public void setScale(String scale) {
+        this.scale = scale;
+    }
+
+    public String getWaveInterval() {
+        return waveInterval;
+    }
+
+    public void setWaveInterval(String waveInterval) {
+        this.waveInterval = waveInterval;
+    }
+
+    public String getgGoodNo() {
+        return gGoodNo;
+    }
+
+    public void setgGoodNo(String gGoodNo) {
+        this.gGoodNo = gGoodNo;
+    }
+
+    public BigDecimal getgBeforePrice() {
+        return gBeforePrice;
+    }
+
+    public void setgBeforePrice(BigDecimal gBeforePrice) {
+        this.gBeforePrice = gBeforePrice;
+    }
+
+    public Date getgAuditTime() {
+        return gAuditTime;
+    }
+
+    public void setgAuditTime(Date gAuditTime) {
+        this.gAuditTime = gAuditTime;
+    }
+
+    public Integer getgAuditStatus() {
+        return gAuditStatus;
+    }
+
+    public void setgAuditStatus(Integer gAuditStatus) {
+        this.gAuditStatus = gAuditStatus;
+    }
 
     public Integer getgId() {
         return gId;
@@ -134,5 +196,13 @@ public class SpsGoodSku implements Serializable {
 
     public void setgDeleteFlag(Integer gDeleteFlag) {
         this.gDeleteFlag = gDeleteFlag;
+    }
+
+    public String getSupName() {
+        return supName;
+    }
+
+    public void setSupName(String supName) {
+        this.supName = supName;
     }
 }

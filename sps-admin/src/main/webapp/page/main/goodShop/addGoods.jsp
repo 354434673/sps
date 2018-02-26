@@ -140,7 +140,7 @@
                         <th>起订量</th>
                         <th>库存</th>
                         <th>代销服务费率</th>
-                        <th>代销服务费(每件)</th>
+                        <th>代销服务费(每件/元)</th>
                     </tr>
                     </thead>
                     <tbody id="content">
@@ -150,8 +150,14 @@
             </div>
             <div id="showStatus" style="display: none">
                 <div class="layui-form-item   ">
-                    <label class="layui-form-label">拒绝意见：</label>
-                    <span id="opinion"></span>
+                    <label class="layui-form-label" style="    width: 160px;">申请上架拒绝意见：</label>
+                    <span id="opinion"  style="padding-left: 10px;padding-top: 8px;"></span>
+                </div>
+            </div>
+            <div id="forceSale" style="display: none">
+                <div class="layui-form-item   ">
+                    <label class="layui-form-label">强制下架意见：</label>
+                    <span id="forceOpinion"></span>
                 </div>
             </div>
 
@@ -708,7 +714,8 @@
         var rate = $(obj).parent().next().next().next().html();
         var priceRate = rate.split('%')[0];
         var b = accMul(priceVal, priceRate)
-        $(obj).parent().next().next().next().next().html(accMul(b, 0.01));
+        var c=accMul(b, 0.01)
+        $(obj).parent().next().next().next().next().html(c.toFixed(2));
     }
 
     //修改获取数据
@@ -748,7 +755,7 @@
                         $(":radio[name='gGroundingFlag'][value='" + json.goods.gGroundingFlag + "']").prop("checked", "checked");
                         // layer.select('').setValue(json.customName);
                         $('#skuIds').val(json.goods.gSkuIds);
-                        if(typeof(json.goods.gOpinion)!="undefined"){
+                        if(typeof(json.goods.gOpinion)!="undefined"&&json.goods.gOpinion!==''){
                             $('#opinion').html(json.goods.gOpinion);
                             $('#showStatus').show();
                         }
