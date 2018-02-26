@@ -10,6 +10,11 @@ import org.sps.service.merchant.read.ChannelBankReadService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.read.SpsChannelBankReadMapper;
 import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
+import org.sps.util.StringUtil;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @Service(timeout=2000,group="dianfu")
 @Transactional(readOnly = true)
 public class ChannelBankReadServiceImpl implements ChannelBankReadService {
@@ -23,12 +28,9 @@ public class ChannelBankReadServiceImpl implements ChannelBankReadService {
 	 * 根据用户身份信息查询绑卡银行卡信息
 	 */
 	@Override
-	public SpsChannelBank getBankInfo(String userName) {
-		//获取档期那登录用户的用户名进行查询
-		String channelNum = accountRead.selectByOpenAdminNum(userName);
-		SpsChannelBank bank = bankRead.selectByChannelNum(channelNum);
-		return bank;
-			
+	public SpsChannelBank getBankInfo(String identify) {
+		SpsChannelBank bank=bankRead.selectByPrimaryKey(identify);
+			return bank;
 	}
 	
 	/***
@@ -37,7 +39,6 @@ public class ChannelBankReadServiceImpl implements ChannelBankReadService {
 	
 	@Override
 	public String generateRequestNo() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -47,9 +48,9 @@ public class ChannelBankReadServiceImpl implements ChannelBankReadService {
 	 * @return
 	 */
 	@Override
-	public Boolean findTradePassword(String userName) {
-		String pwd = bankRead.selectByLoginUser(userName);
-		return StringUtils.isNumeric(pwd);
+	public String findTradePassword(String userName) {
+		return bankRead.selectByLoginUser(userName);
+
 	}
 
 	/**
@@ -60,6 +61,12 @@ public class ChannelBankReadServiceImpl implements ChannelBankReadService {
 	@Override
 	public String findMobileByUserName(String userName) {
 		return bankRead.selectMobileByLoginUser(userName);
+	}
+
+	@Override
+	public SpsChannelBank getBankInfoByUserName(String userName) {
+		
+		return bankRead.selectByLoginName(userName);
 	}
 
 }

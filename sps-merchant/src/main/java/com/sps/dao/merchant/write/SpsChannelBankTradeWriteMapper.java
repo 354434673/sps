@@ -1,5 +1,6 @@
 package com.sps.dao.merchant.write;
 
+import org.apache.ibatis.annotations.Param;
 import org.sps.entity.merchant.SpsChannelBankTrade;
 /**
  * 交易流水账号的DAO
@@ -25,4 +26,12 @@ public interface SpsChannelBankTradeWriteMapper {
 	 * @return
 	 */
 	int deleteBankTrade(String tradeSerialNum);
+
+	/**
+	 * 根据申请日期与状态更新，审核状态
+	 * @param applicationDate
+	 * @param status
+	 * @return
+	 */
+	int updateStatus(@Param("applicationDate") String applicationDate, @Param("status") String status);
 }

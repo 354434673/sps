@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="sps-operation:war">
+    <output-path>$PROJECT_DIR$/sps-operation/target</output-path>
+    <root id="archive" name="sps-operation.war">
+      <element id="artifact" artifact-name="sps-operation:war exploded" />
+    </root>
+  </artifact>
+</component>

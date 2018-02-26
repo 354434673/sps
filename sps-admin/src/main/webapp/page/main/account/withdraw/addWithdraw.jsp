@@ -7,9 +7,8 @@
             + path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!DOCTYPE html>
 <html>
-<head>en umvnmvn
+<head>
     <meta charset="UTF-8">
     <title>新增页面</title>
     <meta name="renderer" content="webkit">
@@ -23,19 +22,19 @@
 <div style="padding: 40px">
     <h3>新增页面</h3>
     <hr>
-    <div class="layui-form layui-form-pane">
+    <div class="layui-form layui-form-pane" style="padding-left: 200px;">
         <div class="layui-form-item ">
             <label class="layui-form-label"  style="width: 130px;">*可提现金额：</label>
             <div class="layui-input-inline" >
 
-                <input id="withdrawAmt"   type="text"  value=" " lay-verify="required"
+                <input id="withdrawAmt"   type="text"  value=" " 
                        placeholder="" autocomplete="off" class="layui-input layui-disabled">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label"  style="width: 130px;">*银行账号：</label>
             <div class="layui-input-inline">
-                <input id="bankCard"   type="text"  value=" " lay-verify="required"
+                <input id="bankCard"   type="text"  value=" " 
                        placeholder="" autocomplete="off" class="layui-input layui-disabled">
 
             </div>
@@ -45,7 +44,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label"  style="width: 130px;">*开户银行：</label>
             <div class="layui-input-inline"  >
-                <input id="bankName"   type="text"  value=" " lay-verify="required"
+                <input id="bankName"   type="text"  value=" " 
                        placeholder="" autocomplete="off" class="layui-input layui-disabled">
             </div>
 
@@ -58,7 +57,7 @@
             </div>
 
         </div>
-        <div class="layui-form-item" align="center">
+        <div class="layui-form-item"   style="padding-left: 200px;">
             <button class="layui-btn" lay-filter="next" lay-submit  id="next">下一步 </button>
             <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
         </div>
@@ -90,11 +89,16 @@
         var form = layui.form();
 
         form.on('submit(next)', function (data) {
+
             if(!lock){    // 2.判断该锁是否打开，如果是关闭的，则直接返回
                 return false;
             }
             lock = false;  //3.进来后，立马把锁锁住
             var amount = $('#amount').val().trim();
+            if( $('#withdrawAmt').val() < amount){
+                layer.msg('可用余额不足');
+                return;
+            }
             layer.msg('处理中...',
                     {
                         icon: 16,
@@ -102,8 +106,10 @@
                         time:1200
                     },
                     function(){
-                        $.ajax({
-                            url: "<%=path%>/bankCard/queryTradePwd",//查询交易密码
+                        location.href = '<%=path%>/page/main/account/withdraw/inputTradePwd.jsp?withdrawAmt='+amount;
+
+                        /* $.ajax({
+
                             type: 'post',
                             dataType: 'json',
                             async: false,
@@ -115,19 +121,20 @@
                                 layer.msg(msg);
                                 if(code == ok){
                                     if(result.body == true){
+
                                         //若已经设置交易密码，则跳转至输入交易密码页面
-                                        location.href = '<%=path%>/page/main/account/withdraw/inputTradePwd.jsp?withdrawAmt='+amount;
                                     }
-                                    if(result.body ==  false){
+                                    if(result.body == false){
                                         //则跳转至设置交易密码页面
                                     }
                                 }
                                 if(code == result.fail){
-                                    layer.msg(msg);
+                                  		layer.msg(msg);
+
                                     lock = true;
                                 }
                             }
-                        });
+                        });*/
                     }
             );
             return false;

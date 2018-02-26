@@ -26,4 +26,11 @@ public interface ChannelBankWriteService{
 	 * 
 	 */
 	Boolean  removeBankInfoOrNo(String userId);
+
+	/**
+	 * 设置交易密码
+	 * @param psw
+	 * @return
+	 */
+	Boolean  modifyTradePsw(String userId,String psw);
 }
