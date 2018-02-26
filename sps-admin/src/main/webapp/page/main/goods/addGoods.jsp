@@ -148,10 +148,14 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*详情图：</label>
-            <div class="layui-input-inline">
-                <input type="text" name="gDpic" id="gDpic" value="" class="layui-input" readonly="readonly">
+            <div  class="layui-upload">
+                <input type="text"  style="display: none" name="gDpic" id="gDpic" value="" class="layui-input" readonly="readonly">
                 <input type="file" name="file" id="logoFile1" style="padding-left: 5px;padding-top: 5px;"
                        onchange="setImg1(this);" multiple="multiple">
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo"></div>
+                </blockquote>
             </div>
             <div style="padding-top: 10px"><span style="color: red">提示:最多十张，单张大小不超过300K</span></div>
         </div>
@@ -545,6 +549,12 @@
                 processData: false,    //不可缺
                 success: function (data) {
                     if (data.code == 0) {
+                        $('#demo').find("img").remove();
+                        $.each(data.fileName, function (index, val) {
+                            $('#demo').append(
+                                "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val+ "' />"
+                            )
+                        })
                         $("#gDpic").val(data.fileName);
                         //如果重新调用过上传图片的方法 则表示商品详情图修改过，后台删掉重新添加
                         $("#updateDetailFlag").val(1);
@@ -639,6 +649,9 @@
                         var picVal = "";
                         if ($.isArray(json.detailList)) {
                             $.each(json.detailList, function (index, val) {
+                                $('#demo').append(
+                                    "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val.albumUrl+ "' />"
+                                )
                                 if (index != json.detailList.length - 1) {
                                     picVal += val.albumUrl + ","
                                 } else {
