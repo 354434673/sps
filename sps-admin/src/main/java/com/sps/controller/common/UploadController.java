@@ -45,7 +45,7 @@ public class UploadController {
             SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
             // 转换成String
             String d = format.format(date);// 得到的值20130802
-            File file1 = new File("D:/backups/1.11/ws-juzi/sps/sps-admin/src/main/webapp/upload/imgs" + "/");
+            File file1 = new File("E:/2018-ws/sps/sps-admin/src/main/webapp/upload/imgs" + "/");
             //如果文件夹不存在则创建
             if (!file1.exists() && !file1.isDirectory()) {
                 file1.mkdir();
@@ -99,7 +99,7 @@ public class UploadController {
                     SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
                     // 转换成String
                     String d = format.format(date);// 得到的值20130802
-                    File file1 = new File("D:/ws-dianfu/sps/sps-admin/src/main/webapp/upload/imgs" + "/");
+                    File file1 = new File("E:/2018-ws/sps/sps-admin/src/main/webapp/upload/imgs" + "/");
                     //如果文件夹不存在则创建
                     if (!file1.exists() && !file1.isDirectory()) {
                         file1.mkdirs();
