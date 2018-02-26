@@ -29,9 +29,16 @@ import org.sps.service.merchant.write.ChannelPicUploadService;
 import org.sps.service.merchant.write.ChannelWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.sps.dao.user.SpsRoleMapper;
+import com.sps.dao.user.SpsUserandroleMapper;
+import com.sps.entity.user.SpsRole;
+import com.sps.entity.user.SpsRoleExample;
 import com.sps.entity.user.SpsUser;
+import com.sps.entity.user.SpsUserandrole;
+import com.sps.entity.user.SpsUserandroleExample;
 import com.sps.httpclient.merchant.MerchantService;
 import com.sps.service.express.ExpressService;
+import com.sps.service.user.UserAndRoleService;
 import com.sps.service.user.UserService;
 import com.sps.util.CommonUtil;
 
@@ -59,6 +66,10 @@ public class MerchantController {
 	private ExpressService expressService;
 	@Resource
 	private MerchantService merchantService;
+	@Resource 
+	private UserAndRoleService userAndRoleService;
+	@Resource
+	private SpsRoleMapper roleMapper;
 	/**
 	 * 插入核心商户,将channelNum返回回来
 	 * @Title: getChannel
@@ -100,6 +111,14 @@ public class MerchantController {
 			spsUser.setUserPhone(openAccount.getOpenAdminPhone());
 			spsUser.setUserMark(1);//1为商户
 			userService.insertUser(spsUser);
+			
+			SpsRoleExample example = new SpsRoleExample();
+			
+			example.createCriteria().andRoleMarkEqualTo(1);
+			List<SpsRole> selectByExample = roleMapper.selectByExample(example );
+			int[] roleList = {selectByExample.get(0).getRoleMark()};//获取标示为1的商户角色
+			//添加用户角色
+			userAndRoleService.insertUserAndRole(openAccount.getOpenAdminNum(), roleList);
 		}
 		return result;
 	}

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelBankTransWriteMapper" >
+  
+  <delete id="deleteByPrimaryKey"  >
+    delete from sps_bank_trans
+    where  t_serial_sh =#{ serialSh } and  t_serial_yop =#{serialYop}
+  </delete>
+ 
+  <insert id="insertBankTrans" parameterType="org.sps.entity.merchant.SpsChannelBankTrans" >
+   	
+    insert into sps_bank_trans
+    (	
+    	t_name, 
+    	t_bank_name ,
+    	t_user_id,
+    	t_login_name,
+    	t_identity ,
+    	t_phone ,
+    	t_merchant_no,
+    	t_start_time ,
+    	t_stop_time ,
+    	t_auth_type  ,
+    	t_serial_sh ,
+    	t_serial_yop ,
+    	t_bank_code  ,
+    	t_state ,
+    	t_remark ,
+    	channl_num 
+      )
+    values (
+     	#{name,jdbcType=VARCHAR}, 
+     	#{bankName,jdbcType=VARCHAR},
+    	#{userId,jdbcType=VARCHAR}, 
+    	#{loginName,jdbcType=VARCHAR}, 
+        #{identity,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR},
+        #{merchantNo,jdbcType=VARCHAR},
+        #{startTime,jdbcType=TIMESTAMP},
+        #{stopTime,jdbcType=TIMESTAMP},
+        #{authType,jdbcType=VARCHAR},
+        #{serialSh,jdbcType=VARCHAR},
+        #{serialYop,jdbcType=VARCHAR},
+        #{bankCode,jdbcType=VARCHAR},
+        #{state,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR},
+        #{channlNum,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <update id="updateBankTrans" parameterType="org.sps.entity.merchant.SpsChannelBankTrans" >
+    update sps_bank_trans
+    <set >
+      <if test="name != null" >
+        t_name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+         t_bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        t_user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        t_login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null" >
+        t_identity = #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        t_phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        t_merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+    
+    <if test="startTime != null" >
+        t_start_time= #{startTime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="stopTime != null" >
+        t_stop_time = #{stopTime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="authType != null" >
+        t_auth_type = #{authType,jdbcType=VARCHAR},
+    </if>
+    <if test="bankCode != null" >
+        t_bank_no = #{bankCode,jdbcType=VARCHAR},
+    </if>
+    <if test="state != null" >
+        t_state = #{state,jdbcType=VARCHAR},
+    </if>
+    <if test="remark != null" >
+        t_remark = #{remark,jdbcType=VARCHAR},
+    </if>
+    <if test="channlNum != null" >
+        channl_num = #{channlNum,jdbcType=VARCHAR}
+    </if>
+    </set>
+     where  t_serial_sh=#{serialSh} and  t_serial_yop=#{serialYop}
+  </update>
+ 
+</mapper>

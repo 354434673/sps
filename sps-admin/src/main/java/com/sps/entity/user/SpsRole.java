@@ -17,6 +17,8 @@ public class SpsRole implements Serializable{
 
     private String roleCreater;
 
+    private Integer roleMark;
+
     private Date roleCreattime;
 
     private Date roleUpdatetime;
@@ -53,6 +55,14 @@ public class SpsRole implements Serializable{
 
     public void setRoleCreater(String roleCreater) {
         this.roleCreater = roleCreater == null ? null : roleCreater.trim();
+    }
+
+    public Integer getRoleMark() {
+        return roleMark;
+    }
+
+    public void setRoleMark(Integer roleMark) {
+        this.roleMark = roleMark;
     }
 
     public Date getRoleCreattime() {

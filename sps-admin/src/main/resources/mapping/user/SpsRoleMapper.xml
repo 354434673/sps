@@ -6,6 +6,7 @@
     <result column="role_name" property="roleName" jdbcType="VARCHAR" />
     <result column="role_describe" property="roleDescribe" jdbcType="VARCHAR" />
     <result column="role_creater" property="roleCreater" jdbcType="VARCHAR" />
+    <result column="role_mark" property="roleMark" jdbcType="INTEGER" />
     <result column="role_creatTime" property="roleCreattime" jdbcType="TIMESTAMP" />
     <result column="role_updateTime" property="roleUpdatetime" jdbcType="TIMESTAMP" />
     <result column="role_state" property="roleState" jdbcType="INTEGER" />
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    role_id, role_name, role_describe, role_creater, role_creatTime, role_updateTime, 
+    role_id, role_name, role_describe, role_creater, role_mark, role_creatTime, role_updateTime, 
     role_state
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.user.SpsRoleExample" >
@@ -85,18 +86,6 @@
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
-  </select>
-  <select id="selectRoleForUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-	SELECT
-		r1.role_name,r1.role_id
-	FROM
-		sps_role r1
-	JOIN sps_userandrole u1 ON r1.role_id = u1.role_id
-	<where>
-		<if test="id != null">
-			u1.user_id = #{id}
-		</if>
-	</where>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -116,13 +105,13 @@
   </delete>
   <insert id="insert" parameterType="com.sps.entity.user.SpsRole" >
     insert into sps_role (role_id, role_name, role_describe, 
-      role_creater, role_creatTime, role_updateTime, 
-      role_state)
+      role_creater, role_mark, role_creatTime, 
+      role_updateTime, role_state)
     values (#{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleDescribe,jdbcType=VARCHAR}, 
-      #{roleCreater,jdbcType=VARCHAR}, #{roleCreattime,jdbcType=TIMESTAMP}, #{roleUpdatetime,jdbcType=TIMESTAMP}, 
-      #{roleState,jdbcType=INTEGER})
+      #{roleCreater,jdbcType=VARCHAR}, #{roleMark,jdbcType=INTEGER}, #{roleCreattime,jdbcType=TIMESTAMP}, 
+      #{roleUpdatetime,jdbcType=TIMESTAMP}, #{roleState,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.sps.entity.user.SpsRole" useGeneratedKeys="true" keyProperty="roleId">
+  <insert id="insertSelective" parameterType="com.sps.entity.user.SpsRole" >
     insert into sps_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >
@@ -136,6 +125,9 @@
       </if>
       <if test="roleCreater != null" >
         role_creater,
+      </if>
+      <if test="roleMark != null" >
+        role_mark,
       </if>
       <if test="roleCreattime != null" >
         role_creatTime,
@@ -159,6 +151,9 @@
       </if>
       <if test="roleCreater != null" >
         #{roleCreater,jdbcType=VARCHAR},
+      </if>
+      <if test="roleMark != null" >
+        #{roleMark,jdbcType=INTEGER},
       </if>
       <if test="roleCreattime != null" >
         #{roleCreattime,jdbcType=TIMESTAMP},
@@ -192,6 +187,9 @@
       <if test="record.roleCreater != null" >
         role_creater = #{record.roleCreater,jdbcType=VARCHAR},
       </if>
+      <if test="record.roleMark != null" >
+        role_mark = #{record.roleMark,jdbcType=INTEGER},
+      </if>
       <if test="record.roleCreattime != null" >
         role_creatTime = #{record.roleCreattime,jdbcType=TIMESTAMP},
       </if>
@@ -212,6 +210,7 @@
       role_name = #{record.roleName,jdbcType=VARCHAR},
       role_describe = #{record.roleDescribe,jdbcType=VARCHAR},
       role_creater = #{record.roleCreater,jdbcType=VARCHAR},
+      role_mark = #{record.roleMark,jdbcType=INTEGER},
       role_creatTime = #{record.roleCreattime,jdbcType=TIMESTAMP},
       role_updateTime = #{record.roleUpdatetime,jdbcType=TIMESTAMP},
       role_state = #{record.roleState,jdbcType=INTEGER}
@@ -231,6 +230,9 @@
       <if test="roleCreater != null" >
         role_creater = #{roleCreater,jdbcType=VARCHAR},
       </if>
+      <if test="roleMark != null" >
+        role_mark = #{roleMark,jdbcType=INTEGER},
+      </if>
       <if test="roleCreattime != null" >
         role_creatTime = #{roleCreattime,jdbcType=TIMESTAMP},
       </if>
@@ -248,6 +250,7 @@
     set role_name = #{roleName,jdbcType=VARCHAR},
       role_describe = #{roleDescribe,jdbcType=VARCHAR},
       role_creater = #{roleCreater,jdbcType=VARCHAR},
+      role_mark = #{roleMark,jdbcType=INTEGER},
       role_creatTime = #{roleCreattime,jdbcType=TIMESTAMP},
       role_updateTime = #{roleUpdatetime,jdbcType=TIMESTAMP},
       role_state = #{roleState,jdbcType=INTEGER}

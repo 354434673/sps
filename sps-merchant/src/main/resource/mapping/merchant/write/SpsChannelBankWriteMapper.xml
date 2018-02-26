@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.write.SpsChannelBankWriteMapper" >
+  <delete id="deleteByPrimaryKey"  parameterType="String">
+    delete from sps_bank  where b_user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertBank"  parameterType="org.sps.entity.merchant.SpsChannelBank"  useGeneratedKeys="true" keyProperty="id" >
+  	
+    insert into sps_bank(
+    	b_name, 
+    	b_accounts,
+    	b_identity, 
+        b_phone, 
+        b_createtime, 
+        b_updatetime,
+        b_bank,
+        b_state,
+        b_remark,
+        b_user_id,
+        b_user_name ,
+        channl_num,
+        b_available_balance,
+        b_trans_password   
+      )
+    values (
+    	
+       #{name,jdbcType=VARCHAR}, 
+       #{accounts,jdbcType=VARCHAR}, 
+       #{identity,jdbcType=VARCHAR},
+       #{phone,jdbcType=VARCHAR},
+       #{createtime,jdbcType=TIMESTAMP},
+       #{updatetime,jdbcType=TIMESTAMP},
+       #{bank,jdbcType=VARCHAR},
+       #{state,jdbcType=INTEGER},
+       #{remark,jdbcType=VARCHAR},
+       #{userId,jdbcType=VARCHAR},
+       #{userName,jdbcType=VARCHAR},
+       #{channlNum,jdbcType=VARCHAR},
+       #{availableBalance,jdbcType=DECIMAL},
+       #{transPassword,jdbcType=VARCHAR}
+      )
+        
+  </insert>
+  
+  <update id="updateBank" parameterType="org.sps.entity.merchant.SpsChannelBank" >
+    update sps_bank
+    <set >
+      <if test="name != null" >
+        b_name = #{name,jdbcType=INTEGER},
+      </if>
+      <if test="accounts != null" >
+         b_accounts = #{accounts,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null" >
+        b_identity = #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        b_phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        b_createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        b_updatetime = #{updatetime,jdbcType=VARCHAR},
+      </if>
+    
+    <if test="bank != null" >
+        b_bank= #{bank,jdbcType=VARCHAR}
+    </if>
+    <if test="state != null" >
+        b_state = #{state,jdbcType=INTEGER}
+    </if>
+    <if test="remark != null" >
+        b_remark = #{remark,jdbcType=VARCHAR}
+    </if>
+    <if test="userName != null" >
+        b_user_name = #{userName,jdbcType=VARCHAR}
+    </if>
+    <if test="channlNum != null" >
+        channl_num = #{channlNum,jdbcType=VARCHAR}
+    </if>
+    <if test="availableBalance != null" >
+        b_available_balance = #{availableBalance,jdbcType=DECIMAL}
+    </if>
+    <if test="transPassword != null" >
+        b_trans_password = #{transPassword,jdbcType=VARCHAR}
+    </if>
+    </set>
+     where  b_user_id=#{userId}
+  </update>
+ 
+</mapper>
