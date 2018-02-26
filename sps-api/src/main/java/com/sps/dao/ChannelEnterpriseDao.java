@@ -21,7 +21,7 @@ public interface ChannelEnterpriseDao extends ServiceBase<SpsChannelEnterpriseEx
      * @return: List<SpsChannelBusiness>      
      * @throws
      */
-    List<SpsChannelBusiness> queryBusinessForApi(
+    List<SpsChannelEnterprise> queryBusinessForApi(
 		    		@Param("businessProduct") List<String> businessProduct, 
 		    		@Param("picType")Integer picType);
 }

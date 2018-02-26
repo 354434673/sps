@@ -8,12 +8,16 @@ import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Md5Util;
 import com.sps.common.Message;
+import com.sps.common.StringUtil;
 import com.sps.dao.SpsShopkeeperAccountDao;
 import com.sps.dao.SpsUserDao;
 import com.sps.entity.shopkeeper.SpsShopkeeperAccount;
@@ -87,40 +91,46 @@ public class UserServiceImpl {
 	}
 	@RequestMapping(value="/api/add", method=RequestMethod.POST)
 	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
-	public HashMap<String, Object> insertUser(SpsUser user) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		try {
-			SpsUser spsUser = getUser(user.getUserUsername());//查重
-			if(spsUser == null){
-				String salt = Md5Util.getSalt(4);//4位盐
-
-				user.setUserSalt(salt);
-
-				user.setUserPassword(Md5Util.getMd5(user.getUserPassword(), salt));
-
-				user.setUserState(0);
-
-				user.setUserCreattime(new Date());
-
-				user.setUserUpdatetime(new Date());
-				int insertSelective = dao.insertSelective(user);
-				if(insertSelective == 1){
-					map.put("msg", "添加成功");
-					map.put("state", "success");
-				}else{
-					map.put("msg", "添加失败,联系管理员");
-					map.put("state", "error");
-				}
-			}else{
-				map.put("msg", "用户重复");
-				map.put("state", "exist");
-			}	
-		} catch (NumberFormatException e) {
-			map.put("msg", "程序错误");
-			map.put("state", "error");
-			e.printStackTrace();
+	public HashMap<String, Object> insertUser(@RequestBody String data) {
+		
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		if(!StringUtil.isEmpty(data)){
+			
+			JSONObject parseObject = JSON.parseObject(data);
+			
+			String phone = parseObject.getString("phone");
+			
+			String password = parseObject.getString("password");
+			
+			String salt = Md5Util.getSalt(4);//4位盐
+			
+			SpsUser user = new SpsUser();
+			
+			user.setUserUsername(phone);
+			
+			user.setUserSalt(salt);
+			
+			user.setUserPassword(Md5Util.getMd5(password, salt));
+			
+			user.setUserPhone(phone);
+			
+			user.setUserState(0);
+			
+			user.setUserMark(2);
+			
+			user.setUserCreattime(new Date());
+			
+			user.setUserUpdatetime(new Date());
+			
+			dao.insertSelective(user);
+			
+			hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG, 
+					Message.SUCCESS_MSG,null, null);
+		}else{
+			hashMap = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG, 
+					Message.FAILURE_MSG,null, null);
 		}
-		return map;
+		return hashMap;
 	}
 
 

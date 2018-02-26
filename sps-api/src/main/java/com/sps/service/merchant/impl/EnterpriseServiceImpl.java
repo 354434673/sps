@@ -54,7 +54,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 				arrayList.add(string);
 			}
 			try {
-				List<SpsChannelBusiness> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1);
+				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1);
 				super.logger.error(Message.SUCCESS_MSG);
 				
 				hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG, 
