@@ -89,10 +89,10 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 	}
 
 	@Override
-	public Boolean modifyBankTradeByApplicateDate(String applicationDate, String status) {
+	public Boolean modifyBankTradeByApplicateDate(String applicationDate, String status,String content) {
 		Boolean flag=true;
 		try{
-			int m = bankTradeWrite.updateStatus(applicationDate, status);
+			int m = bankTradeWrite.updateStatus(applicationDate, status,content);
 
 		}catch(Exception e){
 			e.printStackTrace();
