@@ -118,4 +118,82 @@ public class CashAuditServiceImpl implements CashAuditReadService {
         bankDrawAudio.setTotalAmount(totalAmount);
         return  bankDrawAudio;
     }
+
+    @Override
+    public HashMap<String, Object> getBankTradeIncomePayList(Integer page, Integer limit, String startTime, String endTime, BigDecimal minAmount, BigDecimal maxAmount, String payType, String companyName, String reamrk) {
+        List<SpsChannelBankTrade> list = bankTradeRead.selectIncomePaymentList(startTime, endTime, minAmount, maxAmount, payType, companyName, reamrk);
+        List<BankDrawAudio> listDrawAudio = new ArrayList<BankDrawAudio>();
+        for (SpsChannelBankTrade info: list){
+            //保存收支信息
+            BankDrawAudio bankDrawAudio = new BankDrawAudio();
+            bankDrawAudio.setAuditSerialNum(info.getTradeSerialNum());
+            bankDrawAudio.setCompanyName(info.getEnterprise().getEnterpriseCompanyName());
+            bankDrawAudio.setAmount(info.getTradeAmount());
+            bankDrawAudio.setPayType(info.getTradeType());
+            bankDrawAudio.setRemark(info.getStandby1());
+            bankDrawAudio.setPayDate(info.getPaymentDate());
+            bankDrawAudio.setPayType(info.getTradeType());
+            listDrawAudio.add(bankDrawAudio);
+        }
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        PageHelper.startPage(page, limit);
+        PageInfo pageInfo = new PageInfo(listDrawAudio);
+        hashMap.put("code", 0);
+        hashMap.put("msg", "获取成功");
+        hashMap.put("count", pageInfo.getTotal());
+        hashMap.put("data", listDrawAudio.size() != 0 ? listDrawAudio : null);
+        return hashMap;
+    }
+
+    @Override
+    public HashMap<String, Object> getBankTradeIncomeList(Integer page, Integer limit, String startTime, String endTime, BigDecimal minAmount, BigDecimal maxAmount,String payType, String companyName, String reamrk) {
+        List<SpsChannelBankTrade> list = bankTradeRead.selectBankTradeTypeList(startTime, endTime, minAmount, maxAmount, payType, companyName, reamrk);
+        List<BankDrawAudio> listDrawAudio = new ArrayList<BankDrawAudio>();
+        for (SpsChannelBankTrade info: list){
+            //保存收支信息
+            BankDrawAudio bankDrawAudio = new BankDrawAudio();
+            bankDrawAudio.setAuditSerialNum(info.getTradeSerialNum());
+            bankDrawAudio.setCompanyName(info.getEnterprise().getEnterpriseCompanyName());
+            bankDrawAudio.setAmount(info.getTradeAmount());
+            bankDrawAudio.setPayType(info.getTradeType());
+            bankDrawAudio.setRemark(info.getStandby1());
+            bankDrawAudio.setPayDate(info.getPaymentDate());
+            bankDrawAudio.setPayType(info.getTradeType());
+            listDrawAudio.add(bankDrawAudio);
+        }
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        PageHelper.startPage(page, limit);
+        PageInfo pageInfo = new PageInfo(listDrawAudio);
+        hashMap.put("code", 0);
+        hashMap.put("msg", "获取成功");
+        hashMap.put("count", pageInfo.getTotal());
+        hashMap.put("data", listDrawAudio.size() != 0 ? listDrawAudio : null);
+        return hashMap;
+    }
+
+    @Override
+    public HashMap<String, Object> getBankTradePaymentList(Integer page, Integer limit, String startTime, String endTime, BigDecimal minAmount, BigDecimal maxAmount, String payType,String companyName, String reamrk) {
+        List<SpsChannelBankTrade> list = bankTradeRead.selectBankTradeTypeList(startTime, endTime, minAmount, maxAmount, payType, companyName, reamrk);
+        List<BankDrawAudio> listDrawAudio = new ArrayList<BankDrawAudio>();
+        for (SpsChannelBankTrade info: list){
+            //保存收支信息
+            BankDrawAudio bankDrawAudio = new BankDrawAudio();
+            bankDrawAudio.setAuditSerialNum(info.getTradeSerialNum());
+            bankDrawAudio.setCompanyName(info.getEnterprise().getEnterpriseCompanyName());
+            bankDrawAudio.setAmount(info.getTradeAmount());
+            bankDrawAudio.setPayType(info.getTradeType());
+            bankDrawAudio.setRemark(info.getStandby1());
+            bankDrawAudio.setPayDate(info.getPaymentDate());
+            bankDrawAudio.setPayType(info.getTradeType());
+            listDrawAudio.add(bankDrawAudio);
+        }
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        PageHelper.startPage(page, limit);
+        PageInfo pageInfo = new PageInfo(listDrawAudio);
+        hashMap.put("code", 0);
+        hashMap.put("msg", "获取成功");
+        hashMap.put("count", pageInfo.getTotal());
+        hashMap.put("data", listDrawAudio.size() != 0 ? listDrawAudio : null);
+        return hashMap;
+    }
 }

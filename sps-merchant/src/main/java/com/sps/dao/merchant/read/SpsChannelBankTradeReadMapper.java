@@ -51,6 +51,46 @@ public interface SpsChannelBankTradeReadMapper {
 			@Param("loginName") String loginName);
 
 	/**
+	 * 查询收支信息
+	 * @param startTime
+	 * @param endTime
+	 * @param minAmount
+	 * @param maxAmount
+	 * @param payType
+	 * @param companyName
+	 * @param reamrk
+	 * @return
+	 */
+	List<SpsChannelBankTrade>  selectIncomePaymentList(
+			@Param("startTime") String startTime,
+			@Param("endTime") String endTime,
+			@Param("minAmount") BigDecimal minAmount,
+			@Param("maxAmount") BigDecimal maxAmount,
+			@Param("payType") String payType,
+			@Param("companyName") String companyName,
+			@Param("reamrk") String reamrk);
+
+    /**
+     * 根据收入查询所有
+     * @param startTime
+     * @param endTime
+     * @param minAmount
+     * @param maxAmount
+     * @param companyName
+     * @param reamrk
+     * @return
+     */
+    List<SpsChannelBankTrade>  selectBankTradeTypeList(
+            @Param("startTime") String startTime,
+            @Param("endTime") String endTime,
+            @Param("minAmount") BigDecimal minAmount,
+            @Param("maxAmount") BigDecimal maxAmount,
+            @Param("payType") String payType,
+            @Param("companyName") String companyName,
+            @Param("reamrk") String reamrk);
+
+
+	/**
 	 * 根据用户名查询提现记录
 	 * @param loginName
 	 * @return

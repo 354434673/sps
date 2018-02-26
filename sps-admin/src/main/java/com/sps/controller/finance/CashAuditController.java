@@ -54,21 +54,12 @@ public class CashAuditController {
         return bankTradeAuditInfo;
     }
 
-//    @RequestMapping("/saveAuditStatus")
-//    @ResponseBody
-//    public Result saveAuditStatus(String  applicationDate){
-//        Result<Boolean> result = new Result<Boolean>();
-//        Boolean flag= true;
-//        result.setBody(flag);
-//        result.success();
-//        result.setMsg(flag ? "成功" : "保存失败");
-//        return result;
-//    }
+
     @RequestMapping("/saveAuditStatus")
     @ResponseBody
-    public Result saveAuditStatus(String  applicationDate,String type){
+    public Result saveAuditStatus(String  applicationDate,String type,String content){
 
-        Boolean flag = bankTradeWriteService.modifyBankTradeByApplicateDate(applicationDate,type);
+        Boolean flag = bankTradeWriteService.modifyBankTradeByApplicateDate(applicationDate,type,content);
         Result<Boolean> result = new Result<Boolean>();
         result.setBody(flag);
         result.setMsg(flag ? "成功" : "保存失败");

@@ -48,6 +48,7 @@
 		<result column="bt_trade_amount" property="tradeAmount" jdbcType="DECIMAL" />
 		<result column="bt_trade_status" property="tradeStatus" jdbcType="VARCHAR" />
 		<result column="bt_user_id" property="userid" jdbcType="VARCHAR" />
+		<result column="standby1" property="standby1" jdbcType="VARCHAR" />
 	<association property="cahnnelBank" javaType="org.sps.entity.merchant.SpsChannelBank">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="channl_num" property="channlNum" jdbcType="VARCHAR" />
@@ -103,6 +104,7 @@
 		bt.bt_trade_after_balanc,
 		bt.bt_trade_amount,
 		bt.bt_trade_status,
+		bt.standby1,
 		e.enterprise_company_name
 		from
 	</sql>
@@ -189,10 +191,84 @@
 				and b.b_user_name = #{loginName,jdbcType=VARCHAR}
 			</if>
 			<if test="enterpriseCompanyName != null and enterpriseCompanyName != '' " >
-				and e.enterpriseCompanyName = #{enterpriseCompanyName,jdbcType=VARCHAR}
+				and e.enterprise_company_name = #{enterpriseCompanyName,jdbcType=VARCHAR}
 			</if>
 		</where>
 		ORDER  BY   bt.bt_application_start_date  desc
+	</select>
+	<select id="selectIncomePaymentList"  resultMap="cashAuditBashInfo">
+		SELECT
+		<include refid="join_listAudit" />
+		sps_bank_trade_info bt
+		join
+		sps_bank  b
+		on
+		bt.bt_user_id= b.b_user_id
+		JOIN
+		sps_channel_enterprise e
+		ON
+		e.channel_num=b.channl_num
+		<where>
+			<if test="startTime != null and startTime != '' " >
+				and bt.bt_payment_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
+			</if>
+			<if test="endTime != null and endTime != '' " >
+				and bt.bt_payment_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
+			</if>
+
+			<if test="minAmount != null and minAmount != '' " >
+				and bt.bt_trade_amount  <![CDATA[ >= ]]>  #{minAmount,jdbcType=VARCHAR}
+			</if>
+			<if test="maxAmount != null and maxAmount != '' " >
+				and bt.bt_trade_amount <![CDATA[ <= ]]>  #{maxAmount,jdbcType=VARCHAR}
+			</if>
+			<if test="payType != null and payType != '' " >
+				and bt.bt_trade_type = #{payType,jdbcType=VARCHAR}
+			</if>
+			<if test="companyName != null and companyName != '' " >
+				and e.enterprise_company_name = #{companyName,jdbcType=VARCHAR}
+			</if>
+			<if test="reamrk != null and reamrk != '' " >
+				and bt.standby1 = #{reamrk,jdbcType=VARCHAR}
+			</if>
+		</where>
+		ORDER  BY   bt.bt_payment_date  desc
+	</select>
+	<select id="selectBankTradeTypeList"  resultMap="cashAuditBashInfo">
+		SELECT
+		<include refid="join_listAudit" />
+		sps_bank_trade_info bt
+		join
+		sps_bank  b
+		on
+		bt.bt_user_id= b.b_user_id
+		JOIN
+		sps_channel_enterprise e
+		ON
+		e.channel_num=b.channl_num
+		<where>
+			bt.bt_trade_type = #{payType,jdbcType=VARCHAR}
+			<if test="startTime != null and startTime != '' " >
+				and bt.bt_payment_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
+			</if>
+			<if test="endTime != null and endTime != '' " >
+				and bt.bt_payment_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
+			</if>
+
+			<if test="minAmount != null and minAmount != '' " >
+				and bt.bt_trade_amount  <![CDATA[ >= ]]>  #{minAmount,jdbcType=VARCHAR}
+			</if>
+			<if test="maxAmount != null and maxAmount != '' " >
+				and bt.bt_trade_amount <![CDATA[ <= ]]>  #{maxAmount,jdbcType=VARCHAR}
+			</if>
+			<if test="companyName != null and companyName != '' " >
+				and e.enterprise_company_name = #{companyName,jdbcType=VARCHAR}
+			</if>
+			<if test="reamrk != null and reamrk != '' " >
+				and bt.standby1 = #{reamrk,jdbcType=VARCHAR}
+			</if>
+		</where>
+		ORDER  BY   bt.bt_payment_date  desc
 	</select>
 
 	<select id="selectMoneyAmount" parameterType="String" resultType="BigDecimal">

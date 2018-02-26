@@ -31,5 +31,5 @@ public interface ChannelBankTradeWriteService{
 	 * @param applicationDate
 	 * @return
 	 */
-	Boolean  modifyBankTradeByApplicateDate(String applicationDate,String status);
+	Boolean  modifyBankTradeByApplicateDate(String applicationDate,String status,String content);
 }

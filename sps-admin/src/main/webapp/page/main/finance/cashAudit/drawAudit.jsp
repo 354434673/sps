@@ -184,7 +184,7 @@
 							,type:'post'
 							,dataType: 'json'
 							,async: false
-							,data:{applicationDate:applicationDate,type:'1'}
+							,data:{applicationDate:applicationDate,type:'1',content:content}
 							, success: function (result) {
 								window.location.href = "<%=path%>/page/main/finance/cashAudit/index.jsp";
 							}

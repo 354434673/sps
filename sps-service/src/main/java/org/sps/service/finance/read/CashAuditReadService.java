@@ -2,6 +2,7 @@ package org.sps.service.finance.read;
 
 import org.sps.entity.finance.BankDrawAudio;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 /**
@@ -30,10 +31,53 @@ public interface CashAuditReadService {
     HashMap<String, Object> getBankTradeAuditList(Integer page, Integer limit, String userName);
 
     /**
-     * 根据申请日期查看交易信息
+     * 查看收支信息
      * @param applicationDate
      * @return
      */
    BankDrawAudio getBankTradeAuditInfo(String  applicationDate);
+
+    /**
+     * 查询收支信息
+     * @param page
+     * @param limit
+     * @param startTime
+     * @param endTime
+     * @param minAmount
+     * @param maxAmount
+     * @param payType
+     * @param companyName
+     * @param reamrk
+     * @return
+     */
+    HashMap<String, Object> getBankTradeIncomePayList(Integer page, Integer  limit, String startTime, String endTime, BigDecimal  minAmount,BigDecimal maxAmount, String payType, String companyName, String reamrk);
+
+    /**
+     * 查询收入信息
+     * @param page
+     * @param limit
+     * @param startTime
+     * @param endTime
+     * @param minAmount
+     * @param maxAmount
+     * @param companyName
+     * @param reamrk
+     * @return
+     */
+    HashMap<String, Object> getBankTradeIncomeList(Integer page, Integer  limit, String startTime, String endTime, BigDecimal  minAmount,BigDecimal maxAmount, String payType,String companyName, String reamrk);
+
+    /**
+     * 查询支出信息
+     * @param page
+     * @param limit
+     * @param startTime
+     * @param endTime
+     * @param minAmount
+     * @param maxAmount
+     * @param companyName
+     * @param reamrk
+     * @return
+     */
+    HashMap<String, Object> getBankTradePaymentList(Integer page, Integer  limit, String startTime, String endTime, BigDecimal  minAmount,BigDecimal maxAmount,String payType, String companyName, String reamrk);
 
 }

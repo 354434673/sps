@@ -102,8 +102,8 @@
   </update>
     <update id="updateStatus" >
         update
-              sps_bank_trade_info
-        SET  bt_trade_status=#{status,jdbcType=VARCHAR}
+           sps_bank_trade_info
+        SET  bt_trade_status=#{status,jdbcType=VARCHAR},standby1=#{content,jdbcType=VARCHAR}
         WHERE
         bt_application_start_date=#{applicationDate,jdbcType=VARCHAR}
     </update>
