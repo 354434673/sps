@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.SpsShopkeeperDao" >
+  <resultMap id="BaseResultMap" type="com.sps.entity.shopkeeper.SpsShopkeeper" >
+    <id column="shopkeeper_id" property="shopkeeperId" jdbcType="INTEGER" />
+    <result column="shopkeeper_city" property="shopkeeperCity" jdbcType="VARCHAR" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+    <result column="shopkeeper_approve_type" property="shopkeeperApproveType" jdbcType="VARCHAR" />
+    <result column="shopkeeper_approve_no" property="shopkeeperApproveNo" jdbcType="VARCHAR" />
+    <result column="shopkeeper_product" property="shopkeeperProduct" jdbcType="VARCHAR" />
+    <result column="shopkeeper_register_source" property="shopkeeperRegisterSource" jdbcType="VARCHAR" />
+    <result column="shopkeeper_client_source" property="shopkeeperClientSource" jdbcType="VARCHAR" />
+    <result column="shopkeeper_channel_type" property="shopkeeperChannelType" jdbcType="VARCHAR" />
+    <result column="shopkeeper_default_channel_num" property="shopkeeperDefaultChannelNum" jdbcType="VARCHAR" />
+    <result column="shopkeeper_default_channel_name" property="shopkeeperDefaultChannelName" jdbcType="VARCHAR" />
+    <result column="shopkeeper_salesman_name" property="shopkeeperSalesmanName" jdbcType="VARCHAR" />
+    <result column="shopkeeper_salesman_idcard" property="shopkeeperSalesmanIdcard" jdbcType="VARCHAR" />
+    <result column="shopkeeper_commodity_type" property="shopkeeperCommodityType" jdbcType="VARCHAR" />
+    <result column="shopkeeper_business_model" property="shopkeeperBusinessModel" jdbcType="VARCHAR" />
+    <result column="shopkeeper_brand" property="shopkeeperBrand" jdbcType="VARCHAR" />
+    <result column="shopkeeper_business_type" property="shopkeeperBusinessType" jdbcType="VARCHAR" />
+    <result column="shopkeeper_state" property="shopkeeperState" jdbcType="INTEGER" />
+    <result column="shopkeeper_referrer" property="shopkeeperReferrer" jdbcType="VARCHAR" />
+    <result column="shopkeeper_username" property="shopkeeperUsername" jdbcType="VARCHAR" />
+    <result column="shopkeeper_creat_time" property="shopkeeperCreatTime" jdbcType="TIMESTAMP" />
+    <result column="shopkeeper_update_time" property="shopkeeperUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    shopkeeper_id, shopkeeper_city, shopkeeper_customerId, shopkeeper_approve_type, shopkeeper_approve_no, 
+    shopkeeper_product, shopkeeper_register_source, shopkeeper_client_source, shopkeeper_channel_type, 
+    shopkeeper_default_channel_num, shopkeeper_default_channel_name, shopkeeper_salesman_name, 
+    shopkeeper_salesman_idcard, shopkeeper_commodity_type, shopkeeper_business_model, 
+    shopkeeper_brand, shopkeeper_business_type, shopkeeper_state, shopkeeper_referrer, 
+    shopkeeper_username, shopkeeper_creat_time, shopkeeper_update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper
+    where shopkeeper_id = #{shopkeeperId,jdbcType=INTEGER}
+  </select>
+  <select id="countByExample" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperExample" resultType="java.lang.Integer" >
+    select count(*) from sps_shopkeeper
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

@@ -31,8 +31,18 @@ public class SpsChannelEnterprise implements Serializable{
     private String channelNum;
     
     private SpsChannelBusiness business;
+    
+    private SpsChannelPic pic;
+    
+    public SpsChannelPic getPic() {
+		return pic;
+	}
 
-    public SpsChannelBusiness getBusiness() {
+	public void setPic(SpsChannelPic pic) {
+		this.pic = pic;
+	}
+
+	public SpsChannelBusiness getBusiness() {
 		return business;
 	}
 
