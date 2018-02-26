@@ -34,7 +34,17 @@ public class SpsChannelEnterprise implements Serializable{
     
     private SpsChannelPic pic;
     
-    public SpsChannelPic getPic() {
+    private SpsChannelGuarantee guarantee;
+    
+    public SpsChannelGuarantee getGuarantee() {
+		return guarantee;
+	}
+
+	public void setGuarantee(SpsChannelGuarantee guarantee) {
+		this.guarantee = guarantee;
+	}
+
+	public SpsChannelPic getPic() {
 		return pic;
 	}
 
