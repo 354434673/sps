@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>新增页面</title>
+    <title>输入密码页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -21,7 +21,7 @@
 </head>
 <body>
 <div style="padding: 40px;width: 600px;">
-    <h3>新增</h3>
+    <h3>输入密码页面</h3>
     <hr>
     <div class="layui-form layui-form-pane">
         <input type="hidden" name="customId" id="customId" >
@@ -45,6 +45,7 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 136px;">*输入交易密码：</label>
+
             <div class="layui-input-block" >
                 <input id="tradePwd" style="width: 300px;text-align: center;display: inline" type="password"  value=""  autocomplete="off" class="layui-input"    lay-verify="required|number">
                 <button   style="color:red;" id="forgetPwd">忘记密码?</button>
@@ -69,14 +70,13 @@
             ,dataType:'json'
             ,async:false
             ,success:function(result){
-                $('#withdrawAmt').val(result.withdrawAmt);
+                $('#withdrawAmt').val(withdrawAmt);
                 $("#name").val(result.bankCard.name);
                 $("#account").val(result.bankCard.bank+'('+result.bankCard.accounts+')');
             }
         });
     });
     $("#forgetPwd").on("click",function(){
-        alert('12334');
         //跳转至找回密码页面，即设置交易密码页面；
         var withdrawAmt = getUrlParam("withdrawAmt");
         location.href='<%=path%>/page/main/account/withdraw/setTradePwd.jsp?withdrawAmt='+withdrawAmt;
@@ -105,9 +105,64 @@
                         time:1200
                     },
                     function(){
+                        var psw = $('#tradePwd').val().trim();
                         $.ajax({
-                            data: {withdrawAmt: amount},
-                            url: "<%=path%>/withdraw/save",//保存交易记录，并提交提现申请调用易宝接口
+                            data:{psw:psw},
+                            url:"<%=path%>/withdraw/queryTradePwd",
+                            type: 'post',
+                            dataType: 'json',
+                            async: false,
+                            success: function (result) {
+                                console.log(result);
+
+                                var  msg = result.msg;
+                                layer.msg(msg);
+                               //若密码正确，则进行提现操作
+                                if(result.body.flag==0){
+                                    //若已经设置交易密码，则跳转至输入交易密码页面
+                                    $.ajax({
+                                        data:{withdrawAmt: amount},
+                                        url: "/withdraw/save",//保存交易记录，并提交提现申请调用易宝接口
+                                        type: 'post',
+                                        dataType: 'json',
+                                        async: false,
+                                        success: function (result) {
+                                            console.log(result);
+                                            var code =result.code;
+                                            var ok = result.ok;
+                                            var  msg = result.msg;
+                                            layer.msg(msg);
+                                            if(code == ok){
+                                                if(result.body == true){
+                                                    //若交易成功，则跳转至提现首页列表
+                                                     location.href='/page/main/account/withdraw/index.jsp';
+                                                }
+                                                if(result.body ==  false){
+                                                    //则进行交易失败处理
+                                                }
+                                            }
+                                            if(code == result.fail){
+                                               // layer.msg(msg);
+                                                lock = true;
+                                            }
+                                        }
+                                    });
+                                }
+                                //若密码不正确则，重新输入密码
+                                if(result.body.flag == 1){
+                                    lock = true;
+                                    return  ;
+                                }
+                                //若密码未设置，则跳转至设置页面
+                                if(result.body.flag == 2){
+                                    //则跳转至设置交易密码页面
+                                    location.href='/page/main/account/withdraw/setTradePwd.jsp';
+                                }
+
+                            }
+                        });
+                            /*data:{withdrawAmt: amount},
+                            url: "/withdraw/save",//保存交易记录，并提交提现申请调用易宝接口
                             type: 'post',
                             dataType: 'json',
                             async: false,
@@ -120,7 +175,7 @@
                                 if(code == ok){
                                     if(result.body == true){
                                         //若交易成功，则跳转至提现首页列表
-                                        location.href='<%=path%>/page/main/account/withdraw/index.jsp';
+                                       // location.href='/page/main/account/withdraw/index.jsp';
                                     }
                                     if(result.body ==  false){
                                         //则跳转至设置交易密码页面
@@ -131,7 +186,7 @@
                                     lock = true;
                                 }
                             }
-                        });
+                        });*/
                     }
             );
             return false;

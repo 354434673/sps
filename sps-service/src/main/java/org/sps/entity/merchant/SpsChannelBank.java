@@ -36,13 +36,13 @@ public class SpsChannelBank implements Serializable{
 //	当前可用金额
 	private BigDecimal   availableBalance;
 //	交易密码
-	private Integer  transPassword   ;
+	private String  transPassword   ;
 	
 	
-	public Integer getTransPassword() {
+	public String getTransPassword() {
 		return transPassword;
 	}
-	public void setTransPassword(Integer transPassword) {
+	public void setTransPassword(String transPassword) {
 		this.transPassword = transPassword;
 	}
 	public BigDecimal getAvailableBalance() {

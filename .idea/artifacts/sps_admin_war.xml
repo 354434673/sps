@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="sps-admin:war">
+    <output-path>$PROJECT_DIR$/sps-admin/target</output-path>
+    <root id="archive" name="sps-admin.war">
+      <element id="artifact" artifact-name="sps-admin:war exploded" />
+    </root>
+  </artifact>
+</component>

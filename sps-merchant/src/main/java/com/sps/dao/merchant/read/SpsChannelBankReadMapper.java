@@ -14,11 +14,17 @@ import org.sps.entity.merchant.SpsChannelBank;
 public interface SpsChannelBankReadMapper {
 
     /**
-     * 根据用户省份正查询用户信息
+     * 根據身份証查询用户信息
      * @param identity
      * @return
      */
     SpsChannelBank  selectByPrimaryKey(String identity);
+    /**
+     * 根據登陸用戶查询用户信息
+     * @param identity
+     * @return
+     */
+    SpsChannelBank  selectByLoginName(String userName);
     /**
      * 
      * @param channelNum
