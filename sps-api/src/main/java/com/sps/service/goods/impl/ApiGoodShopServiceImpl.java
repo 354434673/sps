@@ -80,7 +80,7 @@ public class ApiGoodShopServiceImpl implements ApiGoodShopService {
 
     @Override
     public List<SpsGoodShop> findList(Map<String, Object> map) {
-        return null;
+        return spsGoodShopMapper.findListAllWithMap(map);
     }
 
     @Override

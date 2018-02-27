@@ -257,6 +257,10 @@
         <if test="shopNum != null and shopNum!=''">
             and  g.g_shop_id = #{shopNum,jdbcType=VARCHAR}
         </if>
+        <if test="recommend != null and recommend!=''">
+            and  g.g_recommend = #{recommend,jdbcType=VARCHAR}
+        </if>
+
         and g.g_delete_flag=0
         order by g.g_create_time desc
     </select>

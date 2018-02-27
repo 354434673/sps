@@ -1,6 +1,9 @@
 package com.sps.entity.merchant;
 
+import com.sps.entity.goods.SpsGoodShop;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class SpsChannelEnterprise implements Serializable{
     /**   
@@ -8,6 +11,8 @@ public class SpsChannelEnterprise implements Serializable{
 	 */   
 	private static final long serialVersionUID = 1L;
 
+
+    private List<SpsGoodShop> goodShops;
 	private Integer enterpriseId;
 
     private String enterpriseBusinesslicenseNo;
@@ -35,7 +40,16 @@ public class SpsChannelEnterprise implements Serializable{
     private SpsChannelPic pic;
     
     private SpsChannelGuarantee guarantee;
-    
+
+
+    public List<SpsGoodShop> getGoodShops() {
+        return goodShops;
+    }
+
+    public void setGoodShops(List<SpsGoodShop> goodShops) {
+        this.goodShops = goodShops;
+    }
+
     public SpsChannelGuarantee getGuarantee() {
 		return guarantee;
 	}
