@@ -5,10 +5,8 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
-import com.sps.dao.goods.SpsGoodShopMapper;
-import com.sps.dao.goods.SpsGoodShopSkuMapper;
-import com.sps.dao.goods.SpsGoodsAlbumMapper;
-import com.sps.dao.goods.SpsGoodsMapper;
+import com.sps.dao.goods.*;
+import com.sps.entity.goods.SpsCustomCategory;
 import com.sps.entity.goods.SpsGoodShop;
 import com.sps.entity.goods.SpsGoodShopSku;
 import com.sps.entity.goods.SpsGoodsAlbum;
@@ -47,6 +45,8 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 	private SpsGoodsAlbumMapper spsGoodsAlbumMapper;
 	@Resource
 	private SpsGoodShopSkuMapper spsGoodShopSkuMapper;
+	@Resource
+	private SpsCustomCategoryMapper spsCustomCategoryMapper;
 	@Override
 	@Transactional(readOnly = true)
 	public HashMap<String, Object> queryMerchantList(String data) {
@@ -85,7 +85,6 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 								channel.setGoodShops(goodShopList);
 							}
 						}
-
 					}
 				}
 				super.logger.error(Message.SUCCESS_MSG);
@@ -120,24 +119,32 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, enterpriseId);
 				//排序方式
 				String orderType = parseObject.getString("orderType");
+				String goodsName = parseObject.getString("goodsName");
+				Integer categoryId = parseObject.getInteger("categoryId");
 				if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
 					//查询商户下的商品
 					for (SpsChannelEnterprise channel : queryBusinessForApi) {
 						if(!"".equals(channel.getChannelNum())){
 							Map<String, Object> map = new HashMap<>();
 							map.put("shopNum", channel.getChannelNum());
-							map.put("recommend", "1");
+							map.put("goodsName", goodsName);
+							map.put("categorySelf", categoryId);
 							map.put("orderType", orderType);
 							//查询推荐中的商品
 							List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
 							if(goodShopList!=null&&goodShopList.size()>0){
 								channel.setGoodShops(goodShopList);
 							}
+							Map<String, Object> categoryMap = new HashMap<>();
+							categoryMap.put("customShopNum", channel.getChannelNum());
+							List<SpsCustomCategory> categoryList = spsCustomCategoryMapper.findListAllWithMap(categoryMap);
+							if(categoryList!=null&&categoryList.size()>0){
+								channel.setCustomCategoryList(categoryList);
+							}
 						}
 					}
 				}
 				super.logger.error(Message.SUCCESS_MSG);
-
 				hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
 						Message.SUCCESS_MSG,1, queryBusinessForApi.get(0));
 			} catch (Exception e) {

@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class SpsGoodShopSku implements Serializable {
     private String spuName;
+    private String sizeColor;
+
 
     private Integer gId;
     private Integer gGoodsId;
@@ -34,6 +36,14 @@ public class SpsGoodShopSku implements Serializable {
 
     private Date gUpdateTime;
 
+
+    public String getSizeColor() {
+        return sizeColor;
+    }
+
+    public void setSizeColor(String sizeColor) {
+        this.sizeColor = sizeColor;
+    }
 
     public Integer getgGoodsId() {
         return gGoodsId;

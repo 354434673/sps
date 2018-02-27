@@ -1,5 +1,6 @@
 package com.sps.entity.merchant;
 
+import com.sps.entity.goods.SpsCustomCategory;
 import com.sps.entity.goods.SpsGoodShop;
 
 import java.io.Serializable;
@@ -11,7 +12,7 @@ public class SpsChannelEnterprise implements Serializable{
 	 */   
 	private static final long serialVersionUID = 1L;
 
-
+    private List<SpsCustomCategory> customCategoryList;
     private List<SpsGoodShop> goodShops;
 	private Integer enterpriseId;
 
@@ -41,6 +42,14 @@ public class SpsChannelEnterprise implements Serializable{
     
     private SpsChannelGuarantee guarantee;
 
+
+    public List<SpsCustomCategory> getCustomCategoryList() {
+        return customCategoryList;
+    }
+
+    public void setCustomCategoryList(List<SpsCustomCategory> customCategoryList) {
+        this.customCategoryList = customCategoryList;
+    }
 
     public List<SpsGoodShop> getGoodShops() {
         return goodShops;

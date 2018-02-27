@@ -51,7 +51,13 @@ public class GoodShopSkuServiceImpl implements GoodShopSkuService {
 
     @Override
     public List<SpsGoodShopSku> findList(Map<String, Object> map) {
-        return spsGoodShopSkuMapper.findListAllWithMap(map);
+        List<SpsGoodShopSku> list = spsGoodShopSkuMapper.findListAllWithMap(map);
+        if (list!=null &&list.size()>0){
+            for (SpsGoodShopSku skuList:  list){
+                skuList.setSizeColor(skuList.getgSize()+","+skuList.getgColor());
+            }
+        }
+        return list;
     }
 
     @Override
@@ -75,7 +81,7 @@ public class GoodShopSkuServiceImpl implements GoodShopSkuService {
     }
 
     @Override
-    public HashMap<String, Object> findSkuList(Integer page, Integer limit, String goodsName, String spec, String goodSku, String endTime, String startTime,String shopNum) {
+    public HashMap<String, Object> findSkuList(Integer page, Integer limit, String goodsName, String spec, String goodSku, String endTime, String startTime, String shopNum) {
         Map<String, Object> map = new HashMap<>();
         map.put("shopNum", shopNum);
         map.put("goodsName", goodsName);

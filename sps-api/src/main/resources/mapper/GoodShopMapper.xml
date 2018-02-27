@@ -302,11 +302,15 @@
         <if test="recommend != null and recommend!=''">
             and  g.g_recommend = #{recommend,jdbcType=VARCHAR}
         </if>
+        <if test="categorySelf != null and categorySelf!=''">
+            and  g.g_category_self = #{categorySelf,jdbcType=INTEGER}
+        </if>
         and g.g_delete_flag=0
         <if test="orderType==0">
             order by g.g_create_time desc
         </if>
         <if test="orderType== 1">
+            and g.g_recommend  =1
             order by g.g_sales_num desc ,  g.g_create_time desc
         </if>
         <if test="orderType== 2">
