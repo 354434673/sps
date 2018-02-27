@@ -110,14 +110,13 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 	@Transactional(readOnly = true)
 	public HashMap<String, Object> queryMerchantDetail(String data) {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		ArrayList<String> arrayList = null;
 		if(!StringUtil.isEmpty(data)){
 			JSONObject parseObject = JSON.parseObject(data);
+			
 			Integer enterpriseId = parseObject.getInteger("enterpriseId");
 			try {
 				//根据店主主营业务,获取相同主营业务的商户列表
-				enterpriseDao.selectByPrimaryKey(enterpriseId);
-				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1);
+				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApiById(enterpriseId, 1);
 				//排序方式
 				String orderType = parseObject.getString("orderType");
 				if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
@@ -139,7 +138,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 				super.logger.error(Message.SUCCESS_MSG);
 
 				hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
-						Message.SUCCESS_MSG,queryBusinessForApi.size(), queryBusinessForApi);
+						Message.SUCCESS_MSG,1, queryBusinessForApi.get(0));
 			} catch (Exception e) {
 				e.printStackTrace();
 				super.logger.error(Message.SYSTEM_ERROR_MSG);

@@ -112,7 +112,29 @@
 			<if test="picType != null">
 				and p1.pic_type = #{picType}
 			</if>
+			<if test="enterpriseId != null">
+				and e1.enterpriseId = #{enterpriseId}
+			</if>
 		</where>
   </select>
-  
+  <select id="queryBusinessForApiById" resultMap="BaseResultMap">
+	SELECT
+	<include refid="Column_List" />
+	FROM
+		sps_channel_business b1
+	JOIN 
+		sps_channel_enterprise e1 ON b1.channel_num = e1.channel_num
+	JOIN 
+		sps_channel_pic p1 on b1.channel_num = p1.channel_num	
+	JOIN 
+	   	sps_channel_guarantee g1 on b1.channel_num = g1.channel_num
+		<where>
+			<if test="picType != null">
+				and p1.pic_type = #{picType}
+			</if>
+			<if test="enterpriseId != null">
+				and e1.enterpriseId = #{enterpriseId}
+			</if>
+		</where>
+  </select>
 </mapper>
