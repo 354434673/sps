@@ -25,20 +25,6 @@ public interface ChannelEnterpriseDao extends ServiceBase<SpsChannelEnterpriseEx
 	 */
     List<SpsChannelEnterprise> queryBusinessForApi(
 		    		@Param("businessProduct") List<String> businessProduct, 
-		    		@Param("picType")Integer picType);
-    /**
-     * 根据商户id查询
-     * @Title: queryBusinessForApiById   
-     * @Description: TODO(这里用一句话描述这个方法的作用)   
-     * @param: @param businessProduct
-     * @param: @param picType
-     * @param: @return  
-     * @author YangNingSheng    
-     * @date 2018年2月27日 下午4:17:26
-     * @return: List<SpsChannelEnterprise>      
-     * @throws
-     */
-    List<SpsChannelEnterprise> queryBusinessForApiById(
-    		@Param("enterpriseId") Integer enterpriseId, 
-    		@Param("picType")Integer picType);
+		    		@Param("picType")Integer picType,
+		    		@Param("enterpriseId") Integer enterpriseId);
 }

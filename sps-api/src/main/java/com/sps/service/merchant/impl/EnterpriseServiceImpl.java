@@ -70,7 +70,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 			}
 			try {
 				//根据店主主营业务,获取相同主营业务的商户列表
-				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1);
+				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, null);
 				if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
 					//查询商户下的商品
 					for (SpsChannelEnterprise channel : queryBusinessForApi) {
@@ -110,13 +110,14 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 	@Transactional(readOnly = true)
 	public HashMap<String, Object> queryMerchantDetail(String data) {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		ArrayList<String> arrayList = new ArrayList<String>();
 		if(!StringUtil.isEmpty(data)){
 			JSONObject parseObject = JSON.parseObject(data);
 			
 			Integer enterpriseId = parseObject.getInteger("enterpriseId");
 			try {
 				//根据店主主营业务,获取相同主营业务的商户列表
-				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApiById(enterpriseId, 1);
+				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, enterpriseId);
 				//排序方式
 				String orderType = parseObject.getString("orderType");
 				if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
