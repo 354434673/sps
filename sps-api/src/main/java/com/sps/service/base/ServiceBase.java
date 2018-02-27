@@ -9,7 +9,7 @@ public interface ServiceBase<T,K extends Serializable>{
 
     int deleteByExample(T example);
 
-    int deleteByPrimaryKey(Integer userId);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(K record);
 
@@ -17,7 +17,7 @@ public interface ServiceBase<T,K extends Serializable>{
 
     List<K> selectByExample(T example);
 
-    K selectByPrimaryKey(Integer userId);
+    K selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") K record, @Param("example") T example);
 

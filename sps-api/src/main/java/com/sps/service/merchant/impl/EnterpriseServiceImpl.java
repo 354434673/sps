@@ -113,21 +113,10 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 		ArrayList<String> arrayList = null;
 		if(!StringUtil.isEmpty(data)){
 			JSONObject parseObject = JSON.parseObject(data);
-			String shopkeeperCustomerid = parseObject.getString("shopkeeperCustomerid");
-
-
-			SpsShopkeeper queryShopkeeperList = shopkeeperService.queryShopkeeperList(shopkeeperCustomerid);
-			//查询当前登录店主的主营业务
-			String shopkeeperBusinessType = queryShopkeeperList.getShopkeeperBusinessType();
-
-			String[] split = shopkeeperBusinessType.split(",");
-
-			arrayList = new ArrayList<String>();
-			for (String string : split) {
-				arrayList.add(string);
-			}
+			Integer enterpriseId = parseObject.getInteger("enterpriseId");
 			try {
 				//根据店主主营业务,获取相同主营业务的商户列表
+				enterpriseDao.selectByPrimaryKey(enterpriseId);
 				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1);
 				//排序方式
 				String orderType = parseObject.getString("orderType");

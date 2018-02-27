@@ -65,7 +65,7 @@ public class UserServiceImpl extends BaseOperate{
 				result = Message.resultMap(Message.USERNOT_REGIST_CODE, Message.USERNOT_REGIST_MSG,
 						Message.USERNOT_REGIST_MSG, 0, null);
 			}else if(Md5Util.getMd5(password, user.getUserSalt()).equals(user.getUserPassword())){
-				//查询通过后,获取店主商户信息
+				//查询通过后,获取店主账户信息
 				SpsShopkeeperAccountExample example = new SpsShopkeeperAccountExample();
 				
 				example.createCriteria().andAccountNumEqualTo(userName);
