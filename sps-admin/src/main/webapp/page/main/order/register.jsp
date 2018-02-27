@@ -205,7 +205,7 @@
 				  logisticsOther = $('#logisticsOther').val()
 				  logisticsNum = $('#logisticsNum').val()
 				  orderId = <%=request.getParameter("orderid")%>
-<%-- 				  $.post({
+ 				  $.post({
 					  url:'<%=path%>/order/insertLogistics',
 					  dataType:'json',
 					  data:{
@@ -229,7 +229,7 @@
 					  error:function(){
 						  layer.msg('系统错误',{icon: 2});
 					  }
-				  }) --%>
+				  }) 
 			  })
 			  function uploadFile(name,id,other,num,flag){
 			  }
