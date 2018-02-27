@@ -327,11 +327,6 @@
 			<artifactId>spring-test</artifactId>
 			<version>4.1.7.RELEASE</version>
 		</dependency>
-        <dependency>
-            <groupId>com.sps</groupId>
-            <artifactId>sps-goods</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
 	<profiles>
