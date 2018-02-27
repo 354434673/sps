@@ -102,10 +102,21 @@ public class UserServiceImpl extends BaseOperate{
 
 		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
 	}
+	/**
+	 * 店主注册,先查询当前店主是否邀请过,如果邀请过,则注册成功,否则注册失败
+	 * @Title: insertUser   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param data
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月27日 下午5:01:46
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping(value="/api/add", method=RequestMethod.POST)
 	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
 	public HashMap<String, Object> insertUser(@RequestBody String data) {
-		
+		//TODO 查询店主邀请
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		if(!StringUtil.isEmpty(data)){
 			
