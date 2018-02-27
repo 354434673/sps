@@ -20,10 +20,11 @@
         <result column="g_force_opinion" jdbcType="VARCHAR" property="gForceOpinion"/>
         <result column="g_sku_ids" jdbcType="VARCHAR" property="gSkuIds"/>
         <result column="g_goods_id" jdbcType="INTEGER" property="gGoodsId"/>
+        <result column="g_sales_num" jdbcType="INTEGER" property="gSalesNum"/>
     </resultMap>
     <sql id="Base_Column_List">
     g_id, g_category_ids, g_brand_id, g_spu_no, g_spu_name, g_category_self, g_recommend, 
-    g_unit, g_grounding_flag, g_create_time, g_shop_id, g_delete_flag, g_status, g_update_time,g_opinion,g_force_opinion,g_sku_ids,g_goods_id
+    g_unit, g_grounding_flag, g_create_time, g_shop_id, g_delete_flag, g_status, g_update_time,g_opinion,g_force_opinion,g_sku_ids,g_goods_id,g_sales_num
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -40,13 +41,13 @@
       g_spu_no, g_spu_name, g_category_self, 
       g_recommend, g_unit, g_grounding_flag, 
       g_create_time, g_shop_id, g_delete_flag, 
-      g_status, g_update_time,g_opinion,g_force_opinion,g_sku_ids,g_goods_id)
+      g_status, g_update_time,g_opinion,g_force_opinion,g_sku_ids,g_goods_id,g_sales_num)
     values (#{gId,jdbcType=INTEGER}, #{gCategoryIds,jdbcType=VARCHAR}, #{gBrandId,jdbcType=INTEGER}, 
       #{gSpuNo,jdbcType=VARCHAR}, #{gSpuName,jdbcType=VARCHAR}, #{gCategorySelf,jdbcType=INTEGER}, 
       #{gRecommend,jdbcType=VARCHAR}, #{gUnit,jdbcType=VARCHAR}, #{gGroundingFlag,jdbcType=VARCHAR}, 
       #{gCreateTime,jdbcType=TIMESTAMP}, #{gShopId,jdbcType=VARCHAR}, #{gDeleteFlag,jdbcType=INTEGER},
       #{gStatus,jdbcType=INTEGER}, #{gUpdateTime,jdbcType=TIMESTAMP}, #{gOpinion,jdbcType=VARCHAR}, #{gForceOpinion,jdbcType=VARCHAR},
-       #{gSkuIds,jdbcType=VARCHAR},#{gGoodsId,jdbcType=INTEGER})
+       #{gSkuIds,jdbcType=VARCHAR},#{gGoodsId,jdbcType=INTEGER},#{gSalesNum,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="SpsGoodShop">
         insert into sps_good_shop
@@ -199,6 +200,9 @@
             <if test="gGoodsId != null">
                 g_goods_id = #{gGoodsId,jdbcType=INTEGER},
             </if>
+            <if test="gSalesNum != null">
+                g_sales_num = #{gSalesNum,jdbcType=INTEGER},
+            </if>
         </set>
         where g_id = #{gId,jdbcType=INTEGER}
     </update>
@@ -223,12 +227,50 @@
 
     <!-- 查询所有 -->
     <select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">
-        select
-        g.g_id, g.g_category_ids, g.g_brand_id, g.g_spu_no, g.g_spu_name, g.g_category_self, g.g_recommend,
-        g.g_unit, g.g_grounding_flag, g.g_create_time, g.g_shop_id, g.g_delete_flag, g.g_status,
-        g.g_update_time,g.g_opinion,g.g_force_opinion,g.g_sku_ids,g.g_goods_id,
-        b.custom_name as categoryName
-        from sps_good_shop g LEFT JOIN sps_custom_category b on b.custom_id=g.g_category_self
+        SELECT
+        g.g_id,
+        g.g_category_ids,
+        g.g_brand_id,
+        g.g_spu_no,
+        g.g_spu_name,
+        g.g_category_self,
+        g.g_recommend,
+        g.g_unit,
+        g.g_grounding_flag,
+        g.g_create_time,
+        g.g_shop_id,
+        g.g_delete_flag,
+        g.g_status,
+        g.g_update_time,
+        g.g_opinion,
+        g.g_force_opinion,
+        g.g_sku_ids,
+        g.g_goods_id,
+        g.g_sales_num,
+        b.custom_name AS categoryName,
+        (
+        SELECT
+        min(s.g_price)
+        FROM
+        sps_good_shop_sku s
+        WHERE
+        s.g_gid = g.g_id
+        ) AS minPrice,
+        (
+        SELECT
+        a.album_url
+        FROM
+        sps_goods_album a
+        WHERE
+        a.goods_id = g.g_goods_id
+        AND a.album_type = 0
+        ORDER BY
+        a.album_id ASC
+        LIMIT 1
+        ) AS gPic
+        FROM
+        sps_good_shop g
+        LEFT JOIN sps_custom_category b ON b.custom_id = g.g_category_self
         where 1=1
         <if test="goodsName !=null and goodsName != ''">
             and g.g_spu_name LIKE CONCAT('%',#{goodsName,jdbcType=VARCHAR},'%')
@@ -260,9 +302,19 @@
         <if test="recommend != null and recommend!=''">
             and  g.g_recommend = #{recommend,jdbcType=VARCHAR}
         </if>
-
         and g.g_delete_flag=0
-        order by g.g_create_time desc
+        <if test="orderType==0">
+            order by g.g_create_time desc
+        </if>
+        <if test="orderType== 1">
+            order by g.g_sales_num desc ,  g.g_create_time desc
+        </if>
+        <if test="orderType== 2">
+            order by minPrice desc ,  g.g_create_time desc
+        </if>
+        <if test="orderType== 3">
+            order by minPrice asc ,  g.g_create_time desc
+        </if>
     </select>
     <select id="findLastId" parameterType="int" resultMap="BaseResultMap">
     SELECT g_id  from sps_good_shop order by g_id desc  LIMIT 1
@@ -312,6 +364,7 @@
         g.g_force_opinion,
         g.g_sku_ids,
         g.g_goods_id,
+        g.g_sales_num,
         ce.enterprise_company_name as companyName,
         co.open_admin_num as adminNum,
         cc.custom_name as categoryName
@@ -370,6 +423,7 @@
         g.g_force_opinion,
         g.g_sku_ids,
         g.g_goods_id,
+        g.g_sales_num,
         ce.enterprise_company_name as companyName,
         co.open_admin_num as adminNum,
         cc.custom_name as categoryName

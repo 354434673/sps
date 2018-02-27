@@ -13,8 +13,10 @@ public class SpsGoodShop implements Serializable {
     private Integer gId;
     private String gRemark;
     private String gDetails;
-
+    private Integer gSalesNum;
     private String gCategoryIds;
+
+    private String gPic;
 
     private Integer gBrandId;
 
@@ -46,6 +48,21 @@ public class SpsGoodShop implements Serializable {
     private List<SpsGoodsAlbum> albumList;
     private List<SpsGoodsAlbum> albumDetailList;
 
+    public String getgPic() {
+        return gPic;
+    }
+
+    public void setgPic(String gPic) {
+        this.gPic = gPic;
+    }
+
+    public Integer getgSalesNum() {
+        return gSalesNum;
+    }
+
+    public void setgSalesNum(Integer gSalesNum) {
+        this.gSalesNum = gSalesNum;
+    }
 
     public List<SpsGoodsAlbum> getAlbumDetailList() {
         return albumDetailList;
