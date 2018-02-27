@@ -80,7 +80,9 @@
 		src="<%=path%>/page/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="detail"  id="detail">详情</a>
+{{#  if(d.flag == 6 || d.flag == 7 || d.flag == 8 || d.flag == 7 || d.flag == 9 || d.flag == 10){ }}
   <a class="layui-btn layui-btn-mini" lay-event="express" id="express">查看物流</a>
+{{#  } }} 
 </script>
 <script type="text/html" id="date">
 {{#  
