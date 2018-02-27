@@ -18,10 +18,11 @@
     <result column="personal_living_condition_other" property="personalLivingConditionOther" jdbcType="VARCHAR" />
     <result column="personal_living_address" property="personalLivingAddress" jdbcType="VARCHAR" />
     <result column="personal_none_corp" property="personalNoneCorp" jdbcType="VARCHAR" />
-    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+    <result column="personal_nickname" property="personalNickname" jdbcType="VARCHAR" />
     <result column="personal_username" property="personalUsername" jdbcType="VARCHAR" />
     <result column="personal_creat_time" property="personalCreatTime" jdbcType="TIMESTAMP" />
     <result column="personal_update_time" property="personalUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -99,8 +100,8 @@
       personal_phone_password, personal_placeOfDomicile, 
       personal_living_condition, personal_living_condition_other, 
       personal_living_address, personal_none_corp, 
-      shopkeeper_customerId, personal_username, 
-      personal_creat_time, personal_update_time
+      personal_nickname, personal_username, personal_creat_time, 
+      personal_update_time, shopkeeper_customerId
       )
     values (#{personalId,jdbcType=INTEGER}, #{personalClientName,jdbcType=VARCHAR}, #{personalSex,jdbcType=VARCHAR}, 
       #{personalIdcard,jdbcType=VARCHAR}, #{personalIdcardValidityStart,jdbcType=VARCHAR}, 
@@ -109,8 +110,8 @@
       #{personalPhonePassword,jdbcType=VARCHAR}, #{personalPlaceofdomicile,jdbcType=VARCHAR}, 
       #{personalLivingCondition,jdbcType=VARCHAR}, #{personalLivingConditionOther,jdbcType=VARCHAR}, 
       #{personalLivingAddress,jdbcType=VARCHAR}, #{personalNoneCorp,jdbcType=VARCHAR}, 
-      #{shopkeeperCustomerid,jdbcType=VARCHAR}, #{personalUsername,jdbcType=VARCHAR}, 
-      #{personalCreatTime,jdbcType=TIMESTAMP}, #{personalUpdateTime,jdbcType=TIMESTAMP}
+      #{personalNickname,jdbcType=VARCHAR}, #{personalUsername,jdbcType=VARCHAR}, #{personalCreatTime,jdbcType=TIMESTAMP}, 
+      #{personalUpdateTime,jdbcType=TIMESTAMP}, #{shopkeeperCustomerid,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPersonal" >
@@ -164,8 +165,8 @@
       <if test="personalNoneCorp != null" >
         personal_none_corp,
       </if>
-      <if test="shopkeeperCustomerid != null" >
-        shopkeeper_customerId,
+      <if test="personalNickname != null" >
+        personal_nickname,
       </if>
       <if test="personalUsername != null" >
         personal_username,
@@ -175,6 +176,9 @@
       </if>
       <if test="personalUpdateTime != null" >
         personal_update_time,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -226,8 +230,8 @@
       <if test="personalNoneCorp != null" >
         #{personalNoneCorp,jdbcType=VARCHAR},
       </if>
-      <if test="shopkeeperCustomerid != null" >
-        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      <if test="personalNickname != null" >
+        #{personalNickname,jdbcType=VARCHAR},
       </if>
       <if test="personalUsername != null" >
         #{personalUsername,jdbcType=VARCHAR},
@@ -238,8 +242,17 @@
       <if test="personalUpdateTime != null" >
         #{personalUpdateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPersonalExample" resultType="java.lang.Integer" >
+    select count(*) from sps_shopkeeper_personal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update sps_shopkeeper_personal
     <set >
@@ -291,8 +304,8 @@
       <if test="record.personalNoneCorp != null" >
         personal_none_corp = #{record.personalNoneCorp,jdbcType=VARCHAR},
       </if>
-      <if test="record.shopkeeperCustomerid != null" >
-        shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      <if test="record.personalNickname != null" >
+        personal_nickname = #{record.personalNickname,jdbcType=VARCHAR},
       </if>
       <if test="record.personalUsername != null" >
         personal_username = #{record.personalUsername,jdbcType=VARCHAR},
@@ -302,6 +315,9 @@
       </if>
       <if test="record.personalUpdateTime != null" >
         personal_update_time = #{record.personalUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -326,10 +342,11 @@
       personal_living_condition_other = #{record.personalLivingConditionOther,jdbcType=VARCHAR},
       personal_living_address = #{record.personalLivingAddress,jdbcType=VARCHAR},
       personal_none_corp = #{record.personalNoneCorp,jdbcType=VARCHAR},
-      shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      personal_nickname = #{record.personalNickname,jdbcType=VARCHAR},
       personal_username = #{record.personalUsername,jdbcType=VARCHAR},
       personal_creat_time = #{record.personalCreatTime,jdbcType=TIMESTAMP},
-      personal_update_time = #{record.personalUpdateTime,jdbcType=TIMESTAMP}
+      personal_update_time = #{record.personalUpdateTime,jdbcType=TIMESTAMP},
+      shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -382,8 +399,8 @@
       <if test="personalNoneCorp != null" >
         personal_none_corp = #{personalNoneCorp,jdbcType=VARCHAR},
       </if>
-      <if test="shopkeeperCustomerid != null" >
-        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      <if test="personalNickname != null" >
+        personal_nickname = #{personalNickname,jdbcType=VARCHAR},
       </if>
       <if test="personalUsername != null" >
         personal_username = #{personalUsername,jdbcType=VARCHAR},
@@ -393,6 +410,9 @@
       </if>
       <if test="personalUpdateTime != null" >
         personal_update_time = #{personalUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
       </if>
     </set>
     where personal_id = #{personalId,jdbcType=INTEGER}
@@ -414,10 +434,11 @@
       personal_living_condition_other = #{personalLivingConditionOther,jdbcType=VARCHAR},
       personal_living_address = #{personalLivingAddress,jdbcType=VARCHAR},
       personal_none_corp = #{personalNoneCorp,jdbcType=VARCHAR},
-      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      personal_nickname = #{personalNickname,jdbcType=VARCHAR},
       personal_username = #{personalUsername,jdbcType=VARCHAR},
       personal_creat_time = #{personalCreatTime,jdbcType=TIMESTAMP},
-      personal_update_time = #{personalUpdateTime,jdbcType=TIMESTAMP}
+      personal_update_time = #{personalUpdateTime,jdbcType=TIMESTAMP},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR}
     where personal_id = #{personalId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -25,10 +25,11 @@ import com.sps.entity.shopkeeper.SpsShopkeeperAccountExample;
 import com.sps.entity.user.SpsUser;
 import com.sps.entity.user.SpsUserExample;
 import com.sps.entity.user.SpsUserExample.Criteria;
+import com.sps.service.base.BaseOperate;
 
 
 @RestController
-public class UserServiceImpl {
+public class UserServiceImpl extends BaseOperate{
 	@Resource
 	private SpsUserDao dao;
 	@Resource
@@ -47,32 +48,44 @@ public class UserServiceImpl {
 	 */
 	@RequestMapping(value="/api/login", method=RequestMethod.POST)
 	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
-	public HashMap<String, Object> userLogin(String userName, String password){
+	public HashMap<String, Object> userLogin(@RequestBody String data){
 		
-		SpsUser user = getUser(userName);
+		JSONObject parseObject = JSON.parseObject(data);
 		
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		if(userName == null){
-			result = Message.resultMap(Message.USERNOT_REGIST_CODE, Message.USERNOT_REGIST_MSG,
-					Message.USERNOT_REGIST_MSG, 0, null);
-		}else if(Md5Util.getMd5(password, user.getUserSalt()).equals(user.getUserPassword())){
-			//查询通过后,获取店主商户信息
-			SpsShopkeeperAccountExample example = new SpsShopkeeperAccountExample();
+		HashMap<String, Object> result = null;
+		if(!StringUtil.isEmpty(data)){
 			
-			example.createCriteria().andAccountNumEqualTo(userName);
+			String userName = parseObject.getString("userName");
 			
-			List<SpsShopkeeperAccount> selectByExample = accountDao.selectByExample(example);
+			String password = parseObject.getString("password");
 			
-			if(selectByExample.size() == 0){
+			SpsUser user = getUser(userName);
+			
+			if(userName == null){
 				result = Message.resultMap(Message.USERNOT_REGIST_CODE, Message.USERNOT_REGIST_MSG,
 						Message.USERNOT_REGIST_MSG, 0, null);
+			}else if(Md5Util.getMd5(password, user.getUserSalt()).equals(user.getUserPassword())){
+				//查询通过后,获取店主商户信息
+				SpsShopkeeperAccountExample example = new SpsShopkeeperAccountExample();
+				
+				example.createCriteria().andAccountNumEqualTo(userName);
+				
+				List<SpsShopkeeperAccount> selectByExample = accountDao.selectByExample(example);
+				
+				if(selectByExample.size() == 0){
+					result = Message.resultMap(Message.USERNOT_REGIST_CODE, Message.USERNOT_REGIST_MSG,
+							Message.USERNOT_REGIST_MSG, 0, null);
+				}else{
+					result = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
+							Message.SUCCESS_MSG, 1, selectByExample.get(0).getShopkeeperCustomerid());
+				}
 			}else{
-				result = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
-						Message.SUCCESS_MSG, 1, selectByExample.get(0).getShopkeeperCustomerid());
+				result = Message.resultMap(Message.FAILURE_CODE, Message.FAILURE_CODE,
+						Message.FAILURE_MSG, 0, null);
 			}
 		}else{
-			result = Message.resultMap(Message.FAILURE_CODE, Message.FAILURE_CODE,
-					Message.FAILURE_MSG, 0, null);
+			result = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG, 
+					Message.FAILURE_MSG,null, null);
 		}
 		return result;
 	}
@@ -102,31 +115,42 @@ public class UserServiceImpl {
 			
 			String password = parseObject.getString("password");
 			
-			String salt = Md5Util.getSalt(4);//4位盐
-			
-			SpsUser user = new SpsUser();
-			
-			user.setUserUsername(phone);
-			
-			user.setUserSalt(salt);
-			
-			user.setUserPassword(Md5Util.getMd5(password, salt));
-			
-			user.setUserPhone(phone);
-			
-			user.setUserState(0);
-			
-			user.setUserMark(2);
-			
-			user.setUserCreattime(new Date());
-			
-			user.setUserUpdatetime(new Date());
-			
-			dao.insertSelective(user);
-			
-			hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG, 
-					Message.SUCCESS_MSG,null, null);
+			try {
+				String salt = Md5Util.getSalt(4);//4位盐
+				
+				SpsUser user = new SpsUser();
+				
+				user.setUserUsername(phone);
+				
+				user.setUserSalt(salt);
+				
+				user.setUserPassword(Md5Util.getMd5(password, salt));
+				
+				user.setUserPhone(phone);
+				
+				user.setUserState(0);
+				
+				user.setUserMark(2);
+				
+				user.setUserCreattime(new Date());
+				
+				user.setUserUpdatetime(new Date());
+				
+				super.logger.info("手机号为:"+phone+"的用户注册成功");
+				
+				dao.insertSelective(user);
+				
+				hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG, 
+						Message.SUCCESS_MSG,null, null);
+			} catch (Exception e) {
+				
+				super.logger.info("手机号为:"+phone+"的用户注册失败,原因:Exception");
+				
+				hashMap = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG, 
+						Message.FAILURE_MSG,null, null);
+			}
 		}else{
+			super.logger.info("注册失败,失败原因:参数异常");
 			hashMap = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG, 
 					Message.FAILURE_MSG,null, null);
 		}

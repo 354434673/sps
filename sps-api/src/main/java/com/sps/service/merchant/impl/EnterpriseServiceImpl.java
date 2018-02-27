@@ -62,7 +62,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 			String shopkeeperCustomerid = parseObject.getString("shopkeeperCustomerid");
 			
 			SpsShopkeeper queryShopkeeperList = shopkeeperService.queryShopkeeperList(shopkeeperCustomerid);
-			
+			//查询当前登录店主的主营业务
 			String shopkeeperBusinessType = queryShopkeeperList.getShopkeeperBusinessType();
 			
 			String[] split = shopkeeperBusinessType.split(",");
@@ -73,6 +73,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 				arrayList.add(string);
 			}
 			try {
+				//根据店主主营业务,获取相同主营业务的商户列表
 				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1);
 			/*	List<SpsChannelBusiness> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1);*/
 				if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
