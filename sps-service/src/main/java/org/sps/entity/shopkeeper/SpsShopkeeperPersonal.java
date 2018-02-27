@@ -1,4 +1,4 @@
-package com.sps.entity.shopkeeper;
+package org.sps.entity.shopkeeper;
 
 import java.util.Date;
 
