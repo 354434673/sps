@@ -1,5 +1,6 @@
 package org.sps.entity.shopkeeper;
 
+
 import java.io.Serializable;
 import java.util.Date;
 

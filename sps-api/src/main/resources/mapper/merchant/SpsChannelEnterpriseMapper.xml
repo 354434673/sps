@@ -22,6 +22,10 @@
 	    <result column="pic_type" property="picType" jdbcType="INTEGER" />
 	    <result column="pic_src" property="picSrc" jdbcType="VARCHAR" />
     </association>
+    <association property="guarantee" javaType="com.sps.entity.merchant.SpsChannelGuarantee">
+	    <id column="guarantee_id" property="guaranteeId" jdbcType="INTEGER" />
+	    <result column="guarantee_corp_phone" property="guaranteeCorpPhone" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -58,9 +62,9 @@
     enterprise_employee_num, channel_num
   </sql>
   <sql id="Column_List" >
-    e1.enterprise_id, e1.enterprise_businesslicense_no, e1.enterprise_company_name, e1.enterprise_company_abbreviation,e1.enterprise_company_register_addr, 
+    e1.enterprise_id, e1.channel_num,e1.enterprise_businesslicense_no, e1.enterprise_company_name, e1.enterprise_company_abbreviation,e1.enterprise_company_register_addr, 
     e1.enterprise_company_realit_addr, e1.enterprise_corp, e1.enterprise_corp_idCard, e1.enterprise_operatio_time, 
-    e1.enterprise_employee_num,b1.business_id,b1.business_product,p1.pic_type,p1.pic_src
+    e1.enterprise_employee_num,b1.business_id,b1.business_product,p1.pic_type,p1.pic_src,g1.guarantee_corp_phone
   </sql>
   <select id="countByExample" parameterType="com.sps.entity.merchant.SpsChannelEnterpriseExample" resultType="java.lang.Integer" >
     select count(*) from sps_channel_enterprise
@@ -97,6 +101,8 @@
 		sps_channel_enterprise e1 ON b1.channel_num = e1.channel_num
 	JOIN 
 		sps_channel_pic p1 on b1.channel_num = p1.channel_num	
+	JOIN 
+	   	sps_channel_guarantee g1 on b1.channel_num = g1.channel_num
 		<where>
 			<if test="businessProduct.size > 0">
 				<foreach collection="businessProduct" separator="and" item="item">
@@ -106,7 +112,9 @@
 			<if test="picType != null">
 				and p1.pic_type = #{picType}
 			</if>
+			<if test="enterpriseId != null">
+				and e1.enterprise_id = #{enterpriseId}
+			</if>
 		</where>
   </select>
-  
 </mapper>

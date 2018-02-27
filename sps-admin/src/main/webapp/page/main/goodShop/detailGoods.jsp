@@ -97,7 +97,7 @@
                     <th>起订量</th>
                     <th>库存</th>
                     <th>代销服务费率</th>
-                    <th>代销服务费(每件)</th>
+                    <th>代销服务费(每件/元)</th>
                 </tr>
                 </thead>
                 <tbody id="content">
@@ -108,9 +108,9 @@
         </div>
         <div id="showStatus" style="display: none">
             <div class="layui-form-item   ">
-                <label class="layui-form-label">拒绝意见：</label>
+                <label class="layui-form-label" style="    width: 160px;">申请上架拒绝意见：</label>
                 <div style="padding-top: 5px;padding-left: 10px">
-                    <span id="opinion"></span>
+                    <span  id="opinion" style="padding-left: 10px;padding-top: 8px;"></span>
                 </div>
             </div>
         </div>
@@ -151,14 +151,14 @@
                         $('#threeCategoryName').val(json.threeCategory);
                         $('#gCategorySelf').val(json.customName);
                         $('#gSpuName').val(json.goods.gSpuName+'-'+json.goods.gSpuNo);
-                       if(json.goods.gRecommend="1"){
+                       if(json.goods.gRecommend=="1"){
                            $('#recommendFlag').val("是");
-                       } else {
+                       } else if(json.goods.gRecommend=="0") {
                            $('#recommendFlag').val("否");
                        }
-                        if(json.goods.gGroundingFlag="1"){
+                        if(json.goods.gGroundingFlag=="1"){
                             $('#groundingFlag').val("是");
-                        } else {
+                        } else  if(json.goods.gGroundingFlag=="0"){
                             $('#groundingFlag').val("否");
                         }
                     }
@@ -182,7 +182,7 @@
                             })
                         }
                     }
-                    if (json.goods.gOpinion !== undefined) {
+                    if (json.goods.gOpinion !== undefined&&json.goods.gOpinion!=='') {
                         $('#opinion').html(json.goods.gOpinion);
                         $('#showStatus').show();
                     }

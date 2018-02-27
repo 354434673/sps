@@ -1,19 +1,22 @@
 package com.sps.entity.goods;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class SpsGoodShop implements Serializable {
-
-    private String categoryName;
-    private String companyName;
-    private String adminNum;
-
+    private String gForceOpinion;
+    private String gSkuIds;
     private String gOpinion;
-
+    private Integer gGoodsId;
     private Integer gId;
-
+    private String gRemark;
+    private String gDetails;
+    private Integer gSalesNum;
     private String gCategoryIds;
+
+    private String gPic;
 
     private Integer gBrandId;
 
@@ -31,7 +34,7 @@ public class SpsGoodShop implements Serializable {
 
     private Date gCreateTime;
 
-    private Integer gShopId;
+    private String gShopId;
 
     private Integer gDeleteFlag;
 
@@ -39,6 +42,91 @@ public class SpsGoodShop implements Serializable {
 
     private Date gUpdateTime;
 
+    private BigDecimal minPrice;
+
+
+    private List<SpsGoodsAlbum> albumList;
+    private List<SpsGoodsAlbum> albumDetailList;
+
+    public String getgPic() {
+        return gPic;
+    }
+
+    public void setgPic(String gPic) {
+        this.gPic = gPic;
+    }
+
+    public Integer getgSalesNum() {
+        return gSalesNum;
+    }
+
+    public void setgSalesNum(Integer gSalesNum) {
+        this.gSalesNum = gSalesNum;
+    }
+
+    public List<SpsGoodsAlbum> getAlbumDetailList() {
+        return albumDetailList;
+    }
+
+    public void setAlbumDetailList(List<SpsGoodsAlbum> albumDetailList) {
+        this.albumDetailList = albumDetailList;
+    }
+
+    public BigDecimal getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(BigDecimal minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public List<SpsGoodsAlbum> getAlbumList() {
+        return albumList;
+    }
+
+    public void setAlbumList(List<SpsGoodsAlbum> albumList) {
+        this.albumList = albumList;
+    }
+
+    public String getgRemark() {
+        return gRemark;
+    }
+
+    public void setgRemark(String gRemark) {
+        this.gRemark = gRemark;
+    }
+
+    public String getgDetails() {
+        return gDetails;
+    }
+
+    public void setgDetails(String gDetails) {
+        this.gDetails = gDetails;
+    }
+
+    public Integer getgGoodsId() {
+        return gGoodsId;
+    }
+
+    public void setgGoodsId(Integer gGoodsId) {
+        this.gGoodsId = gGoodsId;
+    }
+
+    public String getgSkuIds() {
+        return gSkuIds;
+    }
+
+    public void setgSkuIds(String gSkuIds) {
+        this.gSkuIds = gSkuIds;
+    }
+
+    public String getgForceOpinion() {
+        return gForceOpinion;
+    }
+
+    public void setgForceOpinion(String gForceOpinion) {
+        this.gForceOpinion = gForceOpinion;
+    }
 
     public String getgOpinion() {
         return gOpinion;
@@ -47,31 +135,6 @@ public class SpsGoodShop implements Serializable {
     public void setgOpinion(String gOpinion) {
         this.gOpinion = gOpinion;
     }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getAdminNum() {
-        return adminNum;
-    }
-
-    public void setAdminNum(String adminNum) {
-        this.adminNum = adminNum;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
     public Integer getgId() {
         return gId;
     }
@@ -152,11 +215,11 @@ public class SpsGoodShop implements Serializable {
         this.gCreateTime = gCreateTime;
     }
 
-    public Integer getgShopId() {
+    public String getgShopId() {
         return gShopId;
     }
 
-    public void setgShopId(Integer gShopId) {
+    public void setgShopId(String gShopId) {
         this.gShopId = gShopId;
     }
 

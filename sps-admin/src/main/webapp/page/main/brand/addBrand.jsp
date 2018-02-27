@@ -17,36 +17,37 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet"
-          href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all" />
+          href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all"/>
 </head>
 <body>
 <div style="padding: 40px">
     <h3>品牌信息</h3>
     <hr>
     <div class="layui-form layui-form-pane">
-        <input type="hidden" name="categoryId" id="brandId" >
+        <input type="hidden" name="categoryId" id="brandId">
         <div class="layui-form-item ">
             <label class="layui-form-label">*品牌名称：</label>
             <div class="layui-input-inline">
-                <input id="brandName" type="text" name="brandName"   lay-verify="required|brandName" placeholder="请输入品牌名称"
-                       autocomplete="off" class="layui-input" >
+                <input id="brandName" type="text" name="brandName" lay-verify="required|brandName" placeholder="请输入品牌名称"
+                       autocomplete="off" class="layui-input">
             </div>
             <label class="layui-form-label">*英文名称：</label>
             <div class="layui-input-inline">
                 <input id="brandEnglishName" name="brandEnglishName" lay-verify="required|brandEnglishName" type="text"
                        placeholder="请输入英文名称" autocomplete="off" class="layui-input"
-                       >
+                >
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*简称：</label>
             <div class="layui-input-inline">
-                <input id="brandAbbreviation" name="brandAbbreviation" type="text" lay-verify="required|brandAbbreviation"
+                <input id="brandAbbreviation" name="brandAbbreviation" type="text"
+                       lay-verify="required|brandAbbreviation"
                        placeholder="请输入简称" autocomplete="off" class="layui-input">
             </div>
             <label class="layui-form-label">*关联分类：</label>
             <div class="layui-input-inline">
-                <input type="hidden" id="brandCategoryIds" name="categoryParentId"  lay-verify="required"
+                <input type="hidden" id="brandCategoryIds" name="categoryParentId" lay-verify="required"
                        autocomplete="off" class="layui-input">
                 <input type="hidden" id="brandCategoryNames" name="brandCategoryNames"
                        autocomplete="off" class="layui-input">
@@ -56,19 +57,27 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*小图标：</label>
-            <div class="layui-input-inline">
-                <input type="text" id="brandSmallUrl" name="brandSmallUrl" lay-verify="required" readonly="readonly"
-                       placeholder="小图标" class="layui-input"/>
-                <button onclick="checkImgType()">上传图片</button>
+            <div class="layui-upload">
+                <input type="hidden" id="brandSmallUrl" name="brandSmallUrl" lay-verify="required"/>
+                <input type="file" name="file" style="padding-left: 5px;padding-top: 5px;" id="logoFile2"
+                       onchange="setImg(this);" />
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo2"></div>
+                </blockquote>
             </div>
             <span style="color: red">提示:尺寸是1：1 大小200k以内</span>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*大图标：</label>
-            <div class="layui-input-inline">
-                <input type="text" id="brandBigUrl" name="brandBigUrl"  placeholder="大图标" lay-verify="required" readonly="readonly"
-                       class="layui-input"/>
-                <button onclick="checkImgType1()">上传图片</button>
+            <div class="layui-upload">
+                <input type="hidden" id="brandBigUrl" name="brandBigUrl" lay-verify="required">
+                <input type="file" name="file" style="padding-left: 5px;padding-top: 5px;" id="logoFile"
+                       onchange="setImg1(this);"/>
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo"></div>
+                </blockquote>
             </div>
             <span style="color: red">提示:尺寸是1：1 大小200k以内</span>
         </div>
@@ -79,24 +88,25 @@
             </div>
         </div>
         <div class="layui-form-item" align="center">
-            <button class="layui-btn" lay-filter="submitCategory" lay-submit  id="submit">立即提交
+            <button class="layui-btn" lay-filter="submitCategory" lay-submit id="submit">立即提交
             </button>
-            <button id="back" class="layui-btn layui-btn-primary" >返回</button>
+            <button id="back" class="layui-btn layui-btn-primary">返回</button>
         </div>
     </div>
 </div>
 <div id="tree"></div>
 </div>
 <form id="upload" enctype="multipart/form-data">
-    <input type="file" id='imgupl' name="file" style="display:none" onchange="validateFile()"/>
+    <input type="file" id="imgupl" name="file" style="display:none" onchange="validateFile()"/>
 </form>
 <form id="upload1" enctype="multipart/form-data">
-    <input type="file" id='imgup' name="file" style="display:none" onchange="validateFile1()"/>
+    <input type="file" id="imgup" name="file" style="display:none" onchange="validateFile1()"/>
 </form>
 <script src="<%=path%>/page/static/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript"
         src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
 <script src="<%=path%>/page/static/treeTable/layui.js"></script>
+<script src="<%=path%>/page/static/js/ajaxfileupload.js"></script>
 <script type="text/javascript">
     $(function () {
         $(".import").on("click", function () {
@@ -109,7 +119,7 @@
         $("#tree").hide();
         if ($("#brandCategoryNames").val() == "") {
             $("#showCategory").html("关联分类")
-        }else {
+        } else {
             $("#showCategory").html($("#brandCategoryNames").val())
         }
 
@@ -120,10 +130,96 @@
     function checkImgType() {
         $("#imgupl").click();
     }
+
     // 图片截取
     function checkImgType1() {
         $("#imgup").click();
     }
+
+
+    function setImg1(obj) {//用于进行图片上传，返回地址
+        var f = $(obj).val();
+        if (f == null || f == undefined || f == '') {
+            return false;
+        } else if (!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f)) {
+            layer.msg("类型必须是图片(.png|jpg|bmp|gif|PNG|JPG|BMP|GIF)");
+            $(obj).val('');
+            return false;
+        } else {
+            //批量上传图片
+            $.ajaxFileUpload({
+                type: 'POST',
+                url: '<%=path%>/common/file/upload',
+                secureuri: false,
+                cache: false,
+                fileElementId: "logoFile",//文件选择框的id属性  ,//文件选择框的id属性
+                dataType: 'json',   //json
+                contentType: false,    //不可缺
+                processData: false,    //不可缺
+                success: function (data) {
+                    if (data.code == 0) {
+                        $("#brandBigUrl").val(data.fileName);
+                        $('#demo').find("img").remove();
+                        $('#demo').append(
+                            "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + data.fileName + "' />"
+                        )
+                        // $("#imgShow").attr('src',data.data.avatar);
+                    }  else {
+                        layer.msg('上传失败');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    layer.msg("上传失败，请检查网络后重试");
+                    $("#url").val("");
+                    $(obj).val('');
+                }
+            });
+        }
+    }
+
+
+    function setImg(obj) {//用于进行图片上传，返回地址
+        var f = $(obj).val();
+        if (f == null || f == undefined || f == '') {
+            return false;
+        } else if (!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f)) {
+            layer.msg("类型必须是图片(.png|jpg|bmp|gif|PNG|JPG|BMP|GIF)");
+            $(obj).val('');
+            return false;
+        } else {
+            //批量上传图片
+            $.ajaxFileUpload({
+                type: 'POST',
+                url: '<%=path%>/common/file/upload',
+                secureuri: false,
+                cache: false,
+                fileElementId: "logoFile2",//文件选择框的id属性  ,//文件选择框的id属性
+                dataType: 'json',   //json
+                contentType: false,    //不可缺
+                processData: false,    //不可缺
+                success: function (data) {
+                    if (data.code == 0) {
+                        $("#brandSmallUrl").val(data.fileName);
+                        $('#demo2').find("img").remove();
+                        $('#demo2').append(
+                            "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + data.fileName + "' />"
+                        )
+                        // $("#imgShow").attr('src',data.data.avatar);
+                    }  else {
+                        layer.msg('上传失败');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    layer.msg("上传失败，请检查网络后重试");
+                    $("#url").val("");
+                    $(obj).val('');
+                }
+            });
+        }
+    }
+
+
+
 
     // 验证图片格式及上传
     function validateFile() {
@@ -132,16 +228,20 @@
         if (f.length == 2 && (f[1] == 'jpg' || f[1] == 'jpeg' || f[1] == 'png')) {
             var formData = new FormData($('#upload')[0]);
             $.ajax({
-                url: '<%=path%>/common/file/upload',
+                url: '<%=path%>/common/file/uploadOne',
                 type: 'POST',
                 dataType: 'json',
                 data: formData,
                 cache: false,
                 contentType: false,    //不可缺
                 processData: false,    //不可缺
-                success: function (res) {
-                    if (res.code == 0) {
-                        $("#brandSmallUrl").val(res.fileName);
+                success: function (data) {
+                    if (data.code == 0) {
+                        $("#brandSmallUrl").val(data.fileName);
+                        $('#demo2').find("img").remove();
+                        $('#demo2').append(
+                            "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + data.fileName + "' />"
+                        )
                         // $("#imgShow").attr('src',data.data.avatar);
                     } else {
                         layer.msg('上传失败');
@@ -153,6 +253,7 @@
             $('#brandSmallUrl').val('');
         }
     }
+
     // 验证图片格式及上传
     function validateFile1() {
         var filename = $('#imgup').val();
@@ -167,9 +268,13 @@
                 cache: false,
                 contentType: false,    //不可缺
                 processData: false,    //不可缺
-                success: function (res) {
-                    if (res.code == 0) {
-                        $("#brandBigUrl").val(res.fileName);
+                success: function (rest) {
+                    if (rest.code == 0) {
+                        $("#brandBigUrl").val(rest.fileName);
+                        $('#demo').find("img").remove();
+                        $('#demo').append(
+                            "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + rest.fileName + "' />"
+                        )
                         // $("#imgShow").attr('src',data.data.avatar);
                     } else {
                         layer.msg('上传失败');
@@ -234,11 +339,12 @@
         });
 
     }
+
     $(document).on("click", "#back", function () {
-        if($("#brandId").val()!=""){
+        if ($("#brandId").val() != "") {
             parent.layer.closeAll();
-        }else {
-           window.location.href = "<%=path%>/page/main/brand/index.jsp"
+        } else {
+            window.location.href = "<%=path%>/page/main/brand/index.jsp"
         }
     })
     /*$(document).on("click", "#back", function () {
@@ -283,8 +389,8 @@
         //提交
         var post_flag = false; //设置一个对象来控制是否进入AJAX过程
         form.on('submit(submitCategory)', function (data) {
-            var names= $('#brandCategoryNames').val().split('>')
-            if(names.length<3){
+            var names = $('#brandCategoryNames').val().split('>')
+            if (names.length < 3) {
                 layer.msg("请选择到三级分类！");
                 return false;
             }
@@ -347,16 +453,16 @@
 
         //自定义验证规则
         form.verify({
-            brandName: function(value){
-                if(value.length > 20){
+            brandName: function (value) {
+                if (value.length > 20) {
                     return '品牌名称最多输入20个字符';
                 }
-            }, brandEnglishName: function(value){
-                if(value.length > 50){
+            }, brandEnglishName: function (value) {
+                if (value.length > 50) {
                     return '英文名称最多输入50个字符';
                 }
-            }, brandAbbreviation: function(value){
-                if(value.length > 20){
+            }, brandAbbreviation: function (value) {
+                if (value.length > 20) {
                     return '简称最多输入20个字符';
                 }
             }
