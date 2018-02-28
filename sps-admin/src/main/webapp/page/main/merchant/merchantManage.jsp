@@ -73,9 +73,16 @@
 <script type="text/javascript"
 		src="<%=path%>/page/static/datas/area_data.js"></script>
 <script type="text/html" id="bar">
+	
   <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
+{{#  if(d.channel.channelState != 2){ }}
+  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="freeze">冻结</a>
+{{#  } else if(d.channel.channelState = 2){ }}
+  <a class="layui-btn layui-btn-mini " lay-event="recover">恢复</a>
+{{#  }  }}
+
 </script>
 <!-- 进行数据渲染 -->
 <script type="text/html" id="channelTpl">
@@ -142,26 +149,37 @@
 					  if(layEvent === 'detail'){ //查看
 						  location.href = '<%=path%>/page/main/merchant/queryMerchant.jsp?channelNum='+data.channelNum
 					  } else if(layEvent === 'del'){ //删除
- 					    layer.confirm('真的删除该商户么', function(index){
-					      layer.close(index);
-							$.post({
+	 					    layer.confirm('真的删除该商户么', function(index){
+						      layer.close(index);
+						      updateState(3,data.channelNum,'删除')
+						    }); 
+					  } else if(layEvent === 'edit'){ //编辑
+						  	location.href = '<%=path%>/page/main/merchant/updateMerchant.jsp?channelNum='+data.channelNum
+					  } else if(layEvent == 'freeze'){//冻结
+	 					    layer.confirm('确定冻结该商户么', function(index){
+	 					    updateState(2,data.channelNum,'冻结')
+	 					   }); 
+					  } else if(layEvent == 'recover'){
+	 					    layer.confirm('恢复该冻结商户么', function(index){
+		 					    updateState(0,data.channelNum,'恢复')
+	 					   }); 
+					  }
+				});
+					  //更改状态
+			  	function updateState(state, channelNum, msg){
+						$.post({
 								url:'<%=path%>/merchant/deleteChannel',
 								dataType:'json',
 								data:{
-									state:3,
-									channelNum:data.channelNum
+									state:state,
+									channelNum:channelNum
 								},
 								success:function(result){
-									layer.msg(result.msg)
+									layer.msg(msg+"成功")
 									table.reload('enterpriseId', {})
 								}
 							})
-					      //向服务端发送删除指令
-					    }); 
-					  } else if(layEvent === 'edit'){ //编辑
-						  location.href = '<%=path%>/page/main/merchant/updateMerchant.jsp?channelNum='+data.channelNum
-					  }
-				});
+			  	}
 			});
 	</script>
 </body>

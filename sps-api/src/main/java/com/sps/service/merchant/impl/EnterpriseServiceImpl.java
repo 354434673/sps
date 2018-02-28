@@ -115,7 +115,6 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 			
 			Integer enterpriseId = parseObject.getInteger("enterpriseId");
 			try {
-				//根据店主主营业务,获取相同主营业务的商户列表
 				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, enterpriseId);
 				//排序方式
 				String orderType = parseObject.getString("orderType");
