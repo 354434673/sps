@@ -380,6 +380,8 @@
                 $.ajax(
                     {
                         data: {
+                            gDetails: layedit.getContext(index),
+                            gRemark: layedits.getContext(indexes),
                             flowStatus: 1,
                             gId: $('#goodsId').val(),
                             gCategoryIds: $('#gCategoryIds').val(),
@@ -387,8 +389,6 @@
                             gBrandId: $('#gBrandId').val(),
                             gSpuName: $('#gSpuName').val(),
                             gSpuNo: $('#gSpuNo').val(),
-                            gDetails: layedit.getContext(index),
-                            gRemark: layedits.getContext(indexes),
                             goodsDpic: $('#gDpic').val(),
                             goodsPic: $('#gPic').val(),
                             updateDetailFlag: $("#updateDetailFlag").val(),
