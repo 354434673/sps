@@ -37,9 +37,12 @@ public class MenuServiceImpl implements MenuService{
 		SpsUser user = userService.getUser(userName);
 		
 		List<SpsRole> role = user.getRole();
-		for (SpsRole spsRole : role) {//获得当前用户的所有角色
+		
+		role.forEach(spsRole -> roleList.add(spsRole.getRoleId()));//获得当前用户的所有角色
+		
+/*		for (SpsRole spsRole : role) {//获得当前用户的所有角色
 			roleList.add(spsRole.getRoleId());
-		}
+		}*/
  		SpsMenuExample example = new SpsMenuExample();
  		
  		example.setOrderByClause("m1.menu_sort");
@@ -88,16 +91,17 @@ public class MenuServiceImpl implements MenuService{
 		
 		return seletMenuList;
 	}
-		private List<MenuUtil> getSub(Integer id,List<Integer> roleList){
+	private List<MenuUtil> getSub(Integer id,List<Integer> roleList){
 		SpsMenuExample example2 = new SpsMenuExample();
 		example2.createCriteria()
 								.andMenuParentidEqualTo(id)
 								.andMenuStateEqualTo(0)
 								.andRoleIdIn(roleList);
 		List<SpsMenu> selectByExample2 = spsMenuMapper.selectByExample(example2);
-		MenuUtil menuUtil= null;
+		
 		List<MenuUtil> list2 = new ArrayList<MenuUtil>();
-		for (SpsMenu spsMenu : selectByExample2) {
+		selectByExample2.forEach(spsMenu -> {
+			MenuUtil menuUtil= null;
 			menuUtil = new MenuUtil();
 			menuUtil.setId(spsMenu.getMenuId());
 			menuUtil.setTitle(spsMenu.getMenuName());
@@ -106,7 +110,17 @@ public class MenuServiceImpl implements MenuService{
 			menuUtil.setHref(spsMenu.getMenuUrl());
 			menuUtil.setChildren(null);
 			list2.add(menuUtil);
-		}
+		});
+/*		for (SpsMenu spsMenu : selectByExample2) {
+			menuUtil = new MenuUtil();
+			menuUtil.setId(spsMenu.getMenuId());
+			menuUtil.setTitle(spsMenu.getMenuName());
+			menuUtil.setMenuParentid(spsMenu.getMenuParentid());
+			menuUtil.setMenuNodetype(spsMenu.getMenuNodetype());
+			menuUtil.setHref(spsMenu.getMenuUrl());
+			menuUtil.setChildren(null);
+			list2.add(menuUtil);
+		}*/
 		return list2;
 	}
 }
