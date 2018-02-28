@@ -106,35 +106,27 @@
                         time:1200
                     },
                     function(){
-                        location.href = '<%=path%>/page/main/account/withdraw/inputTradePwd.jsp?withdrawAmt='+amount;
-
-                        /* $.ajax({
-
+                        $.ajax({
                             type: 'post',
                             dataType: 'json',
                             async: false,
                             success: function (result) {
-                                console.log(result);
                                 var code =result.code;
                                 var ok = result.ok;
                                 var  msg = result.msg;
                                 layer.msg(msg);
-                                if(code == ok){
-                                    if(result.body == true){
-
-                                        //若已经设置交易密码，则跳转至输入交易密码页面
-                                    }
-                                    if(result.body == false){
-                                        //则跳转至设置交易密码页面
-                                    }
+                                if(result.body == true){
+                                    location.href = '<%=path%>/page/main/account/withdraw/inputTradePwd.jsp?withdrawAmt='+amount;
+                                    //若已经设置交易密码，则跳转至输入交易密码页面
                                 }
-                                if(code == result.fail){
-                                  		layer.msg(msg);
+                                if(result.body == false){
+                                    //则跳转至设置交易密码页面
+                                    layer.msg(msg);
+                                    location.href = '<%=path%>/page/main/account/withdraw/setTradePwd.jsp';
 
-                                    lock = true;
                                 }
                             }
-                        });*/
+                        });
                     }
             );
             return false;

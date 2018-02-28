@@ -118,7 +118,29 @@ public class WithdrawController {
         return result;
     }
 
+    @RequestMapping("/queryExistTradePwd")
+    @ResponseBody
+    public Result<Boolean> queryExistTradePwd(HttpServletRequest request) {
+        Result<Boolean> result = new Result<Boolean>();
 
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        String pwd = bankReadService.findTradePassword(userName);
+        Boolean flag=true;
+        if(StringUtils.isNotEmpty(pwd) ){
+            result.setBody(flag);
+            result.success();
+            result.setMsg("ok");
+            return result;
+
+        }else{
+            flag=false;
+            result.fail();
+            result.setMsg("未设置交易密码");
+            result.setBody(flag);
+            return result;
+        }
+
+    }
     /**
      * 获取交易详情
      * @return
