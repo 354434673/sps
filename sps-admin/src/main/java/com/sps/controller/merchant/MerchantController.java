@@ -188,6 +188,17 @@ public class MerchantController {
 		
 		return insertGather;
 	}
+	@RequestMapping(value="/queryGather")
+	public String getGather(String gatherBankId){
+		
+		SpsChannelGather g = channelReadService.queryGather(gatherBankId);
+		
+		if(g != null){
+			return "exist";
+		}else{
+			return "success";
+		}
+	}
 	/**
 	 * 获得商户基本信息
 	 * @Title: getChannel   

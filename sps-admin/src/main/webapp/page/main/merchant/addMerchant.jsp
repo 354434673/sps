@@ -1015,7 +1015,7 @@
 			$.getJSON({
 	 			 url:'<%=path%>/salesman/getSalesmanList.json',
 	 			 dataType:'json',
-	 			 data:{bei1:0},
+	 			 data:{bei1:1},
 	 			 success:function(data){
 	 				 console.log(data)
 			 		 var list = "<option value='' >请选择业务员</option>";
