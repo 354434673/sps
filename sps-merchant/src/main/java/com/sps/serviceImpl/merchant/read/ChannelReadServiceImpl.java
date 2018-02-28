@@ -123,6 +123,15 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 		return selectByExample.size() == 0 ? null : selectByExample.get(0);
 	}
 	@Override
+	public SpsChannelGather queryGather(String gatherBankId) {
+		SpsChannelGatherExample example = new SpsChannelGatherExample();
+		
+		example.createCriteria()
+		.andGatherBankIdEqualTo(gatherBankId);
+		List<SpsChannelGather> selectByExample = gatherRead.selectByExample(example);
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
+	}
+	@Override
 	public SpsChannelEnterprise getChannel(SpsChannelEnterprise enterprise) {
 		
 		SpsChannelEnterpriseExample example = new SpsChannelEnterpriseExample();

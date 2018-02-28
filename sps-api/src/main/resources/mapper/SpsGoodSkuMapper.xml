@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsGoodSku">
+  <resultMap id="BaseResultMap" type="com.sps.entity.goods.SpsGoodSku">
+    <id column="g_id" jdbcType="INTEGER" property="gId" />
+    <result column="g_color" jdbcType="VARCHAR" property="gColor" />
+    <result column="g_size" jdbcType="VARCHAR" property="gSize" />
+    <result column="g_no" jdbcType="VARCHAR" property="gNo" />
+    <result column="g_price" jdbcType="DECIMAL" property="gPrice" />
+    <result column="g_type" jdbcType="VARCHAR" property="gType" />
+    <result column="g_scale" jdbcType="DOUBLE" property="gScale" />
+    <result column="g_bprice" jdbcType="DECIMAL" property="gBprice" />
+    <result column="g_aprice" jdbcType="DECIMAL" property="gAprice" />
+    <result column="g_gid" jdbcType="INTEGER" property="gGid" />
+    <result column="g_create_time" jdbcType="TIMESTAMP" property="gCreateTime" />
+    <result column="g_update_time" jdbcType="TIMESTAMP" property="gUpdateTime" />
+    <result column="g_delete_flag" jdbcType="INTEGER" property="gDeleteFlag" />
+    <result column="g_audit_status" jdbcType="INTEGER" property="gAuditStatus" />
+    <result column="g_audit_time" jdbcType="TIMESTAMP" property="gAuditTime" />
+    <result column="g_before_price" jdbcType="DECIMAL" property="gBeforePrice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    g_id, g_color, g_size, g_no, g_price, g_type, g_scale, g_bprice, g_aprice, g_gid, 
+    g_create_time, g_update_time, g_delete_flag,g_audit_status,g_audit_time,g_before_price,g_good_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_good_sku
+    where g_id = #{gId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_good_sku
+    where g_id = #{gId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsGoodSku">
+    insert into sps_good_sku (g_id, g_color, g_size, 
+      g_no, g_price, g_type, 
+      g_scale, g_bprice, g_aprice, 
+      g_gid, g_create_time, g_update_time, 
+      g_delete_flag,g_audit_status,g_audit_time,g_before_price,g_good_no)
+    values (#{gId,jdbcType=INTEGER}, #{gColor,jdbcType=VARCHAR}, #{gSize,jdbcType=VARCHAR}, 
+      #{gNo,jdbcType=VARCHAR}, #{gPrice,jdbcType=DECIMAL}, #{gType,jdbcType=VARCHAR}, 
+      #{gScale,jdbcType=DOUBLE}, #{gBprice,jdbcType=DECIMAL}, #{gAprice,jdbcType=DECIMAL}, 
+      #{gGid,jdbcType=INTEGER}, #{gCreateTime,jdbcType=TIMESTAMP}, #{gUpdateTime,jdbcType=TIMESTAMP}, 
+      #{gDeleteFlag,jdbcType=INTEGER}, #{gAuditStatus,jdbcType=INTEGER}, #{gAuditTime,jdbcType=TIMESTAMP}, #{gBeforePrice,jdbcType=DECIMAL}, #{gGoodNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="SpsGoodSku">
+    insert into sps_good_sku
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gId != null">
+        g_id,
+      </if>
+      <if test="gColor != null">
+        g_color,
+      </if>
+      <if test="gSize != null">
+        g_size,
+      </if>
+      <if test="gNo != null">
+        g_no,
+      </if>
+      <if test="gPrice != null">
+        g_price,
+      </if>
+      <if test="gType != null">
+        g_type,
+      </if>
+      <if test="gScale != null">
+        g_scale,
+      </if>
+      <if test="gBprice != null">
+        g_bprice,
+      </if>
+      <if test="gAprice != null">
+        g_aprice,
+      </if>
+      <if test="gGid != null">
+        g_gid,
+      </if>
+      <if test="gCreateTime != null">
+        g_create_time,
+      </if>
+      <if test="gUpdateTime != null">
+        g_update_time,
+      </if>
+      <if test="gDeleteFlag != null">
+        g_delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gId != null">
+        #{gId,jdbcType=INTEGER},
+      </if>
+      <if test="gColor != null">
+        #{gColor,jdbcType=VARCHAR},
+      </if>
+      <if test="gSize != null">
+        #{gSize,jdbcType=VARCHAR},
+      </if>
+      <if test="gNo != null">
+        #{gNo,jdbcType=VARCHAR},
+      </if>
+      <if test="gPrice != null">
+        #{gPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gType != null">
+        #{gType,jdbcType=VARCHAR},
+      </if>
+      <if test="gScale != null">
+        #{gScale,jdbcType=DOUBLE},
+      </if>
+      <if test="gBprice != null">
+        #{gBprice,jdbcType=DECIMAL},
+      </if>
+      <if test="gAprice != null">
+        #{gAprice,jdbcType=DECIMAL},
+      </if>
+      <if test="gGid != null">
+        #{gGid,jdbcType=INTEGER},
+      </if>
+      <if test="gCreateTime != null">
+        #{gCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gUpdateTime != null">
+        #{gUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gDeleteFlag != null">
+        #{gDeleteFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="SpsGoodSku">
+    update sps_good_sku
+    <set>
+      <if test="gColor != null">
+        g_color = #{gColor,jdbcType=VARCHAR},
+      </if>
+      <if test="gSize != null">
+        g_size = #{gSize,jdbcType=VARCHAR},
+      </if>
+      <if test="gNo != null">
+        g_no = #{gNo,jdbcType=VARCHAR},
+      </if>
+      <if test="gPrice != null">
+        g_price = #{gPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gType != null">
+        g_type = #{gType,jdbcType=VARCHAR},
+      </if>
+      <if test="gScale != null">
+        g_scale = #{gScale,jdbcType=DOUBLE},
+      </if>
+      <if test="gBprice != null">
+        g_bprice = #{gBprice,jdbcType=DECIMAL},
+      </if>
+      <if test="gAprice != null">
+        g_aprice = #{gAprice,jdbcType=DECIMAL},
+      </if>
+      <if test="gGid != null">
+        g_gid = #{gGid,jdbcType=INTEGER},
+      </if>
+      <if test="gCreateTime != null">
+        g_create_time = #{gCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gUpdateTime != null">
+        g_update_time = #{gUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gDeleteFlag != null">
+        g_delete_flag = #{gDeleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="gAuditStatus != null">
+        g_audit_status = #{gAuditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="gAuditTime != null">
+        g_audit_time = #{gAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gBeforePrice != null">
+        g_before_price = #{gBeforePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gGoodNo != null">
+        g_good_no = #{gGoodNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where g_id = #{gId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsGoodSku">
+    update sps_good_sku
+    set g_color = #{gColor,jdbcType=VARCHAR},
+      g_size = #{gSize,jdbcType=VARCHAR},
+      g_no = #{gNo,jdbcType=VARCHAR},
+      g_price = #{gPrice,jdbcType=DECIMAL},
+      g_type = #{gType,jdbcType=VARCHAR},
+      g_scale = #{gScale,jdbcType=DOUBLE},
+      g_bprice = #{gBprice,jdbcType=DECIMAL},
+      g_aprice = #{gAprice,jdbcType=DECIMAL},
+      g_gid = #{gGid,jdbcType=INTEGER},
+      g_create_time = #{gCreateTime,jdbcType=TIMESTAMP},
+      g_update_time = #{gUpdateTime,jdbcType=TIMESTAMP},
+      g_delete_flag = #{gDeleteFlag,jdbcType=INTEGER}
+    where g_id = #{gId,jdbcType=INTEGER}
+  </update>
+  <!-- 查询所有 -->
+  <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_good_sku
+    where 1=1
+    <if test="goodsId !=null and goodsId != ''">
+      and g_gid = #{goodsId,jdbcType=INTEGER}
+    </if>
+    <if test="gAuditStatus !=null and gAuditStatus != ''">
+      and g_audit_status = #{gAuditStatus,jdbcType=INTEGER}
+    </if>
+    <if test="gGoodNo != null and gGoodNo != ''">
+      and  g_good_no = #{gGoodNo,jdbcType=VARCHAR}
+    </if>
+    <if test="gNo !=null and gNo != ''">
+      and g_no LIKE CONCAT('%',#{gNo,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="list !=null and list != ''">
+      and g_id not in
+    <foreach item="item" index="index" collection="list" open="("
+             separator="," close=")">
+      #{item}
+    </foreach>
+    </if>
+    AND g_delete_flag = 0
+  </select>
+  <delete id="deleteSku" parameterType="java.lang.Integer">
+    delete from sps_good_sku
+    where g_gid = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <select id="findById" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_good_sku
+    where g_id = #{gId,jdbcType=INTEGER}
+  </select>
+
+  <select id="getGoodList" parameterType="map"  resultMap="BaseResultMap">
+    select
+    s.g_id, s.g_color, s.g_size, s.g_no, s.g_price, s.g_type, s.g_scale, s.g_bprice, s.g_aprice, s.g_gid,
+    s.g_audit_status,s.g_audit_time,s.g_before_price,s.g_good_no,
+    s.g_create_time, s.g_update_time, s.g_delete_flag,g.g_spu_name as supName
+    from sps_good_sku s LEFT JOIN  sps_goods g on g.g_id=s.g_gid
+    where 1=1
+    <if test="spec !=null and spec != ''">
+      and (s.g_size LIKE CONCAT('%',#{spec,jdbcType=VARCHAR},'%')or s.g_color LIKE CONCAT('%',#{spec,jdbcType=VARCHAR},'%'))
+    </if>
+    <if test="size !=null and size != ''">
+      and (s.g_size LIKE CONCAT('%',#{size,jdbcType=VARCHAR},'%')or s.g_color LIKE CONCAT('%',#{size,jdbcType=VARCHAR},'%'))
+    </if>
+    <if test="spuNo !=null and spuNo != ''">
+      and s.g_no LIKE CONCAT('%',#{spuNo,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="goodsName !=null and goodsName != ''">
+      and g.g_spu_name LIKE CONCAT('%',#{goodsName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="gAuditStatus !=null and gAuditStatus != ''">
+      and s.g_audit_status = #{gAuditStatus,jdbcType=INTEGER}
+    </if>
+    AND s.g_audit_status != 0
+    AND s.g_audit_status != 1
+    AND s.g_delete_flag = 0
+    ORDER BY
+    s.g_update_time DESC
+  </select>
+
+  <update id="updateGoodSkuDelete" parameterType="SpsGoodSku">
+    update sps_good_sku
+    <set>
+      <if test="gUpdateTime != null">
+        g_update_time = #{gUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gDeleteFlag != null">
+        g_delete_flag = #{gDeleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where g_gid = #{gGid,jdbcType=INTEGER}
+  </update>
+
+
+</mapper>

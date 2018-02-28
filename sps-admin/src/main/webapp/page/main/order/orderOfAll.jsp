@@ -135,7 +135,7 @@
 			  var $ = layui.jquery;
 			  
 			  var flag=$('#flag').val();
-			  if(flag==''){
+			  if(flag==''||flag==null){
 				  flag='1,2,3,4,5,6,7,8,9,10,11,18,19';
 			  }
 			  
@@ -153,6 +153,7 @@
 			    ,url: '<%=path%>/order/show.json' //数据接口
 			    ,id:'orderOfAll'
 			    ,page:true
+			    ,where: {flag:flag}
 			    ,cols: [[ //表头
 		              {field: 'orderid', title: '订单编号',align:'center',sort:true}
 				      ,{field: 'name', title: '店主名称', align:'center'}
@@ -190,7 +191,7 @@
 			  //重置
 			  $('#resetInput').on('click',function(){
 				  $('input').val('');
-				  $('select').val('');
+				  $('select').val('1,2,3,4,5,6,7,8,9,10,11,18,19');
 			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){

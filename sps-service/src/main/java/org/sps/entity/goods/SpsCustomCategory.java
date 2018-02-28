@@ -10,7 +10,7 @@ public class SpsCustomCategory  implements Serializable {
 
     private String customShopNum;
 
-    private Integer customWide;
+    private String customWide;
 
     private Integer customDeleteFlag;
 
@@ -27,11 +27,11 @@ public class SpsCustomCategory  implements Serializable {
         this.customShopNum = customShopNum;
     }
 
-    public Integer getCustomWide() {
+    public String getCustomWide() {
         return customWide;
     }
 
-    public void setCustomWide(Integer customWide) {
+    public void setCustomWide(String customWide) {
         this.customWide = customWide;
     }
 

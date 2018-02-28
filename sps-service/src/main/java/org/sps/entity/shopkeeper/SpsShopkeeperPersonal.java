@@ -41,13 +41,15 @@ public class SpsShopkeeperPersonal implements Serializable{
 
     private String personalNoneCorp;
 
-    private String shopkeeperCustomerid;
+    private String personalNickname;
 
     private String personalUsername;
 
     private Date personalCreatTime;
 
     private Date personalUpdateTime;
+
+    private String shopkeeperCustomerid;
 
     public Integer getPersonalId() {
         return personalId;
@@ -177,12 +179,12 @@ public class SpsShopkeeperPersonal implements Serializable{
         this.personalNoneCorp = personalNoneCorp == null ? null : personalNoneCorp.trim();
     }
 
-    public String getShopkeeperCustomerid() {
-        return shopkeeperCustomerid;
+    public String getPersonalNickname() {
+        return personalNickname;
     }
 
-    public void setShopkeeperCustomerid(String shopkeeperCustomerid) {
-        this.shopkeeperCustomerid = shopkeeperCustomerid == null ? null : shopkeeperCustomerid.trim();
+    public void setPersonalNickname(String personalNickname) {
+        this.personalNickname = personalNickname == null ? null : personalNickname.trim();
     }
 
     public String getPersonalUsername() {
@@ -207,5 +209,13 @@ public class SpsShopkeeperPersonal implements Serializable{
 
     public void setPersonalUpdateTime(Date personalUpdateTime) {
         this.personalUpdateTime = personalUpdateTime;
+    }
+
+    public String getShopkeeperCustomerid() {
+        return shopkeeperCustomerid;
+    }
+
+    public void setShopkeeperCustomerid(String shopkeeperCustomerid) {
+        this.shopkeeperCustomerid = shopkeeperCustomerid == null ? null : shopkeeperCustomerid.trim();
     }
 }

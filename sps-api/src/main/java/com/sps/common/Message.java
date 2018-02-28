@@ -1,16 +1,31 @@
 package com.sps.common;
 
+import java.util.HashMap;
+
 import com.alibaba.fastjson.JSONObject;
 
 public class Message {
 
+	//key-value api返回数据格式
+	public static String MAP_CODE = "code";
+	public static String MAP_MSG = "msg";
+	public static String MAP_COUNT = "count";
+	public static String MAP_RESULT = "result";
+	public static String MAP_SUCCESS = "success";
 	//请求成功
 	public static String SUCCESS_CODE = "1";
 	public static String SUCCESS_MSG = "success";
 
+
+	public static String API_SUCCESS_CODE = "100000";
+	public static String API_SUCCESS_MSG = "正常返回";
+	public static String API_SUCCESS_FLAG = "true";
+
 	//请求失败
 	public static String FAILURE_CODE = "0";
 	public static String FAILURE_MSG = "failure";
+	public static String ERROR_MSG = "缺少参数或参数为NUll";
+	public static String API_ERROR_FLAG = "false";
 
 	//系统错误
 	public static String SYSTEM_ERROR_CODE = "-1";
@@ -106,5 +121,14 @@ public class Message {
 		jsonObject.put("code", SYSTEM_ERROR_CODE);
 		jsonObject.put("msg", SYSTEM_ERROR_MSG);
 		return jsonObject.toJSONString();
+	}
+	public static HashMap<String, Object> resultMap(String code, String msg, String success, Integer count, Object result){
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put(Message.MAP_CODE, code);
+		hashMap.put(Message.MAP_MSG, msg);
+		hashMap.put(Message.MAP_SUCCESS, success);
+		hashMap.put(Message.MAP_COUNT, count);
+		hashMap.put(Message.MAP_RESULT, result);
+		return hashMap;
 	}
 }

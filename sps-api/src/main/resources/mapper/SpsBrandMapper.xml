@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsBrand">
+  <resultMap id="BaseResultMap" type="com.sps.entity.goods.SpsBrand">
+    <id column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+    <result column="brand_english_name" jdbcType="VARCHAR" property="brandEnglishName" />
+    <result column="brand_category_names" jdbcType="VARCHAR" property="brandCategoryNames" />
+    <result column="brand_category_ids" jdbcType="VARCHAR" property="brandCategoryIds" />
+    <result column="brand_abbreviation" jdbcType="VARCHAR" property="brandAbbreviation" />
+    <result column="brand_des" jdbcType="VARCHAR" property="brandDes" />
+    <result column="brand_small_url" jdbcType="VARCHAR" property="brandSmallUrl" />
+    <result column="brand_big_url" jdbcType="VARCHAR" property="brandBigUrl" />
+    <result column="brand_delete_flag" jdbcType="INTEGER" property="brandDeleteFlag" />
+    <result column="brand_create_time" jdbcType="TIMESTAMP" property="brandCreateTime" />
+    <result column="brand_update_time" jdbcType="TIMESTAMP" property="brandUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    brand_id, brand_name, brand_english_name, brand_category_ids, brand_abbreviation,
+    brand_des, brand_small_url, brand_big_url, brand_delete_flag, brand_create_time,
+    brand_update_time,brand_category_names
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_brand
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_brand
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsBrand">
+    insert into sps_brand (brand_id, brand_name, brand_english_name,
+    brand_category_ids, brand_abbreviation, brand_des,
+    brand_small_url, brand_big_url, brand_delete_flag,
+    brand_create_time, brand_update_time,brand_category_names)
+    values (#{brandId,jdbcType=INTEGER}, #{brandName,jdbcType=VARCHAR}, #{brandEnglishName,jdbcType=VARCHAR},
+    #{brandCategoryIds,jdbcType=VARCHAR}, #{brandAbbreviation,jdbcType=VARCHAR}, #{brandDes,jdbcType=VARCHAR},
+    #{brandSmallUrl,jdbcType=VARCHAR}, #{brandBigUrl,jdbcType=VARCHAR}, #{brandDeleteFlag,jdbcType=INTEGER},
+    #{brandCreateTime,jdbcType=TIMESTAMP}, #{brandUpdateTime,jdbcType=TIMESTAMP}, #{brandCategoryNames,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="SpsBrand">
+    insert into sps_brand
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="brandId != null">
+        brand_id,
+      </if>
+      <if test="brandName != null">
+        brand_name,
+      </if>
+      <if test="brandEnglishName != null">
+        brand_english_name,
+      </if>
+      <if test="brandCategoryIds != null">
+        brand_category_ids,
+      </if>
+      <if test="brandAbbreviation != null">
+        brand_abbreviation,
+      </if>
+      <if test="brandDes != null">
+        brand_des,
+      </if>
+      <if test="brandSmallUrl != null">
+        brand_small_url,
+      </if>
+      <if test="brandBigUrl != null">
+        brand_big_url,
+      </if>
+      <if test="brandDeleteFlag != null">
+        brand_delete_flag,
+      </if>
+      <if test="brandCreateTime != null">
+        brand_create_time,
+      </if>
+      <if test="brandUpdateTime != null">
+        brand_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="brandId != null">
+        #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="brandName != null">
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandEnglishName != null">
+        #{brandEnglishName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandCategoryIds != null">
+        #{brandCategoryIds,jdbcType=VARCHAR},
+      </if>
+      <if test="brandAbbreviation != null">
+        #{brandAbbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="brandDes != null">
+        #{brandDes,jdbcType=VARCHAR},
+      </if>
+      <if test="brandSmallUrl != null">
+        #{brandSmallUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="brandBigUrl != null">
+        #{brandBigUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="brandDeleteFlag != null">
+        #{brandDeleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="brandCreateTime != null">
+        #{brandCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="brandUpdateTime != null">
+        #{brandUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="SpsBrand">
+    update sps_brand
+    <set>
+      <if test="brandName != null">
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandEnglishName != null">
+        brand_english_name = #{brandEnglishName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandCategoryIds != null">
+        brand_category_ids = #{brandCategoryIds,jdbcType=VARCHAR},
+      </if>
+      <if test="brandAbbreviation != null">
+        brand_abbreviation = #{brandAbbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="brandDes != null">
+        brand_des = #{brandDes,jdbcType=VARCHAR},
+      </if>
+      <if test="brandSmallUrl != null">
+        brand_small_url = #{brandSmallUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="brandBigUrl != null">
+        brand_big_url = #{brandBigUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="brandDeleteFlag != null">
+        brand_delete_flag = #{brandDeleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="brandCreateTime != null">
+        brand_create_time = #{brandCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="brandUpdateTime != null">
+        brand_update_time = #{brandUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="brandCategoryNames != null">
+        brand_category_names =  #{brandCategoryNames,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsBrand">
+    update sps_brand
+    set brand_name = #{brandName,jdbcType=VARCHAR},
+      brand_english_name = #{brandEnglishName,jdbcType=VARCHAR},
+      brand_category_ids = #{brandCategoryIds,jdbcType=VARCHAR},
+      brand_abbreviation = #{brandAbbreviation,jdbcType=VARCHAR},
+      brand_des = #{brandDes,jdbcType=VARCHAR},
+      brand_small_url = #{brandSmallUrl,jdbcType=VARCHAR},
+      brand_big_url = #{brandBigUrl,jdbcType=VARCHAR},
+      brand_delete_flag = #{brandDeleteFlag,jdbcType=INTEGER},
+      brand_create_time = #{brandCreateTime,jdbcType=TIMESTAMP},
+      brand_update_time = #{brandUpdateTime,jdbcType=TIMESTAMP}
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </update>
+
+  <select id="findListCount" parameterType="map" resultType="int">
+    select count(1)
+    from sps_brand
+  </select>
+
+
+
+  <select id="findList" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_brand
+
+  </select>
+  <select id="findById" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_brand
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </select>
+
+  <!-- 查询所有 -->
+  <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_brand
+    where 1=1
+    <if test="brandName !=null and brandName != ''">
+      and brand_name LIKE CONCAT('%',#{brandName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="brandEnglishName !=null and brandEnglishName != ''">
+      and brand_english_name LIKE CONCAT('%',#{brandEnglishName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="categoryId !=null">
+      and  FIND_IN_SET(#{categoryId,jdbcType=INTEGER}, brand_category_ids)
+    </if>
+    <if test="categoryIds !=null">
+      AND FIND_IN_SET(#{categoryIds,jdbcType=VARCHAR},brand_category_ids)
+    </if>
+    AND brand_delete_flag = 0
+    order by brand_create_time desc
+
+  </select>
+</mapper>

@@ -162,6 +162,7 @@
                 })
 
             } else if (layEvent === 'edit') { //编辑
+                console.log(data)
                 //window.location.href="/sps-admin/brand/toAddOrEdit?id="+data.brandId;
                 $.ajax({
                     data: {id: data.brandId},//提交的数据
@@ -181,6 +182,7 @@
                                     body.find('#brandId').val(data.brandId)
                                     body.find('#brandCategoryIds').val(data.brandCategoryIds)
                                     body.find('#brandName').val(data.brandName)
+                                    body.find('#demo').append("<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + data.brandBigUrl + "' />");
                                     body.find('#brandSmallUrl').val(data.brandSmallUrl)
                                     body.find('#brandBigUrl').val(data.brandBigUrl)
                                     body.find('#brandEnglishName').val(data.brandEnglishName)
@@ -188,6 +190,7 @@
                                     body.find('#brandAbbreviation').val(data.brandAbbreviation)
                                     body.find('button').eq(0).html(data.brandCategoryNames)
                                     body.find('#brandDes').val(data.brandDes)
+                                    body.find('#demo2').append("<img style='width: 300px;'src='<%=path%>/upload/imgs/" + data.brandSmallUrl + "' />");
                                 }
                             });
                         } else if (result.flag == '2') {

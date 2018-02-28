@@ -31,8 +31,11 @@ public class GoodServiceImpl implements GoodsService {
     @Override
     public void saveOrUpdate(SpsGoods goods) {
         if (goods.getgId() != null) {
+            Map<String, Object> map1 = new HashMap<>();
+            map1.put("goodsId", goods.getgId());
+            spsGoodsAlbumMapper.deleteDetailPic(map1);
             //如果UpdateDetailFlag不为空 则删除 改商品的详情图
-            if (goods.getUpdateDetailFlag() != null) {
+      /*      if (goods.getUpdateDetailFlag() != null) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("goodsId", goods.getgId());
                 map.put("updateDetailFlag", goods.getUpdateDetailFlag());
@@ -44,7 +47,7 @@ public class GoodServiceImpl implements GoodsService {
                 map.put("goodsId", goods.getgId());
                 map.put("updatePicFlag", goods.getUpdatePicFlag());
                 spsGoodsAlbumMapper.deleteDetailPic(map);
-            }
+            }*/
             //删除sku中的商品数据
             spsGoodSkuMapper.deleteSku(goods.getgId());
             goods.setgUpdateTime(new Date());

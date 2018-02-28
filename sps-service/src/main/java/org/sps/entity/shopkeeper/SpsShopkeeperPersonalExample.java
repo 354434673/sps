@@ -1205,73 +1205,73 @@ public class SpsShopkeeperPersonalExample {
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridIsNull() {
-            addCriterion("shopkeeper_customerId is null");
+        public Criteria andPersonalNicknameIsNull() {
+            addCriterion("personal_nickname is null");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridIsNotNull() {
-            addCriterion("shopkeeper_customerId is not null");
+        public Criteria andPersonalNicknameIsNotNull() {
+            addCriterion("personal_nickname is not null");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridEqualTo(String value) {
-            addCriterion("shopkeeper_customerId =", value, "shopkeeperCustomerid");
+        public Criteria andPersonalNicknameEqualTo(String value) {
+            addCriterion("personal_nickname =", value, "personalNickname");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridNotEqualTo(String value) {
-            addCriterion("shopkeeper_customerId <>", value, "shopkeeperCustomerid");
+        public Criteria andPersonalNicknameNotEqualTo(String value) {
+            addCriterion("personal_nickname <>", value, "personalNickname");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridGreaterThan(String value) {
-            addCriterion("shopkeeper_customerId >", value, "shopkeeperCustomerid");
+        public Criteria andPersonalNicknameGreaterThan(String value) {
+            addCriterion("personal_nickname >", value, "personalNickname");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridGreaterThanOrEqualTo(String value) {
-            addCriterion("shopkeeper_customerId >=", value, "shopkeeperCustomerid");
+        public Criteria andPersonalNicknameGreaterThanOrEqualTo(String value) {
+            addCriterion("personal_nickname >=", value, "personalNickname");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridLessThan(String value) {
-            addCriterion("shopkeeper_customerId <", value, "shopkeeperCustomerid");
+        public Criteria andPersonalNicknameLessThan(String value) {
+            addCriterion("personal_nickname <", value, "personalNickname");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridLessThanOrEqualTo(String value) {
-            addCriterion("shopkeeper_customerId <=", value, "shopkeeperCustomerid");
+        public Criteria andPersonalNicknameLessThanOrEqualTo(String value) {
+            addCriterion("personal_nickname <=", value, "personalNickname");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridLike(String value) {
-            addCriterion("shopkeeper_customerId like", value, "shopkeeperCustomerid");
+        public Criteria andPersonalNicknameLike(String value) {
+            addCriterion("personal_nickname like", value, "personalNickname");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridNotLike(String value) {
-            addCriterion("shopkeeper_customerId not like", value, "shopkeeperCustomerid");
+        public Criteria andPersonalNicknameNotLike(String value) {
+            addCriterion("personal_nickname not like", value, "personalNickname");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridIn(List<String> values) {
-            addCriterion("shopkeeper_customerId in", values, "shopkeeperCustomerid");
+        public Criteria andPersonalNicknameIn(List<String> values) {
+            addCriterion("personal_nickname in", values, "personalNickname");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridNotIn(List<String> values) {
-            addCriterion("shopkeeper_customerId not in", values, "shopkeeperCustomerid");
+        public Criteria andPersonalNicknameNotIn(List<String> values) {
+            addCriterion("personal_nickname not in", values, "personalNickname");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridBetween(String value1, String value2) {
-            addCriterion("shopkeeper_customerId between", value1, value2, "shopkeeperCustomerid");
+        public Criteria andPersonalNicknameBetween(String value1, String value2) {
+            addCriterion("personal_nickname between", value1, value2, "personalNickname");
             return (Criteria) this;
         }
 
-        public Criteria andShopkeeperCustomeridNotBetween(String value1, String value2) {
-            addCriterion("shopkeeper_customerId not between", value1, value2, "shopkeeperCustomerid");
+        public Criteria andPersonalNicknameNotBetween(String value1, String value2) {
+            addCriterion("personal_nickname not between", value1, value2, "personalNickname");
             return (Criteria) this;
         }
 
@@ -1462,6 +1462,76 @@ public class SpsShopkeeperPersonalExample {
 
         public Criteria andPersonalUpdateTimeNotBetween(Date value1, Date value2) {
             addCriterion("personal_update_time not between", value1, value2, "personalUpdateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridIsNull() {
+            addCriterion("shopkeeper_customerId is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridIsNotNull() {
+            addCriterion("shopkeeper_customerId is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridEqualTo(String value) {
+            addCriterion("shopkeeper_customerId =", value, "shopkeeperCustomerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridNotEqualTo(String value) {
+            addCriterion("shopkeeper_customerId <>", value, "shopkeeperCustomerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridGreaterThan(String value) {
+            addCriterion("shopkeeper_customerId >", value, "shopkeeperCustomerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridGreaterThanOrEqualTo(String value) {
+            addCriterion("shopkeeper_customerId >=", value, "shopkeeperCustomerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridLessThan(String value) {
+            addCriterion("shopkeeper_customerId <", value, "shopkeeperCustomerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridLessThanOrEqualTo(String value) {
+            addCriterion("shopkeeper_customerId <=", value, "shopkeeperCustomerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridLike(String value) {
+            addCriterion("shopkeeper_customerId like", value, "shopkeeperCustomerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridNotLike(String value) {
+            addCriterion("shopkeeper_customerId not like", value, "shopkeeperCustomerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridIn(List<String> values) {
+            addCriterion("shopkeeper_customerId in", values, "shopkeeperCustomerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridNotIn(List<String> values) {
+            addCriterion("shopkeeper_customerId not in", values, "shopkeeperCustomerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridBetween(String value1, String value2) {
+            addCriterion("shopkeeper_customerId between", value1, value2, "shopkeeperCustomerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andShopkeeperCustomeridNotBetween(String value1, String value2) {
+            addCriterion("shopkeeper_customerId not between", value1, value2, "shopkeeperCustomerid");
             return (Criteria) this;
         }
     }

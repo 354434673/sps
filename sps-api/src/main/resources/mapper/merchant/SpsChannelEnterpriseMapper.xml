@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.ChannelEnterpriseDao" >
+  <resultMap id="BaseResultMap" type="com.sps.entity.merchant.SpsChannelEnterprise" >
+    <id column="enterprise_id" property="enterpriseId" jdbcType="INTEGER" />
+    <result column="enterprise_businesslicense_no" property="enterpriseBusinesslicenseNo" jdbcType="VARCHAR" />
+    <result column="enterprise_company_name" property="enterpriseCompanyName" jdbcType="VARCHAR" />
+    <result column="enterprise_company_abbreviation" jdbcType="VARCHAR" property="enterpriseCompanyAbbreviation" />
+    <result column="enterprise_company_register_addr" property="enterpriseCompanyRegisterAddr" jdbcType="VARCHAR" />
+    <result column="enterprise_company_realit_addr" property="enterpriseCompanyRealitAddr" jdbcType="VARCHAR" />
+    <result column="enterprise_corp" property="enterpriseCorp" jdbcType="VARCHAR" />
+    <result column="enterprise_corp_idCard" property="enterpriseCorpIdcard" jdbcType="VARCHAR" />
+    <result column="enterprise_operatio_time" property="enterpriseOperatioTime" jdbcType="INTEGER" />
+    <result column="enterprise_employee_num" property="enterpriseEmployeeNum" jdbcType="INTEGER" />
+    <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+    <association property="business" javaType="com.sps.entity.merchant.SpsChannelBusiness">
+	    <id column="business_id" property="businessId" jdbcType="INTEGER" />
+	    <result column="business_product" property="businessProduct" jdbcType="VARCHAR" />
+    </association>
+    <association property="pic" javaType="com.sps.entity.merchant.SpsChannelPic">
+	    <id column="pic_id" property="picId" jdbcType="INTEGER" />
+	    <result column="pic_type" property="picType" jdbcType="INTEGER" />
+	    <result column="pic_src" property="picSrc" jdbcType="VARCHAR" />
+    </association>
+    <association property="guarantee" javaType="com.sps.entity.merchant.SpsChannelGuarantee">
+	    <id column="guarantee_id" property="guaranteeId" jdbcType="INTEGER" />
+	    <result column="guarantee_corp_phone" property="guaranteeCorpPhone" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    enterprise_id, enterprise_businesslicense_no, enterprise_company_name, enterprise_company_abbreviation,enterprise_company_register_addr, 
+    enterprise_company_realit_addr, enterprise_corp, enterprise_corp_idCard, enterprise_operatio_time, 
+    enterprise_employee_num, channel_num
+  </sql>
+  <sql id="Column_List" >
+    e1.enterprise_id, e1.channel_num,e1.enterprise_businesslicense_no, e1.enterprise_company_name, e1.enterprise_company_abbreviation,e1.enterprise_company_register_addr, 
+    e1.enterprise_company_realit_addr, e1.enterprise_corp, e1.enterprise_corp_idCard, e1.enterprise_operatio_time, 
+    e1.enterprise_employee_num,b1.business_id,b1.business_product,p1.pic_type,p1.pic_src,g1.guarantee_corp_phone
+  </sql>
+  <select id="countByExample" parameterType="com.sps.entity.merchant.SpsChannelEnterpriseExample" resultType="java.lang.Integer" >
+    select count(*) from sps_channel_enterprise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.merchant.SpsChannelEnterpriseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_channel_enterprise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_channel_enterprise
+    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+  </select>
+  <select id="queryBusinessForApi" resultMap="BaseResultMap">
+	SELECT
+	<include refid="Column_List" />
+	FROM
+		sps_channel_business b1
+	JOIN 
+		sps_channel_enterprise e1 ON b1.channel_num = e1.channel_num
+	JOIN 
+		sps_channel_pic p1 on b1.channel_num = p1.channel_num	
+	JOIN 
+	   	sps_channel_guarantee g1 on b1.channel_num = g1.channel_num
+		<where>
+			<if test="businessProduct.size > 0">
+				<foreach collection="businessProduct" separator="and" item="item">
+					FIND_IN_SET(#{item}, business_product)
+				</foreach>
+			</if>
+			<if test="picType != null">
+				and p1.pic_type = #{picType}
+			</if>
+			<if test="enterpriseId != null">
+				and e1.enterprise_id = #{enterpriseId}
+			</if>
+		</where>
+  </select>
+</mapper>

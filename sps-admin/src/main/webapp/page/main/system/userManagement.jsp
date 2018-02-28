@@ -7,7 +7,6 @@
 			+ path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -146,7 +145,7 @@
 								 					 obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 								 					layer.msg(data.msg,{icon: 1});
 								 				 }else{
-								 					layer.msg(data.msg,{icon: 1});
+								 					layer.msg(data.msg,{icon: 2});
 								 				 }
 								 			 },
 								 			 error:function(){

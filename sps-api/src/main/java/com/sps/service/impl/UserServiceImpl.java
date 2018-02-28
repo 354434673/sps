@@ -8,12 +8,16 @@ import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Md5Util;
 import com.sps.common.Message;
+import com.sps.common.StringUtil;
 import com.sps.dao.SpsShopkeeperAccountDao;
 import com.sps.dao.SpsUserDao;
 import com.sps.entity.shopkeeper.SpsShopkeeperAccount;
@@ -21,38 +25,67 @@ import com.sps.entity.shopkeeper.SpsShopkeeperAccountExample;
 import com.sps.entity.user.SpsUser;
 import com.sps.entity.user.SpsUserExample;
 import com.sps.entity.user.SpsUserExample.Criteria;
+import com.sps.service.base.BaseOperate;
 
 
 @RestController
-public class UserServiceImpl {
+public class UserServiceImpl extends BaseOperate{
 	@Resource
 	private SpsUserDao dao;
 	@Resource
 	private SpsShopkeeperAccountDao accountDao;
-	
+	/**
+	 * 用户登录
+	 * @Title: userLogin   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param userName
+	 * @param: @param password
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月12日 下午2:57:58
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping(value="/api/login", method=RequestMethod.POST)
 	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
-	public HashMap<String, Object> userLogin(String userName, String password){
+	public HashMap<String, Object> userLogin(@RequestBody String data){
 		
-		SpsUser user = getUser(userName);
+		JSONObject parseObject = JSON.parseObject(data);
 		
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		if(userName == null){
-			result.put("msg", Message.USERNOT_REGIST_MSG);
-			result.put("state", Message.USERNOT_REGIST_CODE);
-		}else if(Md5Util.getMd5(password, user.getUserSalt()).equals(user.getUserPassword())){
-			//查询通过后,获取店主商户信息
-			SpsShopkeeperAccountExample example = new SpsShopkeeperAccountExample();
+		HashMap<String, Object> result = null;
+		if(!StringUtil.isEmpty(data)){
 			
-			example.createCriteria().andAccountNumEqualTo(userName);
+			String userName = parseObject.getString("userName");
 			
-			List<SpsShopkeeperAccount> selectByExample = accountDao.selectByExample(example);
+			String password = parseObject.getString("password");
 			
-			result.put("msg", Message.SUCCESS_CODE);
-			result.put("state", Message.SUCCESS_MSG);
+			SpsUser user = getUser(userName);
+			
+			if(userName == null){
+				result = Message.resultMap(Message.USERNOT_REGIST_CODE, Message.USERNOT_REGIST_MSG,
+						Message.USERNOT_REGIST_MSG, 0, null);
+			}else if(Md5Util.getMd5(password, user.getUserSalt()).equals(user.getUserPassword())){
+				//查询通过后,获取店主账户信息
+				SpsShopkeeperAccountExample example = new SpsShopkeeperAccountExample();
+				
+				example.createCriteria().andAccountNumEqualTo(userName);
+				
+				List<SpsShopkeeperAccount> selectByExample = accountDao.selectByExample(example);
+				
+				if(selectByExample.size() == 0){
+					result = Message.resultMap(Message.USERNOT_REGIST_CODE, Message.USERNOT_REGIST_MSG,
+							Message.USERNOT_REGIST_MSG, 0, null);
+				}else{
+					result = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
+							Message.SUCCESS_MSG, 1, selectByExample.get(0).getShopkeeperCustomerid());
+				}
+			}else{
+				result = Message.resultMap(Message.FAILURE_CODE, Message.FAILURE_CODE,
+						Message.FAILURE_MSG, 0, null);
+			}
 		}else{
-			result.put("msg", Message.FAILURE_CODE);
-			result.put("state", Message.FAILURE_MSG);
+			result = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG, 
+					Message.FAILURE_MSG,null, null);
 		}
 		return result;
 	}
@@ -69,42 +102,70 @@ public class UserServiceImpl {
 
 		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
 	}
+	/**
+	 * 店主注册,先查询当前店主是否邀请过,如果邀请过,则注册成功,否则注册失败
+	 * @Title: insertUser   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param data
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月27日 下午5:01:46
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping(value="/api/add", method=RequestMethod.POST)
 	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
-	public HashMap<String, Object> insertUser(SpsUser user) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		try {
-			SpsUser spsUser = getUser(user.getUserUsername());//查重
-			if(spsUser == null){
+	public HashMap<String, Object> insertUser(@RequestBody String data) {
+		//TODO 查询店主邀请
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		if(!StringUtil.isEmpty(data)){
+			
+			JSONObject parseObject = JSON.parseObject(data);
+			
+			String phone = parseObject.getString("phone");
+			
+			String password = parseObject.getString("password");
+			
+			try {
 				String salt = Md5Util.getSalt(4);//4位盐
-
+				
+				SpsUser user = new SpsUser();
+				
+				user.setUserUsername(phone);
+				
 				user.setUserSalt(salt);
-
-				user.setUserPassword(Md5Util.getMd5(user.getUserPassword(), salt));
-
+				
+				user.setUserPassword(Md5Util.getMd5(password, salt));
+				
+				user.setUserPhone(phone);
+				
 				user.setUserState(0);
-
+				
+				user.setUserMark(2);
+				
 				user.setUserCreattime(new Date());
-
+				
 				user.setUserUpdatetime(new Date());
-				int insertSelective = dao.insertSelective(user);
-				if(insertSelective == 1){
-					map.put("msg", "添加成功");
-					map.put("state", "success");
-				}else{
-					map.put("msg", "添加失败,联系管理员");
-					map.put("state", "error");
-				}
-			}else{
-				map.put("msg", "用户重复");
-				map.put("state", "exist");
-			}	
-		} catch (NumberFormatException e) {
-			map.put("msg", "程序错误");
-			map.put("state", "error");
-			e.printStackTrace();
+				
+				super.logger.info("手机号为:"+phone+"的用户注册成功");
+				
+				dao.insertSelective(user);
+				
+				hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG, 
+						Message.SUCCESS_MSG,null, null);
+			} catch (Exception e) {
+				
+				super.logger.info("手机号为:"+phone+"的用户注册失败,原因:Exception");
+				
+				hashMap = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG, 
+						Message.FAILURE_MSG,null, null);
+			}
+		}else{
+			super.logger.info("注册失败,失败原因:参数异常");
+			hashMap = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG, 
+					Message.FAILURE_MSG,null, null);
 		}
-		return map;
+		return hashMap;
 	}
 
 

@@ -24,7 +24,7 @@
     <hr>
     <div class="layui-form layui-form-pane">
 
-        <input type="hidden" name="parentFlag" id="parentFlag" value="">
+        <input type="hidden" name="parentFlag" id="parentFlag" value="${parentFlag}">
         <input type="hidden" name="categoryParentName" id="categoryParentName" value="${categoryParentName}">
         <input type="hidden" name="categoryId" id="categoryId" value="${spsGoodCategory.categoryId}">
         <div class="layui-form-item ">
@@ -69,10 +69,20 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">图片：</label>
-            <div class="layui-input-inline">
-                <input type="text" id="categoryUrl" name="categoryUrl" value="${spsGoodCategory.categoryUrl}" readonly="readonly"
+            <div class="layui-upload">
+                <input type="text" id="categoryUrl" name="categoryUrl" value="${spsGoodCategory.categoryUrl}"
+                       style="display: none"
                        placeholder="图片" class="layui-input"/>
                 <button onclick="checkImgType()">上传图片</button>
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo2">
+                        <c:if test="${spsGoodCategory.categoryUrl != null}">
+                            <img style='width: 300px;'
+                                 src='<%=path%>/upload/imgs/${spsGoodCategory.categoryUrl}'/>
+                        </c:if>
+                    </div>
+                </blockquote>
                 <%--  <input id="categoryUrl" type="hidden" name="categoryUrl"
                          value="${spsGoodCategory.categoryUrl}">
                   <button type="button" class="layui-btn" id="test1">上传图片</button>
@@ -102,7 +112,7 @@
 
 <script type="text/javascript">
     $(function () {
-        if($("#categoryId").val()!=''){
+        if ($("#categoryId").val() != '') {
             $("#showCategory").attr({"disabled": "disabled"});
         }
         $(".import").on("click", function () {
@@ -136,7 +146,7 @@
         }
         if ($('#parentFlag').val() == '0') {
             layer.msg("只有三级分类才可以上传图片");
-           /* $('#parentFlag').val('');*/
+            /* $('#parentFlag').val('');*/
             return false;
         }
         if (f.length == 2 && (f[1] == 'jpg' || f[1] == 'jpeg' || f[1] == 'png')) {
@@ -151,7 +161,11 @@
                 processData: false,    //不可缺
                 success: function (res) {
                     if (res.code == 0) {
+                        $('#demo2').find("img").remove();
                         $("#categoryUrl").val(res.fileName);
+                        $('#demo2').append(
+                            "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + res.fileName+ "' />"
+                        )
                         // $("#imgShow").attr('src',data.data.avatar);
                     } else {
                         layer.msg('上传失败');
@@ -218,9 +232,9 @@
                             $("#showCategory").html(item.name)
                             $("#categoryParentId").val(item.id)
                             console.log(item);
-                            if(item.pid==undefined){
+                            if (item.pid == undefined) {
                                 $("#parentFlag").val("0")
-                            }else {
+                            } else {
                                 $("#parentFlag").val("1")
                             }
                             if (item.name == '无') {
@@ -243,11 +257,11 @@
 
     }
 
-   /* function checkParent(id) {
-        $.ajax(
-            {
-                data: {id:id},
-                url: "<%=path%>/category/findEntity",//提交连接
+    /* function checkParent(id) {
+         $.ajax(
+             {
+                 data: {id:id},
+                 url: "<%=path%>/category/findEntity",//提交连接
                 type: 'post',
                 dataType: 'json',
                 success: function (result) {
@@ -267,27 +281,46 @@
         var $ = layui.jquery;
         var table = layui.table;
 
+
+        //自定义验证规则
+        form.verify({
+            /*  categoryName: function (value) {
+                  if (value.length > 8) {
+                      return '分类名称最多输入8个字符';
+                  }
+              }, categoryWeight: function (value) {
+                  if (value > 9999 || value == 0) {
+                      return '权重必须为0-9999的数字';
+                  }
+              }, categoryDes: function (value) {
+                  if (value.length > 20) {
+                      return '描述最多输入20个字符';
+                      return false;
+                  }
+              }*/
+        });
+
+
         //提交
         var post_flag = false; //设置一个对象来控制是否进入AJAX过程
         form.on('submit(submitCategory)', function (data) {
-           /* if ( $("#categoryUrl").val()!=''&&$('#parentFlag').val() == '0') {
-                layer.msg("只有三级分类才可以上传图片");
-                $('#parentFlag').val('')
-                return false;
-            }*/
-            if ($("#categoryName").val().length<2) {
+            if ($("#categoryName").val().length < 2) {
                 layer.msg("分类名称最少输入2位！");
+                return false;
+            }
+            if ($("#categoryName").val().length > 8) {
+                layer.msg("分类名称最多输入8位！");
                 return false;
             }
             if ($("#showCategory").html() == "选择分类") {
                 layer.msg("请选择上级分类！");
                 return false;
             }
-            if (parseInt($("#categoryWeight").val()) >9999) {
+            if (parseInt($("#categoryWeight").val()) > 9999) {
                 layer.msg("权重不能大于9999！");
                 return false;
             }
-            if ($("#categoryDes").val().length>20) {
+            if ($("#categoryDes").val().length > 20) {
                 layer.msg("描述不能大于20位！");
                 return false;
             }
@@ -324,8 +357,6 @@
                     }//回调方法
                 });
             }
-            return false;
-
         })
         $(document).on("click", "#showCategory", function () {
             layer.open({
@@ -339,23 +370,6 @@
         })
 
 
-        //自定义验证规则
-        form.verify({
-            categoryName: function (value) {
-                if (value.length > 20) {
-                    return '分类名称最多输入20个字符';
-                }
-            }, categoryWeight: function (value) {
-                if (value > 9999 || value == 0) {
-                    return '权重必须为0-9999的数字';
-                }
-            }, categoryDes: function (value) {
-                if (value.length > 20) {
-                    return '描述最多输入20个字符';
-                    return false;
-                }
-            }
-        });
     });
 
     //提交

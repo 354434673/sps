@@ -8,13 +8,32 @@ public class SpsCustomCategory  implements Serializable {
 
     private String customName;
 
-    private String customWide;
+    private String customShopNum;
+
+    private Integer customWide;
 
     private Integer customDeleteFlag;
 
     private Date customCreateTime;
 
     private Date customUpdateTime;
+
+
+    public String getCustomShopNum() {
+        return customShopNum;
+    }
+
+    public void setCustomShopNum(String customShopNum) {
+        this.customShopNum = customShopNum;
+    }
+
+    public Integer getCustomWide() {
+        return customWide;
+    }
+
+    public void setCustomWide(Integer customWide) {
+        this.customWide = customWide;
+    }
 
     public Integer getCustomId() {
         return customId;
@@ -32,13 +51,6 @@ public class SpsCustomCategory  implements Serializable {
         this.customName = customName == null ? null : customName.trim();
     }
 
-    public String getCustomWide() {
-        return customWide;
-    }
-
-    public void setCustomWide(String customWide) {
-        this.customWide = customWide == null ? null : customWide.trim();
-    }
 
     public Integer getCustomDeleteFlag() {
         return customDeleteFlag;

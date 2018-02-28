@@ -158,18 +158,18 @@
 								}  
 						  }); 
 					  } else if(layEvent === 'del'){ //删除
-					    layer.confirm('真的删除行么', function(index){
-					      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+					    layer.confirm('确认删除当前业务员？', function(index){
 					      layer.close(
 	  					  			$.post({
 							 			 url:'<%=path%>/salesman/updateState',
 							 			 dataType:'json',
 							 			 data:{
 							 				 id:data.salesmanId,
-							 				 state:1
+							 				 state:2
 							 				 },
 							 			 success:function(data){
 							 				 if(data.state == 'success'){
+											    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
 							 					layer.msg(data.msg,{icon: 1});
 							 				 }else{
 							 					layer.msg(data.msg,{icon: 2});

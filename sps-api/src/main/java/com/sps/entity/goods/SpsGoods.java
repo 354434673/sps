@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class SpsGoods  implements Serializable {
-    //修改商品详情图标识
-    private Integer updateDetailFlag;
-    //修改商品主图标识
-    private Integer updatePicFlag;
 
     private Integer gId;
 
@@ -170,19 +166,5 @@ public class SpsGoods  implements Serializable {
         this.gUpdateTime = gUpdateTime;
     }
 
-    public Integer getUpdateDetailFlag() {
-        return updateDetailFlag;
-    }
-
-    public void setUpdateDetailFlag(Integer updateDetailFlag) {
-        this.updateDetailFlag = updateDetailFlag;
-    }
-
-    public Integer getUpdatePicFlag() {
-        return updatePicFlag;
-    }
-
-    public void setUpdatePicFlag(Integer updatePicFlag) {
-        this.updatePicFlag = updatePicFlag;
-    }
+   
 }

@@ -17,8 +17,8 @@ import com.sps.dao.user.SpsRoleMapper;
 import com.sps.dao.user.SpsRoleandmenuMapper;
 import com.sps.entity.user.SpsRole;
 import com.sps.entity.user.SpsRoleExample;
-import com.sps.entity.user.SpsRoleandmenu;
 import com.sps.entity.user.SpsRoleExample.Criteria;
+import com.sps.entity.user.SpsRoleandmenu;
 import com.sps.service.user.RoleService;
 
 @Service
@@ -132,16 +132,24 @@ public class RoleServiceImpl implements RoleService {
 	 */
 	private int insertRoleAndMenu(Integer roleId, List<Integer> menuList) {
 		try {
-			SpsRoleandmenu roleandmenu = new SpsRoleandmenu();
-
-			for (int menuId : menuList) {
+			
+			menuList.forEach(menuId -> {
+				SpsRoleandmenu roleandmenu = new SpsRoleandmenu();
 				roleandmenu.setRoleId(roleId);
 				roleandmenu.setMenuId(menuId);
 				roleandmenu.setCreatTime(new Date());
 				roleandmenu.setUpdateTime(new Date());
 				roleandmenu.setState(0);
 				spsRoleandmenuMapper.insert(roleandmenu);
-			}
+			});
+/*			for (int menuId : menuList) {
+				roleandmenu.setRoleId(roleId);
+				roleandmenu.setMenuId(menuId);
+				roleandmenu.setCreatTime(new Date());
+				roleandmenu.setUpdateTime(new Date());
+				roleandmenu.setState(0);
+				spsRoleandmenuMapper.insert(roleandmenu);
+			}*/
 			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();

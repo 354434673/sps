@@ -45,6 +45,8 @@ public class ChannelSalesmanReadServiceImpl implements ChannelSalesmanReadServic
 			}
 			if(!StringUtil.isEmpty(bei1)){
 				createCriteria.andBei1EqualTo(bei1);
+			}else{
+				createCriteria.andBei1EqualTo("1");
 			}
 			
 			long count = 0;

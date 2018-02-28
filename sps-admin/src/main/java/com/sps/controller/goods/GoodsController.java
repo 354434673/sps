@@ -86,8 +86,15 @@ public class GoodsController {
             goodService.saveOrUpdate(goods);
             SpsGoods spsGoods = goodService.findLastId();
             if(spsGoods.getgId()!=null){
+                //goods.getgId() 不为空 为修改相册  为空则新增相册
+                Integer id = null;
+                if(goods.getgId()!=null){
+                    id = goods.getgId();
+                }else {
+                    id = spsGoods.getgId();
+                }
                 //处理商品相册逻辑
-                goodsAlbumService.saveGoodsDetailPic(goodsPic, goodsDpic,spsGoods.getgId());
+                goodsAlbumService.saveGoodsDetailPic(goodsPic, goodsDpic,id);
                 resultMap.put("goodsId", spsGoods.getgId());
                 resultMap.put("flag", 1);
             }

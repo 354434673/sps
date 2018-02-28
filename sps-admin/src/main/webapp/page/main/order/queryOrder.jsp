@@ -74,13 +74,15 @@
 			    	<button class="layui-btn layui-btn-primary" id="queryOrders">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="resetInput">重置</button>
 	        </div>  
-		<table id="orderList" lay-filter="orderTables"></table>
+		<table id="orderList" lay-filter="orderTables"></table>m
         </div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="detail"  id="detail">详情</a>
+{{#  if(d.flag == 6 || d.flag == 7 || d.flag == 8 || d.flag == 7 || d.flag == 9 || d.flag == 10){ }}
   <a class="layui-btn layui-btn-mini" lay-event="express" id="express">查看物流</a>
+{{#  } }} 
 </script>
 <script type="text/html" id="date">
 {{#  
@@ -151,12 +153,13 @@
 			    ,id:'orderOfAll'
 			    ,page:true
 			    ,cols: [[ //表头
-		              {field: 'orderid', title: '订单编号', align:'center',sort:true}
+			           {title: '序号',type:'numbers',align:'center'}
+		              ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
 				      ,{field: 'name', title: '店主名称', align:'center'}
 				      ,{field: 'selfname', title: '核心商户名称',align:'center'}
 				      ,{field: 'money', title: '订单金额',align:'center'}
-				      ,{field: 'servicemoney', title: '代销服务费',align:'center'}
-				      ,{field: 'sumMoney',  title: '实销金额',align:'center'}
+				      ,{field: 'payment', title: '订单首付',align:'center'}
+				      ,{field: 'sum_money', title: '店付金额',align:'center'}
 				      ,{field: 'createtime', title: '订单申请日期',templet:'#date',width:150, align:'center'}
 				      ,{field: 'flag', title: '订单状态',templet:'#state',align:'center'}
 				      ,{field: 'tool', title: '操作', width:200,align:'center',toolbar:'#bar'}

@@ -79,7 +79,7 @@ public class ChannelBusinessServiceImpl extends BaseOperate{
 						continue;
 
 					gs = new SpsGoodShop();
-					gs.setgShopId(Integer.valueOf(temp.getChannelNum()));
+					gs.setgShopId(temp.getChannelNum());
 					List<SpsGoodShop> gss = goodShopDao.query(gs);
 					temp.setGoodShops(gss);
 				} catch (Exception e) {

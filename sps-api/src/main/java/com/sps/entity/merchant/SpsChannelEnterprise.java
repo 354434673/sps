@@ -1,6 +1,10 @@
 package com.sps.entity.merchant;
 
+import com.sps.entity.goods.SpsCustomCategory;
+import com.sps.entity.goods.SpsGoodShop;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class SpsChannelEnterprise implements Serializable{
     /**   
@@ -8,6 +12,8 @@ public class SpsChannelEnterprise implements Serializable{
 	 */   
 	private static final long serialVersionUID = 1L;
 
+    private List<SpsCustomCategory> customCategoryList;
+    private List<SpsGoodShop> goodShops;
 	private Integer enterpriseId;
 
     private String enterpriseBusinesslicenseNo;
@@ -30,9 +36,54 @@ public class SpsChannelEnterprise implements Serializable{
 
     private String channelNum;
     
-    private SpsChannel channel;
+    private SpsChannelBusiness business;
+    
+    private SpsChannelPic pic;
+    
+    private SpsChannelGuarantee guarantee;
 
-    public Integer getEnterpriseId() {
+
+    public List<SpsCustomCategory> getCustomCategoryList() {
+        return customCategoryList;
+    }
+
+    public void setCustomCategoryList(List<SpsCustomCategory> customCategoryList) {
+        this.customCategoryList = customCategoryList;
+    }
+
+    public List<SpsGoodShop> getGoodShops() {
+        return goodShops;
+    }
+
+    public void setGoodShops(List<SpsGoodShop> goodShops) {
+        this.goodShops = goodShops;
+    }
+
+    public SpsChannelGuarantee getGuarantee() {
+		return guarantee;
+	}
+
+	public void setGuarantee(SpsChannelGuarantee guarantee) {
+		this.guarantee = guarantee;
+	}
+
+	public SpsChannelPic getPic() {
+		return pic;
+	}
+
+	public void setPic(SpsChannelPic pic) {
+		this.pic = pic;
+	}
+
+	public SpsChannelBusiness getBusiness() {
+		return business;
+	}
+
+	public void setBusiness(SpsChannelBusiness business) {
+		this.business = business;
+	}
+
+	public Integer getEnterpriseId() {
         return enterpriseId;
     }
 
@@ -119,13 +170,4 @@ public class SpsChannelEnterprise implements Serializable{
     public void setChannelNum(String channelNum) {
         this.channelNum = channelNum == null ? null : channelNum.trim();
     }
-
-	public SpsChannel getChannel() {
-		return channel;
-	}
-
-	public void setChannel(SpsChannel channel) {
-		this.channel = channel;
-	}
-    
 }

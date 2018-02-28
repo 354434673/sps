@@ -6,7 +6,6 @@
 			+ path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -41,6 +40,7 @@
 				    <label class="layui-form-label">流程状态</label>
 				    <div class="layui-input-inline">
 				      <select name="flag" lay-filter="flag" id="flag">
+				      <option value="14,15,16" selected="selected">全部</option>
 				        <option value="14">待审核</option>
 				        <option value="16">审核通过</option>
 				        <option value="15">审核不通过</option>
@@ -58,7 +58,9 @@
     {{d.LAY_TABLE_INDEX+1}}
 </script>
 <script type="text/html" id="bar">
+{{#  if(d.flag != 15&&d.flag != 16){ }}
   <a class="layui-btn layui-btn-mini" lay-event="audit" id="audit">审核</a>
+{{#  } }} 
   <a class="layui-btn layui-btn-mini" lay-event="detail" id="detail">详情</a>
 </script>
 <script type="text/html" id="date">
@@ -103,7 +105,7 @@
 			  table.render({
 			    elem: '#orderList'
 			    ,url: '<%=path%>/order/show.json' //数据接口
-			    ,where:{flag:14} 
+			    ,where:{flag:'14,15,16'} 
 			    ,id:'orderToBeRejected'
 			    ,page:true
 			    ,cols: [[ //表头
@@ -137,6 +139,7 @@
 			  //重置
 			  $('#resetInput').on('click',function(){
 				  $('input').val('');
+				  $('select').val('14,15,16');
 			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){

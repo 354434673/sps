@@ -109,7 +109,7 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">包装清单</label>
             <div class="layui-input-block">
-                <textarea id="gRemark" type="text" style="height: 200px;  margin-top: 5px" class="layui-input" readonly="readonly"></textarea>
+                <textarea id="gRemark" type="text" style="height: 200px;  margin-top: 5px" class="layui-input"></textarea>
             </div>
         </div>
 
@@ -164,8 +164,8 @@
         var element = layui.element;
         var layedit = layui.layedit;
         var layedits = layui.layedit;
-        var index = layedit.build('gDetails');
-        var indexes = layedits.build('gRemark');
+        /*   var index = layedit.build('gDetails');
+           var indexes = layedits.build('gRemark');*/
     });
 
 
@@ -234,7 +234,7 @@
                         if ($.isArray(json.detailList)) {
                             $.each(json.detailList, function (index, val) {
                                 $('#detailPic').append(
-                                "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val.albumUrl + "' />"
+                                    "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val.albumUrl + "' />"
                                 )
                             })
                         }

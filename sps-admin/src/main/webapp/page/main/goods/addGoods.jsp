@@ -135,19 +135,27 @@
 
         <div class="layui-form-item">
             <label class="layui-form-label">*主图：</label>
-            <div class="layui-input-inline">
-                <input type="text" name="gPic" id="gPic" class="layui-input" value="" readonly="readonly">
+            <div class="layui-upload">
+                <input type="text" name="gPic"  style="display: none"   id="gPic" class="layui-input" value="" <%--readonly="readonly"--%>>
                 <input type="file" name="file" style="padding-left: 5px;padding-top: 5px;" id="logoFile2"
                        onchange="setImg2(this);" multiple="multiple"/>
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo2"></div>
+                </blockquote>
             </div>
             <div style="padding-top: 10px"><span style="color: red">提示:最少一张，最多六张，单张大小不超过100K</span></div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*详情图：</label>
-            <div class="layui-input-inline">
-                <input type="text" name="gDpic" id="gDpic" value="" class="layui-input" readonly="readonly">
+            <div  class="layui-upload">
+                <input type="text"  style="display: none" name="gDpic" id="gDpic" value="" class="layui-input" readonly="readonly">
                 <input type="file" name="file" id="logoFile1" style="padding-left: 5px;padding-top: 5px;"
                        onchange="setImg1(this);" multiple="multiple">
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo"></div>
+                </blockquote>
             </div>
             <div style="padding-top: 10px"><span style="color: red">提示:最多十张，单张大小不超过300K</span></div>
         </div>
@@ -204,8 +212,14 @@
         var element = layui.element;
         var layedit = layui.layedit;
         var layedits = layui.layedit;
-        var index = layedit.build('gDetails');
-        var indexes = layedits.build('gRemark');
+        var index=layedit.build('gDetails', {
+            tool: ['strong','italic','underline','del', '|', 'left', 'center', 'right']
+            ,height: 200
+        })
+        var indexes = layedits.build('gRemark', {
+            tool: ['strong','italic','underline','del', '|', 'left', 'center', 'right']
+            ,height: 200
+        })
         form.on('radio(scale)', function () {
             $("#number").show();
         })
@@ -234,11 +248,11 @@
                 layer.msg("请填写规格信息");
                 return false;
             }
-            if (layedit.getContent(index) == "") {
+            if (layedit.getText(index) == "") {
                 layer.msg("商品描述不能为空！");
                 return false;
             }
-            if (layedits.getContent(indexes) == "") {
+            if (layedits.getText(indexes) == "") {
                 layer.msg("包装清单不能为空！");
                 return false;
             }
@@ -250,11 +264,11 @@
                 layer.msg("主图不能为空！");
                 return false;
             }
-            if (layedit.getContent(index).length>1000) {
+            if (layedit.getText(index).length>1000) {
                 layer.msg("商品描述不能超过1000位！");
                 return false;
             }
-            if (layedits.getContent(indexes).length>1000) {
+            if (layedits.getText(indexes).length>1000) {
                 layer.msg("包装清单不能超过1000位！");
                 return false;
             }
@@ -295,9 +309,15 @@
                                 setTimeout(function () {
                                     window.location.href = "<%=path%>/page/main/goods/index.jsp";
                                 }, 1000);
-                            } else {
+                            } else if (result.flag == '2') {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
-                                layer.msg("操作失败");
+                                layer.msg("详情图最多为10张");
+                            } else if (result.flag == '3') {
+                                post_flag = false; //在提交成功之后将标志标记为可提交状态
+                                layer.msg("主图最多为6张");
+                            }else {
+                                post_flag = false; //在提交成功之后将标志标记为可提交状态
+                                layer.msg("操作失败")
                             }
                         }//回调方法
                     });
@@ -328,12 +348,11 @@
                 layer.msg("请填写规格信息");
                 return false;
             }
-
-            if (layedit.getContent(index) == "") {
+            if (layedit.getText(index) == "") {
                 layer.msg("商品描述不能为空！");
                 return false;
             }
-            if (layedits.getContent(indexes) == "") {
+            if (layedits.getText(indexes) == "") {
                 layer.msg("包装清单不能为空！");
                 return false;
             }
@@ -345,11 +364,11 @@
                 layer.msg("主图不能为空！");
                 return false;
             }
-            if (layedit.getContent(index).length>1000) {
+            if (layedit.getText(index).length>1000) {
                 layer.msg("商品描述不能超过1000位！");
                 return false;
             }
-            if (layedits.getContent(indexes).length>1000) {
+            if (layedits.getText(indexes).length>1000) {
                 layer.msg("包装清单不能超过1000位！");
                 return false;
             }
@@ -396,6 +415,9 @@
                             } else if (result.flag == '3') {
                                 post_flag = false; //在提交成功之后将标志标记为可提交状态
                                 layer.msg("主图最多为6张");
+                            }else {
+                                post_flag = false; //在提交成功之后将标志标记为可提交状态
+                                layer.msg("操作失败")
                             }
                         }//回调方法
                     });
@@ -458,7 +480,16 @@
                 processData: false,    //不可缺
                 success: function (data) {
                     if (data.code == 0) {
+                        console.log(data.fileName)
+                        $('#demo2').find("img").remove();
                         $("#gPic").val(data.fileName);
+                            $.each(data.fileName, function (index, val) {
+                                $('#demo2').append(
+                                    "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val+ "' />"
+                                )
+                            })
+
+                       /* $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')*/
                         //如果重新调用过上传图片的方法 则表示商品主图修改过，后台删掉重新添加
                         $("#updatePicFlag").val(0);
                         // $("#pic").val(data.fileName);
@@ -517,6 +548,12 @@
                 processData: false,    //不可缺
                 success: function (data) {
                     if (data.code == 0) {
+                        $('#demo').find("img").remove();
+                        $.each(data.fileName, function (index, val) {
+                            $('#demo').append(
+                                "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val+ "' />"
+                            )
+                        })
                         $("#gDpic").val(data.fileName);
                         //如果重新调用过上传图片的方法 则表示商品详情图修改过，后台删掉重新添加
                         $("#updateDetailFlag").val(1);
@@ -584,8 +621,6 @@
                         $('#gSpuNo').val(json.goods.gSpuNo);
                         $('#gDetails').val(json.goods.gDetails);
                         $('#gRemark').val(json.goods.gRemark);
-                        $('#gDpic').val(json.goods.gDpic);
-                        $('#gPic').val(json.goods.gPic);
                         $('#gBrandId').val(json.goods.gBrandId);
                     }
                     if (json.brandName != null) {
@@ -613,6 +648,9 @@
                         var picVal = "";
                         if ($.isArray(json.detailList)) {
                             $.each(json.detailList, function (index, val) {
+                                $('#demo').append(
+                                    "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val.albumUrl+ "' />"
+                                )
                                 if (index != json.detailList.length - 1) {
                                     picVal += val.albumUrl + ","
                                 } else {
@@ -626,6 +664,9 @@
                         var picVal = "";
                         if ($.isArray(json.picList)) {
                             $.each(json.picList, function (index, val) {
+                                $('#demo2').append(
+                                    "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val.albumUrl+ "' />"
+                                )
                                 if (index != json.picList.length - 1) {
                                     picVal += val.albumUrl + ","
                                 } else {
@@ -634,6 +675,7 @@
                             })
                         }
                         $('#gPic').val(picVal)
+
                     }
                     if (json.skuList != null) {
                         if ($.isArray(json.skuList)) {
@@ -726,6 +768,11 @@
                 $("#gPrice").focus()
                 return false;
             }
+            var p=/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/; //正数
+            if(!p.test($("#gPrice").val())){
+                layer.msg("基准价输入正数且小数位不超过2位！");
+                return false;
+            }
             if ($("#gScale").val() == "") {
                 layer.msg("波动值不能为空！")
                 $("#gScale").focus()
@@ -744,11 +791,15 @@
                 gType = '按比例';
                 gAprice = accSub(gPrice, accMul(gPrice, accDiv(gScale, 100)));
                 gBprice = accAdd(gPrice, accMul(gPrice, accDiv(gScale, 100)));
+                gAprice = parseFloat(gAprice).toFixed(2);
+                gBprice = parseFloat(gBprice).toFixed(2);
                 gScale = gScale + "%";
             } else if (gType == "0") {
                 gType = '按金额';
                 gAprice = accSub(gPrice, gScale);
                 gBprice = accAdd(gPrice, gScale);
+                gAprice = parseFloat(gAprice).toFixed(2);
+                gBprice = parseFloat(gBprice).toFixed(2);
             }
             $('#content').append(
                 "<tr >" +
