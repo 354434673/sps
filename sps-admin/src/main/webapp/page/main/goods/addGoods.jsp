@@ -348,12 +348,11 @@
                 layer.msg("请填写规格信息");
                 return false;
             }
-
-            if (layedit.getContent(index) == "") {
+            if (layedit.getText(index) == "") {
                 layer.msg("商品描述不能为空！");
                 return false;
             }
-            if (layedits.getContent(indexes) == "") {
+            if (layedits.getText(indexes) == "") {
                 layer.msg("包装清单不能为空！");
                 return false;
             }
@@ -380,8 +379,6 @@
                 $.ajax(
                     {
                         data: {
-                            gDetails: layedit.getContext(index),
-                            gRemark: layedits.getContext(indexes),
                             flowStatus: 1,
                             gId: $('#goodsId').val(),
                             gCategoryIds: $('#gCategoryIds').val(),
@@ -389,6 +386,8 @@
                             gBrandId: $('#gBrandId').val(),
                             gSpuName: $('#gSpuName').val(),
                             gSpuNo: $('#gSpuNo').val(),
+                            gDetails: layedit.getContent(index),
+                            gRemark: layedits.getContent(indexes),
                             goodsDpic: $('#gDpic').val(),
                             goodsPic: $('#gPic').val(),
                             updateDetailFlag: $("#updateDetailFlag").val(),
