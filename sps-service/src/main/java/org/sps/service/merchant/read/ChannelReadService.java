@@ -65,6 +65,18 @@ public interface ChannelReadService{
 	 */
 	SpsChannelGather getGather(SpsChannelGather gather);
 	/**
+	 * 根据银行卡号查询是否添加过
+	 * @Title: queryGather   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param gather
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年2月28日 下午1:55:34
+	 * @return: SpsChannelGather      
+	 * @throws
+	 */
+	SpsChannelGather queryGather(String gatherBankId);
+	/**
 	 * 获得该商户的基本信息
 	 * @Title: getChannelOne   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   

@@ -321,10 +321,10 @@ public class ForceSaleGoodController {
      */
     @RequestMapping(value = "/auditShopGood")
     @ResponseBody
-    public Map<String, Object> auditShopGood(SpsGoodShop goods) {
+    public Map<String, Object> auditShopGood(SpsGoodShop goods,String forceOpinion) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
-            goodService.forceShopGood(goods);
+            goodService.forceShopGood(goods,forceOpinion);
             resultMap.put("flag", 1);
         } catch (Exception e) {
             e.printStackTrace();

@@ -4,7 +4,6 @@ package com.sps.dao.goods;
 import com.sps.dao.goods.base.BaseDaoImpl;
 import org.springframework.stereotype.Repository;
 import org.sps.entity.goods.SpsGoodShop;
-import org.sps.entity.goods.SpsGoods;
 
 import java.util.List;
 import java.util.Map;
@@ -35,5 +34,9 @@ public class SpsGoodShopMapper extends BaseDaoImpl<SpsGoodShop, Integer> {
 
     public int updateByGoodsId(SpsGoodShop spsGoodShop) {
         return super.updateByValue("updateGoodShopDelete", spsGoodShop);
+    }
+
+    public int updateCustomCategory(SpsGoodShop spsGoodShop) {
+        return super.updateByValue("updateCategorySelf", spsGoodShop);
     }
 }

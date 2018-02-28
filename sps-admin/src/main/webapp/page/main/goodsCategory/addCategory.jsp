@@ -69,10 +69,20 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">图片：</label>
-            <div class="layui-input-inline">
-                <input type="text" id="categoryUrl" name="categoryUrl" value="${spsGoodCategory.categoryUrl}" readonly="readonly"
+            <div class="layui-upload">
+                <input type="text" id="categoryUrl" name="categoryUrl" value="${spsGoodCategory.categoryUrl}"
+                       style="display: none"
                        placeholder="图片" class="layui-input"/>
                 <button onclick="checkImgType()">上传图片</button>
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo2">
+                        <c:if test="${spsGoodCategory.categoryUrl != null}">
+                            <img style='width: 300px;'
+                                 src='<%=path%>/upload/imgs/${spsGoodCategory.categoryUrl}'/>
+                        </c:if>
+                    </div>
+                </blockquote>
                 <%--  <input id="categoryUrl" type="hidden" name="categoryUrl"
                          value="${spsGoodCategory.categoryUrl}">
                   <button type="button" class="layui-btn" id="test1">上传图片</button>
@@ -102,7 +112,7 @@
 
 <script type="text/javascript">
     $(function () {
-        if($("#categoryId").val()!=''){
+        if ($("#categoryId").val() != '') {
             $("#showCategory").attr({"disabled": "disabled"});
         }
         $(".import").on("click", function () {
@@ -151,7 +161,11 @@
                 processData: false,    //不可缺
                 success: function (res) {
                     if (res.code == 0) {
+                        $('#demo2').find("img").remove();
                         $("#categoryUrl").val(res.fileName);
+                        $('#demo2').append(
+                            "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + res.fileName+ "' />"
+                        )
                         // $("#imgShow").attr('src',data.data.avatar);
                     } else {
                         layer.msg('上传失败');
@@ -218,9 +232,9 @@
                             $("#showCategory").html(item.name)
                             $("#categoryParentId").val(item.id)
                             console.log(item);
-                            if(item.pid==undefined){
+                            if (item.pid == undefined) {
                                 $("#parentFlag").val("0")
-                            }else {
+                            } else {
                                 $("#parentFlag").val("1")
                             }
                             if (item.name == '无') {
@@ -290,11 +304,11 @@
         //提交
         var post_flag = false; //设置一个对象来控制是否进入AJAX过程
         form.on('submit(submitCategory)', function (data) {
-            if ($("#categoryName").val().length<2) {
+            if ($("#categoryName").val().length < 2) {
                 layer.msg("分类名称最少输入2位！");
                 return false;
             }
-            if ($("#categoryName").val().length>8) {
+            if ($("#categoryName").val().length > 8) {
                 layer.msg("分类名称最多输入8位！");
                 return false;
             }
@@ -302,11 +316,11 @@
                 layer.msg("请选择上级分类！");
                 return false;
             }
-            if (parseInt($("#categoryWeight").val()) >9999) {
+            if (parseInt($("#categoryWeight").val()) > 9999) {
                 layer.msg("权重不能大于9999！");
                 return false;
             }
-            if ($("#categoryDes").val().length>20) {
+            if ($("#categoryDes").val().length > 20) {
                 layer.msg("描述不能大于20位！");
                 return false;
             }
@@ -354,7 +368,6 @@
                 content: $('#tree') //这里content是一个DOM，这个元素要放在body根节点下
             });
         })
-
 
 
     });

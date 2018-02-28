@@ -110,24 +110,30 @@
 			  
 			  //查询
 			  $('#queryOrders').on('click',function(){
-				  var date= $('#time').val().split('至')
+				  var date= $('#time').val().split('至');
 				  var name = $('#name').val();
 				  var selfname = $('#selfname').val();
 				  var orderid = $('#orderid').val();
 				  var startTime = date[0];
 				  var endTime = date[1];
+
+				  if(endTime=='undefined'){
+					  endTime="";
+				  }
+
 				  //var flag=1;//待确认订单1，已拒绝2，订单审核中3，订单审核不通过4，待签约5，待发货6......默认如果不输入的话查询全部
 				  //待确认的退货申请，flag未确定
 				  table.reload('orderToBeRecieved', {
 					  page:{
 						  curr:1//重新从第一页开始
-					  },
+			  		  },
 					  where: {name:name,selfname:selfname,orderid:orderid,startTime:startTime,endTime:endTime/* ,flag:flag */}
 					});
 			  })
 			  //重置
 			  $('#resetInput').on('click',function(){
 				  $('input').val('');
+				  $('time').val('');
 			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){

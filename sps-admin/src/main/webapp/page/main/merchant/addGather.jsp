@@ -28,7 +28,7 @@
 				  <div class="layui-form-item">
 				    <label class="layui-form-label" style="width: 150px">收款银行卡账号：</label>
 				    <div class="layui-input-inline">
-				      <input id="gatherBankId" type="text" name="gatherBankId"  lay-verify="required|IsBank" placeholder="" autocomplete="off" class="layui-input">
+				      <input id="gatherBankId" type="text" name="gatherBankId"  lay-verify="required|IsBank|haveBank" placeholder="" autocomplete="off" class="layui-input">
 				    </div>
 				    <div class="layui-form-mid layui-word-aux" >
 				    <font color="red">
@@ -86,11 +86,13 @@
 		src="<%=path%>/page/layui/layui.js"></script>
 <script type="text/javascript">
 	  var gatherListJson = []
-	layui.use(['form','table','element'], function(){
+	layui.use(['form','table','element','layer'], function(){
 	  var form = layui.form;
 	  var $ = layui.jquery;
 	  var element = layui.element;
+	  var layer = layui.layer;
 	  var index = 1;
+	  var add = false;
   	  $('#test').on('click',function(){
 			 var gatherBankId = $('#gatherBankId').val()
 			 var gatherOwnerName = $('#gatherOwnerName').val()
@@ -112,26 +114,46 @@
 				$('input').val('')
 				console.log(gatherListJson)
 	  })  
-  	  form.on('submit(insertGather)', function(data){
-			 var gatherBankId = $('#gatherBankId').val()
-			 var gatherOwnerName = $('#gatherOwnerName').val()
-			 var gatherPhone = $('#gatherPhone').val()
-			 var gatherIdcard = $('#gatherIdcard').val()
-			 var gatherDepositBank = $('#gatherDepositBank').val()
-			 var gatherBankBranch = $('#gatherBankBranch').val()
-			 var gatherBankSubbranch = $('#gatherBankSubbranch').val()
-			 gatherListJson.push({
-				 gatherId:index++,
-				 gatherBankId:gatherBankId,
-				 gatherOwnerName:gatherOwnerName,
-				 gatherPhone:gatherPhone,
-				 gatherIdcard:gatherIdcard,
-				 gatherDepositBank:gatherDepositBank,
-				 gatherBankBranch:gatherBankBranch,
-				 gatherBankSubbranch:gatherBankSubbranch,
-				 })
-		      $('input').val('')
-	  })  
+	   
+	  $('#gatherBankId').blur(function(){
+		  var gatherBankId = $('#gatherBankId').val()
+		    $.ajax({
+				url:'<%=path%>/merchant/queryGather',
+				data:{gatherBankId:gatherBankId},
+				success:function(result){
+					if(eval(result) == 'exist'){
+						add = false;
+						layer.msg("该银行卡已添加",{icon: 2})
+					}else{
+						add = true;
+					}
+				}
+			})  
+	  })
+	  	  form.on('submit(insertGather)', function(data){
+	  		  if(add){
+				 var gatherBankId = $('#gatherBankId').val()
+				 var gatherOwnerName = $('#gatherOwnerName').val()
+				 var gatherPhone = $('#gatherPhone').val()
+				 var gatherIdcard = $('#gatherIdcard').val()
+				 var gatherDepositBank = $('#gatherDepositBank').val()
+				 var gatherBankBranch = $('#gatherBankBranch').val()
+				 var gatherBankSubbranch = $('#gatherBankSubbranch').val()
+				 gatherListJson.push({
+					 gatherId:index++,
+					 gatherBankId:gatherBankId,
+					 gatherOwnerName:gatherOwnerName,
+					 gatherPhone:gatherPhone,
+					 gatherIdcard:gatherIdcard,
+					 gatherDepositBank:gatherDepositBank,
+					 gatherBankBranch:gatherBankBranch,
+					 gatherBankSubbranch:gatherBankSubbranch,
+					 })
+			      $('input').val('')
+	  		  }else{
+	  			layer.msg("该银行卡已添加",{icon: 2})
+	  		  }
+		  })  
 	  //自定义验证规则  
 	  form.verify({  
 			//验证只包含汉字  

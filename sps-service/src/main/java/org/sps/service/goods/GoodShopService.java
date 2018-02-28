@@ -93,7 +93,7 @@ public interface GoodShopService {
      * 强制下架
      * @param goods
      */
-    void forceShopGood(SpsGoodShop goods);
+    void forceShopGood(SpsGoodShop goods,String forceOpinion);
 
     /**
      * 商户详情查看商户商品列表

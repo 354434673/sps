@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="sps-merchant:war">
-    <output-path>$PROJECT_DIR$/sps-merchant/target</output-path>
-    <root id="archive" name="sps-merchant.war">
-      <element id="artifact" artifact-name="sps-merchant:war exploded" />
-    </root>
-  </artifact>
-</component>

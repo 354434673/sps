@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsSaleLog">
+  <resultMap id="BaseResultMap" type="SpsSaleLog">
+    <id column="sale_id" jdbcType="INTEGER" property="saleId" />
+    <result column="sale_good_id" jdbcType="INTEGER" property="saleGoodId" />
+    <result column="sale_content" jdbcType="VARCHAR" property="saleContent" />
+    <result column="sale_create_time" jdbcType="TIMESTAMP" property="saleCreateTime" />
+    <result column="sale_update_time" jdbcType="TIMESTAMP" property="saleUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sale_id, sale_good_id, sale_content, sale_create_time, sale_update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_sale_log
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_sale_log
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsSaleLog">
+    insert into sps_sale_log (sale_id, sale_good_id, sale_content, 
+      sale_create_time, sale_update_time)
+    values (#{saleId,jdbcType=INTEGER}, #{saleGoodId,jdbcType=INTEGER}, #{saleContent,jdbcType=VARCHAR}, 
+      #{saleCreateTime,jdbcType=TIMESTAMP}, #{saleUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="SpsSaleLog">
+    insert into sps_sale_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="saleId != null">
+        sale_id,
+      </if>
+      <if test="saleGoodId != null">
+        sale_good_id,
+      </if>
+      <if test="saleContent != null">
+        sale_content,
+      </if>
+      <if test="saleCreateTime != null">
+        sale_create_time,
+      </if>
+      <if test="saleUpdateTime != null">
+        sale_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="saleId != null">
+        #{saleId,jdbcType=INTEGER},
+      </if>
+      <if test="saleGoodId != null">
+        #{saleGoodId,jdbcType=INTEGER},
+      </if>
+      <if test="saleContent != null">
+        #{saleContent,jdbcType=VARCHAR},
+      </if>
+      <if test="saleCreateTime != null">
+        #{saleCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleUpdateTime != null">
+        #{saleUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="SpsSaleLog">
+    update sps_sale_log
+    <set>
+      <if test="saleGoodId != null">
+        sale_good_id = #{saleGoodId,jdbcType=INTEGER},
+      </if>
+      <if test="saleContent != null">
+        sale_content = #{saleContent,jdbcType=VARCHAR},
+      </if>
+      <if test="saleCreateTime != null">
+        sale_create_time = #{saleCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleUpdateTime != null">
+        sale_update_time = #{saleUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsSaleLog">
+    update sps_sale_log
+    set sale_good_id = #{saleGoodId,jdbcType=INTEGER},
+      sale_content = #{saleContent,jdbcType=VARCHAR},
+      sale_create_time = #{saleCreateTime,jdbcType=TIMESTAMP},
+      sale_update_time = #{saleUpdateTime,jdbcType=TIMESTAMP}
+    where sale_id = #{saleId,jdbcType=INTEGER}
+  </update>
+</mapper>

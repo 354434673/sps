@@ -135,19 +135,27 @@
 
         <div class="layui-form-item">
             <label class="layui-form-label">*主图：</label>
-            <div class="layui-input-inline">
-                <input type="text" name="gPic" id="gPic" class="layui-input" value="" readonly="readonly">
+            <div class="layui-upload">
+                <input type="text" name="gPic"  style="display: none"   id="gPic" class="layui-input" value="" <%--readonly="readonly"--%>>
                 <input type="file" name="file" style="padding-left: 5px;padding-top: 5px;" id="logoFile2"
                        onchange="setImg2(this);" multiple="multiple"/>
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo2"></div>
+                </blockquote>
             </div>
             <div style="padding-top: 10px"><span style="color: red">提示:最少一张，最多六张，单张大小不超过100K</span></div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">*详情图：</label>
-            <div class="layui-input-inline">
-                <input type="text" name="gDpic" id="gDpic" value="" class="layui-input" readonly="readonly">
+            <div  class="layui-upload">
+                <input type="text"  style="display: none" name="gDpic" id="gDpic" value="" class="layui-input" readonly="readonly">
                 <input type="file" name="file" id="logoFile1" style="padding-left: 5px;padding-top: 5px;"
                        onchange="setImg1(this);" multiple="multiple">
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo"></div>
+                </blockquote>
             </div>
             <div style="padding-top: 10px"><span style="color: red">提示:最多十张，单张大小不超过300K</span></div>
         </div>
@@ -372,6 +380,8 @@
                 $.ajax(
                     {
                         data: {
+                            gDetails: layedit.getContext(index),
+                            gRemark: layedits.getContext(indexes),
                             flowStatus: 1,
                             gId: $('#goodsId').val(),
                             gCategoryIds: $('#gCategoryIds').val(),
@@ -379,8 +389,6 @@
                             gBrandId: $('#gBrandId').val(),
                             gSpuName: $('#gSpuName').val(),
                             gSpuNo: $('#gSpuNo').val(),
-                            gDetails: layedit.getContext(index),
-                            gRemark: layedits.getContext(indexes),
                             goodsDpic: $('#gDpic').val(),
                             goodsPic: $('#gPic').val(),
                             updateDetailFlag: $("#updateDetailFlag").val(),
@@ -473,7 +481,16 @@
                 processData: false,    //不可缺
                 success: function (data) {
                     if (data.code == 0) {
+                        console.log(data.fileName)
+                        $('#demo2').find("img").remove();
                         $("#gPic").val(data.fileName);
+                            $.each(data.fileName, function (index, val) {
+                                $('#demo2').append(
+                                    "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val+ "' />"
+                                )
+                            })
+
+                       /* $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')*/
                         //如果重新调用过上传图片的方法 则表示商品主图修改过，后台删掉重新添加
                         $("#updatePicFlag").val(0);
                         // $("#pic").val(data.fileName);
@@ -532,6 +549,12 @@
                 processData: false,    //不可缺
                 success: function (data) {
                     if (data.code == 0) {
+                        $('#demo').find("img").remove();
+                        $.each(data.fileName, function (index, val) {
+                            $('#demo').append(
+                                "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val+ "' />"
+                            )
+                        })
                         $("#gDpic").val(data.fileName);
                         //如果重新调用过上传图片的方法 则表示商品详情图修改过，后台删掉重新添加
                         $("#updateDetailFlag").val(1);
@@ -626,6 +649,9 @@
                         var picVal = "";
                         if ($.isArray(json.detailList)) {
                             $.each(json.detailList, function (index, val) {
+                                $('#demo').append(
+                                    "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val.albumUrl+ "' />"
+                                )
                                 if (index != json.detailList.length - 1) {
                                     picVal += val.albumUrl + ","
                                 } else {
@@ -639,6 +665,9 @@
                         var picVal = "";
                         if ($.isArray(json.picList)) {
                             $.each(json.picList, function (index, val) {
+                                $('#demo2').append(
+                                    "<img style='width: 300px;'  src='<%=path%>/upload/imgs/" + val.albumUrl+ "' />"
+                                )
                                 if (index != json.picList.length - 1) {
                                     picVal += val.albumUrl + ","
                                 } else {
@@ -647,6 +676,7 @@
                             })
                         }
                         $('#gPic').val(picVal)
+
                     }
                     if (json.skuList != null) {
                         if ($.isArray(json.skuList)) {
@@ -739,6 +769,11 @@
                 $("#gPrice").focus()
                 return false;
             }
+            var p=/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/; //正数
+            if(!p.test($("#gPrice").val())){
+                layer.msg("基准价输入正数且小数位不超过2位！");
+                return false;
+            }
             if ($("#gScale").val() == "") {
                 layer.msg("波动值不能为空！")
                 $("#gScale").focus()
@@ -757,11 +792,15 @@
                 gType = '按比例';
                 gAprice = accSub(gPrice, accMul(gPrice, accDiv(gScale, 100)));
                 gBprice = accAdd(gPrice, accMul(gPrice, accDiv(gScale, 100)));
+                gAprice = parseFloat(gAprice).toFixed(2);
+                gBprice = parseFloat(gBprice).toFixed(2);
                 gScale = gScale + "%";
             } else if (gType == "0") {
                 gType = '按金额';
                 gAprice = accSub(gPrice, gScale);
                 gBprice = accAdd(gPrice, gScale);
+                gAprice = parseFloat(gAprice).toFixed(2);
+                gBprice = parseFloat(gBprice).toFixed(2);
             }
             $('#content').append(
                 "<tr >" +
