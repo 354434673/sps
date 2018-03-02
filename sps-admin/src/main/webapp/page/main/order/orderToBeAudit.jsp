@@ -49,9 +49,9 @@
 				    <label class="layui-form-label">流程状态</label>
 				    <div class="layui-input-inline">
 				      <select name="flag" lay-filter="flag" id="flag">
-				        <option value="3,4,6" selected="selected">全部</option>
+				        <option value="3,4,18" selected="selected">全部</option>
 				        <option value="3">待审核</option>
-				        <option value="6">审核通过</option>
+				        <option value="18">审核通过</option>
 				        <option value="4">审核不通过</option>
 				      </select>
 				    </div>
@@ -64,7 +64,7 @@
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
-{{#  if(d.flag == 6){ }}
+{{#  if(d.flag == 18){ }}
 <a class="layui-btn layui-btn-mini" lay-event="query" id="query">查看</a>
 {{#  } else if(d.flag == 4){ }}
 <a class="layui-btn layui-btn-mini" lay-event="query" id="query">查看</a>
@@ -89,7 +89,7 @@
 <script type="text/html" id="state">
 {{#  if(d.flag == 3){ }}
 待审核
-{{#  } else if(d.flag == 6){ }}
+{{#  } else if(d.flag == 18){ }}
 审核通过
 {{#  } else if(d.flag == 4){ }}
 审核不通过
@@ -116,7 +116,7 @@
 			  table.render({
 			    elem: '#orderList'
 			    ,url: '<%=path%>/order/show.json' //数据接口
-			    ,where:{flag:3}
+			    ,where:{flag:'3,4,18'}
 			    ,id:'orderToBeAudit'
 			    ,page:true
 			    ,cols: [[ //表头
@@ -161,7 +161,7 @@
 			  //重置
 			  $('#resetInput').on('click',function(){
 				  $('input').val('');
-				  $('select').val('3,4,6');
+				  $('select').val('3,4,18');
 			  });
 			  //监听工作条
 			 table.on('tool(orderTables)', function(obj){
