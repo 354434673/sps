@@ -125,9 +125,9 @@
 					  $('#orderid').html(result.data[0].orderid)//订单编号
 					  $('#money').html(result.data[0].money)//订单金额
 					  $('#servicescale').html(result.data[0].servicescale)//代销服务费率
-					  $('#servicemoney').html(result.data[0].servicemoney + ' ¥')//代销服务费
-					  $('#sumMoney').html(result.data[0].sumMoney + ' ¥')//实销金额
-					  $('#backSumMoney').html(result.data[0].sumMoney + ' ¥')//退款金额 = 实销金额
+					  $('#servicemoney').html(result.data[0].servicemoney)//代销服务费
+					  $('#sumMoney').html(result.data[0].sumMoney)//实销金额
+					  $('#backSumMoney').html(result.data[0].sumMoney)//退款金额 = 实销金额
 					  var date = getDate(result.data[0].createtime)
 					  $('#createtime').html(date)//订单申请日期
 					  $('#name').html(result.data[0].name)//店主名称
