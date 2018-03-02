@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsPurchaseOrder">
+  <resultMap id="BaseResultMap" type="SpsPurchaseOrder">
+    <id column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="order_goods_num" jdbcType="INTEGER" property="orderGoodsNum" />
+    <result column="order_sku_id" jdbcType="INTEGER" property="orderSkuId" />
+    <result column="order_goods_id" jdbcType="INTEGER" property="orderGoodsId" />
+    <result column="order_customer_num" jdbcType="VARCHAR" property="orderCustomerNum" />
+    <result column="order_delete_flag" jdbcType="INTEGER" property="orderDeleteFlag" />
+    <result column="order_create_time" jdbcType="TIMESTAMP" property="orderCreateTime" />
+    <result column="order_update_time" jdbcType="TIMESTAMP" property="orderUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, order_goods_num, order_sku_id, order_goods_id, order_customer_num, order_delete_flag, 
+    order_create_time, order_update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_purchase_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_purchase_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsPurchaseOrder">
+    insert into sps_purchase_order (order_id, order_goods_num, order_sku_id, 
+      order_goods_id, order_customer_num, order_delete_flag, 
+      order_create_time, order_update_time)
+    values (#{orderId,jdbcType=INTEGER}, #{orderGoodsNum,jdbcType=INTEGER}, #{orderSkuId,jdbcType=INTEGER}, 
+      #{orderGoodsId,jdbcType=INTEGER}, #{orderCustomerNum,jdbcType=VARCHAR}, #{orderDeleteFlag,jdbcType=INTEGER}, 
+      #{orderCreateTime,jdbcType=TIMESTAMP}, #{orderUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="SpsPurchaseOrder">
+    insert into sps_purchase_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="orderGoodsNum != null">
+        order_goods_num,
+      </if>
+      <if test="orderSkuId != null">
+        order_sku_id,
+      </if>
+      <if test="orderGoodsId != null">
+        order_goods_id,
+      </if>
+      <if test="orderCustomerNum != null">
+        order_customer_num,
+      </if>
+      <if test="orderDeleteFlag != null">
+        order_delete_flag,
+      </if>
+      <if test="orderCreateTime != null">
+        order_create_time,
+      </if>
+      <if test="orderUpdateTime != null">
+        order_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderGoodsNum != null">
+        #{orderGoodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderSkuId != null">
+        #{orderSkuId,jdbcType=INTEGER},
+      </if>
+      <if test="orderGoodsId != null">
+        #{orderGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="orderCustomerNum != null">
+        #{orderCustomerNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDeleteFlag != null">
+        #{orderDeleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="orderCreateTime != null">
+        #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUpdateTime != null">
+        #{orderUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="SpsPurchaseOrder">
+    update sps_purchase_order
+    <set>
+      <if test="orderGoodsNum != null">
+        order_goods_num = #{orderGoodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderSkuId != null">
+        order_sku_id = #{orderSkuId,jdbcType=INTEGER},
+      </if>
+      <if test="orderGoodsId != null">
+        order_goods_id = #{orderGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="orderCustomerNum != null">
+        order_customer_num = #{orderCustomerNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDeleteFlag != null">
+        order_delete_flag = #{orderDeleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="orderCreateTime != null">
+        order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUpdateTime != null">
+        order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsPurchaseOrder">
+    update sps_purchase_order
+    set order_goods_num = #{orderGoodsNum,jdbcType=INTEGER},
+      order_sku_id = #{orderSkuId,jdbcType=INTEGER},
+      order_goods_id = #{orderGoodsId,jdbcType=INTEGER},
+      order_customer_num = #{orderCustomerNum,jdbcType=VARCHAR},
+      order_delete_flag = #{orderDeleteFlag,jdbcType=INTEGER},
+      order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+
+
+  <!-- 查询所有 -->
+  <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
+    SELECT
+    o.order_id,
+    o.order_goods_num,
+    o.order_sku_id,
+    o.order_goods_id,
+    o.order_customer_num,
+    o.order_delete_flag,
+    o.order_create_time,
+    o.order_update_time,
+    s.g_goods_id AS platGoodsId,
+    s.g_spu_name AS goodsName,
+    ss.g_price AS price,
+    ss.g_color AS color,
+    ss.g_quantity AS quantity,
+    ss.g_size AS size,
+    ss.g_stock as stock,
+    (
+    SELECT
+    a.album_url
+    FROM
+    sps_goods_album a
+    WHERE
+    a.goods_id = platGoodsId
+    AND a.album_type = 0
+    ORDER BY
+    a.album_id ASC
+    LIMIT 1
+    ) AS url,
+    s.g_grounding_flag as groundingFlag
+    FROM
+    sps_purchase_order o
+    LEFT JOIN sps_good_shop s ON o.order_goods_id = s.g_id
+    LEFT JOIN sps_good_shop_sku ss ON ss.g_id = o.order_sku_id
+    where 1=1
+    <if test="customerNum !=null and customerNum != ''">
+      and o.order_customer_num=#{customerNum,jdbcType=VARCHAR}
+    </if>
+    AND order_delete_flag = 0
+    order by order_create_time desc
+
+  </select>
+</mapper>

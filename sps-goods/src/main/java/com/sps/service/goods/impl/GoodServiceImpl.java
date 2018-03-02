@@ -101,10 +101,11 @@ public class GoodServiceImpl implements GoodsService {
     }
 
     @Override
-    public HashMap<String, Object> findGoodsList(Integer page, Integer limit, String goodsName, String goodsNo,String flowStatus) {
+    public HashMap<String, Object> findGoodsList(Integer page, Integer limit, String goodsName, String goodsNo,String flowStatus,String categoryId) {
         Map<String, Object> map = new HashMap<>();
         map.put("flowStatus", flowStatus);
         map.put("goodsName", goodsName);
+        map.put("categoryId", categoryId);
         map.put("goodsNo", goodsNo);
         //分页
         PageHelper.startPage(page, limit);

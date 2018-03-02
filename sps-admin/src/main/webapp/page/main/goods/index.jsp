@@ -32,6 +32,7 @@
             <div class="layui-input-inline">
                 <input id="goodsName" type="text" name="goodsName"  lay-verify="" placeholder="请输入商品名称" autocomplete="off" class="layui-input">
             </div>
+
             <label class="layui-form-label">流程状态:</label>
             <div class="layui-input-inline">
                 <select   id="status" lay-filter="channelFlowState">
@@ -45,6 +46,18 @@
             </div>
             <button class="layui-btn layui-btn-primary" id="queryGoods">查询</button>
             <button class="layui-btn layui-btn-primary" id="resetGoods">重置</button>
+
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <button class="layui-btn layui-btn-primary" id="showCategory">
+                    选择分类
+                </button>
+                <input type="hidden" id="gCategoryIds" name="gCategoryIds" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+
+
         </div>
     </div>
     <div>
@@ -56,8 +69,11 @@
     </div>
     <table id="goodsList" lay-filter="goodsTables"></table>
 </div>
+    <div id="tree"  style="display: none"></div>
 <script type="text/javascript"
         src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
+<script src="<%=path%>/page/static/js/jquery-1.10.2.min.js"></script>
+<script src="<%=path%>/page/static/treeTable/layui.js"></script>
 <script type="text/html" id="bar">
     <a class="layui-btn layui-btn-mini" lay-event="detail">详情</a>
     <a class="layui-btn layui-btn-mini update"  lay-event="edit" >修改</a>
@@ -70,12 +86,77 @@
     {{#  }); }}
 </script>
 <script>
+    $(function () {
+        initTree();
+    });
+    //获取树
+    function initTree() {
+        $.ajax({
+            data: {},//提交的数据
+            url: "<%=path%>/category/getCategory",//提交连接
+            type: 'post',
+            dataType: 'json',
+            success: function (result) {
+                layui.use(['tree', 'layer'], function () {
+                    var layer = layui.layer;
+                    layui.tree({
+                        elem: '#tree',
+                        //check: 'checkbox',              //输入checkbox则生成带checkbox的tree, 默认不带checkbox
+                        skin: 'as',                     //设定皮肤
+                        drag: true,                     //点击每一项时是否生成提示信息
+                        checkboxName: 'selectedArr',    //复选框的name属性值
+                        checkboxStyle: "",              //设置复选框的样式，必须为字符串，css样式怎么写就怎么写
+                        click: function (item) {          //节点点击事件
+                            //根据pid和id 到后台拼接分类名称和ids
+                            getCategoryName(item.pid, item.id);
+                            $("#tree").hide();
+                            layer.closeAll();
+                        },
+                        nodes: eval(result),
+                    });
+                });
+            }//回调方法
+        });
+
+    }
+    //从后台再查一次
+    function getCategoryName(pId, id) {
+        $.ajax({
+            data: {pId: pId, id: id},//提交的数据
+            url: "<%=path%>/category/getCategoryName",//提交连接
+            type: 'post',
+            dataType: 'json',
+            success: function (result) {
+                if (result.flag == '1') {
+                    $("#showCategory").html(result.name);
+                    $("#gCategoryIds").val(result.ids);
+
+                } else {
+                    layer.msg("操作失败");
+                }
+            }
+        });
+
+    }
+
     layui.use(['table','laypage','layer'], function(){
         var table = layui.table;
         var form = layui.form;
         var laypage = layui.laypage;
-        var layer = layui.layer
-        var $ = layui.jquery
+        var layer = layui.layer;
+        var $ = layui.jquery;
+
+        $(document).on("click", "#showCategory", function () {
+            layer.open({
+                type: 1,
+                area: ['600px', '400px'],
+                shade: false,
+                title: false,
+                skin: 'yourclass',
+                content: $('#tree') //这里content是一个DOM，这个元素要放在body根节点下
+            });
+        });
+
         $('#add').on('click', function() {
             window.location.href="<%=path%>/page/main/goods/addGoods.jsp";
         });
@@ -122,8 +203,9 @@
             var goodsNo = $('#goodsNo').val();
             var goodsName = $('#goodsName').val();
             var status =$('#status').val();
+            var gCategoryIds =$('#gCategoryIds').val();
             table.reload('gId', {
-                where: {goodsNo:goodsNo, goodsName:goodsName,flowStatus:status}
+                where: {goodsNo:goodsNo, goodsName:goodsName,flowStatus:status,categoryId:gCategoryIds}
             });
         })
         //重置
@@ -131,6 +213,8 @@
             $('#goodsName').val('')
             $('#goodsNo').val('')
             $('#status').val('')
+            $('#gCategoryIds').val('')
+            $("#showCategory").html("选择分类");
             form.render('select');
         })
         //监听工作条

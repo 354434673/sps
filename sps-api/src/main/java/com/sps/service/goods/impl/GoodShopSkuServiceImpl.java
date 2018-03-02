@@ -54,7 +54,7 @@ public class GoodShopSkuServiceImpl implements GoodShopSkuService {
         List<SpsGoodShopSku> list = spsGoodShopSkuMapper.findListAllWithMap(map);
         if (list!=null &&list.size()>0){
             for (SpsGoodShopSku skuList:  list){
-                skuList.setSizeColor(skuList.getgSize()+","+skuList.getgColor());
+                skuList.setColorSize(skuList.getgColor()+","+skuList.getgSize());
             }
         }
         return list;
