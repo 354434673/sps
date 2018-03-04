@@ -36,7 +36,6 @@
 					<input type="text" class="layui-input" id="account"  lay-verify="required">
 				</div>
 				<button class="layui-btn layui-btn-primary" id="search">查询</button>
-				<button class="layui-btn layui-btn-primary" id="reset">重置</button>
 
 			</div>
 			<div class="layui-form-item">
@@ -51,6 +50,7 @@
 				<div class="layui-input-inline">
 					<input type="text" class="layui-input" id="beizhu" lay-verify="required">
 				</div>
+				<button class="layui-btn layui-btn-primary" id="reset">重置</button>
 
 			</div>
 		</div>
@@ -58,9 +58,9 @@
 	</div>
 	<script type="text/javascript"  src="<%=path%>/page/layui/layui.js"></script>
 	<script type="text/html" id="type">
-		{{#    if(d.payType == '1'){  }}
+		{{#    if(d.payType == '0'){  }}
 		支出
-		{{#  } else if(d.payType == '2'){ }}
+		{{#  } else if(d.payType == '1'){ }}
 		收入
 		{{#  } }}
 

@@ -9,7 +9,7 @@
 <html>
 	<head>
 		 <meta charset="UTF-8">
-	    <title>提现审核</title>
+	    <title>余额调整</title>
 	    <meta name="renderer" content="webkit">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	    <meta name="viewport"
@@ -23,62 +23,42 @@
 		<div style="margin: 15px;">
 			 <div class="layui-form layui-form-pane">
 			 	<div class="layui-form-item">
-			 			<label class="layui-form-label">客户账号:</label>
+			 			<label class="layui-form-label">客户编号:</label>
                     	<div class="layui-input-inline">
-                       	 	<input type="text" class="layui-input" id="account"  lay-verify="required">
+                       	 	<input type="text" class="layui-input" id="kehuNo"  lay-verify="required">
                     	</div>
                     	
 			 		 	<label class="layui-form-label">客户名称:</label>
                     	<div class="layui-input-inline">
-                       	 	<input type="text" class="layui-input" id="name"  lay-verify="required">
+                       	 	<input type="text" class="layui-input" id="kehuName"  lay-verify="required">
                     	</div>
                     	<button class="layui-btn layui-btn-primary" id="search">查询</button>
                     	<button class="layui-btn layui-btn-primary" id="reset">重置</button>
 			 	</div>
 			 	<div class="layui-form-item">
-			 			<label class="layui-form-label">提现时间:</label>
+			 			<label class="layui-form-label">调整日期:</label>
                     	<div class="layui-input-inline">
                        	 	<input type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required">
                     	</div>
                     	<div class="layui-input-inline">
                         	<input type="text" class="layui-input" id="endTime" placeholder="年-月-日" lay-verify="required">
                     	</div>
-			 		 	<label class="layui-form-label">状态:</label>
-                        <div class="layui-input-inline">
-                            <select  id="status" lay-filter="withDrawState">
-                            <option value="0">待审核</option>
-							<option value="1">审核不通过</option>
-                            <option value="2">审核通过</option>
-							<option value="">全部</option>
-                            </select>
-                        </div>
 			 	</div>
+				 <div>
+					 <blockquote class="layui-elem-quote">
+						 <a href="javascript:;" class="layui-btn layui-btn-warm" id="add">
+							 <i class="layui-icon">&#xe608;</i> 新增
+						 </a>
+					 </blockquote>
+				 </div>
 			 </div>
-			 <table id="drawAudioList" lay-filter="drawAudioTables"></table>
+			 <table id="balanceAudioList" lay-filter="balanceAdjustTables"></table>
 	</div>
 <script type="text/javascript"  src="<%=path%>/page/layui/layui.js"></script>
 <script type="text/html" id="bar">
-	{{#    if(d.status != '2'){  }}
-		<a class="layui-btn layui-btn-mini" lay-event="edit">审核</a>
-		<a class="layui-btn layui-btn-mini" lay-event="delete">查看历史记录</a>
-
-		<%--<a class="layui-btn layui-btn-mini" lay-event="detail">查看详情</a>--%>
-	{{#  }  }}
-	{{#    if(d.status == '2'){  }}
-		<a class="layui-btn layui-btn-mini" lay-event="delete">查看历史记录</a>
-		<%--<a class="layui-btn layui-btn-mini" lay-event="detail">查看详情</a>--%>
-	{{#  }  }}
-
+		<a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
 </script>
-<script type="text/html" id="withDrawStateTpl">
-		{{#    if(d.status == '0'){  }}
-		待审核
-		{{#  } else if(d.status == '1'){ }}
-		审核不通过
-		{{#  } else if(d.status == '2'){ }}
-		审核通过
-		{{#  } }}
-</script>
+
 
 <script type="text/html" id="date">
     {{#
@@ -120,24 +100,21 @@
             ,id:'id'
             ,page:true
             ,cols: [[ //表头
-                 {type:'numbers', title: '序号',align:'center'}
-                ,{field: 'userName', title: '客户账号',align:'center'  }
-                ,{field: 'companyName', title: '客户名称',align:'center'  }
-                ,{field: 'amount', title: '提现金额',width:230,align:'center'}
-                ,{field: 'applicationDate', title: '提现申请日期', width:230, align:'center',templet: '#date'}
-                ,{field: 'moneyAmount', title: '近30日提款合计金额',width:230,align:'center'}
-                ,{field: 'totalAmount', title: '累计提款合计金额',align:'center' }
-                ,{field: 'status', title: '流程状态',event: 'setStatus', width:140,align:'center',templet: '#withDrawStateTpl'}
+				 {field: 'kehuNo', title: '客户编号',align:'center'  }
+                ,{field: 'kehuName', title: '客户名称',align:'center'  }
+                ,{field: 'eforeBalance', title: '调整前余额',width:230,align:'center'}
+                ,{field: 'afterBalance', title: '调整后余额', width:230, align:'center'}
+                ,{field: 'adjustAmount', title: '调整金额',width:230,align:'center'}
+                ,{field: 'adjustTime', title: '调整日期',align:'center' ,templet: '#date'}
                 ,{field: 'tool', title: '操作',width:270,align:'center', event: 'setSign' ,toolbar:'#bar'}
             ]]
         });
       //查询
         $('#search').on('click',function(){
+            var kehuNo = $('#kehuNo').val();
+            var kehuName = $('#kehuName').val();
             var startTime = $('#startTime').val();
-            var endTime = $('#endTime').val();
-            var withDrawState = $('#status').val();
-            var name = $('#name').val();
-            var account = $('#account').val();
+            var name = $('#endTime').val();
             table.reload('id', {
                 where: {
 					applicationDate:startTime,
@@ -148,27 +125,21 @@
                 }
             });
         });
+		$('#add').on('click', function() {
+			window.location.href="<%=path%>page/main/finance/balanceAdjust/add.jsp";
+		});
         //重置
         $('#reset').on('click',function(){
             $('input').val('')
             $('select').val('');
         });
       //监听工作条
-        table.on('tool(drawAudioTables)', function(obj){
+        table.on('tool(balanceAdjustTables)', function(obj){
             var data = obj.data;
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
-			/*if(obj.event === 'setStatus'){
-				if(data.status==='2'){
-					var bar=$("#bar").find("a").get(0);
-					bar.attr("visible", false);
-
-				}*/
-            if(layEvent === 'delete'){ //查看
+            if(layEvent === 'detail'){ //查看
                 location.href = '<%=path%>/page/main/finance/cashAudit/historyInfo.jsp?userName='+data.userName;
-            }
-            if(layEvent === 'edit'){ //跳转至审核页面
-                location.href = '<%=path%>/page/main/finance/cashAudit/drawAudit.jsp?applicationDate='+data.applicationDate;
             }
         });
     });

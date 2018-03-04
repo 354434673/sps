@@ -119,7 +119,8 @@
 	on 
 	bt.bt_identity = b.b_identity
 	<where>
-		b.channl_num=#{channelNum,jdbcType=VARCHAR}
+		bt.bt_trade_type = #{tradeType,jdbcType=VARCHAR}
+		and  b.channl_num=#{channelNum,jdbcType=VARCHAR}
 		<if test="applicationStartDate != null and applicationStartDate != '' " >
 			and bt.bt_application_start_date  <![CDATA[ >= ]]>    #{applicationStartDate,jdbcType=VARCHAR}
 		</if>
@@ -142,9 +143,14 @@
 		on
 			bt.bt_identity = b.b_identity
 		where
-			b.channl_num=#{channelNum} 
+		<if test="channelNum != null and channelNum != '' " >
+			b.channl_num=#{channelNum}
+		</if>
+		<if test="tradeSerialNum != null and tradeSerialNum != '' " >
 			and bt.bt_trade_serial_num=#{tradeSerialNum}
+		</if>
 	</select>
+
     <select id="selectListCashAuditByUserName" parameterType="String"  resultMap="cashAuditBashInfo">
         SELECT
            bt.bt_application_start_date,
@@ -179,7 +185,7 @@
 		e.channel_num=b.channl_num
 		<where>
 			<if test="applicationStartDate != null and applicationStartDate != '' " >
-				and bt.bt_application_start_date  <![CDATA[ >= ]]>    #{applicationStartDate,jdbcType=VARCHAR}
+				and bt.bt_application_start_date   <![CDATA[ >= ]]>    #{applicationStartDate,jdbcType=VARCHAR}
 			</if>
 			<if test="applicationStartDate != null and applicationStartDate != '' " >
 				and bt.bt_application_start_date  <![CDATA[ <= ]]>    #{paymentDate,jdbcType=VARCHAR}
@@ -189,10 +195,10 @@
 				and bt.bt_trade_status = #{tradeStatus,jdbcType=VARCHAR}
 			</if>
 			<if test="loginName != null and loginName != '' " >
-				and b.b_user_name = #{loginName,jdbcType=VARCHAR}
+				and b.b_user_name  like CONCAT('%',#{loginName,jdbcType=VARCHAR},'%')
 			</if>
 			<if test="enterpriseCompanyName != null and enterpriseCompanyName != '' " >
-				and e.enterprise_company_name = #{enterpriseCompanyName,jdbcType=VARCHAR}
+				and e.enterprise_company_name  like CONCAT('%',#{enterpriseCompanyName,jdbcType=VARCHAR},'%')
 			</if>
 		</where>
 		ORDER  BY   bt.bt_application_start_date  desc
@@ -211,10 +217,10 @@
 		e.channel_num=b.channl_num
 		<where>
 			<if test="startTime != null and startTime != '' " >
-				and bt.bt_payment_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
+				and bt.bt_audit_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
 			</if>
 			<if test="endTime != null and endTime != '' " >
-				and bt.bt_payment_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
+				and bt.bt_audit_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
 			</if>
 
 			<if test="minAmount != null and minAmount != '' " >
@@ -227,10 +233,10 @@
 				and bt.bt_trade_type = #{payType,jdbcType=VARCHAR}
 			</if>
 			<if test="companyName != null and companyName != '' " >
-				and e.enterprise_company_name = #{companyName,jdbcType=VARCHAR}
+				and e.enterprise_company_name  like CONCAT('%',#{companyName,jdbcType=VARCHAR},'%')
 			</if>
 			<if test="reamrk != null and reamrk != '' " >
-				and bt.standby1 = #{reamrk,jdbcType=VARCHAR}
+				and bt.standby1 like CONCAT('%',#{reamrk,jdbcType=VARCHAR},'%')
 			</if>
 		</where>
 		ORDER  BY   bt.bt_payment_date  desc
@@ -250,10 +256,10 @@
 		<where>
 			bt.bt_trade_type = #{payType,jdbcType=VARCHAR}
 			<if test="startTime != null and startTime != '' " >
-				and bt.bt_payment_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
+				and bt.bt_audit_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
 			</if>
 			<if test="endTime != null and endTime != '' " >
-				and bt.bt_payment_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
+				and bt.bt_audit_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
 			</if>
 
 			<if test="minAmount != null and minAmount != '' " >
@@ -263,10 +269,10 @@
 				and bt.bt_trade_amount <![CDATA[ <= ]]>  #{maxAmount,jdbcType=VARCHAR}
 			</if>
 			<if test="companyName != null and companyName != '' " >
-				and e.enterprise_company_name = #{companyName,jdbcType=VARCHAR}
+				and e.enterprise_company_name like CONCAT('%',#{companyName,jdbcType=VARCHAR},'%')
 			</if>
 			<if test="reamrk != null and reamrk != '' " >
-				and bt.standby1 = #{reamrk,jdbcType=VARCHAR}
+				and bt.standby1 like CONCAT('%',#{reamrk,jdbcType=VARCHAR},'%')
 			</if>
 		</where>
 		ORDER  BY   bt.bt_payment_date  desc

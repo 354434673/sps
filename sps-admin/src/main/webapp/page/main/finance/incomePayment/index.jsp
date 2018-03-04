@@ -34,9 +34,9 @@
 				<label class="layui-form-label">交易状态:</label>
 				<div class="layui-input-inline">
 					<select  id="status" lay-filter="withDrawState">
-						<option value="0">全部</option>
-						<option value="1">支出</option>
-						<option value="2">收入</option>
+						<option value="">全部</option>
+						<option value="0">支出</option>
+						<option value="1">收入</option>
 					</select>
 				</div>
 
@@ -69,9 +69,9 @@
 	</div>
 	<script type="text/javascript"  src="<%=path%>/page/layui/layui.js"></script>
 	<script type="text/html" id="type">
-		{{#    if(d.payType == '1'){  }}
+		{{#    if(d.payType == '0'){  }}
 		支出
-		{{#  } else if(d.payType == '2'){ }}
+		{{#  } else if(d.payType == '1'){ }}
 		收入
 		{{#  } }}
 

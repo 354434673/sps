@@ -256,4 +256,13 @@
       order_id = #{orderId,jdbcType=VARCHAR}
     where logistics_id = #{logisticsId,jdbcType=INTEGER}
   </update>
+  <select id="selectByOrderNo" parameterType="String" resultMap="BaseResultMap" >
+  SELECT
+    logistics_id,
+    logistics_name,
+    logistics_num
+    FROM
+    sps_order_logistics
+    WHERE  order_id=#{orderNo,jdbcType=VARCHAR}
+  </select>
 </mapper>

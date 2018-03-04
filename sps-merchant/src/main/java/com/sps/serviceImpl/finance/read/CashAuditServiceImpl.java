@@ -9,6 +9,7 @@ import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.finance.BankDrawAudio;
+import org.sps.entity.finance.OrderDetail;
 import org.sps.entity.merchant.SpsChannelBankTrade;
 import org.sps.service.finance.read.CashAuditReadService;
 
@@ -133,7 +134,7 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             bankDrawAudio.setAmount(info.getTradeAmount());
             bankDrawAudio.setPayType(info.getTradeType());
             bankDrawAudio.setRemark(info.getStandby1());
-            bankDrawAudio.setPayDate(info.getPaymentDate());
+            bankDrawAudio.setPayDate(info.getApplicationStartDate());
             bankDrawAudio.setPayType(info.getTradeType());
             listDrawAudio.add(bankDrawAudio);
         }
@@ -159,7 +160,7 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             bankDrawAudio.setAmount(info.getTradeAmount());
             bankDrawAudio.setPayType(info.getTradeType());
             bankDrawAudio.setRemark(info.getStandby1());
-            bankDrawAudio.setPayDate(info.getPaymentDate());
+            bankDrawAudio.setPayDate(info.getAuditDate());
             bankDrawAudio.setPayType(info.getTradeType());
             listDrawAudio.add(bankDrawAudio);
         }
@@ -185,7 +186,7 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             bankDrawAudio.setAmount(info.getTradeAmount());
             bankDrawAudio.setPayType(info.getTradeType());
             bankDrawAudio.setRemark(info.getStandby1());
-            bankDrawAudio.setPayDate(info.getPaymentDate());
+            bankDrawAudio.setPayDate(info.getAuditDate());
             bankDrawAudio.setPayType(info.getTradeType());
             listDrawAudio.add(bankDrawAudio);
         }
@@ -197,5 +198,11 @@ public class CashAuditServiceImpl implements CashAuditReadService {
         hashMap.put("count", pageInfo.getTotal());
         hashMap.put("data", listDrawAudio.size() != 0 ? listDrawAudio : null);
         return hashMap;
+    }
+
+    @Override
+    public OrderDetail getTradeOrderInfo(String tradeSeriNum) {
+        //根据交易号查询交易订单信息
+        return null;
     }
 }

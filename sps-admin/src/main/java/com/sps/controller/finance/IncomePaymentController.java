@@ -1,20 +1,14 @@
 package com.sps.controller.finance;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.sps.entity.finance.BankDrawAudio;
-import org.sps.entity.merchant.SpsChannelBankTrade;
 import org.sps.service.finance.read.CashAuditReadService;
 import org.sps.service.merchant.write.ChannelBankTradeWriteService;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Administrator on 2018-02-26.
@@ -67,7 +61,7 @@ public class IncomePaymentController {
 @ResponseBody
 public HashMap<String, Object> findIncomeList(Integer page, Integer limit, String startTime, String endTime,
                                               BigDecimal minAmount,BigDecimal maxAmount, String companyName, String reamrk) {
-    HashMap<String, Object> list =cashAuditService.getBankTradeIncomeList(page,limit,startTime,endTime,minAmount,maxAmount,"2",companyName,reamrk);
+    HashMap<String, Object> list =cashAuditService.getBankTradeIncomeList(page,limit,startTime,endTime,minAmount,maxAmount,"1",companyName,reamrk);
     return list;
 }
 
@@ -87,7 +81,7 @@ public HashMap<String, Object> findIncomeList(Integer page, Integer limit, Strin
     @ResponseBody
     public HashMap<String, Object> findPayment(Integer page, Integer limit, String startTime, String endTime,
                                                   BigDecimal minAmount,BigDecimal maxAmount, String companyName, String reamrk) {
-        HashMap<String, Object> list =cashAuditService.getBankTradePaymentList(page,limit,startTime,endTime,minAmount,maxAmount,"1",companyName,reamrk);
+        HashMap<String, Object> list =cashAuditService.getBankTradePaymentList(page,limit,startTime,endTime,minAmount,maxAmount,"0",companyName,reamrk);
 
         return list;
     }

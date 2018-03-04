@@ -34,5 +34,6 @@ public interface SpsChannelBankTradeWriteMapper {
 	 * @param status
 	 * @return
 	 */
-	int updateStatus(@Param("applicationDate") String applicationDate, @Param("status") String status,@Param("content")String content);
+	int updateStatus(@Param("applicationDate") String applicationDate, @Param("status") String status,
+					 @Param("content")String content,@Param("applicationStopDate")String applicationStopDate,@Param("auditDate")String auditDate);
 }

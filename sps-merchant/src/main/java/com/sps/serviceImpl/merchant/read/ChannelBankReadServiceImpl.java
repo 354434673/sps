@@ -1,19 +1,13 @@
 package com.sps.serviceImpl.merchant.read;
 
-import javax.annotation.Resource;
-
-import com.alibaba.dubbo.common.utils.StringUtils;
+import com.alibaba.dubbo.config.annotation.Service;
+import com.sps.dao.merchant.read.SpsChannelBankReadMapper;
+import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.merchant.SpsChannelBank;
 import org.sps.service.merchant.read.ChannelBankReadService;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.sps.dao.merchant.read.SpsChannelBankReadMapper;
-import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
-import org.sps.util.StringUtil;
-
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.Resource;
 
 @Service(timeout=2000,group="dianfu")
 @Transactional(readOnly = true)
@@ -28,8 +22,8 @@ public class ChannelBankReadServiceImpl implements ChannelBankReadService {
 	 * 根据用户身份信息查询绑卡银行卡信息
 	 */
 	@Override
-	public SpsChannelBank getBankInfo(String identify) {
-		SpsChannelBank bank=bankRead.selectByPrimaryKey(identify);
+	public SpsChannelBank getBankInfo(String userName) {
+		SpsChannelBank bank=bankRead.selectByPrimaryKey(userName);
 			return bank;
 	}
 	
@@ -61,6 +55,11 @@ public class ChannelBankReadServiceImpl implements ChannelBankReadService {
 	@Override
 	public String findMobileByUserName(String userName) {
 		return bankRead.selectMobileByLoginUser(userName);
+	}
+
+	@Override
+	public String findSalt(String userName) {
+		return bankRead.selectSalt(userName);
 	}
 
 	@Override

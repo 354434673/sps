@@ -73,7 +73,7 @@
  <!--根据登录用户获取channel_num  -->
   
   <select id="selectByOpenAdminNum" parameterType="String" resultType="String" >
-    select channel_num  from sps_channel_open_account
-     where  open_admin_num=#{openAdminNum}
+    select channel_num  channelNum  from sps_channel_open_account
+     where  open_admin_num =#{openAdminNum}
   </select>
 </mapper>

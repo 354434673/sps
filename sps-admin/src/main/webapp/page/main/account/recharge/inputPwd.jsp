@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>输入密码页面</title>
+    <title>充值页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -21,29 +21,29 @@
 </head>
 <body>
 <div style="padding: 40px;width: 600px;">
-    <h3>输入密码页面</h3>
+    <h3 style="padding-left: 199px;">输入密码页面</h3>
     <hr>
     <div class="layui-form layui-form-pane">
         <input type="hidden" name="customId" id="customId" >
-        <div class="layui-form-item ">
+        <div class="layui-form-item " style="padding-left: 47px;">
             <label class="layui-form-label" style="width: 136px;padding-left: 28px;" >*姓名：</label>
             <div class="layui-input-inline" >
                 <input id="name" style="width: 370px;text-align: center;" type="text"    value=""  autocomplete="off" class="layui-input layui-disabled"    lay-verify="none">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item"  style="padding-left: 47px;">
             <label class="layui-form-label" style="width: 136px;" >*账户信息：</label>
             <div class="layui-input-inline" >
                 <input id="account"  style="width: 370px;text-align: center;" type="text"    value=""  autocomplete="off" class="layui-input layui-disabled"    lay-verify="none">
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 136px;">*提现金额：</label>
+        <div class="layui-form-item"  style="padding-left: 47px;">
+            <label class="layui-form-label" style="width: 136px;">*充值金额：</label>
             <div class="layui-input-inline" >
                 <input id="withdrawAmt" style="width: 370px;text-align: center;" type="text"    value=""  autocomplete="off" class="layui-input layui-disabled"    lay-verify="none">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item"  style="padding-left: 47px;">
             <label class="layui-form-label" style="width: 136px;">*输入交易密码：</label>
 
             <div class="layui-input-block" >
@@ -52,9 +52,9 @@
 
             </div>
         </div>
-        <div class="layui-form-item"   style="padding-left: 72px;">
+        <div class="layui-form-item"   style="padding-left: 150px;">
             <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >上一步</button>
-            <button class="layui-btn" lay-filter="next" lay-submit  id="next">完成</button>
+            <button class="layui-btn" lay-filter="next" lay-submit  id="next">确认充值</button>
         </div>
     </div>
 </div>
@@ -76,21 +76,11 @@
             }
         });
     });
-    $("#forgetPwd").on("click",function(){
-        //跳转至找回密码页面，即设置交易密码页面；
-        var withdrawAmt = getUrlParam("withdrawAmt");
-        location.href='<%=path%>/page/main/account/withdraw/setTradePwd.jsp?withdrawAmt='+withdrawAmt;
-    });
-    //获得url参数
-    function getUrlParam(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
-    }
+    var layer = null;
     var lock =true;
     layui.use(['layer', 'form'], function () {
         var $ = layui.jquery;
-        var layer = layui.layer ;
+        layer = layui.layer ;
         var form = layui.form();
         form.on('submit(next)', function (data) {
             if(!lock){    // 2.判断该锁是否打开，如果是关闭的，则直接返回
@@ -98,47 +88,55 @@
             }
             lock = false;  //3.进来后，立马把锁锁住
             var amount = $('#withdrawAmt').val().trim();
-            var tradePwd = $('#tradePwd').val().trim();
-            if(tradePwd == ''){
-                layer.msg('请输入交易密码');
-                lock = true;
-                return false;
-            }
             layer.msg('处理中...',
-                    {
-                        icon: 16,
-                        shade: 0.01,
-                        time:1200
-                    },
-                    function(){
-
-                        //若已经设置交易密码，则跳转至输入交易密码页面
-                        $.ajax({
-                            data:{withdrawAmt:amount,tradePwd:tradePwd},
-                            url: '<%=path%>/withdraw/save',
-                            type: 'post',
-                            dataType: 'json',
-                            async: false,
-                            success: function (result) {
-                                var  msg = result.msg;
-                                if(result.body == true){
-                                    //若交易成功，则跳转至提现首页列表
-                                    location.href='<%=path%>/page/main/account/withdraw/index.jsp';
-                                }
-                                if(result.body ==  false){
-                                    //则进行交易失败处理
-                                    layer.msg(msg);
-                                    lock = true;
-                                }
+                {
+                    icon: 16,
+                    shade: 0.01,
+                    time:1200
+                },
+                function(){
+                    var psw = $('#tradePwd').val().trim();
+                    $.ajax({
+                        data:{withdrawAmt: amount,tradePwd:psw},
+                        url: "<%=path%>/recharge/save",//保存交易记录，并提交提现申请调用易宝接口
+                        type: 'post',
+                        dataType: 'json',
+                        async: false,
+                        success: function (result) {
+                            var  msg = result.msg;
+                            var tradeSerialNum = result.body;
+                            if(tradeSerialNum != ''){
+                                //若交易成功，跳转至详情页
+                                location.href='<%=path%>/page/main/account/recharge/rechargeDetail.jsp?tradeSerialNum='+tradeSerialNum;
                             }
-                        });
+                            if(tradeSerialNum ==  ''){
+                                lock = true;
+                                //则进行交易失败处理
+                                layer.msg(msg);
+                            }
+                        }
+                    });
 
-                    }
+                }
             );
             return false;
         });
         lock = true;
     });
+
+
+    $("#forgetPwd").on("click",function(){
+        //跳转至找回密码页面，即设置交易密码页面；
+        var withdrawAmt = getUrlParam("withdrawAmt");
+        window.location.href='<%=path%>/page/main/account/recharge/resetTradePwd.jsp';
+    });
+    //获得url参数
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
 
 
 </script>

@@ -10,16 +10,17 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>详情</title>
+    <title>充值成功</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"   content="width=device-width, initial-scale=1, maximum-scale=1">
    <link rel="stylesheet" href="<%=request.getContextPath()%>/page/static/plugins/layui/css/layui.css" media="all"/>
 </head>
 <body>
-<div style="padding: 100px">
+<div style="padding: 0px">
+    <h3 style="padding-left: 327px;">充值成功</h3>
     <hr>
-    <div class="layui-form layui-form-pane" style="padding-left: 200px;padding-right: 300px;width: 800px;">
+    <div class="layui-form layui-form-pane"  style="padding-left: 200px;padding-right: 300px;width: 800px;">
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 130px;">银行账号： </label>
             <div class="layui-input-inline">
@@ -29,7 +30,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 130px;">开户银行 </label>
+            <label class="layui-form-label" style="width: 130px;">开户银行：</label>
             <div class="layui-input-inline">
                 <input id="bankName" type="text" name="bankName"  value=""
                        placeholder="请输入开户行"
@@ -37,39 +38,40 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 130px;">提现前余额</label>
+            <label class="layui-form-label" style="width: 130px;">充值前余额：</label>
             <div class="layui-input-inline">
                 <input id="amountBefore" type="tel" name="amountBefore" value=""
-                       placeholder="提现前余额"
+                       placeholder="充值前余额"
                        autocomplete="off" class="layui-input layui-disabled"  lay-verify="none" >
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 130px;">提现后余额</label>
+            <label class="layui-form-label" style="width: 130px;">充值后余额：</label>
             <div class="layui-input-inline">
                 <input id="amountAfter" type="text" name="amountAfter"  value=""
-                       placeholder="提现后余额"
+                       placeholder="充值后余额"
                        autocomplete="off" class="layui-input layui-disabled"   lay-verify="required|identity">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 130px;">提现金额：</label>
+            <label class="layui-form-label" style="width: 130px;">充值金额：</label>
             <div class="layui-input-inline">
                 <input id="withdrawAmt" type="text" name="withdrawAmt"  value=""
-                       placeholder="提现金额"
+                       placeholder="充值金额"
                        autocomplete="off" class="layui-input layui-disabled"   lay-verify="none">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 130px;">提现申请时间</label>
+            <label class="layui-form-label" style="width: 130px;">充值时间：</label>
             <div class="layui-input-inline">
                 <input id="applyTime" type="text" name="applyTime"  value=""
-                       placeholder="提现申请时间："
+                       placeholder="充值时间"
                        autocomplete="off" class="layui-input layui-disabled"    lay-verify="none">
             </div>
           </div> 
-           <div class="layui-form-item"> 
-            <label class="layui-form-label" style="width: 130px;">审核通过时间</label>
+           <%--
+           <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 130px;">充值通过时间</label>
             <div class="layui-input-inline">
                 <input id="passTime" type="text" name="identity"  value=" "
                        placeholder="审核通过时间"
@@ -77,16 +79,16 @@
             </div>
             </div>
              <div class="layui-form-item"> 
-            	<label class="layui-form-label" style="width: 130px;">到账时间</label>
+            	<label class="layui-form-label" style="width: 130px;">到账时间：</label>
            			 <div class="layui-input-inline">
                 		<input id="incomeTime" type="text" name="incomeTime"  value=""
                        placeholder="到账时间"
                        autocomplete="off" class="layui-input layui-disabled"   lay-verify="none">
             		</div>
             </div>
+            --%>
         </div>
        
-    </form>
 </div>
 <script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript">
@@ -94,7 +96,7 @@
  		var tradeSerialNum = getUrlParam("tradeSerialNum");
 
         $.ajax({
-             url:'<%=path%>/withdraw/withdrawDetail'
+             url:'<%=path%>/recharge/rechargeDetail'
             ,type: 'post'
             ,dataType:'json'
             ,async:false
@@ -106,8 +108,8 @@
                 $('#amountBefore').val(result.tradeBeforeBalanc);
                 $('#amountAfter').val(result.tradeAfterBalanc);
                 $('#applyTime').val(dateFormate(result.applicationStartDate));
-                $('#passTime').val(dateFormate(result.auditDate));
-                $('#incomeTime').val(dateFormate(result.paymentDate));
+                //$('#passTime').val(dateFormate(result.auditDate));
+                //$('#incomeTime').val(dateFormate(result.paymentDate));
             }
         });
     });

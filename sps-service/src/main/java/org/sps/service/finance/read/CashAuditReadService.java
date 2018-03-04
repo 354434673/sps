@@ -1,6 +1,7 @@
 package org.sps.service.finance.read;
 
 import org.sps.entity.finance.BankDrawAudio;
+import org.sps.entity.finance.OrderDetail;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -80,4 +81,10 @@ public interface CashAuditReadService {
      */
     HashMap<String, Object> getBankTradePaymentList(Integer page, Integer  limit, String startTime, String endTime, BigDecimal  minAmount,BigDecimal maxAmount,String payType, String companyName, String reamrk);
 
+    /**
+     * 根据交易记录查询订单信息
+     * @param tradeSeriNum
+     * @return
+     */
+    OrderDetail getTradeOrderInfo(String  tradeSeriNum);
 }

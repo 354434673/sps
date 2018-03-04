@@ -1,26 +1,26 @@
 package com.sps.serviceImpl.order;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.sps.entity.order.Order;
-import org.sps.entity.order.OrderGoods;
-import org.sps.entity.order.OrderGoodsVo;
-import org.sps.entity.order.SpsOrderLogistics;
-import org.sps.service.order.OrderService;
-import org.sps.util.FinalData;
-
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.order.OrderGoodsMapper;
 import com.sps.dao.order.OrderMapper;
 import com.sps.dao.order.SpsOrderLogisticsMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.sps.entity.finance.BankDrawAudio;
+import org.sps.entity.merchant.SpsChannelBankTrade;
+import org.sps.entity.order.Order;
+import org.sps.entity.order.OrderGoods;
+import org.sps.entity.order.SpsOrderLogistics;
+import org.sps.service.order.OrderService;
+import org.sps.util.FinalData;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 @Service(timeout = 2000, group = "dianfu")
 @Transactional
@@ -239,7 +239,7 @@ public class OrderServiceImpl implements OrderService {
 	/**
 	 * 批量更新订单商品的价格与订货量，并将之前的价格与订货量写入到对应的字段中，然后同时更新当前商品订货的总价
 	 * 
-	 * @param orderGoodses
+	 * @param
 	 *            前台页面传入的订单商品的列表
 	 * @return
 	 */
@@ -431,6 +431,55 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return hashMap;
 	}
+
+	@Override
+	public Order queryByOrderId(String orderNo) {
+		Order order = orderMapper.selectByPrimaryKey(orderNo);
+		return order;
+	}
+
+	@Override
+	public SpsOrderLogistics queryOrderLogistics(String orderNo) {
+		SpsOrderLogistics logs = mapper.selectByOrderNo(orderNo);
+		return logs;
+	}
+
+
+	@Override
+	public List<OrderGoods> queryGoods(String orderNo) {
+		List<OrderGoods> list = orderGoodsMapper.selectOrderGoods(orderNo, null);
+		return list;
+	}
+
+	/**
+	 * 根据各种条件查询信息
+	 * @param page
+	 * @param limit
+	 * @param loanStartTime
+	 * @param loanEndTime
+	 * @param loanName
+	 * @param loanStatus
+	 * @param orderNo
+	 * @return
+	 */
+
+	@Override
+	public HashMap<String, Object> queryOrderList(Integer page, Integer limit, String loanStartTime, String loanEndTime, String loanName, Integer loanStatus, String orderNo) {
+		List<Order> orderList = orderMapper.selectByMoreCondition(loanStartTime, loanEndTime, loanName, loanStatus, orderNo);
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		PageHelper.startPage(page, limit);
+		PageInfo pageInfo = new PageInfo(orderList);
+		hashMap.put("code", 0);
+		hashMap.put("msg", "获取成功");
+		hashMap.put("count", pageInfo.getTotal());
+		hashMap.put("data", orderList.size() != 0 ? orderList : null);
+		return hashMap;
+	}
+
+
+
+
+
 
 	/*
 	 * @Override public HashMap<String,Object> selectByExpressPrimaryKey(Integer

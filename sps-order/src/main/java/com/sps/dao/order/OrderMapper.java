@@ -7,6 +7,20 @@ import org.apache.ibatis.annotations.Param;
 import org.sps.entity.order.Order;
 
 public interface OrderMapper {
+	/***
+	 * 根据各种条件查询所欲信息
+	 * @param loanStartTime
+	 * @param loanEndTime
+	 * @param loanName
+	 * @param loanStatus
+	 * @param orderNo
+	 * @return
+	 */
+	List<Order> selectByMoreCondition(@Param("loanStartTime") String  loanStartTime,
+									  @Param("loanEndTime") String loanEndTime,
+									  @Param("loanName") String loanName,
+									  @Param("loanStatus") Integer loanStatus,
+									  @Param("orderNo") String orderNo);
 
 	/**
 	 * 根据oId查看订单

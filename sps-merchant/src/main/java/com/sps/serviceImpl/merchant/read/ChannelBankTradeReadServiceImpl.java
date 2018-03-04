@@ -1,24 +1,18 @@
 package com.sps.serviceImpl.merchant.read;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.transaction.annotation.Transactional;
-import org.sps.entity.merchant.SpsChannelBank;
-import org.sps.entity.merchant.SpsChannelBankTrade;
-import org.sps.entity.shopkeeper.SpsShopkeeper;
-import org.sps.service.merchant.read.ChannelBankTradeReadService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.merchant.read.SpsChannelBankReadMapper;
 import com.sps.dao.merchant.read.SpsChannelBankTradeReadMapper;
 import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
-import com.sps.dao.shopkeeper.read.SpsShopkeeperCarPropertyReadMapper;
+import org.springframework.transaction.annotation.Transactional;
+import org.sps.entity.merchant.SpsChannelBankTrade;
+import org.sps.service.merchant.read.ChannelBankTradeReadService;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 交易記錄的方法
@@ -40,12 +34,12 @@ public class ChannelBankTradeReadServiceImpl implements ChannelBankTradeReadServ
 
 	@Override
 	public HashMap<String, Object> getBankTradeList(Integer page, Integer limit, String applicationStartDate,
-			String paymentDate, String tradeStatus, String loginName) {
+			String paymentDate, String tradeStatus, String loginName,String tradeType) {
 		// 获取档期那登录用户的用户名进行查询
 		String channelNum = accountRead.selectByOpenAdminNum(loginName);
 
 		List<SpsChannelBankTrade> listBankTrade = bankTradeRead.selectListBankTrade(applicationStartDate, paymentDate,
-				tradeStatus, channelNum);
+				tradeStatus, channelNum,tradeType);
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		PageHelper.startPage(page, limit);
 		PageInfo pageInfo = new PageInfo(listBankTrade);

@@ -9,7 +9,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>收入明细</title>
+	<title>借贷明细</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport"
@@ -21,44 +21,16 @@
 </head>
 <bod>
 	<div style="margin: 15px;">
-		<div class="layui-form layui-form-pane">
-
-			<div class="layui-form-item">
-				<label class="layui-form-label">交易时间:</label>
-				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required">
-				</div>
-				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="endTime" placeholder="年-月-日" lay-verify="required">
-				</div>
-				<label class="layui-form-label">交易方:</label>
-				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="account"  lay-verify="required">
-				</div>
-				<button class="layui-btn layui-btn-primary" id="search">查询</button>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">交易金额:</label>
-				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="minAmount" lay-verify="required">
-				</div>
-				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="maxAmount" lay-verify="required">
-				</div>
-				<label class="layui-form-label">备注:</label>
-				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="beizhu" lay-verify="required">
-				</div>
-				<button class="layui-btn layui-btn-primary" id="reset">重置</button>
-			</div>
-		</div>
 		<table id="drawAudioList" lay-filter="drawAudioTables"></table>
 	</div>
 	<script type="text/javascript"  src="<%=path%>/page/layui/layui.js"></script>
+	<script type="text/html" id="bar">
+		<a class="layui-btn layui-btn-mini" lay-event="detail">查看详情</a>
+	</script>
 	<script type="text/html" id="type">
-		{{#    if(d.payType == '0'){  }}
+		{{#    if(d.payType == '1'){  }}
 		支出
-		{{#  } else if(d.payType == '1'){ }}
+		{{#  } else if(d.payType == '2'){ }}
 		收入
 		{{#  } }}
 
@@ -67,7 +39,7 @@
 
 	<script type="text/html" id="date">
 		{{#
-		var da = d.payDate;
+		var da = d.loanStartDate;
 		da = new Date(da);
 		var year = da.getFullYear();
 		var month = da.getMonth()+1;
@@ -75,6 +47,14 @@
 		var hours= da.getHours();
 		var minutes= da.getMinutes();
 		var seconds= da.getSeconds();
+		var daa=d.loanEndDate;
+		daa = new Date(daa);
+		var year = daa.getFullYear();
+		var month = daa.getMonth()+1;
+		var date = daa.getDate();
+		var hours= daa.getHours();
+		var minutes= daa.getMinutes();
+		var seconds= daa.getSeconds();
 		console.log([year,month,date,hours,minutes,seconds].join('-'));
 		var fn = function(){
 		return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
@@ -101,37 +81,39 @@
 			});
 			table.render({
 				elem: '#drawAudioList'
-				,url: '<%=path%>/incomePayment/findIncomeList' //数据接口
+				,url: '<%=path%>/loan/findLoanList' //数据接口
 				,id:'id'
 				,page:true
 				,cols: [[ //表头
 					{type:'numbers', title: '序号',align:'center'}
-					,{field: 'payDate', title: '交易时间', width:230, align:'center',templet: '#date'}
-					,{field: 'payType', title: '收支类型',align:'center' ,templet: '#type'}
-					,{field: 'amount', title: '交易金额',width:230,align:'center'}
-					,{field: 'auditSerialNum', title: '流水号',width:230,align:'center'}
-					,{field: 'companyName', title: '交易方',align:'center' }
-					,{field: 'remark', title: '备注',event: 'setStatus', width:140,align:'center'}
-
+					,{field: 'loanStartDate', title: '还款日期', width:230, align:'center',templet: '#date'}
+					,{field: 'loanEndDate', title: '借款到期日', width:230, align:'center',templet: '#date'}
+					,{field: 'loanAmount', title: '还款金额',align:'center' }
+					,{field: 'loanBalancel', title: '还本金金额',align:'center' }
+					,{field: 'shouXuFeiByDate', title: '还利息金额',align:'center' }
+					,{field: 'incomeShouXuFei', title: '还逾期手续费金额',align:'center' }
+					,{field: 'daiXiaoFeilv ', title: '剩余未还本金',align:'center' }
+					,{field: 'daiXiaoFei', title: '剩余未还利息',align:'center' }
+					,{field: 'status', title: '剩余未还逾期手续费',align:'center'  ,templet: '#state' }
 				]]
 			});
 			//查询
 			$('#search').on('click',function(){
-
 				var startTime = $('#startTime').val();
 				var endTime = $('#endTime').val();
 				var minAmount = $('#minAmount').val();
 				var maxAmount = $('#maxAmount').val();
+				var withDrawState = $('#status').val();
 				var name = $('#name').val();
-				var reamrk = $('#beizhu').val();
 				table.reload('id', {
 					where: {
-						applicationDate:startTime,
-						payDate:endTime,
-						minAmount:minAmount,
-						maxAmount:maxAmount,
-						companyName:name,
-						reamrk:reamrk
+						loanStartTime:startTime,
+						loanEndTime:endTime,
+						orderNo:minAmount,
+						loanName:maxAmount,
+						loanStatus:withDrawState,
+						companyName:name
+
 					}
 				});
 			});
@@ -139,6 +121,15 @@
 			$('#reset').on('click',function(){
 				$('input').val('')
 				$('select').val('');
+			});
+			//监听工作条
+			table.on('tool(drawAudioTables)', function(obj){
+				var data = obj.data;
+				var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+				var tr = obj.tr; //获得当前行 tr 的DOM对象
+				if(layEvent === 'detail') { //查看
+					location.href = '<%=path%>/page/main/finance/jieHuanInfo/repaymentDetail.jsp';
+				}
 			});
 		});
 	</script>
