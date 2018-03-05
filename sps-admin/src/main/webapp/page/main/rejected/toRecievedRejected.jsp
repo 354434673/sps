@@ -110,7 +110,8 @@
 				       {title: '序号', align:'center',type:'numbers'} 
 		 			  ,{field: 'sku', title: 'SKU编号', align:'center',sort:true}
 				      ,{field: 'skuname', title: '商品名称', align:'center'}
-				      ,{field: 'color', title: '规格', align:'center'}
+				      ,{field: 'color', title: '颜色', align:'center'}
+				      ,{field: 'memory', title: '尺寸', align:'center'}
 				      ,{field: 'price', title: '单价',align:'center'}
 				      ,{field: 'amount', title: '订货量',align:'center'}
 				      ,{field: 'summation', title: '金额',align:'center',sort:true}
