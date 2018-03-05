@@ -36,7 +36,7 @@ public interface GoodsService extends Serializable{
      * @param
      * @return
      */
-    HashMap<String,Object> findGoodsList(Integer page, Integer limit, String goodsName, String spuNo,String flowStatus);
+    HashMap<String,Object> findGoodsList(Integer page, Integer limit, String goodsName, String spuNo,String flowStatus,String categoryId);
 
     /**
      * 获取最后的id

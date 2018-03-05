@@ -1,5 +1,6 @@
 package com.test;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,5 +32,19 @@ public class MyTest {
 		List<String> businessProduct = new ArrayList<String>();
 		List<SpsChannelBusiness> queryBusinessForApi = aaa.queryBusinessForApi(businessProduct , null);
 		System.out.println(JSON.toJSONString(queryBusinessForApi));
+=======
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:spring-dao.xml")
+public class MyTest {
+	
+	@Test
+	public void test1(){
+
+>>>>>>> refs/remotes/origin/backups
 	}
 }

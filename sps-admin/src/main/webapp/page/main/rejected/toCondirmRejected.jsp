@@ -125,9 +125,9 @@
 					  $('#orderid').html(result.data[0].orderid)//订单编号
 					  $('#money').html(result.data[0].money)//订单金额
 					  $('#servicescale').html(result.data[0].servicescale)//代销服务费率
-					  $('#servicemoney').html(result.data[0].servicemoney + ' ¥')//代销服务费
-					  $('#sumMoney').html(result.data[0].sumMoney + ' ¥')//实销金额
-					  $('#backSumMoney').html(result.data[0].sumMoney + ' ¥')//退款金额 = 实销金额
+					  $('#servicemoney').html(result.data[0].servicemoney)//代销服务费
+					  $('#sumMoney').html(result.data[0].sumMoney)//实销金额
+					  $('#backSumMoney').html(result.data[0].sumMoney)//退款金额 = 实销金额
 					  var date = getDate(result.data[0].createtime)
 					  $('#createtime').html(date)//订单申请日期
 					  $('#name').html(result.data[0].name)//店主名称
@@ -145,7 +145,8 @@
 				       {title: '序号', align:'center',width:80,sort:true,type:'numbers'}
 				      ,{field: 'sku', title: 'SKU编号', align:'center',sort:true}
 				      ,{field: 'skuname', title: '商品名称', align:'center'}
-				      ,{field: 'color', title: '规格', align:'center'}
+				      ,{field: 'color', title: '颜色', align:'center'}
+				      ,{field: 'memory', title: '尺寸', align:'center'}
 				      ,{field: 'price', title: '单价',align:'center'}
 				      ,{field: 'amount', title: '订货量',align:'center'}
 				      ,{field: 'summation', title: '金额',align:'center',sort:true}

@@ -35,17 +35,17 @@
         <input type="hidden" name="updateDetailFlag" id="updateDetailFlag">
         <input type="hidden" name="goodsNumberFlag" id="updatePicFlag">
         <div class="layui-form-item ">
-            <label class="layui-form-label">*三级分类：</label>
-            <div class="layui-input-inline">
-                <input type="hidden" id="gCategoryIds" name="gCategoryIds" lay-verify="required"
-                       autocomplete="off" class="layui-input">
-                <input type="hidden" id="gCategoryNames" name="gCategoryNames" lay-verify="required"
-                       autocomplete="off" class="layui-input">
-                <button class="layui-btn layui-btn-primary" id="showCategory">
-                    选择分类
-                </button>
-            </div>
+        <label class="layui-form-label">*三级分类：</label>
+        <div class="layui-input-inline">
+            <input type="hidden" id="gCategoryIds" name="gCategoryIds" lay-verify="required"
+                   autocomplete="off" class="layui-input">
+            <input type="hidden" id="gCategoryNames" name="gCategoryNames" lay-verify="required"
+                   autocomplete="off" class="layui-input">
+            <button class="layui-btn layui-btn-primary" id="showCategory">
+                选择分类
+            </button>
         </div>
+    </div>
 
         <div class="layui-form-item ">
             <label class="layui-form-label">*品牌：</label>
@@ -348,12 +348,11 @@
                 layer.msg("请填写规格信息");
                 return false;
             }
-
-            if (layedit.getContent(index) == "") {
+            if (layedit.getText(index) == "") {
                 layer.msg("商品描述不能为空！");
                 return false;
             }
-            if (layedits.getContent(indexes) == "") {
+            if (layedits.getText(indexes) == "") {
                 layer.msg("包装清单不能为空！");
                 return false;
             }
@@ -380,8 +379,6 @@
                 $.ajax(
                     {
                         data: {
-                            gDetails: layedit.getContext(index),
-                            gRemark: layedits.getContext(indexes),
                             flowStatus: 1,
                             gId: $('#goodsId').val(),
                             gCategoryIds: $('#gCategoryIds').val(),
@@ -389,6 +386,8 @@
                             gBrandId: $('#gBrandId').val(),
                             gSpuName: $('#gSpuName').val(),
                             gSpuNo: $('#gSpuNo').val(),
+                            gDetails: layedit.getContent(index),
+                            gRemark: layedits.getContent(indexes),
                             goodsDpic: $('#gDpic').val(),
                             goodsPic: $('#gPic').val(),
                             updateDetailFlag: $("#updateDetailFlag").val(),

@@ -61,9 +61,13 @@
 <script type="text/javascript"
 		src="<%=path%>/page/static/datas/area_data.js"></script>
 <script type="text/html" id="bar">
+ {{#  if(d.shopkeeperState != 2 && d.shopkeeperState!=1 && d.shopkeeperState!=3&&d.shopkeeperState!=5){ }}
   <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
+{{#  } }}
   <a class="layui-btn layui-btn-mini" lay-event="detail">详情</a>
+ {{#  if(d.shopkeeperState != 2 && d.shopkeeperState!=1 &&d.shopkeeperState!=5){ }}
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="audit">审核</a>
+{{#  } }}
 </script>
 <!-- 进行数据渲染 -->
 <script type="text/html" id="channelTpl">
@@ -137,7 +141,6 @@
 				  var account = $('#account').val()
 				  var shopkeeperName = $('#shopkeeperName').val()
 				  var shopkeeperState = $('#shopkeeperState').val()
-				  alert(shopkeeperState)
 				  table.reload('shopkeeper', {
 					  where: {
 						  account:account,

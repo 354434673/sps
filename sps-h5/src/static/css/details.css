@@ -1,0 +1,18 @@
+
+html,body,.web-wrap{ width: 100%; max-width: 750px; background: #f3f2f0; position: relative; margin: 0 auto; }
+html,body{ margin: 0 auto; padding: 0; }
+
+.details-tab{ width: 100%; height: .8rem; line-height: .8rem; background: #fff; border-bottom: 1px solid #fff; }
+.details-tab li{ width: 33.333333%; height: 100%;  text-align: center; overflow: hidden; float: left; font-size: .28rem; color: #666; cursor: pointer; }
+.details-tab li:hover{ color: #09f; }
+.hover{ width: 33.333333; border-bottom: 1px solid #09f; border-width: 1px; -webkit-animation: myborder .5s; }
+
+.info-list{ display: none; width: 100%; height: auto; margin-top: .2rem; padding: 0 .2rem; box-sizing: border-box; background: #fff; overflow: hidden; }
+.info-list li{ width: 100%; padding: .2rem 0; border-top: 1px solid #f1f0ee; }
+.info-list li:nth-of-type(1){ border: none; }
+.info-list li p{ width: 100%; height: .3rem; line-height: .3rem; padding: .1rem 0; text-align: center; color: #999; }
+.info-list li p em,.info-list li p i{ display: inline-block; height: 100%; float: left; }
+.info-list li p em{ width: 20%; text-align: left; }
+.info-list li p i{ width: 80%; text-align: left; }
+
+@-webkit-keyframes myborder { from {width: 10%;} to {width: 33.333333%;} }

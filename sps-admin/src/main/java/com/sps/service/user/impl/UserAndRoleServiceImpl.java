@@ -24,6 +24,7 @@ public class UserAndRoleServiceImpl implements UserAndRoleService{
 	public int insertUserAndRole(String userName, int[] roleList) {
 		
 		SpsUser user = userService.getUser(userName);
+		
 		for (int roleId : roleList) {
 			SpsUserandrole userAndrole = 
 					getUserAndrole(user.getUserId(), roleId);

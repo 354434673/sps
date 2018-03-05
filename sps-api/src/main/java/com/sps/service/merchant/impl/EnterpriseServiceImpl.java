@@ -1,17 +1,12 @@
 package com.sps.service.merchant.impl;
 
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
-import com.sps.dao.goods.*;
-import com.sps.entity.goods.SpsCustomCategory;
-import com.sps.entity.goods.SpsGoodShop;
-import com.sps.entity.goods.SpsGoodShopSku;
-import com.sps.entity.goods.SpsGoodsAlbum;
-import com.sps.service.goods.ApiGoodShopService;
-import com.sps.service.goods.GoodShopSkuService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,15 +15,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Message;
 import com.sps.common.StringUtil;
 import com.sps.dao.ChannelEnterpriseDao;
-import com.sps.dao.SpsShopkeeperDao;
-import com.sps.entity.merchant.SpsChannelBusiness;
+import com.sps.dao.goods.SpsCustomCategoryMapper;
+import com.sps.dao.goods.SpsGoodShopMapper;
+import com.sps.dao.goods.SpsGoodShopSkuMapper;
+import com.sps.dao.goods.SpsGoodsAlbumMapper;
+import com.sps.dao.goods.SpsGoodsMapper;
+import com.sps.entity.goods.SpsCustomCategory;
+import com.sps.entity.goods.SpsGoodShop;
 import com.sps.entity.merchant.SpsChannelEnterprise;
 import com.sps.entity.shopkeeper.SpsShopkeeper;
-import com.sps.entity.shopkeeper.SpsShopkeeperExample;
 import com.sps.service.base.BaseOperate;
+import com.sps.service.goods.ApiGoodShopService;
 import com.sps.service.merchant.EnterpriseService;
 import com.sps.service.shopkeeper.ShopkeeperService;
-import com.sun.mail.util.SharedByteArrayOutputStream;
 @Service
 public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseService {
 	@Resource
