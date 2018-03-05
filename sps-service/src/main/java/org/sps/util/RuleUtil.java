@@ -1,5 +1,6 @@
 package org.sps.util;
 
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -45,5 +46,14 @@ public class RuleUtil {
 			sb.append(randChar[new Random().nextInt(randChar.length)]);
 		}
 		return sb.toString();
+	}
+	public static String getClientNum(String mark){
+		String numRandom = RuleUtil.getNumRandom(6);
+		
+		String DateFormat = DateUtil.format(new Date(), "yyyyMMss");
+		
+		String channelNum = mark+DateFormat+numRandom;
+		
+		return channelNum;
 	}
 }

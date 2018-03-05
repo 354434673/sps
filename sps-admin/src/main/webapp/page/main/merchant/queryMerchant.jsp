@@ -614,7 +614,6 @@
                     $('#enterpriseCompanyName').html(result.enterpriseCompanyName)//公司名称
                     $('#realAddress').html(result.enterpriseCompanyRealitAddr)//实际地址
                     $('#registerAddress').html(result.enterpriseCompanyRegisterAddr)//注册地址
-                    $('#enterpriseCompanyAbbreviation').html(result.enterpriseCompanyAbbreviation)//公司简称
                     $('#enterpriseCorp').html(result.enterpriseCorp)//法人代表
                     $('#enterpriseOperatioTime').html(result.enterpriseOperatioTime)//经营年限
                     $('#enterpriseEmployeeNum').html(result.enterpriseEmployeeNum)//员工人数

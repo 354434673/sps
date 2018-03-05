@@ -23,7 +23,7 @@
 <body>
 	<div style="margin: 15px;">
 		<div class="layui-form layui-form-pane"  >
-		    <div class="layui-form-item">
+		    <div class="layui-form-item">	
 			    <label class="layui-form-label">业务员姓名:</label>
 			    <div class="layui-input-inline">
 			      <input id="salesmanName" type="text" name="salesmanName"  placeholder="请输入业务员名称" autocomplete="off" class="layui-input">
@@ -65,6 +65,11 @@
   <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
+{{#  if(d.bei1 == 1){ }}
+  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="freeze">冻结</a>
+{{#  } else if(d.bei1 == 2){ }}
+<a class="layui-btn layui-btn-mini " lay-event="recover">恢复</a>
+{{#  } }}  
 </script>
 <!-- 进行数据渲染 -->
 <script type="text/html" id="roleTpl">
@@ -113,7 +118,7 @@
 			      ,{field: 'salesmanEmail', title: '电子邮箱', width:230,align:'center'} 
 			      ,{field: 'salesmanCity', title: '城市', align:'center'}
 			      ,{field: 'bei1', title: '状态', align:'center',templet:'#state'}
-			      ,{field: 'tool', title: '操作', width:270,align:'center',toolbar:'#bar'}
+			      ,{field: 'tool', title: '操作', width:330,align:'center',toolbar:'#bar'}
 			    ]]
 			  });
 			  //查询
@@ -158,31 +163,21 @@
 								}  
 						  }); 
 					  } else if(layEvent === 'del'){ //删除
-					    layer.confirm('确认删除当前业务员？', function(index){
+					    layer.confirm('确认删除该业务员？', function(index){
 					      layer.close(
-	  					  			$.post({
-							 			 url:'<%=path%>/salesman/updateState',
-							 			 dataType:'json',
-							 			 data:{
-							 				 id:data.salesmanId,
-							 				 state:2
-							 				 },
-							 			 success:function(data){
-							 				 if(data.state == 'success'){
-											    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-							 					layer.msg(data.msg,{icon: 1});
-							 				 }else{
-							 					layer.msg(data.msg,{icon: 2});
-							 				 }
-							 			 },
-							 			 error:function(){
-							 				layer.msg('系统错误',{icon: 2});
-							 			 }
-							 		 })
+					    		  updateState(3, data.salesmanId, null)
 						  );
 					      //向服务端发送删除指令
 					    });
-					  } else if(layEvent === 'edit'){ //编辑
+					  } else if(layEvent == 'freeze'){//冻结
+	 					    layer.confirm('确定冻结该商户么', function(index){
+		 					    updateState(2,data.salesmanId,null)
+		 					   }); 
+						} else if(layEvent == 'recover'){
+		 					    layer.confirm('恢复该冻结商户么', function(index){
+			 					    updateState(1,data.salesmanId,null)
+		 					   }); 
+						} else if(layEvent === 'edit'){ //编辑
 						  layer.open({
 							  type: 2, 
 							  title:'修改业务员',
@@ -190,6 +185,7 @@
 							  content: '<%=path%>/page/main/salesman/addSales.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
 							  success: function(layero, index){
 								    var body = layer.getChildFrame('body', index);
+								    body.find('#salesmanId').val(data.salesmanId)
 								    body.find('#salesmanName').val(data.salesmanName)
 								    body.find('#salesmanIdcard').val(data.salesmanIdcard)
 								    body.find('#salesmanPhone').val(data.salesmanPhone)
@@ -211,6 +207,28 @@
 					    }); */
 					  }
 				});
+			  	//更改状态
+			  	function updateState(state, id, msg){
+			  			$.post({
+				 			 url:'<%=path%>/salesman/updateSalesmanState',
+				 			 dataType:'json',
+				 			 data:{
+				 				 id:id,
+				 				 state:state
+				 				 },
+				 			 success:function(data){
+				 				 if(data.state == 'success'){
+				 					layer.msg(data.msg,{icon: 1});
+				 					table.reload('salesmanId', {})
+				 				 }else{
+				 					layer.msg(data.msg,{icon: 2});
+				 				 }
+				 			 },
+				 			 error:function(){
+				 				layer.msg('系统错误',{icon: 2});
+				 			 }
+				 		 })
+			  	}
 			});
 	</script>
 </body>

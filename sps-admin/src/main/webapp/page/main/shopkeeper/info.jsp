@@ -37,13 +37,13 @@
  			<legend>店主信息</legend>
 		</fieldset>
 			  <div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >城市：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="shopkeeperCity"></div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >客户编号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="shopkeeperCustomerid"> </div>
@@ -51,13 +51,13 @@
 			    </div>
 			  </div>
 			  <div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >店付业务员姓名：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="shopkeeperSalesmanName"> </div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >店付业务员身份证号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="shopkeeperSalesmanIdcard"> </div>
@@ -65,13 +65,13 @@
 			    </div>
 			  </div>
 			  <div class="layui-row layui-col-space10" >
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >业务类型：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="shopkeeperBusinessType"> </div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >客户来源：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="shopkeeperClientSource"> </div>
@@ -79,13 +79,13 @@
 			    </div>
 			  </div>
 			  <div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >默认核心商户编号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="shopkeeperDefaultChannelNum"></div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >默认核心商户名称：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="shopkeeperDefaultChannelName"> </div>
@@ -98,13 +98,13 @@
  			<legend>个人信息</legend>
 		</fieldset>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >姓名：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="personalClientName"></div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >身份证号码：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="personalIdcard"> </div>
@@ -112,13 +112,13 @@
 			    </div>
 			  </div>
 			  <div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >性别：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="personalSex"> </div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >年龄：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="personalAge"> </div>
@@ -126,13 +126,13 @@
 			    </div>
 			  </div>
 			  <div class="layui-row layui-col-space10" >
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >婚姻状况：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="personalMaritalStatus"> </div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >手机号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="personalPhone"> </div>
@@ -140,13 +140,13 @@
 			    </div>
 			  </div>
 			  <div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >户籍地址：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="personalPlaceofdomicile"> </div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >现居住状况：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="personalLivingCondition"> </div>
@@ -154,13 +154,13 @@
 			    </div>
 			  </div>
 			  <div class="layui-row layui-col-space10">
-			    <div class=layui-col-md3>
+			    <div class=layui-col-md4>
 			      	<label class="layui-form-label" >现居住地址：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="personalLivingAddress"> </div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >是否为法人代表：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id=""> </div>
@@ -172,13 +172,13 @@
  			<legend>公司信息</legend>
 		</fieldset>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >公司名称：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="companyName"></div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >店铺名称：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="companyShopName"> </div>
@@ -186,13 +186,13 @@
 			    </div>
 			  </div>
 			  <div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >实际经营地址：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="companyBusinessAddr"> </div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >法人姓名：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="companyCorpName"> </div>
@@ -200,13 +200,13 @@
 			    </div>
 			  </div>
 			  <div class="layui-row layui-col-space10" >
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >经营年限(年)：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="companyOperatioTime"> </div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >经营场地所有权：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="companyBusinessAddrOwnership"> </div>
@@ -214,13 +214,13 @@
 			    </div>
 			  </div>
 			  <div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >经营面积（m2）：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="companyBusinessArea"> </div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >员工数量(人)：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="companyEmployeeNum"> </div>
@@ -232,13 +232,13 @@
  			<legend>业务信息</legend>
 		</fieldset>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >主营业务：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="shopkeeperProduct"></div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >主营商品类型：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="shopkeeperCommodityType"> </div>
@@ -246,13 +246,13 @@
 			    </div>
 			  </div>
 			  <div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >经营模式：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="shopkeeperBusinessModel"> </div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >主营品牌：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="shopkeeperBrand"> </div>
@@ -264,7 +264,7 @@
  			<legend>营业收入</legend>
 		</fieldset>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >月均营业额：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id=""></div>
@@ -283,13 +283,13 @@
  			<legend>房产资产</legend>
 		</fieldset>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >面积：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="houseArea"></div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >房屋地址：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="houseAddr"> </div>
@@ -302,13 +302,13 @@
  			<legend>车产资产</legend>
 		</fieldset>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >车架号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="carChassisNum"></div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >车牌号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="carPlateNum"> </div>
@@ -316,7 +316,7 @@
 			    </div>
 			  </div>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >号牌种类：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="carBrand"></div>
@@ -328,13 +328,13 @@
  			<legend>还款卡号</legend>
 		</fieldset>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >银行卡账号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="repaymentBankid"></div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >开户银行：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="repaymentDepositBank"> </div>
@@ -342,13 +342,13 @@
 			    </div>
 			  </div>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >绑定手机号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="repaymentPhone"></div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >服务密码：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="">******</div>
@@ -360,13 +360,13 @@
  			<legend>征信授权</legend>
 		</fieldset>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >账号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="creditUsername"></div>
 				    </div>
 			    </div>
-			    <div class="layui-col-md9">
+			    <div class="layui-col-md8">
 			     	<label class="layui-form-label" >密码：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="creditPassword"> </div>
@@ -374,7 +374,7 @@
 			    </div>
 			  </div>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md4">
 			      	<label class="layui-form-label" >身份验证码：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="creditVerify"></div>
@@ -387,7 +387,7 @@
  			<legend>账户信息</legend>
 		</fieldset>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md12">
 			      	<label class="layui-form-label" >最低首付比例（%）：</label>
 				    <div class="layui-input-inline">
 				   	<select name="accountDownPayment"  id="accountDownPayment"> 
@@ -406,7 +406,7 @@
 			    </div>
 			  </div>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md12">
 			      	<label class="layui-form-label" >账号：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="accountNum"></div>
@@ -414,7 +414,7 @@
 			    </div>
 			</div>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md12">
 			      	<label class="layui-form-label" >账户开通日期：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="accountStartTime"></div>
@@ -422,7 +422,7 @@
 			    </div>
 			  </div>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md12">
 			      	<label class="layui-form-label" >账户到期日期：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="accountEndTime"></div>
@@ -430,7 +430,7 @@
 			    </div>
 			</div>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md12">
 			      	<label class="layui-form-label" >授信有效期：</label>
 				    <div class="layui-input-inline">
 				    	<div class="layui-form-mid layui-word-aux" id="accountValidity"></div>
@@ -438,7 +438,7 @@
 			    </div>
 			</div>
 			<div class="layui-row layui-col-space10">
-			    <div class="layui-col-md3">
+			    <div class="layui-col-md12">
 			      	<label class="layui-form-label" >账户状态：</label>
 				    <div class="layui-input-inline">
 				    	<select name="accountState" id="accountState"> 
@@ -598,6 +598,46 @@
   <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
 </script>
+<script type="text/html" id="balanceType">
+  <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
+  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
+</script>
+<script type="text/html" id="balanceState">
+  {{}}
+  {{#  if(d.balanceState == 0){ }}
+    	正常
+  {{#  } else if(d.balanceState == 1){ }}
+    	异常
+  {{#  } }}
+</script>
+<script type="text/html" id="balanceExpireDate">
+{{#  
+   var da = d.balanceExpireDate;
+    da = new Date(da);
+    var year = da.getFullYear();
+    var month = da.getMonth()+1;
+    var date = da.getDate();
+    console.log([year,month,date].join('-'));
+  var fn = function(){
+    return [year,month,date].join('-');
+  }; 
+}}
+{{ fn() }}
+</script>
+<script type="text/html" id="balanceStartDate">
+{{#  
+   var da = d.balanceStartDate;
+    da = new Date(da);
+    var year = da.getFullYear();
+    var month = da.getMonth()+1;
+    var date = da.getDate();
+    console.log([year,month,date].join('-'));
+  var fn = function(){
+    return [year,month,date].join('-');
+  }; 
+}}
+{{ fn() }}
+</script>
 <script type="text/javascript">
 	  var a = <%=request.getParameter("orderid")%>
 	  var channelNum ;//外键,很多地方能用到
@@ -658,22 +698,23 @@
 		      ,{field: 'contactRelation', title: '关系', align:'center'}
 		    ]]
 		  });
-	  //收款信息
+	  //额度信息 ,查询的balance表,无数据
 	  table.render({
 		    elem: '#limitList'
-		    ,url: '<%=path%>/merchant/getGatherList.json' //数据接口
+		    ,url: '<%=path%>/balance/queryBalanceList.json' //数据接口
+		    ,where:{clientNum:shopkeeperCustomerid}
 		    ,id:'gather'
 		    ,page:true
 		    ,limit:5
 		    ,limits:[5,10,15]
 		    ,cols: [[ //表头
-		      {field: 'gatherBankId3', title: '额度类型', align:'center'}
-		      ,{field: 'gatherBankId', title: '额度起始日',align:'center'}
-		      ,{field: 'gatherOwnerName', title: '额度到期日',align:'center'}
-		      ,{field: 'gatherIdcard', title: '总授信额', align:'center'}
-		      ,{field: 'gatherBankId1', title: '当前可用额度',align:'center'}
-		      ,{field: 'gatherOwnerNam2e', title: '已用额度',align:'center'}
-		      ,{field: 'gatherIdcard3', title: '额度状态', align:'center'}
+		      {field: 'balanceType', title: '额度类型', align:'center'}
+		      ,{field: 'balanceStartDate', title: '额度起始日',align:'center',templet: '#balanceStartDate'}
+		      ,{field: 'balanceExpireDate', title: '额度到期日',align:'center',templet: '#balanceExpireDate'}
+		      ,{field: 'balanceAmount', title: '总授信额', align:'center'}
+		      ,{field: 'balanceAmountUsable', title: '当前可用额度',align:'center'}
+		      ,{field: 'balanceAmountUsed', title: '已用额度',align:'center'}
+		      ,{field: 'balanceState', title: '额度状态', align:'center',templet: '#balanceState'}
 		    ]]
 		  });
 	  $('#submit').click(function(){

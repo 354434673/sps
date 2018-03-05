@@ -72,10 +72,40 @@ public class SalesmanController {
 		
 		return salesmanList;
 	}
-	@RequestMapping("/updateState")
-	public HashMap<String,Object>  updateSalesman(String state, Integer id){
+	/**
+	 * 更改业务员状态
+	 * @Title: updateSalesmanState   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param state
+	 * @param: @param id
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:25:11
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	@RequestMapping("/updateSalesmanState")
+	public HashMap<String,Object>  updateSalesmanState(String state, Integer id){
 		
-		HashMap<String, Object> updateSalesman = salesmanWrite.updateSalesman(state, id);
+		HashMap<String, Object> updateSalesman = salesmanWrite.updateSalesmanState(state, id);
+		
+		return updateSalesman;
+	}
+	/**
+	 * 更改业务员信息
+	 * @Title: updateSalesman   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param salesman
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:25:19
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	@RequestMapping("/updateSalesman")
+	public HashMap<String,Object>  updateSalesman(SpsChannelSalesman salesman){
+		
+		HashMap<String, Object> updateSalesman = salesmanWrite.updateSalesman(salesman);
 		
 		return updateSalesman;
 	}

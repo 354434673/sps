@@ -137,7 +137,6 @@
 				  var account = $('#account').val()
 				  var shopkeeperName = $('#shopkeeperName').val()
 				  var shopkeeperState = $('#shopkeeperState').val()
-				  alert(shopkeeperState)
 				  table.reload('shopkeeper', {
 					  where: {
 						  account:account,

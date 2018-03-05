@@ -1,0 +1,47 @@
+2018-02-11 15:25:07.016 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-11 15:25:10.657 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-11 15:26:23.942 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-11 15:26:27.593 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==>  Preparing: select account_id, account_num, account_start_time, account_end_time, account_validity, account_down_payment, account_state, shopkeeper_customerId from sps_shopkeeper_account where account_id = ? 
+2018-02-11 15:26:27.692 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==> Parameters: 1(Integer)
+2018-02-11 15:26:27.837 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-11 15:28:08.213 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-11 15:28:11.573 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==>  Preparing: select account_id, account_num, account_start_time, account_end_time, account_validity, account_down_payment, account_state, shopkeeper_customerId from sps_shopkeeper_account where account_id = ? 
+2018-02-11 15:28:11.621 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==> Parameters: 1(Integer)
+2018-02-11 15:28:11.736 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-11 15:29:59.104 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-11 15:30:02.599 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==>  Preparing: select account_id, account_num, account_start_time, account_end_time, account_validity, account_down_payment, account_state, shopkeeper_customerId from sps_shopkeeper_account where account_id = ? 
+2018-02-11 15:30:02.660 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==> Parameters: 1(Integer)
+2018-02-11 15:30:02.731 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-11 15:31:02.975 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-11 15:31:06.277 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==>  Preparing: select account_id, account_num, account_start_time, account_end_time, account_validity, account_down_payment, account_state, shopkeeper_customerId from sps_shopkeeper_account where account_id = ? 
+2018-02-11 15:31:06.426 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==> Parameters: 1(Integer)
+2018-02-11 15:31:06.621 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-11 15:34:54.745 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-11 15:34:58.174 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==>  Preparing: select account_id, account_num, account_start_time, account_end_time, account_validity, account_down_payment, account_state, shopkeeper_customerId from sps_shopkeeper_account where account_id = ? 
+2018-02-11 15:34:58.226 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==> Parameters: 1(Integer)
+2018-02-11 15:34:58.263 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - <==      Total: 1
+2018-02-11 15:34:58.339 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-11 15:35:02.212 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-11 15:35:05.633 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==>  Preparing: select account_id, account_num, account_start_time, account_end_time, account_validity, account_down_payment, account_state, shopkeeper_customerId from sps_shopkeeper_account where account_id = ? 
+2018-02-11 15:35:05.714 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==> Parameters: 1(Integer)
+2018-02-11 15:35:05.740 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - <==      Total: 1
+2018-02-11 15:35:05.754 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-11 15:36:09.818 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-11 15:36:12.982 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==>  Preparing: select account_id, account_num, account_start_time, account_end_time, account_validity, account_down_payment, account_state, shopkeeper_customerId from sps_shopkeeper_account where account_id = ? 
+2018-02-11 15:36:13.069 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - ==> Parameters: 1(Integer)
+2018-02-11 15:36:13.098 [DEBUG] d.c.s.d.SpsShopkeeperAccountDao.selectByPrimaryKey - <==      Total: 1
+2018-02-11 15:36:13.286 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-11 16:46:14.827 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-11 16:46:21.984 [DEBUG] d.c.s.dao.ChannelEnterpriseDao.queryBusinessForApi - ==>  Preparing: SELECT e1.enterprise_id, e1.enterprise_businesslicense_no, e1.enterprise_company_name, e1.enterprise_company_abbreviation,e1.enterprise_company_register_addr, e1.enterprise_company_realit_addr, e1.enterprise_corp, e1.enterprise_corp_idCard, e1.enterprise_operatio_time, e1.enterprise_employee_num,b1.business_id,b1.business_product FROM sps_channel_business b1 JOIN sps_channel_enterprise e1 ON b1.channel_num = e1.channel_num WHERE 
+2018-02-11 16:46:22.090 [DEBUG] d.c.s.dao.ChannelEnterpriseDao.queryBusinessForApi - ==> Parameters: 
+2018-02-11 16:46:22.324 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-11 16:46:58.933 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-11 16:47:02.802 [DEBUG] d.c.s.dao.ChannelEnterpriseDao.queryBusinessForApi - ==>  Preparing: SELECT e1.enterprise_id, e1.enterprise_businesslicense_no, e1.enterprise_company_name, e1.enterprise_company_abbreviation,e1.enterprise_company_register_addr, e1.enterprise_company_realit_addr, e1.enterprise_corp, e1.enterprise_corp_idCard, e1.enterprise_operatio_time, e1.enterprise_employee_num,b1.business_id,b1.business_product FROM sps_channel_business b1 JOIN sps_channel_enterprise e1 ON b1.channel_num = e1.channel_num 
+2018-02-11 16:47:02.871 [DEBUG] d.c.s.dao.ChannelEnterpriseDao.queryBusinessForApi - ==> Parameters: 
+2018-02-11 16:47:02.943 [DEBUG] d.c.s.dao.ChannelEnterpriseDao.queryBusinessForApi - <==      Total: 27
+2018-02-11 16:47:03.187 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2018-02-12 14:50:33.494 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2018-02-12 14:50:37.118 [DEBUG] d.c.s.dao.SpsShopkeeperAccountDao.selectByExample - ==>  Preparing: select account_id, account_num, account_start_time, account_end_time, account_validity, account_down_payment, account_state, shopkeeper_customerId from sps_shopkeeper_account WHERE ( account_num = ? ) 
+2018-02-12 14:50:37.166 [DEBUG] d.c.s.dao.SpsShopkeeperAccountDao.selectByExample - ==> Parameters: 18513967345(String)
+2018-02-12 14:50:37.197 [DEBUG] d.c.s.dao.SpsShopkeeperAccountDao.selectByExample - <==      Total: 0
+2018-02-12 14:50:37.262 [INFO ] com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed

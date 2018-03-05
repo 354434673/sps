@@ -116,7 +116,7 @@ public class MerchantController {
 			
 			example.createCriteria().andRoleMarkEqualTo(1);
 			List<SpsRole> selectByExample = roleMapper.selectByExample(example );
-			int[] roleList = {selectByExample.get(0).getRoleMark()};//获取标示为1的商户角色
+			int[] roleList = {selectByExample.get(0).getRoleId()};//获取标示为1的商户角色
 			//添加用户角色
 			userAndRoleService.insertUserAndRole(openAccount.getOpenAdminNum(), roleList);
 		}

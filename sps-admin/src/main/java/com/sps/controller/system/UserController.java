@@ -187,6 +187,16 @@ public class UserController {
 		
 		return userService.userLogout();
 	}
+	/**
+	 * 获得当前登录用户的客户编号,1商户,2店主
+	 * @Title: getNumForUserType   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:26:30
+	 * @return: String      
+	 * @throws
+	 */
 	public String getNumForUserType(){
 		 Subject subject = SecurityUtils.getSubject();
 		//获取当前token中的用户
