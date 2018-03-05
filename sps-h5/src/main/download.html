@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="shareType" content="yes">
+    <meta name="sharetitle" content="">
+    <meta name="sharedesc" content="">
+    <meta name="sharelink" content="">
+    <meta name="shareicon" content="">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="email=no" />
+    <meta name="format-detection" content="address=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="copyright" content="Copyright (c) juzifenqi.com" />
+    <title>下载店付APP</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/h5reset.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/download.css" />
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?02e3ab6b9317648c24457729807be7b5";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+        function getMetaContentValue(name) {
+            var name = name || '';
+            var getMate = null;
+            document.querySelectorAll ? getMate = document.querySelectorAll('meta') : getMate = document.getElementsByTagName('meta');
+            if (getMate && getMate.length > 0) {
+                for (var i = 0; i < getMate.length; i++) {
+                    if (!getMate[i].getAttribute('name')) {
+                        continue;
+                    } else {
+                        if (getMate[i].getAttribute('name') == name.toString()) {
+                            return getMate[i].getAttribute('content');
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="web-wrap clearfix">
+        <div class="head"><img src="../static/images/banner.png" alt=""></div>
+        <div class="intro-wrap">
+            <h2>产品简介</h2>
+            <p class="intro-textarea">桔子分期集团于2014年9月成立，是目前国内领先的、成立时间较早的互联网消费金融企业。公司秉承“成为年轻人首选的信用消费平台”的企业愿景，坚持科技改造金融的技术驱动理念，分别从个人用户场景消费金融、汽车后市场消费金融、小微企业短期资金周转及互联网技术服务支持方面为用户提供全方位多元化的金融服务和技术解决方案，利用大数据等互联网创新技术进行风险控制和平台管理，致力于成为国内领先的科技金融企业。公司旗下目前有专注于年轻人分期购物的桔子分期商城、专注于年轻车主信用消费的车主白条、专注于小微企业短期资金周转服务的店付和专注于智能化IT解决方案的小桔汇金,利用大数据等互联网创新技术进行风险控制和平台管理，致力于成为国内领先的科技金融企业。公司旗下目前有专注于年轻人分期购物的桔子分期商城、专注于年轻车主信用消费的车主白条、专注于小微企业短期资金周转服务的店付和专注于智能化IT解决方案的小桔汇金</p>
+        </div>
+        <a id="downloadBtn" class="download-btn" href="javascript:;">立即下载</a>
+    </div>
+    <script type="text/javascript" src="../static/js/aspen.lib.min.js"></script>
+    <script type="text/javascript" src="../static/js/download.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="shareType" content="yes">
+    <meta name="sharetitle" content="">
+    <meta name="sharedesc" content="">
+    <meta name="sharelink" content="">
+    <meta name="shareicon" content="">
+    <meta name="keywords" content="桔子分期" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="email=no" />
+    <meta name="format-detection" content="address=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="copyright" content="Copyright (c) juzifenqi.com" />
+    <title>店主邀请</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/h5reset.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/details.css" />
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?02e3ab6b9317648c24457729807be7b5";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+        function getMetaContentValue(name) {
+            var name = name || '';
+            var getMate = null;
+            document.querySelectorAll ? getMate = document.querySelectorAll('meta') : getMate = document.getElementsByTagName('meta');
+            if (getMate && getMate.length > 0) {
+                for (var i = 0; i < getMate.length; i++) {
+                    if (!getMate[i].getAttribute('name')) {
+                        continue;
+                    } else {
+                        if (getMate[i].getAttribute('name') == name.toString()) {
+                            return getMate[i].getAttribute('content');
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="web-wrap clearfix">
+        <ul class="details-tab">
+            <li class="hover">全部</li>
+            <li>已接受</li>
+            <li>待接受</li>
+        </ul>
+        <ul class="info-list" style="display:block;">
+            <li>
+                <p><em>店主名称</em><i>*******************</i></p>
+                <p><em>手机号</em><i>*******************</i></p>
+                <p><em>地址</em><i>*******************</i></p>
+            </li>
+        </ul>
+        <ul class="info-list">
+            <li>
+                <p><em>店主名称</em><i>2</i></p>
+                <p><em>手机号</em><i>*******************</i></p>
+                <p><em>地址</em><i>*******************</i></p>
+            </li>
+        </ul>
+        <ul class="info-list">
+            <li>
+                <p><em>店主名称</em><i>3</i></p>
+                <p><em>手机号</em><i>*******************</i></p>
+                <p><em>地址</em><i>*******************</i></p>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="../static/js/aspen.lib.min.js"></script>
+    <script type="text/javascript" src="../static/js/details.js"></script>
+</body>
+
+</html>

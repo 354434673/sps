@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="shareType" content="yes">
+    <meta name="sharetitle" content="">
+    <meta name="sharedesc" content="">
+    <meta name="sharelink" content="">
+    <meta name="shareicon" content="">
+    <meta name="keywords" content="桔子分期" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="email=no" />
+    <meta name="format-detection" content="address=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="copyright" content="Copyright (c) juzifenqi.com" />
+    <title>店主邀请</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/h5reset.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/invitation.css" />
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?02e3ab6b9317648c24457729807be7b5";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+        function getMetaContentValue(name) {
+            var name = name || '';
+            var getMate = null;
+            document.querySelectorAll ? getMate = document.querySelectorAll('meta') : getMate = document.getElementsByTagName('meta');
+            if (getMate && getMate.length > 0) {
+                for (var i = 0; i < getMate.length; i++) {
+                    if (!getMate[i].getAttribute('name')) {
+                        continue;
+                    } else {
+                        if (getMate[i].getAttribute('name') == name.toString()) {
+                            return getMate[i].getAttribute('content');
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="web-wrap clearfix">
+        <ul class="user-addr">
+            <li><em>店主名称</em><input type="text" placeholder="请输入店主名称" /></li>
+            <li><em>手机号</em><input type="text" placeholder="请输入店主手机号" maxlength="11" /></li>
+            <li><em>地址</em><input type="text" disabled placeholder="请选择省.市.区" /><span></span></li>
+        </ul>
+        <ul class="detail-list">
+            <li>
+                <strong>全部邀请</strong>
+                <a class="cur" href="javascript:;"><em>查看全部</em><span></span></a>
+            </li>
+            <li>
+                <strong>今日已接受</strong>
+                <a class="cur" href="javascript:;"><em>12(人)</em><span></span></a>
+            </li>
+            <li>
+                <strong>今日待接受</strong>
+                <a class="cur" href="javascript:;"><em>3(人)</em><span></span></a>
+            </li>
+        </ul>
+        <a id="createCode" href="javascript:;">生成二维码</a>
+    </div>
+    <script type="text/javascript" src="../static/js/aspen.lib.min.js"></script>
+    <script type="text/javascript" src="../static/js/invitation.js"></script>
+</body>
+</html>
