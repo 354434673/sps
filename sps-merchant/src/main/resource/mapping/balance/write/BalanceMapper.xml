@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.balance.write.BalanceWriteMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.balance.Balance" >
+    <id column="balance_id" property="balanceId" jdbcType="INTEGER" />
+    <result column="balance_type" property="balanceType" jdbcType="VARCHAR" />
+    <result column="balance_amount" property="balanceAmount" jdbcType="DECIMAL" />
+    <result column="balance_amount_used" property="balanceAmountUsed" jdbcType="DECIMAL" />
+    <result column="balance_amount_usable" property="balanceAmountUsable" jdbcType="DECIMAL" />
+    <result column="balance_expire_date" property="balanceExpireDate" jdbcType="TIMESTAMP" />
+    <result column="balance_start_date" property="balanceStartDate" jdbcType="TIMESTAMP" />
+    <result column="balance_state" property="balanceState" jdbcType="INTEGER" />
+    <result column="balance_client_num" property="balanceClientNum" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from balance
+    where balance_id = #{balanceId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sps.entity.balance.BalanceExample" >
+    delete from balance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sps.entity.balance.Balance" >
+    insert into balance (balance_id, balance_type, balance_amount, 
+      balance_amount_used, balance_amount_usable, 
+      balance_expire_date, balance_start_date, 
+      balance_state, balance_client_num, create_time, 
+      update_time)
+    values (#{balanceId,jdbcType=INTEGER}, #{balanceType,jdbcType=VARCHAR}, #{balanceAmount,jdbcType=DECIMAL}, 
+      #{balanceAmountUsed,jdbcType=DECIMAL}, #{balanceAmountUsable,jdbcType=DECIMAL}, 
+      #{balanceExpireDate,jdbcType=TIMESTAMP}, #{balanceStartDate,jdbcType=TIMESTAMP}, 
+      #{balanceState,jdbcType=INTEGER}, #{balanceClientNum,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.sps.entity.balance.Balance" >
+    insert into balance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="balanceId != null" >
+        balance_id,
+      </if>
+      <if test="balanceType != null" >
+        balance_type,
+      </if>
+      <if test="balanceAmount != null" >
+        balance_amount,
+      </if>
+      <if test="balanceAmountUsed != null" >
+        balance_amount_used,
+      </if>
+      <if test="balanceAmountUsable != null" >
+        balance_amount_usable,
+      </if>
+      <if test="balanceExpireDate != null" >
+        balance_expire_date,
+      </if>
+      <if test="balanceStartDate != null" >
+        balance_start_date,
+      </if>
+      <if test="balanceState != null" >
+        balance_state,
+      </if>
+      <if test="balanceClientNum != null" >
+        balance_client_num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="balanceId != null" >
+        #{balanceId,jdbcType=INTEGER},
+      </if>
+      <if test="balanceType != null" >
+        #{balanceType,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceAmount != null" >
+        #{balanceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceAmountUsed != null" >
+        #{balanceAmountUsed,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceAmountUsable != null" >
+        #{balanceAmountUsable,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceExpireDate != null" >
+        #{balanceExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="balanceStartDate != null" >
+        #{balanceStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="balanceState != null" >
+        #{balanceState,jdbcType=INTEGER},
+      </if>
+      <if test="balanceClientNum != null" >
+        #{balanceClientNum,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update balance
+    <set >
+      <if test="record.balanceId != null" >
+        balance_id = #{record.balanceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.balanceType != null" >
+        balance_type = #{record.balanceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balanceAmount != null" >
+        balance_amount = #{record.balanceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.balanceAmountUsed != null" >
+        balance_amount_used = #{record.balanceAmountUsed,jdbcType=DECIMAL},
+      </if>
+      <if test="record.balanceAmountUsable != null" >
+        balance_amount_usable = #{record.balanceAmountUsable,jdbcType=DECIMAL},
+      </if>
+      <if test="record.balanceExpireDate != null" >
+        balance_expire_date = #{record.balanceExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.balanceStartDate != null" >
+        balance_start_date = #{record.balanceStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.balanceState != null" >
+        balance_state = #{record.balanceState,jdbcType=INTEGER},
+      </if>
+      <if test="record.balanceClientNum != null" >
+        balance_client_num = #{record.balanceClientNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update balance
+    set balance_id = #{record.balanceId,jdbcType=INTEGER},
+      balance_type = #{record.balanceType,jdbcType=VARCHAR},
+      balance_amount = #{record.balanceAmount,jdbcType=DECIMAL},
+      balance_amount_used = #{record.balanceAmountUsed,jdbcType=DECIMAL},
+      balance_amount_usable = #{record.balanceAmountUsable,jdbcType=DECIMAL},
+      balance_expire_date = #{record.balanceExpireDate,jdbcType=TIMESTAMP},
+      balance_start_date = #{record.balanceStartDate,jdbcType=TIMESTAMP},
+      balance_state = #{record.balanceState,jdbcType=INTEGER},
+      balance_client_num = #{record.balanceClientNum,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sps.entity.balance.Balance" >
+    update balance
+    <set >
+      <if test="balanceType != null" >
+        balance_type = #{balanceType,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceAmount != null" >
+        balance_amount = #{balanceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceAmountUsed != null" >
+        balance_amount_used = #{balanceAmountUsed,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceAmountUsable != null" >
+        balance_amount_usable = #{balanceAmountUsable,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceExpireDate != null" >
+        balance_expire_date = #{balanceExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="balanceStartDate != null" >
+        balance_start_date = #{balanceStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="balanceState != null" >
+        balance_state = #{balanceState,jdbcType=INTEGER},
+      </if>
+      <if test="balanceClientNum != null" >
+        balance_client_num = #{balanceClientNum,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where balance_id = #{balanceId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sps.entity.balance.Balance" >
+    update balance
+    set balance_type = #{balanceType,jdbcType=VARCHAR},
+      balance_amount = #{balanceAmount,jdbcType=DECIMAL},
+      balance_amount_used = #{balanceAmountUsed,jdbcType=DECIMAL},
+      balance_amount_usable = #{balanceAmountUsable,jdbcType=DECIMAL},
+      balance_expire_date = #{balanceExpireDate,jdbcType=TIMESTAMP},
+      balance_start_date = #{balanceStartDate,jdbcType=TIMESTAMP},
+      balance_state = #{balanceState,jdbcType=INTEGER},
+      balance_client_num = #{balanceClientNum,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where balance_id = #{balanceId,jdbcType=INTEGER}
+  </update>
+</mapper>

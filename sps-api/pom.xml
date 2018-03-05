@@ -14,13 +14,18 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+		
 		<!-- Mybatis分页 -->
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
 			<version>5.1.2</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.sps</groupId>
+			<artifactId>sps-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -312,8 +317,6 @@
 			<version>4.4.6</version>
 		</dependency>
 
-
-
 		<!-- test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -328,13 +331,53 @@
 			<version>4.1.7.RELEASE</version>
 		</dependency>
 		
-<!-- 		<dependency>
-			<groupId>com.juzifenqi</groupId>
-			<artifactId>member-center-api</artifactId>
-			<version>2.3.0.0-SNAPSHOT</version>
-		</dependency> -->
+		<dependency>
+			<groupId>jzfq_auth</groupId>
+			<artifactId>auth_api</artifactId>
+			<version>1.7.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>${dubbo.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>${zkClient.version}</version>
+		</dependency>
     </dependencies>
 
+<!--     <distributionManagement>
+		<repository>
+			<id>releases</id>
+			<url>http://git.juzifenqi.cn:8081/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>http://git.juzifenqi.cn:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>Public Repositories</name>
+			<url>http://git.juzifenqi.cn:8081/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories> -->
 	<profiles>
 		<profile>
 			<id>dev</id>
@@ -344,6 +387,7 @@
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
+			
 		</profile>
 
 		<profile>
@@ -352,6 +396,7 @@
 				<env>prod</env>
 			</properties>
 		</profile>
+		
 	</profiles>
 
 	<build>
@@ -394,9 +439,10 @@
 			<!--</plugin> -->
 		</plugins>
 	</build>
-
 	<properties>
 		<!-- 设置默认编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<dubbo.version>2.5.3</dubbo.version>
+		<zkClient.version>0.10</zkClient.version>
 	</properties>
 </project>

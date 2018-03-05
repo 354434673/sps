@@ -18,8 +18,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Md5Util;
 import com.sps.common.Message;
 import com.sps.common.StringUtil;
-import com.sps.dao.SpsShopkeeperAccountDao;
 import com.sps.dao.SpsUserDao;
+import com.sps.dao.shopkeeper.SpsShopkeeperAccountDao;
 import com.sps.entity.shopkeeper.SpsShopkeeperAccount;
 import com.sps.entity.shopkeeper.SpsShopkeeperAccountExample;
 import com.sps.entity.user.SpsUser;
@@ -125,6 +125,8 @@ public class UserServiceImpl extends BaseOperate{
 			String phone = parseObject.getString("phone");
 			
 			String password = parseObject.getString("password");
+			
+			String clientNum = parseObject.getString("clientNum");
 			
 			try {
 				String salt = Md5Util.getSalt(4);//4位盐

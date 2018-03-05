@@ -1,4 +1,4 @@
-package com.sps.dao;
+package com.sps.dao.shopkeeper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
