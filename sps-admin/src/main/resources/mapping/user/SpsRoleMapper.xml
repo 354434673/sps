@@ -73,6 +73,9 @@
     role_id, role_name, role_describe, role_creater, role_mark, role_creatTime, role_updateTime, 
     role_state
   </sql>
+  <sql id="Column_List" >
+    r1.role_id, r1.role_name
+  </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.user.SpsRoleExample" >
     select
     <if test="distinct" >
@@ -92,6 +95,16 @@
     <include refid="Base_Column_List" />
     from sps_role
     where role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+  <select id="selectRoleForUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+	SELECT
+	<include refid="Column_List" />
+	FROM
+		sps_role r1
+	JOIN 
+		sps_userandrole r2 ON r1.role_id = r2.role_id
+	WHERE
+		r2.user_id = #{id}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sps_role

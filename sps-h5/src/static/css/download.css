@@ -1,0 +1,13 @@
+
+html,body,.web-wrap{ width: 100%; max-width: 750px; height: 100%; padding: .2rem; box-sizing: border-box; background: #fff; position: relative; margin: 0 auto; }
+html{ background: #fff; }
+html,body{ margin: 0 auto; padding: 0; }
+
+.head{ width: 100%; height: 46%; text-align: center; padding: .3rem; box-sizing: border-box; overflow: hidden; }
+.head img{ max-width: 100%; height: 90%; }
+
+.download-btn{ display: block; width: 80%; height: .4rem; line-height: .4rem; margin: 0 auto; padding: .3rem 0; background: linear-gradient(to bottom, #49AFF7, #3585F0); border: 1px solid #fff; border-radius: .6rem; text-align: center; font-size: .32rem; position: absolute; bottom: .4rem; left: 10%; }
+
+.intro-wrap{ width: 100%; height: 36%; overflow: hidden; }
+.intro-wrap h2{text-align: center; font-size: .3rem; color: #9B9B9B; }
+.intro-textarea{ width: 100%; height: 100%; line-height: .46rem; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 33; overflow-x: hidden; overflow-y: scroll; color: #9B9B9B; }

@@ -53,8 +53,9 @@ public class MenuServiceImpl implements MenuService{
 		List<MenuUtil> list = new ArrayList<MenuUtil>();
 		
 		List<SpsMenu> selectByExample = spsMenuMapper.selectByExample(example);
-		MenuUtil menuUtil= null;
-		for (SpsMenu spsMenu : selectByExample) {
+		
+		selectByExample.forEach(spsMenu -> {
+			MenuUtil menuUtil= null;
 			//只遍历nodeType为1的，如果nodeType为1，说明为父节点
 			if(spsMenu.getMenuNodetype() == 1){
 				List<MenuUtil> getSubMenu = getSub(spsMenu.getMenuId(),roleList);
@@ -68,7 +69,10 @@ public class MenuServiceImpl implements MenuService{
 				menuUtil.setChildren(getSubMenu);
 			}
 			list.add(menuUtil);
-		}
+		});
+/*		
+		for (SpsMenu spsMenu : selectByExample) {
+		}*/
 		return list;
 	}
 	@Override

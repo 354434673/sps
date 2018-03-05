@@ -51,7 +51,11 @@
 		dataType:'json',
 		async:false,//同步,赋值给json,否则会找不到
 		success:function(data){
-			json= eval(data);
+			if(eval(data) == ''){
+				layer.msg("当前业务无商品类型,请重新选择")
+			}else{
+				json= eval(data);
+			}
 		}
 	})  
       //创建tree

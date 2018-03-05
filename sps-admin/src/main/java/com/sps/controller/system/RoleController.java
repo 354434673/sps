@@ -32,16 +32,47 @@ public class RoleController {
 
 		return roleList;
 	}
-
+	/**
+	 * 根据id获得角色
+	 * @Title: getRoleByID   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param roleId
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:25:42
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping(value = "getRole")
 	public @ResponseBody HashMap<String, Object> getRoleByID(String roleId) {
 		return roleService.getRoleByID(roleId);
 	}
-
+	/**
+	 * 删除角色
+	 * @Title: deleteRole   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param roleID
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:25:57
+	 * @return: HashMap<String,String>      
+	 * @throws
+	 */
 	@RequestMapping(value = "deleteRole")
 	public @ResponseBody HashMap<String, String> deleteRole(String roleID) {
 		return roleService.deleteRole(roleID);
 	}
+	/**
+	 * 获得用户对应的角色
+	 * @Title: getRoleForUserId   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param id
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:26:07
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping(value = "getRoleForUserId")
 	public @ResponseBody HashMap<String, Object> getRoleForUserId(Integer id) {
 		

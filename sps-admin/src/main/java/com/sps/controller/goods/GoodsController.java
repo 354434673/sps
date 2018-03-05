@@ -38,8 +38,8 @@ public class GoodsController {
      */
     @RequestMapping("/goodsList")
     @ResponseBody
-    public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName, String goodsNo,String flowStatus) {
-        HashMap<String, Object> goodsList = goodService.findGoodsList(page, limit, goodsName, goodsNo,flowStatus);
+    public HashMap<String, Object> goodsList(Integer page, Integer limit, String goodsName, String goodsNo,String flowStatus,String categoryId) {
+        HashMap<String, Object> goodsList = goodService.findGoodsList(page, limit, goodsName, goodsNo,flowStatus,categoryId);
         return goodsList;
     }
 

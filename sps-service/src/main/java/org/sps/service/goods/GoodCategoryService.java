@@ -45,4 +45,6 @@ public interface GoodCategoryService {
      * @return
      */
     List<SpsGoodCategory> findLastCategory(String ids);
+
+    void falseDeletion(Integer id);
 }
