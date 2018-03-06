@@ -1,12 +1,14 @@
 package org.sps.service.order;
 
+import org.sps.entity.finance.OrderDetail;
+import org.sps.entity.order.Order;
+import org.sps.entity.order.OrderGoods;
+import org.sps.entity.order.SpsOrderLogistics;
+
+import javax.print.DocFlavor;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
-
-import org.sps.entity.order.OrderGoods;
-import org.sps.entity.order.OrderGoodsVo;
-import org.sps.entity.order.SpsOrderLogistics;
 
 public interface OrderService extends Serializable{
 
@@ -89,5 +91,43 @@ public interface OrderService extends Serializable{
 	 * @throws
 	 */
 	HashMap<String, Object> insertLogistics(String flag, SpsOrderLogistics logistics);
-	
+
+	/**
+	 * 根据订单号查询订单基本信息
+	 * @param orderNo
+	 * @return
+	 */
+	Order queryByOrderId(String  orderNo);
+
+	/**
+	 * 根据订单号查询物流信息
+	 * @param orderNo
+	 * @return
+	 */
+	SpsOrderLogistics queryOrderLogistics(String orderNo);
+
+
+	public List<OrderGoods> queryGoods(String orderNo);
+
+	/**
+	 * 根据各种条件查询信息
+	 * @param page
+	 * @param limit
+	 * @param loanStartTime
+	 * @param loanEndTime
+	 * @param loanName
+	 * @param loanStatus
+	 * @param orderNo
+	 * @return
+	 */
+	HashMap<String, Object> queryOrderList(Integer page,
+										   Integer limit,
+										   String loanStartTime,
+										   String loanEndTime,
+										   String  loanName,
+										   Integer loanStatus,
+										   String orderNo);
+
+
+
 }

@@ -1,11 +1,8 @@
 package org.sps.service.merchant.read;
 
-import java.util.Date;
-import java.util.HashMap;
-
-import org.sps.entity.merchant.SpsChannelBank;
 import org.sps.entity.merchant.SpsChannelBankTrade;
-import org.sps.entity.merchant.SpsChannelBankTrans;
+
+import java.util.HashMap;
 
 /***
  *  提现 支付 业务层
@@ -27,7 +24,7 @@ public interface ChannelBankTradeReadService{
 	 */
 	public HashMap<String,Object> getBankTradeList(Integer page, Integer limit,
                                                   String applicationStartDate, String
-                                                           paymentDate, String tradeStatus, String loginName);
+                                                           paymentDate, String tradeStatus, String loginName,String tradeType);
 
 	/**ate
 	 * 获取交易详情

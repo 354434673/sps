@@ -1,9 +1,9 @@
 package org.sps.service.merchant.write;
 
-import java.math.BigDecimal;
-
 import org.sps.entity.merchant.SpsChannelBank;
 import org.sps.entity.merchant.SpsChannelBankTrade;
+
+import java.math.BigDecimal;
 
 /***
  *  充值 提现交易
@@ -16,7 +16,7 @@ public interface ChannelBankTradeWriteService{
 	 * 插入交易记录
 	 * 
 	 */
-  Boolean  saveBankTradeInfo(SpsChannelBank bankInfo, BigDecimal amount);
+  String  saveBankTradeInfo(SpsChannelBank bankInfo, BigDecimal amount,String tradeType);
 	/**
 	 * 更新交易记录信息
 	 */
@@ -31,5 +31,5 @@ public interface ChannelBankTradeWriteService{
 	 * @param applicationDate
 	 * @return
 	 */
-	Boolean  modifyBankTradeByApplicateDate(String applicationDate,String status);
+	Boolean  modifyBankTradeByApplicateDate(String applicationDate,String status,String content);
 }

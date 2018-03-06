@@ -40,8 +40,9 @@ public class SpsShopkeeperPersonal implements Serializable{
     private String personalLivingAddress;
 
     private String personalNoneCorp;
+    private String  personalNickname;
 
-    private String personalNickname;
+    private String shopkeeperCustomerid;
 
     private String personalUsername;
 
@@ -49,7 +50,24 @@ public class SpsShopkeeperPersonal implements Serializable{
 
     private Date personalUpdateTime;
 
-    private String shopkeeperCustomerid;
+    private SpsShopkeeperPic pic;
+
+
+    public String getPersonalNickname() {
+        return personalNickname;
+    }
+
+    public void setPersonalNickname(String personalNickname) {
+        this.personalNickname = personalNickname;
+    }
+
+    public SpsShopkeeperPic getPic() {
+        return pic;
+    }
+
+    public void setPic(SpsShopkeeperPic pic) {
+        this.pic = pic;
+    }
 
     public Integer getPersonalId() {
         return personalId;
@@ -179,12 +197,12 @@ public class SpsShopkeeperPersonal implements Serializable{
         this.personalNoneCorp = personalNoneCorp == null ? null : personalNoneCorp.trim();
     }
 
-    public String getPersonalNickname() {
-        return personalNickname;
+    public String getShopkeeperCustomerid() {
+        return shopkeeperCustomerid;
     }
 
-    public void setPersonalNickname(String personalNickname) {
-        this.personalNickname = personalNickname == null ? null : personalNickname.trim();
+    public void setShopkeeperCustomerid(String shopkeeperCustomerid) {
+        this.shopkeeperCustomerid = shopkeeperCustomerid == null ? null : shopkeeperCustomerid.trim();
     }
 
     public String getPersonalUsername() {
@@ -209,13 +227,5 @@ public class SpsShopkeeperPersonal implements Serializable{
 
     public void setPersonalUpdateTime(Date personalUpdateTime) {
         this.personalUpdateTime = personalUpdateTime;
-    }
-
-    public String getShopkeeperCustomerid() {
-        return shopkeeperCustomerid;
-    }
-
-    public void setShopkeeperCustomerid(String shopkeeperCustomerid) {
-        this.shopkeeperCustomerid = shopkeeperCustomerid == null ? null : shopkeeperCustomerid.trim();
     }
 }

@@ -46,8 +46,7 @@
        #{userid,jdbcType=VARCHAR},
        #{standby1,jdbcType=VARCHAR}
       )
-        
-  </insert>
+   </insert>
   
   <update id="updateBankTrade" parameterType="org.sps.entity.merchant.SpsChannelBankTrade" >
     update 
@@ -100,10 +99,15 @@
     </set>
      where bt_trade_serial_num=#{tradeSerialNum}
   </update>
+
+
     <update id="updateStatus" >
         update
-              sps_bank_trade_info
-        SET  bt_trade_status=#{status,jdbcType=VARCHAR}
+           sps_bank_trade_info
+        SET  bt_trade_status=#{status,jdbcType=VARCHAR},
+            standby2=#{content,jdbcType=VARCHAR},
+            bt_application_stop_date=#{applicationStopDate,jdbcType=VARCHAR},
+            bt_audit_date=#{auditDate,jdbcType=VARCHAR}
         WHERE
         bt_application_start_date=#{applicationDate,jdbcType=VARCHAR}
     </update>

@@ -31,27 +31,30 @@
                     <div class="layui-input-inline">
                         <input type="text" class="layui-input" id="endTime" placeholder="年-月-日" lay-verify="required">
                     </div>
-
-                    <label class="layui-form-label">状态:</label>
-                        <div class="layui-input-inline">
-                            <select   id="status" lay-filter="withDrawState">
-                            <option value="">全部</option>
-                            <option value="0">待提交</option>
-                            <option value="1">审核中</option>
-                            <option value="2">审核通过</option>
-                            <option value="3">审核失败</option>
-                            </select>
-                        </div>
-
-                     <button class="layui-btn layui-btn-primary" id="search">查询</button>
-                    <button class="layui-btn layui-btn-primary" id="reset">重置</button>
+                  <label class="layui-form-label">状态:</label>
+                  <div class="layui-input-inline">
+                      <select   id="status" lay-filter="withDrawState">
+                          <option value="">全部</option>
+                          <option value="0">待提交</option>
+                          <option value="1">审核中</option>
+                          <option value="2">审核通过</option>
+                          <option value="3">审核失败</option>
+                      </select>
+                  </div>
               </div>
               <div>
-                    <blockquote class="layui-elem-quote">
+                  <a href="javascript:;" class="layui-btn layui-btn-warm" id="add">
+                      <i class="layui-icon">&#xe608;</i> 新增
+                  </a>
+
+                  <button class="layui-btn layui-btn-primary" id="search">查询</button>
+                  <button class="layui-btn layui-btn-primary" id="reset">重置</button>
+
+                  <%--  <blockquote class="layui-elem-quote">
                         <a href="javascript:;" class="layui-btn layui-btn-warm" id="add">
                             <i class="layui-icon">&#xe608;</i> 新增
                         </a>
-                    </blockquote>
+                    </blockquote>--%>
               </div>
         </div>
     </div>
@@ -149,7 +152,6 @@
         //监听工作条
         table.on('tool(withdrawTables)', function(obj){
             var data = obj.data;
-            alert(data.tradeSerialNum);
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if(layEvent === 'detail'){ //查看

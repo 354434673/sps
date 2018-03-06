@@ -49,7 +49,7 @@
                             <option value="0">待审核</option>
 							<option value="1">审核不通过</option>
                             <option value="2">审核通过</option>
-							<option value="3">全部</option>
+							<option value="">全部</option>
                             </select>
                         </div>
 			 	</div>

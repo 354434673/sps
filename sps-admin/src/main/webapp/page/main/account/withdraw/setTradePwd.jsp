@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>新增页面</title>
+    <title>设置交易页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -66,7 +66,7 @@
 <script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/plugins/layui/layui.js"></script>
 <script type="text/javascript">
     $(function () {
-        var withdrawAmt = getUrlParam("withdrawAmt");
+       // var withdrawAmt = getUrlParam("withdrawAmt");
         $.ajax({
             url:'<%=path%>/withdraw/getPhone'
             ,type: 'post'
@@ -130,7 +130,7 @@
             var tradePwd = $('#tradePwd').val().trim();
             var confirmPwd = $('#confirmPwd').val().trim();
             var withdrawAmt = getUrlParam("withdrawAmt");
-            if(tradePwd == confirmPwd){
+            if(tradePwd === confirmPwd){
                 layer.msg('处理中...',
                         {
                             icon: 16,
@@ -161,8 +161,7 @@
                                         }
                                     }
                                     if(code == result.fail){//若异常，则提示
-                                        layer.msg(msg);
-                                        lock = true;
+                                           lock = true;
                                     }
                                 }
                             });
