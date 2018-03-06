@@ -1,17 +1,14 @@
 package com.sps.controller.merchant;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.sps.entity.merchant.SpsChannel;
@@ -30,12 +27,9 @@ import org.sps.service.merchant.write.ChannelWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sps.dao.user.SpsRoleMapper;
-import com.sps.dao.user.SpsUserandroleMapper;
 import com.sps.entity.user.SpsRole;
 import com.sps.entity.user.SpsRoleExample;
 import com.sps.entity.user.SpsUser;
-import com.sps.entity.user.SpsUserandrole;
-import com.sps.entity.user.SpsUserandroleExample;
 import com.sps.httpclient.merchant.MerchantService;
 import com.sps.service.express.ExpressService;
 import com.sps.service.user.UserAndRoleService;

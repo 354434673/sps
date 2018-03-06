@@ -17,8 +17,8 @@ import com.sps.dao.user.SpsRoleMapper;
 import com.sps.dao.user.SpsRoleandmenuMapper;
 import com.sps.entity.user.SpsRole;
 import com.sps.entity.user.SpsRoleExample;
-import com.sps.entity.user.SpsRoleandmenu;
 import com.sps.entity.user.SpsRoleExample.Criteria;
+import com.sps.entity.user.SpsRoleandmenu;
 import com.sps.service.user.RoleService;
 
 @Service

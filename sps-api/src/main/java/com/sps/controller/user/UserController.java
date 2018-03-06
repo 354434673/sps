@@ -7,9 +7,6 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.sps.entity.merchant.SpsChannelEnterprise;
-import org.sps.service.merchant.read.ChannelReadService;
-import org.sps.service.merchant.write.ChannelWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;

@@ -32,5 +32,5 @@ public interface ChannelBankWriteService{
 	 * @param psw
 	 * @return
 	 */
-	Boolean  modifyTradePsw(String userId,String psw);
+	Boolean  modifyTradePsw(String userId,String psw,String salt);
 }

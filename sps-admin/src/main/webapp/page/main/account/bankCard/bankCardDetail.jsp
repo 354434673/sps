@@ -18,10 +18,10 @@
    <link rel="stylesheet" href="<%=request.getContextPath()%>/page/static/plugins/layui/css/layui.css" media="all"/>
 </head>
 <body>
-<div style="padding: 100px">
+<div style="padding: 40px;width: 600px;">
 
     <hr>
-    <div class="layui-form layui-form-pane"  style="padding-left: 500px;padding-right: 300px;width: 800px;">
+    <div class="layui-form layui-form-pane"  style="padding-left: 200px;padding-right: 300px;width: 800px;">
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 130px;">姓名 </label>
             <div class="layui-input-inline" >

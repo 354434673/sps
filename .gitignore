@@ -4,6 +4,7 @@
 .settings      
  ##filter databfile、sln file##
 *.mdb  
+.idea 
 *.ldb  
 *.sln    
 ##class file##

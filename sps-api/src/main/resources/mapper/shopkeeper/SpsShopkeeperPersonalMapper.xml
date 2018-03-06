@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.SpsShopkeeperPersonalDao" >
+  <resultMap id="BaseResultMap" type="com.sps.entity.shopkeeper.SpsShopkeeperPersonal" >
+    <id column="personal_id" property="personalId" jdbcType="INTEGER" />
+    <result column="personal_client_name" property="personalClientName" jdbcType="VARCHAR" />
+    <result column="personal_sex" property="personalSex" jdbcType="VARCHAR" />
+    <result column="personal_idCard" property="personalIdcard" jdbcType="VARCHAR" />
+    <result column="personal_idCard_validity_start" property="personalIdcardValidityStart" jdbcType="VARCHAR" />
+    <result column="personal_idCard_validity_end" property="personalIdcardValidityEnd" jdbcType="VARCHAR" />
+    <result column="personal_licence_issuing_authority" property="personalLicenceIssuingAuthority" jdbcType="VARCHAR" />
+    <result column="personal_age" property="personalAge" jdbcType="INTEGER" />
+    <result column="personal_marital_status" property="personalMaritalStatus" jdbcType="VARCHAR" />
+    <result column="personal_phone" property="personalPhone" jdbcType="VARCHAR" />
+    <result column="personal_phone_password" property="personalPhonePassword" jdbcType="VARCHAR" />
+    <result column="personal_placeOfDomicile" property="personalPlaceofdomicile" jdbcType="VARCHAR" />
+    <result column="personal_living_condition" property="personalLivingCondition" jdbcType="VARCHAR" />
+    <result column="personal_living_condition_other" property="personalLivingConditionOther" jdbcType="VARCHAR" />
+    <result column="personal_living_address" property="personalLivingAddress" jdbcType="VARCHAR" />
+    <result column="personal_none_corp" property="personalNoneCorp" jdbcType="VARCHAR" />
+    <result column="personal_nickname" property="personalNickname" jdbcType="VARCHAR" />
+    <result column="personal_username" property="personalUsername" jdbcType="VARCHAR" />
+    <result column="personal_creat_time" property="personalCreatTime" jdbcType="TIMESTAMP" />
+    <result column="personal_update_time" property="personalUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+    <association property="pic" javaType="com.sps.entity.shopkeeper.SpsShopkeeperPic">
+      <id column="pic_id" property="picId" jdbcType="INTEGER" />
+      <result column="pic_src" property="picSrc" jdbcType="VARCHAR" />
+      <result column="pic_type" property="picType" jdbcType="INTEGER" />
+      <result column="pic_upload_time" property="picUploadTime" jdbcType="TIMESTAMP" />
+      <result column="pic_old_name" property="picOldName" jdbcType="VARCHAR" />
+      <result column="pic_new_name" property="picNewName" jdbcType="VARCHAR" />
+      <result column="pic_state" property="picState" jdbcType="INTEGER" />
+      <result column="pic_creat_time" property="picCreatTime" jdbcType="TIMESTAMP" />
+      <result column="pic_update_time" property="picUpdateTime" jdbcType="TIMESTAMP" />
+      <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+
+    <select id="getByPersonId" resultMap="BaseResultMap">
+        SELECT
+              per.personal_phone,
+              per.personal_nickname,
+              pi.pic_src,
+              pi.pic_id
+         FROM
+              sps_shopkeeper_personal  per
+         LEFT JOIN
+            sps_shopkeeper_pic  pi
+            ON
+            per.shopkeeper_customerId=pi.shopkeeper_customerId
+         WHERE per.personal_id=#{id}
+    </select>
+    <update id="saveSrc"  >
+           UPDATE
+              sps_shopkeeper_pic
+            SET   pic_src=#{src}
+            WHERE
+                pic_id=#{id} AND  pic_type=11
+    </update>
+    <update id="updateNickName"  >
+        UPDATE
+          sps_shopkeeper_personal
+        SET   personal_nickname=#{nickName}
+        WHERE
+        personal_id=#{id}
+    </update>
+</mapper>

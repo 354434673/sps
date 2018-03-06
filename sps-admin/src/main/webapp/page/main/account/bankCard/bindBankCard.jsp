@@ -22,10 +22,10 @@
     </style>
 </head>
 <body>
-<div style="padding: 100px">
+<div style="padding: 40px;width: 600px;">
 
     <hr>
-    <form class="layui-form layui-form-pane"  style="padding-left: 500px;padding-right: 300px;width: 800px;">
+    <form class="layui-form layui-form-pane"  style="padding-left: 200px;padding-right: 300px;width: 800px;">
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 130px;">姓名 </label>
             <div class="layui-input-inline">
@@ -130,7 +130,7 @@
                             }
                             if(code == result.fail){
                                 layer.msg(msg);
-                                lock = true;
+                                window.location.href="<%=path%>/page/main/account/bankCard/unbindBankCard.jsp";
                             }
                         }
                     });
@@ -159,8 +159,12 @@
                     }
                 },
                 function(value, index, elem){
-                    console.log(value);
-                    var reg = new RegExp("^[0-9]{6}$");
+                    layer.msg('绑卡成功', {
+                        icon: 2,
+                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                    });
+                    window.location.href = "<%=path%>/page/main/account/bankCard/bankCardDetail.jsp";
+                   /* var reg = new RegExp("^[0-9]{6}$");
                     if(!reg.test(value)){
                         layer.msg('请输入六位数字的短信验证码', {
                             icon: 2,
@@ -173,7 +177,7 @@
                         //发短信验证码确认情求
                         $.ajax({
                             data: {validatecode:value.trim(),requestno:result.body.requestno,yborderid:result.body.yborderid},
-                            url: "<%=path%>/bankCard/confirm",//确认请求
+                            url: "%=path%/bankCard/confirm",//确认请求
                             type: 'post',
                             dataType: 'json',
                             async: false,
@@ -188,7 +192,6 @@
                                                     time:1000
                                                 },function(){//关闭时，执行
                                                     //跳转至详情页
-                                                    window.location.href = "<%=path%>/page/main/account/bankCard/bankCardDetail.jsp";
                                                 });
 
                                         return ;
@@ -207,7 +210,7 @@
 
                             }
                         });
-                    }
+                    }*/
                 }
         );
     }

@@ -38,7 +38,6 @@
 		    <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
     </collection> -->
   </resultMap>
-  
   <resultMap id="BaseOrderGoodsResultMap" type="org.sps.entity.order.OrderGoods" >
     <id column="o_id" property="oId" jdbcType="INTEGER" />
     <result column="orderid" property="orderid" jdbcType="VARCHAR" />
@@ -133,6 +132,33 @@
       </if>
    </where>
   </select>
+
+    <select id="selectByMoreCondition" resultMap="BaseOrderResultMap">
+        <include refid="Base_Order_Column_List"/>
+        FROM
+            sps_order
+        WHERE
+        <where>
+            <if test="loanStartTime != null and loanStartTime != '' ">
+                <![CDATA[ and  createtime <= #{loanStartTime,jdbcType=TIMESTAMP }]]>
+
+            </if>
+            <if test="loanEndTime != null and loanEndTime != '' ">
+                <![CDATA[ and  createtime <= #{loanEndTime,jdbcType=TIMESTAMP }]]>
+
+            </if>
+            <if test="loanName != null and loanName !='' ">
+                and shopkeepername like CONCAT('%',#{shopkeepername,jdbcType=VARCHAR},'%' )
+            </if>
+            <if test="loanStatus != null and loanStatus !='' ">
+                and flag like CONCAT('%',#{loanStatus,jdbcType=INTEGER},'%' )
+            </if>
+            <if test="orderNo != null and orderNo !='' ">
+                and orderid like CONCAT('%',#{orderNo,jdbcType=VARCHAR},'%' )
+            </if>
+        </where>
+    </select>
+
   
 <!--   <select id="selectByParametersPage" resultMap="BaseOrderResultMap">
     select 
