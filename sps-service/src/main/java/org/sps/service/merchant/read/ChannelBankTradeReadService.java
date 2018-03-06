@@ -34,6 +34,8 @@ public interface ChannelBankTradeReadService{
 
 	public SpsChannelBankTrade getTradeDetail(String loginName,String tradeSerialNum);
 
+	SpsChannelBankTrade getTradeInfo(String tradeSerialNum);
+
 	/**
 	 * 根据条件查询所有提现申请信息
 	 * @param page
@@ -46,4 +48,5 @@ public interface ChannelBankTradeReadService{
 	 * @return
 	 */
 	HashMap<String, Object> getBankAuditInfo(Integer page, Integer limit, String applicationStartDate, String paymentDate, String tradeStatus, String name, String account);
+
 }

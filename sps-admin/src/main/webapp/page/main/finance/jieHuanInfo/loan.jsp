@@ -33,11 +33,11 @@
 				</div>
 				<label class="layui-form-label">状态:</label>
 				<div class="layui-input-inline">
-					<select  id="status" lay-filter="withDrawState">
+					<select  id="loanStatus" lay-filter="withDrawState">
 						<option value="0">全部</option>
-						<option value="1">待还款</option>
-						<option value="2">已结清</option>
-						<option value="3">已逾期</option>
+						<option value="10">待还款</option>
+						<option value="11">已结清</option>
+						<option value="12">已逾期</option>
 					</select>
 				</div>
 
@@ -45,11 +45,11 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">订单编号:</label>
 				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="minAmount" lay-verify="required">
+					<input type="text" class="layui-input" id="orderNo" lay-verify="required">
 				</div>
 				<label class="layui-form-label">借款人:</label>
 				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="account"  lay-verify="required">
+					<input type="text" class="layui-input" id="loanName"  lay-verify="required">
 				</div>
 				<button class="layui-btn layui-btn-primary" id="search">查询</button>
 				<button class="layui-btn layui-btn-primary" id="reset">重置</button>
@@ -62,19 +62,20 @@
 	<script type="text/html" id="bar">
 		<a class="layui-btn layui-btn-mini" lay-event="detail">查看详情</a>
 	</script>
-	<script type="text/html" id="type">
-		{{#    if(d.payType == '1'){  }}
-		支出
-		{{#  } else if(d.payType == '2'){ }}
-		收入
+	<script type="text/html" id="flag">
+		{{#    if(d.flag == 10){  }}
+		待还款
+		{{#  } else if(d.flag == 11){ }}
+		已结清
+		{{#  } else if(d.flag == 12){ }}
+		已逾期
 		{{#  } }}
-
 	</script>
 
 
 	<script type="text/html" id="date">
 		{{#
-		var da = d.loanStartDate;
+		var da = d.loanStartTime;
 		da = new Date(da);
 		var year = da.getFullYear();
 		var month = da.getMonth()+1;
@@ -82,7 +83,7 @@
 		var hours= da.getHours();
 		var minutes= da.getMinutes();
 		var seconds= da.getSeconds();
-		var daa=d.loanEndDate;
+		var daa=d.loanEndTime;
 		daa = new Date(daa);
 		var year = daa.getFullYear();
 		var month = daa.getMonth()+1;
@@ -116,23 +117,23 @@
 			});
 			table.render({
 				elem: '#drawAudioList'
-				,url: '<%=path%>/loan/findLoanList' //数据接口
+				,url: '<%=path%>/loan/findLoanList'  //数据接口
 				,id:'id'
 				,page:true
 				,cols: [[ //表头
 					{type:'numbers', title: '序号',align:'center'}
-					,{field: 'orderNo', title: '订单编号', width:230, align:'center'}
-					,{field: 'loanNo', title: '借据号',align:'center' }
-					,{field: 'LoanName', title: '借款人',width:230,align:'center'}
-					,{field: 'loanStartDate', title: '借款起始日', width:230, align:'center',templet: '#date'}
-					,{field: 'loanEndDate', title: '借款到期日', width:230, align:'center',templet: '#date'}
-					,{field: 'loanAmount', title: '借款金额',align:'center' }
-					,{field: 'loanBalancel', title: '借款余额',align:'center' }
-					,{field: 'shouXuFeiByDate', title: '手续费率（每日）',align:'center' }
-					,{field: 'incomeShouXuFei', title: '应收手续费',align:'center' }
-					,{field: 'daiXiaoFeilv ', title: '代销服务费率',align:'center' }
-					,{field: 'daiXiaoFei', title: '代销服务费',align:'center' }
-					,{field: 'status', title: '状态',align:'center'  ,templet: '#state' }
+					,{field: 'orderid', title: '订单编号', width:230, align:'center'}
+					,{field: 'loanCode', title: '借据号',align:'center' }
+					,{field: 'shopkeeper', title: '借款人',width:230,align:'center'}
+					,{field: 'loanStartTime', title: '借款起始日', width:230, align:'center',templet: '#date'}
+					,{field: 'loanEndTime', title: '借款到期日', width:230, align:'center',templet: '#date'}
+					,{field: 'payment', title: '借款金额',align:'center' }
+					,{field: 'loanBalance', title: '借款余额',align:'center' }
+					,{field: 'formalityRate', title: '手续费率（每日）',align:'center' }
+					,{field: 'serviceCharge', title: '应收手续费',align:'center' }
+					,{field: 'servicescale ', title: '代销服务费率',align:'center' }
+					,{field: 'servicemoney', title: '代销服务费',align:'center' }
+					,{field: 'flag', title: '状态',align:'center'  ,templet: '#state', templet: '#flag' }
 					,{field: 'tool', title: '还款情况',width:270,align:'center', event: 'setSign' ,toolbar:'#bar'}
 				]]
 			});
@@ -140,19 +141,16 @@
 			$('#search').on('click',function(){
 				var startTime = $('#startTime').val();
 				var endTime = $('#endTime').val();
-				var minAmount = $('#minAmount').val();
-				var maxAmount = $('#maxAmount').val();
-				var withDrawState = $('#status').val();
-				var name = $('#name').val();
+				var orderNo = $('#orderNo').val();
+				var loanStatus = $('#loanStatus').val();
+				var loanName = $('#loanName').val();
 				table.reload('id', {
 					where: {
 						loanStartTime:startTime,
 						loanEndTime:endTime,
-						orderNo:minAmount,
-						loanName:maxAmount,
-						loanStatus:withDrawState,
-						companyName:name
-
+						orderNo:orderNo,
+						loanName:loanName,
+						loanStatus:loanStatus
 					}
 				});
 			});
@@ -167,7 +165,7 @@
 				var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 				var tr = obj.tr; //获得当前行 tr 的DOM对象
 				if(layEvent === 'detail') { //查看
-					location.href = '<%=path%>/page/main/finance/jieHuanInfo/repaymentDetail.jsp';
+					location.href = '<%=path%>/page/main/finance/jieHuanInfo/repaymentDetail.jsp?orderid='+data.orderid;
 				}
 			});
 		});

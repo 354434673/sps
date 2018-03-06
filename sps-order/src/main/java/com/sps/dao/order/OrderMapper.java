@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.sps.entity.finance.OrderDetail;
 import org.sps.entity.order.Order;
 
 public interface OrderMapper {
@@ -57,9 +58,15 @@ public interface OrderMapper {
 	int updateOrderFlag(
 			@Param(value="orderid") String orderid,
 			@Param(value="flag") String flag,
-			@Param(value="remark") String remark, 
+			@Param(value="remark") String remark,
 			@Param(value="modifytime") Date modifytime
 			);
-    
-   
+
+
+	/**
+	 * 根据交易号查询与订单相关的物流信息
+	 * @param orderNo
+	 * @return
+	 */
+	Order selectByTradeNO(String orderNo);
 }

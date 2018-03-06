@@ -22,188 +22,136 @@
 <bod>
     <div style="margin: 15px;">
         <div class="layui-form layui-form-pane">
-            订单流程
-            <div class="layui-form-item">
-                <label class="layui-form-label">店主下单（时间）:</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required">
-                </div>
-                <label class="layui-form-label">确认（时间）:</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="comfirTime" placeholder="年-月-日" lay-verify="required">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">已支付（时间）:</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="payTime" placeholder="年-月-日" lay-verify="required">
-                </div>
-                <label class="layui-form-label">发货（时间）:</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="faHuoTime" placeholder="年-月-日" lay-verify="required">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">退货（时间）:</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="tuihuoTime" placeholder="年-月-日" lay-verify="required">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form layui-form-pane">
-            <label class="layui-form-label">物流信息</label>
+            物流信息:
             <div class="layui-form-item">
                 <label class="layui-form-label">物流公司:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="wuLiuName" lay-verify="required">
+                    <input type="text" class="layui-input" id="wuliuName" lay-verify="required">
                 </div>
                 <label class="layui-form-label">物流单号:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="wuLiOrderNO"  lay-verify="required">
+                    <input type="text" class="layui-input" id="wuOderNo"  lay-verify="required">
                 </div>
             </div>
-
-        </div>
-        <div class="layui-form layui-form-pane">
-            <label class="layui-form-label">基本信息</label>
+            基本信息
             <div class="layui-form-item">
                 <label class="layui-form-label">订单编号:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="ordeNo" lay-verify="required">
+                    <input type="text" class="layui-input" id="orderid" lay-verify="required">
                 </div>
                 <label class="layui-form-label">订单金额:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="orderAmount" lay-verify="required">
+                    <input type="text" class="layui-input" id="money" lay-verify="required">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">代销服务费率:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="serverLv" lay-verify="required">
+                    <input type="text" class="layui-input" id="servicescale" lay-verify="required">
                 </div>
                 <label class="layui-form-label">代销服务费:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="serverAmount" lay-verify="required">
+                    <input type="text" class="layui-input" id="servicemoney" lay-verify="required">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">单位:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="per" lay-verify="required">
+                    <input type="text" class="layui-input" id="unit" lay-verify="required">
                 </div>
                 <label class="layui-form-label">订单申请日期:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="auditTime" placeholder="年-月-日" lay-verify="required">
+                    <input type="text" class="layui-input" id="createtime" placeholder="年-月-日" lay-verify="required">
                 </div>
-             </div>
+            </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">店主名称:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="companyNamme" lay-verify="required">
+                    <input type="text" class="layui-input" id="name" lay-verify="required">
                 </div>
                 <label class="layui-form-label">联系电话:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="mobily"  lay-verify="required">
+                    <input type="text" class="layui-input" id="phone"  lay-verify="required">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">收货信息:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="orderAddr" lay-verify="required">
+                    <input type="text" class="layui-input" id="address" lay-verify="required">
                 </div>
                 <label class="layui-form-label">订单备注:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="orderRemark"  lay-verify="required">
+                    <input type="text" class="layui-input" id="remark"  lay-verify="required">
                 </div>
             </div>
         </div>
-
-        <label class="layui-form-label">商品列表</label>
+        商品列表:
          <table id="goodsList" lay-filter="drawAudioTables"></table>
         <label class="layui-form-label">说明:  同意</label>
 
     </div>
-    <script type="text/javascript"  src="<%=path%>/page/layui/layui.js"></script>
-    <script type="text/html" id="type">
-        {{#    if(d.payType == '1'){  }}
-        支出
-        {{#  } else if(d.payType == '2'){ }}
-        收入
-        {{#  } }}
+    <script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/js/jquery-1.10.2.min.js"></script>
+    <script language="JavaScript"   src="<%=request.getContextPath() %>/page/static/plugins/layui/lay/dest/layui.all.js"></script>
+    <script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/plugins/layui/layui.js"></script>
 
-    </script>
     <script type="text/html" id="bar">
         <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
     </script>
-
-    <script type="text/html" id="date">
-        {{#
-        var da = d.payDate;
-        da = new Date(da);
-        var year = da.getFullYear();
-        var month = da.getMonth()+1;
-        var date = da.getDate();
-        var hours= da.getHours();
-        var minutes= da.getMinutes();
-        var seconds= da.getSeconds();
-        console.log([year,month,date,hours,minutes,seconds].join('-'));
-        var fn = function(){
-        return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
-        };
-        }}
-        {{ fn() }}
-    </script>
     <script>
+        $(function () {
+            var auditSerialNum = getUrlParam("auditSerialNum");
+            $.ajax({
+                url:'<%=path%>/tradeFlow/queryTradeBasicInfo'
+                ,type: 'post'
+                ,dataType:'json'
+                ,data:{tradeSeriNum:auditSerialNum}
+                ,async:false
+                ,success:function(result){
+                    var body=result.body;
+                    console.info(result);
+                    $('#wuliuName').val(body.logs.logisticsName);
+                    $("#wuOderNo").val(body.logs.logisticsNum);
+                    $("#orderid").val(body.orderid);
+                    $("#money").val(body.money);
+                    $("#servicescale").val(body.servicescale);
+                    $("#servicemoney").val(body.servicemoney);
+                    $("#createtime").val(body.createtime);
+                    $("#name").val(body.name);
+                    $("#phone").val(body.phone);
+                    $("#address").val(body.address);
+                    $("#remark").val(body.remark);
+                }
+            });
+        });
+        //获得url参数
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
         layui.use(['table', 'laypage', 'laydate', 'layer'], function () {
             var $ = layui.jquery;
             var table = layui.table;
             var laypage = layui.laypage;
             var layer = layui.layer ;
             var laydate = layui.laydate;
-            //加载日期框
-            laydate.render({
-                elem: '#startTime',
-                type: 'datetime'
-
-            });
-            laydate.render({
-                elem: '#endTime',
-                type: 'datetime'
-            });
+            var auditSerialNum1 = getUrlParam("auditSerialNum");
             table.render({
                 elem: '#goodsList'
                 ,height: 500
-                ,url: '<%=path%>/goods/goodsList' //数据接口
+                ,url: '<%=path%>/tradeFlow/queryOrderGoods' //数据接口
                 ,id:'gId'
+                ,where: {tradeSeriNum:auditSerialNum1}
                 ,page:true
                 ,cols: [[ //表头
                      {type:'numbers', title: '序号',align:'center'}
-                    ,{field: 'gSpuNo', title: 'SKU编号', align:'center'}
+                    ,{field: 'sku', title: 'SKU编号', align:'center'}
                     ,{field: 'gSpuName', title: '商品名称',align:'center'}
-                    ,{field: 'gCategoryNames', title: '规格', width:230, align:'center'}
-                    ,{field: 'per', title: '单价', width:230,align:'center'}
-                    ,{field: 'orderAmount', title: '订货量', width:230,align:'center'}
-                    ,{field: 'amount', title: '金额', width:270,align:'center',toolbar:'#bar'}
+                    ,{field: 'skuname', title: '规格', width:230, align:'center'}
+                    ,{field: 'price', title: '单价', width:230,align:'center'}
+                    ,{field: 'amount', title: '订货量', width:230,align:'center'}
+                    ,{field: 'summation', title: '金额', width:270,align:'center'}
                 ]], done: function (res, page, count) {
-                    $("[data-field='flowStatus']").children().each(function () {
-                        if ($(this).text() == '0') {
-                            $(this).text("待提交")
-                            $(this).parent().parent().find(".delete").show();
-                            $(this).parent().parent().find(".update").show();
-                        } else if ($(this).text() == '1') {
-                            $(this).text("审核中")
-                            $(this).parent().parent().find(".update").hide();
-                            $(this).parent().parent().find(".delete").hide();
-                        } else if ($(this).text() == '2') {
-                            $(this).parent().parent().find(".update").show();
-                            $(this).parent().parent().find(".delete").show();
-                            $(this).text("审核不通过")
-                        } else if ($(this).text() == '3') {
-                            $(this).parent().parent().find(".update").show();
-                            $(this).parent().parent().find(".delete").show();
-                            $(this).text("审核通过")
-                        }
-                    })
                 }
             });
         });

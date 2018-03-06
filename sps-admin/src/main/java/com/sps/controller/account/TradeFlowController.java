@@ -2,9 +2,11 @@ package com.sps.controller.account;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sps.common.Result;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.sps.entity.finance.OrderDetail;
 import org.sps.entity.merchant.SpsChannelBankTrade;
 import org.sps.entity.order.Order;
 import org.sps.entity.order.OrderGoods;
@@ -12,6 +14,7 @@ import org.sps.entity.order.SpsOrderLogistics;
 import org.sps.service.merchant.read.ChannelBankTradeReadService;
 import org.sps.service.order.OrderService;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,62 +30,25 @@ public class TradeFlowController {
     private OrderService orderService;
 
     /**
-     * 获取交易基本信息
+     * 获取交易号获取订一切信息
      * @param tradeSeriNum
      * @return
      */
-    @RequestMapping("/queryTradeInfo")
+    @RequestMapping("/queryTradeBasicInfo")
     @ResponseBody
-    public Result<SpsChannelBankTrade> queryTradeInfo(String tradeSeriNum) {
-        Result<SpsChannelBankTrade> result = new Result<SpsChannelBankTrade>();
-        SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeDetail(null, tradeSeriNum);
-        if(tradeDetail!=null){
-            result.setBody(tradeDetail);
-            result.setMsg("成功");
-            return result;
-        }
-        result.setMsg("失败");
-        return result;
-    }
-
-    /**
-     * 获取订单基本信息
-     * @param orderNo
-     * @return
-     */
-    @RequestMapping("/queryOrderBasic")
-    @ResponseBody
-    public Result<Order> queryOrderBasic(String orderNo) {
+    public Result<Order> queryTradeBasicInfo(String tradeSeriNum) {
         Result<Order> result = new Result<Order>();
-        Order order = orderService.queryByOrderId(orderNo);
-        if(order!=null){
-            result.setBody(order);
+//        根据交易序列号查询订单编号
+        SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeInfo( tradeSeriNum);
+        Order orderDetail = orderService.queryByOrderId(tradeDetail.getOrderId());
+        if(orderDetail!=null){
+            result.setBody(orderDetail);
             result.setMsg("成功");
             return result;
         }
         result.setMsg("失败");
         return result;
     }
-
-    /**
-     * 获取物流信息
-     * @param orderNo
-     * @return
-     */
-    @RequestMapping("/queryOrderLogs")
-    @ResponseBody
-    public Result<SpsOrderLogistics> queryOrderLogs(String orderNo) {
-        Result<SpsOrderLogistics> result = new Result<SpsOrderLogistics>();
-        SpsOrderLogistics spsOrderLogistics = orderService.queryOrderLogistics(orderNo);
-        if(spsOrderLogistics!=null){
-            result.setBody(spsOrderLogistics);
-            result.setMsg("成功");
-            return result;
-        }
-        result.setMsg("失败");
-        return result;
-    }
-
     /**
      * 个根据订单号获取所有订单项信息
      * @param orderNo
@@ -90,17 +56,10 @@ public class TradeFlowController {
      */
     @RequestMapping("/queryOrderGoods")
     @ResponseBody
-    public Result<List> queryOrderGoods(String orderNo) {
-        Result<List> result = new Result<List>();
-        return null;
-      /*  List<OrderGoods> orderGoodss = orderService.queryGoods(orderNo);
-        if(orderGoodss!=null){
-            result.setBody(orderGoodss);
-            result.setMsg("成功");
-            return result;
-        }
-        result.setMsg("失败");
-        return result;*/
+    public HashMap<String, Object> queryOrderGoods(Integer page, Integer limit,String tradeSeriNum ) {
+        SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeInfo( tradeSeriNum);
+        HashMap<String, Object> list = orderService.getGoodsByOrderId(page, limit,tradeDetail.getOrderId());
+        return list;
     }
 
 }
