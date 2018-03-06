@@ -121,7 +121,7 @@
 		 			 	salesmanPhone:salesmanPhone,
 		 			 	salesmanEmail:salesmanEmail,
 		 			 	salesmanCity:salesmanCity,
-		 			 	bei1:0
+		 			 	bei1:1
 		 			 },
 		 			 success:function(data){
 		 				 if(data.state == 'success'){
@@ -136,18 +136,23 @@
 	  })
 	  //修改
 	  form.on('submit(submitUpdate)', function(data){
-		     var username = $('#username').val()
-	 		 var password = $('#password').val()
-	 		 var name = $('#name').val()
-	 		 var phone = $('#phone').val()
-	 		 var email = $('#email').val()
-	 		 if(array.length != 0){
+		  var salesmanName = $('#salesmanName').val()
+	 		 var salesmanIdcard = $('#salesmanIdcard').val()
+	 		 var salesmanPhone = $('#salesmanPhone').val()
+	 		 var salesmanEmail = $('#salesmanEmail').val()
+	 		 var salesmanCity = $('#province').find("option:selected").text()+
+			 			 $('#city').find("option:selected").text()+
+			 			$('#area').find("option:selected").text();
+		     
 		 		 $.post({
-		 			 url:'<%=path%>/user/updateUser.html',
+		 			 url:'<%=path%>/salesman/updateSalesman',
 		 			 dataType:'json',
-		 			 data:{userUsername:username,userPassword:password, 
-		 				 userName:name,userPhone:phone, userEmail:email,
-		 				 roleList:array
+		 			 data:{salesmanName:salesmanName,
+			 			 	salesmanIdcard:salesmanIdcard,
+			 			 	salesmanPhone:salesmanPhone,
+			 			 	salesmanEmail:salesmanEmail,
+			 			 	salesmanCity:salesmanCity,
+			 			 	bei1:1
 		 			 },
 		 			 success:function(data){
 		 				 if(data.state == 'success'){
@@ -159,9 +164,6 @@
 		 				 }
 		 			 }
 		 		 }) 
-	 		 }else{
-	 			layer.msg('请选择该用户权限',{icon: 2});
-	 		 }
 	  })
 	  //自定义验证规则  
 	  form.verify({  
@@ -217,7 +219,7 @@
 					15: '内蒙古',
 					21: '辽宁',
 					22: '吉林',
-					23: '黑龙江 ',
+					23: '黑龙江',
 					31: '上海',
 					32: '江苏',
 					33: '浙江',
