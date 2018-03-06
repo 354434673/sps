@@ -27,6 +27,7 @@ public class SpsChannelBank implements Serializable{
 	private Integer state;
 //	备注信息
 	private String remark ;
+	private String salt;
 //	用户id
 	private String userId;
 //	当前登录用户名
@@ -37,8 +38,24 @@ public class SpsChannelBank implements Serializable{
 	private BigDecimal   availableBalance;
 //	交易密码
 	private String  transPassword   ;
-	
-	
+	private String standby2;
+
+	public String getStandby2() {
+		return standby2;
+	}
+
+	public void setStandby2(String standby2) {
+		this.standby2 = standby2;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
 	public String getTransPassword() {
 		return transPassword;
 	}

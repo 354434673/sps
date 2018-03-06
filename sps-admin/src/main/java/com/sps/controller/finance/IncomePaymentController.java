@@ -1,11 +1,13 @@
 package com.sps.controller.finance;
 
+import com.alibaba.druid.support.logging.LogFactory;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.sps.service.finance.read.CashAuditReadService;
 import org.sps.service.merchant.write.ChannelBankTradeWriteService;
+import org.sps.service.order.OrderService;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -20,7 +22,16 @@ public class IncomePaymentController {
     private CashAuditReadService cashAuditService;
     @Reference(check=false,group="dianfu")
     private ChannelBankTradeWriteService bankTradeWriteService;
+    @Reference(check=false,group="dianfu")
+    private OrderService orderService;
 
+    @RequestMapping("/findLoanList")
+    @ResponseBody
+    public HashMap<String, Object> findLoanList(Integer page, Integer limit, String loanStartTime, String loanEndTime,String orderNo, String loanName, String loanStatus ) {
+        LogFactory.getLog(LoanController.class).info("+++++++++++++++++findLoanList");
+        HashMap<String, Object> result = orderService.queryOrderList(page, limit, loanStartTime, loanEndTime, loanName, new Integer(loanStatus), orderNo);
+        return result;
+    }
     /**
      * 查询交易详情
      * @param page
