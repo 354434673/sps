@@ -65,7 +65,6 @@
             render: function(row) {
                 return '<a class="layui-btn layui-btn-danger layui-btn-mini" onclick="toDelete(' + row.id + ')"> 删除</a>'; //列渲染
             }
-
         },
         {
             name: '操作',
@@ -134,14 +133,15 @@
                         layer.close(
                             //向服务端发送删除指令
                             deleteCategory(nodeId)
-
                         );
                     });
                 } else if (result.flag == '2') {
                     layer.msg("该类目下有商品在使用，请删除分类下的商品！");
                 }else if (result.flag == '3') {
-                    layer.msg("该类目下有品牌在使用，请您重新设置品牌分类！");
-                    deleteCategory(nodeId)
+                    layer.msg("注意：该类目下有品牌在使用，请您重新设置品牌分类！");
+                    setTimeout(function () {
+                        deleteCategory(nodeId)
+                    }, 3000);
                 }
             }
         })

@@ -27,19 +27,10 @@
 	<script type="text/html" id="bar">
 		<a class="layui-btn layui-btn-mini" lay-event="detail">查看详情</a>
 	</script>
-	<script type="text/html" id="type">
-		{{#    if(d.payType == '1'){  }}
-		支出
-		{{#  } else if(d.payType == '2'){ }}
-		收入
-		{{#  } }}
-
-	</script>
-
 
 	<script type="text/html" id="date">
 		{{#
-		var da = d.loanStartDate;
+		var da = d.repayDate;
 		da = new Date(da);
 		var year = da.getFullYear();
 		var month = da.getMonth()+1;
@@ -47,14 +38,6 @@
 		var hours= da.getHours();
 		var minutes= da.getMinutes();
 		var seconds= da.getSeconds();
-		var daa=d.loanEndDate;
-		daa = new Date(daa);
-		var year = daa.getFullYear();
-		var month = daa.getMonth()+1;
-		var date = daa.getDate();
-		var hours= daa.getHours();
-		var minutes= daa.getMinutes();
-		var seconds= daa.getSeconds();
 		console.log([year,month,date,hours,minutes,seconds].join('-'));
 		var fn = function(){
 		return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
@@ -63,12 +46,18 @@
 		{{ fn() }}
 	</script>
 	<script>
+		function getUrlParam(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]); return null;
+		}
 		layui.use(['table', 'laypage', 'laydate', 'layer'], function () {
 			var $ = layui.jquery;
 			var table = layui.table;
 			var laypage = layui.laypage;
 			var layer = layui.layer ;
 			var laydate = layui.laydate;
+			var orderid = getUrlParam("orderid");
 			//加载日期框
 			laydate.render({
 				elem: '#startTime',
@@ -81,20 +70,20 @@
 			});
 			table.render({
 				elem: '#drawAudioList'
-				,url: '<%=path%>/loan/findLoanList' //数据接口
+				,url: '<%=path%>/loan/queryLoanDetail' //数据接口
 				,id:'id'
 				,page:true
+				,where: {orderid:orderid}
 				,cols: [[ //表头
 					{type:'numbers', title: '序号',align:'center'}
-					,{field: 'loanStartDate', title: '还款日期', width:230, align:'center',templet: '#date'}
-					,{field: 'loanEndDate', title: '借款到期日', width:230, align:'center',templet: '#date'}
-					,{field: 'loanAmount', title: '还款金额',align:'center' }
-					,{field: 'loanBalancel', title: '还本金金额',align:'center' }
-					,{field: 'shouXuFeiByDate', title: '还利息金额',align:'center' }
-					,{field: 'incomeShouXuFei', title: '还逾期手续费金额',align:'center' }
-					,{field: 'daiXiaoFeilv ', title: '剩余未还本金',align:'center' }
-					,{field: 'daiXiaoFei', title: '剩余未还利息',align:'center' }
-					,{field: 'status', title: '剩余未还逾期手续费',align:'center'  ,templet: '#state' }
+					,{field: 'repayDate', title: '还款日期', width:230, align:'center',templet: '#date'}
+					,{field: 'repayAmount', title: '还款金额',align:'center' }
+					,{field: 'repayBenAmount', title: '还本金金额',align:'center' }
+					,{field: 'repayAccrualAmount', title: '还利息金额',align:'center' }
+					,{field: 'rapayPoundage', title: '还逾期手续费金额',align:'center' }
+					,{field: 'noRepayBenAmount ', title: '剩余未还本金',align:'center' }
+					,{field: 'noReapayAccrualAmount', title: '剩余未还利息',align:'center' }
+					,{field: 'noRepayPoundage', title: '剩余未还逾期手续费',align:'center'  ,templet: '#state' }
 				]]
 			});
 			//查询

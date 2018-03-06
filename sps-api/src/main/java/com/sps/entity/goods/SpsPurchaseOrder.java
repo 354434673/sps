@@ -5,17 +5,21 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class SpsPurchaseOrder implements Serializable {
+
+    private String customerId;
+
     private Integer groundingFlag;
     private Integer platGoodsId;
     private String goodsName;
     private BigDecimal price;
     private String color;
     private Integer quantity;
-    private Integer size;
+    private String size;
     private String url;
     private Integer skuFlag;
     private Integer goodsFlag;
     private Integer stock;
+    private BigDecimal totalPrice;
 
     //分割线
     private Integer orderId;
@@ -34,6 +38,22 @@ public class SpsPurchaseOrder implements Serializable {
 
     private Date orderUpdateTime;
 
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
     public Integer getStock() {
         return stock;
@@ -115,11 +135,11 @@ public class SpsPurchaseOrder implements Serializable {
         this.quantity = quantity;
     }
 
-    public Integer getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(String size) {
         this.size = size;
     }
 

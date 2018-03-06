@@ -5,13 +5,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.order.OrderGoodsMapper;
 import com.sps.dao.order.OrderMapper;
+import com.sps.dao.order.OrderRepayDetailMapper;
 import com.sps.dao.order.SpsOrderLogisticsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.finance.BankDrawAudio;
+import org.sps.entity.finance.OrderDetail;
 import org.sps.entity.merchant.SpsChannelBankTrade;
 import org.sps.entity.order.Order;
 import org.sps.entity.order.OrderGoods;
+import org.sps.entity.order.OrderRepayDetail;
 import org.sps.entity.order.SpsOrderLogistics;
 import org.sps.service.order.OrderService;
 import org.sps.util.FinalData;
@@ -34,6 +37,8 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private SpsOrderLogisticsMapper mapper;
+	@Autowired
+	private OrderRepayDetailMapper orderDetailMapper;
 
 	/**
 	 * 根据orderid查询订单order,只返回order相关的信息，不包含关联的orderGoods相关信息
@@ -240,7 +245,7 @@ public class OrderServiceImpl implements OrderService {
 	 * 批量更新订单商品的价格与订货量，并将之前的价格与订货量写入到对应的字段中，然后同时更新当前商品订货的总价
 	 * 
 	 * @param
-	 *            前台页面传入的订单商品的列表
+	 *
 	 * @return
 	 */
 	// public HashMap<String, Object> updatePriceBatch(List<OrderGoods>
@@ -432,11 +437,7 @@ public class OrderServiceImpl implements OrderService {
 		return hashMap;
 	}
 
-	@Override
-	public Order queryByOrderId(String orderNo) {
-		Order order = orderMapper.selectByPrimaryKey(orderNo);
-		return order;
-	}
+
 
 	@Override
 	public SpsOrderLogistics queryOrderLogistics(String orderNo) {
@@ -476,10 +477,43 @@ public class OrderServiceImpl implements OrderService {
 		return hashMap;
 	}
 
+	@Override
+	public HashMap<String, Object> queryByOrderDetailByOrderNo( Integer page,
+														 Integer limit, String orderNo) {
+		OrderRepayDetail orderRepayDetail = orderDetailMapper.selectByOrderNo(orderNo);
+		List list = new ArrayList();
+		list.add(orderRepayDetail);
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("code", 0);
+		hashMap.put("msg", "获取成功");
+		hashMap.put("data", list.size() > 0 ? list : null);
+		hashMap.put("count", 1);
+		return hashMap;
+	}
 
+	@Override
+	public Order queryByOrderId(String orderId) {
+		Order order = orderMapper.selectByTradeNO(orderId);
+		return order;
+	}
 
-
-
+	@Override
+	public HashMap<String, Object> getGoodsByOrderId(Integer page, Integer limit, String orderId) {
+//		根据订单号查询所有的订单项
+		List<OrderGoods> orderGoodses = orderGoodsMapper.selectOrderGoods(orderId, null);
+		for (OrderGoods good:orderGoodses) {
+            double d = good.getPrice().doubleValue();
+			good.setSummation(  d  * good.getAmount() );
+		}
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		PageHelper.startPage(page, limit);
+		PageInfo pageInfo = new PageInfo(orderGoodses);
+		hashMap.put("code", 0);
+		hashMap.put("msg", "获取成功");
+		hashMap.put("count", pageInfo.getTotal());
+		hashMap.put("data", orderGoodses.size() != 0 ? orderGoodses : null);
+		return hashMap;
+	}
 
 	/*
 	 * @Override public HashMap<String,Object> selectByExpressPrimaryKey(Integer

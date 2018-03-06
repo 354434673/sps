@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>交易流水</title>
+    <title>收支明细</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -34,9 +34,9 @@
                 <label class="layui-form-label">交易状态:</label>
                 <div class="layui-input-inline">
                     <select  id="status" lay-filter="withDrawState">
-                        <option value="0">全部</option>
-                        <option value="1">支出</option>
-                        <option value="2">收入</option>
+                        <option value="">全部</option>
+                        <option value="0">支出</option>
+                        <option value="1">收入</option>
                     </select>
                 </div>
 
@@ -69,9 +69,9 @@
     </div>
     <script type="text/javascript"  src="<%=path%>/page/layui/layui.js"></script>
     <script type="text/html" id="type">
-        {{#    if(d.payType == '1'){  }}
+        {{#    if(d.payType == '0'){  }}
         支出
-        {{#  } else if(d.payType == '2'){ }}
+        {{#  } else if(d.payType == '1'){ }}
         收入
         {{#  } }}
 
@@ -79,6 +79,7 @@
     <script type="text/html" id="bar">
         <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
     </script>
+
 
     <script type="text/html" id="date">
         {{#
@@ -117,7 +118,7 @@
             table.render({
                 elem: '#drawAudioList'
                 ,url: '<%=path%>/incomePayment/findIncomePaymentList' //数据接口
-                ,id:'auditSerialNum'
+                ,id:'id'
                 ,page:true
                 ,cols: [[ //表头
                     {type:'numbers', title: '序号',align:'center'}
@@ -127,8 +128,7 @@
                     ,{field: 'auditSerialNum', title: '流水号',width:230,align:'center'}
                     ,{field: 'companyName', title: '交易方',align:'center' }
                     ,{field: 'remark', title: '备注',event: 'setStatus', width:140,align:'center'}
-                    ,{field: 'tool', title: '交易明细',width:270,align:'center', event: 'setSign' ,toolbar:'#bar'}
-                ]]
+                    ,{field: 'tool', title: '交易明细',width:270,align:'center', event: 'setSign' ,toolbar:'#bar'}                ]]
             });
             //查询
             $('#search').on('click',function(){
@@ -162,7 +162,7 @@
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 var tr = obj.tr; //获得当前行 tr 的DOM对象
                 if(layEvent === 'detail'){ //查看
-                    location.href = '<%=path%>/page/main/account/withdraw/tradeDetail.jsp?id='+data.auditSerialNum  ;
+                    location.href = '<%=path%>/page/main/account/withdraw/tradeDetail.jsp?auditSerialNum='+data.auditSerialNum  ;
                 }
             });
         });

@@ -35,8 +35,6 @@ public class PurchaseOrderController {
 
     /**
      * 进货单添加
-     *
-     * @param order 地址对象
      * @return
      */
     @RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)

@@ -18,8 +18,11 @@
     <result column="bt_trade_amount" property="tradeAmount" jdbcType="DECIMAL" />
     <result column="bt_trade_status" property="tradeStatus" jdbcType="VARCHAR" />
     <result column="bt_user_id" property="userid" jdbcType="VARCHAR" />
-    
-    <association property="cahnnelBank" javaType="org.sps.entity.merchant.SpsChannelBank">
+	<result column="standby1" property="userid" jdbcType="VARCHAR" />
+	<result column="standby2" property="userid" jdbcType="VARCHAR" />
+	<result column="bt_trade_no" property="userid" jdbcType="VARCHAR" />
+	<result column="orderid" property="orderId" jdbcType="VARCHAR" />
+	<association property="cahnnelBank" javaType="org.sps.entity.merchant.SpsChannelBank">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="b_name" property="name" jdbcType="VARCHAR" />
 		<result column="b_accounts" property="accounts" jdbcType="VARCHAR" />
@@ -28,7 +31,8 @@
 		<result column="b_bank" property="bank" jdbcType="VARCHAR" />
 		<result column="channl_num" property="channlNum" jdbcType="VARCHAR" />
 		<result column="b_available_balance" property="availableBalance" jdbcType="DECIMAL" />
-    </association>
+		<result column="b_user_id" property="userId" jdbcType="VARCHAR" />
+	</association>
   </resultMap>
 
 <resultMap id="cashAuditBashInfo" type="org.sps.entity.merchant.SpsChannelBankTrade" >
@@ -47,13 +51,18 @@
 		<result column="bt_trade_after_balanc" property="tradeAfterBalanc" jdbcType="DECIMAL" />
 		<result column="bt_trade_amount" property="tradeAmount" jdbcType="DECIMAL" />
 		<result column="bt_trade_status" property="tradeStatus" jdbcType="VARCHAR" />
-		<result column="bt_user_id" property="userid" jdbcType="VARCHAR" />
+		<result column="bt_user_id" property="userId" jdbcType="VARCHAR" />
 		<result column="standby1" property="standby1" jdbcType="VARCHAR" />
+		<result column="standby1" property="standby1" jdbcType="VARCHAR" />
+		<result column="standby2" property="standby2" jdbcType="VARCHAR" />
+		<result column="bt_trade_no" property="tradeNo" jdbcType="VARCHAR" />
+		<result column="orderid" property="orderId" jdbcType="VARCHAR" />
 	<association property="cahnnelBank" javaType="org.sps.entity.merchant.SpsChannelBank">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="channl_num" property="channlNum" jdbcType="VARCHAR" />
 		<result column="b_accounts" property="accounts" jdbcType="VARCHAR" />
 		<result column="b_user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="b_user_id" property="userId" jdbcType="VARCHAR" />
 	</association>
 	<association property="enterprise" javaType="org.sps.entity.merchant.SpsChannelEnterprise">
 		<id column="enterprise_id" property="enterpriseId" jdbcType="INTEGER" />
@@ -80,7 +89,10 @@
 	bt.bt_trade_Before_balanc,
 	bt.bt_trade_after_balanc,
 	bt.bt_trade_amount,
-	bt.bt_trade_status
+	bt.bt_trade_status,
+	bt.orderid,
+	bt.bt_trade_no,
+	bt.orderid
 	from
   </sql>
 	<sql id="join_listAudit" >
@@ -105,6 +117,7 @@
 		bt.bt_trade_amount,
 		bt.bt_trade_status,
 		bt.standby1,
+
 		e.enterprise_company_name
 		from
 	</sql>
@@ -117,7 +130,7 @@
 	join 
 	sps_bank  b
 	on 
-	bt.bt_identity = b.b_identity
+	bt.bt_user_id = b.b_user_id
 	<where>
 		bt.bt_trade_type = #{tradeType,jdbcType=VARCHAR}
 		and  b.channl_num=#{channelNum,jdbcType=VARCHAR}
@@ -141,14 +154,17 @@
 		join
 			sps_bank  b
 		on
-			bt.bt_identity = b.b_identity
-		where
-		<if test="channelNum != null and channelNum != '' " >
-			b.channl_num=#{channelNum}
-		</if>
-		<if test="tradeSerialNum != null and tradeSerialNum != '' " >
-			and bt.bt_trade_serial_num=#{tradeSerialNum}
-		</if>
+			bt.bt_user_id = b.b_user_id
+		<where>
+			<if test="tradeSerialNum != null and tradeSerialNum != '' " >
+				 bt.bt_trade_serial_num=#{tradeSerialNum}
+			</if>
+			<if test="channelNum != null and channelNum != '' " >
+				and  b.channl_num=#{channelNum}
+			</if>
+
+		</where>
+
 	</select>
 
     <select id="selectListCashAuditByUserName" parameterType="String"  resultMap="cashAuditBashInfo">
@@ -314,5 +330,12 @@
         e.channel_num=b.channl_num
         where
 			bt.bt_application_start_date=#{applicationDate,jdbcType=VARCHAR}
+	</select>
+	<select id="selectOrderByTradeSeriNum" parameterType="String" resultType="String">
+		 SELECT id,  orderid
+		 FROM
+		    sps_bank_trade_info
+		  WHERE
+			  bt_trade_no=#{tradeSeriNum}
 	</select>
 </mapper>

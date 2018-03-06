@@ -341,12 +341,14 @@ public class ShopkeeperController{
 		List<ArrayList<String>> importExcel = new ExcelUtil().importExcel(file);
 		
 		SpsShopkeeperInvitation spsShopkeeperInvitation = null;
+		
+		String channelNum = getChannelNum();
 		try {
 			for (ArrayList<String> arrayList : importExcel) {
 					spsShopkeeperInvitation = new SpsShopkeeperInvitation();
 					spsShopkeeperInvitation.setInvitationName(arrayList.get(0));
 					spsShopkeeperInvitation.setInvitationPhone(arrayList.get(1));
-					writeService.insertInvitation(spsShopkeeperInvitation);
+					writeService.insertInvitation(spsShopkeeperInvitation, channelNum);
 			}
 			map.put("msg", "添加成功");
 			map.put("state", FinalData.STATE_SUCCESS);
@@ -374,7 +376,9 @@ public class ShopkeeperController{
 	@ResponseBody
 	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation){
 		
-		HashMap<String, Object> insertInvitation = writeService.insertInvitation(invitation);
+		String channelNum = getChannelNum();
+		
+		HashMap<String, Object> insertInvitation = writeService.insertInvitation(invitation,channelNum);
 		
 		return insertInvitation;
 	}
@@ -400,5 +404,24 @@ public class ShopkeeperController{
 		HashMap<String, Object> queryInvitationList = readService.queryInvitationList(page, limit, name, phone, state);
 		
 		return queryInvitationList;
+	}
+	/**
+	 * 获得当前登录商户的num
+	 * @Title: getChannelNum   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月6日 下午2:40:31
+	 * @return: String      
+	 * @throws
+	 */
+	private String getChannelNum(){
+		Subject subject = SecurityUtils.getSubject();
+		//获取当前token中的用户
+		String userName = (String) subject.getPrincipal();
+		
+		String channelNum = (String) subject.getSession().getAttribute(userName);
+		
+		return channelNum;
 	}
 }

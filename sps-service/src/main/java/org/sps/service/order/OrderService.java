@@ -3,6 +3,7 @@ package org.sps.service.order;
 import org.sps.entity.finance.OrderDetail;
 import org.sps.entity.order.Order;
 import org.sps.entity.order.OrderGoods;
+import org.sps.entity.order.OrderRepayDetail;
 import org.sps.entity.order.SpsOrderLogistics;
 
 import javax.print.DocFlavor;
@@ -92,12 +93,6 @@ public interface OrderService extends Serializable{
 	 */
 	HashMap<String, Object> insertLogistics(String flag, SpsOrderLogistics logistics);
 
-	/**
-	 * 根据订单号查询订单基本信息
-	 * @param orderNo
-	 * @return
-	 */
-	Order queryByOrderId(String  orderNo);
 
 	/**
 	 * 根据订单号查询物流信息
@@ -128,6 +123,29 @@ public interface OrderService extends Serializable{
 										   Integer loanStatus,
 										   String orderNo);
 
+	/**
+	 * 根据订单id查询详情信息
+	 * @param orderNo
+	 * @return
+	 */
+	HashMap<String, Object> queryByOrderDetailByOrderNo(Integer page,
+															 Integer limit, String orderNo);
 
+	/**
+	 * 根据订单id，查询订单信息
+	 * @param orderId
+	 * @return
+	 */
+	Order queryByOrderId(String orderId);
 
+	/**
+	 *根据订单id查询所有的订单项
+	 * @param page
+	 * @param limit
+	 * @param tradeSeriNum
+	 * @return
+	 */
+
+	HashMap<String, Object> getGoodsByOrderId(Integer page,
+														Integer limit, String tradeSeriNum);
 }

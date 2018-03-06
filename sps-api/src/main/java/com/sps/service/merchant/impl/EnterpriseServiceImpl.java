@@ -57,44 +57,48 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 			String shopkeeperCustomerid = parseObject.getString("shopkeeperCustomerid");
 			
 			SpsShopkeeper queryShopkeeperList = shopkeeperService.queryShopkeeperList(shopkeeperCustomerid);
-			//查询当前登录店主的主营业务
-			String shopkeeperBusinessType = queryShopkeeperList.getShopkeeperBusinessType();
-			
-			String[] split = shopkeeperBusinessType.split(",");
-			
-			arrayList = new ArrayList<String>();
-			for (String string : split) {
+			if(queryShopkeeperList != null){
+				//查询当前登录店主的主营业务
+				String shopkeeperBusinessType = queryShopkeeperList.getShopkeeperBusinessType();
 				
-				arrayList.add(string);
-			}
-			try {
-				//根据店主主营业务,获取相同主营业务的商户列表
-				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, null);
-				if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
-					//查询商户下的商品
-					for (SpsChannelEnterprise channel : queryBusinessForApi) {
-						if(!"".equals(channel.getChannelNum())){
-							Map<String, Object> map = new HashMap<>();
-							map.put("shopNum", channel.getChannelNum());
-							map.put("recommend", "1");
-							map.put("orderType", "0");
-							//查询推荐中的商品
-							List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
-							if(goodShopList!=null&&goodShopList.size()>0){
-								channel.setGoodShops(goodShopList);
+				String[] split = shopkeeperBusinessType.split(",");
+				
+				arrayList = new ArrayList<String>();
+				for (String string : split) {
+					arrayList.add(string);
+				}
+				try {
+					//根据店主主营业务,获取相同主营业务的商户列表
+					List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, null);
+					if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
+						//查询商户下的商品
+						for (SpsChannelEnterprise channel : queryBusinessForApi) {
+							if(!"".equals(channel.getChannelNum())){
+								Map<String, Object> map = new HashMap<>();
+								map.put("shopNum", channel.getChannelNum());
+								map.put("recommend", "1");
+								map.put("orderType", "0");
+								//查询推荐中的商品
+								List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
+								if(goodShopList!=null&&goodShopList.size()>0){
+									channel.setGoodShops(goodShopList);
+								}
 							}
 						}
 					}
+					super.logger.error(Message.SUCCESS_MSG);
+					
+					hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG, 
+							Message.SUCCESS_MSG,queryBusinessForApi.size(), queryBusinessForApi);
+				} catch (Exception e) {
+					e.printStackTrace();
+					super.logger.error(Message.SYSTEM_ERROR_MSG);
+					
+					hashMap = Message.resultMap( Message.SYSTEM_ERROR_CODE, Message.SYSTEM_ERROR_MSG, 
+							Message.FAILURE_MSG,null, null);
 				}
-				super.logger.error(Message.SUCCESS_MSG);
-				
-				hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG, 
-						Message.SUCCESS_MSG,queryBusinessForApi.size(), queryBusinessForApi);
-			} catch (Exception e) {
-				e.printStackTrace();
-				super.logger.error(Message.SYSTEM_ERROR_MSG);
-				
-				hashMap = Message.resultMap( Message.SYSTEM_ERROR_CODE, Message.SYSTEM_ERROR_MSG, 
+			}else{
+				hashMap = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG, 
 						Message.FAILURE_MSG,null, null);
 			}
 		}else{
