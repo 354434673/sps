@@ -43,7 +43,7 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 		bankTrandeInfo.setTradeSerialNum(uuid);
 		//0代表支出（提现），1代表收入（充值）
 		bankTrandeInfo.setTradeType(tradeType);
-		bankTrandeInfo.setUserid(bankInfo.getUserId());
+		bankTrandeInfo.setUserId(bankInfo.getUserId());
 		//交易状态 0 代表待审批，2 审批通过，1审批不通过
 		bankTrandeInfo.setTradeStatus("0");
 		bankTrandeInfo.setTradeName(bankInfo.getUserName());

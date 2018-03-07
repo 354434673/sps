@@ -1,4 +1,4 @@
-package com.sps.service.impl;
+/*package com.sps.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,13 +29,13 @@ import com.sps.entity.user.SpsUserExample.Criteria;
 import com.sps.service.base.BaseOperate;
 
 
-@RestController
+@Service
 public class UserServiceImpl extends BaseOperate{
 	@Resource
 	private SpsUserDao dao;
 	@Resource
 	private SpsShopkeeperAccountDao accountDao;
-	/**
+	*//**
 	 * 用户登录
 	 * @Title: userLogin   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -45,19 +46,12 @@ public class UserServiceImpl extends BaseOperate{
 	 * @date 2018年2月12日 下午2:57:58
 	 * @return: HashMap<String,Object>      
 	 * @throws
-	 */
+	 *//*
 	@RequestMapping(value="/api/login", method=RequestMethod.POST)
 	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
-	public HashMap<String, Object> userLogin(@RequestBody String data){
-		
-		JSONObject parseObject = JSON.parseObject(data);
+	public HashMap<String, Object> userLogin(String userName, String password){
 		
 		HashMap<String, Object> result = null;
-		if(!StringUtil.isEmpty(data)){
-			
-			String userName = parseObject.getString("userName");
-			
-			String password = parseObject.getString("password");
 			
 			SpsUser user = getUser(userName);
 			
@@ -83,10 +77,6 @@ public class UserServiceImpl extends BaseOperate{
 				result = Message.resultMap(Message.FAILURE_CODE, Message.FAILURE_CODE,
 						Message.FAILURE_MSG, 0, null);
 			}
-		}else{
-			result = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG, 
-					Message.FAILURE_MSG,null, null);
-		}
 		return result;
 	}
 	@RequestMapping(value="/api/getUser", method=RequestMethod.POST)
@@ -102,7 +92,7 @@ public class UserServiceImpl extends BaseOperate{
 
 		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
 	}
-	/**
+	*//**
 	 * 店主注册,先查询当前店主是否邀请过,如果邀请过,则注册成功,否则注册失败
 	 * @Title: insertUser   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -112,7 +102,7 @@ public class UserServiceImpl extends BaseOperate{
 	 * @date 2018年2月27日 下午5:01:46
 	 * @return: HashMap<String,Object>      
 	 * @throws
-	 */
+	 *//*
 	@RequestMapping(value="/api/add", method=RequestMethod.POST)
 	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
 	public HashMap<String, Object> insertUser(@RequestBody String data) {
@@ -276,3 +266,4 @@ public class UserServiceImpl extends BaseOperate{
 	}
 
 }
+*/

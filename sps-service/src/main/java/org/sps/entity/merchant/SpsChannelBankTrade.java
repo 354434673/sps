@@ -44,7 +44,7 @@ public class SpsChannelBankTrade implements Serializable {
 //	交易状态
 	private String tradeStatus  ;
 //	交易用户sps_bank的id
-	private String userid  ;
+	private String userId  ;
 //	备注信息 提现还是充值
 	private String standby1;
 //	备注拒绝信息
@@ -229,13 +229,13 @@ public class SpsChannelBankTrade implements Serializable {
 	public void setTradeStatus(String tradeStatus) {
 		this.tradeStatus = tradeStatus;
 	}
-	public String getUserid() {
-		return userid;
-	}
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-	
-	
 
+	public String getUserId() {
+
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 }

@@ -2,6 +2,8 @@ package com.sps.controller.user;
 
 import java.util.HashMap;
 
+import javax.annotation.Resource;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,46 +14,27 @@ import com.alibaba.fastjson.JSONObject;
 import com.juzifenqi.core.ServiceResult;
 import com.juzifenqi.usercenter.entity.member.LoginInfo;
 import com.juzifenqi.usercenter.service.ISmsCommonService;
-import com.juzifenqi.usercenter.service.authorization.IBaitiaoPassportService;
 import com.juzifenqi.usercenter.service.authorization.IDianfuPassportService;
-import com.juzifenqi.usercenter.service.member.IMemberDianfuService;
+import com.juzifenqi.usercenter.vo.LoginDto;
 import com.juzifenqi.usercenter.vo.RegisterDto;
 import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.entiy.face.AuthFaceIdCard;
 import com.jzfq.auth.core.api.vo.JsonResult;
 import com.sps.common.StringUtil;
+import com.sps.service.user.UserService;
+
+import io.swagger.models.auth.In;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
-	@Reference(group = "auth_dev1")
-	private FaceAuthApi faceAuthApi;
+	@Resource
+	private UserService userService;
+/*	@Reference(group = "${dubbo.group}")*/
 	@Reference(group = "member-center-dev1")
 	private ISmsCommonService iSmsCommonService;
-/*	@Reference(group = "member-center-dev1")
-	private IDianfuPassportService iDianfuPassportService;*/
-	/**
-	 * 用户认证,调核心接口
-	 * @Title: authentication   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
-	 * @param: @return  
-	 * @author YangNingSheng    
-	 * @date 2018年2月28日 下午4:35:32
-	 * @return: HashMap<String,Object>      
-	 * @throws
-	 */
-	@RequestMapping("/authentication")
-	public HashMap<String, Object> authentication(){
-		AuthFaceIdCard arg0 = new AuthFaceIdCard();
-		arg0.setBackImagePath("123124124");
-		arg0.setChannel("DF");
-		arg0.setRequestNo("12321312");
-		arg0.setSource("h5");
-		arg0.setUserId(123412412);
-		
-		JsonResult<AuthFaceIdCard> backIdCardResult = faceAuthApi.getBackIdCardResult(arg0);
-		return null;
-	}
+	@Reference(group = "member-center-dev1")
+	private IDianfuPassportService iDianfuPassportService;
 	/**
 	 * 注册密码短信验证码
 	 * @Title: getPhoneCode   
@@ -110,26 +93,45 @@ public class UserController {
 	 * @return: ServiceResult<Boolean>      
 	 * @throws
 	 */
-/*	@RequestMapping("/regist")
-	public ServiceResult<LoginInfo> userRegist(@RequestBody String data){
+	@RequestMapping("/regist")
+	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc){
 		
-		ServiceResult<LoginInfo> serviceResult = null;
-		if(!StringUtil.isEmpty(data)){
-			JSONObject parseObject = JSON.parseObject(data);
+/*			JSONObject parseObject = JSON.parseObject(data);
 			
 			String mobile = parseObject.getString("phone");
 			String code = parseObject.getString("code");
 			String password = parseObject.getString("password");
-			String saleSrc = parseObject.getString("saleSrc");
+			String saleSrc = parseObject.getString("saleSrc");*/
 			
 			RegisterDto arg0 = new RegisterDto();
+			
 			arg0.setMobile(mobile);
+			
 			arg0.setCode(code);
+			
 			arg0.setPassword(password);
+			
 			arg0.setSaleSrc(saleSrc);
-			iDianfuPassportService.login4Browser(arg0);
-		}
-		return serviceResult;
-	}*/
-	
+			
+			ServiceResult<LoginInfo> serviceResult = iDianfuPassportService.memberRegister4Browser(arg0);
+			
+			return serviceResult;
+	}
+	@RequestMapping("/login")
+	public HashMap<String, Object> userLogin(String imei, String ip, String mobile, 
+			String mobileBrand, String mobileMaker, String password, Integer source){
+		LoginDto arg0 = new LoginDto();
+		arg0.setImei(imei);
+		arg0.setIp(ip);
+		arg0.setMobile(mobile);
+		arg0.setMobileMaker(mobileMaker);
+		arg0.setMobileBrand(mobileBrand);
+		arg0.setPassword(password);
+		arg0.setSource(source);
+		ServiceResult<LoginInfo> login4Browser = iDianfuPassportService.login4Native(arg0);
+		
+		HashMap<String, Object> userLogin = userService.userLogin(mobile, password);
+		
+		return userLogin;
+	}
 }
