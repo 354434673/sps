@@ -45,8 +45,12 @@ public class UserServiceImpl implements UserService{
 				result = Message.resultMap(Message.USERNOT_REGIST_CODE, Message.USERNOT_REGIST_MSG,
 						Message.USERNOT_REGIST_MSG, 0, null);
 			}else{
+				HashMap<String, Object> data = new HashMap<String, Object>();
+				
+				data.put("customerid", selectByExample.get(0).getShopkeeperCustomerid());
+				
 				result = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
-						Message.SUCCESS_MSG, 1, selectByExample.get(0).getShopkeeperCustomerid());
+						Message.SUCCESS_MSG, 1, data);
 			}
 		}else{
 			result = Message.resultMap(Message.FAILURE_CODE, Message.FAILURE_CODE,

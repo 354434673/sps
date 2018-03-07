@@ -39,7 +39,7 @@ public interface PurchaseOrderService {
      * @param order
      * @return
      */
-    Map<String,Object> saveOrder(List<SpsPurchaseOrder> order, SpsOrder spsOrder);
+    Map<String,Object> saveOrder(List<SpsPurchaseOrder> order);
 
     /**
      * 校验进货单数据

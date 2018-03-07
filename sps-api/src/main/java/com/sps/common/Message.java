@@ -40,7 +40,7 @@ public class Message {
 
 	//未登录
 	public static String UNAUTHENTICATED_CODE = "1001";
-	public static String UNAUTHENTICATED_MSG = "not login";
+	public static String UNAUTHENTICATED_MSG = "未登录";
 
 	//账号被锁定
 	public static String ACCOUNT_LOCK_CODE = "1002";
@@ -90,7 +90,7 @@ public class Message {
 	public static String USERNOT_BINDDOMAIN_MSG = "the user not bind domain";
 	//用户没注册
 	public static String USERNOT_REGIST_CODE = "1008";
-	public static String USERNOT_REGIST_MSG = "the user not regist";
+	public static String USERNOT_REGIST_MSG = "用户未注册";
 
 	public static String responseStr(String code, String msg){
 		JSONObject jsonObject = new JSONObject();
