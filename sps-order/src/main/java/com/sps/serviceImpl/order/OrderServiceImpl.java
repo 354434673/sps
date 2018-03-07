@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service(timeout = 2000, group = "dianfu")
+@org.springframework.stereotype.Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
 

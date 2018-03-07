@@ -76,6 +76,7 @@
 	
   <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
+{{}}
 {{#  if(d.channel.channelState == 0||d.channel.channelState == 3){ }}
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
 {{#  if(d.channel.channelState != 2){ }}

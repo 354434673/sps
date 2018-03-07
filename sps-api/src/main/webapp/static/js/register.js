@@ -81,8 +81,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         var telNum = document.getElementById('telNum');
                         aspenLib.ajax({
-                            //url: location.protocol + "//" + location.hostname + ":8080/sps-api/user/getPhoneCode/regist",
-                            url: location.protocol + "//" + location.hostname + "/user/getPhoneCode/regist",
+                            url: location.protocol + "//" + location.hostname + ":8080/sps-api/user/getPhoneCode/regist",
+                            //url: location.protocol + "//" + location.hostname + "/user/getPhoneCode/regist",
                             type: 'POST',
                             dataType: 'json',
                             data: {
@@ -90,10 +90,11 @@ document.addEventListener('DOMContentLoaded', function () {
                                 mobile: telNum.value
                             },
                             success: function (data) {
-                                if (data.result == 1) {
+                                if (data.success) {
+                                	aspenLib.tips(data.message);
                                     _this.countDown('getCheckCode');
                                 } else {
-                                    aspenLib.tips(data.msg);
+                                    aspenLib.tips(data.message);
                                     return;
                                 }
                             },
@@ -166,22 +167,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     var getTerminalType = document.querySelectorAll('body')[0].className.indexOf('ios') != -1 ? '3' : '2';
                     aspenLib.ajax({
-                        url: location.protocol + "//" + location.hostname + "/termi/doregister.html",
+                        url: location.protocol + "//" + location.hostname + ":8080/sps-api/user/regist",
                         type: 'post',
                         dataType: 'json',
                         data: {
-                            accurate: '',
-                            channelID: '',
-                            equipmentName: '',
-                            identity: '',
-                            latitude: '',
-                            longitude: '',
-                            recommendCode: '',
-                            time: '',
+                        	saleSrc:'CH123456',
                             mobile: telNum.value,
                             password: password.value,
-                            terminalType: getTerminalType,
-                            yzm: checkCode.value
+                            code: checkCode.value
                         },
                         success: function (data) {
                             if (data.result == 1) {
