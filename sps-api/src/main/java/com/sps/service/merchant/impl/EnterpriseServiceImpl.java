@@ -48,13 +48,9 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 	private SpsCustomCategoryMapper spsCustomCategoryMapper;
 	@Override
 	@Transactional(readOnly = true)
-	public HashMap<String, Object> queryMerchantList(String data) {
+	public HashMap<String, Object> queryMerchantList(String shopkeeperCustomerid) {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		ArrayList<String> arrayList = null;
-		if(!StringUtil.isEmpty(data)){
-			JSONObject parseObject = JSON.parseObject(data);
-			
-			String shopkeeperCustomerid = parseObject.getString("shopkeeperCustomerid");
 			
 			SpsShopkeeper queryShopkeeperList = shopkeeperService.queryShopkeeperList(shopkeeperCustomerid);
 			if(queryShopkeeperList != null){
@@ -101,28 +97,18 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 				hashMap = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG, 
 						Message.FAILURE_MSG,null, null);
 			}
-		}else{
-			hashMap = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG, 
-					Message.FAILURE_MSG,null, null);
-		}
 		return hashMap;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public HashMap<String, Object> queryMerchantDetail(String data) {
+	public HashMap<String, Object> queryMerchantDetail(Integer enterpriseId ,Integer categoryId, String orderType, String goodsName) {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		ArrayList<String> arrayList = new ArrayList<String>();
-		if(!StringUtil.isEmpty(data)){
-			JSONObject parseObject = JSON.parseObject(data);
 			
-			Integer enterpriseId = parseObject.getInteger("enterpriseId");
 			try {
 				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, enterpriseId);
 				//排序方式
-				String orderType = parseObject.getString("orderType");
-				String goodsName = parseObject.getString("goodsName");
-				Integer categoryId = parseObject.getInteger("categoryId");
 				if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
 					//查询商户下的商品
 					for (SpsChannelEnterprise channel : queryBusinessForApi) {
@@ -156,10 +142,6 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 				hashMap = Message.resultMap( Message.SYSTEM_ERROR_CODE, Message.SYSTEM_ERROR_MSG,
 						Message.FAILURE_MSG,null, null);
 			}
-		}else{
-			hashMap = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG,
-					Message.FAILURE_MSG,null, null);
-		}
 		return hashMap;
 	}
 }
