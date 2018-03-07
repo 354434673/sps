@@ -1,118 +1,259 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sps.dao.order.OrderMapper" >
-  <resultMap id="BaseOrderResultMap" type="org.sps.entity.order.Order" >
-    <id column="o_id" property="oId" jdbcType="INTEGER" />
-    <result column="orderid" property="orderid" jdbcType="VARCHAR" />
-    <result column="shopkeeper" property="shopkeeper" jdbcType="VARCHAR" />
-    <result column="shopkeepername" property="shopkeepername" jdbcType="VARCHAR" />
-    <result column="selfemployed" property="selfemployed" jdbcType="VARCHAR" />
-    <result column="selfname" property="selfname" jdbcType="VARCHAR" />
-    <result column="scale" property="scale" jdbcType="INTEGER" />
-    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
-    <result column="flag" property="flag" jdbcType="INTEGER" />
-    <result column="payment" property="payment" jdbcType="DECIMAL" />
-    <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="money" property="money" jdbcType="DECIMAL" />
-    <result column="servicescale" property="servicescale" jdbcType="DOUBLE" />
-    <result column="servicemoney" property="servicemoney" jdbcType="DECIMAL" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
-    <result column="sum_money" property="sumMoney" jdbcType="DECIMAL" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="unit" property="unit" jdbcType="VARCHAR" />
-    <result column="loan_code" property="loanCode" jdbcType="VARCHAR" />
-     <result column="loan_start_time" property="loanStartTime" jdbcType="TIMESTAMP" />
-     <result column="loan_end_time" property="loanEndTime" jdbcType="TIMESTAMP" />
-    <result column="formality_rate" property="formalityRate" jdbcType="DOUBLE" />
-    <result column="service_charge" property="serviceCharge" jdbcType="DECIMAL" />
-     <result column="loan_balance" property="loanBalance" jdbcType="DECIMAL" />
-  <association property="logs" javaType="org.sps.entity.order.SpsOrderLogistics">
-          <id column="logistics_id" property="logisticsId" jdbcType="INTEGER" />
-          <result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
-          <result column="logistics_num" property="logisticsNum" jdbcType="VARCHAR" />
-          <result column="logistics_voucher" property="logisticsVoucher" jdbcType="VARCHAR" />
-  </association>
-  </resultMap>
+    <resultMap id="BaseOrderResultMap" type="org.sps.entity.order.Order" >
+        <id column="o_id" property="oId" jdbcType="INTEGER" />
+        <result column="orderid" property="orderid" jdbcType="VARCHAR" />
+        <result column="shopkeeper" property="shopkeeper" jdbcType="VARCHAR" />
+        <result column="shopkeepername" property="shopkeepername" jdbcType="VARCHAR" />
+        <result column="selfemployed" property="selfemployed" jdbcType="VARCHAR" />
+        <result column="selfname" property="selfname" jdbcType="VARCHAR" />
+        <result column="scale" property="scale" jdbcType="INTEGER" />
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+        <result column="flag" property="flag" jdbcType="INTEGER" />
+        <result column="payment" property="payment" jdbcType="DECIMAL" />
+        <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="money" property="money" jdbcType="DECIMAL" />
+        <result column="servicescale" property="servicescale" jdbcType="DOUBLE" />
+        <result column="servicemoney" property="servicemoney" jdbcType="DECIMAL" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+        <result column="sum_money" property="sumMoney" jdbcType="DECIMAL" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="unit" property="unit" jdbcType="VARCHAR" />
+        <!-- <collection property="orderGoods" resultMap="BaseOrderGoodsResultMap" javaType="list"> -->
+        <!--  <collection property="orderGoods" javaType="List" ofType="com.sps.order.entity.OrderGoods" select="query" column="orderid" >
+                 <id column="o_id" property="oId" jdbcType="INTEGER" />
+                 <result column="orderid" property="orderid" jdbcType="VARCHAR" />
+                 <result column="sku" property="sku" jdbcType="VARCHAR" />
+                 <result column="skuname" property="skuname" jdbcType="VARCHAR" />
+                 <result column="color" property="color" jdbcType="VARCHAR" />
+                 <result column="memory" property="memory" jdbcType="VARCHAR" />
+                 <result column="price" property="price" jdbcType="DECIMAL" />
+                 <result column="amount" property="amount" jdbcType="INTEGER" />
+                 <result column="summation" property="summation" jdbcType="DOUBLE" />
+                 <result column="pre_price" property="prePrice" jdbcType="DECIMAL" />
+                 <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+         </collection> -->
+    </resultMap>
+
+    <resultMap id="BaseOrderResultMap1" type="org.sps.entity.order.Order" >
+        <id column="o_id" property="oId" jdbcType="INTEGER" />
+        <result column="orderid" property="orderid" jdbcType="VARCHAR" />
+        <result column="shopkeeper" property="shopkeeper" jdbcType="VARCHAR" />
+        <result column="shopkeepername" property="shopkeepername" jdbcType="VARCHAR" />
+        <result column="selfemployed" property="selfemployed" jdbcType="VARCHAR" />
+        <result column="selfname" property="selfname" jdbcType="VARCHAR" />
+        <result column="scale" property="scale" jdbcType="INTEGER" />
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+        <result column="flag" property="flag" jdbcType="INTEGER" />
+        <result column="payment" property="payment" jdbcType="DECIMAL" />
+        <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="money" property="money" jdbcType="DECIMAL" />
+        <result column="servicescale" property="servicescale" jdbcType="DOUBLE" />
+        <result column="servicemoney" property="servicemoney" jdbcType="DECIMAL" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+        <result column="sum_money" property="sumMoney" jdbcType="DECIMAL" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="unit" property="unit" jdbcType="VARCHAR" />
+        <result column="loan_code" property="loanCode" jdbcType="VARCHAR" />
+        <result column="loan_start_time" property="loanStartTime" jdbcType="TIMESTAMP" />
+        <result column="loan_end_time" property="loanEndTime" jdbcType="TIMESTAMP" />
+        <result column="formality_rate" property="formalityRate" jdbcType="DOUBLE" />
+        <result column="service_charge" property="serviceCharge" jdbcType="DECIMAL" />
+        <result column="loan_balance" property="loanBalance" jdbcType="DECIMAL" />
+        <association property="logs" javaType="org.sps.entity.order.SpsOrderLogistics">
+            <id column="logistics_id" property="logisticsId" jdbcType="INTEGER" />
+            <result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
+            <result column="logistics_num" property="logisticsNum" jdbcType="VARCHAR" />
+            <result column="logistics_voucher" property="logisticsVoucher" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+
+    <resultMap id="BaseOrderGoodsResultMap" type="org.sps.entity.order.OrderGoods" >
+        <id column="o_id" property="oId" jdbcType="INTEGER" />
+        <result column="orderid" property="orderid" jdbcType="VARCHAR" />
+        <result column="sku" property="sku" jdbcType="VARCHAR" />
+        <result column="skuname" property="skuname" jdbcType="VARCHAR" />
+        <result column="color" property="color" jdbcType="VARCHAR" />
+        <result column="memory" property="memory" jdbcType="VARCHAR" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="amount" property="amount" jdbcType="INTEGER" />
+        <result column="summation" property="summation" jdbcType="DOUBLE" />
+        <result column="pre_price" property="prePrice" jdbcType="DECIMAL" />
+        <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Order_Column_List" >
+        sps_order.o_id
+        ,sps_order.orderid
+        ,sps_order.shopkeeper
+        ,sps_order.shopkeepername
+        ,sps_order.selfemployed
+        ,sps_order.selfname
+        ,sps_order.scale
+        ,sps_order.createtime
+        ,sps_order.flag
+        ,sps_order.payment
+        ,sps_order.isdelete
+        ,sps_order.remark
+        ,sps_order.money
+        ,sps_order.servicescale
+        ,sps_order.servicemoney
+        ,sps_order.phone
+        ,sps_order.address
+        ,sps_order.modifytime
+        ,sps_order.sum_money
+        ,sps_order.name
+        ,sps_order.unit
+    </sql>
+
+    <sql id="Base_Order_Goods_Column_List" >
+        sps_order_goods.o_id,
+        sps_order_goods.orderid,
+        sps_order_goods.sku,
+        sps_order_goods.skuname,
+        sps_order_goods.color,
+        sps_order_goods.memory,
+        sps_order_goods.price,
+        sps_order_goods.amount,
+        sps_order_goods.summation,
+        sps_order_goods.pre_price,
+        sps_order_goods.modifytime
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseOrderResultMap" parameterType="java.lang.String" >
+        select
+        <!--  sps_order.o_id
+       ,sps_order.orderid
+       ,sps_order.shopkeeper
+       ,sps_order.shopkeepername
+       ,sps_order.selfemployed
+       ,sps_order.selfname
+       ,sps_order.scale
+       ,sps_order.createtime
+       ,sps_order.flag
+       ,sps_order.payment
+       ,sps_order.isdelete
+       ,sps_order.remark
+       ,sps_order.money
+       ,sps_order.servicescale
+       ,sps_order.servicemoney
+       ,sps_order.phone
+       ,sps_order.address
+       ,sps_order.modifytime
+       ,sps_order.sum_money
+       ,sps_order.name
+       ,sps_order.unit
+       ,sps_order_goods.o_id,
+       sps_order_goods.orderid,
+       sps_order_goods.sku,
+       sps_order_goods.skuname,
+       sps_order_goods.color,
+       sps_order_goods.memory,
+       sps_order_goods.price,
+       sps_order_goods.amount,
+       sps_order_goods.summation,
+       sps_order_goods.pre_price,
+       sps_order_goods.modifytime -->
+        *
+        from sps_order<!-- , sps_order_goods -->
+        <where>
+            <!-- sps_order.orderid=sps_order_goods.orderid -->
+            <if test="orderid != null and orderid != '' ">
+                and sps_order.orderid = #{orderid,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
 
 
-
-  <resultMap id="BaseOrderGoodsResultMap" type="org.sps.entity.order.OrderGoods" >
-    <id column="o_id" property="oId" jdbcType="INTEGER" />
-    <result column="orderid" property="orderid" jdbcType="VARCHAR" />
-    <result column="sku" property="sku" jdbcType="VARCHAR" />
-    <result column="skuname" property="skuname" jdbcType="VARCHAR" />
-    <result column="color" property="color" jdbcType="VARCHAR" />
-    <result column="memory" property="memory" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="DECIMAL" />
-    <result column="amount" property="amount" jdbcType="INTEGER" />
-    <result column="summation" property="summation" jdbcType="DOUBLE" />
-    <result column="pre_price" property="prePrice" jdbcType="DECIMAL" />
-    <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Order_Column_List" >
-      o_id
-	 ,orderid
-	 ,shopkeeper
-	 ,shopkeepername
-	 ,selfemployed
-	 ,selfname
-	 ,scale
-	 ,createtime
-	 ,flag
-	 ,payment
-	 ,isdelete
-	 ,remark
-	 ,money
-	 ,servicescale
-	 ,servicemoney
-	 ,phone
-	 ,address
-	 ,modifytime
-	 ,sum_money
-	 ,name
-	 ,unit
-	 ,loan_code
-	 ,loan_start_time
-	 ,loan_end_time
-	 ,formality_rate
-	 ,service_charge
-	 ,loan_balance
-  </sql>
-  
-   <sql id="Base_Order_Goods_Column_List" >
-     sps_order_goods.o_id, 
-     sps_order_goods.orderid, 
-     sps_order_goods.sku, 
-     sps_order_goods.skuname, 
-     sps_order_goods.color, 
-     sps_order_goods.memory, 
-     sps_order_goods.price, 
-     sps_order_goods.amount, 
-     sps_order_goods.summation, 
-     sps_order_goods.pre_price, 
-     sps_order_goods.modifytime
- </sql>
-
-
-    <select id="selectByMoreCondition" resultMap="BaseOrderResultMap">
+    <select id="selectByTradeNO" parameterType="String" resultMap="BaseOrderResultMap1">
         SELECT
-        <include refid="Base_Order_Column_List"/>
+        o.o_id
+        ,o.orderid
+        ,o.shopkeeper
+        ,o.shopkeepername
+        ,o.selfemployed
+        ,o.selfname
+        ,o.scale
+        ,o.createtime
+        ,o.flag
+        ,o.payment
+        ,o.isdelete
+        ,o.remark
+        ,o.money
+        ,o.servicescale
+        ,o.servicemoney
+        ,o.phone
+        ,o.address
+        ,o.modifytime
+        ,o.sum_money
+        ,o.name
+        ,o.unit
+        ,o.loan_code
+        ,o.loan_start_time
+        ,o.loan_end_time
+        ,o.formality_rate
+        ,o.service_charge
+        ,o.loan_balance
+        ,l.logistics_name
+        ,l.logistics_num
         FROM
-            sps_order
+        sps_order o
+        JOIN
+        sps_order_logistics l
+        ON  o.order_id=l.orderid
+        WHERE
+        o.order_id=#{orderNo}
+
+    </select>
+
+    <select id="selectByMoreCondition" resultMap="BaseOrderResultMap1">
+        SELECT
+        o_id
+        ,orderid
+        ,shopkeeper
+        ,shopkeepername
+        ,selfemployed
+        ,selfname
+        ,scale
+        ,createtime
+        ,flag
+        ,payment
+        ,isdelete
+        ,remark
+        ,money
+        ,servicescale
+        ,servicemoney
+        ,phone
+        ,address
+        ,modifytime
+        ,sum_money
+        ,name
+        ,unit
+        ,loan_code
+        ,loan_start_time
+        ,loan_end_time
+        ,formality_rate
+        ,service_charge
+        ,loan_balance
+        FROM
+        sps_order
         <where>
             <if test="loanStartTime != null and loanStartTime != '' ">
-                <![CDATA[ and  loan_start_time <= #{loanStartTime,jdbcType=TIMESTAMP }]]>
+                <![CDATA[ and  createtime <= #{loanStartTime,jdbcType=TIMESTAMP }]]>
 
             </if>
             <if test="loanEndTime != null and loanEndTime != '' ">
-                <![CDATA[ and  loan_start_time <= #{loanEndTime,jdbcType=TIMESTAMP }]]>
+                <![CDATA[ and  createtime <= #{loanEndTime,jdbcType=TIMESTAMP }]]>
 
             </if>
             <if test="loanName != null and loanName !='' ">
-                and  shopkeepername like CONCAT('%',#{loanName,jdbcType=VARCHAR},'%' )
+                and shopkeepername like CONCAT('%',#{shopkeepername,jdbcType=VARCHAR},'%' )
             </if>
             <if test="loanStatus != null and loanStatus !='' ">
                 and flag like CONCAT('%',#{loanStatus,jdbcType=INTEGER},'%' )
@@ -122,130 +263,91 @@
             </if>
         </where>
     </select>
-    <select id="selectByTradeNO" parameterType="String" resultMap="BaseOrderResultMap">
-        SELECT
-          o.o_id
-         ,o.orderid
-         ,o.shopkeeper
-         ,o.shopkeepername
-         ,o.selfemployed
-         ,o.selfname
-         ,o.scale
-         ,o.createtime
-         ,o.flag
-         ,o.payment
-         ,o.isdelete
-         ,o.remark
-         ,o.money
-         ,o.servicescale
-         ,o.servicemoney
-         ,o.phone
-         ,o.address
-         ,o.modifytime
-         ,o.sum_money
-         ,o.name
-         ,o.unit
-         ,o.loan_code
-         ,o.loan_start_time
-         ,o.loan_end_time
-         ,o.formality_rate
-         ,o.service_charge
-         ,o.loan_balance
-          ,l.logistics_name
-          ,l.logistics_num
-          FROM
-             sps_order o
-          JOIN
-             sps_order_logistics l
-          ON  o.orderid=l.order_id
-           WHERE
-          o.orderid=#{orderNo}
 
+    <!--   <select id="selectByParametersPage" resultMap="BaseOrderResultMap">
+        select
+          orderid,name,money,createtime
+          <include refid="Base_Order_Column_List" />
+        from
+          sps_order
+        <where>
+          <if test="name != null and name != '' ">
+            name=#{name,jdbcType=VARCHAR}
+          </if>
+          <if test="orderid != null and orderid != '' ">
+            and orderid=#{orderid,jdbcType=VARCHAR}
+          </if>
+          <if test="startTime != null and startTime !='' ">
+            <![CDATA[ and createtime >= #{startTime,jdbcType=TIMESTAMP } ]]>
+          </if>
+          <if test="endTime != null and endTime !='' ">
+            <![CDATA[ and  createtime <= #{endTime,jdbcType=TIMESTAMP }]]>
+          </if>
+          <if test="flag != null and flag !='' ">
+            and flag=#{flag,jdbcType=VARCHAR}
+          </if>
+        </where>
+        order by createtime desc,money asc
+        <if test="size>0">
+          limit #{size}
+        </if>
+      </select>
+     -->
+    <select id="selectByParameters" resultMap="BaseOrderResultMap">
+        select
+        <!-- orderid,name,money,createtime  -->
+        <include refid="Base_Order_Column_List" />
+        from
+        sps_order
+        <where>
+            <if test="name!=null and name!='' ">
+                name like CONCAT('%','${name}','%' )
+            </if>
+            <if test="orderid!=null and orderid!='' ">
+                and orderid like CONCAT('%','${orderid}','%' )
+            </if>
+            <if test="channelName!=null and channelName!='' ">
+                and shopkeepername like CONCAT('%','${channelName}','%' )
+            </if>
+            <if test="selfname!=null and selfname!='' ">
+                and selfname like CONCAT('%','${selfname}','%' )
+            </if>
+            <if test="startTime != null and startTime !='' ">
+                <![CDATA[ and createtime >= #{startTime,jdbcType=TIMESTAMP } ]]>
+            </if>
+            <if test="endTime != null and endTime !='' ">
+                <![CDATA[ and  createtime <= #{endTime,jdbcType=TIMESTAMP }]]>
+            </if>
+            <if test="flagList.size > 0">
+                and flag in
+                <foreach collection="flagList" index="index" open="(" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by createtime desc,money asc
     </select>
-<!--   <select id="selectByParametersPage" resultMap="BaseOrderResultMap">
-    select 
-      orderid,name,money,createtime 
-      <include refid="Base_Order_Column_List" />
-    from
-      sps_order
-    <where>
-      <if test="name != null and name != '' ">
-        name=#{name,jdbcType=VARCHAR}
-      </if>
-      <if test="orderid != null and orderid != '' ">
-        and orderid=#{orderid,jdbcType=VARCHAR}
-      </if>
-      <if test="startTime != null and startTime !='' ">
-        <![CDATA[ and createtime >= #{startTime,jdbcType=TIMESTAMP } ]]>
-      </if>
-      <if test="endTime != null and endTime !='' ">
-        <![CDATA[ and  createtime <= #{endTime,jdbcType=TIMESTAMP }]]>
-      </if>
-      <if test="flag != null and flag !='' ">
-        and flag=#{flag,jdbcType=VARCHAR}
-      </if>
-    </where>
-    order by createtime desc,money asc
-    <if test="size>0">
-      limit #{size}
-    </if>
-  </select>
- -->  
- <select id="selectByParameters" resultMap="BaseOrderResultMap">
-    select 
-      <!-- orderid,name,money,createtime  -->
-      <include refid="Base_Order_Column_List" />
-    from 
-      sps_order
-    <where>
-      <if test="name!=null and name!='' ">
-        name like CONCAT('%','${name}','%' )
-      </if>
-      <if test="orderid!=null and orderid!='' ">
-        and orderid like CONCAT('%','${orderid}','%' )
-      </if>
-      <if test="channelName!=null and channelName!='' ">
-        and shopkeepername like CONCAT('%','${channelName}','%' )
-      </if>
-      <if test="selfname!=null and selfname!='' ">
-        and selfname like CONCAT('%','${selfname}','%' )
-      </if>
-       <if test="startTime != null and startTime !='' ">
-        <![CDATA[ and createtime >= #{startTime,jdbcType=TIMESTAMP } ]]>
-      </if>
-      <if test="endTime != null and endTime !='' ">
-        <![CDATA[ and  createtime <= #{endTime,jdbcType=TIMESTAMP }]]>
-      </if>
-      <if test="flagList.size > 0">
-        and flag in 
-        <foreach collection="flagList" index="index" open="(" separator="," close=")" item="item">
-        	 #{item}  
-        </foreach>
-      </if>
-    </where>
-    order by createtime desc,money asc
-  </select>
-  
-  <!-- 待确认订单去确认中同意或者拒绝处理 -->
-  <update id="updateOrderFlag" parameterType="org.sps.entity.order.Order">
-  	update sps_order
-  	<set>
-  		<if test="flag != null and flag != '' ">
-  			flag=#{flag}
-  		</if>
-  		<if test="remark != null and remark != '' ">
-  			,remark=#{remark}
-  		</if>
-  		<if test="modifytime != null">
-  			,modifytime=#{modifytime}
-  		</if>
-  	</set>
-  	<where>
-  		<if test="orderid != null and orderid != '' ">
-  			orderid=#{orderid}
-  		</if>
-  	</where>
-  </update>
-  
-  
+
+    <!-- 待确认订单去确认中同意或者拒绝处理 -->
+    <update id="updateOrderFlag" parameterType="org.sps.entity.order.Order">
+        update sps_order
+        <set>
+            <if test="flag != null and flag != '' ">
+                flag=#{flag}
+            </if>
+            <if test="remark != null and remark != '' ">
+                ,remark=#{remark}
+            </if>
+            <if test="modifytime != null">
+                ,modifytime=#{modifytime}
+            </if>
+        </set>
+        <where>
+            <if test="orderid != null and orderid != '' ">
+                orderid=#{orderid}
+            </if>
+        </where>
+    </update>
+
+
 </mapper>
