@@ -17,10 +17,10 @@
     <result column="bt_trade_after_balanc" property="tradeAfterBalanc" jdbcType="DECIMAL" />
     <result column="bt_trade_amount" property="tradeAmount" jdbcType="DECIMAL" />
     <result column="bt_trade_status" property="tradeStatus" jdbcType="VARCHAR" />
-    <result column="bt_user_id" property="userid" jdbcType="VARCHAR" />
-	<result column="standby1" property="userid" jdbcType="VARCHAR" />
-	<result column="standby2" property="userid" jdbcType="VARCHAR" />
-	<result column="bt_trade_no" property="userid" jdbcType="VARCHAR" />
+    <result column="bt_user_id" property="userId" jdbcType="VARCHAR" />
+	<result column="standby1" property="standby1" jdbcType="VARCHAR" />
+	<result column="standby2" property="standby2" jdbcType="VARCHAR" />
+	<result column="bt_trade_no" property="tradeNo" jdbcType="VARCHAR" />
 	<result column="orderid" property="orderId" jdbcType="VARCHAR" />
 	<association property="cahnnelBank" javaType="org.sps.entity.merchant.SpsChannelBank">
 		<id column="id" property="id" jdbcType="INTEGER" />
@@ -52,7 +52,6 @@
 		<result column="bt_trade_amount" property="tradeAmount" jdbcType="DECIMAL" />
 		<result column="bt_trade_status" property="tradeStatus" jdbcType="VARCHAR" />
 		<result column="bt_user_id" property="userId" jdbcType="VARCHAR" />
-		<result column="standby1" property="standby1" jdbcType="VARCHAR" />
 		<result column="standby1" property="standby1" jdbcType="VARCHAR" />
 		<result column="standby2" property="standby2" jdbcType="VARCHAR" />
 		<result column="bt_trade_no" property="tradeNo" jdbcType="VARCHAR" />

@@ -160,7 +160,7 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             bankDrawAudio.setAmount(info.getTradeAmount());
             bankDrawAudio.setPayType(info.getTradeType());
             bankDrawAudio.setRemark(info.getStandby1());
-            bankDrawAudio.setPayDate(info.getAuditDate());
+            bankDrawAudio.setPayDate(info.getApplicationStartDate());
             bankDrawAudio.setPayType(info.getTradeType());
             listDrawAudio.add(bankDrawAudio);
         }
@@ -186,7 +186,7 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             bankDrawAudio.setAmount(info.getTradeAmount());
             bankDrawAudio.setPayType(info.getTradeType());
             bankDrawAudio.setRemark(info.getStandby1());
-            bankDrawAudio.setPayDate(info.getAuditDate());
+            bankDrawAudio.setPayDate(info.getApplicationStartDate());
             bankDrawAudio.setPayType(info.getTradeType());
             listDrawAudio.add(bankDrawAudio);
         }
