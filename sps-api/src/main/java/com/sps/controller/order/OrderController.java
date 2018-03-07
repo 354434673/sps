@@ -30,20 +30,18 @@ public class OrderController {
      */
     @RequestMapping(value = "/saveOrder", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo saveOrUpdate(@RequestBody List<SpsPurchaseOrder> order,@RequestBody SpsOrder spsOrder) {
+    public ReturnInfo saveOrUpdate(@RequestBody List<SpsPurchaseOrder> order) {
         ReturnInfo ri = new ReturnInfo();
         try {
-            Map<String,Object> map= purchaseOrderService.saveOrder(order,spsOrder);
+            Map<String,Object> map= purchaseOrderService.saveOrder(order);
             //成功返回当前用户地址个人信息
-            if((Integer) map.get("flag")==0){
-                ri.setData(map.get("company"));
+                if((Integer) map.get("flag")==0){
                 ri.setSuccess(Message.API_SUCCESS_FLAG);
                 ri.setCode(Message.API_SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
             }else {
                 ri.setSuccess(Message.API_SUCCESS_FLAG);
-                ri.setCode((String) map.get("flag"));
-                ri.setMsg((String) map.get("goodsName"));
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,6 +63,7 @@ public class OrderController {
         ReturnInfo ri = new ReturnInfo();
         try {
             Map<String,Object> map= purchaseOrderService.verificationOrder(order);
+
             //成功返回当前用户地址个人信息
             if((Integer) map.get("flag")==0){
                 ri.setData(map.get("company"));
@@ -73,8 +72,8 @@ public class OrderController {
                 ri.setMsg(Message.API_SUCCESS_MSG);
             }else {
                 ri.setSuccess(Message.API_SUCCESS_FLAG);
-                ri.setCode((String) map.get("flag"));
-                ri.setMsg((String) map.get("goodsName"));
+                ri.setCode(""+(Integer) map.get("flag"));
+                ri.setMsg(""+(String) map.get("goodsName"));
             }
         } catch (Exception e) {
             e.printStackTrace();

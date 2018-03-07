@@ -6,8 +6,25 @@ import java.util.Date;
 
 public class SpsPurchaseOrder implements Serializable {
 
-    private String customerId;
 
+    //订单所需
+    private BigDecimal payment;
+    private BigDecimal money;
+    private BigDecimal serviceMoney;
+    private BigDecimal shopPayMoney;
+    private Integer scale;
+    private String selfName;
+    private String phone;
+    private String address;
+    private String unit;
+    private String name;
+    private String remark;
+
+
+
+
+
+    private String customerId;
     private Integer groundingFlag;
     private Integer platGoodsId;
     private String goodsName;
@@ -38,6 +55,94 @@ public class SpsPurchaseOrder implements Serializable {
 
     private Date orderUpdateTime;
 
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSelfName() {
+        return selfName;
+    }
+
+    public void setSelfName(String selfName) {
+        this.selfName = selfName;
+    }
+
+    public BigDecimal getPayment() {
+        return payment;
+    }
+
+    public void setPayment(BigDecimal payment) {
+        this.payment = payment;
+    }
+
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+
+    public BigDecimal getShopPayMoney() {
+        return shopPayMoney;
+    }
+
+    public void setShopPayMoney(BigDecimal shopPayMoney) {
+        this.shopPayMoney = shopPayMoney;
+    }
+
+    public Integer getScale() {
+        return scale;
+    }
+
+    public void setScale(Integer scale) {
+        this.scale = scale;
+    }
+
+    public BigDecimal getServiceMoney() {
+        return serviceMoney;
+    }
+
+    public void setServiceMoney(BigDecimal serviceMoney) {
+        this.serviceMoney = serviceMoney;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public String getCustomerId() {
         return customerId;
