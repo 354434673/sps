@@ -895,52 +895,52 @@ public class SpsUserExample {
             return (Criteria) this;
         }
 
-        public Criteria andUserSupplierNumEqualTo(Integer value) {
+        public Criteria andUserSupplierNumEqualTo(String value) {
             addCriterion("user_supplier_num =", value, "userSupplierNum");
             return (Criteria) this;
         }
 
-        public Criteria andUserSupplierNumNotEqualTo(Integer value) {
+        public Criteria andUserSupplierNumNotEqualTo(String value) {
             addCriterion("user_supplier_num <>", value, "userSupplierNum");
             return (Criteria) this;
         }
 
-        public Criteria andUserSupplierNumGreaterThan(Integer value) {
+        public Criteria andUserSupplierNumGreaterThan(String value) {
             addCriterion("user_supplier_num >", value, "userSupplierNum");
             return (Criteria) this;
         }
 
-        public Criteria andUserSupplierNumGreaterThanOrEqualTo(Integer value) {
+        public Criteria andUserSupplierNumGreaterThanOrEqualTo(String value) {
             addCriterion("user_supplier_num >=", value, "userSupplierNum");
             return (Criteria) this;
         }
 
-        public Criteria andUserSupplierNumLessThan(Integer value) {
+        public Criteria andUserSupplierNumLessThan(String value) {
             addCriterion("user_supplier_num <", value, "userSupplierNum");
             return (Criteria) this;
         }
 
-        public Criteria andUserSupplierNumLessThanOrEqualTo(Integer value) {
+        public Criteria andUserSupplierNumLessThanOrEqualTo(String value) {
             addCriterion("user_supplier_num <=", value, "userSupplierNum");
             return (Criteria) this;
         }
 
-        public Criteria andUserSupplierNumIn(List<Integer> values) {
+        public Criteria andUserSupplierNumIn(List<String> values) {
             addCriterion("user_supplier_num in", values, "userSupplierNum");
             return (Criteria) this;
         }
 
-        public Criteria andUserSupplierNumNotIn(List<Integer> values) {
+        public Criteria andUserSupplierNumNotIn(List<String> values) {
             addCriterion("user_supplier_num not in", values, "userSupplierNum");
             return (Criteria) this;
         }
 
-        public Criteria andUserSupplierNumBetween(Integer value1, Integer value2) {
+        public Criteria andUserSupplierNumBetween(String value1, String value2) {
             addCriterion("user_supplier_num between", value1, value2, "userSupplierNum");
             return (Criteria) this;
         }
 
-        public Criteria andUserSupplierNumNotBetween(Integer value1, Integer value2) {
+        public Criteria andUserSupplierNumNotBetween(String value1, String value2) {
             addCriterion("user_supplier_num not between", value1, value2, "userSupplierNum");
             return (Criteria) this;
         }

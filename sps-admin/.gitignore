@@ -1,7 +1,8 @@
 ##ignore this file##
 /target/ 
 .classpath
-.settings      
+.settings  
+/src/test    
  ##filter databfile、sln file##
 *.mdb  
 *.ldb  

@@ -130,7 +130,10 @@ public class UserController {
 		arg0.setSource(source);
 		ServiceResult<LoginInfo> login4Browser = iDianfuPassportService.login4Native(arg0);
 		
-		HashMap<String, Object> userLogin = userService.userLogin(mobile, password);
+		HashMap<String, Object> userLogin = null;
+		if(login4Browser.getSuccess()){
+			userLogin = userService.userLogin(mobile, password);
+		}
 
 		return userLogin;
 	}

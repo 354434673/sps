@@ -392,6 +392,8 @@
 			<id>dev</id>
 			<properties>
 				<env>dev</env>
+				<dubbo.group>auth_dev1</dubbo.group>
+				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
