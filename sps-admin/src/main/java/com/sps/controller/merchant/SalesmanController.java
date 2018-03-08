@@ -13,100 +13,59 @@ import org.sps.service.merchant.read.ChannelSalesmanReadService;
 import org.sps.service.merchant.write.ChannelSalesmanWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+
 /**
  * 业务员控制层
- * @ClassName:  SalesmanController   
- * @Description:TODO(这里用一句话描述这个类的作用)   
+ *
+ * @ClassName: SalesmanController
+ * @Description:TODO(这里用一句话描述这个类的作用)
  * @author YangNingSheng
  * @date 2018年1月12日 下午4:14:48
  */
 @RestController
 @RequestMapping("/salesman")
 public class SalesmanController {
-	@Reference(check=false,group="dianfu")
+	@Reference(check = false, group = "dianfu")
 	private ChannelSalesmanWriteService salesmanWrite;
-	@Reference(check=false,group="dianfu")
+	@Reference(check = false, group = "dianfu")
 	private ChannelSalesmanReadService salesmanRead;
+
 	/**
-	 * 添加业务员
-	 * @Title: insertSalesman   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
-	 * @param: @param salesman
-	 * @param: @return  
-	 * @author YangNingSheng    
-	 * @date 2018年1月12日 下午4:15:01
-	 * @return: HashMap<String,Object>      
-	 * @throws
+	 * 添加业务员 @Title: insertSalesman @Description:
+	 * TODO(这里用一句话描述这个方法的作用) @param: @param salesman @param: @return @author
+	 * YangNingSheng @date 2018年1月12日 下午4:15:01 @return:
+	 * HashMap<String,Object> @throws
 	 */
 	@RequestMapping("insertSalesman")
-	public HashMap<String,Object>  insertSalesman(SpsChannelSalesman salesman){
-		
+	public HashMap<String, Object> insertSalesman(SpsChannelSalesman salesman) {
+
 		HashMap<String, Object> insertSalesman = salesmanWrite.insertSalesman(salesman);
-		
+
 		return insertSalesman;
 	};
+
+	@RequestMapping("updateSalesman")
+	public HashMap<String, Object> updateSalesman(SpsChannelSalesman salesman) {
+		HashMap<String, Object> updateSalesman = salesmanWrite.updateSalesman(salesman);
+
+		return updateSalesman;
+	}
+
 	/**
-	 * 查询业务员列表
-	 * @Title: getSalesmanList   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
-	 * @param: @param salesmanName
-	 * @param: @param salesmanIdcard
-	 * @param: @param salesmanPhone
-	 * @param: @param salesmanEmail
-	 * @param: @param bei1
-	 * @param: @param page
-	 * @param: @param limit
-	 * @param: @return  
-	 * @author YangNingSheng    
-	 * @date 2018年1月12日 下午4:15:12
-	 * @return: HashMap<String,Object>      
-	 * @throws
+	 * 查询业务员列表 @Title: getSalesmanList @Description:
+	 * TODO(这里用一句话描述这个方法的作用) @param: @param salesmanName @param: @param
+	 * salesmanIdcard @param: @param salesmanPhone @param: @param
+	 * salesmanEmail @param: @param bei1 @param: @param page @param: @param
+	 * limit @param: @return @author YangNingSheng @date 2018年1月12日
+	 * 下午4:15:12 @return: HashMap<String,Object> @throws
 	 */
 	@RequestMapping("/getSalesmanList.json")
-	public HashMap<String,Object>  getSalesmanList(String salesmanName, String salesmanIdcard, 
-			String salesmanPhone, String salesmanEmail, String bei1, Integer page, Integer limit){
-		
-		HashMap<String, Object> salesmanList = 
-				salesmanRead.getSalesmanList(salesmanName, salesmanIdcard, salesmanPhone,
-						salesmanEmail, bei1, page, limit);
-		
+	public HashMap<String, Object> getSalesmanList(String salesmanName, String salesmanIdcard, String salesmanPhone,
+			String salesmanEmail, String bei1, Integer page, Integer limit) {
+
+		HashMap<String, Object> salesmanList = salesmanRead.getSalesmanList(salesmanName, salesmanIdcard, salesmanPhone,
+				salesmanEmail, bei1, page, limit);
+
 		return salesmanList;
-	}
-	/**
-	 * 更改业务员状态
-	 * @Title: updateSalesmanState   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
-	 * @param: @param state
-	 * @param: @param id
-	 * @param: @return  
-	 * @author YangNingSheng    
-	 * @date 2018年3月2日 上午11:25:11
-	 * @return: HashMap<String,Object>      
-	 * @throws
-	 */
-	@RequestMapping("/updateSalesmanState")
-	public HashMap<String,Object>  updateSalesmanState(String state, Integer id){
-		
-		HashMap<String, Object> updateSalesman = salesmanWrite.updateSalesmanState(state, id);
-		
-		return updateSalesman;
-	}
-	/**
-	 * 更改业务员信息
-	 * @Title: updateSalesman   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
-	 * @param: @param salesman
-	 * @param: @return  
-	 * @author YangNingSheng    
-	 * @date 2018年3月2日 上午11:25:19
-	 * @return: HashMap<String,Object>      
-	 * @throws
-	 */
-	@RequestMapping("/updateSalesman")
-	public HashMap<String,Object>  updateSalesman(SpsChannelSalesman salesman){
-		
-		HashMap<String, Object> updateSalesman = salesmanWrite.updateSalesman(salesman);
-		
-		return updateSalesman;
 	}
 }

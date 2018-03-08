@@ -43,7 +43,7 @@
        #{tradeAfterBalanc,jdbcType=DECIMAL},
        #{tradeAmount,jdbcType=DECIMAL},
        #{tradeStatus,jdbcType=VARCHAR},
-       #{userid,jdbcType=VARCHAR},
+       #{userId,jdbcType=VARCHAR},
        #{standby1,jdbcType=VARCHAR}
       )
    </insert>
@@ -93,8 +93,8 @@
     <if test="tradeStatus != null" >
         bt_trade_status = #{tradeStatus,jdbcType=VARCHAR}
     </if>
-    <if test="userid != null" >
-        bt_user_id = #{userid,jdbcType=VARCHAR}
+    <if test="userId != null" >
+        bt_user_id = #{userId,jdbcType=VARCHAR}
     </if>
     </set>
      where bt_trade_serial_num=#{tradeSerialNum}

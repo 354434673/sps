@@ -1,12 +1,12 @@
 package com.sps.serviceImpl.finance.read;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.merchant.read.SpsChannelBankReadMapper;
 import com.sps.dao.merchant.read.SpsChannelBankTradeReadMapper;
 import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.finance.BankDrawAudio;
 import org.sps.entity.finance.OrderDetail;
@@ -35,17 +35,18 @@ public class CashAuditServiceImpl implements CashAuditReadService {
     private SpsChannelBankReadMapper bankRead;
     @Override
     public HashMap<String, Object> getBankTradeList(Integer page, Integer limit, String applicationStartDate, String paymentDate, String tradeStatus, String enterpriseCompanyName, String loginName) {
-
+        PageHelper.startPage(page, limit);
         List<SpsChannelBankTrade> listBankTrade = bankTradeRead.selectListCashAudit(applicationStartDate,paymentDate,tradeStatus,enterpriseCompanyName,loginName);
         List<BankDrawAudio> listDrawAudio = new ArrayList<BankDrawAudio>();
         for (SpsChannelBankTrade info: listBankTrade){
 
             BankDrawAudio bankDrawAudio = new BankDrawAudio();
+            bankDrawAudio.setId(info.getId());
             bankDrawAudio.setBankCard(info.getCahnnelBank().getAccounts());
             bankDrawAudio.setAmount(info.getTradeAmount());
             bankDrawAudio.setApplicationDate(info.getApplicationStartDate());
             bankDrawAudio.setCompanyName(info.getEnterprise().getEnterpriseCompanyName());
-            bankDrawAudio.setPayDate(info.getPaymentDate());
+            bankDrawAudio.setPayDate(info.getApplicationStartDate());
             bankDrawAudio.setStatus(info.getTradeStatus());
             bankDrawAudio.setBalance(info.getTradeAfterBalanc());
             bankDrawAudio.setUserName(info.getCahnnelBank().getUserName());
@@ -58,7 +59,7 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             listDrawAudio.add(bankDrawAudio);
         }
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
-        PageHelper.startPage(page, limit);
+
         PageInfo pageInfo = new PageInfo(listDrawAudio);
         hashMap.put("code", 0);
         hashMap.put("msg", "获取成功");
@@ -76,6 +77,7 @@ public class CashAuditServiceImpl implements CashAuditReadService {
      */
     @Override
     public HashMap<String, Object> getBankTradeAuditList(Integer page, Integer limit, String userName) {
+        PageHelper.startPage(page, limit);
         List<SpsChannelBankTrade> listBankTrade = bankTradeRead.selectListCashAuditByUserName(userName);
         List<BankDrawAudio> listDrawAudio = new ArrayList<BankDrawAudio>();
         for (SpsChannelBankTrade info: listBankTrade){
@@ -85,7 +87,7 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             listDrawAudio.add(bankDrawAudio);
         }
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
-        PageHelper.startPage(page, limit);
+
         PageInfo pageInfo = new PageInfo(listDrawAudio);
         hashMap.put("code", 0);
         hashMap.put("msg", "获取成功");
@@ -124,7 +126,9 @@ public class CashAuditServiceImpl implements CashAuditReadService {
 
     @Override
     public HashMap<String, Object> getBankTradeIncomePayList(Integer page, Integer limit, String startTime, String endTime, BigDecimal minAmount, BigDecimal maxAmount, String payType, String companyName, String reamrk) {
+        PageHelper.startPage(page, limit);
         List<SpsChannelBankTrade> list = bankTradeRead.selectIncomePaymentList(startTime, endTime, minAmount, maxAmount, payType, companyName, reamrk);
+
         List<BankDrawAudio> listDrawAudio = new ArrayList<BankDrawAudio>();
         for (SpsChannelBankTrade info: list){
             //保存收支信息
@@ -134,22 +138,22 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             bankDrawAudio.setAmount(info.getTradeAmount());
             bankDrawAudio.setPayType(info.getTradeType());
             bankDrawAudio.setRemark(info.getStandby1());
-            bankDrawAudio.setPayDate(info.getApplicationStartDate());
+            bankDrawAudio.setPayDate(info.getPaymentDate());
             bankDrawAudio.setPayType(info.getTradeType());
             listDrawAudio.add(bankDrawAudio);
         }
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
-        PageHelper.startPage(page, limit);
-        PageInfo pageInfo = new PageInfo(listDrawAudio);
+        Page p = (Page) list;
         hashMap.put("code", 0);
         hashMap.put("msg", "获取成功");
-        hashMap.put("count", pageInfo.getTotal());
+        hashMap.put("count", p.getTotal());
         hashMap.put("data", listDrawAudio.size() != 0 ? listDrawAudio : null);
         return hashMap;
     }
 
     @Override
     public HashMap<String, Object> getBankTradeIncomeList(Integer page, Integer limit, String startTime, String endTime, BigDecimal minAmount, BigDecimal maxAmount,String payType, String companyName, String reamrk) {
+        PageHelper.startPage(page, limit);
         List<SpsChannelBankTrade> list = bankTradeRead.selectBankTradeTypeList(startTime, endTime, minAmount, maxAmount, payType, companyName, reamrk);
         List<BankDrawAudio> listDrawAudio = new ArrayList<BankDrawAudio>();
         for (SpsChannelBankTrade info: list){
@@ -165,7 +169,6 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             listDrawAudio.add(bankDrawAudio);
         }
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
-        PageHelper.startPage(page, limit);
         PageInfo pageInfo = new PageInfo(listDrawAudio);
         hashMap.put("code", 0);
         hashMap.put("msg", "获取成功");
@@ -176,6 +179,7 @@ public class CashAuditServiceImpl implements CashAuditReadService {
 
     @Override
     public HashMap<String, Object> getBankTradePaymentList(Integer page, Integer limit, String startTime, String endTime, BigDecimal minAmount, BigDecimal maxAmount, String payType,String companyName, String reamrk) {
+        PageHelper.startPage(page, limit);
         List<SpsChannelBankTrade> list = bankTradeRead.selectBankTradeTypeList(startTime, endTime, minAmount, maxAmount, payType, companyName, reamrk);
         List<BankDrawAudio> listDrawAudio = new ArrayList<BankDrawAudio>();
         for (SpsChannelBankTrade info: list){
@@ -191,7 +195,6 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             listDrawAudio.add(bankDrawAudio);
         }
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
-        PageHelper.startPage(page, limit);
         PageInfo pageInfo = new PageInfo(listDrawAudio);
         hashMap.put("code", 0);
         hashMap.put("msg", "获取成功");

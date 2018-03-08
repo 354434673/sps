@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.app.HelpDao">
+	<resultMap id="baseInfo" type="com.sps.entity.app.Help">
+		<id column="h_id" property="id" jdbcType="INTEGER"/>
+		<result column="h_title"  property="title" jdbcType="VARCHAR"/>
+		<result column="h_content"  property="content" jdbcType="VARCHAR"/>
+		<result column="h_createtime"  property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="h_flag"  property="flag" jdbcType="INTEGER"/>
+	</resultMap>
+	<sql id="baseSql" >
+		h_id,
+		h_title,
+		h_content,
+		h_createtime
+	</sql>
+	<select id="selectAllTittle" resultMap="baseInfo">
+		SELECT
+			<include refid="baseSql"/>
+		FROM
+		sps_app_help
+		WHERE
+		h_flag=1
+	</select>
+	<select id="selectContent" parameterType="int" resultMap="baseInfo">
+		SELECT
+		<include refid="baseSql"/>
+		FROM
+		sps_app_help
+		WHERE
+			h_id=#{helpId}
+	</select>
+
+</mapper>

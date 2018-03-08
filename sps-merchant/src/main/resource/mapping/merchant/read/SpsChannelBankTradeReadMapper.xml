@@ -103,6 +103,7 @@
 		b.b_bank,
 		b.b_available_balance,
 		b.b_user_name,
+		bt.id,
 		bt.bt_trade_serial_num,
 		bt.bt_application_start_date,
 		bt.bt_application_stop_date,
@@ -136,7 +137,7 @@
 		<if test="applicationStartDate != null and applicationStartDate != '' " >
 			and bt.bt_application_start_date  <![CDATA[ >= ]]>    #{applicationStartDate,jdbcType=VARCHAR}
 		</if>
-		<if test="applicationStartDate != null and applicationStartDate != '' " >
+		<if test="paymentDate != null and paymentDate != '' " >
 			and bt.bt_application_start_date  <![CDATA[ <= ]]>    #{paymentDate,jdbcType=VARCHAR}
 		</if>
 
@@ -202,7 +203,7 @@
 			<if test="applicationStartDate != null and applicationStartDate != '' " >
 				and bt.bt_application_start_date   <![CDATA[ >= ]]>    #{applicationStartDate,jdbcType=VARCHAR}
 			</if>
-			<if test="applicationStartDate != null and applicationStartDate != '' " >
+			<if test="paymentDate != null and paymentDate != '' " >
 				and bt.bt_application_start_date  <![CDATA[ <= ]]>    #{paymentDate,jdbcType=VARCHAR}
 			</if>
 
@@ -232,10 +233,10 @@
 		e.channel_num=b.channl_num
 		<where>
 			<if test="startTime != null and startTime != '' " >
-				and bt.bt_audit_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
+				and bt.bt_payment_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
 			</if>
 			<if test="endTime != null and endTime != '' " >
-				and bt.bt_audit_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
+				and bt.bt_payment_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
 			</if>
 
 			<if test="minAmount != null and minAmount != '' " >

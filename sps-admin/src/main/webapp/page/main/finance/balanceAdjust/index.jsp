@@ -38,10 +38,10 @@
 			 	<div class="layui-form-item">
 			 			<label class="layui-form-label">调整日期:</label>
                     	<div class="layui-input-inline">
-                       	 	<input type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required">
+							<input type="text"  readonly=""  class="layui-input" id="startTime" placeholder="选择范围" autocomplete="off" lay-verify="">
                     	</div>
                     	<div class="layui-input-inline">
-                        	<input type="text" class="layui-input" id="endTime" placeholder="年-月-日" lay-verify="required">
+                        	<input type="text"  readonly=""  class="layui-input" id="endTime" placeholder="选择范围"   autocomplete="off" lay-verify="">
                     	</div>
 			 	</div>
 				 <div>
@@ -84,16 +84,23 @@
         var laypage = layui.laypage;
         var layer = layui.layer ;
         var laydate = layui.laydate;
+		var newDate = new Date().setDate(new Date().getDate() - 60)//60天以前的日期
+		//执行一个laydate实例
+		laydate.render({
+			elem: '#startTime', //指定元素
+			type:'date',
+			range: '至',
+			min: getDate(newDate),
+			max: getDate()
+		});
+		laydate.render({
+			elem: '#endTime', //指定元素
+			type:'date',
+			range: '至',
+			min: getDate(newDate),
+			max: getDate()
+		});
       //加载日期框
-        laydate.render({
-            elem: '#startTime',
-            type: 'datetime'
-
-        });
-        laydate.render({
-            elem: '#endTime',
-            type: 'datetime'
-        });
         table.render({
             elem: '#drawAudioList'
             ,url: '<%=path%>/cashAudit/findAudioList' //数据接口
@@ -109,12 +116,45 @@
                 ,{field: 'tool', title: '操作',width:270,align:'center', event: 'setSign' ,toolbar:'#bar'}
             ]]
         });
+
       //查询
         $('#search').on('click',function(){
+			var startTime = $('#startTime').val()
+			console.log(startTime)
+			var startTime1 = null;
+			var endTime1 = null;
+			if(startTime != null || startTime != ''){
+				var date= $('#startTime').val().split('至')
+				startTime1 = date[0];
+				endTime1 = date[1];
+			}
+
+			var startTime1 = date[0];
+			var endTime1 = date[1];
+			if(startTime1==''||startTime1==null){
+				endTime1='';
+			}
+			var entTime = $('#endTime').val();
+			var startTime2 = null;
+			var endTime2 = null;
+			if(entTime != null || entTime != ''){
+				var date2= $('#entTime').val().split('至')
+				startTime2 = date[0];
+				endTime2 = date[1];
+			}
+
+			var startTime2 = date[0];
+			var endTime2 = date[1];
+			if(startTime2==''||startTime2==null){
+				endTime2='';
+			}
+
+
             var kehuNo = $('#kehuNo').val();
             var kehuName = $('#kehuName').val();
-            var startTime = $('#startTime').val();
+            /*var startTime = $('#startTime').val();
             var name = $('#endTime').val();
+*/
             table.reload('id', {
                 where: {
 					applicationDate:startTime,

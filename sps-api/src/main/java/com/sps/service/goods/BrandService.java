@@ -39,4 +39,6 @@ public interface BrandService {
     HashMap<String,Object> findBrandList(Integer page, Integer limit, String brandName, String brandEnglishName);
 
     HashMap<String,Object> findBrand(Map<String, Object> map);
+
+
 }
