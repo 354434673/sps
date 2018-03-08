@@ -115,9 +115,10 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public HashMap<String, Object> queryOrderList(Integer page, Integer limit, String loanStartTime, String loanEndTime, String loanName, Integer loanStatus, String orderNo) {
+		PageHelper.startPage(page, limit);
 		List<Order> orderList = orderMapper.selectByMoreCondition(loanStartTime, loanEndTime, loanName, loanStatus, orderNo);
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		PageHelper.startPage(page, limit);
+
 		PageInfo pageInfo = new PageInfo(orderList);
 		hashMap.put("code", 0);
 		hashMap.put("msg", "获取成功");

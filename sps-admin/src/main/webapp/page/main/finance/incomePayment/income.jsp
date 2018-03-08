@@ -25,17 +25,15 @@
 
 			<div class="layui-form-item">
 				<label class="layui-form-label">交易时间:</label>
-				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required">
+				<div class="layui-input-inline" style="width: 300px;">
+					<input id="time"   readonly="" type="text" name="startTime"  lay-verify="" placeholder="选择范围 " autocomplete="off" class="layui-input">
 				</div>
-				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="endTime" placeholder="年-月-日" lay-verify="required">
-				</div>
+
 				<label class="layui-form-label">交易方:</label>
 				<div class="layui-input-inline">
 					<input type="text" class="layui-input" id="account"  lay-verify="required">
 				</div>
-				<button class="layui-btn layui-btn-primary" id="search">查询</button>
+				<button class="layui-btn layui-btn-primary" id="search" >查询</button>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">交易金额:</label>
@@ -90,15 +88,15 @@
 			var layer = layui.layer ;
 			var laydate = layui.laydate;
 			//加载日期框
-			laydate.render({
-				elem: '#startTime',
-				type: 'datetime'
-
-			});
-			laydate.render({
-				elem: '#endTime',
-				type: 'datetime'
-			});
+            var newDate = new Date().setDate(new Date().getDate() - 60)//60天以前的日期
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#time', //指定元素
+                type:'datetime',
+                range: '至',
+                min: getDate(newDate),
+                max: getDate()
+            });
 			table.render({
 				elem: '#drawAudioList'
 				,url: '<%=path%>/incomePayment/findIncomeList' //数据接口
@@ -118,8 +116,9 @@
 			//查询
 			$('#search').on('click',function(){
 
-				var startTime = $('#startTime').val();
-				var endTime = $('#endTime').val();
+                var date= $('#time').val().split('至');
+                var startTime = date[0];
+                var endTime = date[1];
 				var minAmount = $('#minAmount').val();
 				var maxAmount = $('#maxAmount').val();
 				var name = $('#name').val();
@@ -141,6 +140,24 @@
 				$('select').val('');
 			});
 		});
+        //时间格式化
+        function getDate(data){
+            if(data == null || data == ""){
+                da = new Date();
+            }else{
+                da = new Date(data);
+            }
+            var year = da.getFullYear();
+            var month = da.getMonth()+1;
+            var date = da.getDate();
+			/*var hours= da.getHours();
+			 var minutes= da.getMinutes();
+			 var seconds= da.getSeconds();*/
+
+            var dat =[year,month,date].join('-');
+            var tad = [23,59,59].join(':');
+            return [dat,tad].join(' ');
+        }
 	</script>
 
 
