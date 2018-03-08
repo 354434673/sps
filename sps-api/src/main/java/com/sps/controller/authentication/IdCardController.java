@@ -1,20 +1,14 @@
 package com.sps.controller.authentication;
 
-import java.util.HashMap;
-
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.jzfq.auth.core.api.FaceAuthApi;
-import com.jzfq.auth.core.api.JzfqAuthApi;
-import com.jzfq.auth.core.api.entiy.AuthLinkDetail;
 import com.jzfq.auth.core.api.entiy.face.AuthFaceIdCard;
 import com.jzfq.auth.core.api.vo.JsonResult;
-import com.sps.common.PropertyUtil;
+
 
 @RestController
 @RequestMapping("/authentication")
@@ -75,5 +69,8 @@ public class IdCardController {
 		
 		JsonResult saveLinkDetail = jzfqAuthApi.saveLinkDetail(arg0);
 		return saveLinkDetail;
+=======
+		return null;
+>>>>>>> branch 'backups' of http://git.juzifenqi.cn/sps/sps.git
 	}*/
 }

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.sps.common.Message;
 import com.sps.common.StringUtil;
+import com.sps.dao.GoodShopDao;
 import com.sps.entity.merchant.SpsChannelBusiness;
+import com.sps.service.goods.GoodCategoryService;
 import com.sps.service.merchant.EnterpriseService;
 /**
  * 商户相关api

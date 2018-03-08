@@ -26,6 +26,7 @@ import com.sps.entity.merchant.SpsChannelEnterprise;
 import com.sps.entity.shopkeeper.SpsShopkeeper;
 import com.sps.service.base.BaseOperate;
 import com.sps.service.goods.ApiGoodShopService;
+import com.sps.service.goods.GoodCategoryService;
 import com.sps.service.merchant.EnterpriseService;
 import com.sps.service.shopkeeper.ShopkeeperService;
 @Service
@@ -46,29 +47,42 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 	private SpsGoodShopSkuMapper spsGoodShopSkuMapper;
 	@Resource
 	private SpsCustomCategoryMapper spsCustomCategoryMapper;
+	@Resource
+	private GoodCategoryService goodCategoryService;
 	@Override
 	@Transactional(readOnly = true)
 	public HashMap<String, Object> queryMerchantList(String shopkeeperCustomerid) {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		ArrayList<String> arrayList = null;
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();//封装对象
+		
+		ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
+		
+		ArrayList<String> arrayList = new ArrayList<String>();;
 			
 			SpsShopkeeper queryShopkeeperList = shopkeeperService.queryShopkeeperList(shopkeeperCustomerid);
 			if(queryShopkeeperList != null){
-				//查询当前登录店主的主营业务
-				String shopkeeperBusinessType = queryShopkeeperList.getShopkeeperBusinessType();
-				
-				String[] split = shopkeeperBusinessType.split(",");
-				
-				arrayList = new ArrayList<String>();
-				for (String string : split) {
-					arrayList.add(string);
-				}
+				List<SpsChannelEnterprise> queryBusinessForApi = null;
+
 				try {
 					//根据店主主营业务,获取相同主营业务的商户列表
-					List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, null);
-					if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
+					if(StringUtil.isEmpty(shopkeeperCustomerid)){
+						queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, null , null);
+					}else{
+						//查询当前登录店主的主营业务
+						String shopkeeperBusinessType = queryShopkeeperList.getShopkeeperBusinessType();
+						
+						String[] split = shopkeeperBusinessType.split(",");
+						
+						for (String string : split) {
+							arrayList.add(string);
+						}
+						queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, null);
+					}
+/*					if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
 						//查询商户下的商品
 						for (SpsChannelEnterprise channel : queryBusinessForApi) {
+							
 							if(!"".equals(channel.getChannelNum())){
 								Map<String, Object> map = new HashMap<>();
 								map.put("shopNum", channel.getChannelNum());
@@ -81,11 +95,20 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 								}
 							}
 						}
+					}*/
+					for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
+						data = new HashMap<String, Object>();
+						data.put("id", spsChannelEnterprise.getEnterpriseId());
+						data.put("phone", spsChannelEnterprise.getGuarantee().getGuaranteeCorpPhone());
+						data.put("businessProduct", goodCategoryService.findListByIds(spsChannelEnterprise.getBusiness().getBusinessProduct()));
+						data.put("companyName", spsChannelEnterprise.getEnterpriseCompanyName());
+						data.put("picSrc", spsChannelEnterprise.getPic().getPicSrc());
+						result.add(data);
 					}
 					super.logger.error(Message.SUCCESS_MSG);
 					
 					hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG, 
-							Message.SUCCESS_MSG,queryBusinessForApi.size(), queryBusinessForApi);
+							Message.SUCCESS_MSG,queryBusinessForApi.size(), result);
 				} catch (Exception e) {
 					e.printStackTrace();
 					super.logger.error(Message.SYSTEM_ERROR_MSG);
@@ -104,6 +127,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 	@Transactional(readOnly = true)
 	public HashMap<String, Object> queryMerchantDetail(Integer enterpriseId ,Integer categoryId, String orderType, String goodsName) {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		
 		ArrayList<String> arrayList = new ArrayList<String>();
 			
 			try {

@@ -280,4 +280,52 @@
       unit = #{unit,jdbcType=VARCHAR}
     where o_id = #{oId,jdbcType=INTEGER}
   </update>
+
+  <!-- 查询所有 -->
+  <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
+    select
+    o.o_id, o.orderid, o.shopkeeper, o.shopkeepername, o.selfemployed, o.selfname, o.scale, o.createtime,
+    o.flag, o.payment, o.isdelete, o.remark, o.money, o.servicescale, o.servicemoney, o.phone, o.address,
+    o.modifytime, o.sum_money, o.name, o.unit
+    from sps_order o
+    where 1=1
+    <if test="goodsName !=null and goodsName != ''">
+      and
+      o.orderid IN (
+      SELECT
+      a.orderid
+      FROM
+      sps_order a
+      LEFT JOIN sps_order_goods b ON a.orderid = b.orderid
+      WHERE
+      b.skuname LIKE CONCAT('%',#{goodsName,jdbcType=VARCHAR},'%')
+      GROUP BY
+      a.orderid
+      )
+    </if>
+    <if test="orderNum !=null and orderNum != ''">
+      and o.orderid LIKE CONCAT('%',#{orderNum,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="customerNum !=null and customerNum != ''">
+      and o.selfemployed = #{customerNum,jdbcType=VARCHAR}
+    </if>
+    <if test="shopkeeperNum !=null and shopkeeperNum != ''">
+      and o.shopkeeper =#{shopkeeperNum,jdbcType=VARCHAR}
+    </if>
+    <if test="flag !=null and flag != ''">
+      and o.flag =#{flag,jdbcType=INTEGER}
+    </if>
+    AND o.isdelete = 0
+    order by o.createtime desc
+
+  </select>
+
+
+  <select id="findById" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_order
+    where o_id = #{oId,jdbcType=INTEGER}
+    AND isdelete = 0
+  </select>
 </mapper>

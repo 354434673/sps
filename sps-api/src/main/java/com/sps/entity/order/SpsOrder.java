@@ -3,6 +3,7 @@ package com.sps.entity.order;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class SpsOrder implements Serializable {
 
@@ -52,6 +53,16 @@ public class SpsOrder implements Serializable {
 
     private String unit;
 
+    private List<SpsOrderGoods>  orderGoodsList;
+
+
+    public List<SpsOrderGoods> getOrderGoodsList() {
+        return orderGoodsList;
+    }
+
+    public void setOrderGoodsList(List<SpsOrderGoods> orderGoodsList) {
+        this.orderGoodsList = orderGoodsList;
+    }
 
     public BigDecimal getSumMoney() {
         return sumMoney;
