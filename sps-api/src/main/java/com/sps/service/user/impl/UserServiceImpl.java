@@ -70,5 +70,10 @@ public class UserServiceImpl implements UserService{
 
 		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
 	}
+	@Override
+	public HashMap<String, Object> insertUser(String phone, String password, String clientNum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

@@ -110,6 +110,10 @@ public class UserServiceImpl implements UserService {
 				user.setUserCreattime(new Date());
 
 				user.setUserUpdatetime(new Date());
+				
+				if(user.getUserMark() == 3 || user.getUserMark().equals("3")){
+					user.setUserSupplierNum((String) SecurityUtils.getSubject().getPrincipal());
+				}
 
 				int insertSelective = spsUserMapper.insertSelective(user);
 				if (insertSelective == 1) {

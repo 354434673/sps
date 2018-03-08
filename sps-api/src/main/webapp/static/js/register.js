@@ -81,12 +81,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         var telNum = document.getElementById('telNum');
                         aspenLib.ajax({
-                            url: location.protocol + "//" + location.hostname + ":8080/sps-api/user/getPhoneCode/regist",
+                            url: location.protocol + "//" + location.hostname + ":8080/sps-api/api/user/getPhoneCode/regist",
                             //url: location.protocol + "//" + location.hostname + "/user/getPhoneCode/regist",
                             type: 'POST',
                             dataType: 'json',
                             data: {
-                                category : 1,
+                                category : 3,
                                 mobile: telNum.value
                             },
                             success: function (data) {
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     var getTerminalType = document.querySelectorAll('body')[0].className.indexOf('ios') != -1 ? '3' : '2';
                     aspenLib.ajax({
-                        url: location.protocol + "//" + location.hostname + ":8080/sps-api/user/regist",
+                        url: location.protocol + "//" + location.hostname + ":8080/sps-api/api/user/regist",
                         type: 'post',
                         dataType: 'json',
                         data: {
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             code: checkCode.value
                         },
                         success: function (data) {
-                            if (data.result == 1) {
+                            if (data.success) {
                                 aspenLib.tips('您已注册成功！');
                                 try {
                                     _hmt.push(['_trackEvent', aspenLib.getQueryString('channel') + 'zhuce', 'dianfu_register', 'click', aspenLib.getQueryString('channel') + 'zhuce']);
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     setClear = null;
                                 }, 1000);
                             } else {
-                                aspenLib.tips(data.msg);
+                                aspenLib.tips(data.message);
                                 return;
                             }
                         },

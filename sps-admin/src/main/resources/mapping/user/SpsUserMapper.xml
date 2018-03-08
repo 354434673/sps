@@ -14,7 +14,7 @@
     <result column="user_updateTime" property="userUpdatetime" jdbcType="TIMESTAMP" />
     <result column="user_state" property="userState" jdbcType="INTEGER" />
     <result column="user_mark" property="userMark" jdbcType="INTEGER" />
-    <result column="user_supplier_num" property="userSupplierNum" jdbcType="INTEGER" />
+    <result column="user_supplier_num" property="userSupplierNum" jdbcType="VARCHAR" />
   		<collection property="role" javaType="list" ofType="com.sps.entity.user.SpsRole"  select="queryRole" column="user_id" >
   			 <id column="role_id" property="roleId" jdbcType="INTEGER" />
     		 <result column="role_name" property="roleName" jdbcType="VARCHAR" />
@@ -126,7 +126,7 @@
       #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, 
       #{userAge,jdbcType=INTEGER}, #{userSalt,jdbcType=VARCHAR}, #{userCreattime,jdbcType=TIMESTAMP}, 
       #{userUpdatetime,jdbcType=TIMESTAMP}, #{userState,jdbcType=INTEGER}, #{userMark,jdbcType=INTEGER}, 
-      #{userSupplierNum,jdbcType=INTEGER})
+      #{userSupplierNum,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.sps.entity.user.SpsUser" useGeneratedKeys="true" keyProperty="userId">
     insert into sps_user
@@ -209,7 +209,7 @@
         #{userMark,jdbcType=INTEGER},
       </if>
       <if test="userSupplierNum != null" >
-        #{userSupplierNum,jdbcType=INTEGER},
+        #{userSupplierNum,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -259,7 +259,7 @@
         user_mark = #{record.userMark,jdbcType=INTEGER},
       </if>
       <if test="record.userSupplierNum != null" >
-        user_supplier_num = #{record.userSupplierNum,jdbcType=INTEGER},
+        user_supplier_num = #{record.userSupplierNum,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -280,7 +280,7 @@
       user_updateTime = #{record.userUpdatetime,jdbcType=TIMESTAMP},
       user_state = #{record.userState,jdbcType=INTEGER},
       user_mark = #{record.userMark,jdbcType=INTEGER},
-      user_supplier_num = #{record.userSupplierNum,jdbcType=INTEGER}
+      user_supplier_num = #{record.userSupplierNum,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -322,7 +322,7 @@
         user_mark = #{userMark,jdbcType=INTEGER},
       </if>
       <if test="userSupplierNum != null" >
-        user_supplier_num = #{userSupplierNum,jdbcType=INTEGER},
+        user_supplier_num = #{userSupplierNum,jdbcType=VARCHAR},
       </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
@@ -340,7 +340,7 @@
       user_updateTime = #{userUpdatetime,jdbcType=TIMESTAMP},
       user_state = #{userState,jdbcType=INTEGER},
       user_mark = #{userMark,jdbcType=INTEGER},
-      user_supplier_num = #{userSupplierNum,jdbcType=INTEGER}
+      user_supplier_num = #{userSupplierNum,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
   

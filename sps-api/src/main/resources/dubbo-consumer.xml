@@ -19,6 +19,8 @@
 	<dubbo:registry protocol="zookeeper" address="${dubbo.zookeeper}" />
 	<!-- 使用注解方式暴露接口 -->     
     <dubbo:annotation package="com.sps.controller"/>
+    
+    <dubbo:reference group = "${dubbo.group}" id="faceAuthApi" interface="com.jzfq.auth.core.api.FaceAuthApi"/>
 </beans>
  
  
