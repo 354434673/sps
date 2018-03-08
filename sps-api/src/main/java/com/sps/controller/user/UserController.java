@@ -17,6 +17,7 @@ import com.juzifenqi.usercenter.service.ISmsCommonService;
 import com.juzifenqi.usercenter.service.authorization.IDianfuPassportService;
 import com.juzifenqi.usercenter.vo.LoginDto;
 import com.juzifenqi.usercenter.vo.RegisterDto;
+import com.sps.common.Message;
 /*import com.juzifenqi.core.ServiceResult;
 import com.juzifenqi.usercenter.entity.member.LoginInfo;
 import com.juzifenqi.usercenter.service.ISmsCommonService;
@@ -128,8 +129,10 @@ public class UserController {
 		HashMap<String, Object> userLogin = null;
 		if(login4Browser.getSuccess()){
 			userLogin = userService.userLogin(mobile, password);
+		}else{
+			userLogin = Message.resultMap(login4Browser.getCode(), login4Browser.getMessage(),
+					Message.SYSTEM_ERROR_MSG, 0, null);
 		}
-
 		return userLogin;
 	}
 }
