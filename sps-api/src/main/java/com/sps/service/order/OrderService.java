@@ -33,4 +33,16 @@ public interface OrderService {
      */
     void falseDeletion(Integer id);
 
+    /**
+     * 查询订单详情
+     * @param id
+     * @return
+     */
+    SpsOrder findById(Integer id);
+
+    /**
+     * 取消订单
+     * @param id
+     */
+    void cancelOrder(Integer id);
 }

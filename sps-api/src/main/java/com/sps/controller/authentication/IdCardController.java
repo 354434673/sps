@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.jzfq.auth.core.api.FaceAuthApi;
+/*import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.entiy.face.AuthFaceIdCard;
-import com.jzfq.auth.core.api.vo.JsonResult;
+import com.jzfq.auth.core.api.vo.JsonResult;*/
 
 @RestController
 @RequestMapping("/authentication")
 public class IdCardController {
-	@Reference(group = "auth_dev1")
+/*	@Reference(group = "auth_dev1")
 	private FaceAuthApi faceAuthApi;
 	
 	@RequestMapping("/authentication")
@@ -27,5 +27,5 @@ public class IdCardController {
 		
 		JsonResult<AuthFaceIdCard> backIdCardResult = faceAuthApi.getBackIdCardResult(arg0);
 		return null;
-	}
+	}*/
 }
