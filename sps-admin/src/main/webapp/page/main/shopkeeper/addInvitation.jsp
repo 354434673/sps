@@ -64,6 +64,7 @@
 		 				invitationPhone:phone, 
 		 			 },
 		 			 success:function(data){
+		 				 //data.result 返回生成的客户编号
 		 				 if(data.state == 'success'){
 		 					layer.msg(data.msg,{icon: 1});
 		 				 }else if(data.state == 'exist'){

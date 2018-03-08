@@ -62,14 +62,18 @@ public class BrandServiceImpl implements BrandService {
         List<SpsBrand> brandList = spsBrandMapper.findListAllWithMap(map);
         if (brandList != null && brandList.size() > 0) {
             for (SpsBrand list : brandList) {
-                String[] ids = list.getBrandCategoryIds().split(",");
-                if (ids != null && ids.length > 0) {
-                    String categoryNames = "";
-                    for (String id : ids) {
-                        SpsGoodCategory category = spsGoodCategoryMapper.findById(Integer.valueOf(id));
-                        categoryNames += ">" + category.getCategoryName();
+                if(!"".equals(list.getBrandCategoryIds())){
+                    String[] ids = list.getBrandCategoryIds().split(",");
+                    if (ids != null && ids.length > 0) {
+                        String categoryNames = "";
+                        for (String id : ids) {
+                            SpsGoodCategory category = spsGoodCategoryMapper.findById(Integer.valueOf(id));
+                            categoryNames += ">" + category.getCategoryName();
+                        }
+                        list.setBrandCategoryNames(categoryNames.substring(1));
                     }
-                    list.setBrandCategoryNames(categoryNames.substring(1));
+                }else {
+                    list.setBrandCategoryNames("");
                 }
             }
         }

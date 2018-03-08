@@ -1,39 +1,29 @@
 package com.sps.service.shopkeeper.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.sps.common.Message;
-import com.sps.common.Page;
-import com.sps.common.StringUtil;
-
-import com.sps.dao.shopkeeper.SpsShopkeeperCarPrppertyDao;
-import com.sps.dao.shopkeeper.SpsShopkeeperHousePrppertyDao;
-import com.sps.dao.shopkeeper.SpsShopkeeperPersonalDao;
-import com.sps.entity.app.SpsAppBanner;
-import com.sps.entity.goods.SpsGoodShop;
-import com.sps.entity.merchant.SpsChannelBusiness;
-import com.sps.entity.shopkeeper.SpsShopkeeper;
-import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
-import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
-import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
-
-import com.sps.service.base.BaseOperate;
-import com.sps.service.base.BaseService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.sps.common.Message;
+import com.sps.common.StringUtil;
+import com.sps.dao.shopkeeper.SpsShopkeeperCarPrppertyDao;
+import com.sps.dao.shopkeeper.SpsShopkeeperHousePrppertyDao;
+import com.sps.dao.shopkeeper.SpsShopkeeperPersonalDao;
+import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
+import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
+import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
+import com.sps.service.base.BaseOperate;
 
 
 @RestController

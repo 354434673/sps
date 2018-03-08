@@ -9,6 +9,7 @@ public class SpsBrand implements Serializable {
     private String brandName;
 
     private String brandCategoryNames;
+    private String categoryNames;
 
     private String brandEnglishName;
 
@@ -27,6 +28,15 @@ public class SpsBrand implements Serializable {
     private Date brandCreateTime;
 
     private Date brandUpdateTime;
+
+
+    public String getCategoryNames() {
+        return categoryNames;
+    }
+
+    public void setCategoryNames(String categoryNames) {
+        this.categoryNames = categoryNames;
+    }
 
     public String getBrandCategoryNames() {
         return brandCategoryNames;

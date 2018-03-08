@@ -56,12 +56,21 @@
     var layout = [
         { name: '分类名称', treeNodes: true, headerClass: 'value_col', colClass: 'value_col', style: 'width: 60%' },
         {name: '权重', field: 'categoryWeight', headerClass: 'value_col', colClass: 'value_col', style: 'width: 10%'},
-        {name: '描述', field: 'categoryDes', headerClass: 'value_col', colClass: 'value_col', style: 'width: 20%'},
+      /*  {name: '描述', field: 'categoryDes', headerClass: 'value_col', colClass: 'value_col', style: 'width: 20%'},*/
+        {
+            name: '',
+            headerClass: 'value_col',
+            colClass: 'value_col',
+            style: 'width: 10%',
+            render: function(row) {
+                return '<a class="layui-btn layui-btn-danger layui-btn-mini" onclick="toDelete(' + row.id + ')"> 删除</a>'; //列渲染
+            }
+        },
         {
             name: '操作',
             headerClass: 'value_col',
             colClass: 'value_col',
-            style: 'width: 20%',
+            style: 'width: 10%',
             render: function(row) {
                 return '<a class="layui-btn layui-btn-danger layui-btn-mini" onclick="toUpdate(' + row.id + ')"> 修改</a>'; //列渲染
             }
@@ -69,7 +78,7 @@
         },
         {
             name: '',
-            style: 'width: 15%',
+            style: 'width: 10%',
             render: function(row) {
                 return '<a class="layui-btn layui-btn-danger layui-btn-mini" onclick="toDetail(' + row.id + ')"> 详情</a>'; //列渲染
             }
@@ -112,6 +121,51 @@
         })
 
     }
+    function toDelete(nodeId) {
+        $.ajax({
+            data: {id:nodeId},//提交的数据
+            url: "<%=path%>/category/checkDeleteCategory",//提交连接
+            type: 'post',
+            dataType: 'json',
+            success: function (result) {
+                if (result.flag == '1') {
+                    layer.confirm('真的删除行么', function (index) {
+                        layer.close(
+                            //向服务端发送删除指令
+                            deleteCategory(nodeId)
+                        );
+                    });
+                } else if (result.flag == '2') {
+                    layer.msg("该类目下有商品在使用，请删除分类下的商品！");
+                }else if (result.flag == '3') {
+                    layer.msg("注意：该类目下有品牌在使用，请您重新设置品牌分类！");
+                    setTimeout(function () {
+                        deleteCategory(nodeId)
+                    }, 3000);
+                }
+            }
+        })
+
+    }
+    function deleteCategory(id) {
+        $.ajax({
+            data: {id: id},//提交的数据
+            url: "<%=path%>/category/delCategory",//提交连接
+            type: 'post',
+            dataType: 'json',
+            success: function (result) {
+                if (result.flag == '1') {
+                    layer.msg("删除成功");
+                    setTimeout(function () {
+                        window.location.href = "<%=path%>/page/main/goodsCategory/index.jsp";
+                    }, 1000);
+                } else {
+                    layer.msg("操作失败");
+                }
+            }
+        })
+    }
+
     function toDetail(nodeId) {
         window.location.href="<%=path%>/category/findEntity?id="+nodeId;
     }

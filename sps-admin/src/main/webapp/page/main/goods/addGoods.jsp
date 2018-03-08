@@ -35,17 +35,17 @@
         <input type="hidden" name="updateDetailFlag" id="updateDetailFlag">
         <input type="hidden" name="goodsNumberFlag" id="updatePicFlag">
         <div class="layui-form-item ">
-            <label class="layui-form-label">*三级分类：</label>
-            <div class="layui-input-inline">
-                <input type="hidden" id="gCategoryIds" name="gCategoryIds" lay-verify="required"
-                       autocomplete="off" class="layui-input">
-                <input type="hidden" id="gCategoryNames" name="gCategoryNames" lay-verify="required"
-                       autocomplete="off" class="layui-input">
-                <button class="layui-btn layui-btn-primary" id="showCategory">
-                    选择分类
-                </button>
-            </div>
+        <label class="layui-form-label">*三级分类：</label>
+        <div class="layui-input-inline">
+            <input type="hidden" id="gCategoryIds" name="gCategoryIds" lay-verify="required"
+                   autocomplete="off" class="layui-input">
+            <input type="hidden" id="gCategoryNames" name="gCategoryNames" lay-verify="required"
+                   autocomplete="off" class="layui-input">
+            <button class="layui-btn layui-btn-primary" id="showCategory">
+                选择分类
+            </button>
         </div>
+    </div>
 
         <div class="layui-form-item ">
             <label class="layui-form-label">*品牌：</label>

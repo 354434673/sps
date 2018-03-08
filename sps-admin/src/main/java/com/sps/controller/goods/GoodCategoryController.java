@@ -10,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.sps.entity.goods.SpsBrand;
 import org.sps.entity.goods.SpsGoodCategory;
 import org.sps.entity.goods.SpsGoods;
+import org.sps.service.goods.BrandService;
 import org.sps.service.goods.GoodCategoryService;
 import org.sps.service.goods.GoodsService;
 
@@ -24,6 +26,8 @@ public class GoodCategoryController {
     GoodCategoryService goodCategoryService;
     @Reference(check = false, group = "dianfu")
     GoodsService goodsService;
+    @Reference(check = false, group = "dianfu")
+    BrandService brandService;
 
 
     /**
@@ -189,6 +193,47 @@ public class GoodCategoryController {
         }
         return resultMap;
     }
+    /**
+     * 校验是否有审核中的商品在使用该分类
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/checkDeleteCategory")
+    @ResponseBody
+    public Map<String, Object> checkDeleteCategory(Integer id) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            if (id != null) {
+                //这块麻烦啦 以后有时间改  用sql改很方便 效率更高
+                Map<String, Object> map = new HashMap<>();
+                List<SpsGoods> goodsList = goodsService.findAuditList(map);
+                if (goodsList != null && goodsList.size() > 0) {
+                    for (SpsGoods goods : goodsList) {
+                        String[] ids = goods.getgCategoryIds().split(",");
+                        //判断数组是否包含id
+                        if (useLoop(ids, id.toString())) {
+                            resultMap.put("flag", 2);
+                            return resultMap;
+                        }
+                    }
+                }
+                Map<String, Object> brandMap = new HashMap<>();
+                brandMap.put("categoryId", id);
+                List<SpsBrand> brandList = brandService.findList(brandMap);
+                if (brandList != null && brandList.size() > 0) {
+                    resultMap.put("flag", 3);
+                    return resultMap;
+                }
+                resultMap.put("flag", 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("flag", 0);
+            resultMap.put("msg", "操作失败");
+        }
+        return resultMap;
+    }
 
     /**
      * 判断数组中是否包含某一元素
@@ -336,4 +381,25 @@ public class GoodCategoryController {
         return resultMap;
     }
 
+
+    /**
+     * 假删除
+     *
+     * @param id 用户ID
+     * @return
+     */
+    @RequestMapping(value = "/delCategory")
+    @ResponseBody
+    public Map<String, Object> delCategory(Integer id) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            goodCategoryService.falseDeletion(id);
+            resultMap.put("flag", 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("flag", 0);
+            resultMap.put("msg", "操作失败");
+        }
+        return resultMap;
+    }
 }

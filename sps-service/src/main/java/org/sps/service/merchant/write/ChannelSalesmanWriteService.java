@@ -30,7 +30,10 @@ public interface ChannelSalesmanWriteService{
 	 * @return: HashMap<String,Object>      
 	 * @throws
 	 */
-	HashMap<String, Object> updateSalesman(String state, Integer id);
+	HashMap<String, Object> updateSalesmanState(String state, Integer id);
+	
+	HashMap<String, Object> updateSalesman(SpsChannelSalesman salesman);
+	
 	
 	
 }

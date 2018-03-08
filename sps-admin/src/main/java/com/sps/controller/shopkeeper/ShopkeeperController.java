@@ -92,7 +92,18 @@ public class ShopkeeperController{
 
 		return shopkeeper;
 	}
-
+	
+	/**
+	 * 查询公司信息
+	 * @Title: getShopkeeperCompany   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param shopkeeperCustomerid
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:22:42
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/getShopkeeperCompany")
 	public @ResponseBody HashMap<String, Object> getShopkeeperCompany(String shopkeeperCustomerid) {
 
@@ -100,7 +111,17 @@ public class ShopkeeperController{
 
 		return shopkeeper;
 	}
-
+	/**
+	 * 查询车产
+	 * @Title: getShopkeeperCarProperty   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param shopkeeperCustomerid
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:22:50
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/getShopkeeperCarProperty")
 	public @ResponseBody HashMap<String, Object> getShopkeeperCarProperty(String shopkeeperCustomerid) {
 
@@ -108,7 +129,19 @@ public class ShopkeeperController{
 
 		return shopkeeper;
 	}
-
+	/**
+	 * 查找联系人信息
+	 * @Title: getShopkeeperContact   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param shopkeeperCustomerid
+	 * @param: @param page
+	 * @param: @param limit
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:23:03
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/getShopkeeperContact")
 	public @ResponseBody HashMap<String, Object> getShopkeeperContact(String shopkeeperCustomerid, Integer page,
 			Integer limit) {
@@ -117,7 +150,17 @@ public class ShopkeeperController{
 
 		return shopkeeper;
 	}
-
+	/**
+	 * 查找征信信息
+	 * @Title: getShopkeeperCredit   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param shopkeeperCustomerid
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:23:24
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/getShopkeeperCredit")
 	public @ResponseBody HashMap<String, Object> getShopkeeperCredit(String shopkeeperCustomerid) {
 
@@ -125,7 +168,17 @@ public class ShopkeeperController{
 
 		return shopkeeper;
 	}
-
+	/**
+	 * 查询房产信息
+	 * @Title: getShopkeeperHouseProperty   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param shopkeeperCustomerid
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:23:35
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/getShopkeeperHouseProperty")
 	public @ResponseBody HashMap<String, Object> getShopkeeperHouseProperty(String shopkeeperCustomerid) {
 
@@ -133,7 +186,17 @@ public class ShopkeeperController{
 
 		return shopkeeper;
 	}
-
+	/**
+	 * 查找个人信息
+	 * @Title: getShopkeeperPersonal   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param shopkeeperCustomerid
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:23:42
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/getShopkeeperPersonal")
 	public @ResponseBody HashMap<String, Object> getShopkeeperPersonal(String shopkeeperCustomerid) {
 
@@ -141,7 +204,17 @@ public class ShopkeeperController{
 
 		return shopkeeper;
 	}
-
+	/**
+	 * 查找收人信息
+	 * @Title: getShopkeeperRepayment   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param shopkeeperCustomerid
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:24:02
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/getShopkeeperRepayment")
 	public @ResponseBody HashMap<String, Object> getShopkeeperRepayment(String shopkeeperCustomerid) {
 
@@ -149,7 +222,17 @@ public class ShopkeeperController{
 
 		return shopkeeper;
 	}
-
+	/**
+	 * 查找图片信息
+	 * @Title: getShopkeeperPic   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param shopkeeperCustomerid
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:24:10
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/getShopkeeperPic")
 	public @ResponseBody HashMap<String, Object> getShopkeeperPic(String shopkeeperCustomerid) {
 
@@ -157,7 +240,17 @@ public class ShopkeeperController{
 
 		return shopkeeper;
 	}
-
+	/**
+	 *  查询账户信息
+	 * @Title: getShopkeeperAccount   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param shopkeeperCustomerid
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:24:23
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/getShopkeeperAccount")
 	public @ResponseBody HashMap<String, Object> getShopkeeperAccount(String shopkeeperCustomerid) {
 
@@ -165,7 +258,18 @@ public class ShopkeeperController{
 
 		return shopkeeper;
 	}
-
+	/**
+	 * 更改账户信息
+	 * @Title: updateAccount   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param shopkeeperCustomerid
+	 * @param: @param account
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:24:27
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/updateAccount")
 	public @ResponseBody HashMap<String, Object> updateAccount(String shopkeeperCustomerid,
 			SpsShopkeeperAccount account) {
@@ -174,7 +278,18 @@ public class ShopkeeperController{
 
 		return updateAccount;
 	}
-	
+	/**
+	 * 修改店主状态
+	 * @Title: updateState   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param shopkeeperCustomerid
+	 * @param: @param state
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:24:34
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/updateState")
 	public @ResponseBody HashMap<String, Object> updateState(String shopkeeperCustomerid,
 			Integer state) {
@@ -226,12 +341,14 @@ public class ShopkeeperController{
 		List<ArrayList<String>> importExcel = new ExcelUtil().importExcel(file);
 		
 		SpsShopkeeperInvitation spsShopkeeperInvitation = null;
+		
+		String channelNum = getChannelNum();
 		try {
 			for (ArrayList<String> arrayList : importExcel) {
 					spsShopkeeperInvitation = new SpsShopkeeperInvitation();
 					spsShopkeeperInvitation.setInvitationName(arrayList.get(0));
 					spsShopkeeperInvitation.setInvitationPhone(arrayList.get(1));
-					writeService.insertInvitation(spsShopkeeperInvitation);
+					writeService.insertInvitation(spsShopkeeperInvitation, channelNum);
 			}
 			map.put("msg", "添加成功");
 			map.put("state", FinalData.STATE_SUCCESS);
@@ -242,22 +359,44 @@ public class ShopkeeperController{
 		}
 		return map;
 	}
+	/**
+	 * @throws Exception 
+	 * 店主邀请
+	 * @Title: insertInvitation   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param invitation
+	 * @param: @return
+	 * @param: @throws IOException  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:22:07
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping(value = "/insertInvitation")
 	@ResponseBody
-	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation)
-			throws IOException {
+	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation){
 		
-		HashMap<String, Object> insertInvitation = null;
-		try {
-			insertInvitation = writeService.insertInvitation(invitation);
-		} catch (Exception e) {
-			insertInvitation.put("msg", "添加失败,联系管理员");
-			insertInvitation.put("state", FinalData.STATE_ERROR);
-			e.printStackTrace();
-		}
+		String channelNum = getChannelNum();
+		
+		HashMap<String, Object> insertInvitation = writeService.insertInvitation(invitation,channelNum);
 		
 		return insertInvitation;
 	}
+	/**
+	 * 查询店主邀请列表
+	 * @Title: queryInvitationList   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param page
+	 * @param: @param limit
+	 * @param: @param name
+	 * @param: @param phone
+	 * @param: @param state
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月2日 上午11:22:17
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping(value = "/queryInvitationList.json")
 	@ResponseBody
 	public HashMap<String, Object> queryInvitationList(Integer page, Integer limit, String name, String phone, String state) {
@@ -265,5 +404,24 @@ public class ShopkeeperController{
 		HashMap<String, Object> queryInvitationList = readService.queryInvitationList(page, limit, name, phone, state);
 		
 		return queryInvitationList;
+	}
+	/**
+	 * 获得当前登录商户的num
+	 * @Title: getChannelNum   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月6日 下午2:40:31
+	 * @return: String      
+	 * @throws
+	 */
+	private String getChannelNum(){
+		Subject subject = SecurityUtils.getSubject();
+		//获取当前token中的用户
+		String userName = (String) subject.getPrincipal();
+		
+		String channelNum = (String) subject.getSession().getAttribute(userName);
+		
+		return channelNum;
 	}
 }

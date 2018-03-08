@@ -58,7 +58,7 @@
 {{#  if(d.userState == 0){ }}
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="blockUp">停用</a>
 {{#  } else if(d.userState == 2){ }}
-  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="recover">恢复</a>
+  <a class="layui-btn layui-btn-mini " lay-event="recover">恢复</a>
 {{#  } }} 
 </script>
 <!-- 进行数据渲染 -->

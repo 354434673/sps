@@ -36,8 +36,20 @@ public class SpsShopkeeperCompany implements Serializable{
     private Date companyCreatTime;
 
     private Date companyUpdateTime;
+    
+    private SpsShopkeeperPersonal personal;
+    
+    
 
-    public Integer getCompanyId() {
+    public SpsShopkeeperPersonal getPersonal() {
+		return personal;
+	}
+
+	public void setPersonal(SpsShopkeeperPersonal personal) {
+		this.personal = personal;
+	}
+
+	public Integer getCompanyId() {
         return companyId;
     }
 

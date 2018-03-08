@@ -178,7 +178,7 @@
                                 success: function (layero, index) {
                                     var body = layer.getChildFrame('body', index);
                                     //body.find('input').attr({"disabled":"disabled"});
-                                    body.find("#showCategory").attr({"disabled": "disabled"});
+
                                     body.find('#brandId').val(data.brandId)
                                     body.find('#brandCategoryIds').val(data.brandCategoryIds)
                                     body.find('#brandName').val(data.brandName)
@@ -186,9 +186,15 @@
                                     body.find('#brandSmallUrl').val(data.brandSmallUrl)
                                     body.find('#brandBigUrl').val(data.brandBigUrl)
                                     body.find('#brandEnglishName').val(data.brandEnglishName)
-                                    body.find('#brandCategoryNames').val(data.brandCategoryNames)
+                                    if(data.brandCategoryNames==""){
+                                        body.find('button').eq(0).html("关联分类")
+                                    }else {
+                                        body.find('#brandCategoryNames').val(data.brandCategoryNames)
+                                        body.find("#showCategory").attr({"disabled": "disabled"});
+                                        body.find('button').eq(0).html(data.brandCategoryNames)
+                                    }
                                     body.find('#brandAbbreviation').val(data.brandAbbreviation)
-                                    body.find('button').eq(0).html(data.brandCategoryNames)
+
                                     body.find('#brandDes').val(data.brandDes)
                                     body.find('#demo2').append("<img style='width: 300px;'src='<%=path%>/upload/imgs/" + data.brandSmallUrl + "' />");
                                 }

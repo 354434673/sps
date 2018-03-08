@@ -9,7 +9,7 @@ import org.sps.service.merchant.read.ChannelBankReadService;
 
 import javax.annotation.Resource;
 
-@Service(timeout=2000,group="dianfu")
+@Service(timeout=12000,group="dianfu")
 @Transactional(readOnly = true)
 public class ChannelBankReadServiceImpl implements ChannelBankReadService {
 	@Resource

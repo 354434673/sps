@@ -10,20 +10,26 @@ import org.sps.entity.shopkeeper.SpsShopkeeperAccount;
 import org.sps.entity.shopkeeper.SpsShopkeeperAccountExample;
 import org.sps.entity.shopkeeper.SpsShopkeeperExample;
 import org.sps.entity.shopkeeper.SpsShopkeeperInvitation;
+import org.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import org.sps.service.shopkeeper.write.ShopkeeperWriteService;
 import org.sps.util.FinalData;
+import org.sps.util.RuleUtil;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.write.SpsChannelWriteMapper;
 import com.sps.dao.shopkeeper.write.SpsShopkeeperAccountWriteMapper;
 import com.sps.dao.shopkeeper.write.SpsShopkeeperInvitationWriteMapper;
+import com.sps.dao.shopkeeper.write.SpsShopkeeperPersonalWriteMapper;
 import com.sps.dao.shopkeeper.write.SpsShopkeeperWriteMapper;
 @Service(timeout = 2000, group = "dianfu")
+@org.springframework.stereotype.Service
 public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 	@Resource
 	private SpsShopkeeperAccountWriteMapper accountWrite;
 	@Resource
 	private SpsShopkeeperWriteMapper write;
+	@Resource
+	private SpsShopkeeperPersonalWriteMapper personalWrite;
 	@Resource
 	private SpsShopkeeperInvitationWriteMapper invitationWrite;
 	@Override
@@ -76,7 +82,7 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 		return hashMap;
 	}
 	@Override
-	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation) throws Exception{
+	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation,  String channelNum){
 		HashMap<String, Object> hashMap = new HashMap<String,Object>();
 		try {
 			invitation.setInvitationCreatTime(new Date());
@@ -84,9 +90,36 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 			invitation.setInvitationTime(new Date());
 			invitation.setInvitationState("0");
 			invitationWrite.insert(invitation);
+			/*
+			 * 添加后往店主信息表中差一条数据,店主账号,状态为邀请中(1)
+			 */
+			String clientNum = RuleUtil.getClientNum("SP");
+			SpsShopkeeper spsShopkeeper = new SpsShopkeeper();
+			spsShopkeeper.setShopkeeperUsername(invitation.getInvitationPhone());
+			spsShopkeeper.setShopkeeperCreatTime(new Date());
+			spsShopkeeper.setShopkeeperUpdateTime(new Date());
+			spsShopkeeper.setShopkeeperState(1);
+			spsShopkeeper.setShopkeeperCustomerid(clientNum);
+			spsShopkeeper.setShopkeeperDefaultChannelNum(channelNum);
+			write.insertSelective(spsShopkeeper);
+			/*
+			 * 往个人信息中添加,字段为店主名称
+			 */
+			SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
+			personal.setPersonalClientName(invitation.getInvitationName());
+			personal.setPersonalCreatTime(new Date());
+			personal.setPersonalUpdateTime(new Date());
+			personal.setShopkeeperCustomerid(clientNum);
+			personalWrite.insertSelective(personal);
+			
+			HashMap<String, String> result = new HashMap<>();
+			result.put("channelNum", channelNum);
+			result.put("clientNum", clientNum);
+			
 			hashMap.put("code", 0);
 			hashMap.put("msg", "添加成功");
 			hashMap.put("state", FinalData.STATE_SUCCESS);
+			hashMap.put("result", result);
 		} catch (Exception e) {
 			hashMap.put("code", 0);
 			hashMap.put("msg", "添加失败");

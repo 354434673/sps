@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.com//DTD Mapper 3.0//EN" "http://mybatis.com/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.balance.read.BalanceReadMapper" >
+  <resultMap id="BaseResultMap" type="org.sps.entity.balance.Balance" >
+    <id column="balance_id" property="balanceId" jdbcType="INTEGER" />
+    <result column="balance_type" property="balanceType" jdbcType="VARCHAR" />
+    <result column="balance_amount" property="balanceAmount" jdbcType="DECIMAL" />
+    <result column="balance_amount_used" property="balanceAmountUsed" jdbcType="DECIMAL" />
+    <result column="balance_amount_usable" property="balanceAmountUsable" jdbcType="DECIMAL" />
+    <result column="balance_expire_date" property="balanceExpireDate" jdbcType="TIMESTAMP" />
+    <result column="balance_start_date" property="balanceStartDate" jdbcType="TIMESTAMP" />
+    <result column="balance_state" property="balanceState" jdbcType="INTEGER" />
+    <result column="balance_client_num" property="balanceClientNum" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    balance_id, balance_type, balance_amount, balance_amount_used, balance_amount_usable, 
+    balance_expire_date, balance_start_date, balance_state, balance_client_num, create_time, 
+    update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.balance.BalanceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from balance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from balance
+    where balance_id = #{balanceId,jdbcType=INTEGER}
+  </select>
+  <select id="countByExample" parameterType="org.sps.entity.balance.BalanceExample" resultType="java.lang.Integer" >
+    select count(*) from balance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

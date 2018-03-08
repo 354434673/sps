@@ -10,7 +10,7 @@ import org.sps.entity.merchant.SpsChannelBankTrans;
 import org.sps.service.merchant.read.ChannelBankTransReadService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.read.SpsChannelBankTransReadMapper;
-@Service(timeout=2000,group="dianfu")
+@Service(timeout=12000,group="dianfu")
 @Transactional
 public class ChannelBankTransReadServiceImpl implements ChannelBankTransReadService{
 

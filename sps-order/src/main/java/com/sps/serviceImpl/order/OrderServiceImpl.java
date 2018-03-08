@@ -21,6 +21,7 @@ import com.sps.dao.order.OrderMapper;
 import com.sps.dao.order.SpsOrderLogisticsMapper;
 
 @Service(timeout = 2000, group = "dianfu")
+@org.springframework.stereotype.Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
 

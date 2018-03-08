@@ -448,6 +448,8 @@
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
 </script>
 <script type="text/javascript">
+	var channelNum ;//外键,很多地方能用到
+	var businessProductArray = [];//主营业务数组,设为全局变量
 	layui.use(['form','table','laydate','flow','element','upload'], function(){
 	  var element = layui.element;
 	  var form = layui.form;
@@ -538,6 +540,7 @@
 			  $('#registerAddress').val(result.enterpriseCompanyRegisterAddr)//注册地址
 			  $('#enterpriseCompanyAbbreviation').val(result.enterpriseCompanyAbbreviation)//公司简称
 			  $('#enterpriseCorp').val(result.enterpriseBusinesslicenseNo)//法人代表
+			  $('#enterpriseCorpIdcard').val(result.enterpriseCorpIdcard)//法人代表
 			  $('#enterpriseOperatioTime').val(result.enterpriseOperatioTime)//经营年限
 			  $('#enterpriseEmployeeNum').val(result.enterpriseEmployeeNum)//员工人数
 		  }
