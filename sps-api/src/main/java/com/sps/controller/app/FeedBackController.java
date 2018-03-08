@@ -12,6 +12,7 @@ import com.sps.service.app.help.HelpService;
 import com.sps.service.app.help.feedBack.FeedBackService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -68,15 +69,16 @@ public class FeedBackController {
      * 根据类型id，保存反馈意见的方法
      * @return
      */
-    @RequestMapping(value="/savaFeedBackInfo/{categoeyId}/{content}/{creater}/{systype}",method = RequestMethod.GET)
+    @RequestMapping(value="/savaFeedBackInfo/{categoeyId}/{content}/{systype}",method = RequestMethod.GET)
     @ResponseBody
-    public ReturnInfo savaFeedBackInfo(@PathVariable("categoeyId") Integer categoeyId, @PathVariable("content") String content, @PathVariable("creater") String creater, @PathVariable("systype") String systype) {
+    public ReturnInfo savaFeedBackInfo(@PathVariable("categoeyId") Integer categoeyId, @PathVariable("content") String content, @PathVariable("systype") String systype) {
         logger.info("savaFeedBackInfo ....................");
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
         ReturnInfo returnInfo = new ReturnInfo();
         FeedBack feedBack = new FeedBack();
         feedBack.setCategoeyId(categoeyId);
         feedBack.setContent(content);
-        feedBack.setCreater(creater);
+        feedBack.setCreater(userName);
         feedBack.setSystype(systype);
         Date date = new Date();
         //设置要获取到什么样的时间
