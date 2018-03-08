@@ -66,32 +66,29 @@ public class ChannelWriteServiceImpl implements ChannelWriteService{
 			
 			if(queryEnterprise == null){
 				try {
-					String numRandom = RuleUtil.getNumRandom(6);
 					
-					String DateFormat = DateUtil.format(new Date(), "yyyyMMss");
+					String clientNum = RuleUtil.getClientNum("DF");
 					
-					String channelNum = "DF"+DateFormat+numRandom;
-					
-					channel.setChannelNum(channelNum);
+					channel.setChannelNum(clientNum);
 					
 					insertChanel(channel);
 					
-					insertEnterprise(enterprise,channelNum);
+					insertEnterprise(enterprise,clientNum);
 					
-					insertBusiness(business, channelNum);
+					insertBusiness(business, clientNum);
 					
-					insertGuarantee(guarantee, channelNum);
+					insertGuarantee(guarantee, clientNum);
 					
-					insertFinanceTarget(financeTarget, channelNum);
+					insertFinanceTarget(financeTarget, clientNum);
 					
-					insertLogistics(logistics, channelNum);
+					insertLogistics(logistics, clientNum);
 					
-					insertOpenAccount(openAccount, channelNum);
+					insertOpenAccount(openAccount, clientNum);
 					
 					result.put("msg", "添加成功");
 					result.put("state", FinalData.STATE_SUCCESS);
 					result.put("icon", "1");
-					result.put("channelNum", channelNum);
+					result.put("channelNum", clientNum);
 				} catch (Exception e) {
 					result.put("msg", "添加失败");
 					result.put("state", FinalData.STATE_ERROR);

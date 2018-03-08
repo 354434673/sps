@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsOrderLog">
+  <resultMap id="BaseResultMap" type="SpsOrderLog">
+    <id column="log_id" jdbcType="INTEGER" property="logId" />
+    <result column="log_name" jdbcType="VARCHAR" property="logName" />
+    <result column="log_type" jdbcType="INTEGER" property="logType" />
+    <result column="log_des" jdbcType="VARCHAR" property="logDes" />
+    <result column="log_create_time" jdbcType="TIMESTAMP" property="logCreateTime" />
+    <result column="log_update_time" jdbcType="TIMESTAMP" property="logUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    log_id, log_name, log_type, log_des, log_create_time, log_update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_order_log
+    where log_id = #{logId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_order_log
+    where log_id = #{logId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsOrderLog">
+    insert into sps_order_log (log_id, log_name, log_type, 
+      log_des, log_create_time, log_update_time
+      )
+    values (#{logId,jdbcType=INTEGER}, #{logName,jdbcType=VARCHAR}, #{logType,jdbcType=INTEGER}, 
+      #{logDes,jdbcType=VARCHAR}, #{logCreateTime,jdbcType=TIMESTAMP}, #{logUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="SpsOrderLog">
+    insert into sps_order_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        log_id,
+      </if>
+      <if test="logName != null">
+        log_name,
+      </if>
+      <if test="logType != null">
+        log_type,
+      </if>
+      <if test="logDes != null">
+        log_des,
+      </if>
+      <if test="logCreateTime != null">
+        log_create_time,
+      </if>
+      <if test="logUpdateTime != null">
+        log_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        #{logId,jdbcType=INTEGER},
+      </if>
+      <if test="logName != null">
+        #{logName,jdbcType=VARCHAR},
+      </if>
+      <if test="logType != null">
+        #{logType,jdbcType=INTEGER},
+      </if>
+      <if test="logDes != null">
+        #{logDes,jdbcType=VARCHAR},
+      </if>
+      <if test="logCreateTime != null">
+        #{logCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logUpdateTime != null">
+        #{logUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="SpsOrderLog">
+    update sps_order_log
+    <set>
+      <if test="logName != null">
+        log_name = #{logName,jdbcType=VARCHAR},
+      </if>
+      <if test="logType != null">
+        log_type = #{logType,jdbcType=INTEGER},
+      </if>
+      <if test="logDes != null">
+        log_des = #{logDes,jdbcType=VARCHAR},
+      </if>
+      <if test="logCreateTime != null">
+        log_create_time = #{logCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logUpdateTime != null">
+        log_update_time = #{logUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsOrderLog">
+    update sps_order_log
+    set log_name = #{logName,jdbcType=VARCHAR},
+      log_type = #{logType,jdbcType=INTEGER},
+      log_des = #{logDes,jdbcType=VARCHAR},
+      log_create_time = #{logCreateTime,jdbcType=TIMESTAMP},
+      log_update_time = #{logUpdateTime,jdbcType=TIMESTAMP}
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -26,9 +26,9 @@
 <hr>
 <div class="layui-form layui-form-pane"  >
   <div class="layui-form-item ">
-    <label class="layui-form-label">*用户名：</label>
+    <label class="layui-form-label">*登录名：</label>
     <div class="layui-input-inline">
-      <input id="username" type="text" name="username"  lay-verify="required|IsEnglishCharacter|max20Length" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+      <input id="username" type="text" name="username"  lay-verify="required|IsEnglishCharacter|max20Length" placeholder="请输入登录名" autocomplete="off" class="layui-input">
     </div>
     <button style="display:none" class="layui-btn layui-btn-primary" id="resetPasssword">重置密码</button>
   </div>

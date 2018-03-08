@@ -436,7 +436,7 @@
 			</div>
 			<!-- 按钮 -->
     		 <div class="layui-form-item" align="center" id="btn" style="padding-top: 10px" >
-				<button class="layui-btn layui-btn-primary" id="last">返回</button>
+				<!-- <button class="layui-btn layui-btn-primary" id="last">返回</button> -->
 				<button class="layui-btn layui-btn-primary" id="submit">提交</button>
 			</div>
     </div>

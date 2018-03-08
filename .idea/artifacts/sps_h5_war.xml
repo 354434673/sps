@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="sps-h5:war">
-    <output-path>$PROJECT_DIR$/sps-h5/target</output-path>
-    <root id="archive" name="sps-h5.war">
-      <element id="artifact" artifact-name="sps-h5:war exploded" />
-    </root>
-  </artifact>
-</component>

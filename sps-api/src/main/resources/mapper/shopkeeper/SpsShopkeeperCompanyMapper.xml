@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.com/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.SpsShopkeeperCompanyDao" >
+  <resultMap id="BaseResultMap" type="com.sps.entity.shopkeeper.SpsShopkeeperCompany" >
+    <id column="company_id" property="companyId" jdbcType="INTEGER" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_shop_name" property="companyShopName" jdbcType="VARCHAR" />
+    <result column="company_corp_name" property="companyCorpName" jdbcType="VARCHAR" />
+    <result column="company_business_addr" property="companyBusinessAddr" jdbcType="VARCHAR" />
+    <result column="company_gps_addr" property="companyGpsAddr" jdbcType="VARCHAR" />
+    <result column="company_business_addr_ownership" property="companyBusinessAddrOwnership" jdbcType="VARCHAR" />
+    <result column="company_operatio_time" property="companyOperatioTime" jdbcType="INTEGER" />
+    <result column="company_employee_num" property="companyEmployeeNum" jdbcType="INTEGER" />
+    <result column="company_business_area" property="companyBusinessArea" jdbcType="DOUBLE" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+    <result column="company_username" property="companyUsername" jdbcType="VARCHAR" />
+    <result column="company_creat_time" property="companyCreatTime" jdbcType="TIMESTAMP" />
+    <result column="company_update_time" property="companyUpdateTime" jdbcType="TIMESTAMP" />
+    <association property="personal" javaType="com.sps.entity.shopkeeper.SpsShopkeeperPersonal">
+	    <id column="personal_id" property="personalId" jdbcType="INTEGER" />
+	    <result column="personal_phone" property="personalPhone" jdbcType="VARCHAR" />
+    </association>
+    
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    company_id, company_name, company_shop_name, company_corp_name, company_business_addr, 
+    company_gps_addr, company_business_addr_ownership, company_operatio_time, company_employee_num, 
+    company_business_area, shopkeeper_customerId, company_username, company_creat_time, 
+    company_update_time
+  </sql>
+  <sql id="Column_List" >
+		c1.company_shop_name,
+		c1.company_business_addr,
+		p1.personal_phone
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompanyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_company
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </select>
+  <select id="queryCompanyJoin" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	SELECT
+	<include refid="Column_List" />
+	FROM
+		sps_shopkeeper_company c1
+	JOIN 
+		sps_shopkeeper_personal p1 ON c1.shopkeeper_customerId = p1.shopkeeper_customerId
+	<where>
+		 <if test="customerId != null" >
+		 	p1.shopkeeper_customerId = #{customerId}
+		 </if>
+	</where>
+  </select>
+  <select id="countByExample" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompanyExample" resultType="java.lang.Integer" >
+    select count(*) from sps_shopkeeper_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_shopkeeper_company
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompanyExample" >
+    delete from sps_shopkeeper_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompany" >
+    insert into sps_shopkeeper_company (company_id, company_name, company_shop_name, 
+      company_corp_name, company_business_addr, company_gps_addr, 
+      company_business_addr_ownership, company_operatio_time, 
+      company_employee_num, company_business_area, 
+      shopkeeper_customerId, company_username, 
+      company_creat_time, company_update_time
+      )
+    values (#{companyId,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, #{companyShopName,jdbcType=VARCHAR}, 
+      #{companyCorpName,jdbcType=VARCHAR}, #{companyBusinessAddr,jdbcType=VARCHAR}, #{companyGpsAddr,jdbcType=VARCHAR}, 
+      #{companyBusinessAddrOwnership,jdbcType=VARCHAR}, #{companyOperatioTime,jdbcType=INTEGER}, 
+      #{companyEmployeeNum,jdbcType=INTEGER}, #{companyBusinessArea,jdbcType=DOUBLE}, 
+      #{shopkeeperCustomerid,jdbcType=VARCHAR}, #{companyUsername,jdbcType=VARCHAR}, 
+      #{companyCreatTime,jdbcType=TIMESTAMP}, #{companyUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompany" >
+    insert into sps_shopkeeper_company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="companyShopName != null" >
+        company_shop_name,
+      </if>
+      <if test="companyCorpName != null" >
+        company_corp_name,
+      </if>
+      <if test="companyBusinessAddr != null" >
+        company_business_addr,
+      </if>
+      <if test="companyGpsAddr != null" >
+        company_gps_addr,
+      </if>
+      <if test="companyBusinessAddrOwnership != null" >
+        company_business_addr_ownership,
+      </if>
+      <if test="companyOperatioTime != null" >
+        company_operatio_time,
+      </if>
+      <if test="companyEmployeeNum != null" >
+        company_employee_num,
+      </if>
+      <if test="companyBusinessArea != null" >
+        company_business_area,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
+      </if>
+      <if test="companyUsername != null" >
+        company_username,
+      </if>
+      <if test="companyCreatTime != null" >
+        company_creat_time,
+      </if>
+      <if test="companyUpdateTime != null" >
+        company_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="companyId != null" >
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyShopName != null" >
+        #{companyShopName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCorpName != null" >
+        #{companyCorpName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessAddr != null" >
+        #{companyBusinessAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="companyGpsAddr != null" >
+        #{companyGpsAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessAddrOwnership != null" >
+        #{companyBusinessAddrOwnership,jdbcType=VARCHAR},
+      </if>
+      <if test="companyOperatioTime != null" >
+        #{companyOperatioTime,jdbcType=INTEGER},
+      </if>
+      <if test="companyEmployeeNum != null" >
+        #{companyEmployeeNum,jdbcType=INTEGER},
+      </if>
+      <if test="companyBusinessArea != null" >
+        #{companyBusinessArea,jdbcType=DOUBLE},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="companyUsername != null" >
+        #{companyUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCreatTime != null" >
+        #{companyCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="companyUpdateTime != null" >
+        #{companyUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_shopkeeper_company
+    <set >
+      <if test="record.companyId != null" >
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyShopName != null" >
+        company_shop_name = #{record.companyShopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyCorpName != null" >
+        company_corp_name = #{record.companyCorpName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyBusinessAddr != null" >
+        company_business_addr = #{record.companyBusinessAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyGpsAddr != null" >
+        company_gps_addr = #{record.companyGpsAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyBusinessAddrOwnership != null" >
+        company_business_addr_ownership = #{record.companyBusinessAddrOwnership,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyOperatioTime != null" >
+        company_operatio_time = #{record.companyOperatioTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyEmployeeNum != null" >
+        company_employee_num = #{record.companyEmployeeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyBusinessArea != null" >
+        company_business_area = #{record.companyBusinessArea,jdbcType=DOUBLE},
+      </if>
+      <if test="record.shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyUsername != null" >
+        company_username = #{record.companyUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyCreatTime != null" >
+        company_creat_time = #{record.companyCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.companyUpdateTime != null" >
+        company_update_time = #{record.companyUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_shopkeeper_company
+    set company_id = #{record.companyId,jdbcType=INTEGER},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      company_shop_name = #{record.companyShopName,jdbcType=VARCHAR},
+      company_corp_name = #{record.companyCorpName,jdbcType=VARCHAR},
+      company_business_addr = #{record.companyBusinessAddr,jdbcType=VARCHAR},
+      company_gps_addr = #{record.companyGpsAddr,jdbcType=VARCHAR},
+      company_business_addr_ownership = #{record.companyBusinessAddrOwnership,jdbcType=VARCHAR},
+      company_operatio_time = #{record.companyOperatioTime,jdbcType=INTEGER},
+      company_employee_num = #{record.companyEmployeeNum,jdbcType=INTEGER},
+      company_business_area = #{record.companyBusinessArea,jdbcType=DOUBLE},
+      shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      company_username = #{record.companyUsername,jdbcType=VARCHAR},
+      company_creat_time = #{record.companyCreatTime,jdbcType=TIMESTAMP},
+      company_update_time = #{record.companyUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompany" >
+    update sps_shopkeeper_company
+    <set >
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyShopName != null" >
+        company_shop_name = #{companyShopName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCorpName != null" >
+        company_corp_name = #{companyCorpName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessAddr != null" >
+        company_business_addr = #{companyBusinessAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="companyGpsAddr != null" >
+        company_gps_addr = #{companyGpsAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessAddrOwnership != null" >
+        company_business_addr_ownership = #{companyBusinessAddrOwnership,jdbcType=VARCHAR},
+      </if>
+      <if test="companyOperatioTime != null" >
+        company_operatio_time = #{companyOperatioTime,jdbcType=INTEGER},
+      </if>
+      <if test="companyEmployeeNum != null" >
+        company_employee_num = #{companyEmployeeNum,jdbcType=INTEGER},
+      </if>
+      <if test="companyBusinessArea != null" >
+        company_business_area = #{companyBusinessArea,jdbcType=DOUBLE},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="companyUsername != null" >
+        company_username = #{companyUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCreatTime != null" >
+        company_creat_time = #{companyCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="companyUpdateTime != null" >
+        company_update_time = #{companyUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompany" >
+    update sps_shopkeeper_company
+    set company_name = #{companyName,jdbcType=VARCHAR},
+      company_shop_name = #{companyShopName,jdbcType=VARCHAR},
+      company_corp_name = #{companyCorpName,jdbcType=VARCHAR},
+      company_business_addr = #{companyBusinessAddr,jdbcType=VARCHAR},
+      company_gps_addr = #{companyGpsAddr,jdbcType=VARCHAR},
+      company_business_addr_ownership = #{companyBusinessAddrOwnership,jdbcType=VARCHAR},
+      company_operatio_time = #{companyOperatioTime,jdbcType=INTEGER},
+      company_employee_num = #{companyEmployeeNum,jdbcType=INTEGER},
+      company_business_area = #{companyBusinessArea,jdbcType=DOUBLE},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      company_username = #{companyUsername,jdbcType=VARCHAR},
+      company_creat_time = #{companyCreatTime,jdbcType=TIMESTAMP},
+      company_update_time = #{companyUpdateTime,jdbcType=TIMESTAMP}
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </update>
+</mapper>

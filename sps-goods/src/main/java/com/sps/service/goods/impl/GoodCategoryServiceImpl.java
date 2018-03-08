@@ -2,8 +2,10 @@ package com.sps.service.goods.impl;
 
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.sps.dao.goods.SpsBrandMapper;
 import com.sps.dao.goods.SpsGoodCategoryMapper;
 
+import org.sps.entity.goods.SpsBrand;
 import org.sps.entity.goods.SpsGoodCategory;
 import org.sps.service.goods.GoodCategoryService;
 
@@ -14,6 +16,8 @@ import java.util.*;
 public class GoodCategoryServiceImpl implements GoodCategoryService {
     @Resource
     private SpsGoodCategoryMapper spsGoodCategoryMapper;
+    @Resource
+    private SpsBrandMapper spsBrandMapper;
 
     @Override
     public void saveOrUpdate(org.sps.entity.goods.SpsGoodCategory category) {
@@ -105,6 +109,40 @@ public class GoodCategoryServiceImpl implements GoodCategoryService {
             }
         }
         return list;
+    }
+
+    @Override
+    public void falseDeletion(Integer id) {
+        if(id != null) {
+            //判断是否有下级
+            Map<String, Object> map = new HashMap<>();
+            map.put("categoryId", id);
+            List<SpsGoodCategory> selectChildern = this.findList(map);
+            if (selectChildern!=null&&selectChildern.size()>0){
+                for ( SpsGoodCategory list:selectChildern) {
+                    list.setCategoryId(id);
+                    list.setCategoryDeleteFlag(1);
+                    spsGoodCategoryMapper.update(list);
+                }
+            }else {
+                SpsGoodCategory category = new SpsGoodCategory();
+                category.setCategoryId(id);
+                category.setCategoryDeleteFlag(1);
+                spsGoodCategoryMapper.update(category);
+            }
+            //品牌中包含分类的全至为空
+            Map<String, Object> brandMap = new HashMap<>();
+            brandMap.put("categoryId", id);
+            List<SpsBrand> brandList = spsBrandMapper.findListAllWithMap(brandMap);
+            if (brandList != null && brandList.size() > 0) {
+                for(SpsBrand list:brandList){
+                    if(list.getBrandCategoryIds()!=null){
+                        list.setBrandCategoryIds("");
+                        spsBrandMapper.update(list);
+                    }
+                }
+            }
+        }
     }
 
     private List<SpsGoodCategory> getTowChildren(Integer categoryId) {

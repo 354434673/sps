@@ -52,7 +52,7 @@ public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteServ
 		return selectByExample.size() == 0 ? null : selectByExample.get(0);
 	}
 	@Override
-	public HashMap<String, Object> updateSalesman(String state, Integer id) {
+	public HashMap<String, Object> updateSalesmanState(String state, Integer id) {
 		
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		
@@ -71,6 +71,23 @@ public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteServ
 			hashMap.put("state", FinalData.STATE_SUCCESS);
 		} catch (Exception e) {
 			hashMap.put("msg", "删除失败");
+			hashMap.put("state", FinalData.STATE_ERROR);
+			e.printStackTrace();
+		}
+		return hashMap;
+	}
+	@Override
+	public HashMap<String, Object> updateSalesman(SpsChannelSalesman salesman) {
+		
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		
+		try {
+			salesmanWrite.updateByPrimaryKeySelective(salesman);
+			
+			hashMap.put("msg", "修改成功");
+			hashMap.put("state", FinalData.STATE_SUCCESS);
+		} catch (Exception e) {
+			hashMap.put("msg", "修改失败");
 			hashMap.put("state", FinalData.STATE_ERROR);
 			e.printStackTrace();
 		}

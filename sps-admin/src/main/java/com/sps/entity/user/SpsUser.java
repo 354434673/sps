@@ -34,7 +34,7 @@ public class SpsUser implements Serializable{
 
     private Integer userMark;
 
-    private Integer userSupplierNum;
+    private String userSupplierNum;
 
     private List<SpsRole> role;
     public Integer getUserId() {
@@ -133,11 +133,11 @@ public class SpsUser implements Serializable{
         this.userMark = userMark;
     }
 
-    public Integer getUserSupplierNum() {
+    public String getUserSupplierNum() {
         return userSupplierNum;
     }
 
-    public void setUserSupplierNum(Integer userSupplierNum) {
+    public void setUserSupplierNum(String userSupplierNum) {
         this.userSupplierNum = userSupplierNum;
     }
 
