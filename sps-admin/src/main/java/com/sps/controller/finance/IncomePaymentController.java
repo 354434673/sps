@@ -48,9 +48,9 @@ public class IncomePaymentController {
 
     @RequestMapping("/findIncomePaymentList")
     @ResponseBody
-    public HashMap<String, Object> findIncomePaymentList(Integer page, Integer limit, String startTime, String endTime,
+    public HashMap<String, Object> findIncomePaymentList(Integer page, Integer limit, String applicationDate, String payDate,
                                                        BigDecimal minAmount,BigDecimal maxAmount,String payType,String companyName,String reamrk) {
-        HashMap<String, Object> list = cashAuditService.getBankTradeIncomePayList(page,limit,startTime,endTime,minAmount,maxAmount,payType,companyName,reamrk);
+        HashMap<String, Object> list = cashAuditService.getBankTradeIncomePayList(page,limit,applicationDate,payDate,minAmount,maxAmount,payType,companyName,reamrk);
         return list;
 
 

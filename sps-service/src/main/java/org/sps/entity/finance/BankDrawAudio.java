@@ -11,6 +11,7 @@ public class BankDrawAudio implements Serializable {
     private String  userName;
     private String  auditSerialNum;
     private String  applicationDate;
+    //交易时间 ，到账时间
     private String  payDate;
     private String  payType;
     private BigDecimal amount    ;

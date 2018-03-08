@@ -23,9 +23,11 @@
 	<div style="margin: 15px;">
 		<table id="drawAudioList" lay-filter="drawAudioTables"></table>
 	</div>
+	<div class="layui-form-item" style="border-left-width: 525px;padding-left: 530px;">
+		<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
+	</div>
 	<script type="text/javascript"  src="<%=path%>/page/layui/layui.js"></script>
 	<script type="text/html" id="bar">
-		<a class="layui-btn layui-btn-mini" lay-event="detail">查看详情</a>
 	</script>
 
 	<script type="text/html" id="date">

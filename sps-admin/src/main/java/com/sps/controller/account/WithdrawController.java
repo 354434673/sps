@@ -47,7 +47,7 @@ public class WithdrawController {
     private static Logger logger = LoggerFactory.getLogger(WithdrawController.class);
     @RequestMapping("/findBankTradeList")
     @ResponseBody
-     public HashMap<String, Object> userList( Integer page,Integer limit,String applicationStartDate,String paymentDate,String tradeStatus) {
+     public HashMap<String, Object> findBankTradeList( Integer page,Integer limit,String applicationStartDate,String paymentDate,String tradeStatus) {
         String loginName = (String)SecurityUtils.getSubject().getPrincipal();
         HashMap<String, Object> list = bankTradereadService.getBankTradeList(page, limit, applicationStartDate, paymentDate, tradeStatus, loginName,"0");
 		return list;

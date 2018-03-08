@@ -111,7 +111,7 @@
                                     var code =result.code;
                                     var ok = result.ok;
                                     var  msg = result.msg;
-                                    layer.msg(msg);
+//                                    layer.msg(msg);
                                     if(result.body == true){
                                         location.href = '<%=path%>/page/main/account/withdraw/inputTradePwd.jsp?withdrawAmt='+amount;
                                         //若已经设置交易密码，则跳转至输入交易密码页面

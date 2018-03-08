@@ -9,7 +9,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>借情况</title>
+	<title>借款情况</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport"
@@ -25,12 +25,10 @@
 
 			<div class="layui-form-item">
 				<label class="layui-form-label">时间:</label>
-				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required">
+				<div class="layui-input-inline" style="width: 300px;">
+					<input id="time"   readonly="" type="text" name="startTime"  lay-verify="" placeholder="选择范围 " autocomplete="off" class="layui-input">
 				</div>
-				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="endTime" placeholder="年-月-日" lay-verify="required">
-				</div>
+
 				<label class="layui-form-label">状态:</label>
 				<div class="layui-input-inline">
 					<select  id="loanStatus" lay-filter="withDrawState">
@@ -84,6 +82,16 @@
 		var minutes= da.getMinutes();
 		var seconds= da.getSeconds();
 		var daa=d.loanEndTime;
+		console.log([year,month,date,hours,minutes,seconds].join('-'));
+		var fn = function(){
+		return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
+		};
+		}}
+		{{ fn() }}
+	</script>
+	<script type="text/html" id="date1">
+		{{#
+		var daa=d.loanEndTime;
 		daa = new Date(daa);
 		var year = daa.getFullYear();
 		var month = daa.getMonth()+1;
@@ -106,15 +114,15 @@
 			var layer = layui.layer ;
 			var laydate = layui.laydate;
 			//加载日期框
-			laydate.render({
-				elem: '#startTime',
-				type: 'datetime'
-
-			});
-			laydate.render({
-				elem: '#endTime',
-				type: 'datetime'
-			});
+            var newDate = new Date().setDate(new Date().getDate() - 60)//60天以前的日期
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#time', //指定元素
+                type:'datetime',
+                range: '至',
+                min: getDate(newDate),
+                max: getDate()
+            });
 			table.render({
 				elem: '#drawAudioList'
 				,url: '<%=path%>/loan/findLoanList'  //数据接口
@@ -126,12 +134,12 @@
 					,{field: 'loanCode', title: '借据号',align:'center' }
 					,{field: 'shopkeeper', title: '借款人',width:230,align:'center'}
 					,{field: 'loanStartTime', title: '借款起始日', width:230, align:'center',templet: '#date'}
-					,{field: 'loanEndTime', title: '借款到期日', width:230, align:'center',templet: '#date'}
+					,{field: 'loanEndTime', title: '借款到期日', width:230, align:'center',templet: '#date1'}
 					,{field: 'payment', title: '借款金额',align:'center' }
 					,{field: 'loanBalance', title: '借款余额',align:'center' }
 					,{field: 'formalityRate', title: '手续费率（每日）',align:'center' }
 					,{field: 'serviceCharge', title: '应收手续费',align:'center' }
-					,{field: 'servicescale ', title: '代销服务费率',align:'center' }
+					,{field: 'servicescale', title: '代销服务费率',align:'center' }
 					,{field: 'servicemoney', title: '代销服务费',align:'center' }
 					,{field: 'flag', title: '状态',align:'center'  ,templet: '#state', templet: '#flag' }
 					,{field: 'tool', title: '还款情况',width:270,align:'center', event: 'setSign' ,toolbar:'#bar'}
@@ -139,8 +147,9 @@
 			});
 			//查询
 			$('#search').on('click',function(){
-				var startTime = $('#startTime').val();
-				var endTime = $('#endTime').val();
+                var date= $('#time').val().split('至');
+                var startTime = date[0];
+                var endTime = date[1];
 				var orderNo = $('#orderNo').val();
 				var loanStatus = $('#loanStatus').val();
 				var loanName = $('#loanName').val();
@@ -169,6 +178,24 @@
 				}
 			});
 		});
+        //时间格式化
+        function getDate(data){
+            if(data == null || data == ""){
+                da = new Date();
+            }else{
+                da = new Date(data);
+            }
+            var year = da.getFullYear();
+            var month = da.getMonth()+1;
+            var date = da.getDate();
+			/*var hours= da.getHours();
+			 var minutes= da.getMinutes();
+			 var seconds= da.getSeconds();*/
+
+            var dat =[year,month,date].join('-');
+            var tad = [23,59,59].join(':');
+            return [dat,tad].join(' ');
+        }
 	</script>
 
 

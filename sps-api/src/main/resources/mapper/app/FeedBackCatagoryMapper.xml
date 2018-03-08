@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.app.FeedBackCatagoryDao">
+	<resultMap id="baseInfo" type="com.sps.entity.app.FeedbackCategory">
+		<id column="f_id" property="id" jdbcType="INTEGER"/>
+		<result column="f_name"  property="name" jdbcType="VARCHAR"/>
+		<result column="f_createtime"  property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="f_flag"  property="flag" jdbcType="INTEGER"/>
+	</resultMap>
+	<sql id="baseSql" >
+		f_id,
+		f_name,
+		f_createtime,
+		f_flag
+	</sql>
+	<select id="selectList" resultMap="baseInfo">
+		SELECT
+			<include refid="baseSql"/>
+		FROM
+		sps_app_feedback_category
+		WHERE  f_flag=1
+	</select>
+</mapper>

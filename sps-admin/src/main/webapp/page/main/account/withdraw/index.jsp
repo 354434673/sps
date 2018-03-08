@@ -14,26 +14,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet"
-          href="<%=path%>/page/static/plugins/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet"  href="<%=path%>/page/layui/css/layui.css" media="all" />
     <style type="text/css">
+        tr th{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-<div style="margin: 15px;">
-    <div class="layui-form layui-form-pane">
-        <div class="layui-form-item">
-              <div class="layui-form-item">
-                    <label class="layui-form-label">提现时间:</label>
-                    <div class="layui-input-inline">
-                        <input type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required">
-                    </div>
-                    <div class="layui-input-inline">
-                        <input type="text" class="layui-input" id="endTime" placeholder="年-月-日" lay-verify="required">
-                    </div>
+ <div style="margin: 15px;">
+        <div class="layui-form layui-form-pane">
+            <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">提现时间:</label>
+                <div class="layui-input-inline" style="width: 300px;">
+                    <input id="time"   readonly="" type="text" name="startTime"  lay-verify="" placeholder="选择范围 " autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+            <div class="layui-form-item">
                   <label class="layui-form-label">状态:</label>
-                  <div class="layui-input-inline">
-                      <select   id="status" lay-filter="withDrawState">
+                  <div class="layui-input-inline" style="width: 300px;">
+                      <select   id="status" lay-filter="withDrawState" >
                           <option value="">全部</option>
                           <option value="0">待提交</option>
                           <option value="1">审核中</option>
@@ -42,7 +44,7 @@
                       </select>
                   </div>
               </div>
-              <div>
+            <div class="layui-form-item" >
                   <a href="javascript:;" class="layui-btn layui-btn-warm" id="add">
                       <i class="layui-icon">&#xe608;</i> 新增
                   </a>
@@ -57,10 +59,9 @@
                     </blockquote>--%>
               </div>
         </div>
-    </div>
-    <table id="withdrawList" lay-filter="withdrawTables"></table>
+     <table id="withdrawList" lay-filter="withdrawTables"></table>
 </div>
-<script type="text/javascript"  src="<%=path%>/page/layui/layui.js"></script>
+ <script type="text/javascript" src="<%=path%>/page/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
     <a class="layui-btn layui-btn-mini" lay-event="detail">详情</a>
 </script>
@@ -99,16 +100,16 @@
          var laypage = layui.laypage;
          var layer = layui.layer ;
          var laydate = layui.laydate;
-        //加载日期框
+        var newDate = new Date().setDate(new Date().getDate() - 60)//60天以前的日期
+        //执行一个laydate实例
         laydate.render({
-            elem: '#startTime',
-            type: 'datetime'
+            elem: '#time', //指定元素
+            type:'datetime',
+            range: '至',
+            min: getDate(newDate),
+            max: getDate()
+        });
 
-        });
-        laydate.render({
-            elem: '#endTime',
-            type: 'datetime'
-        });
         $('#add').on('click', function() {
             window.location.href="<%=path%>/page/main/account/withdraw/addWithdraw.jsp";
         });
@@ -133,8 +134,9 @@
 
         //查询
         $('#search').on('click',function(){
-            var startTime = $('#startTime').val();
-            var endTime = $('#endTime').val();
+            var date= $('#time').val().split('至');
+            var startTime = date[0];
+            var endTime = date[1];
             var withDrawState = $('#status').val();
             table.reload('tradeSerialNum', {
                 where: {
@@ -159,6 +161,25 @@
             }
         });
     });
+    //时间格式化
+    function getDate(data){
+        if(data == null || data == ""){
+            da = new Date();
+        }else{
+            da = new Date(data);
+        }
+        var year = da.getFullYear();
+        var month = da.getMonth()+1;
+        var date = da.getDate();
+        /*var hours= da.getHours();
+         var minutes= da.getMinutes();
+         var seconds= da.getSeconds();*/
+
+        var dat =[year,month,date].join('-');
+        var tad = [23,59,59].join(':');
+        return [dat,tad].join(' ');
+    }
+
 
 </script>
 </body>
