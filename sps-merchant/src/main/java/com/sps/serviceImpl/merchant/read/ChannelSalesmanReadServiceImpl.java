@@ -31,6 +31,7 @@ public class ChannelSalesmanReadServiceImpl implements ChannelSalesmanReadServic
 			
 			Criteria createCriteria = example.createCriteria();
 			
+			createCriteria.andBei1NotEqualTo("3");
 			if(!StringUtil.isEmpty(salesmanName)){
 				createCriteria.andSalesmanNameLike("%"+salesmanName+"%");
 			}
@@ -45,10 +46,7 @@ public class ChannelSalesmanReadServiceImpl implements ChannelSalesmanReadServic
 			}
 			if(!StringUtil.isEmpty(bei1)){
 				createCriteria.andBei1EqualTo(bei1);
-			}else{
-				createCriteria.andBei1EqualTo("1");
 			}
-			
 			long count = 0;
 			List<SpsChannelSalesman> selectByExample = null;
 			if(page != null&&limit!=null){

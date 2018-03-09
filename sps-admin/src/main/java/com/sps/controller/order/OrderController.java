@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,7 +71,13 @@ public class OrderController {
 	public HashMap<String,Object> selectByParameters(Integer page, Integer limit,String name,
 													 String channelName, String selfname, String orderid,
 													 String startTime,String endTime, String flag){
-		HashMap<String,Object> orders=orderService.selectByParameters(page, limit, name, channelName,
+		 Subject subject = SecurityUtils.getSubject();
+		//获取当前token中的用户
+		String userName = (String) subject.getPrincipal();
+		
+		String channelNum = (String) subject.getSession().getAttribute(userName);
+		
+		HashMap<String,Object> orders=orderService.selectByParameters(page, limit, name, channelNum, channelName,
 				selfname, orderid, startTime, endTime, flag);
 		return orders;
 	}
