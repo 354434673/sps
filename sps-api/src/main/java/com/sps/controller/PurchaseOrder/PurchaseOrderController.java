@@ -43,9 +43,9 @@ public class PurchaseOrderController {
         ReturnInfo ri = new ReturnInfo();
         try {
             purchaseOrderService.saveOrUpdate(order);
-            ri.setSuccess(Message.API_SUCCESS_FLAG);
-            ri.setCode(Message.API_SUCCESS_CODE);
+            ri.setCode(Message.SUCCESS_CODE);
             ri.setMsg(Message.API_SUCCESS_MSG);
+            ri.setSuccess(Message.API_SUCCESS_FLAG);
         } catch (Exception e) {
             e.printStackTrace();
             ri.setCode(Message.FAILURE_CODE);
@@ -69,10 +69,10 @@ public class PurchaseOrderController {
         try {
             List<SpsPurchaseOrder> purchaseOrderList = purchaseOrderService.findList(map);
             if (purchaseOrderList != null) {
-                ri.setData(purchaseOrderList);
-                ri.setSuccess(Message.API_SUCCESS_FLAG);
-                ri.setCode(Message.API_SUCCESS_CODE);
+                ri.setResult(purchaseOrderList);
+                ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
+                ri.setSuccess(Message.API_SUCCESS_FLAG);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,9 +97,9 @@ public class PurchaseOrderController {
         try {
             Integer id = (Integer) map.get("id");
             purchaseOrderService.falseDeletion(id);
-            ri.setSuccess(Message.API_SUCCESS_FLAG);
-            ri.setCode(Message.API_SUCCESS_CODE);
+            ri.setCode(Message.SUCCESS_CODE);
             ri.setMsg(Message.API_SUCCESS_MSG);
+            ri.setSuccess(Message.API_SUCCESS_FLAG);
         } catch (Exception e) {
             e.printStackTrace();
             ri.setCode(Message.FAILURE_CODE);

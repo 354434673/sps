@@ -84,4 +84,13 @@ public class OrderServiceImpl implements OrderService {
         order.setFlag(11);
         spsOrderGoodsMapper.update(order);
     }
+
+    @Override
+    public void deleteOrder(Integer id) {
+        SpsOrder order = new SpsOrder();
+        order.setoId(id);
+        order.setModifytime(new Date());
+        order.setIsdelete(1);
+        spsOrderGoodsMapper.update(order);
+    }
 }

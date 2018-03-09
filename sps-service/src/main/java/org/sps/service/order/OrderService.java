@@ -37,7 +37,7 @@ public interface OrderService extends Serializable{
 	 *            订单状态
 	 * @return
 	 */
-	HashMap<String, Object> selectByParameters(Integer page, Integer limit, String name, String channelName, String selfname, String orderid,
+	HashMap<String, Object> selectByParameters(Integer page, Integer limit, String name, String channelNum, String channelName, String selfname, String orderid,
 											   String startTime, String endTime, String flag);
 
 	/**

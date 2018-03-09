@@ -45,4 +45,10 @@ public interface OrderService {
      * @param id
      */
     void cancelOrder(Integer id);
+
+    /**
+     * 删除订单
+     * @param id
+     */
+    void deleteOrder(Integer id);
 }

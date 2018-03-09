@@ -44,10 +44,35 @@ public class OrderController {
         try {
             Integer id = (Integer) map.get("id");
            orderService.cancelOrder(id);
-                ri.setData(id);
-                ri.setSuccess(Message.API_SUCCESS_FLAG);
-                ri.setCode(Message.API_SUCCESS_CODE);
-                ri.setMsg(Message.API_SUCCESS_MSG);
+                ri.setResult(id);
+            ri.setSuccess(Message.SUCCESS_MSG);
+            ri.setCode(Message.SUCCESS_CODE);
+            ri.setMsg(Message.API_SUCCESS_MSG);
+        } catch (Exception e){
+            e.printStackTrace();
+            ri.setCode(Message.FAILURE_CODE);
+            ri.setMsg(Message.FAILURE_MSG);
+            ri.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return ri;
+    }
+    /**
+     * 根据ID订单详情
+     * @param map  id
+     * @return
+     */
+    @RequestMapping(value = "/deleteOrder", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnInfo deleteOrder(@RequestBody Map<String,Object> map){
+        ReturnInfo ri = Common.validate(map, "id");
+        if("0".equals(ri.getCode())) return ri;
+        try {
+            Integer id = (Integer) map.get("id");
+            orderService.deleteOrder(id);
+            ri.setResult(id);
+            ri.setSuccess(Message.SUCCESS_MSG);
+            ri.setCode(Message.SUCCESS_CODE);
+            ri.setMsg(Message.API_SUCCESS_MSG);
         } catch (Exception e){
             e.printStackTrace();
             ri.setCode(Message.FAILURE_CODE);
@@ -72,9 +97,9 @@ public class OrderController {
             Integer id = (Integer) map.get("id");
             SpsOrder order = orderService.findById(id);
             if(order != null){
-                ri.setData(order);
-                ri.setSuccess(Message.API_SUCCESS_FLAG);
-                ri.setCode(Message.API_SUCCESS_CODE);
+                ri.setResult(order);
+                ri.setSuccess(Message.SUCCESS_MSG);
+                ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
             }
         } catch (Exception e){
@@ -100,9 +125,9 @@ public class OrderController {
         try {
             List<SpsOrder> orderList = orderService.findList(map);
             if(orderList != null){
-                ri.setData(orderList);
-                ri.setSuccess(Message.API_SUCCESS_FLAG);
-                ri.setCode(Message.API_SUCCESS_CODE);
+                ri.setResult(orderList);
+                ri.setSuccess(Message.SUCCESS_MSG);
+                ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
             }
         } catch (Exception e){
@@ -126,11 +151,13 @@ public class OrderController {
             Map<String,Object> map= purchaseOrderService.saveOrder(order);
             //成功返回当前用户地址个人信息
                 if((Integer) map.get("flag")==0){
-                ri.setSuccess(Message.API_SUCCESS_FLAG);
-                ri.setCode(Message.API_SUCCESS_CODE);
-                ri.setMsg(Message.API_SUCCESS_MSG);
+                    ri.setCode(Message.SUCCESS_CODE);
+                    ri.setMsg(Message.API_SUCCESS_MSG);
+                    ri.setSuccess(Message.API_SUCCESS_FLAG);
             }else {
-                ri.setSuccess(Message.API_SUCCESS_FLAG);
+                    ri.setCode(Message.FAILURE_CODE);
+                    ri.setMsg(Message.FAILURE_MSG);
+                    ri.setSuccess(Message.API_ERROR_FLAG);
 
             }
         } catch (Exception e) {
@@ -156,10 +183,10 @@ public class OrderController {
 
             //成功返回当前用户地址个人信息
             if((Integer) map.get("flag")==0){
-                ri.setData(map.get("company"));
-                ri.setSuccess(Message.API_SUCCESS_FLAG);
-                ri.setCode(Message.API_SUCCESS_CODE);
+                ri.setResult(map.get("company"));
+                ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
+                ri.setSuccess(Message.API_SUCCESS_FLAG);
             }else {
                 ri.setSuccess(Message.API_SUCCESS_FLAG);
                 ri.setCode(""+(Integer) map.get("flag"));

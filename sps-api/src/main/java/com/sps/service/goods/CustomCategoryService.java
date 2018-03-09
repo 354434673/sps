@@ -37,4 +37,11 @@ public interface CustomCategoryService{
      * @return
      */
     HashMap<String,Object> findCustomCategoryList(Integer page, Integer limit, String name, String shopNum);
+
+    /**
+     * 根据商户id查询自定义分类
+     * @param enterpriseId
+     * @return
+     */
+    List<SpsCustomCategory> findByEnterpriseId(Integer enterpriseId);
 }
