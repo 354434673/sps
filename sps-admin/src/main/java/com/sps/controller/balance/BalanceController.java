@@ -11,7 +11,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 @RestController
 @RequestMapping("/balance")
 public class BalanceController {
-	@Reference
+	@Reference(group = "dianfu")
 	private BalanceReadService balanceReadService;
 	
 	@RequestMapping("/queryBalanceList.json")
