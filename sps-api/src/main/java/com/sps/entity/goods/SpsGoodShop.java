@@ -42,50 +42,50 @@ public class SpsGoodShop implements Serializable {
 
     private Date gUpdateTime;
 
-    private BigDecimal minPrice;
+    private BigDecimal gMinPrice;
 
 
     private List<SpsGoodsAlbum> albumList;
     private List<SpsGoodsAlbum> albumDetailList;
 
-    public String getgPic() {
-        return gPic;
+    public String getgForceOpinion() {
+        return gForceOpinion;
     }
 
-    public void setgPic(String gPic) {
-        this.gPic = gPic;
+    public void setgForceOpinion(String gForceOpinion) {
+        this.gForceOpinion = gForceOpinion;
     }
 
-    public Integer getgSalesNum() {
-        return gSalesNum;
+    public String getgSkuIds() {
+        return gSkuIds;
     }
 
-    public void setgSalesNum(Integer gSalesNum) {
-        this.gSalesNum = gSalesNum;
+    public void setgSkuIds(String gSkuIds) {
+        this.gSkuIds = gSkuIds;
     }
 
-    public List<SpsGoodsAlbum> getAlbumDetailList() {
-        return albumDetailList;
+    public String getgOpinion() {
+        return gOpinion;
     }
 
-    public void setAlbumDetailList(List<SpsGoodsAlbum> albumDetailList) {
-        this.albumDetailList = albumDetailList;
+    public void setgOpinion(String gOpinion) {
+        this.gOpinion = gOpinion;
     }
 
-    public BigDecimal getMinPrice() {
-        return minPrice;
+    public Integer getgGoodsId() {
+        return gGoodsId;
     }
 
-    public void setMinPrice(BigDecimal minPrice) {
-        this.minPrice = minPrice;
+    public void setgGoodsId(Integer gGoodsId) {
+        this.gGoodsId = gGoodsId;
     }
 
-    public List<SpsGoodsAlbum> getAlbumList() {
-        return albumList;
+    public Integer getgId() {
+        return gId;
     }
 
-    public void setAlbumList(List<SpsGoodsAlbum> albumList) {
-        this.albumList = albumList;
+    public void setgId(Integer gId) {
+        this.gId = gId;
     }
 
     public String getgRemark() {
@@ -104,43 +104,12 @@ public class SpsGoodShop implements Serializable {
         this.gDetails = gDetails;
     }
 
-    public Integer getgGoodsId() {
-        return gGoodsId;
+    public Integer getgSalesNum() {
+        return gSalesNum;
     }
 
-    public void setgGoodsId(Integer gGoodsId) {
-        this.gGoodsId = gGoodsId;
-    }
-
-    public String getgSkuIds() {
-        return gSkuIds;
-    }
-
-    public void setgSkuIds(String gSkuIds) {
-        this.gSkuIds = gSkuIds;
-    }
-
-    public String getgForceOpinion() {
-        return gForceOpinion;
-    }
-
-    public void setgForceOpinion(String gForceOpinion) {
-        this.gForceOpinion = gForceOpinion;
-    }
-
-    public String getgOpinion() {
-        return gOpinion;
-    }
-
-    public void setgOpinion(String gOpinion) {
-        this.gOpinion = gOpinion;
-    }
-    public Integer getgId() {
-        return gId;
-    }
-
-    public void setgId(Integer gId) {
-        this.gId = gId;
+    public void setgSalesNum(Integer gSalesNum) {
+        this.gSalesNum = gSalesNum;
     }
 
     public String getgCategoryIds() {
@@ -148,7 +117,15 @@ public class SpsGoodShop implements Serializable {
     }
 
     public void setgCategoryIds(String gCategoryIds) {
-        this.gCategoryIds = gCategoryIds == null ? null : gCategoryIds.trim();
+        this.gCategoryIds = gCategoryIds;
+    }
+
+    public String getgPic() {
+        return gPic;
+    }
+
+    public void setgPic(String gPic) {
+        this.gPic = gPic;
     }
 
     public Integer getgBrandId() {
@@ -164,7 +141,7 @@ public class SpsGoodShop implements Serializable {
     }
 
     public void setgSpuNo(String gSpuNo) {
-        this.gSpuNo = gSpuNo == null ? null : gSpuNo.trim();
+        this.gSpuNo = gSpuNo;
     }
 
     public String getgSpuName() {
@@ -172,7 +149,7 @@ public class SpsGoodShop implements Serializable {
     }
 
     public void setgSpuName(String gSpuName) {
-        this.gSpuName = gSpuName == null ? null : gSpuName.trim();
+        this.gSpuName = gSpuName;
     }
 
     public Integer getgCategorySelf() {
@@ -188,7 +165,7 @@ public class SpsGoodShop implements Serializable {
     }
 
     public void setgRecommend(String gRecommend) {
-        this.gRecommend = gRecommend == null ? null : gRecommend.trim();
+        this.gRecommend = gRecommend;
     }
 
     public String getgUnit() {
@@ -196,7 +173,7 @@ public class SpsGoodShop implements Serializable {
     }
 
     public void setgUnit(String gUnit) {
-        this.gUnit = gUnit == null ? null : gUnit.trim();
+        this.gUnit = gUnit;
     }
 
     public String getgGroundingFlag() {
@@ -204,7 +181,7 @@ public class SpsGoodShop implements Serializable {
     }
 
     public void setgGroundingFlag(String gGroundingFlag) {
-        this.gGroundingFlag = gGroundingFlag == null ? null : gGroundingFlag.trim();
+        this.gGroundingFlag = gGroundingFlag;
     }
 
     public Date getgCreateTime() {
@@ -245,5 +222,29 @@ public class SpsGoodShop implements Serializable {
 
     public void setgUpdateTime(Date gUpdateTime) {
         this.gUpdateTime = gUpdateTime;
+    }
+
+    public BigDecimal getgMinPrice() {
+        return gMinPrice;
+    }
+
+    public void setgMinPrice(BigDecimal gMinPrice) {
+        this.gMinPrice = gMinPrice;
+    }
+
+    public List<SpsGoodsAlbum> getAlbumList() {
+        return albumList;
+    }
+
+    public void setAlbumList(List<SpsGoodsAlbum> albumList) {
+        this.albumList = albumList;
+    }
+
+    public List<SpsGoodsAlbum> getAlbumDetailList() {
+        return albumDetailList;
+    }
+
+    public void setAlbumDetailList(List<SpsGoodsAlbum> albumDetailList) {
+        this.albumDetailList = albumDetailList;
     }
 }

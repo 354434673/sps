@@ -10,7 +10,7 @@ import java.util.Map;
  * @author Zhang Yongwei
  *
  */
-public class EntityUtils {
+public class EntityUtiles {
 	/**
 	 * 根据字段设置值
 	 * @param <E>
@@ -24,7 +24,7 @@ public class EntityUtils {
 		}
 		Object entityTemp = entity ;
 		for (String propertyArr : property.trim().split("\\.")) {
-			entityTemp = invokeReturn(entityTemp, "get"+propertyArr) ;
+			entityTemp = invokeReturn(entityTemp, "get"+toUpperFirst(propertyArr)) ;
 			if(null==entityTemp){
 				entityTemp= "";
 			}

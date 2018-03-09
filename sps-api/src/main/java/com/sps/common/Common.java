@@ -29,11 +29,11 @@ public class Common {
         if (bl) {
             ri.setCode(Message.API_SUCCESS_CODE);
             ri.setMsg(Message.API_SUCCESS_MSG);
-            ri.setData(map);
+            ri.setResult(map);
         } else {
             ri.setCode(Message.FAILURE_CODE);
             ri.setMsg(Message.ERROR_MSG);
-            ri.setData(sb.toString());
+            ri.setResult(sb.toString());
         }
         return ri;
     }
