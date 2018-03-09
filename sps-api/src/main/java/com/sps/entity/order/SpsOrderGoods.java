@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class SpsOrderGoods implements Serializable {
+
+    private String url;
+
     private Integer oId;
 
     private String orderid;
@@ -28,6 +31,14 @@ public class SpsOrderGoods implements Serializable {
     private Date modifytime;
 
     private Integer preAmount;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public Integer getoId() {
         return oId;

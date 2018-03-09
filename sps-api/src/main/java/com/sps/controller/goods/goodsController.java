@@ -75,7 +75,7 @@ public class goodsController {
             ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
             Integer id = (Integer) map.get("id");
             SpsGoodShop goods = goodShopService.findById(id);
-            String[] pro = new String[]{"gId","gSpuName","gMinPrice"};
+
             data.put("gId", goods.getgId());
             data.put("gSpuName", goods.getgSpuName());
             data.put("gMinPrice", goods.getgMinPrice());
@@ -107,8 +107,9 @@ public class goodsController {
         if("0".equals(ri.getCode())) return ri;
         try {
             List<SpsGoodShopSku> skuList = goodShopSkuService.findList(map);
+            String[] pro = new String[]{"gId","gGid","gColorSize","gColor","gSize","gPrice","gQuantity","gStock"};
             if(skuList != null){
-                ri.setResult(skuList);
+                ri.setResult(EntityUtils.reloadListPropertyValue(skuList, pro));
                 ri.setSuccess(Message.SUCCESS_MSG);
                 ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);

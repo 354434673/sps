@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -122,10 +124,21 @@ public class OrderController {
     public ReturnInfo orderList(@RequestBody Map<String,Object> map){
         ReturnInfo ri = Common.validate(map,"customerNum","shopkeeperNum");
         if("0".equals(ri.getCode())) return ri;
+        HashMap<String, Object> data = new HashMap<>();
+        ArrayList<HashMap<String, Object>> result = new ArrayList<>();
         try {
             List<SpsOrder> orderList = orderService.findList(map);
+            for (SpsOrder  list:orderList) {
+                data.put("orderid", list.getOrderid());
+                data.put("selfname", list.getSelfname());
+                data.put("scale", list.getScale());
+                data.put("shopPayMoney", list.getShopPayMoney());
+                data.put("servicemoney", list.getServicemoney());
+                data.put("orderGoodsList", list.getOrderGoodsList());
+                result.add(data);
+            }
             if(orderList != null){
-                ri.setResult(orderList);
+                ri.setResult(result);
                 ri.setSuccess(Message.SUCCESS_MSG);
                 ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
