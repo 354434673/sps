@@ -46,7 +46,7 @@
 			<artifactId>shiro-ehcache</artifactId>
 			<version>${shiro-version}</version>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 	      <groupId>com.juzifenqi</groupId>
 	      <artifactId>member-center-api</artifactId>
 	      <version>2.3.0.0-SNAPSHOT</version>
@@ -55,7 +55,7 @@
 	      <groupId>com.juzifenqi</groupId>
 	      <artifactId>member-center-core</artifactId>
 	      <version>2.3.0.0-SNAPSHOT</version>
-	    </dependency>
+	    </dependency> -->
   </dependencies>
   <build>
     <finalName>sps-admin</finalName>

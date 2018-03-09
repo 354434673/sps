@@ -27,11 +27,6 @@ import org.sps.entity.merchant.SpsChannelOpenAccount;
 import org.sps.service.merchant.read.ChannelReadService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.juzifenqi.core.ServiceResult;
-import com.juzifenqi.usercenter.entity.member.LoginInfo;
-import com.juzifenqi.usercenter.service.ISmsCommonService;
-import com.juzifenqi.usercenter.service.authorization.IDianfuPassportService;
-import com.juzifenqi.usercenter.vo.RegisterDto;
 import com.sps.entity.user.SpsUser;
 import com.sps.service.user.UserAndRoleService;
 import com.sps.service.user.UserService;
@@ -46,9 +41,9 @@ public class UserController {
 	@Reference(group="dianfu")
 	private ChannelReadService readService;
 	/*@Reference(group = "member-center-dev1")*/
-	private ISmsCommonService iSmsCommonService;
-	/*@Reference(group = "member-center-dev1")*/
-	private IDianfuPassportService iDianfuPassportService;
+/*	private ISmsCommonService iSmsCommonService;
+	@Reference(group = "member-center-dev1")
+	private IDianfuPassportService iDianfuPassportService;*/
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	/**
 	 * 用户列表
@@ -241,7 +236,7 @@ public class UserController {
 	 * @return: ServiceResult<Boolean>
 	 * @throws
 	 */
-	@RequestMapping("/h5/regist")
+/*	@RequestMapping("/h5/regist")
 	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc){
 			RegisterDto arg0 = new RegisterDto();
 
@@ -257,7 +252,7 @@ public class UserController {
 
 			return serviceResult;
 	}
-	/**
+	*//**
 	 * 注册密码短信验证码
 	 * @Title: getPhoneCode
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -267,12 +262,12 @@ public class UserController {
 	 * @date 2018年3月6日 下午1:56:42
 	 * @return: ServiceResult<Boolean>
 	 * @throws
-	 */
+	 *//*
 	@RequestMapping("/getPhoneCode/regist")
 	public ServiceResult<Boolean> registForPhoneCode(String mobile, Integer category){
 		
 			ServiceResult<Boolean> sendRegisterSms = iSmsCommonService.sendRegisterSms(mobile, category);
 
 			return sendRegisterSms;
-	}
+	}*/
 }
