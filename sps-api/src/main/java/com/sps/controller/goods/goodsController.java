@@ -71,6 +71,7 @@ public class goodsController {
         ReturnInfo ri = Common.validate(map, "id");
         if("0".equals(ri.getCode())) return ri;
         try {
+
             HashMap<String, Object> data = new HashMap<String, Object>();//封装对象
             ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
             String id = (String) map.get("id");
