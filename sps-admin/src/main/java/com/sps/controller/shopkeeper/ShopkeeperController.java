@@ -1,24 +1,16 @@
 package com.sps.controller.shopkeeper;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -27,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.document.AbstractExcelView;
 import org.sps.entity.shopkeeper.SpsShopkeeperAccount;
 import org.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 import org.sps.service.shopkeeper.read.ShopkeeperReadService;
@@ -35,9 +26,9 @@ import org.sps.service.shopkeeper.write.ShopkeeperWriteService;
 import org.sps.util.FinalData;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.sps.util.CommonUtil;
+import com.google.zxing.WriterException;
+import com.sps.common.QRCodeFactory;
 import com.sps.util.ExcelUtil;
-import com.sps.util.ResultCodeEnum;
 
 /**
  * 店主相关控制层
@@ -404,6 +395,35 @@ public class ShopkeeperController{
 		HashMap<String, Object> queryInvitationList = readService.queryInvitationList(page, limit, name, phone, state);
 		
 		return queryInvitationList;
+	}
+
+	@RequestMapping(value = "/getQRcode")
+	public void getCode(HttpServletResponse response, HttpServletRequest request) {
+		try {
+			String serverName = request.getServerName();
+			
+			int serverPort = request.getServerPort();
+			
+			String contextPath = request.getContextPath();
+			
+			response.setContentType("image/png");
+			
+/*			String content = serverName+":"+serverPort+"/"
+					+ contextPath+"/page/main/register.html";*/
+			String content = "http://123.56.24.208:8480/register.html";
+			
+			int[] size = new int[] { 430, 430 };
+			
+			OutputStream os = response.getOutputStream();
+			
+			BufferedImage creatQrImage = new QRCodeFactory().CreatQrImage(content, os, size);
+			
+			ImageIO.write(creatQrImage, "png", os);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (WriterException e) {
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * 获得当前登录商户的num

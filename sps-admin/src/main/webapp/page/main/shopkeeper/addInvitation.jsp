@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>收款信息添加</title>
+<title>店主邀请</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -41,6 +41,7 @@
 				   	<div class="layui-form-item" align="center" id="btn" style="padding-top: 10px">
 						<button class="layui-btn layui-btn-primary" id="close">返回</button>
 						<button class="layui-btn layui-btn-primary" lay-submit  lay-filter="submit"  id="submit">扫码邀请</button>
+						<button class="layui-btn layui-btn-primary" id="code">扫码邀请</button>
 					</div>
 					</div>
 </div>
@@ -75,6 +76,9 @@
 		 			 }
 		 		 })
 	  })  
+	  $('#"code"').click(function(){
+		  
+	  })
 	  //自定义验证规则  
 	  form.verify({  
 			//验证只包含汉字  
