@@ -1,8 +1,6 @@
 package com.sps.controller.PurchaseOrder;
 
-import com.sps.common.Common;
-import com.sps.common.Message;
-import com.sps.common.ReturnInfo;
+import com.sps.common.*;
 import com.sps.entity.goods.SpsGoodShop;
 import com.sps.entity.goods.SpsGoodShopSku;
 import com.sps.entity.goods.SpsPurchaseOrder;
@@ -68,8 +66,9 @@ public class PurchaseOrderController {
         if ("0".equals(ri.getCode())) return ri;
         try {
             List<SpsPurchaseOrder> purchaseOrderList = purchaseOrderService.findList(map);
+            String[] pro = new String[]{"goodsName","price","quantity","size","url","stock","orderGoodsNum","color"};
             if (purchaseOrderList != null) {
-                ri.setResult(purchaseOrderList);
+                ri.setResult(EntityUtiles.reloadListPropertyValue(purchaseOrderList, pro));
                 ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
                 ri.setSuccess(Message.API_SUCCESS_FLAG);

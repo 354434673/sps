@@ -27,11 +27,6 @@ import org.sps.entity.merchant.SpsChannelOpenAccount;
 import org.sps.service.merchant.read.ChannelReadService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.juzifenqi.core.ServiceResult;
-import com.juzifenqi.usercenter.entity.member.LoginInfo;
-import com.juzifenqi.usercenter.service.ISmsCommonService;
-import com.juzifenqi.usercenter.service.authorization.IDianfuPassportService;
-import com.juzifenqi.usercenter.vo.RegisterDto;
 import com.sps.entity.user.SpsUser;
 import com.sps.service.user.UserAndRoleService;
 import com.sps.service.user.UserService;
@@ -46,9 +41,9 @@ public class UserController {
 	@Reference(group="dianfu")
 	private ChannelReadService readService;
 	/*@Reference(group = "member-center-dev1")*/
-	private ISmsCommonService iSmsCommonService;
-	/*@Reference(group = "member-center-dev1")*/
-	private IDianfuPassportService iDianfuPassportService;
+/*	private ISmsCommonService iSmsCommonService;
+	@Reference(group = "member-center-dev1")
+	private IDianfuPassportService iDianfuPassportService;*/
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	/**
 	 * 用户列表
@@ -229,50 +224,5 @@ public class UserController {
 			subject.getSession().setAttribute(userName, num);
 		}
 		return num;
-	}
-	/**
-	 * h5用户注册
-	 * @Title: userRegist
-	 * @Description: TODO(这里用一句话描述这个方法的作用)
-	 * @param: @param data
-	 * @param: @return
-	 * @author YangNingSheng
-	 * @date 2018年3月6日 下午3:07:13
-	 * @return: ServiceResult<Boolean>
-	 * @throws
-	 */
-	@RequestMapping("/h5/regist")
-	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc){
-			RegisterDto arg0 = new RegisterDto();
-
-			arg0.setMobile(mobile);
-
-			arg0.setCode(code);
-
-			arg0.setPassword(password);
-
-			arg0.setSaleSrc(saleSrc);
-
-			ServiceResult<LoginInfo> serviceResult = iDianfuPassportService.memberRegister4Browser(arg0);
-
-			return serviceResult;
-	}
-	/**
-	 * 注册密码短信验证码
-	 * @Title: getPhoneCode
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
-	 * @param: @param data
-	 * @param: @return
-	 * @author YangNingSheng    
-	 * @date 2018年3月6日 下午1:56:42
-	 * @return: ServiceResult<Boolean>
-	 * @throws
-	 */
-	@RequestMapping("/getPhoneCode/regist")
-	public ServiceResult<Boolean> registForPhoneCode(String mobile, Integer category){
-		
-			ServiceResult<Boolean> sendRegisterSms = iSmsCommonService.sendRegisterSms(mobile, category);
-
-			return sendRegisterSms;
 	}
 }

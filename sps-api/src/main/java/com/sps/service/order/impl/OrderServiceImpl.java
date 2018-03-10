@@ -2,6 +2,8 @@ package com.sps.service.order.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sps.common.EntityUtiles;
+import com.sps.common.EntityUtils;
 import com.sps.dao.goods.SpsBrandMapper;
 import com.sps.dao.goods.SpsGoodCategoryMapper;
 import com.sps.dao.goods.SpsGoodsMapper;
@@ -9,6 +11,7 @@ import com.sps.dao.order.SpsOrderGoodsMapper;
 import com.sps.dao.order.SpsOrderMapper;
 import com.sps.entity.goods.SpsBrand;
 import com.sps.entity.goods.SpsGoodCategory;
+import com.sps.entity.goods.SpsGoodShop;
 import com.sps.entity.order.SpsOrder;
 import com.sps.entity.order.SpsOrderGoods;
 import com.sps.service.goods.BrandService;
@@ -49,8 +52,9 @@ public class OrderServiceImpl implements OrderService {
                 Map<String, Object> goodsMap = new HashMap<>();
                 goodsMap.put("orderNum", order.getOrderid());
                 List<SpsOrderGoods> goodsList = spsOrderGoodsMapper.findListAllWithMap(goodsMap);
+                String[] pro1 = new String[]{"skuname","price","url"};
                 if (goodsList!=null&&goodsList.size()>0){
-                    order.setOrderGoodsList(goodsList);
+                    order.setOrderGoodsList((List<SpsOrderGoods>) EntityUtiles.reloadListPropertyValue(goodsList, pro1));
                 }
             }
         }
