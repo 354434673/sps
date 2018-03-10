@@ -73,8 +73,8 @@ public class goodsController {
         try {
             HashMap<String, Object> data = new HashMap<String, Object>();//封装对象
             ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
-            Integer id = (Integer) map.get("id");
-            SpsGoodShop goods = goodShopService.findById(id);
+            String id = (String) map.get("id");
+            SpsGoodShop goods = goodShopService.findById(Integer.valueOf(id));
 
             data.put("gId", goods.getgId());
             data.put("gSpuName", goods.getgSpuName());
