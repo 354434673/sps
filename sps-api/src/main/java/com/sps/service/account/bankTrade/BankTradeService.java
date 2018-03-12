@@ -18,5 +18,8 @@ import java.util.List;
 public interface BankTradeService {
 //   根据用户名查询交易信息
     List<BankTradeInfo> findBankTrdeList(String userName, Integer userType);
-
+//根据交易类型查询信息
+    List<BankTradeInfo> findBankTrdeListByTradeType(String userName, Integer userType,String tradeType);
+//查询交易详情
+    BankTradeInfo findBankTradeDetail(Integer id);
 }

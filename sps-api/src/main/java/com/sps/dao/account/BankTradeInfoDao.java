@@ -18,5 +18,9 @@ import java.util.List;
 public interface BankTradeInfoDao {
 //    获取当前登录用户的所有交易记录
     List<BankTradeInfo> selectListByUserName(@Param("userId") String userId);
+//根据类型查询交易信息
+    List<BankTradeInfo> selectListByUserNameAndTradeType(@Param("userId") String userId,@Param("tradeType") String tradeType);
+//根据主键查询详情
+    BankTradeInfo selectDetail(Integer id);
 
 }

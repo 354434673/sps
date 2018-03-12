@@ -19,7 +19,7 @@
 		<result column="bt_trade_status" property="tradeStatus" jdbcType="VARCHAR" />
 		<result column="bt_user_id" property="userId" jdbcType="VARCHAR" />
 		<result column="standby1" property="standby1" jdbcType="VARCHAR" />
-		<result column="standby2" property="stanbdy2" jdbcType="VARCHAR" />
+		<result column="standby2" property="standby2" jdbcType="VARCHAR" />
 		<result column="bt_trade_no" property="tradeNo" jdbcType="VARCHAR" />
 		<result column="orderid" property="orderId" jdbcType="VARCHAR" />
 	</resultMap>
@@ -40,7 +40,50 @@
 		  ON  b.a =DATE_FORMAT( x.bt_application_start_date, "%Y-%m-%d " )
 		WHERE
 		  x.bt_user_id=#{userId}
+
 	  order by  b.a DESC
+	</select>
+
+	<select id="selectListByUserNameAndTradeType" resultMap="BaseResultMap">
+		SELECT
+		x.id,x.bt_trade_amount,x.bt_trade_status,x.bt_trade_type,x.bt_application_start_date
+		FROM
+		(
+		SELECT
+		DATE_FORMAT( bt.bt_application_start_date, "%Y-%m-%d " ) a ,
+		bt.id,
+		bt.bt_user_id userId
+		FROM sps_bank_trade_info bt
+		GROUP BY DATE_FORMAT( bt.bt_application_start_date, "%Y-%m-%d %H" )
+		) b
+		JOIN
+		sps_bank_trade_info x
+		ON  b.a =DATE_FORMAT( x.bt_application_start_date, "%Y-%m-%d " )
+		<where>
+			x.bt_user_id=#{userId}
+			<if test="tradeType!=null and tradeType != ''">
+				 and bt_trade_type=#{tradeType}
+			</if>
+		</where>
+		order by  b.a DESC
+	</select>
+
+	<select id="selectDetail" parameterType="int" resultMap="BaseResultMap">
+		SELECT
+			bt_trade_amount,
+			bt_trade_no,
+			bt_trade_after_balanc,
+			bt_trade_status,
+			bt_trade_type,
+			bt_income_type,
+			bt_expenditure_type,
+			bt_payment_date,
+			standby1,
+			standby2
+		  FROM
+			sps_bank_trade_info
+		  WHERE
+		   id=#{id}
 	</select>
 
 </mapper>

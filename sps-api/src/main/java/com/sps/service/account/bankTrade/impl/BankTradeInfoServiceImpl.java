@@ -34,4 +34,18 @@ public class BankTradeInfoServiceImpl implements BankTradeService {
         List<BankTradeInfo> bankTradeList = bankTradeInfoDao.selectListByUserName(userId);
         return bankTradeList;
     }
+
+    @Override
+    public List<BankTradeInfo> findBankTrdeListByTradeType(String userName, Integer userType, String tradeType) {
+        String userId = bankCardInfoDao.selectByUserName(userName);
+//        根据用户userId查询交易信息
+        List<BankTradeInfo> bankTradeList = bankTradeInfoDao.selectListByUserNameAndTradeType(userId,tradeType);
+        return bankTradeList;
+    }
+
+    @Override
+    public BankTradeInfo findBankTradeDetail( Integer id) {
+        BankTradeInfo bankTradeInfo = bankTradeInfoDao.selectDetail(id);
+        return bankTradeInfo;
+    }
 }
