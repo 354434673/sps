@@ -75,5 +75,16 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+	@Override
+	public SpsUser findUserByUserName(String userName) {
+		SpsUserExample example = new SpsUserExample();
+
+		Criteria createCriteria = example.createCriteria();
+
+		createCriteria.andUserUsernameEqualTo(userName);
+
+		List<SpsUser> selectByExample = dao.selectByExample(example);
+
+		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
+	}
 }

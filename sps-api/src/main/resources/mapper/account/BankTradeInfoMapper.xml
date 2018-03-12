@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.account.BankTradeInfoDao" >
+	<resultMap id="BaseResultMap" type="com.sps.entity.account.BankTradeInfo" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="bt_trade_name" property="tradeName" jdbcType="VARCHAR" />
+		<result column="bt_trade_serial_num" property="tradeSerialNum" jdbcType="VARCHAR" />
+		<result column="bt_identity" property="identity" jdbcType="VARCHAR" />
+		<result column="bt_application_start_date" property="applicationStartDate" jdbcType="TIMESTAMP" />
+		<result column="bt_application_stop_date" property="applicationStopDate" jdbcType="TIMESTAMP" />
+		<result column="bt_audit_date" property="auditDate" jdbcType="TIMESTAMP" />
+		<result column="bt_payment_date" property="paymentDate" jdbcType="TIMESTAMP" />
+		<result column="bt_trade_type" property="tradeType" jdbcType="VARCHAR" />
+		<result column="bt_income_type" property="incomeType" jdbcType="VARCHAR" />
+		<result column="bt_expenditure_type" property="expenditureType" jdbcType="VARCHAR" />
+		<result column="bt_trade_Before_balanc" property="tradeBeforeBalanc" jdbcType="DECIMAL" />
+		<result column="bt_trade_after_balanc" property="tradeAfterBalanc" jdbcType="DECIMAL" />
+		<result column="bt_trade_amount" property="tradeAmount" jdbcType="DECIMAL" />
+		<result column="bt_trade_status" property="tradeStatus" jdbcType="VARCHAR" />
+		<result column="bt_user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="standby1" property="standby1" jdbcType="VARCHAR" />
+		<result column="standby2" property="stanbdy2" jdbcType="VARCHAR" />
+		<result column="bt_trade_no" property="tradeNo" jdbcType="VARCHAR" />
+		<result column="orderid" property="orderId" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectListByUserName" resultMap="BaseResultMap">
+		SELECT
+			x.id,x.bt_trade_amount,x.bt_trade_status,x.bt_trade_type,x.bt_application_start_date
+		FROM
+			(
+				SELECT
+				 	DATE_FORMAT( bt.bt_application_start_date, "%Y-%m-%d " ) a ,
+					bt.id,
+					bt.bt_user_id userId
+			 	 FROM sps_bank_trade_info bt
+			  	GROUP BY DATE_FORMAT( bt.bt_application_start_date, "%Y-%m-%d %H" )
+			  	) b
+		JOIN
+				sps_bank_trade_info x
+		  ON  b.a =DATE_FORMAT( x.bt_application_start_date, "%Y-%m-%d " )
+		WHERE
+		  x.bt_user_id=#{userId}
+	  order by  b.a DESC
+	</select>
+
+</mapper>
