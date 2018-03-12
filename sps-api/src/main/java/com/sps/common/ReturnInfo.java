@@ -20,14 +20,16 @@ public class ReturnInfo {
     Object result;
 
     String success;
+    
+	public Object getResult() {
+		return result;
+	}
 
-    public Object getResult() {
-        return result;
-    }
-    public void setResult(Object result) {
-        this.result = result;
-    }
-    public String getSuccess() {
+	public void setResult(Object result) {
+		this.result = result;
+	}
+
+	public String getSuccess() {
         return success;
     }
 

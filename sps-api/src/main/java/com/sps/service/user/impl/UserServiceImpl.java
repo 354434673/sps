@@ -139,5 +139,16 @@ public class UserServiceImpl extends BaseOperate implements UserService{
 		
 		return selectByExample.size() == 0 ? null : selectByExample.get(0);
 	}
-	
+	@Override
+	public SpsUser findUserByUserName(String userName) {
+		SpsUserExample example = new SpsUserExample();
+
+		Criteria createCriteria = example.createCriteria();
+
+		createCriteria.andUserUsernameEqualTo(userName);
+
+		List<SpsUser> selectByExample = dao.selectByExample(example);
+
+		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
+	}
 }

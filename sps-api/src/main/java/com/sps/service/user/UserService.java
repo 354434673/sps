@@ -1,5 +1,7 @@
 package com.sps.service.user;
 
+import com.sps.entity.user.SpsUser;
+
 import java.util.HashMap;
 
 import com.juzifenqi.core.ServiceResult;
@@ -48,4 +50,7 @@ public interface UserService {
 	 * @throws
 	 */
 	public SpsShopkeeperInvitation queryShopInvitation(String phone, String clientNum);
+	
+	public SpsUser findUserByUserName(String userName);
+
 }	
