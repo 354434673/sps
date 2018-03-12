@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.SpsShopkeeperInvitationDao" >
+  <resultMap id="BaseResultMap" type="com.sps.entity.shopkeeper.SpsShopkeeperInvitation" >
+    <id column="invitation_id" property="invitationId" jdbcType="INTEGER" />
+    <result column="invitation_name" property="invitationName" jdbcType="VARCHAR" />
+    <result column="invitation_phone" property="invitationPhone" jdbcType="VARCHAR" />
+    <result column="invitation_time" property="invitationTime" jdbcType="TIMESTAMP" />
+    <result column="invitation_state" property="invitationState" jdbcType="VARCHAR" />
+    <result column="invitation_creat_time" property="invitationCreatTime" jdbcType="TIMESTAMP" />
+    <result column="invitation_update_time" property="invitationUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    invitation_id, invitation_name, invitation_phone, invitation_time, invitation_state, 
+    invitation_creat_time, invitation_update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperInvitationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_invitation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_invitation
+    where invitation_id = #{invitationId,jdbcType=INTEGER}
+  </select>
+  <select id="countByExample" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperInvitationExample" resultType="java.lang.Integer" >
+    select count(*) from sps_shopkeeper_invitation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

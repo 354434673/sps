@@ -28,6 +28,7 @@ import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.entiy.face.AuthFaceIdCard;
 import com.jzfq.auth.core.api.vo.JsonResult;*/
 import com.sps.common.StringUtil;
+import com.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 import com.sps.service.user.UserService;
 
 @RestController
@@ -98,18 +99,35 @@ public class UserController {
 	 * @throws
 	 */
 	@RequestMapping("/regist")
-	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc){
-			RegisterDto arg0 = new RegisterDto();
-
-			arg0.setMobile(mobile);
-
-			arg0.setCode(code);
-
-			arg0.setPassword(password);
-
-			arg0.setSaleSrc(saleSrc);
-
-			ServiceResult<LoginInfo> serviceResult = iDianfuPassportService.memberRegister4Browser(arg0);
+	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc, String clientNum, String channelNum){
+		
+			SpsShopkeeperInvitation queryShopInvitation = userService.queryShopInvitation(mobile, null);
+			
+			ServiceResult<LoginInfo> serviceResult = null;
+			if(queryShopInvitation != null){
+				
+				RegisterDto arg0 = new RegisterDto();
+				
+				arg0.setMobile(mobile);
+				
+				arg0.setCode(code);
+				
+				arg0.setPassword(password);
+				
+				arg0.setSaleSrc(saleSrc);
+				
+				serviceResult = iDianfuPassportService.memberRegister4Browser(arg0);
+				
+				if(serviceResult.getSuccess()){
+					serviceResult = userService.insertUser(mobile, password, clientNum);
+				}
+			}else{
+				serviceResult = new ServiceResult<LoginInfo>();
+				
+				serviceResult.setMessage("该店主未邀请,请邀请后注册");
+				
+				serviceResult.setSuccess(false);
+			}
 
 			return serviceResult;
 	}

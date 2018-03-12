@@ -398,8 +398,10 @@ public class ShopkeeperController{
 	}
 
 	@RequestMapping(value = "/getQRcode")
-	public void getCode(HttpServletResponse response, HttpServletRequest request) {
+	public void getCode(HttpServletResponse response, HttpServletRequest request, String channelNum, String clientNum) {
 		try {
+			System.out.println(channelNum);
+			
 			String serverName = request.getServerName();
 			
 			int serverPort = request.getServerPort();
@@ -410,7 +412,7 @@ public class ShopkeeperController{
 			
 /*			String content = serverName+":"+serverPort+"/"
 					+ contextPath+"/page/main/register.html";*/
-			String content = "http://123.56.24.208:8480/register.html";
+			String content = "http://123.56.24.208:8480/register.html?channelNum="+channelNum+"&clientNum="+clientNum;
 			
 			int[] size = new int[] { 430, 430 };
 			
@@ -419,6 +421,8 @@ public class ShopkeeperController{
 			BufferedImage creatQrImage = new QRCodeFactory().CreatQrImage(content, os, size);
 			
 			ImageIO.write(creatQrImage, "png", os);
+			
+			os.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (WriterException e) {

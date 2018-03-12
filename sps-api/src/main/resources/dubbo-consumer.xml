@@ -21,6 +21,8 @@
     <dubbo:annotation package="com.sps.controller"/>
     
     <dubbo:reference group = "${dubbo.group}" id="faceAuthApi" interface="com.jzfq.auth.core.api.FaceAuthApi"/>
+    
+    <dubbo:reference group = "${dubbo.group}" id="jzfqAuthApi" interface="com.jzfq.auth.core.api.JzfqAuthApi"/>
 </beans>
  
  
