@@ -51,7 +51,7 @@ public class FeedBackController {
         try {
             List<FeedbackCategory> catagorys = feedBackService.queryAllCtagory();
             if(catagorys.size()>0){
-                returnInfo.setData(catagorys);
+                returnInfo.setResult(catagorys);
                 returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
                 returnInfo.setCode(Message.API_SUCCESS_CODE);
                 returnInfo.setMsg(Message.API_SUCCESS_MSG);

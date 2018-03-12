@@ -46,7 +46,7 @@ public class SpsPurchaseOrder implements Serializable {
     private Integer orderSkuId;
 
     private Integer orderGoodsId;
-
+    private String orderGoodsUrl;
     private String orderCustomerNum;
 
     private Integer orderDeleteFlag;
@@ -55,6 +55,14 @@ public class SpsPurchaseOrder implements Serializable {
 
     private Date orderUpdateTime;
 
+
+    public String getOrderGoodsUrl() {
+        return orderGoodsUrl;
+    }
+
+    public void setOrderGoodsUrl(String orderGoodsUrl) {
+        this.orderGoodsUrl = orderGoodsUrl;
+    }
 
     public String getPhone() {
         return phone;

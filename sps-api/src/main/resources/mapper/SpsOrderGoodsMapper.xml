@@ -174,4 +174,31 @@
       pre_amount = #{preAmount,jdbcType=INTEGER}
     where o_id = #{oId,jdbcType=INTEGER}
   </update>
+
+  <!-- 查询所有 -->
+  <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
+    select
+    s.o_id,  s.orderid,  s.sku,  s.skuname,  s.color,  s.memory,  s.price,  s.amount,  s.summation,  s.pre_price,
+    s.modifytime,  s.pre_amount,
+    (
+    SELECT
+    a.album_url
+    FROM
+    sps_goods_album a
+    WHERE
+    a.goods_id = g.g_id
+    AND a.album_type = 0
+    ORDER BY
+    a.album_id ASC
+    LIMIT 1
+    ) AS url
+    from sps_order_goods s
+    LEFT JOIN sps_good_shop_sku ss on ss.g_id = s.sku
+    LEFT JOIN sps_good_shop  gs on gs.g_id=ss.g_gid
+    LEFT JOIN sps_goods g on g.g_id=gs.g_goods_id
+    where 1=1
+    <if test="orderNum !=null and orderNum != ''">
+      and  s.orderid = #{orderNum,jdbcType=VARCHAR}
+    </if>
+  </select>
 </mapper>

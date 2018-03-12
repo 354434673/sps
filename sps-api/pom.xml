@@ -14,7 +14,7 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
-		
+
 		<!-- Mybatis分页 -->
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
@@ -329,18 +329,20 @@
 		<dependency>
 			<groupId>jzfq_auth</groupId>
 			<artifactId>auth_api</artifactId>
-			<version>1.7.1-SNAPSHOT</version>
+			<version>1.7.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 	      <groupId>com.juzifenqi</groupId>
 	      <artifactId>member-center-api</artifactId>
 	      <version>2.3.0.0-SNAPSHOT</version>
 	    </dependency>
+	    
 		<dependency>
 	      <groupId>com.juzifenqi</groupId>
 	      <artifactId>member-center-core</artifactId>
 	      <version>2.3.0.0-SNAPSHOT</version>
 	    </dependency>
+	    
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
@@ -392,19 +394,22 @@
 			<id>dev</id>
 			<properties>
 				<env>dev</env>
-				<dubbo.group>auth_dev1</dubbo.group>
-				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-			
 		</profile>
 
 		<profile>
-			<id>prod</id>
+			<id>test</id>
 			<properties>
-				<env>prod</env>
+				<env>test</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>pro</id>
+			<properties>
+				<env>pro</env>
 			</properties>
 		</profile>
 		

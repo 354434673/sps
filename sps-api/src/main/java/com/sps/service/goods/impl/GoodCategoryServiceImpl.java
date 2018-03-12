@@ -1,6 +1,7 @@
 package com.sps.service.goods.impl;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,5 +47,22 @@ public class GoodCategoryServiceImpl implements GoodCategoryService {
     @Override
     public List<SpsGoodCategory> findLastCategory(String ids) {
         return null;
+    }
+
+    @Override
+    public String findListByIds(String ids) {
+        String categoryNames = "";
+        String[] idList = ids.split(",");
+        for (String id : idList) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", id);
+            List<SpsGoodCategory> categoryList = spsGoodCategoryMapper.findListAllWithMap(map);
+            if (categoryList!=null&&categoryList.size()>0){
+                for (SpsGoodCategory list:categoryList) {
+                    categoryNames += "," + list.getCategoryName();
+                }
+            }
+        }
+        return categoryNames.substring(1);
     }
 }

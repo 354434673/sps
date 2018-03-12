@@ -46,4 +46,11 @@ public interface GoodCategoryService {
      * @return
      */
     List<SpsGoodCategory> findLastCategory(String ids);
+
+    /**
+     *
+     * @param ids
+     * @return
+     */
+    String findListByIds(String ids);
 }

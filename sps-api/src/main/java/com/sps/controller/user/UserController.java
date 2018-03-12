@@ -17,20 +17,25 @@ import com.juzifenqi.usercenter.service.ISmsCommonService;
 import com.juzifenqi.usercenter.service.authorization.IDianfuPassportService;
 import com.juzifenqi.usercenter.vo.LoginDto;
 import com.juzifenqi.usercenter.vo.RegisterDto;
+import com.sps.common.Message;
+/*import com.juzifenqi.core.ServiceResult;
+import com.juzifenqi.usercenter.entity.member.LoginInfo;
+import com.juzifenqi.usercenter.service.ISmsCommonService;
+import com.juzifenqi.usercenter.service.authorization.IDianfuPassportService;
+import com.juzifenqi.usercenter.vo.LoginDto;
+import com.juzifenqi.usercenter.vo.RegisterDto;
 import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.entiy.face.AuthFaceIdCard;
-import com.jzfq.auth.core.api.vo.JsonResult;
+import com.jzfq.auth.core.api.vo.JsonResult;*/
 import com.sps.common.StringUtil;
+import com.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 import com.sps.service.user.UserService;
-
-import io.swagger.models.auth.In;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 	@Resource
 	private UserService userService;
-/*	@Reference(group = "${dubbo.group}")*/
 	@Reference(group = "member-center-dev1")
 	private ISmsCommonService iSmsCommonService;
 	@Reference(group = "member-center-dev1")
@@ -94,26 +99,35 @@ public class UserController {
 	 * @throws
 	 */
 	@RequestMapping("/regist")
-	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc){
+	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc, String clientNum, String channelNum){
 		
-/*			JSONObject parseObject = JSON.parseObject(data);
-
-			String mobile = parseObject.getString("phone");
-			String code = parseObject.getString("code");
-			String password = parseObject.getString("password");
-			String saleSrc = parseObject.getString("saleSrc");*/
-
-			RegisterDto arg0 = new RegisterDto();
-
-			arg0.setMobile(mobile);
-
-			arg0.setCode(code);
-
-			arg0.setPassword(password);
-
-			arg0.setSaleSrc(saleSrc);
-
-			ServiceResult<LoginInfo> serviceResult = iDianfuPassportService.memberRegister4Browser(arg0);
+			SpsShopkeeperInvitation queryShopInvitation = userService.queryShopInvitation(mobile, null);
+			
+			ServiceResult<LoginInfo> serviceResult = null;
+			if(queryShopInvitation != null){
+				
+				RegisterDto arg0 = new RegisterDto();
+				
+				arg0.setMobile(mobile);
+				
+				arg0.setCode(code);
+				
+				arg0.setPassword(password);
+				
+				arg0.setSaleSrc(saleSrc);
+				
+				serviceResult = iDianfuPassportService.memberRegister4Browser(arg0);
+				
+				if(serviceResult.getSuccess()){
+					serviceResult = userService.insertUser(mobile, password, clientNum);
+				}
+			}else{
+				serviceResult = new ServiceResult<LoginInfo>();
+				
+				serviceResult.setMessage("该店主未邀请,请邀请后注册");
+				
+				serviceResult.setSuccess(false);
+			}
 
 			return serviceResult;
 	}
@@ -133,8 +147,10 @@ public class UserController {
 		HashMap<String, Object> userLogin = null;
 		if(login4Browser.getSuccess()){
 			userLogin = userService.userLogin(mobile, password);
+		}else{
+			userLogin = Message.resultMap(login4Browser.getCode(), login4Browser.getMessage(),
+					Message.SYSTEM_ERROR_MSG, 0, null);
 		}
-
 		return userLogin;
 	}
 }

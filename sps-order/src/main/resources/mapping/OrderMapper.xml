@@ -304,6 +304,9 @@
             <if test="orderid!=null and orderid!='' ">
                 and orderid like CONCAT('%','${orderid}','%' )
             </if>
+            <if test="channelNum!=null and channelNum!='' ">
+                and shopkeeper = #{channelNum}
+            </if>
             <if test="channelName!=null and channelName!='' ">
                 and shopkeepername like CONCAT('%','${channelName}','%' )
             </if>

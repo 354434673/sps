@@ -153,7 +153,7 @@ public class OrderServiceImpl implements OrderService {
 	 * @return
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public HashMap<String, Object> selectByParameters(Integer page, Integer limit, String name, String channelName,
+	public HashMap<String, Object> selectByParameters(Integer page, Integer limit, String name, String channelNum, String channelName,
 													  String selfname, String orderid, String startTime, String endTime, String flag) {
 		page = page == null ? 1 : page;
 
@@ -187,7 +187,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 		}
 		PageHelper.startPage(page, limit);
-		List<Order> orders = orderMapper.selectByParameters(name, channelName, selfname, orderid, startTime, endTime,
+		List<Order> orders = orderMapper.selectByParameters(name, channelNum, channelName, selfname, orderid, startTime, endTime,
 				flagList);
 
 		PageInfo pageInfo = new PageInfo(orders);

@@ -10,6 +10,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var submitBtn = document.getElementById('submitBtn');
     var getInput = document.querySelectorAll('input');
     var protocol = document.querySelectorAll('.protocol')[0];
+    var channelNum = getUrlParam("channelNum")
+    var clientNum = getUrlParam("channelNum")
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
     var register = {
         init: function () {
             // this.keyFocus();
@@ -82,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         var telNum = document.getElementById('telNum');
                         aspenLib.ajax({
                             url: location.protocol + "//" + location.hostname + ":8080/sps-api/api/user/getPhoneCode/regist",
-                            //url: location.protocol + "//" + location.hostname + "/user/getPhoneCode/regist",
+                            //url: location.protocol + "//" + location.hostname + "/api/user/getPhoneCode/regist",
                             type: 'POST',
                             dataType: 'json',
                             data: {
@@ -168,6 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     var getTerminalType = document.querySelectorAll('body')[0].className.indexOf('ios') != -1 ? '3' : '2';
                     aspenLib.ajax({
                         url: location.protocol + "//" + location.hostname + ":8080/sps-api/api/user/regist",
+                        //url: location.protocol + "//" + location.hostname + "/api/user/regist",
                         type: 'post',
                         dataType: 'json',
                         data: {

@@ -1,7 +1,6 @@
 package com.sps.controller.app;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.juzifenqi.usercenter.service.authorization.IDianfuPassportService;
 import com.sps.common.Common;
 import com.sps.common.Message;
 import com.sps.common.ReturnInfo;
@@ -50,7 +49,7 @@ public class HelpController {
         try {
             List<Help> helps = helpService.queryAllTittle();
             if(helps.size()>0){
-                returnInfo.setData(helps);
+                returnInfo.setResult(helps);
                 returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
                 returnInfo.setCode(Message.API_SUCCESS_CODE);
                 returnInfo.setMsg(Message.API_SUCCESS_MSG);

@@ -40,7 +40,7 @@
 			    <label class="layui-form-label">状态:</label>
 			    <div class="layui-input-inline" >
 			    <select lay-filter="salesState" id="status"> 
-				  <option value="1,2">全部</option>
+				  <option value="">全部</option>
 				  <option value="1">正常</option>
 				  <option value="2">停用</option>
 		      	</select>
@@ -87,8 +87,6 @@
  正常
 {{#  } else if(d.bei1 == 2){ }}
  停用
-{{#  } else { }}
-  {{d.bei1}}
 {{#  } }}  
 </script>
 
@@ -142,7 +140,7 @@
 			  //重置
 			  $('#resetUser').on('click',function(){
 				  $('input').val('')
-				  $('select').val('1,2')
+				  $('select').val('')
 			  })
 			  //监听工作条
 				table.on('tool(salesmanTables)', function(obj){

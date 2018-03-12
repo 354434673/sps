@@ -1,13 +1,9 @@
 package com.sps.controller.goods;
-import com.sps.common.Common;
-import com.sps.common.Message;
-import com.sps.common.ResultCodeEnum;
-import com.sps.common.ReturnInfo;
+import com.sps.common.*;
+import com.sps.entity.goods.SpsCustomCategory;
 import com.sps.entity.goods.SpsGoodShop;
 import com.sps.entity.goods.SpsGoodShopSku;
-import com.sps.service.goods.ApiGoodShopService;
-import com.sps.service.goods.GoodShopSkuService;
-import com.sps.service.goods.GoodsService;
+import com.sps.service.goods.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,18 +11,54 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @Controller
 @RequestMapping(value = "/api/goods")
 public class goodsController {
 
+
+    @Resource
+    private BrandService brandService;
+    @Resource
+    private GoodCategoryService goodCategoryService;
     @Resource
     private GoodsService goodService;
     @Resource
     private ApiGoodShopService goodShopService;
     @Resource
     private GoodShopSkuService goodShopSkuService;
+    @Resource
+    private CustomCategoryService customCategoryService;
+
+
+    /**
+     * 根据ID商品详情
+     * @return
+     */
+    @RequestMapping(value = "/findCustomerCategory", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnInfo findCustomerCategory(Integer enterpriseId){
+        ReturnInfo ri = new ReturnInfo();
+        try {
+            List<SpsCustomCategory> categoryList = customCategoryService.findByEnterpriseId(enterpriseId);
+            String[] pro = new String[]{"customId","customName","customWide"};
+            if(categoryList != null){
+                ri.setResult(EntityUtiles.reloadListPropertyValue(categoryList, pro));
+                ri.setSuccess(Message.SUCCESS_MSG);
+                ri.setCode(Message.SUCCESS_CODE);
+                ri.setMsg(Message.API_SUCCESS_MSG);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            ri.setCode(Message.FAILURE_CODE);
+            ri.setMsg(Message.FAILURE_MSG);
+            ri.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return ri;
+    }
 
     /**
      * 根据ID商品详情
@@ -39,12 +71,20 @@ public class goodsController {
         ReturnInfo ri = Common.validate(map, "id");
         if("0".equals(ri.getCode())) return ri;
         try {
+            HashMap<String, Object> data = new HashMap<String, Object>();//封装对象
+            ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
             Integer id = (Integer) map.get("id");
             SpsGoodShop goods = goodShopService.findById(id);
+
+            data.put("gId", goods.getgId());
+            data.put("gSpuName", goods.getgSpuName());
+            data.put("gMinPrice", goods.getgMinPrice());
+            data.put("albumList", goods.getAlbumList());
+            data.put("albumDetailList", goods.getAlbumDetailList());
             if(goods != null){
-                ri.setData(goods);
-                ri.setSuccess(Message.API_SUCCESS_FLAG);
-                ri.setCode(Message.API_SUCCESS_CODE);
+                ri.setResult(data);
+                ri.setSuccess(Message.SUCCESS_MSG);
+                ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
             }
         } catch (Exception e){
@@ -55,8 +95,6 @@ public class goodsController {
         }
         return ri;
     }
-
-
     /**
      * 根据ID查询Sku
      * @param map  id
@@ -69,10 +107,11 @@ public class goodsController {
         if("0".equals(ri.getCode())) return ri;
         try {
             List<SpsGoodShopSku> skuList = goodShopSkuService.findList(map);
+            String[] pro = new String[]{"gId","gGid","gColorSize","gColor","gSize","gPrice","gQuantity","gStock"};
             if(skuList != null){
-                ri.setData(skuList);
-                ri.setSuccess(Message.API_SUCCESS_FLAG);
-                ri.setCode(Message.API_SUCCESS_CODE);
+                ri.setResult(EntityUtils.reloadListPropertyValue(skuList, pro));
+                ri.setSuccess(Message.SUCCESS_MSG);
+                ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
             }
         } catch (Exception e){
@@ -83,6 +122,7 @@ public class goodsController {
         }
         return ri;
     }
+
 
 
 }

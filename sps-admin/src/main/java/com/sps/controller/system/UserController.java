@@ -40,7 +40,10 @@ public class UserController {
 	private UserAndRoleService userAndRoleService;
 	@Reference(group="dianfu")
 	private ChannelReadService readService;
-	
+	/*@Reference(group = "member-center-dev1")*/
+/*	private ISmsCommonService iSmsCommonService;
+	@Reference(group = "member-center-dev1")
+	private IDianfuPassportService iDianfuPassportService;*/
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	/**
 	 * 用户列表
