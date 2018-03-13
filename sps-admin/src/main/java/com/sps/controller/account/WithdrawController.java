@@ -4,13 +4,12 @@ import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Result;
+import com.sps.util.Md5Util;
 import com.sps.util.ValidateImageCodeUtils;
 import org.apache.shiro.SecurityUtils;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,8 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,33 +44,38 @@ public class WithdrawController {
 	private ChannelReadService  readService;
 	@Reference(check=false,group="dianfu")
 	private ChannelBankTradeReadService  bankTradereadService;
-   /*@InitBinder
-    public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        dateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));   //true:允许输入空值，false:不能为空值
-    }*/
+    private static Logger logger = LoggerFactory.getLogger(WithdrawController.class);
     @RequestMapping("/findBankTradeList")
     @ResponseBody
-     public HashMap<String, Object> userList( Integer page,Integer limit,String applicationStartDate,String paymentDate,String tradeStatus) {
+     public HashMap<String, Object> findBankTradeList( Integer page,Integer limit,String applicationStartDate,String paymentDate,String tradeStatus) {
         String loginName = (String)SecurityUtils.getSubject().getPrincipal();
-        HashMap<String, Object> list = bankTradereadService.getBankTradeList(page, limit, applicationStartDate, paymentDate, tradeStatus, loginName);
+        HashMap<String, Object> list = bankTradereadService.getBankTradeList(page, limit, applicationStartDate, paymentDate, tradeStatus, loginName,"0");
 		return list;
      }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public Result<Boolean> saveOrUpdate(BigDecimal withdrawAmt,String type, Model model) {
-
-    	//未完善的地方，type类型要从页面动态获取
+    public Result<Boolean> saveOrUpdate(BigDecimal withdrawAmt, String tradePwd) {
+        Result<Boolean> result = new Result<Boolean>();
+    	//比对交易密码是否正确
 		String userName = (String) SecurityUtils.getSubject().getPrincipal();
-		//从当前登录用户中获取用户银行卡信息
-		SpsChannelBank bankInfo = bankReadService.getBankInfoByUserName(userName);
-		Result<Boolean> result = new Result<Boolean>();
-		Boolean flag = bankTradeWriteService.saveBankTradeInfo(bankInfo, withdrawAmt);
-		result.setBody(flag);
-		result.success();
-		result.setMsg(flag ? "成功" : "保存失败");
-		return result;
+
+        String pwd = bankReadService.findTradePassword(userName);
+        String salt = bankReadService.findSalt(userName);
+
+        String pass=Md5Util.getMd5(tradePwd,salt);
+        if(pass.equals(pwd)){
+            //从当前登录用户中获取用户银行卡信息
+            SpsChannelBank bankInfo = bankReadService.getBankInfoByUserName(userName);
+            String tradeSerialNum = bankTradeWriteService.saveBankTradeInfo(bankInfo, withdrawAmt, "0");
+            boolean flag = StringUtils.isNotEmpty(tradeSerialNum);
+            result.setBody(flag);
+            result.setMsg(flag ? "成功" : "保存失败");
+            return result;
+        }
+        result.setBody(false);
+        result.setMsg("密码输入有误");
+
+        return result;
     }
 
 
@@ -95,14 +97,16 @@ public class WithdrawController {
     @RequestMapping("/queryTradePwd")
     @ResponseBody
     public Result findTradePwd(HttpServletRequest request,String psw) {
-        Result<Map> result = new Result<Map>();//
+        Result<Map> result = new Result<Map>();
         Map<String, Object> body = new HashMap<String,Object>();
         result.setBody(body);
         String userName = (String)SecurityUtils.getSubject().getPrincipal();
         String pwd = bankReadService.findTradePassword(userName);
+        String salt = bankReadService.findSalt(userName);
         if(StringUtils.isNotEmpty(pwd) ){
             result.success();
-            if(psw.equals(pwd)){
+            String pass=Md5Util.getMd5(psw+salt,Md5Util.getSalt(6));
+            if(pass.equals(pwd)){
                 result.setMsg("成功");
                 body.put("flag",0);
             }else{
@@ -118,29 +122,50 @@ public class WithdrawController {
         return result;
     }
 
+    @RequestMapping("/queryExistTradePwd")
+    @ResponseBody
+    public Result<Boolean> queryExistTradePwd(HttpServletRequest request) {
+        Result<Boolean> result = new Result<Boolean>();
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        String pwd = bankReadService.findTradePassword(userName);
+        Boolean flag=true;
+        if(StringUtils.isNotEmpty(pwd) ){
+            result.setBody(flag);
+            result.success();
+            result.setMsg("ok");
+            return result;
 
+        }else{
+            flag=false;
+            result.fail();
+            result.setMsg("未设置交易密码");
+            result.setBody(flag);
+            return result;
+        }
+
+    }
     /**
      * 获取交易详情
      * @return
      */
-    @RequestMapping(value = "/withdrawDetail")
-    @ResponseBody
-    public SpsChannelBankTrade findTradeDetail(String  tradeSerialNum) {
-        Map<String, String > resultMap = new HashMap<String,String>();
-        String userName = (String)SecurityUtils.getSubject().getPrincipal();
-        SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeDetail(userName, tradeSerialNum);
-        return tradeDetail;
-    }
-    @RequestMapping("/getVerifyCode")
-    @ResponseBody
-    public Result<String> getVerifyCode(HttpServletRequest request, String phone){
-        String numricCode = ValidateImageCodeUtils.getRandNum();
-        request.getSession().setAttribute("phoneCode",numricCode);
-        Result<String> result = new Result<String>();
-        result.setBody(numricCode);
-        result.success();
-        result.setMsg("成功");
-        return result;
+        @RequestMapping(value = "/withdrawDetail")
+        @ResponseBody
+        public SpsChannelBankTrade findTradeDetail(String  tradeSerialNum) {
+            Map<String, String > resultMap = new HashMap<String,String>();
+            String userName = (String)SecurityUtils.getSubject().getPrincipal();
+            SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeDetail(userName, tradeSerialNum);
+            return tradeDetail;
+        }
+        @RequestMapping("/getVerifyCode")
+        @ResponseBody
+        public Result<String> getVerifyCode(HttpServletRequest request, String phone){
+            String numricCode = ValidateImageCodeUtils.getRandNum();
+            request.getSession().setAttribute("phoneCode",numricCode);
+            Result<String> result = new Result<String>();
+            result.setBody(numricCode);
+            result.success();
+            result.setMsg("成功");
+            return result;
     }
     @RequestMapping("/getPhone")
     @ResponseBody
@@ -159,20 +184,27 @@ public class WithdrawController {
     public Result<Boolean> setTradePwd(HttpServletRequest request, String phoneCode,String imgCode,String tradePwd) {
         Result<Boolean> result = new Result<Boolean>();
         String srcImgCode = (String) request.getSession().getAttribute("imgCode");
+        logger.info("srcImgCode" + srcImgCode);
+
         String srcPhoneCode = (String) request.getSession().getAttribute("phoneCode");
+        logger.info("srcPhoneCode"+ srcPhoneCode);
         if (imgCode.equals(srcImgCode) && phoneCode.equals(srcPhoneCode)) {
             //调用业务层进行更新账户中的交易密码
             String userName = (String) SecurityUtils.getSubject().getPrincipal();
-            Boolean flag = bankWriteService.modifyTradePsw(userName, tradePwd);
+            String salt = Md5Util.getSalt(6);
+            String realPwd = Md5Util.getMd5(tradePwd, salt);
+            Boolean flag = bankWriteService.modifyTradePsw(userName, realPwd,salt);
             result.setBody(flag);
             result.success();
             result.setMsg(flag ? "设置密码成功" : "设置密码失败");
-
             request.getSession().removeAttribute("imgCode");
             request.getSession().removeAttribute("phoneCode");
+            return result;
+        }else{
+            result.setMsg("输入验证信息错误");
+            return result;
+
         }
-        result.setMsg("输入验证信息错误");
-        return result;
 
     }
 

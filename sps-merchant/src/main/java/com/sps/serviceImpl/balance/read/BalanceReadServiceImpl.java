@@ -15,7 +15,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.balance.read.BalanceReadMapper;
 
-@Service
+@Service(group = "dianfu")
 @org.springframework.stereotype.Service
 @Transactional(readOnly = true)
 public class BalanceReadServiceImpl implements BalanceReadService{

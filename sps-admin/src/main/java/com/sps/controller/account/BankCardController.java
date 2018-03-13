@@ -1,19 +1,16 @@
 package com.sps.controller.account;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSONObject;
+import com.sps.common.Result;
+import com.sps.entity.user.SpsUser;
+import com.sps.service.user.UserAndRoleService;
+import com.sps.service.user.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.sps.entity.account.AuthEnums;
 import org.sps.entity.account.AuthRequest;
 import org.sps.entity.account.AuthResponse;
@@ -24,16 +21,11 @@ import org.sps.service.merchant.write.AuthBindCardWriteService;
 import org.sps.service.merchant.write.ChannelBankTransWriteService;
 import org.sps.service.merchant.write.ChannelBankWriteService;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.fastjson.JSONObject;
-import com.sps.common.Result;
-import com.sps.entity.user.SpsUser;
-import com.sps.service.user.UserAndRoleService;
-import com.sps.service.user.UserService;
-import com.sps.util.LogUtil;
-
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Reference;
-import static org.apache.shiro.web.filter.mgt.DefaultFilter.user;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/bankCard")
@@ -70,8 +62,7 @@ public class BankCardController {
 		JSONObject body = new JSONObject();
 		Result<JSONObject> result = new Result<JSONObject>(body);
 		String userName = (String)SecurityUtils.getSubject().getPrincipal();
-		bankInfo.setUserName(userName);
-		SpsChannelBank bankCard = bankReadService.getBankInfo(bankInfo.getIdentity());
+		SpsChannelBank bankCard = bankReadService.getBankInfo(userName);
 		if(bankCard == null){
 			Boolean saveBankInfo = bankWriteService.saveBankInfo( bankInfo, userName);
 			if(saveBankInfo){
@@ -154,12 +145,14 @@ public class BankCardController {
 		String userName = (String)SecurityUtils.getSubject().getPrincipal();
 		Result result = new Result<Boolean>();
 		String msg = "解绑成功";
-		boolean delete = true;
-		if("1".equals(isDEL)){
+		Boolean delete = bankWriteService.removeBankInfo(userName);
+		msg = delete?"解绑成功":"解绑失败";
+//		boolean delete = true;
+	/*	if("1".equals(isDEL)){
 			delete = bankWriteService.removeBankInfo(userName);
 			msg = delete?"解绑成功":"解绑失败";
-		}
-		result.success();
+		}*/
+//		result.success();
 		result.setBody(delete);
 		result.setMsg(msg);
 		return result;

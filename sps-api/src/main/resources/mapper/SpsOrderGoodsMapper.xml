@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsOrderGoods">
+  <resultMap id="BaseResultMap" type="SpsOrderGoods">
+    <id column="o_id" jdbcType="INTEGER" property="oId" />
+    <result column="orderid" jdbcType="VARCHAR" property="orderid" />
+    <result column="sku" jdbcType="VARCHAR" property="sku" />
+    <result column="skuname" jdbcType="VARCHAR" property="skuname" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="memory" jdbcType="VARCHAR" property="memory" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="summation" jdbcType="DOUBLE" property="summation" />
+    <result column="pre_price" jdbcType="DECIMAL" property="prePrice" />
+    <result column="modifytime" jdbcType="TIMESTAMP" property="modifytime" />
+    <result column="pre_amount" jdbcType="INTEGER" property="preAmount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    o_id, orderid, sku, skuname, color, memory, price, amount, summation, pre_price, 
+    modifytime, pre_amount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_order_goods
+    where o_id = #{oId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_order_goods
+    where o_id = #{oId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsOrderGoods">
+    insert into sps_order_goods (o_id, orderid, sku, 
+      skuname, color, memory, 
+      price, amount, summation, 
+      pre_price, modifytime, pre_amount
+      )
+    values (#{oId,jdbcType=INTEGER}, #{orderid,jdbcType=VARCHAR}, #{sku,jdbcType=VARCHAR}, 
+      #{skuname,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, #{memory,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{amount,jdbcType=INTEGER}, #{summation,jdbcType=DOUBLE}, 
+      #{prePrice,jdbcType=DECIMAL}, #{modifytime,jdbcType=TIMESTAMP}, #{preAmount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="SpsOrderGoods">
+    insert into sps_order_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        o_id,
+      </if>
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="sku != null">
+        sku,
+      </if>
+      <if test="skuname != null">
+        skuname,
+      </if>
+      <if test="color != null">
+        color,
+      </if>
+      <if test="memory != null">
+        memory,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="summation != null">
+        summation,
+      </if>
+      <if test="prePrice != null">
+        pre_price,
+      </if>
+      <if test="modifytime != null">
+        modifytime,
+      </if>
+      <if test="preAmount != null">
+        pre_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null">
+        #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="skuname != null">
+        #{skuname,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null">
+        #{memory,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="summation != null">
+        #{summation,jdbcType=DOUBLE},
+      </if>
+      <if test="prePrice != null">
+        #{prePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="preAmount != null">
+        #{preAmount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="SpsOrderGoods">
+    update sps_order_goods
+    <set>
+      <if test="orderid != null">
+        orderid = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null">
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
+      <if test="skuname != null">
+        skuname = #{skuname,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null">
+        memory = #{memory,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="summation != null">
+        summation = #{summation,jdbcType=DOUBLE},
+      </if>
+      <if test="prePrice != null">
+        pre_price = #{prePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="modifytime != null">
+        modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="preAmount != null">
+        pre_amount = #{preAmount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where o_id = #{oId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsOrderGoods">
+    update sps_order_goods
+    set orderid = #{orderid,jdbcType=VARCHAR},
+      sku = #{sku,jdbcType=VARCHAR},
+      skuname = #{skuname,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      memory = #{memory,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=INTEGER},
+      summation = #{summation,jdbcType=DOUBLE},
+      pre_price = #{prePrice,jdbcType=DECIMAL},
+      modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      pre_amount = #{preAmount,jdbcType=INTEGER}
+    where o_id = #{oId,jdbcType=INTEGER}
+  </update>
+
+  <!-- 查询所有 -->
+  <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
+    select
+    s.o_id,  s.orderid,  s.sku,  s.skuname,  s.color,  s.memory,  s.price,  s.amount,  s.summation,  s.pre_price,
+    s.modifytime,  s.pre_amount,
+    (
+    SELECT
+    a.album_url
+    FROM
+    sps_goods_album a
+    WHERE
+    a.goods_id = g.g_id
+    AND a.album_type = 0
+    ORDER BY
+    a.album_id ASC
+    LIMIT 1
+    ) AS url
+    from sps_order_goods s
+    LEFT JOIN sps_good_shop_sku ss on ss.g_id = s.sku
+    LEFT JOIN sps_good_shop  gs on gs.g_id=ss.g_gid
+    LEFT JOIN sps_goods g on g.g_id=gs.g_goods_id
+    where 1=1
+    <if test="orderNum !=null and orderNum != ''">
+      and  s.orderid = #{orderNum,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

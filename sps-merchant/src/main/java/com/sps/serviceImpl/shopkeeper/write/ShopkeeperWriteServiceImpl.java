@@ -82,7 +82,7 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 		return hashMap;
 	}
 	@Override
-	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation){
+	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation,  String channelNum){
 		HashMap<String, Object> hashMap = new HashMap<String,Object>();
 		try {
 			invitation.setInvitationCreatTime(new Date());
@@ -100,6 +100,7 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 			spsShopkeeper.setShopkeeperUpdateTime(new Date());
 			spsShopkeeper.setShopkeeperState(1);
 			spsShopkeeper.setShopkeeperCustomerid(clientNum);
+			spsShopkeeper.setShopkeeperDefaultChannelNum(channelNum);
 			write.insertSelective(spsShopkeeper);
 			/*
 			 * 往个人信息中添加,字段为店主名称
@@ -111,10 +112,14 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 			personal.setShopkeeperCustomerid(clientNum);
 			personalWrite.insertSelective(personal);
 			
+			HashMap<String, String> result = new HashMap<>();
+			result.put("channelNum", channelNum);
+			result.put("clientNum", clientNum);
+			
 			hashMap.put("code", 0);
 			hashMap.put("msg", "添加成功");
 			hashMap.put("state", FinalData.STATE_SUCCESS);
-			hashMap.put("result", clientNum);
+			hashMap.put("result", result);
 		} catch (Exception e) {
 			hashMap.put("code", 0);
 			hashMap.put("msg", "添加失败");

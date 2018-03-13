@@ -14,7 +14,7 @@
 	</context:component-scan>
 
 
-	<context:property-placeholder location="classpath:properties/dev.properties" />
+	<context:property-placeholder location="classpath:properties/dev.properties" ignore-unresolvable="true" />
 
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" 
 		init-method="init" destroy-method="close" >

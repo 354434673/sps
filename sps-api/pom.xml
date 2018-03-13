@@ -14,17 +14,12 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
-		
+
 		<!-- Mybatis分页 -->
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
 			<version>5.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sps</groupId>
-			<artifactId>sps-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -334,9 +329,26 @@
 		<dependency>
 			<groupId>jzfq_auth</groupId>
 			<artifactId>auth_api</artifactId>
-			<version>1.7.1-SNAPSHOT</version>
+			<version>1.7.2-SNAPSHOT</version>
 		</dependency>
 		
+		<dependency>
+	      <groupId>com.juzifenqi</groupId>
+	      <artifactId>member-center-api</artifactId>
+	      <version>2.3.0.1-SNAPSHOT</version>
+	    </dependency>
+	    
+		<dependency>
+	      <groupId>com.juzifenqi</groupId>
+	      <artifactId>member-center-core</artifactId>
+	      <version>2.3.0.1-SNAPSHOT</version>
+	    </dependency>
+	    
+	    <dependency>
+	      <groupId>com.juzifenqi</groupId>
+	      <artifactId>capital-api</artifactId>
+	      <version>1.1.7-SNAPSHOT</version>
+	    </dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
@@ -360,7 +372,7 @@
         </dependency>
     </dependencies>
 
-<!--     <distributionManagement>
+    <distributionManagement>
 		<repository>
 			<id>releases</id>
 			<url>http://git.juzifenqi.cn:8081/nexus/content/repositories/releases</url>
@@ -382,7 +394,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-	</repositories> -->
+	</repositories>
 	<profiles>
 		<profile>
 			<id>dev</id>
@@ -392,13 +404,18 @@
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-			
 		</profile>
 
 		<profile>
-			<id>prod</id>
+			<id>test</id>
 			<properties>
-				<env>prod</env>
+				<env>test</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>pro</id>
+			<properties>
+				<env>pro</env>
 			</properties>
 		</profile>
 		

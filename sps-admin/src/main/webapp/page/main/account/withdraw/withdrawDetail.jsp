@@ -19,7 +19,7 @@
 <body>
 <div style="padding: 100px">
     <hr>
-    <div class="layui-form layui-form-pane"  style="padding-left: 300px;padding-right: 300px;width: 800px;">
+    <div class="layui-form layui-form-pane" style="padding-left: 200px;padding-right: 300px;width: 800px;">
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 130px;">银行账号： </label>
             <div class="layui-input-inline">

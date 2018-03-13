@@ -24,7 +24,7 @@
 			<table id="drawAudioList" lay-filter="drawAudioTables"></table>
 
 		</div>
-		<div class="layui-form-item" align="left" style="padding-left: 104px;">
+		<div class="layui-form-item" align="left" style="padding-left: 260px;">
 			<button class="layui-btn" lay-filter="submitBankVerify" lay-submit  id="submitBankVerify">返回</button>
 		</div>
 	<script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/js/jquery-1.10.2.min.js"></script>

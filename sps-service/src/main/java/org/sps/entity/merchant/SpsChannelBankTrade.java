@@ -44,36 +44,50 @@ public class SpsChannelBankTrade implements Serializable {
 //	交易状态
 	private String tradeStatus  ;
 //	交易用户sps_bank的id
-	private String userid  ;
-//	备注信息
+	private String userId  ;
+//	备注信息 提现还是充值
 	private String standby1;
-	
+//	备注拒绝信息
+	private String  standby2;
+//	核心传来的交易编号
+	private String   tradeNo;
+//	订单编号
+	private String   orderId;
+
+	public String getTradeNo() {
+		return tradeNo;
+	}
+
+	public void setTradeNo(String tradeNo) {
+		this.tradeNo = tradeNo;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
+	public String getStandby2() {
+		return standby2;
+	}
+
+	public void setStandby2(String standby2) {
+		this.standby2 = standby2;
+	}
+
 	private SpsChannelBank cahnnelBank;
 	private SpsChannel  channel;
 	private SpsChannelEnterprise  enterprise;
-	@Override
-	public String toString() {
-		return "SpsChannelBankTrade{" +
-				"id=" + id +
-				", tradeName='" + tradeName + '\'' +
-				", tradeSerialNum='" + tradeSerialNum + '\'' +
-				", identity='" + identity + '\'' +
-				", applicationStartDate='" + applicationStartDate + '\'' +
-				", applicationStopDate='" + applicationStopDate + '\'' +
-				", auditDate='" + auditDate + '\'' +
-				", paymentDate='" + paymentDate + '\'' +
-				", tradeType='" + tradeType + '\'' +
-				", incomeType='" + incomeType + '\'' +
-				", expenditureType='" + expenditureType + '\'' +
-				", tradeBeforeBalanc=" + tradeBeforeBalanc +
-				", tradeAfterBalanc=" + tradeAfterBalanc +
-				", tradeAmount=" + tradeAmount +
-				", tradeStatus='" + tradeStatus + '\'' +
-				", userid='" + userid + '\'' +
-				", standby1='" + standby1 + '\'' +
-				", cahnnelBank=" + cahnnelBank +
-				", channel=" + channel +
-				'}';
+
+	public SpsChannelEnterprise getEnterprise() {
+		return enterprise;
+	}
+
+	public void setEnterprise(SpsChannelEnterprise enterprise) {
+		this.enterprise = enterprise;
 	}
 
 	/**
@@ -215,21 +229,13 @@ public class SpsChannelBankTrade implements Serializable {
 	public void setTradeStatus(String tradeStatus) {
 		this.tradeStatus = tradeStatus;
 	}
-	public String getUserid() {
-		return userid;
-	}
-	public void setUserid(String userid) {
-		this.userid = userid;
+
+	public String getUserId() {
+
+		return userId;
 	}
 
-	public SpsChannelEnterprise getEnterprise() {
-		return enterprise;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-
-	public void setEnterprise(SpsChannelEnterprise enterprise) {
-		this.enterprise = enterprise;
-	}
-	
-	
-
 }

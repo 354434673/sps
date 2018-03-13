@@ -87,56 +87,50 @@
         var $ = layui.jquery;
         var layer = layui.layer ;
         var form = layui.form();
-
         form.on('submit(next)', function (data) {
-
             if(!lock){    // 2.判断该锁是否打开，如果是关闭的，则直接返回
                 return false;
             }
             lock = false;  //3.进来后，立马把锁锁住
             var amount = $('#amount').val().trim();
-            if( $('#withdrawAmt').val() < amount){
-                layer.msg('可用余额不足');
-                return;
-            }
-            layer.msg('处理中...',
-                    {
-                        icon: 16,
-                        shade: 0.01,
-                        time:1200
-                    },
-                    function(){
-                        location.href = '<%=path%>/page/main/account/withdraw/inputTradePwd.jsp?withdrawAmt='+amount;
-
-                        /* $.ajax({
-
-                            type: 'post',
-                            dataType: 'json',
-                            async: false,
-                            success: function (result) {
-                                console.log(result);
-                                var code =result.code;
-                                var ok = result.ok;
-                                var  msg = result.msg;
-                                layer.msg(msg);
-                                if(code == ok){
+            var withdrawAmt= $('#withdrawAmt').val();
+            if( parseInt(withdrawAmt)>parseInt(amount)){
+                layer.msg('处理中...',
+                        {
+                            icon: 16,
+                            shade: 0.01,
+                            time:1200
+                        },
+                        function(){
+                            $.ajax({
+                                url: '<%=path%>/withdraw/queryExistTradePwd',
+                                type: 'post',
+                                dataType: 'json',
+                                async: false,
+                                success: function (result) {
+                                    var code =result.code;
+                                    var ok = result.ok;
+                                    var  msg = result.msg;
+//                                    layer.msg(msg);
                                     if(result.body == true){
-
+                                        location.href = '<%=path%>/page/main/account/withdraw/inputTradePwd.jsp?withdrawAmt='+amount;
                                         //若已经设置交易密码，则跳转至输入交易密码页面
                                     }
                                     if(result.body == false){
                                         //则跳转至设置交易密码页面
+                                        layer.msg(msg);
+                                        location.href = '<%=path%>/page/main/account/withdraw/setTradePwd.jsp?withdrawAmt='+amount;
+
                                     }
                                 }
-                                if(code == result.fail){
-                                  		layer.msg(msg);
+                            });
+                        }
+                );
+            }else{
+                layer.msg("余额不足");
+                location.href = '<%=path%>/page/main/account/recharge/index.jsp';
+            }
 
-                                    lock = true;
-                                }
-                            }
-                        });*/
-                    }
-            );
             return false;
         });
         lock = true;

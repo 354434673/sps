@@ -222,7 +222,6 @@
     s.g_delete_flag, s.g_sku_id, s.g_create_time, s.g_update_time,g.g_spu_name as spuName
     from sps_good_shop_sku s LEFT  JOIN  sps_good_shop g on g.g_id= s.g_gid
     where 1=1
-
     <if test="spec !=null and spec != ''">
       and (s.g_size LIKE CONCAT('%',#{spec,jdbcType=VARCHAR},'%')or s.g_color LIKE CONCAT('%',#{spec,jdbcType=VARCHAR},'%'))
     </if>
@@ -249,10 +248,12 @@
 
 
   <select id="findById" parameterType="int" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from sps_good_shop_sku
-    where g_id = #{gId,jdbcType=INTEGER}
+     select
+     ss.g_id, ss.g_gid, ss.g_color, ss.g_size, ss.g_sku, ss.g_price, ss.g_quantity, ss.g_stock, ss.g_scale, ss.g_service,
+    ss.g_delete_flag, ss.g_sku_id, ss.g_create_time, ss.g_update_time,ss.g_goods_id,
+    s.g_grounding_flag as groundingFlag
+    from sps_good_shop_sku ss LEFT JOIN sps_good_shop s ON ss.g_gid=s.g_id
+    where ss.g_id = #{gId,jdbcType=INTEGER}
   </select>
 
 

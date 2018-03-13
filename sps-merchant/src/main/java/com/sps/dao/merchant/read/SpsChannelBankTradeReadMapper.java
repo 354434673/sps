@@ -1,13 +1,10 @@
 package com.sps.dao.merchant.read;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 import org.sps.entity.merchant.SpsChannelBankTrade;
-import org.sps.entity.merchant.SpsChannelBankTrans;
-import org.sps.entity.shopkeeper.SpsShopkeeper;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 提現交易Dao
@@ -26,7 +23,8 @@ public interface SpsChannelBankTradeReadMapper {
             @Param("applicationStartDate") String applicationStartDate,
             @Param("paymentDate") String paymentDate,
             @Param("tradeStatus") String tradeStatus,
-            @Param("channelNum") String channelNum);
+            @Param("channelNum") String channelNum,
+			@Param("tradeType") String tradeType);
 
 	/**
 	 * 根据商户编号进行查询
@@ -49,6 +47,47 @@ public interface SpsChannelBankTradeReadMapper {
 			@Param("tradeStatus") String tradeStatus,
 			@Param("enterpriseCompanyName") String enterpriseCompanyName,
 			@Param("loginName") String loginName);
+
+	/**
+	 * 查询收支信息
+	 * @param startTime
+	 * @param endTime
+	 * @param minAmount
+	 * @param maxAmount
+	 * @param payType
+	 * @param companyName
+	 * @param reamrk
+	 * @return
+	 */
+	List<SpsChannelBankTrade>  selectIncomePaymentList(
+			@Param("startTime") String startTime,
+			@Param("endTime") String endTime,
+			@Param("minAmount") BigDecimal minAmount,
+			@Param("maxAmount") BigDecimal maxAmount,
+			@Param("payType") String payType,
+			@Param("companyName") String companyName,
+			@Param("reamrk") String reamrk);
+
+
+    /**
+     * 根据收入查询所有
+     * @param startTime
+     * @param endTime
+     * @param minAmount
+     * @param maxAmount
+     * @param companyName
+     * @param reamrk
+     * @return
+     */
+    List<SpsChannelBankTrade>  selectBankTradeTypeList(
+            @Param("startTime") String startTime,
+            @Param("endTime") String endTime,
+            @Param("minAmount") BigDecimal minAmount,
+            @Param("maxAmount") BigDecimal maxAmount,
+            @Param("payType") String payType,
+            @Param("companyName") String companyName,
+            @Param("reamrk") String reamrk);
+
 
 	/**
 	 * 根据用户名查询提现记录
@@ -77,4 +116,11 @@ public interface SpsChannelBankTradeReadMapper {
 	 * @return
 	 */
 	SpsChannelBankTrade selectBankTradeInfo(String  applicationDate);
+
+	/**
+	 * 根据交易号查询订单号
+	 * @param tradeSeriNum
+	 * @return
+	 */
+	SpsChannelBankTrade selectOrderByTradeSeriNum(String  tradeSeriNum);
 }

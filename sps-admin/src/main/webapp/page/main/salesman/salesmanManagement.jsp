@@ -64,6 +64,11 @@
 <script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
   <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
+{{#  if(d.bei1 == 1){ }}
+<a class="layui-btn layui-btn-mini" lay-event="stop" >停用</a>
+{{#  } else if(d.bei1 == 2){ }}
+<a class="layui-btn layui-btn-mini" lay-event="recovery" >恢复</a>
+{{#  } }}  
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
 {{#  if(d.bei1 == 1){ }}
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="freeze">冻结</a>
@@ -82,8 +87,6 @@
  正常
 {{#  } else if(d.bei1 == 2){ }}
  停用
-{{#  } else { }}
-  {{d.bei1}}
 {{#  } }}  
 </script>
 
@@ -205,6 +208,53 @@
 					      username: '123'
 					      ,title: 'xxx'
 					    }); */
+					  }else if(layEvent === 'stop'){ //停用
+						  layer.confirm('确认停用当前业务员？', function(index){
+						      layer.close(
+		  					  			$.post({
+								 			 url:'<%=path%>/salesman/updateState',
+								 			 dataType:'json',
+								 			 data:{
+								 				 id:data.salesmanId,
+								 				 state:2
+								 				 },
+								 			 success:function(data){
+								 				 if(data.state == 'success'){
+								 					layer.msg("停用成功",{icon: 1});
+								 					table.reload();
+								 				 }else{
+								 					layer.msg("停用失败",{icon: 2});
+								 				 }
+								 			 },
+								 			 error:function(){
+								 				layer.msg('系统错误',{icon: 2});
+								 			 }
+								 		 })
+							  );
+						      //向服务端发送删除指令
+						    });
+					  }else if(layEvent === 'recovery'){ //恢复
+						  layer.close(
+	  					  			$.post({
+							 			 url:'<%=path%>/salesman/updateState',
+							 			 dataType:'json',
+							 			 data:{
+							 				 id:data.salesmanId,
+							 				 state:1
+							 				 },
+							 			 success:function(data){
+							 				 if(data.state == 'success'){
+							 					layer.msg("恢复成功",{icon: 1});
+							 					table.reload();
+							 				 }else{
+							 					layer.msg("恢复失败",{icon: 2});
+							 				 }
+							 			 },
+							 			 error:function(){
+							 				layer.msg('系统错误',{icon: 2});
+							 			 }
+							 		 })
+						  );
 					  }
 				});
 			  	//更改状态

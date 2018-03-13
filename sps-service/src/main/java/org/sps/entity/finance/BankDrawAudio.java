@@ -11,7 +11,9 @@ public class BankDrawAudio implements Serializable {
     private String  userName;
     private String  auditSerialNum;
     private String  applicationDate;
+    //交易时间 ，到账时间
     private String  payDate;
+    private String  payType;
     private BigDecimal amount    ;
     private BigDecimal  totalAmount  ;
     private BigDecimal  moneyAmount  ;
@@ -20,6 +22,24 @@ public class BankDrawAudio implements Serializable {
     private String  companyName  ;
     private String  status  ;
     private String  advice  ;
+
+    private String  remark;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
 
     public Integer getId() {
         return id;

@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.sps.common.StringUtil;
 import com.sps.dao.shopkeeper.SpsShopkeeperAccountDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperDao;
 import com.sps.entity.shopkeeper.SpsShopkeeper;
@@ -31,8 +32,9 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		
 		SpsShopkeeperExample example = new SpsShopkeeperExample();
 		
-		example.createCriteria().andShopkeeperCustomeridEqualTo(shopkeeperCustomerid);
-		
+		if(!StringUtil.isEmpty(shopkeeperCustomerid)){
+			example.createCriteria().andShopkeeperCustomeridEqualTo(shopkeeperCustomerid);
+		}
 		List<SpsShopkeeper> selectByExample = spsShopkeeperDao.selectByExample(example);
 		
 		return selectByExample.size() == 0 ? null : selectByExample.get(0);

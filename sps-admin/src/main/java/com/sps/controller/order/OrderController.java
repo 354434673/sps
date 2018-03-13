@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +29,12 @@ import com.sps.util.CommonUtil;
 public class OrderController {
 
 	Logger logger=Logger.getLogger(this.getClass().getName());
-	
+
 	@Reference(timeout = 20000, group = "dianfu")
 	OrderService orderService;
 	@Resource
 	private ExpressService expressService;
-	
+
 	@RequestMapping("/showOrder.json")
 	@ResponseBody
 	public  HashMap<String, Object> selectOrderByOrderId(String orderid){
@@ -51,13 +53,13 @@ public class OrderController {
 		model.addAttribute("data", data);
 		return "order/confimed";
 	}*/
-	
+
 	/*@RequestMapping("/showOrderGoods")
 	@ResponseBody
 	public Order selectOrderGoods(String orderid){
 		return orderService.selectOrderGoods(orderid);
 	}*/
-	
+
 	@RequestMapping("/showOrderGoods.json")
 	@ResponseBody
 	public HashMap<String,Object> selectOrderGoods(Integer page, Integer limit,String orderid,String sku){
@@ -66,14 +68,20 @@ public class OrderController {
 	}
 	@RequestMapping("/show.json")
 	@ResponseBody
-	public HashMap<String,Object> selectByParameters(Integer page, Integer limit,String name, 
-			String channelName, String selfname, String orderid, 
-			String startTime,String endTime, String flag){
-		HashMap<String,Object> orders=orderService.selectByParameters(page, limit, name, channelName, 
+	public HashMap<String,Object> selectByParameters(Integer page, Integer limit,String name,
+													 String channelName, String selfname, String orderid,
+													 String startTime,String endTime, String flag){
+		 Subject subject = SecurityUtils.getSubject();
+		//获取当前token中的用户
+		String userName = (String) subject.getPrincipal();
+		
+		String channelNum = (String) subject.getSession().getAttribute(userName);
+		
+		HashMap<String,Object> orders=orderService.selectByParameters(page, limit, name, channelNum, channelName,
 				selfname, orderid, startTime, endTime, flag);
 		return orders;
 	}
-		
+
 /*	@RequestMapping("/toConfirm")
 	public String toConfirm(String orderid,Integer page,Integer limit,String sku, Model model ){
 		if(orderid != null){
@@ -83,8 +91,8 @@ public class OrderController {
 		}
 		return "order/confimedOrder";
 	}*/
-	
-	
+
+
 	/*@RequestMapping("/updatePrice")
 	@ResponseBody
 	public int updateBatch(OrderGoods orderGoods){
@@ -98,7 +106,7 @@ public class OrderController {
 			}
 		return result;
 	}*/
-	
+
 	/*@RequestMapping(value="/updatePriceBeath",method=RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> updatePriceBeath(List<OrderGoods> orderGoods){
@@ -112,18 +120,18 @@ public class OrderController {
 			}
 		return result;
 	}*/
-	
-	
+
+
 	/**
 	 * 修改订单的价格以及订货量，修改后页面刷新返回到修改后的详情页面
 	 * @param orderGoods
 	 * @return
-	 */ 
+	 */
 	@RequestMapping(value="/updatePriceBeath",method=RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> updatePriceBeath(@RequestBody List<OrderGoods> orderGoods){
 		HashMap<String, Object> updatePriceBatch = orderService.updatePriceBatch(orderGoods);
-		
+
 		return  updatePriceBatch;
 	}
 	/*@RequestMapping(value="/updatePriceBeath",method=RequestMethod.POST)
@@ -131,7 +139,7 @@ public class OrderController {
 		orderService.updatePriceBatch(Arrays.asList(orderGoods));
 		return  "/order/confimed";
 	}*/
-	/**	
+	/**
 	 * 修改待确认订单状态，修改好后返回到待确认订单页面
 	 * @param orderid 订单id
 	 * @return
@@ -150,25 +158,25 @@ public class OrderController {
 			expressService.insertExpress(otherName);
 		}
 		HashMap<String, Object> insertLogistics = orderService.insertLogistics(flag, logistics);
-		
+
 		return insertLogistics;
 	}
 	@RequestMapping("/uploadLogistics")
 	@ResponseBody
 	public HashMap<String, Object> uploadLogistics(@RequestParam(value = "file", required = false) MultipartFile file,
-			SpsOrderLogistics logistics, String orderid,String flag, HttpServletRequest request){
-		
+												   SpsOrderLogistics logistics, String orderid,String flag, HttpServletRequest request){
+
 		if(file != null){//文件不为空则上传图片
 			//String realPath = request.getSession().getServletContext().getRealPath("upload/"); //项目路径
-			
+
 			String realPath = "C:\\development\\sps\\sps\\sps-admin\\src\\main\\webapp\\upload\\";
-			
+
 			String filePath ="order/"+logistics.getOrderId()+"/";
-			
+
 			CommonUtil.uploadPicture(file, realPath+filePath, file.getOriginalFilename());
 		}
 		HashMap<String, Object> insertLogistics = orderService.insertLogistics(flag, logistics);
-		
+
 		return insertLogistics;
 	}
 	/**

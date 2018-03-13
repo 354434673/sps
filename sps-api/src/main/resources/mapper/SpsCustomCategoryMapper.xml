@@ -120,7 +120,10 @@
       and custom_shop_num =#{customShopNum,jdbcType=VARCHAR}
     </if>
     AND custom_delete_flag = 0
-    order by custom_wide asc ,  custom_create_time desc
+    ORDER BY
+    cast(custom_wide as SIGNED INTEGER)
+    ASC,
+    custom_create_time DESC
   </select>
   <select id="findById" parameterType="int" resultMap="BaseResultMap">
     select

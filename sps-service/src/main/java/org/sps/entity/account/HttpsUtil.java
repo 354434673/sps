@@ -201,7 +201,7 @@ public class HttpsUtil {
 	        params.put("cardno","6228480402564890018 ");
 	        params.put("idcardno","142325198903160519");
 	        params.put("idcardtype","ID");
-	        params.put("username","刘国云");
+	        params.put("username","哈哈哈");
 	        params.put("phone","18612174790");
 	        params.put("issms","true");
 	        params.put("advicesmstype","MESSAGE");

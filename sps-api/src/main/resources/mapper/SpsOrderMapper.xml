@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsOrder">
+  <resultMap id="BaseResultMap" type="SpsOrder">
+    <id column="o_id" jdbcType="INTEGER" property="oId" />
+    <result column="orderid" jdbcType="VARCHAR" property="orderid" />
+    <result column="shopkeeper" jdbcType="VARCHAR" property="shopkeeper" />
+    <result column="shopkeepername" jdbcType="VARCHAR" property="shopkeepername" />
+    <result column="selfemployed" jdbcType="VARCHAR" property="selfemployed" />
+    <result column="selfname" jdbcType="VARCHAR" property="selfname" />
+    <result column="scale" jdbcType="INTEGER" property="scale" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="payment" jdbcType="DECIMAL" property="payment" />
+    <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="servicescale" jdbcType="DOUBLE" property="servicescale" />
+    <result column="servicemoney" jdbcType="DECIMAL" property="servicemoney" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="modifytime" jdbcType="TIMESTAMP" property="modifytime" />
+    <result column="sum_money" jdbcType="DECIMAL" property="sumMoney" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    o_id, orderid, shopkeeper, shopkeepername, selfemployed, selfname, scale, createtime, 
+    flag, payment, isdelete, remark, money, servicescale, servicemoney, phone, address, 
+    modifytime, sum_money, name, unit
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_order
+    where o_id = #{oId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_order
+    where o_id = #{oId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsOrder">
+    insert into sps_order (o_id, orderid, shopkeeper, 
+      shopkeepername, selfemployed, selfname, 
+      scale, createtime, flag, 
+      payment, isdelete, remark, 
+      money, servicescale, servicemoney, 
+      phone, address, modifytime, 
+      sum_money, name, unit
+      )
+    values (#{oId,jdbcType=INTEGER}, #{orderid,jdbcType=VARCHAR}, #{shopkeeper,jdbcType=VARCHAR}, 
+      #{shopkeepername,jdbcType=VARCHAR}, #{selfemployed,jdbcType=VARCHAR}, #{selfname,jdbcType=VARCHAR}, 
+      #{scale,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{flag,jdbcType=INTEGER}, 
+      #{payment,jdbcType=DECIMAL}, #{isdelete,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{money,jdbcType=DECIMAL}, #{servicescale,jdbcType=DOUBLE}, #{servicemoney,jdbcType=DECIMAL}, 
+      #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}, 
+      #{sumMoney,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="SpsOrder">
+    insert into sps_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        o_id,
+      </if>
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="shopkeeper != null">
+        shopkeeper,
+      </if>
+      <if test="shopkeepername != null">
+        shopkeepername,
+      </if>
+      <if test="selfemployed != null">
+        selfemployed,
+      </if>
+      <if test="selfname != null">
+        selfname,
+      </if>
+      <if test="scale != null">
+        scale,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="payment != null">
+        payment,
+      </if>
+      <if test="isdelete != null">
+        isdelete,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="servicescale != null">
+        servicescale,
+      </if>
+      <if test="servicemoney != null">
+        servicemoney,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="modifytime != null">
+        modifytime,
+      </if>
+      <if test="sumMoney != null">
+        sum_money,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        #{oId,jdbcType=INTEGER},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeper != null">
+        #{shopkeeper,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeepername != null">
+        #{shopkeepername,jdbcType=VARCHAR},
+      </if>
+      <if test="selfemployed != null">
+        #{selfemployed,jdbcType=VARCHAR},
+      </if>
+      <if test="selfname != null">
+        #{selfname,jdbcType=VARCHAR},
+      </if>
+      <if test="scale != null">
+        #{scale,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="payment != null">
+        #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="isdelete != null">
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="servicescale != null">
+        #{servicescale,jdbcType=DOUBLE},
+      </if>
+      <if test="servicemoney != null">
+        #{servicemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sumMoney != null">
+        #{sumMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="SpsOrder">
+    update sps_order
+    <set>
+      <if test="orderid != null">
+        orderid = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeper != null">
+        shopkeeper = #{shopkeeper,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeepername != null">
+        shopkeepername = #{shopkeepername,jdbcType=VARCHAR},
+      </if>
+      <if test="selfemployed != null">
+        selfemployed = #{selfemployed,jdbcType=VARCHAR},
+      </if>
+      <if test="selfname != null">
+        selfname = #{selfname,jdbcType=VARCHAR},
+      </if>
+      <if test="scale != null">
+        scale = #{scale,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="payment != null">
+        payment = #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="isdelete != null">
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="servicescale != null">
+        servicescale = #{servicescale,jdbcType=DOUBLE},
+      </if>
+      <if test="servicemoney != null">
+        servicemoney = #{servicemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sumMoney != null">
+        sum_money = #{sumMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where o_id = #{oId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsOrder">
+    update sps_order
+    set orderid = #{orderid,jdbcType=VARCHAR},
+      shopkeeper = #{shopkeeper,jdbcType=VARCHAR},
+      shopkeepername = #{shopkeepername,jdbcType=VARCHAR},
+      selfemployed = #{selfemployed,jdbcType=VARCHAR},
+      selfname = #{selfname,jdbcType=VARCHAR},
+      scale = #{scale,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      flag = #{flag,jdbcType=INTEGER},
+      payment = #{payment,jdbcType=DECIMAL},
+      isdelete = #{isdelete,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DECIMAL},
+      servicescale = #{servicescale,jdbcType=DOUBLE},
+      servicemoney = #{servicemoney,jdbcType=DECIMAL},
+      phone = #{phone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      sum_money = #{sumMoney,jdbcType=DECIMAL},
+      name = #{name,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR}
+    where o_id = #{oId,jdbcType=INTEGER}
+  </update>
+
+  <!-- 查询所有 -->
+  <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
+    select
+    o.o_id, o.orderid, o.shopkeeper, o.shopkeepername, o.selfemployed, o.selfname, o.scale, o.createtime,
+    o.flag, o.payment, o.isdelete, o.remark, o.money, o.servicescale, o.servicemoney, o.phone, o.address,
+    o.modifytime, o.sum_money, o.name, o.unit
+    from sps_order o
+    where 1=1
+    <if test="goodsName !=null and goodsName != ''">
+      and
+      o.orderid IN (
+      SELECT
+      a.orderid
+      FROM
+      sps_order a
+      LEFT JOIN sps_order_goods b ON a.orderid = b.orderid
+      WHERE
+      b.skuname LIKE CONCAT('%',#{goodsName,jdbcType=VARCHAR},'%')
+      GROUP BY
+      a.orderid
+      )
+    </if>
+    <if test="orderNum !=null and orderNum != ''">
+      and o.orderid LIKE CONCAT('%',#{orderNum,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="customerNum !=null and customerNum != ''">
+      and o.selfemployed = #{customerNum,jdbcType=VARCHAR}
+    </if>
+    <if test="shopkeeperNum !=null and shopkeeperNum != ''">
+      and o.shopkeeper =#{shopkeeperNum,jdbcType=VARCHAR}
+    </if>
+    <if test="flag !=null and flag != ''">
+      and o.flag =#{flag,jdbcType=INTEGER}
+    </if>
+    AND o.isdelete = 0
+    order by o.createtime desc
+
+  </select>
+
+
+  <select id="findById" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_order
+    where o_id = #{oId,jdbcType=INTEGER}
+    AND isdelete = 0
+  </select>
+</mapper>

@@ -103,12 +103,13 @@
 			  var $ = layui.jquery
 			  var upload = layui.upload;
 			  $('#add').on('click', function() {
-				  layer.open({
+				  location.href = '<%=path%>/page/main/shopkeeper/addInvitation.jsp'
+<%-- 				  layer.open({
 					  type: 2, 
 					  title:'店主邀请新增',
 					  area: ['30%', '40%'],//宽高
 					  content: '<%=path%>/page/main/shopkeeper/addInvitation.jsp' ,//这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-				  }); 
+				  });  --%>
 			  });
 			  table.render({
 			    elem: '#invitationList'

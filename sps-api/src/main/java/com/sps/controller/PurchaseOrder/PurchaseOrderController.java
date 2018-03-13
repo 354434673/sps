@@ -1,8 +1,6 @@
 package com.sps.controller.PurchaseOrder;
 
-import com.sps.common.Common;
-import com.sps.common.Message;
-import com.sps.common.ReturnInfo;
+import com.sps.common.*;
 import com.sps.entity.goods.SpsGoodShop;
 import com.sps.entity.goods.SpsGoodShopSku;
 import com.sps.entity.goods.SpsPurchaseOrder;
@@ -35,8 +33,6 @@ public class PurchaseOrderController {
 
     /**
      * 进货单添加
-     *
-     * @param order 地址对象
      * @return
      */
     @RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
@@ -45,9 +41,9 @@ public class PurchaseOrderController {
         ReturnInfo ri = new ReturnInfo();
         try {
             purchaseOrderService.saveOrUpdate(order);
-            ri.setSuccess(Message.API_SUCCESS_FLAG);
-            ri.setCode(Message.API_SUCCESS_CODE);
+            ri.setCode(Message.SUCCESS_CODE);
             ri.setMsg(Message.API_SUCCESS_MSG);
+            ri.setSuccess(Message.API_SUCCESS_FLAG);
         } catch (Exception e) {
             e.printStackTrace();
             ri.setCode(Message.FAILURE_CODE);
@@ -59,22 +55,22 @@ public class PurchaseOrderController {
 
     /**
      * 根据ID查询Sku
-     *
-     * @param map id
      * @return
      */
     @RequestMapping(value = "/findListByCustomerNum", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findSkuById(@RequestBody Map<String, Object> map) {
-        ReturnInfo ri = Common.validate(map, "customerNum");
-        if ("0".equals(ri.getCode())) return ri;
+    public ReturnInfo findSkuById(String customerNum ) {
+        ReturnInfo ri = new ReturnInfo();
         try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("customerNum", customerNum);
             List<SpsPurchaseOrder> purchaseOrderList = purchaseOrderService.findList(map);
+            String[] pro = new String[]{"goodsName","price","quantity","size","url","stock","orderGoodsNum","color"};
             if (purchaseOrderList != null) {
-                ri.setData(purchaseOrderList);
-                ri.setSuccess(Message.API_SUCCESS_FLAG);
-                ri.setCode(Message.API_SUCCESS_CODE);
+                ri.setResult(EntityUtiles.reloadListPropertyValue(purchaseOrderList, pro));
+                ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
+                ri.setSuccess(Message.API_SUCCESS_FLAG);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,20 +84,18 @@ public class PurchaseOrderController {
     /**
      * 根据ID查询Sku
      *
-     * @param map id
      * @return
      */
     @RequestMapping(value = "/deleteSku", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo deleteSku(@RequestBody Map<String, Object> map) {
-        ReturnInfo ri = Common.validate(map, "id");
+    public ReturnInfo deleteSku(Integer id) {
+        ReturnInfo ri = new ReturnInfo();
         if ("0".equals(ri.getCode())) return ri;
         try {
-            Integer id = (Integer) map.get("id");
             purchaseOrderService.falseDeletion(id);
-            ri.setSuccess(Message.API_SUCCESS_FLAG);
-            ri.setCode(Message.API_SUCCESS_CODE);
+            ri.setCode(Message.SUCCESS_CODE);
             ri.setMsg(Message.API_SUCCESS_MSG);
+            ri.setSuccess(Message.API_SUCCESS_FLAG);
         } catch (Exception e) {
             e.printStackTrace();
             ri.setCode(Message.FAILURE_CODE);

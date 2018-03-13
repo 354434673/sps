@@ -173,6 +173,69 @@ public class Order implements Serializable {
 	 * @mbggenerated
 	 */
 	private String unit;
+	private String loanCode;
+	private String loanStartTime;
+	private String loanEndTime;
+	private Double formalityRate;
+	private BigDecimal serviceCharge;
+	private BigDecimal loanBalance;
+	private SpsOrderLogistics logs;
+
+	public String getLoanCode() {
+		return loanCode;
+	}
+
+	public void setLoanCode(String loanCode) {
+		this.loanCode = loanCode;
+	}
+
+	public String getLoanStartTime() {
+		return loanStartTime;
+	}
+
+	public void setLoanStartTime(String loanStartTime) {
+		this.loanStartTime = loanStartTime;
+	}
+
+	public String getLoanEndTime() {
+		return loanEndTime;
+	}
+
+	public void setLoanEndTime(String loanEndTime) {
+		this.loanEndTime = loanEndTime;
+	}
+
+	public Double getFormalityRate() {
+		return formalityRate;
+	}
+
+	public void setFormalityRate(Double formalityRate) {
+		this.formalityRate = formalityRate;
+	}
+
+	public BigDecimal getServiceCharge() {
+		return serviceCharge;
+	}
+
+	public void setServiceCharge(BigDecimal serviceCharge) {
+		this.serviceCharge = serviceCharge;
+	}
+
+	public BigDecimal getLoanBalance() {
+		return loanBalance;
+	}
+
+	public void setLoanBalance(BigDecimal loanBalance) {
+		this.loanBalance = loanBalance;
+	}
+
+	public SpsOrderLogistics getLogs() {
+		return logs;
+	}
+
+	public void setLogs(SpsOrderLogistics logs) {
+		this.logs = logs;
+	}
 
 	private List<OrderGoods> orderGoods;
 
@@ -737,36 +800,36 @@ public class Order implements Serializable {
 		Order other = (Order) that;
 		return (this.getoId() == null ? other.getoId() == null : this.getoId().equals(other.getoId()))
 				&& (this.getOrderid() == null ? other.getOrderid() == null
-						: this.getOrderid().equals(other.getOrderid()))
+				: this.getOrderid().equals(other.getOrderid()))
 				&& (this.getShopkeeper() == null ? other.getShopkeeper() == null
-						: this.getShopkeeper().equals(other.getShopkeeper()))
+				: this.getShopkeeper().equals(other.getShopkeeper()))
 				&& (this.getShopkeepername() == null ? other.getShopkeepername() == null
-						: this.getShopkeepername().equals(other.getShopkeepername()))
+				: this.getShopkeepername().equals(other.getShopkeepername()))
 				&& (this.getSelfemployed() == null ? other.getSelfemployed() == null
-						: this.getSelfemployed().equals(other.getSelfemployed()))
+				: this.getSelfemployed().equals(other.getSelfemployed()))
 				&& (this.getSelfname() == null ? other.getSelfname() == null
-						: this.getSelfname().equals(other.getSelfname()))
+				: this.getSelfname().equals(other.getSelfname()))
 				&& (this.getScale() == null ? other.getScale() == null : this.getScale().equals(other.getScale()))
 				&& (this.getCreatetime() == null ? other.getCreatetime() == null
-						: this.getCreatetime().equals(other.getCreatetime()))
+				: this.getCreatetime().equals(other.getCreatetime()))
 				&& (this.getFlag() == null ? other.getFlag() == null : this.getFlag().equals(other.getFlag()))
 				&& (this.getPayment() == null ? other.getPayment() == null
-						: this.getPayment().equals(other.getPayment()))
+				: this.getPayment().equals(other.getPayment()))
 				&& (this.getIsdelete() == null ? other.getIsdelete() == null
-						: this.getIsdelete().equals(other.getIsdelete()))
+				: this.getIsdelete().equals(other.getIsdelete()))
 				&& (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
 				&& (this.getMoney() == null ? other.getMoney() == null : this.getMoney().equals(other.getMoney()))
 				&& (this.getServicescale() == null ? other.getServicescale() == null
-						: this.getServicescale().equals(other.getServicescale()))
+				: this.getServicescale().equals(other.getServicescale()))
 				&& (this.getServicemoney() == null ? other.getServicemoney() == null
-						: this.getServicemoney().equals(other.getServicemoney()))
+				: this.getServicemoney().equals(other.getServicemoney()))
 				&& (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
 				&& (this.getAddress() == null ? other.getAddress() == null
-						: this.getAddress().equals(other.getAddress()))
+				: this.getAddress().equals(other.getAddress()))
 				&& (this.getModifytime() == null ? other.getModifytime() == null
-						: this.getModifytime().equals(other.getModifytime()))
+				: this.getModifytime().equals(other.getModifytime()))
 				&& (this.getSumMoney() == null ? other.getSumMoney() == null
-						: this.getSumMoney().equals(other.getSumMoney()))
+				: this.getSumMoney().equals(other.getSumMoney()))
 				&& (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
 				&& (this.getUnit() == null ? other.getUnit() == null : this.getUnit().equals(other.getUnit()));
 	}

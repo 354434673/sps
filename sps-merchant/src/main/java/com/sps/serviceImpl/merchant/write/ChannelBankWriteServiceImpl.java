@@ -1,18 +1,18 @@
 package com.sps.serviceImpl.merchant.write;
 
-import java.util.Date;
-import java.util.UUID;
-
-import javax.annotation.Resource;
-
+import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.read.SpsChannelBankReadMapper;
+import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
+import com.sps.dao.merchant.write.SpsChannelBankWriteMapper;
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.merchant.SpsChannelBank;
 import org.sps.service.merchant.write.ChannelBankWriteService;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
-import com.sps.dao.merchant.write.SpsChannelBankWriteMapper;
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.UUID;
+
+
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelBankWriteServiceImpl implements ChannelBankWriteService{
@@ -44,6 +44,7 @@ public class ChannelBankWriteServiceImpl implements ChannelBankWriteService{
 	public Boolean removeBankInfo(String userName) {
 		
 		try {
+
 			bankWrite.deleteByPrimaryKey(userName);
 			return true;
 		} catch (Exception e) {
@@ -78,17 +79,10 @@ public class ChannelBankWriteServiceImpl implements ChannelBankWriteService{
 	}
 
 	@Override
-	public Boolean modifyTradePsw(String userName, String psw) {
+	public Boolean modifyTradePsw(String userName, String psw,String salt) {
 		SpsChannelBank bank = bankRead.selectByLoginName(userName);
-		Boolean flag=true;
-		try{
-			bankWrite.updateTradePsw(bank.getUserId(), psw);
-		}catch(Exception e){
-			e.printStackTrace();
-			flag=false;
-		}finally{
-			return flag;
-		}
+		int  num = bankWrite.updateTradePsw(bank.getUserId(), psw,salt);
+		return num > 0;
 	}
 
 

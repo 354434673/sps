@@ -24,7 +24,7 @@ public class EntityUtils {
 		}
 		Object entityTemp = entity ;
 		for (String propertyArr : property.trim().split("\\.")) {
-			entityTemp = invokeReturn(entityTemp, "get"+toUpperFirst(propertyArr)) ;
+			entityTemp = invokeReturn(entityTemp, "get"+propertyArr) ;
 			if(null==entityTemp){
 				entityTemp= "";
 			}

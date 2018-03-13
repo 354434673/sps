@@ -5,17 +5,38 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class SpsPurchaseOrder implements Serializable {
+
+
+    //订单所需
+    private BigDecimal payment;
+    private BigDecimal money;
+    private BigDecimal serviceMoney;
+    private BigDecimal shopPayMoney;
+    private Integer scale;
+    private String selfName;
+    private String phone;
+    private String address;
+    private String unit;
+    private String name;
+    private String remark;
+
+
+
+
+
+    private String customerId;
     private Integer groundingFlag;
     private Integer platGoodsId;
     private String goodsName;
     private BigDecimal price;
     private String color;
     private Integer quantity;
-    private Integer size;
+    private String size;
     private String url;
     private Integer skuFlag;
     private Integer goodsFlag;
     private Integer stock;
+    private BigDecimal totalPrice;
 
     //分割线
     private Integer orderId;
@@ -25,7 +46,7 @@ public class SpsPurchaseOrder implements Serializable {
     private Integer orderSkuId;
 
     private Integer orderGoodsId;
-
+    private String orderGoodsUrl;
     private String orderCustomerNum;
 
     private Integer orderDeleteFlag;
@@ -34,6 +55,118 @@ public class SpsPurchaseOrder implements Serializable {
 
     private Date orderUpdateTime;
 
+
+    public String getOrderGoodsUrl() {
+        return orderGoodsUrl;
+    }
+
+    public void setOrderGoodsUrl(String orderGoodsUrl) {
+        this.orderGoodsUrl = orderGoodsUrl;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSelfName() {
+        return selfName;
+    }
+
+    public void setSelfName(String selfName) {
+        this.selfName = selfName;
+    }
+
+    public BigDecimal getPayment() {
+        return payment;
+    }
+
+    public void setPayment(BigDecimal payment) {
+        this.payment = payment;
+    }
+
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+
+    public BigDecimal getShopPayMoney() {
+        return shopPayMoney;
+    }
+
+    public void setShopPayMoney(BigDecimal shopPayMoney) {
+        this.shopPayMoney = shopPayMoney;
+    }
+
+    public Integer getScale() {
+        return scale;
+    }
+
+    public void setScale(Integer scale) {
+        this.scale = scale;
+    }
+
+    public BigDecimal getServiceMoney() {
+        return serviceMoney;
+    }
+
+    public void setServiceMoney(BigDecimal serviceMoney) {
+        this.serviceMoney = serviceMoney;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
     public Integer getStock() {
         return stock;
@@ -115,11 +248,11 @@ public class SpsPurchaseOrder implements Serializable {
         this.quantity = quantity;
     }
 
-    public Integer getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
