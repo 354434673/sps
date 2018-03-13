@@ -44,7 +44,7 @@
 				   	<div class="layui-form-item" align="center" id="btn" style="padding-top: 10px">
 						<button class="layui-btn layui-btn-primary" onclick="javascript:history.back(-1)">返回</button>
 						<button class="layui-btn layui-btn-primary" lay-submit  lay-filter="submit"  id="submit">扫码邀请</button>
-						<button class="layui-btn layui-btn-primary" id="code">扫码邀请</button>
+						<!-- <button class="layui-btn layui-btn-primary" id="code">扫码邀请</button> -->
 					</div>
 					</div>
 </div>
@@ -88,19 +88,6 @@
 		 			 }
 		 		 })
 	  })  
- 	  $('#code').click(function(){
- 		  location.href="http://localhost:8080/sps-admin/page/main/shopkeeper/QRcode.jsp?channelNum=111&clientNum=111"
-/* 		  layer.open({
-			  type: 2, 
-			  shade: [0.8, '#393D49'],
-			  area: ['800px', '700px'],
-			  content: 'http://localhost:8080/sps-admin/shopkeeper/getQRcode', //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-				  zIndex: layer.zIndex, //重点1
-				  success: function(layero){
-				    layer.setTop(layero); //重点2
-				  }
-		  });  */
-	  }) 
 	  //自定义验证规则  
 	  form.verify({  
 			//验证只包含汉字  

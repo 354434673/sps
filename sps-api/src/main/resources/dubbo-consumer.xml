@@ -24,7 +24,7 @@
     
     <dubbo:reference group = "${dubbo.auth.group}" id="jzfqAuthApi" interface="com.jzfq.auth.core.api.JzfqAuthApi"/>
     
-    <!-- <dubbo:reference group = "${dubbo.member.group}" id="iUserCardService" interface="com.juzifenqi.capital.service.IUserCardService"/> -->
+    <dubbo:reference group = "${dubbo.capital.group}" id="iUserCardService" interface="com.juzifenqi.capital.service.IUserCardService"/>
 </beans>
  
  
