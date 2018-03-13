@@ -18,8 +18,6 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/api/goods")
 public class goodsController {
-
-
     @Resource
     private BrandService brandService;
     @Resource
@@ -62,20 +60,15 @@ public class goodsController {
 
     /**
      * 根据ID商品详情
-     * @param map  id
      * @return
      */
     @RequestMapping(value = "/findById", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findEntity(@RequestBody Map<String,Object> map){
-        ReturnInfo ri = Common.validate(map, "id");
-        if("0".equals(ri.getCode())) return ri;
+    public ReturnInfo findEntity(Integer id){
+        ReturnInfo ri = new ReturnInfo();
         try {
             HashMap<String, Object> data = new HashMap<String, Object>();//封装对象
-            ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
-            Integer id = (Integer) map.get("id");
             SpsGoodShop goods = goodShopService.findById(id);
-
             data.put("gId", goods.getgId());
             data.put("gSpuName", goods.getgSpuName());
             data.put("gMinPrice", goods.getgMinPrice());
@@ -97,15 +90,15 @@ public class goodsController {
     }
     /**
      * 根据ID查询Sku
-     * @param map  id
      * @return
      */
     @RequestMapping(value = "/findSkuById", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findSkuById(@RequestBody Map<String,Object> map){
-        ReturnInfo ri = Common.validate(map, "goodsId");
-        if("0".equals(ri.getCode())) return ri;
+    public ReturnInfo findSkuById(Integer goodsId){
+        Map<String, Object> map = new HashMap<>();
+        ReturnInfo ri = new ReturnInfo();
         try {
+            map.put("goodsId", goodsId);
             List<SpsGoodShopSku> skuList = goodShopSkuService.findList(map);
             String[] pro = new String[]{"gId","gGid","gColorSize","gColor","gSize","gPrice","gQuantity","gStock"};
             if(skuList != null){

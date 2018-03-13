@@ -35,22 +35,21 @@ public class OrderController {
 
     /**
      * 根据ID订单详情
-     * @param map  id
+     *
      * @return
      */
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo cancelOrder(@RequestBody Map<String,Object> map){
-        ReturnInfo ri = Common.validate(map, "id");
-        if("0".equals(ri.getCode())) return ri;
+    public ReturnInfo cancelOrder(Integer id) {
+        ReturnInfo ri = new ReturnInfo();
+        if ("0".equals(ri.getCode())) return ri;
         try {
-            Integer id = (Integer) map.get("id");
-           orderService.cancelOrder(id);
-                ri.setResult(id);
+            orderService.cancelOrder(id);
+            ri.setResult(id);
             ri.setSuccess(Message.SUCCESS_MSG);
             ri.setCode(Message.SUCCESS_CODE);
             ri.setMsg(Message.API_SUCCESS_MSG);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             ri.setCode(Message.FAILURE_CODE);
             ri.setMsg(Message.FAILURE_MSG);
@@ -58,24 +57,23 @@ public class OrderController {
         }
         return ri;
     }
+
     /**
      * 根据ID订单详情
-     * @param map  id
+     *
      * @return
      */
     @RequestMapping(value = "/deleteOrder", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo deleteOrder(@RequestBody Map<String,Object> map){
-        ReturnInfo ri = Common.validate(map, "id");
-        if("0".equals(ri.getCode())) return ri;
+    public ReturnInfo deleteOrder(Integer id ) {
+        ReturnInfo ri = new ReturnInfo();
         try {
-            Integer id = (Integer) map.get("id");
             orderService.deleteOrder(id);
             ri.setResult(id);
             ri.setSuccess(Message.SUCCESS_MSG);
             ri.setCode(Message.SUCCESS_CODE);
             ri.setMsg(Message.API_SUCCESS_MSG);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             ri.setCode(Message.FAILURE_CODE);
             ri.setMsg(Message.FAILURE_MSG);
@@ -87,24 +85,23 @@ public class OrderController {
 
     /**
      * 根据ID订单详情
-     * @param map  id
+     *
      * @return
      */
     @RequestMapping(value = "/findById", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findEntity(@RequestBody Map<String,Object> map){
-        ReturnInfo ri = Common.validate(map, "id");
-        if("0".equals(ri.getCode())) return ri;
+    public ReturnInfo findEntity(Integer id) {
+        ReturnInfo ri = new ReturnInfo();
+        if ("0".equals(ri.getCode())) return ri;
         try {
-            Integer id = (Integer) map.get("id");
             SpsOrder order = orderService.findById(id);
-            if(order != null){
+            if (order != null) {
                 ri.setResult(order);
                 ri.setSuccess(Message.SUCCESS_MSG);
                 ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             ri.setCode(Message.FAILURE_CODE);
             ri.setMsg(Message.FAILURE_MSG);
@@ -116,19 +113,21 @@ public class OrderController {
 
     /**
      * 根据用户编号商家编号查询订单列表
-     * @param map  id
+     *
      * @return
      */
     @RequestMapping(value = "/orderList", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo orderList(@RequestBody Map<String,Object> map){
-        ReturnInfo ri = Common.validate(map,"customerNum","shopkeeperNum");
-        if("0".equals(ri.getCode())) return ri;
+    public ReturnInfo orderList(String customerNum,String shopkeeperNum ) {
+        ReturnInfo ri = new ReturnInfo();
+        Map<String, Object> map = new HashMap<>();
         HashMap<String, Object> data = new HashMap<>();
         ArrayList<HashMap<String, Object>> result = new ArrayList<>();
         try {
+            map.put("customerNum", customerNum);
+            map.put("shopkeeperNum", shopkeeperNum);
             List<SpsOrder> orderList = orderService.findList(map);
-            for (SpsOrder  list:orderList) {
+            for (SpsOrder list : orderList) {
                 data.put("orderid", list.getOrderid());
                 data.put("selfname", list.getSelfname());
                 data.put("scale", list.getScale());
@@ -137,13 +136,13 @@ public class OrderController {
                 data.put("orderGoodsList", list.getOrderGoodsList());
                 result.add(data);
             }
-            if(orderList != null){
+            if (orderList != null) {
                 ri.setResult(result);
                 ri.setSuccess(Message.SUCCESS_MSG);
                 ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             ri.setCode(Message.FAILURE_CODE);
             ri.setMsg(Message.FAILURE_MSG);
@@ -154,6 +153,7 @@ public class OrderController {
 
     /**
      * 进货单数据校验
+     *
      * @return
      */
     @RequestMapping(value = "/saveOrder", method = RequestMethod.POST)
@@ -161,16 +161,16 @@ public class OrderController {
     public ReturnInfo saveOrUpdate(@RequestBody List<SpsPurchaseOrder> order) {
         ReturnInfo ri = new ReturnInfo();
         try {
-            Map<String,Object> map= purchaseOrderService.saveOrder(order);
+            Map<String, Object> map = purchaseOrderService.saveOrder(order);
             //成功返回当前用户地址个人信息
-                if((Integer) map.get("flag")==0){
-                    ri.setCode(Message.SUCCESS_CODE);
-                    ri.setMsg(Message.API_SUCCESS_MSG);
-                    ri.setSuccess(Message.API_SUCCESS_FLAG);
-            }else {
-                    ri.setCode(Message.FAILURE_CODE);
-                    ri.setMsg(Message.FAILURE_MSG);
-                    ri.setSuccess(Message.API_ERROR_FLAG);
+            if ((Integer) map.get("flag") == 0) {
+                ri.setCode(Message.SUCCESS_CODE);
+                ri.setMsg(Message.API_SUCCESS_MSG);
+                ri.setSuccess(Message.API_SUCCESS_FLAG);
+            } else {
+                ri.setCode(Message.FAILURE_CODE);
+                ri.setMsg(Message.FAILURE_MSG);
+                ri.setSuccess(Message.API_ERROR_FLAG);
 
             }
         } catch (Exception e) {
@@ -185,6 +185,7 @@ public class OrderController {
 
     /**
      * 进货单数据校验
+     *
      * @return
      */
     @RequestMapping(value = "/verificationOrder", method = RequestMethod.POST)
@@ -192,18 +193,18 @@ public class OrderController {
     public ReturnInfo verificationOrder(@RequestBody List<SpsPurchaseOrder> order) {
         ReturnInfo ri = new ReturnInfo();
         try {
-            Map<String,Object> map= purchaseOrderService.verificationOrder(order);
+            Map<String, Object> map = purchaseOrderService.verificationOrder(order);
 
             //成功返回当前用户地址个人信息
-            if((Integer) map.get("flag")==0){
+            if ((Integer) map.get("flag") == 0) {
                 ri.setResult(map.get("company"));
                 ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
                 ri.setSuccess(Message.API_SUCCESS_FLAG);
-            }else {
+            } else {
                 ri.setSuccess(Message.API_SUCCESS_FLAG);
-                ri.setCode(""+(Integer) map.get("flag"));
-                ri.setMsg(""+(String) map.get("goodsName"));
+                ri.setCode("" + (Integer) map.get("flag"));
+                ri.setMsg("" + (String) map.get("goodsName"));
             }
         } catch (Exception e) {
             e.printStackTrace();
