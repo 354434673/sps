@@ -30,7 +30,13 @@ import com.jzfq.auth.core.api.vo.JsonResult;*/
 import com.sps.common.StringUtil;
 import com.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 import com.sps.service.user.UserService;
-
+/**
+ * 用户登录注册接口
+ * @ClassName:  UserController   
+ * @Description:TODO(这里用一句话描述这个类的作用)   
+ * @author YangNingSheng
+ * @date 2018年3月13日 上午10:25:50
+ */
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
