@@ -34,7 +34,7 @@ public class UserServiceImpl extends BaseOperate implements UserService{
 	@Resource
 	private SpsShopkeeperInvitationDao invitationDao;
 	@Override
-	public HashMap<String, Object> userLogin(String userName, String password) {
+	public HashMap<String, Object> userLogin(String userName, String password, Integer userId) {
 		HashMap<String, Object> result = null;
 		
 		SpsUser user = getUser(userName);
@@ -58,6 +58,9 @@ public class UserServiceImpl extends BaseOperate implements UserService{
 				
 				data.put("customerid", selectByExample.get(0).getShopkeeperCustomerid());
 				
+				data.put("userId", userId);
+				
+				data.put("phone", userName);
 				result = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
 						Message.SUCCESS_MSG, 1, data);
 			}
@@ -81,43 +84,52 @@ public class UserServiceImpl extends BaseOperate implements UserService{
 	}
 	@Override
 	public ServiceResult<LoginInfo> insertUser(String phone, String password, String clientNum) {
-		ServiceResult<LoginInfo> serviceResult = new ServiceResult<LoginInfo>();;
+		ServiceResult<LoginInfo> serviceResult = new ServiceResult<LoginInfo>();
+
 		try {
-			String salt = Md5Util.getSalt(4);//4位盐
+			SpsUser u = getUser(phone);
 			
-			SpsUser user = new SpsUser();
-			
-			user.setUserUsername(phone);
-			
-			user.setUserSalt(salt);
-			
-			user.setUserPassword(Md5Util.getMd5(password, salt));
-			
-			user.setUserPhone(phone);
-			
-			user.setUserState(0);
-			
-			user.setUserMark(2);
-			
-			user.setUserCreattime(new Date());
-			
-			user.setUserUpdatetime(new Date());
-			/*
-			 * 添加user表
-			 */
-			dao.insertSelective(user);
-			
-			SpsShopkeeperAccount record = new SpsShopkeeperAccount();
-			
-			record.setAccountNum(phone);
-			
-			record.setShopkeeperCustomerid(clientNum);
-			/*
-			 * 添加店主账户表
-			 */
-			accountDao.insertSelective(record );
-			
-			super.logger.info("手机号为:"+phone+"的用户注册成功");
+			if(u == null){
+				String salt = Md5Util.getSalt(4);//4位盐
+				
+				SpsUser user = new SpsUser();
+				
+				user.setUserUsername(phone);
+				
+				user.setUserSalt(salt);
+				
+				user.setUserPassword(Md5Util.getMd5(password, salt));
+				
+				user.setUserPhone(phone);
+				
+				user.setUserState(0);
+				
+				user.setUserMark(2);
+				
+				user.setUserCreattime(new Date());
+				
+				user.setUserUpdatetime(new Date());
+				/*
+				 * 添加user表
+				 */
+				dao.insertSelective(user);
+				
+				SpsShopkeeperAccount record = new SpsShopkeeperAccount();
+				
+				record.setAccountNum(phone);
+				
+				record.setShopkeeperCustomerid(clientNum);
+				/*
+				 * 添加店主账户表
+				 */
+				accountDao.insertSelective(record );
+				
+				super.logger.info("手机号为:"+phone+"的用户注册成功");
+			}else{
+				serviceResult.setMessage("该用户已注册");
+				
+				serviceResult.setSuccess(false);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			

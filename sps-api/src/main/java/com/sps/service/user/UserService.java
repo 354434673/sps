@@ -21,7 +21,7 @@ public interface UserService {
 	 * @return: HashMap<String,Object>      
 	 * @throws
 	 */
-	public HashMap<String, Object> userLogin(String userName, String password);
+	public HashMap<String, Object> userLogin(String userName, String password, Integer userId);
 	/**
 	 * 店主注册
 	 * @Title: insertUser   
