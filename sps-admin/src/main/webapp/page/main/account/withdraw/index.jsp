@@ -111,7 +111,8 @@
         });
 
         $('#add').on('click', function() {
-            window.location.href="<%=path%>/page/main/account/withdraw/addWithdraw.jsp";
+            <%--window.location.href="<%=path%>/page/main/account/withdraw/addWithdraw.jsp";--%>
+            window.location.href= '<%=path%>/page/main/account/withdraw/inputTradePwd.jsp?withdrawAmt=1';
         });
         table.render({
             elem: '#withdrawList'
