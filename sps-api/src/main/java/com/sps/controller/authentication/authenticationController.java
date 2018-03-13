@@ -28,8 +28,8 @@ public class authenticationController {
 	private FaceAuthApi faceAuthApi;
 	@Resource
 	private JzfqAuthApi jzfqAuthApi;
-/*	@Resource
-	private IUserCardService iUsercardService;*/
+	@Resource
+	private IUserCardService iUsercardService;
 	
 	/**
 	 * 身份证反面认证
