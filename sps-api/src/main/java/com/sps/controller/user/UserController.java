@@ -152,7 +152,7 @@ public class UserController {
 		
 		HashMap<String, Object> userLogin = null;
 		if(login4Browser.getSuccess()){
-			userLogin = userService.userLogin(mobile, password);
+			userLogin = userService.userLogin(mobile, password, login4Browser.getResult().getMemberId());
 		}else{
 			userLogin = Message.resultMap(login4Browser.getCode(), login4Browser.getMessage(),
 					Message.SYSTEM_ERROR_MSG, 0, null);
