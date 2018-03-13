@@ -49,6 +49,8 @@ public class SetPwdController {
         return  sendRegisterSms;
    }
 
+
+
     @RequestMapping(value="/modifyLoaginPwd",method = RequestMethod.POST)
     @ResponseBody
     public ReturnInfo modifyLoaginPwd( String mobile,
