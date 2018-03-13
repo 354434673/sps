@@ -89,8 +89,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         var telNum = document.getElementById('telNum');
                         aspenLib.ajax({
-                            //url: location.protocol + "//" + location.hostname + ":8080/sps-api/api/user/getPhoneCode/regist",
-                            url: location.protocol + "//" + location.hostname + "/api/user/getPhoneCode/regist",
+                            url: location.protocol + "//" + location.host+ "/sps-api/api/user/getPhoneCode/regist",
+                            //url: location.protocol + "//" + location.host + ":/api/user/getPhoneCode/regist",
                             type: 'POST',
                             dataType: 'json',
                             data: {
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                             if (s == 0) {
                                 getCode.innerHTML = '获取验证码';
-                                clearTimeout(setTimes);
+                                clearTimeout(setTimes);	
                                 return false;
                             }
                         }, 1000);
@@ -176,11 +176,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     var getTerminalType = document.querySelectorAll('body')[0].className.indexOf('ios') != -1 ? '3' : '2';
                     aspenLib.ajax({
                         //url: location.protocol + "//" + location.hostname + ":8080/sps-api/api/user/regist",
-                        url: location.protocol + "//" + location.hostname + "/api/user/regist",
+                        url: location.protocol + "//" + location.host + "/api/user/regist",
                         type: 'post',
                         dataType: 'json',
                         data: {
-                        	saleSrc:'CH123456',
+                        	//saleSrc:'CH123456',
                             mobile: telNum.value,
                             password: password.value,
                             code: checkCode.value,
