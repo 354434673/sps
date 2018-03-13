@@ -349,8 +349,7 @@ public class ShopkeeperReadServiceImpl implements ShopkeeperReadService{
 		
 		SpsShopkeeperInvitationExample example = new SpsShopkeeperInvitationExample();
 		
-		example.createCriteria().andInvitationNameEqualTo(name)
-								.andInvitationPhoneEqualTo(phone);
+		example.createCriteria().andInvitationPhoneEqualTo(phone);
 		
 		List<SpsShopkeeperInvitation> selectByExample = invitationRead.selectByExample(example );
 		

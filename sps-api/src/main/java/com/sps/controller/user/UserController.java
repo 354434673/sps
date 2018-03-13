@@ -120,7 +120,7 @@ public class UserController {
 				
 				arg0.setPassword(password);
 				
-				arg0.setSaleSrc(saleSrc);
+				arg0.setSaleSrc(clientNum);
 				
 				serviceResult = iDianfuPassportService.memberRegister4Browser(arg0);
 				
