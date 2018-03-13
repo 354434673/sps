@@ -111,14 +111,13 @@
                         time:1200
                     },
                     function(){
-
                         //若已经设置交易密码，则跳转至输入交易密码页面
                         $.ajax({
                             data:{withdrawAmt:amount,tradePwd:tradePwd},
                             url: '<%=path%>/withdraw/save',
                             type: 'post',
                             dataType: 'json',
-                            async: false,
+                            async: true,
                             success: function (result) {
                                 var  msg = result.msg;
                                 if(result.body == true){
