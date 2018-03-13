@@ -6,7 +6,6 @@
 			+ path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -40,7 +39,7 @@
 	  var index = 1;
 	  var channelNum = getUrlParam("channelNum")
 	  var clientNum = getUrlParam("clientNum")
-	  var src = "http://localhost:8080/sps-admin/shopkeeper/getQRcode?channelNum="+channelNum+"&clientNum="+clientNum
+	  var src = "<%=path%>/shopkeeper/getQRcode?channelNum="+channelNum+"&clientNum="+clientNum
 	  var img = "<img src='"+src+"' alt='二维码'>"
 	  $('#pic').html(img)
 	  	        //获得url参数
