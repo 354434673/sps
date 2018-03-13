@@ -20,9 +20,11 @@
 	<!-- 使用注解方式暴露接口 -->     
     <dubbo:annotation package="com.sps.controller"/>
     
-    <dubbo:reference group = "${dubbo.group}" id="faceAuthApi" interface="com.jzfq.auth.core.api.FaceAuthApi"/>
+    <dubbo:reference group = "${dubbo.auth.group}" id="faceAuthApi" interface="com.jzfq.auth.core.api.FaceAuthApi"/>
     
-    <dubbo:reference group = "${dubbo.group}" id="jzfqAuthApi" interface="com.jzfq.auth.core.api.JzfqAuthApi"/>
+    <dubbo:reference group = "${dubbo.auth.group}" id="jzfqAuthApi" interface="com.jzfq.auth.core.api.JzfqAuthApi"/>
+    
+    <!-- <dubbo:reference group = "${dubbo.member.group}" id="iUserCardService" interface="com.juzifenqi.capital.service.IUserCardService"/> -->
 </beans>
  
  
