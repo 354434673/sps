@@ -28,8 +28,8 @@ public class authenticationController {
 	private FaceAuthApi faceAuthApi;
 	@Resource
 	private JzfqAuthApi jzfqAuthApi;
-	@Resource
-	private IUserCardService iUsercardService;
+/*	@Resource
+	private IUserCardService iUsercardService;*/
 	
 	/**
 	 * 身份证反面认证
@@ -359,7 +359,7 @@ public class authenticationController {
 		
 		return saveLinkDetail;
 	}
-	@RequestMapping("/saveUserCardByNo")
+/*	@RequestMapping("/saveUserCardByNo")
 	public ServiceResult<Integer> saveUserCardByNo(String channel, String companyName, String storeName,Integer source,  
 			String actualACode, String actualAName, String actualCCode, String actualCName, String actualPCode, String actualPName,
 			String ownerShip, String actualAddress, Integer actualArea, Integer staffNum, String operateModel,
@@ -370,5 +370,5 @@ public class authenticationController {
 		ServiceResult<Integer> saveUserCardByNo = iUsercardService.saveUserCardByNo(arg0 );
 		
 		return saveUserCardByNo;
-	}
+	}*/
 }
