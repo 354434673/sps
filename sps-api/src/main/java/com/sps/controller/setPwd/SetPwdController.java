@@ -32,7 +32,7 @@ public class SetPwdController {
  /* @Reference(check=false,group="auth_dev1")
     private IDianfuPassportService idianPaswwService;*/
 
-    @Reference(check=false,group="member-center-dev1")
+    @Reference(group="member-center-dev1")
     private IMemberDianfuService memberDianfuService;
 
 
@@ -46,6 +46,7 @@ public class SetPwdController {
         //  String userName = (String) SecurityUtils.getSubject().getPrincipal();
         // 调用短信验证码接口--获取短信验证码  category 3  ISmsCommonService.sendEditPasswordSms
        ServiceResult<Boolean> sendRegisterSms = ismsCommonService.sendEditPasswordSms(phone, 3);
+       
         return  sendRegisterSms;
    }
 
@@ -53,14 +54,14 @@ public class SetPwdController {
 
     @RequestMapping(value="/modifyLoaginPwd",method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo modifyLoaginPwd( String mobile,
+    public ServiceResult<MemberInfo> modifyLoaginPwd( String mobile,
                                       String oldPwd,
                                      String newPwd
                                     ) {
         //获取登录用户名---用户名就是手机号
         //  String userName = (String) SecurityUtils.getSubject().getPrincipal();
         ServiceResult<MemberInfo> result = memberDianfuService.editPasswordByOldPwd(oldPwd,newPwd, mobile);
-        ReturnInfo returnInfo = new ReturnInfo();
+/*        ReturnInfo returnInfo = new ReturnInfo();
         if(result.getSuccess()){
             logger.info("返回code " + result.getCode());
             logger.info("返回信息"+    result.getMessage());
@@ -72,7 +73,7 @@ public class SetPwdController {
             returnInfo.setCode(Message.FAILURE_CODE);
             returnInfo.setMsg(Message.FAILURE_MSG);
             returnInfo.setSuccess(Message.API_ERROR_FLAG);
-        }
-        return returnInfo;
+        }*/
+        return result;
     }
 }
