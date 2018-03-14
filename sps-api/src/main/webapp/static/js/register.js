@@ -89,8 +89,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         var telNum = document.getElementById('telNum');
                         aspenLib.ajax({
-                            url: location.protocol + "//" + location.host+ "/sps-api/api/user/getPhoneCode/regist",
-                            //url: location.protocol + "//" + location.host + ":/api/user/getPhoneCode/regist",
+                            //url: location.protocol + "//" + location.host+ "/sps-api/api/user/getPhoneCode/regist",
+                            url: location.protocol + "//" + location.host + "/api/user/getPhoneCode/regist",
                             type: 'POST',
                             dataType: 'json',
                             data: {

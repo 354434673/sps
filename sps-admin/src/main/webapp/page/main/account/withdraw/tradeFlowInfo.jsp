@@ -79,21 +79,26 @@
 
 
     <script type="text/html" id="date">
-        {{#
-        var da = d.payDate;
-        da = new Date(da);
-        var year = da.getFullYear();
-        var month = da.getMonth()+1;
-        var date = da.getDate();
-        var hours= da.getHours();
-        var minutes= da.getMinutes();
-        var seconds= da.getSeconds();
-        console.log([year,month,date,hours,minutes,seconds].join('-'));
-        var fn = function(){
-        return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
-        };
-        }}
-        {{ fn() }}
+        {{#    if(d.payDate != null){  }}
+            {{#
+            var da = d.payDate;
+            da = new Date(da);
+            var year = da.getFullYear();
+            var month = da.getMonth()+1;
+            var date = da.getDate();
+            var hours= da.getHours();
+            var minutes= da.getMinutes();
+            var seconds= da.getSeconds();
+            console.log([year,month,date,hours,minutes,seconds].join('-'));
+            var fn = function(){
+            return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
+            };
+            }}
+            {{ fn() }}
+
+        {{#  } }}
+
+
     </script>
     <script>
         layui.use(['table', 'laypage', 'laydate', 'layer'], function () {

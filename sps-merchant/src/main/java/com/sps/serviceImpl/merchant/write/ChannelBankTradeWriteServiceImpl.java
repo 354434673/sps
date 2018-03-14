@@ -31,15 +31,14 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 	 * 保存交易记录的方法
 	 */
 	@Override
-
 	public String  saveBankTradeInfo(SpsChannelBank bankInfo,BigDecimal amount,String tradeType) {
 		SpsChannelBankTrade bankTrandeInfo = new SpsChannelBankTrade();
 		String uuid = UUID.randomUUID().toString();
 		bankTrandeInfo.setIdentity(bankInfo.getIdentity());
-		Date date = new Date();
+		/*Date date = new Date();
 		DateFormat timeInstance = SimpleDateFormat.getDateTimeInstance();
-		String format = timeInstance.format(date);
-		bankTrandeInfo.setApplicationStartDate(format);
+		String format = timeInstance.format(date);*/
+		bankTrandeInfo.setApplicationStartDate(new Date());
 		bankTrandeInfo.setTradeSerialNum(uuid);
 		//0代表支出（提现），1代表收入（充值）
 		bankTrandeInfo.setTradeType(tradeType);

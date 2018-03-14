@@ -11,6 +11,7 @@ import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthApi;
 import com.jzfq.auth.core.api.entiy.AuthBasicDetail;
 import com.jzfq.auth.core.api.entiy.AuthHouseDetail;
+import com.jzfq.auth.core.api.entiy.AuthIdentityDetail;
 import com.jzfq.auth.core.api.entiy.AuthIousDetail;
 import com.jzfq.auth.core.api.entiy.AuthLinkDetail;
 import com.jzfq.auth.core.api.entiy.AuthStoreDetail;
@@ -41,7 +42,7 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/authBackIdCard")
-	public JsonResult<AuthFaceIdCard> authBackIdCard(String imagePath, String channel, String requestNo, String source, Integer userId){
+	public JsonResult<AuthFaceIdCard> authBackIdCard(String clientNum, String imagePath, String channel, String requestNo, String source, Integer userId){
 		
 		AuthFaceIdCard arg0 = new AuthFaceIdCard();
 		
@@ -70,7 +71,7 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/authFrontIdCard")
-	public JsonResult<AuthFaceIdCard> authFrontIdCard(String imagePath, String channel, String requestNo, String source, Integer userId){
+	public JsonResult<AuthFaceIdCard> authFrontIdCard(String clientNum, String imagePath, String channel, String requestNo, String source, Integer userId){
 		
 		AuthFaceIdCard arg0 = new AuthFaceIdCard();
 		
@@ -98,7 +99,7 @@ public class authenticationController {
 	 * @throws   
 	 */  
 	@RequestMapping("/saveLinkDetail")
-	public JsonResult saveLinkDetail(String channel, String effectiveTime, 
+	public JsonResult saveLinkDetail(String clientNum, String channel, String effectiveTime, 
 			String linkInfoF, String linkInfoT, Integer source, 
 			String productLine, Integer type, Integer userId){
 		AuthLinkDetail arg0 = new AuthLinkDetail();
@@ -140,7 +141,7 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveIousDetail")
-	public JsonResult saveIousDetail(String channel, String plateType, 
+	public JsonResult saveIousDetail(String clientNum, String channel, String plateType, 
 			String plateTypeStr, String frameNumber, Integer source, 
 			String productLine, Integer type, Integer userId){
 		
@@ -187,7 +188,7 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveHouseDetail")
-	public JsonResult saveHouseDetail(String channel, Integer houseArea, 
+	public JsonResult saveHouseDetail(String clientNum, String channel, Integer houseArea, 
 			String houseACode, String houseAName,String houseCCode,
 			String houseCName,String housePCode, String housePName, 
 			String productLine, String houseAddress,Integer type, Integer userId){
@@ -242,7 +243,7 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveBasicDetail")
-	public JsonResult saveBasicDetail(String channel, Integer source, Integer marriage, String liveAddress, 
+	public JsonResult saveBasicDetail(String clientNum, String channel, Integer source, Integer marriage, String liveAddress, 
 			String liveA, String liveACode, String liveC, String liveCCode, String liveP, String livePCode, 
 			Integer liveState, String productLine, Integer type, Integer userId){
 		
@@ -280,6 +281,61 @@ public class authenticationController {
 		return saveLinkDetail;
 	}
 	/**
+	 * 认证保存身份证信息
+	 * @Title: saveIdentityDetail   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channel
+	 * @param: @param source
+	 * @param: @param marriage
+	 * @param: @param liveAddress
+	 * @param: @param liveA
+	 * @param: @param liveACode
+	 * @param: @param liveC
+	 * @param: @param liveCCode
+	 * @param: @param liveP
+	 * @param: @param livePCode
+	 * @param: @param liveState
+	 * @param: @param productLine
+	 * @param: @param type
+	 * @param: @param userId
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月13日 下午5:16:51
+	 * @return: JsonResult      
+	 * @throws
+	 */
+	@RequestMapping("/saveIdentityDetail")
+	public JsonResult saveIdentityDetail(String clientNum, String channel, Integer source, String certAddress, 
+			String effectiveTime, String signingOrganization, String certNo, String name, 
+			String productLine, Integer type, Integer userId){
+		
+		AuthIdentityDetail arg0 = new AuthIdentityDetail();
+		
+		arg0.setName(name);
+		
+		arg0.setCertNo(certNo);
+		
+		arg0.setSigningOrganization(signingOrganization);
+		
+		arg0.setEffectiveTime(effectiveTime);
+		
+		arg0.setCertAddress(certAddress);
+		
+		arg0.setChannel(channel);
+		
+		arg0.setProductLine(productLine);
+		
+		arg0.setSource(source);
+		
+		arg0.setType(type);
+		
+		arg0.setUserId(userId);
+		
+		JsonResult saveLinkDetail = jzfqAuthApi.saveIdentityDetail(arg0);
+		
+		return saveLinkDetail;
+	}
+	/**
 	 * 公司店铺认证
 	 * @Title: saveStoreDetail   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -308,7 +364,7 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveStoreDetail")
-	public JsonResult saveStoreDetail(String channel, String companyName, String storeName,Integer source,  
+	public JsonResult saveStoreDetail(String clientNum, String channel, String companyName, String storeName,Integer source,  
 			String actualACode, String actualAName, String actualCCode, String actualCName, String actualPCode, String actualPName,
 			String ownerShip, String actualAddress, Integer actualArea, Integer staffNum, String operateModel,
 			String majorBrand, String majorType, String majorBusiness, Integer type, Integer userId){

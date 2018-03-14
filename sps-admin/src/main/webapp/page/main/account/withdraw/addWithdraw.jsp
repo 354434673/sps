@@ -20,7 +20,7 @@
 </head>
 <body>
 <div style="padding: 40px">
-    <h3>新增页面</h3>
+    <h3>新增页面</h3>	
     <hr>
     <div class="layui-form layui-form-pane" style="padding-left: 200px;">
         <div class="layui-form-item ">
@@ -94,7 +94,7 @@
             lock = false;  //3.进来后，立马把锁锁住
             var amount = $('#amount').val().trim();
             var withdrawAmt= $('#withdrawAmt').val();
-            if( parseInt(withdrawAmt)>parseInt(amount)){
+            if( parseInt(withdrawAmt)>=parseInt(amount)){
                 layer.msg('处理中...',
                         {
                             icon: 16,
