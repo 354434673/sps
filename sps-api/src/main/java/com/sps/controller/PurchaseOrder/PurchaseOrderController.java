@@ -65,7 +65,7 @@ public class PurchaseOrderController {
             Map<String, Object> map = new HashMap<>();
             map.put("customerNum", customerNum);
             List<SpsPurchaseOrder> purchaseOrderList = purchaseOrderService.findList(map);
-            String[] pro = new String[]{"orderId","goodsName","price","quantity","size","url","stock","orderGoodsNum","color"};
+            String[] pro = new String[]{"orderId","orderSkuId","goodsName","price","quantity","size","url","stock","orderGoodsNum","color"};
             if (purchaseOrderList != null) {
                 ri.setResult(EntityUtiles.reloadListPropertyValue(purchaseOrderList, pro));
                 ri.setCode(Message.SUCCESS_CODE);
