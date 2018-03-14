@@ -2,6 +2,8 @@ package org.sps.entity.merchant;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
+
 /**
  * 交易流水类
  * @author cailing
@@ -22,13 +24,13 @@ public class SpsChannelBankTrade implements Serializable {
 //	交易人的身份证
 	private String identity ;
 //	交易申请日期
-	private String applicationStartDate ;
+	private Date applicationStartDate ;
 //	交易结束日期
-	private String applicationStopDate ;
+	private Date  applicationStopDate ;
 //	交易审批通过日期
-	private String auditDate ;
+	private Date  auditDate ;
 //	到账日期
-	private String paymentDate ;
+	private Date paymentDate ;
 //	交易类型  0 为支出，1 为收入
 	private String tradeType ;
 //	收入类型
@@ -139,54 +141,38 @@ public class SpsChannelBankTrade implements Serializable {
 		this.identity = identity;
 	}
 
-	/**
-	 * @return the applicationStartDate
-	 */
-	public String getApplicationStartDate() {
+	public Date getApplicationStartDate() {
 		return applicationStartDate;
 	}
-	/**
-	 * @param applicationStartDate the applicationStartDate to set
-	 */
-	public void setApplicationStartDate(String applicationStartDate) {
+
+	public void setApplicationStartDate(Date applicationStartDate) {
 		this.applicationStartDate = applicationStartDate;
 	}
-	/**
-	 * @return the applicationStopDate
-	 */
-	public String getApplicationStopDate() {
+
+	public Date getApplicationStopDate() {
 		return applicationStopDate;
 	}
-	/**
-	 * @param applicationStopDate the applicationStopDate to set
-	 */
-	public void setApplicationStopDate(String applicationStopDate) {
+
+	public void setApplicationStopDate(Date applicationStopDate) {
 		this.applicationStopDate = applicationStopDate;
 	}
-	/**
-	 * @return the auditDate
-	 */
-	public String getAuditDate() {
+
+	public Date getAuditDate() {
 		return auditDate;
 	}
-	/**
-	 * @param auditDate the auditDate to set
-	 */
-	public void setAuditDate(String auditDate) {
+
+	public void setAuditDate(Date auditDate) {
 		this.auditDate = auditDate;
 	}
-	/**
-	 * @return the paymentDate
-	 */
-	public String getPaymentDate() {
+
+	public Date getPaymentDate() {
 		return paymentDate;
 	}
-	/**
-	 * @param paymentDate the paymentDate to set
-	 */
-	public void setPaymentDate(String paymentDate) {
+
+	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
 	}
+
 	public String getTradeType() {
 		return tradeType;
 	}

@@ -136,7 +136,6 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             bankDrawAudio.setAuditSerialNum(info.getTradeSerialNum());
             bankDrawAudio.setCompanyName(info.getEnterprise().getEnterpriseCompanyName());
             bankDrawAudio.setAmount(info.getTradeAmount());
-            bankDrawAudio.setPayType(info.getTradeType());
             bankDrawAudio.setRemark(info.getStandby1());
             bankDrawAudio.setPayDate(info.getPaymentDate());
             bankDrawAudio.setPayType(info.getTradeType());
