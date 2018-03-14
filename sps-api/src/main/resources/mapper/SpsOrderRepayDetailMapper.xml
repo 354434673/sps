@@ -7,6 +7,8 @@
     <result column="order_status" jdbcType="VARCHAR" property="orderStatus" />
     <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="repay_date" jdbcType="TIMESTAMP" property="repayDate" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="repay_ben_amount" jdbcType="DECIMAL" property="repayBenAmount" />
     <result column="repay_accrual_amount" jdbcType="DECIMAL" property="repayAccrualAmount" />
     <result column="rapay_poundage" jdbcType="DECIMAL" property="rapayPoundage" />
@@ -18,7 +20,7 @@
   <sql id="Base_Column_List">
     id, custome_num, order_status, order_no, repay_date, repay_ben_amount, repay_accrual_amount, 
     rapay_poundage, no_repay_ben_amount, no_reapay_accrual_amount, no_repay_poundage, 
-    repay_amount
+    repay_amount,create_time,update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -35,12 +37,12 @@
       order_no, repay_date, repay_ben_amount, 
       repay_accrual_amount, rapay_poundage, no_repay_ben_amount, 
       no_reapay_accrual_amount, no_repay_poundage, 
-      repay_amount)
+      repay_amount,create_time,update_time)
     values (#{id,jdbcType=INTEGER}, #{customeNum,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, 
       #{orderNo,jdbcType=VARCHAR}, #{repayDate,jdbcType=TIMESTAMP}, #{repayBenAmount,jdbcType=DECIMAL}, 
       #{repayAccrualAmount,jdbcType=DECIMAL}, #{rapayPoundage,jdbcType=DECIMAL}, #{noRepayBenAmount,jdbcType=DECIMAL}, 
       #{noReapayAccrualAmount,jdbcType=DECIMAL}, #{noRepayPoundage,jdbcType=DECIMAL}, 
-      #{repayAmount,jdbcType=DECIMAL})
+      #{repayAmount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="SpsOrderRepayDetail">
     insert into sps_order_repay_detail
@@ -175,4 +177,38 @@
       repay_amount = #{repayAmount,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 查询所有 -->
+  <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
+     SELECT
+      d.id,d.order_status,d.order_no,d.repay_amount,datediff(repay_date,NOW())as days
+      FROM
+      sps_order_repay_detail d
+	   WHERE
+	   1=1
+    <if test="customerNum !=null and customerNum != ''">
+      and d.custome_num  = #{customerNum,jdbcType=VARCHAR}
+    </if>
+    ORDER BY  days desc
+
+  </select>
+
+
+  <select id="findById" parameterType="int" resultMap="BaseResultMap">
+   SELECT
+	rd.id,
+	rd.order_no,
+	rd.repay_date,
+	o.money AS orderMoney,
+	o.selfname AS selfName,
+	o.createtime AS orderTime,
+	o.payment AS payment,
+	o.shop_pay_money AS shopPayMoney,
+	o.servicemoney AS serviceMoney
+FROM
+	sps_order_repay_detail rd
+LEFT JOIN sps_order o ON rd.order_no = o.orderid
+
+	where rd.id = #{id,jdbcType=INTEGER}
+  </select>
 </mapper>

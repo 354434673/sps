@@ -5,8 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.juzifenqi.capital.entity.UserCard;
-import com.juzifenqi.capital.service.IUserCardService;
+
 import com.juzifenqi.core.ServiceResult;
 import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthApi;

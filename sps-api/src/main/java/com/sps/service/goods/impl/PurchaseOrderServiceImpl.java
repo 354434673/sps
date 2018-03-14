@@ -72,12 +72,15 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     }
 
     @Override
-    public void falseDeletion(Integer id) {
-        SpsPurchaseOrder order = new SpsPurchaseOrder();
-        order.setOrderId(id);
-        order.setOrderDeleteFlag(1);
-        order.setOrderUpdateTime(new Date());
-        spsPurchaseOrderMapper.update(order);
+    public void falseDeletion(String ids) {
+    	String [] ides= ids.split(",");
+    	for(String id:ides){
+    		SpsPurchaseOrder order = new SpsPurchaseOrder();
+	        order.setOrderId(Integer.valueOf(id));
+	        order.setOrderDeleteFlag(1);
+	        order.setOrderUpdateTime(new Date());
+	        spsPurchaseOrderMapper.update(order);
+    	}
     }
 
     @Override
@@ -189,39 +192,43 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                             SpsGoodShopSku sku = spsGoodShopSkuMapper.findById(orderList.getOrderSkuId());
                             //判断是否删除
                             if (sku.getgDeleteFlag() == 1) {
-                                map.put("flag", 1);
-                                map.put("goodsName", sku.getgSku());
+                                map.put("flag", 2);
+                                map.put("goodsName", sku.getgSku().split("-")[1]);
                                 return map;
                             }
                             //判断是否上架
                             if (sku.getGroundingFlag() == 1) {
-                                map.put("flag", 2);
-                                map.put("goodsName", sku.getgSku());
+                                map.put("flag", 3);
+                                map.put("goodsName", sku.getgSku().split("-")[1]);
                                 return map;
                             }
                             //判断价格是否发生变化
                             if (sku.getgPrice() != null) {
                                 if (!sku.getgPrice().setScale(4).equals(orderList.getPrice().setScale(4))) {
-                                    map.put("flag", 3);
-                                    map.put("goodsName", sku.getgSku());
+                                    map.put("flag", 4);
+                                    map.put("goodsName", sku.getgSku().split("-")[1]);
                                     return map;
                                 }
                             }
                             //判断库存是否充足
                             if (sku.getgStock() != null) {
                                 if (sku.getgStock() < orderList.getOrderGoodsNum()) {
-                                    map.put("flag", 4);
-                                    map.put("goodsName", sku.getgSku());
+                                    map.put("flag",5);
+                                    map.put("goodsName", sku.getgSku().split("-")[1]);
                                     return map;
                                 }
                             }
                         }
                     }
+                    HashMap<String, Object> data = new HashMap<String, Object>();//封装对象
                     SpsShopkeeperCompany company = spsShopkeeperCompanyDao.queryCompanyJoin(order.get(0).getCustomerId());
-                    map.put("company", company);
+                    data.put("companyShopName", company.getCompanyShopName());
+                    data.put("companyBusinessAddr", company.getCompanyBusinessAddr());
+                    data.put("personalPhone", company.getPersonal().getPersonalPhone());
+                    map.put("company", data);
                     map.put("flag", 0);
                 } else {
-                    map.put("flag", 5);
+                    map.put("flag", 6);
                 }
             }
         }
