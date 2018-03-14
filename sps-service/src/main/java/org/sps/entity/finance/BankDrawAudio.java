@@ -2,6 +2,7 @@ package org.sps.entity.finance;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /** 提现申请记录表
  * Created by Administrator on 2018-02-23.
@@ -10,10 +11,10 @@ public class BankDrawAudio implements Serializable {
     private Integer id;       
     private String  userName;
     private String  auditSerialNum;
-    private String  applicationDate;
+    private Date  applicationDate;
     //交易时间 ，到账时间
-    private String  payDate;
-    private String  payType;
+    private Date payDate;
+    private String   payType;
     private BigDecimal amount    ;
     private BigDecimal  totalAmount  ;
     private BigDecimal  moneyAmount  ;
@@ -33,13 +34,6 @@ public class BankDrawAudio implements Serializable {
         this.remark = remark;
     }
 
-    public String getPayType() {
-        return payType;
-    }
-
-    public void setPayType(String payType) {
-        this.payType = payType;
-    }
 
     public Integer getId() {
         return id;
@@ -65,20 +59,28 @@ public class BankDrawAudio implements Serializable {
         this.auditSerialNum = auditSerialNum;
     }
 
-    public String getApplicationDate() {
+    public Date getApplicationDate() {
         return applicationDate;
     }
 
-    public void setApplicationDate(String applicationDate) {
+    public void setApplicationDate(Date applicationDate) {
         this.applicationDate = applicationDate;
     }
 
-    public String getPayDate() {
+    public Date getPayDate() {
         return payDate;
     }
 
-    public void setPayDate(String payDate) {
+    public void setPayDate(Date payDate) {
         this.payDate = payDate;
+    }
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
     }
 
     public BigDecimal getAmount() {
