@@ -20,7 +20,7 @@
 </head>
 <body>
 <div style="padding: 40px">
-    <h3>新增页面</h3>
+    <h3>新增页面</h3>	
     <hr>
     <div class="layui-form layui-form-pane" style="padding-left: 200px;">
         <div class="layui-form-item ">
