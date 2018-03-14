@@ -25,7 +25,8 @@ import com.sps.entity.user.SpsUser;
 public class SystemAuthorizingRealm extends AuthorizingRealm {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
-
+	
+  
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
