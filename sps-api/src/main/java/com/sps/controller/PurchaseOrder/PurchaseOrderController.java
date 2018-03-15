@@ -37,7 +37,7 @@ public class PurchaseOrderController {
      */
     @RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo saveOrUpdate(@RequestBody SpsPurchaseOrder order) {
+    public ReturnInfo saveOrUpdate(SpsPurchaseOrder order) {
         ReturnInfo ri = new ReturnInfo();
         try {
             purchaseOrderService.saveOrUpdate(order);

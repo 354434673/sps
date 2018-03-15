@@ -189,6 +189,11 @@
     <if test="customerNum !=null and customerNum != ''">
       and d.custome_num  = #{customerNum,jdbcType=VARCHAR}
     </if>
+    <if test="dayNum !=null and dayNum != ''">
+      and datediff(repay_date,NOW())<![CDATA[<=]]>  #{dayNum,jdbcType=INTEGER}
+      and datediff(repay_date,NOW())<![CDATA[>=]]> 0
+      and d.order_status = 20
+    </if>
     ORDER BY  days desc
 
   </select>

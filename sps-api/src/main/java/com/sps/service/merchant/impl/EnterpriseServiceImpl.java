@@ -88,6 +88,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 							map.put("shopNum", spsChannelEnterprise.getChannelNum());
 							map.put("recommend", "1");
 							map.put("orderType", "0");
+							map.put("flowStatus", "2");
 							//查询推荐中的商品
 							List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
 							String[] pro = new String[]{"gId","gPic","gSpuName","gMinPrice"};
@@ -143,6 +144,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 							map.put("goodsName", goodsName);
 							map.put("categorySelf", categoryId);
 							map.put("orderType", orderType);
+							map.put("flowStatus", "2");
 							//查询推荐中的商品
 							List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
 							String[] pro1 = new String[]{"gId","gPic","gSpuName","gMinPrice"};
