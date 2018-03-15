@@ -60,26 +60,26 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 		
 		ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
 		
-		ArrayList<String> arrayList = new ArrayList<String>();;
+		SpsShopkeeper queryShopkeeperList = shopkeeperService.queryShopkeeperList(shopkeeperCustomerid);
 			
-			SpsShopkeeper queryShopkeeperList = shopkeeperService.queryShopkeeperList(shopkeeperCustomerid);
 			if(queryShopkeeperList != null){
+				String shopkeeperDefaultChannelNum = queryShopkeeperList.getShopkeeperDefaultChannelNum();
+				
 				List<SpsChannelEnterprise> queryBusinessForApi = null;
 
 				try {
-					//根据店主主营业务,获取相同主营业务的商户列表
-					if(StringUtil.isEmpty(shopkeeperCustomerid)){
-						queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, null , null);
+					if(!StringUtil.isEmpty(shopkeeperCustomerid)){
+						queryBusinessForApi = enterpriseDao.queryBusinessForApi(shopkeeperDefaultChannelNum, null , null);
 					}else{
-						//查询当前登录店主的主营业务
+/*						//查询当前登录店主的主营业务
 						String shopkeeperBusinessType = queryShopkeeperList.getShopkeeperBusinessType();
 						
 						String[] split = shopkeeperBusinessType.split(",");
 						
 						for (String string : split) {
 							arrayList.add(string);
-						}
-						queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, null);
+						}*/
+						queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, null, null);
 					}
 					for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
 						data = new HashMap<String, Object>();
@@ -132,7 +132,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 		ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
 			
 			try {
-				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, enterpriseId);
+				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, 1, enterpriseId);
 				//排序方式
 				if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
 					for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {

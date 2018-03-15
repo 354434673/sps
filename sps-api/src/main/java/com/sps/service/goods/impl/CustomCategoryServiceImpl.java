@@ -72,7 +72,7 @@ public class CustomCategoryServiceImpl implements CustomCategoryService {
     @Override
     public List<SpsCustomCategory>findByEnterpriseId(Integer enterpriseId) {
         ArrayList<String> arrayList = new ArrayList<String>();
-        List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, enterpriseId);
+        List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, 1, enterpriseId);
         Map<String, Object> categoryMap = new HashMap<>();
         categoryMap.put("customShopNum", queryBusinessForApi.get(0).getChannelNum());
         List<SpsCustomCategory> categoryList = spsCustomCategoryMapper.findListAllWithMap(categoryMap);

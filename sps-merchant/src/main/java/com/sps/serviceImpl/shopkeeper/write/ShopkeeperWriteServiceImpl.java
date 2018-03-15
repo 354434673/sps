@@ -112,6 +112,12 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 				spsShopkeeper.setShopkeeperCustomerid(clientNum);
 				spsShopkeeper.setShopkeeperDefaultChannelNum(channelNum);
 				write.insertSelective(spsShopkeeper);
+				
+/*				SpsShopkeeperAccount account = new SpsShopkeeperAccount();
+				account.setShopkeeperCustomerid(clientNum);
+				account.setAccountNum(invitation.getInvitationPhone());
+				account.setAccountState(0);
+				accountWrite.insertSelective(account);*/
 				/*
 				 * 往个人信息中添加,字段为店主名称
 				 */

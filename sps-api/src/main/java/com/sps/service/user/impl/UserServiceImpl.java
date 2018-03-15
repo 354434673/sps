@@ -24,6 +24,7 @@ import com.sps.entity.user.SpsUser;
 import com.sps.entity.user.SpsUserExample;
 import com.sps.entity.user.SpsUserExample.Criteria;
 import com.sps.service.base.BaseOperate;
+import com.sps.service.shopkeeper.ShopkeeperService;
 import com.sps.service.user.UserService;
 @Service
 public class UserServiceImpl extends BaseOperate implements UserService{
@@ -33,6 +34,8 @@ public class UserServiceImpl extends BaseOperate implements UserService{
 	private SpsShopkeeperAccountDao accountDao;
 	@Resource
 	private SpsShopkeeperInvitationDao invitationDao;
+	@Resource
+	private ShopkeeperService shopkeeperService;
 	@Override
 	public HashMap<String, Object> userLogin(String userName, String password, Integer userId) {
 		HashMap<String, Object> result = null;
@@ -118,11 +121,21 @@ public class UserServiceImpl extends BaseOperate implements UserService{
 				
 				record.setAccountNum(phone);
 				
+				record.setAccountState(0);
+				
 				record.setShopkeeperCustomerid(clientNum);
 				/*
 				 * 添加店主账户表
 				 */
 				accountDao.insertSelective(record );
+				/*
+				 * 注册成功后将状态改为已接收(状态码为1)
+				 */
+				shopkeeperService.updateShopkeeperInvitationState("1", phone);
+				/*
+				 * 注册成功后将状态改为待激活(状态码为2)
+				 */
+				shopkeeperService.updateShopkeeperState(2, clientNum);
 				
 				super.logger.info("手机号为:"+phone+"的用户注册成功");
 			}else{
