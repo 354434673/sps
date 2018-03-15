@@ -30,7 +30,24 @@
 	<script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/js/jquery-1.10.2.min.js"></script>
 	<script language="JavaScript"   src="<%=request.getContextPath() %>/page/static/plugins/layui/lay/dest/layui.all.js"></script>
 	<script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/plugins/layui/layui.js"></script>
-	<script type="text/javascript">
+		<script type="text/html" id="date">
+			{{#
+			var da = d.applicationStartDate;
+			da = new Date(da);
+			var year = da.getFullYear();
+			var month = da.getMonth()+1;
+			var date = da.getDate();
+			var hours= da.getHours();
+			var minutes= da.getMinutes();
+			var seconds= da.getSeconds();
+			console.log([year,month,date,hours,minutes,seconds].join('-'));
+			var fn = function(){
+			return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
+			};
+			}}
+			{{ fn() }}
+		</script>
+		<script type="text/javascript">
 
 		function getUrlParam(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -53,8 +70,8 @@
 				,page:true
 				,where: {userName:userName}
 				,cols: [[ //表头
-					{field: 'applicationDate', title: '提现申请日期', width:230, align:'center',templet: '#date'}
-					,{field: 'amount', title: '提现金额',width:230,align:'center'}
+					{field: 'applicationStartDate', title: '提现申请日期', width:230, align:'center',templet: '#date'}
+					,{field: 'tradeAmount', title: '提现金额',width:230,align:'center'}
 				]]
 			});
 			var form = layui.form();

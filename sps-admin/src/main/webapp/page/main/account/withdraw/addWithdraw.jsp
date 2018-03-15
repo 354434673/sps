@@ -40,7 +40,6 @@
             </div>
 
         </div>
-
         <div class="layui-form-item">
             <label class="layui-form-label"  style="width: 130px;">*开户银行：</label>
             <div class="layui-input-inline"  >

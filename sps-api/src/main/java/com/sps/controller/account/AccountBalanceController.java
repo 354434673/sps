@@ -50,7 +50,7 @@ public class AccountBalanceController {
         SpsUser user = userService.findUserByUserName(userName);
         try {
             BigDecimal balance = accountBalanceService.queryByUserIdAndUserTyoe(user.getUserId(), userMark);
-                returnInfo.setData(balance);
+                returnInfo.setResult(balance);
                 returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
                 returnInfo.setCode(Message.API_SUCCESS_CODE);
                 returnInfo.setMsg(Message.API_SUCCESS_MSG);

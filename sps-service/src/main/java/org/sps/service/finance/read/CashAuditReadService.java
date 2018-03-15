@@ -33,10 +33,10 @@ public interface CashAuditReadService {
 
     /**
      * 查看收支信息
-     * @param applicationDate
+     * @param id
      * @return
      */
-   BankDrawAudio getBankTradeAuditInfo(String  applicationDate);
+   BankDrawAudio getBankTradeAuditInfo(int   id);
 
     /**
      * 查询收支信息

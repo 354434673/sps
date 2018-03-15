@@ -51,7 +51,7 @@ public class TradeFlowController {
     }
     /**
      * 个根据订单号获取所有订单项信息
-     * @param orderNo
+     * @param tradeSeriNum
      * @return
      */
     @RequestMapping("/queryOrderGoods")

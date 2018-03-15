@@ -245,10 +245,10 @@
         sps_order
         <where>
             <if test="loanStartTime != null and loanStartTime != '' ">
-                 loan_start_time   <![CDATA[ >= ]]>    #{loanStartTime,jdbcType=VARCHAR}
+                 loan_start_time   <![CDATA[ >= ]]>    #{loanStartTime,jdbcType=TIMESTAMP}
             </if>
             <if test="loanEndTime != null and loanEndTime != '' ">
-                and loan_start_time   <![CDATA[ <= ]]>    #{loanEndTime,jdbcType=VARCHAR}
+                and loan_start_time   <![CDATA[ <= ]]>    #{loanEndTime,jdbcType=TIMESTAMP}
             </if>
             <if test="loanName != null and loanName !='' ">
                 and shopkeepername like CONCAT('%',#{loanName,jdbcType=VARCHAR},'%' )
@@ -260,6 +260,7 @@
                 and  orderid  like CONCAT('%',#{orderNo,jdbcType=VARCHAR},'%' )
             </if>
         </where>
+        order by loan_start_time  DESC ,loan_end_time
     </select>
 
     <!--   <select id="selectByParametersPage" resultMap="BaseOrderResultMap">

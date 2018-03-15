@@ -93,13 +93,13 @@
 
 		<script type="text/javascript">
 			$(function () {
-				var applicationDate=getUrlParam("applicationDate");
+				var id=getUrlParam("id");
 				$.ajax({
 					url: '<%=path%>/cashAudit/findAuditDetailByApplicationDate'
 					,type:'post'
 					, dataType: 'json'
 					, async: false
-					,data:{applicationDate:applicationDate}
+					,data:{id:id}
 					, success: function (result) {
 						$('#amount').val(result.amount);
 						$('#bankCard').val(result.bankCard);
@@ -124,7 +124,7 @@
 				var layer = layui.layer ;
 				var form = layui.form();
 				var type;
-				var applicationDate=getUrlParam("applicationDate");
+				var id=getUrlParam("id");
 				form.on('submit(submit1)',function (data) {
 					if(!lock){    // 2.判断该锁是否打开，如果是关闭的，则直接返回
 						return false;
@@ -143,7 +143,7 @@
 									,type:'post'
 									, dataType: 'json'
 									, async: false
-									,data:{applicationDate:applicationDate,type:'2'}
+									,data:{id:id,type:'2'}
 									, success: function (result) {
 										var  msg = result.msg;
 										layer.msg(msg)
@@ -185,7 +185,7 @@
 							,type:'post'
 							,dataType: 'json'
 							,async: false
-							,data:{applicationDate:applicationDate,type:'1',content:content}
+							,data:{id:id,type:'1',content:content}
 							, success: function (result) {
 								window.location.href = "<%=path%>/page/main/finance/cashAudit/index.jsp";
 							}

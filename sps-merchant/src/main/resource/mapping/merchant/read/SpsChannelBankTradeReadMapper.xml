@@ -95,6 +95,7 @@
 	from
   </sql>
 	<sql id="join_listAudit" >
+		e.enterprise_company_name,
 		b.channl_num,
 		b.b_accounts,
 		b.b_name,
@@ -117,14 +118,15 @@
 		bt.bt_trade_amount,
 		bt.bt_trade_status,
 		bt.standby1,
-
-		e.enterprise_company_name
+		bt.standby2,
+		bt.bt_trade_no,
+		bt.orderid
 		from
 	</sql>
 
 
   <select id="selectListBankTrade" resultMap="BaseResultMap">
-  	SELECT  bt.bt_payment_date,
+  	SELECT
 	<include refid="join_list" />
 		sps_bank_trade_info bt 
 	join 
@@ -169,6 +171,7 @@
 
     <select id="selectListCashAuditByUserName" parameterType="String"  resultMap="cashAuditBashInfo">
         SELECT
+          	bt.id,
            bt.bt_application_start_date,
            bt.bt_trade_amount
         FROM
@@ -200,6 +203,7 @@
 		ON
 		e.channel_num=b.channl_num
 		<where>
+				bt.bt_trade_type="0"
 			<if test="applicationStartDate != null and applicationStartDate != '' " >
 				and bt.bt_application_start_date   <![CDATA[ >= ]]>    #{applicationStartDate,jdbcType=VARCHAR}
 			</if>
@@ -316,7 +320,7 @@
 
 	</select>
 
-	<select id="selectBankTradeInfo" parameterType="String"  resultMap="cashAuditBashInfo">
+	<select id="selectBankTradeInfo" parameterType="int"  resultMap="cashAuditBashInfo">
 		SELECT
 		<include refid="join_listAudit" />
         sps_bank_trade_info bt
@@ -329,7 +333,7 @@
         ON
         e.channel_num=b.channl_num
         where
-			bt.bt_application_start_date=#{applicationDate,jdbcType=VARCHAR}
+		bt.id=#{id}
 	</select>
 	<select id="selectOrderByTradeSeriNum" parameterType="String" resultType="String">
 		 SELECT id,  orderid

@@ -53,7 +53,7 @@ public class AccountTradeController {
      SpsUser user = userService.findUserByUserName(userName);
         try {
             List<BankTradeInfo> bankTrdeList = bankTradeService.findBankTrdeList(userName, userMark);
-            returnInfo.setData(bankTrdeList);
+            returnInfo.setResult(bankTrdeList);
             returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
             returnInfo.setCode(Message.API_SUCCESS_CODE);
             returnInfo.setMsg(Message.API_SUCCESS_MSG);
@@ -86,7 +86,7 @@ public class AccountTradeController {
                 bankTrdeList = bankTradeService.findBankTrdeList(userName, userMark);
 
             }
-            returnInfo.setData(bankTrdeList);
+            returnInfo.setResult(bankTrdeList);
             returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
             returnInfo.setCode(Message.API_SUCCESS_CODE);
             returnInfo.setMsg(Message.API_SUCCESS_MSG);
@@ -116,7 +116,7 @@ public class AccountTradeController {
 //        SpsUser user = userService.findUserByUserName(userName);
         try {
             BankTradeInfo bankTradeDetail = bankTradeService.findBankTradeDetail(id);
-            returnInfo.setData(bankTradeDetail);
+            returnInfo.setResult(bankTradeDetail);
             returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
             returnInfo.setCode(Message.API_SUCCESS_CODE);
             returnInfo.setMsg(Message.API_SUCCESS_MSG);

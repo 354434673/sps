@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import com.github.pagehelper.Page;
 import com.sps.dao.order.OrderRepayDetailMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,6 +99,7 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	@Override
 	public HashMap<String, Object> getGoodsByOrderId(Integer page, Integer limit, String orderId) {
+		PageHelper.startPage(page, limit);
 //		根据订单号查询所有的订单项
 		List<OrderGoods> orderGoodses = orderGoodsMapper.selectOrderGoods(orderId, null);
 		for (OrderGoods good:orderGoodses) {
@@ -105,11 +107,11 @@ public class OrderServiceImpl implements OrderService {
 			good.setSummation(  d  * good.getAmount() );
 		}
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		PageHelper.startPage(page, limit);
+		Page p=(Page)orderGoodses;
 		PageInfo pageInfo = new PageInfo(orderGoodses);
 		hashMap.put("code", 0);
 		hashMap.put("msg", "获取成功");
-		hashMap.put("count", pageInfo.getTotal());
+		hashMap.put("count", p.getTotal());
 		hashMap.put("data", orderGoodses.size() != 0 ? orderGoodses : null);
 		return hashMap;
 	}

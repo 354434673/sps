@@ -72,39 +72,48 @@
 
 
 	<script type="text/html" id="date">
-		{{#
-		var da = d.loanStartTime;
-		da = new Date(da);
-		var year = da.getFullYear();
-		var month = da.getMonth()+1;
-		var date = da.getDate();
-		var hours= da.getHours();
-		var minutes= da.getMinutes();
-		var seconds= da.getSeconds();
-		var daa=d.loanEndTime;
-		console.log([year,month,date,hours,minutes,seconds].join('-'));
-		var fn = function(){
-		return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
-		};
-		}}
-		{{ fn() }}
+		{{#    if(d.loanStartTime !=null){  }}
+			{{#
+			var da = d.loanStartTime;
+			da = new Date(da);
+			var year = da.getFullYear();
+			var month = da.getMonth()+1;
+			var date = da.getDate();
+			var hours= da.getHours();
+			var minutes= da.getMinutes();
+			var seconds= da.getSeconds();
+			var daa=d.loanEndTime;
+			console.log([year,month,date,hours,minutes,seconds].join('-'));
+			var fn = function(){
+			return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
+			};
+			}}
+			{{ fn() }}
+
+		{{#  } }}
+
 	</script>
 	<script type="text/html" id="date1">
-		{{#
-		var daa=d.loanEndTime;
-		daa = new Date(daa);
-		var year = daa.getFullYear();
-		var month = daa.getMonth()+1;
-		var date = daa.getDate();
-		var hours= daa.getHours();
-		var minutes= daa.getMinutes();
-		var seconds= daa.getSeconds();
-		console.log([year,month,date,hours,minutes,seconds].join('-'));
-		var fn = function(){
-		return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
-		};
-		}}
-		{{ fn() }}
+
+		{{#    if(d.loanEndTime != null){  }}
+			{{#
+			var daa=d.loanEndTime;
+			daa = new Date(daa);
+			var year = daa.getFullYear();
+			var month = daa.getMonth()+1;
+			var date = daa.getDate();
+			var hours= daa.getHours();
+			var minutes= daa.getMinutes();
+			var seconds= daa.getSeconds();
+			console.log([year,month,date,hours,minutes,seconds].join('-'));
+			var fn = function(){
+			return year + "-" + month + "-" + date + " " + hours+ ":" + minutes+ ":" + seconds;
+			};
+			}}
+			{{ fn() }}
+		{{#  } }}
+
+
 	</script>
 	<script>
 		layui.use(['table', 'laypage', 'laydate', 'layer'], function () {

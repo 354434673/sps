@@ -108,6 +108,13 @@ public interface UserService {
 	 * @throws
 	 */
 	HashMap<String, Object> updateUserState(String userName, Integer state);
+
+	/**
+	 * 根据用户名查询 userMark
+	 * @param userName
+	 * @return
+	 */
+	SpsUser findByUserName(String userName);
 	
 	
 	

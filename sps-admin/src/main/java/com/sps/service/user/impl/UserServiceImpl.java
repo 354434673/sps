@@ -250,6 +250,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public SpsUser findByUserName(String userName) {
+		return spsUserMapper.selectByUserName(userName);
+	}
+
+	@Override
 	public String userLogin(String user, String pass, String code, boolean rememberMe) {
 		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user, pass);
 

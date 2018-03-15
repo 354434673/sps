@@ -112,10 +112,10 @@ public interface SpsChannelBankTradeReadMapper {
 
 	/**
 	 * 根据申请日期查询提现交易信息
-	 * @param applicationDate
+	 * @param id
 	 * @return
 	 */
-	SpsChannelBankTrade selectBankTradeInfo(String  applicationDate);
+	SpsChannelBankTrade selectBankTradeInfo(int   id);
 
 	/**
 	 * 根据交易号查询订单号

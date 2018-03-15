@@ -16,7 +16,7 @@ public interface ChannelBankTradeWriteService{
 	 * 插入交易记录
 	 * 
 	 */
-  String  saveBankTradeInfo(SpsChannelBank bankInfo, BigDecimal amount,String tradeType);
+  String  saveBankTradeInfo(SpsChannelBank bankInfo, BigDecimal amount,String tradeType,Integer userId,Integer userMark);
 	/**
 	 * 更新交易记录信息
 	 */
@@ -28,8 +28,8 @@ public interface ChannelBankTradeWriteService{
 
 	/**
 	 * 根据申请日期更新状态
-	 * @param applicationDate
+	 * @param id
 	 * @return
 	 */
-	Boolean  modifyBankTradeByApplicateDate(String applicationDate,String status,String content);
+	Boolean  modifyBankTradeByApplicateDate(int  id,String status,String content);
 }
