@@ -37,7 +37,7 @@ public class PurchaseOrderController {
      */
     @RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo saveOrUpdate(@RequestBody SpsPurchaseOrder order) {
+    public ReturnInfo saveOrUpdate(SpsPurchaseOrder order) {
         ReturnInfo ri = new ReturnInfo();
         try {
             purchaseOrderService.saveOrUpdate(order);
@@ -65,7 +65,7 @@ public class PurchaseOrderController {
             Map<String, Object> map = new HashMap<>();
             map.put("customerNum", customerNum);
             List<SpsPurchaseOrder> purchaseOrderList = purchaseOrderService.findList(map);
-            String[] pro = new String[]{"goodsName","price","quantity","size","url","stock","orderGoodsNum","color"};
+            String[] pro = new String[]{"orderId","orderSkuId","goodsName","price","quantity","size","url","stock","orderGoodsNum","color"};
             if (purchaseOrderList != null) {
                 ri.setResult(EntityUtiles.reloadListPropertyValue(purchaseOrderList, pro));
                 ri.setCode(Message.SUCCESS_CODE);
@@ -88,11 +88,11 @@ public class PurchaseOrderController {
      */
     @RequestMapping(value = "/deleteSku", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo deleteSku(Integer id) {
+    public ReturnInfo deleteSku(String  ids) {
         ReturnInfo ri = new ReturnInfo();
         if ("0".equals(ri.getCode())) return ri;
         try {
-            purchaseOrderService.falseDeletion(id);
+            purchaseOrderService.falseDeletion(ids);
             ri.setCode(Message.SUCCESS_CODE);
             ri.setMsg(Message.API_SUCCESS_MSG);
             ri.setSuccess(Message.API_SUCCESS_FLAG);

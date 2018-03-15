@@ -194,7 +194,7 @@ public class OrderController {
         ReturnInfo ri = new ReturnInfo();
         try {
             Map<String, Object> map = purchaseOrderService.verificationOrder(order);
-
+          
             //成功返回当前用户地址个人信息
             if ((Integer) map.get("flag") == 0) {
                 ri.setResult(map.get("company"));
