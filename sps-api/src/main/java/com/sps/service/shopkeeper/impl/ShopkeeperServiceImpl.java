@@ -1,5 +1,6 @@
 package com.sps.service.shopkeeper.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -31,10 +32,12 @@ import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 import com.sps.entity.shopkeeper.SpsShopkeeperInvitationExample;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
+import com.sps.entity.shopkeeper.SpsShopkeeperPersonalExample;
 import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 import com.sps.entity.shopkeeper.SpsShopkeeperRepayment;
 import com.sps.entity.shopkeeper.SpsShopkeeperTaking;
 import com.sps.service.shopkeeper.ShopkeeperService;
+import com.sun.org.apache.bcel.internal.generic.DADD;
 /**
  * 店主相关业务层
  * @ClassName:  ShopkeeperServiceImpl   
@@ -130,52 +133,116 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 			return 1;
 		}
 	}
+	/*
+	 * 以下为insert
+	 */
 	@Override
 	public int insertShopkeeper(SpsShopkeeper shopkeeper) {
+		
+		shopkeeper.setShopkeeperCreatTime(new Date());
+		
+		shopkeeper.setShopkeeperUpdateTime(new Date());
 		
 		return spsShopkeeperDao.insertSelective(shopkeeper );
 	}
 	@Override
 	public int insertsShopkeeperCarProperty(SpsShopkeeperCarProperty carProperty) {
-		return 0;
+		
+		carProperty.setCarCreatTime(new Date());
+		
+		carProperty.setCarUpdateTime(new Date());
+		
+		return carPrppertyDao.insertSelective(carProperty);
 	}
 	@Override
 	public int insertShopkeeperCompany(SpsShopkeeperCompany company) {
+		
+		company.setCompanyCreatTime(new Date());
+		
+		company.setCompanyUpdateTime(new Date());
 		
 		return companyDao.insertSelective(company);
 	}
 	@Override
 	public int insertSpsShopkeeperContact(SpsShopkeeperContact contact) {
 		
+		contact.setContactCreatTime(new Date());
+		
+		contact.setContactUpdateTime(new Date());
+		
 		return contactDao.insertSelective(contact);
 	}
 	@Override
 	public int insertSpsShopkeeperCredit(SpsShopkeeperCredit credit) {
+		
+		credit.setCreditUpdateTime(new Date());
+		
+		credit.setCreditCreatTime(new Date());
 		
 		return creditDao.insertSelective(credit);
 	}
 	@Override
 	public int insertSpsShopkeeperHouseProperty(SpsShopkeeperHouseProperty houseProperty) {
 		
-		return 0;
+		houseProperty.setHouseCreatTime(new Date());
+		
+		houseProperty.setHouseUpdateTime(new Date());
+		
+		return 	housePrppertyDao.insertSelective(houseProperty);
 	}
 	@Override
 	public int insertSpsShopkeeperPersonal(SpsShopkeeperPersonal personal) {
-		return 0;
+		
+		personal.setPersonalCreatTime(new Date());
+		
+		personal.setPersonalUpdateTime(new Date());
+		
+		return personalDao.insertSelective(personal);
 	}
 	@Override
 	public int insertSpsShopkeeperPic(SpsShopkeeperPic pic) {
+		
+		pic.setPicCreatTime(new Date());
+		
+		pic.setPicUploadTime(new Date());
+		
 		
 		return picDao.insertSelective(pic);
 	}
 	@Override
 	public int insertSpsShopkeeperRepayment(SpsShopkeeperRepayment repayment) {
 		
+		repayment.setRepaymentCreatTime(new Date());
+		
+		repayment.setRepaymentUpdateTime(new Date());
+		
 		return repaymentDao.insertSelective(repayment);
 	}
 	@Override
 	public int insertSpsShopkeeperTaking(SpsShopkeeperTaking taking) {
 		
+		taking.setTakingCreatTime(new Date());
+		
+		taking.setTakingUpdateTime(new Date());
+		
 		return takingDao.insertSelective(taking);
+	}
+	@Override
+	public int updateSpsShopkeeperPersonal(SpsShopkeeperPersonal personal) {
+		
+		SpsShopkeeperPersonalExample example = new SpsShopkeeperPersonalExample();
+		
+		example.createCriteria().andShopkeeperCustomeridEqualTo(personal.getShopkeeperCustomerid());
+		
+		return personalDao.updateByExampleSelective(personal, example );
+	}
+	@Override
+	public int updateShopkeeper(SpsShopkeeper shopkeeper) {
+		
+		SpsShopkeeperExample example = new SpsShopkeeperExample();
+		
+		example.createCriteria().andShopkeeperCustomeridEqualTo(shopkeeper.getShopkeeperCustomerid());
+		
+		return spsShopkeeperDao.updateByExample(shopkeeper, example);
 	}
 }

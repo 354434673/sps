@@ -364,6 +364,13 @@
             <artifactId>javassist</artifactId>
             <version>3.20.0-GA</version>
         </dependency>
+<!--         
+        <dependency>
+			 <groupId>com.yop</groupId>
+			 <artifactId>yop-sdk</artifactId>
+			 <version>1.2.1</version>
+		</dependency> -->
+		
     </dependencies>
 
     <distributionManagement>
@@ -396,7 +403,7 @@
 			<properties>
 				<env>dev</env>
 				<db.driver>com.mysql.jdbc.Driver</db.driver>
-				<db.connectionURL>jdbc:mysql://192.168.201.15:3728/sps</db.connectionURL>
+				<db.connectionURL>jdbc:mysql://192.168.201.158:3306/sps</db.connectionURL>
 				<db.username>root</db.username>
 				<db.password>123456</db.password>
 				<dubbo.auth.group>auth_dev1</dubbo.auth.group>
@@ -404,7 +411,9 @@
 				<dubbo.capital.group>capital-dev1</dubbo.capital.group>
 				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
-			
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 		</profile>
 		<!-- 测试环境 -->
 		<profile>
@@ -420,9 +429,6 @@
 				<dubbo.capital.group>capital-dev1</dubbo.capital.group>
 				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 		</profile>
 		<!-- 生产环境 -->
 		<profile>

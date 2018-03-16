@@ -1,5 +1,8 @@
 package com.sps.controller.authentication;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -7,14 +10,11 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.juzifenqi.core.ServiceResult;
+import com.alibaba.fastjson.JSON;
 import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthQueryApi;
-import com.jzfq.auth.core.api.dto.JzfqAuthInfoDto;
 import com.jzfq.auth.core.api.entiy.AuthBasicDetail;
-import com.jzfq.auth.core.api.entiy.AuthConfig;
 import com.jzfq.auth.core.api.entiy.AuthHouseDetail;
 import com.jzfq.auth.core.api.entiy.AuthIdentityDetail;
 import com.jzfq.auth.core.api.entiy.AuthIousDetail;
@@ -23,13 +23,16 @@ import com.jzfq.auth.core.api.entiy.AuthResult;
 import com.jzfq.auth.core.api.entiy.AuthStoreDetail;
 import com.jzfq.auth.core.api.entiy.face.AuthFaceIdCard;
 import com.jzfq.auth.core.api.vo.AuthStateArray;
-import com.jzfq.auth.core.api.vo.AuthStateEntity;
 import com.jzfq.auth.core.api.vo.JsonResult;
+import com.sps.common.HttpClientUtil;
+import com.sps.common.IdcardUtil;
 import com.sps.common.StringUtil;
+import com.sps.entity.shopkeeper.SpsShopkeeper;
 import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperCompany;
 import com.sps.entity.shopkeeper.SpsShopkeeperContact;
 import com.sps.entity.shopkeeper.SpsShopkeeperCredit;
+import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 import com.sps.service.shopkeeper.ShopkeeperService;
@@ -50,13 +53,10 @@ public class authenticationController {
 /*	@Resource
 	private IUserCardService iUsercardService;*/
 	@RequestMapping("/queryStateArray")
-	public JsonResult<Map<String, Object>> queryStateArray(String clientNum, String imagePath, String channel, String requestNo, String source, Integer userId){
+	public JsonResult<Map<String, Object>> queryStateArray(AuthStateArray arg0){
 		
-		
-		AuthStateArray arg0 = new AuthStateArray();
-		arg0.setChannel("3");
-		arg0.setUserId(210001000);
 		JsonResult<Map<String, Object>> queryStateArray = jzfqAuthQueryApi.queryStateArray(arg0 );
+		
 		return queryStateArray;
 	}
 	/**
@@ -76,31 +76,21 @@ public class authenticationController {
 		
 		if(!StringUtil.isEmpty(clientNum)){
 			
-/*			AuthFaceIdCard arg0 = new AuthFaceIdCard();
-			
-			arg0.setBackImagePath(imagePath);
-			
-			arg0.setChannel(channel);
-			
-			arg0.setRequestNo(requestNo);
-			
-			arg0.setSource(source);
-			
-			arg0.setUserId(userId);*/
-			
 			backIdCardResult = faceAuthApi.getBackIdCardResult(arg0);
 			
-			SpsShopkeeperPic pic = new SpsShopkeeperPic();
-			
-			pic.setPicType(3);
-			
-			pic.setShopkeeperCustomerid(clientNum);
-			
-			pic.setPicSrc(arg0.getBackImagePath());
-			
-			pic.setPicState(0);
-			
-			shopkeeperService.insertSpsShopkeeperPic(pic );
+			if(backIdCardResult.getCode().equals("SUCCESS")){
+				SpsShopkeeperPic pic = new SpsShopkeeperPic();
+				
+				pic.setPicType(3);
+				
+				pic.setShopkeeperCustomerid(clientNum);
+				
+				pic.setPicSrc(arg0.getBackImagePath());
+				
+				pic.setPicState(0);
+				
+				shopkeeperService.insertSpsShopkeeperPic(pic );
+			}
 		}else{
 			backIdCardResult.setMsg("clientNum字段不可为空");
 		}
@@ -121,31 +111,22 @@ public class authenticationController {
 		JsonResult<AuthFaceIdCard> backIdCardResult = new JsonResult<AuthFaceIdCard>();
 		
 		if(!StringUtil.isEmpty(clientNum)){
-/*			AuthFaceIdCard arg0 = new AuthFaceIdCard();
-			
-			arg0.setBackImagePath(imagePath);
-			
-			arg0.setChannel(channel);
-			
-			arg0.setRequestNo(requestNo);
-			
-			arg0.setSource(source);
-			
-			arg0.setUserId(userId);*/
 			
 			backIdCardResult = faceAuthApi.getFrontIdCardResult(arg0);
 			
-			SpsShopkeeperPic pic = new SpsShopkeeperPic();
-			
-			pic.setPicType(2);
-			
-			pic.setShopkeeperCustomerid(clientNum);
-			
-			pic.setPicSrc(arg0.getFrontImagePath());
-			
-			pic.setPicState(0);
-			
-			shopkeeperService.insertSpsShopkeeperPic(pic);
+			if(backIdCardResult.getCode().equals("SUCCESS")){
+				SpsShopkeeperPic pic = new SpsShopkeeperPic();
+				
+				pic.setPicType(2);
+				
+				pic.setShopkeeperCustomerid(clientNum);
+				
+				pic.setPicSrc(arg0.getFrontImagePath());
+				
+				pic.setPicState(0);
+				
+				shopkeeperService.insertSpsShopkeeperPic(pic);
+			}
 		}else{
 			backIdCardResult.setMsg("clientNum字段不可为空");
 		}
@@ -166,27 +147,53 @@ public class authenticationController {
 		JsonResult saveLinkDetail = new JsonResult<>();
 		
 		if(!StringUtil.isEmpty(clientNum)){
-/*			AuthLinkDetail arg0 = new AuthLinkDetail();
-			
-			arg0.setChannel(channel);
-			
-			arg0.setLinkInfoF(linkInfoF);
-			
-			arg0.setLinkInfoT(linkInfoT);
-			
-			arg0.setProductLine(productLine);
-			
-			arg0.setSource(source);
-			
-			arg0.setType(type);
-			
-			arg0.setUserId(userId);*/
 			
 			saveLinkDetail = jzfqAuthApi.saveLinkDetail(arg0);
 			
-			SpsShopkeeperContact contact = new SpsShopkeeperContact();
-			
-			shopkeeperService.insertSpsShopkeeperContact(contact);
+			if(saveLinkDetail.getCode().equals("SUCCESS")){
+				
+				String linkInfoF = arg0.getLinkInfoF();
+				
+				String[] first = linkInfoF.split("||");
+				
+				SpsShopkeeperContact contact = null;
+				
+				contact = new SpsShopkeeperContact();
+				
+				contact.setContactCreatTime(new Date());
+				
+				contact.setContactUpdateTime(new Date());
+				
+				contact.setContactRelation(first[0]);
+				
+				contact.setContactName(first[1]);
+				
+				contact.setContactPhone(first[1]);
+				
+				contact.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperContact(contact);
+				
+				String linkInfoT = arg0.getLinkInfoT();
+				
+				String[] sec = linkInfoT.split("||");
+				
+				contact = new SpsShopkeeperContact();
+				
+				contact.setContactCreatTime(new Date());
+				
+				contact.setContactUpdateTime(new Date());
+				
+				contact.setContactRelation(sec[0]);
+				
+				contact.setContactName(sec[1]);
+				
+				contact.setContactPhone(sec[1]);
+				
+				contact.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperContact(contact);
+			}
 		}else{
 			saveLinkDetail.setMsg("clientNum字段不可为空");
 		}
@@ -211,36 +218,38 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveIousDetail")
-	public JsonResult saveIousDetail(String clientNum, AuthIousDetail arg0){
+	public String saveIousDetail(String clientNum, String idCard, AuthIousDetail arg0){
 		
 		JsonResult saveLinkDetail = new JsonResult<>();
 		
 		if(!StringUtil.isEmpty(clientNum)){
-/*			AuthIousDetail arg0 = new AuthIousDetail();
-			
-			arg0.setChannel(channel);
-			
-			arg0.setProductLine(productLine);
-			
-			arg0.setType(type);
-			
-			arg0.setPlateType(plateType);
-			
-			arg0.setPlateTypeStr(plateTypeStr);
-			
-			arg0.setFrameNumber(frameNumber);
-			
-			arg0.setUserId(userId);*/
 			
 			saveLinkDetail = jzfqAuthApi.saveIousDetail(arg0 );
 			
-			SpsShopkeeperCarProperty carProperty = new SpsShopkeeperCarProperty();
-			
-			shopkeeperService.insertsShopkeeperCarProperty(carProperty );
+			if(saveLinkDetail.getCode().equals("SUCCESS")){
+				
+				SpsShopkeeperCarProperty carProperty = new SpsShopkeeperCarProperty();
+				
+				carProperty.setCarChassisNum(arg0.getFrameNumber());//车架号
+				
+				carProperty.setCarPlateNum(arg0.getPlateTypeStr());//车牌号
+				
+				carProperty.setCarBrand(arg0.getPlateType());//号牌种类
+				
+				carProperty.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertsShopkeeperCarProperty(carProperty );
+				//进行个人信用初始化
+				String accountInit = accountInit(new BigDecimal(10000.00), "dianfu", idCard);
+				//进行个人资金初始化
+				customerAccountInit("店付", idCard);
+				
+				return accountInit;
+			}
 		}else{
 			saveLinkDetail.setMsg("clientNum字段不可为空");
 		}
-		return saveLinkDetail;
+		return null;
 	}
 	/**
 	 * 房产认证
@@ -268,33 +277,20 @@ public class authenticationController {
 	public JsonResult saveHouseDetail(String clientNum, AuthHouseDetail arg0){
 		JsonResult saveLinkDetail = new JsonResult<>(); 
 		if(!StringUtil.isEmpty(clientNum)){
-/*			AuthHouseDetail arg0 = new AuthHouseDetail();
-			
-			arg0.setChannel(channel);
-			
-			arg0.setHouseArea(houseArea);
-			
-			arg0.setHouseACode(houseACode);
-			
-			arg0.setHouseAName(houseAName);
-			
-			arg0.setHouseCCode(houseCCode);
-			
-			arg0.setHouseCName(houseCName);
-			
-			arg0.setHousePCode(housePCode);
-			
-			arg0.setHousePName(housePName);
-			
-			arg0.setHouseAddress(houseAddress);
-			
-			arg0.setProductLine(productLine);
-			
-			arg0.setType(type);
-			
-			arg0.setUserId(userId);*/
 			
 			saveLinkDetail = jzfqAuthApi.saveHouseDetail(arg0 );
+			
+			if(saveLinkDetail.getCode().equals("SUCCESS")){
+				SpsShopkeeperHouseProperty houseProperty = new SpsShopkeeperHouseProperty();
+				
+				houseProperty.setHouseArea((double)arg0.getHouseArea());
+				
+				houseProperty.setHouseAddr(arg0.getHousePName()+arg0.getHouseCName()+arg0.getHouseAName()+arg0.getHouseAddress());
+				
+				houseProperty.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperHouseProperty(houseProperty );
+			}
 		}else{
 			saveLinkDetail.setMsg("clientNum字段不可为空");
 		}
@@ -324,40 +320,25 @@ public class authenticationController {
 		
 		JsonResult saveLinkDetail = new JsonResult<>();
 		if(!StringUtil.isEmpty(clientNum)){
-/*			AuthBasicDetail arg0 = new AuthBasicDetail();
-			arg0.setChannel(channel);
-			
-			arg0.setMarriage(marriage);
-			
-			arg0.setLiveState(liveState);
-			
-			arg0.setLiveAddress(liveAddress);
-			
-			arg0.setLiveA(liveA);
-			
-			arg0.setLiveACode(liveACode);
-			
-			arg0.setLiveC(liveC);
-			
-			arg0.setLiveCCode(liveCCode);
-			
-			arg0.setLiveP(liveP);
-
-			arg0.setLivePCode(livePCode);
-			
-			arg0.setProductLine(productLine);
-			
-			arg0.setSource(source);
-			
-			arg0.setType(type);
-			
-			arg0.setUserId(userId);*/
 			
 			saveLinkDetail = jzfqAuthApi.saveBasicDetail(arg0);
-			/**
-			 * 更改信息
-			 */
-			shopkeeperService.insertSpsShopkeeperPersonal(null);
+			
+			if(saveLinkDetail.getCode().equals("SUCCESS")){
+				/**
+				 * 更改信息
+				 */
+				SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
+				
+				personal.setPersonalLivingAddress(arg0.getLiveP()+arg0.getLiveC()+arg0.getLiveA()+arg0.getLiveAddress());
+				
+				personal.setPersonalMaritalStatus(arg0.getMarriage()+"");
+				
+				personal.setPersonalLivingCondition(arg0.getLiveState()+"");
+				
+				personal.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.updateSpsShopkeeperPersonal(personal);
+			}
 		}else{
 			saveLinkDetail.setMsg("clientNum字段不可为空");
 		}
@@ -393,33 +374,35 @@ public class authenticationController {
 		JsonResult saveLinkDetail = new JsonResult<>();
 		
 		if(!StringUtil.isEmpty(clientNum)){
-/*			AuthIdentityDetail arg0 = new AuthIdentityDetail();
-			
-			arg0.setName(name);
-			
-			arg0.setCertNo(certNo);
-			
-			arg0.setSigningOrganization(signingOrganization);
-			
-			arg0.setEffectiveTime(effectiveTime);
-			
-			arg0.setCertAddress(certAddress);
-			
-			arg0.setChannel(channel);
-			
-			arg0.setProductLine(productLine);
-			
-			arg0.setSource(source);
-			
-			arg0.setType(type);
-			
-			arg0.setUserId(userId);*/
 			
 			saveLinkDetail = jzfqAuthApi.saveIdentityDetail(arg0);
 			
-			SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
-			
-			shopkeeperService.insertSpsShopkeeperPersonal(personal );
+			if(saveLinkDetail.getCode().equals("SUCCESS")){
+				
+				SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
+				
+				personal.setPersonalClientName(arg0.getName());
+				
+				personal.setPersonalSex(IdcardUtil.getSex(arg0.getCertNo()));
+				
+				personal.setPersonalIdcard(arg0.getCertNo());
+
+				String effectiveTime = arg0.getEffectiveTime();
+				
+				String[] split = effectiveTime.split("-");
+				
+				personal.setPersonalIdcardValidityStart(split[0]);
+				
+				personal.setPersonalIdcardValidityEnd(split[1]);
+				
+				personal.setPersonalLicenceIssuingAuthority(arg0.getSigningOrganization());
+				
+				personal.setPersonalPlaceofdomicile(arg0.getCertAddress());
+				
+				personal.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperPersonal(personal );
+			}
 		}else{
 			saveLinkDetail.setMsg("clientNum字段不可为空");
 		}
@@ -459,52 +442,55 @@ public class authenticationController {
 		JsonResult saveLinkDetail = new JsonResult<>();
 		
 		if(!StringUtil.isEmpty(clientNum)){
-/*			AuthStoreDetail arg0 = new AuthStoreDetail();
-			arg0.setChannel(channel);
-			
-			arg0.setCompanyName(companyName);
-			
-			arg0.setStoreName(storeName);
-			
-			arg0.setActualACode(actualACode);
-
-			arg0.setActualAName(actualAName);
-			
-			arg0.setActualCCode(actualCCode);
-			
-			arg0.setActualCName(actualCName);
-			
-			arg0.setActualPCode(actualPCode);
-			
-			arg0.setActualPName(actualPName);
-			
-			arg0.setActualAddress(actualAddress);
-			
-			arg0.setOwnerShip(ownerShip);
-			
-			arg0.setActualArea(actualArea);
-			
-			arg0.setStaffNum(staffNum);
-			
-			arg0.setOperateModel(operateModel);
-			
-			arg0.setMajorBrand(majorBrand);
-			
-			arg0.setMajorType(majorType);
-			
-			arg0.setMajorBusiness(majorBusiness);
-			
-			arg0.setSource(source);
-			
-			arg0.setType(type);
-			
-			arg0.setUserId(userId);*/
 			
 			saveLinkDetail = jzfqAuthApi.saveStoreDetail(arg0);
 			
-			SpsShopkeeperCompany company = new SpsShopkeeperCompany();
-			
-			shopkeeperService.insertShopkeeperCompany(company);
+			if(saveLinkDetail.getCode().equals("SUCCESS")){
+				/*
+				 * 添加到公司表
+				 */
+				SpsShopkeeperCompany company = new SpsShopkeeperCompany();
+				
+				company.setCompanyName(arg0.getCompanyName());
+				
+				company.setCompanyShopName(arg0.getStoreName());
+				
+				//company.setCompanyCorpName(companyCorpName);
+				
+				company.setCompanyBusinessAddr(arg0.getActualPName()+arg0.getActualCName()+arg0.getActualAName());
+				
+				company.setCompanyGpsAddr(arg0.getGpsAddress());
+				
+				company.setCompanyBusinessAddrOwnership(arg0.getOwnerShip());
+				
+				company.setCompanyOperatioTime(arg0.getStaffNum());
+				
+				company.setCompanyEmployeeNum(arg0.getStaffNum());
+				
+				company.setCompanyBusinessArea((double)arg0.getActualArea());
+				
+				company.setShopkeeperCustomerid(clientNum);
+
+				shopkeeperService.insertShopkeeperCompany(company);
+				/**
+				 * 更改shopkeeper主表的内容
+				 */
+				SpsShopkeeper shopkeeper = new SpsShopkeeper();
+				
+				shopkeeper.setShopkeeperChannelType("店主");
+				
+				shopkeeper.setShopkeeperCommodityType(arg0.getMajorType());
+				
+				shopkeeper.setShopkeeperBusinessModel(arg0.getOperateModel());
+				
+				shopkeeper.setShopkeeperBrand(arg0.getMajorBrand());
+				
+				shopkeeper.setShopkeeperBusinessType(arg0.getMajorBusiness());
+				
+				shopkeeper.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.updateShopkeeper(shopkeeper);
+			}
 		}else{
 			saveLinkDetail.setMsg("clientNum字段不可为空");
 		}
@@ -539,28 +525,19 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveMentionDetail")
-	public JsonResult saveMentionDetail(AuthResult arg0, String clientNum){
+	public JsonResult saveMentionDetail(AuthResult arg0, String clientNum, SpsShopkeeperCredit credit){
 		
 		JsonResult saveMentionDetail = new JsonResult<>();
 		
 		if(!StringUtil.isEmpty(clientNum)){
-/*			AuthResult arg0 = new AuthResult();
-			
-			arg0.setAuthState(authState);
-			
-			arg0.setAuthType(authType);
-			
-			arg0.setChannel(channel);
-			
-			arg0.setUserId(userId);
-			
-			arg0.setType(type);*/
-			
 			saveMentionDetail = jzfqAuthApi.saveMentionDetail(arg0);
 			
-			SpsShopkeeperCredit credit = new SpsShopkeeperCredit();
-			
-			shopkeeperService.insertSpsShopkeeperCredit(credit);
+			if(saveMentionDetail.getCode().equals("SUCCESS")){
+				
+				credit.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperCredit(credit);
+			}
 		}else{
 			saveMentionDetail.setMsg("clientNum字段不可为空");
 		}
@@ -577,5 +554,58 @@ public class authenticationController {
 			saveMentionDetail.setMsg("clientNum字段不可为空");
 		}
 		return saveMentionDetail;
+	}
+	/**
+	 * 个人信用账户
+	 * @Title: accountInit   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param amount
+	 * @param: @param application
+	 * @param: @param certNo
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月16日 上午11:31:57
+	 * @return: String      
+	 * @throws
+	 */
+	public String accountInit(BigDecimal amount, String application, String certNo){
+		
+		StringBuffer url = new StringBuffer("http://dev.app.chezhubaitiao.com/api/account/init?");
+		
+		url.append("amount="+amount);
+		
+		url.append("&application="+application);
+		
+		url.append("&certNo="+certNo);
+		
+		String doPost = HttpClientUtil.doPost(url.toString());
+		
+		String jsonString = JSON.toJSONString(doPost);
+		
+		return jsonString;
+	}
+	/**
+	 * 个人资金账户
+	 * @Title: customerAccountInit   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param application
+	 * @param: @param certNo
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月16日 上午11:31:49
+	 * @return: String      
+	 * @throws
+	 */
+	public String customerAccountInit(String application, String certNo){
+		
+		StringBuffer url = new StringBuffer("http://dev.app.chezhubaitiao.com/api/customerAccount/init?");
+		
+		url.append("application="+application);
+		
+		url.append("&certNo="+certNo);
+		
+		String doPost = HttpClientUtil.doPost(url.toString());
+		
+		return doPost;
 	}
 }

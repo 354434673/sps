@@ -85,5 +85,7 @@ public interface ShopkeeperService {
 	
 	int insertSpsShopkeeperTaking(SpsShopkeeperTaking taking);
 	
+	int updateSpsShopkeeperPersonal(SpsShopkeeperPersonal personal);
 	
+	int updateShopkeeper(SpsShopkeeper shopkeeper);
 }
