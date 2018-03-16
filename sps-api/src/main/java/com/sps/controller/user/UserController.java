@@ -141,13 +141,21 @@ public class UserController {
 	public HashMap<String, Object> userLogin(String imei, String ip, String mobile,
 			String mobileBrand, String mobileMaker, String password, Integer source){
 		LoginDto arg0 = new LoginDto();
+		
 		arg0.setImei(imei);
+		
 		arg0.setIp(ip);
+		
 		arg0.setMobile(mobile);
+		
 		arg0.setMobileMaker(mobileMaker);
+		
 		arg0.setMobileBrand(mobileBrand);
+		
 		arg0.setPassword(password);
+		
 		arg0.setSource(source);
+		
 		ServiceResult<LoginInfo> login4Browser = iDianfuPassportService.login4Native(arg0);
 		
 		HashMap<String, Object> userLogin = null;

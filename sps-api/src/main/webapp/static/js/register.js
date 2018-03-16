@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     var getTerminalType = document.querySelectorAll('body')[0].className.indexOf('ios') != -1 ? '3' : '2';
                     aspenLib.ajax({
-                        //url: location.protocol + "//" + location.hostname + ":8080/sps-api/api/user/regist",
+                        //url: location.protocol + "//" + location.host + "/sps-api/api/user/regist",
                         url: location.protocol + "//" + location.host + "/api/user/regist",
                         type: 'post',
                         dataType: 'json',
@@ -184,8 +184,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             mobile: telNum.value,
                             password: password.value,
                             code: checkCode.value,
-                            clientNum:clientNum.value,
-                            channelNum:channelNum.value,
+                            clientNum:clientNum,
+                            channelNum:channelNum,
                         },
                         success: function (data) {
                             if (data.success) {

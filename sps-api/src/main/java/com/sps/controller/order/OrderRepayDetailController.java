@@ -60,6 +60,38 @@ public class OrderRepayDetailController {
     }
 
 
+
+    /**
+     * 根据用户编号商家编号查询我的账单
+     *
+     * @return
+     */
+    @RequestMapping(value = "/repaymentsListByDayNum", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnInfo repaymentsListByDayNum(String customerNum,Integer dayNum) {
+        ReturnInfo ri = new ReturnInfo();
+        Map<String, Object> map = new HashMap<>();
+        try {
+            map.put("customerNum", customerNum);
+            map.put("dayNum", dayNum);
+            List<SpsOrderRepayDetail> orderRepayList = orderRepayDetailService.findList(map);
+            String[] pro = new String[]{"id","orderStatus","repayAmount","orderNo","days"};
+            if (orderRepayList != null) {
+                ri.setResult(EntityUtiles.reloadListPropertyValue(orderRepayList, pro));
+                ri.setSuccess(Message.SUCCESS_MSG);
+                ri.setCode(Message.SUCCESS_CODE);
+                ri.setMsg(Message.API_SUCCESS_MSG);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ri.setCode(Message.FAILURE_CODE);
+            ri.setMsg(Message.FAILURE_MSG);
+            ri.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return ri;
+    }
+
+
     /**
      * 根据用户编号商家编号查询我的账单
      *
@@ -88,7 +120,4 @@ public class OrderRepayDetailController {
         }
         return ri;
     }
-
-  
-
 }

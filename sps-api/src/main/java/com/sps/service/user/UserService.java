@@ -21,7 +21,7 @@ public interface UserService {
 	 * @return: HashMap<String,Object>      
 	 * @throws
 	 */
-	public HashMap<String, Object> userLogin(String userName, String password, Integer userId);
+	HashMap<String, Object> userLogin(String userName, String password, Integer userId);
 	/**
 	 * 店主注册
 	 * @Title: insertUser   
@@ -35,7 +35,7 @@ public interface UserService {
 	 * @return: HashMap<String,Object>      
 	 * @throws
 	 */
-	public ServiceResult<LoginInfo> insertUser(String phone, String password, String clientNum);
+	ServiceResult<LoginInfo> insertUser(String phone, String password, String clientNum);
 	/**
 	 * 查询店主是否邀请
 	 * @Title: queryShopInvitation   
@@ -49,8 +49,8 @@ public interface UserService {
 	 * @return: HashMap<String,Object>      
 	 * @throws
 	 */
-	public SpsShopkeeperInvitation queryShopInvitation(String phone, String clientNum);
+	SpsShopkeeperInvitation queryShopInvitation(String phone, String clientNum);
 	
-	public SpsUser findUserByUserName(String userName);
+	SpsUser findUserByUserName(String userName);
 
 }	

@@ -19,17 +19,12 @@ import java.util.Map;
 @RequestMapping(value = "/api/goods")
 public class goodsController {
     @Resource
-    private BrandService brandService;
-    @Resource
-    private GoodCategoryService goodCategoryService;
-    @Resource
-    private GoodsService goodService;
-    @Resource
     private ApiGoodShopService goodShopService;
     @Resource
     private GoodShopSkuService goodShopSkuService;
     @Resource
     private CustomCategoryService customCategoryService;
+
 
 
     /**

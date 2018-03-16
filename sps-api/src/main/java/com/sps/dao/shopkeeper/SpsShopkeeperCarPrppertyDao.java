@@ -17,4 +17,6 @@ public interface SpsShopkeeperCarPrppertyDao extends BaseDB<SpsShopkeeperPersona
      * @returnid
      */
     int  saveCarInfo(SpsShopkeeperCarProperty car);
+    
+    int insertSelective(SpsShopkeeperCarProperty record);
 }

@@ -60,26 +60,26 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 		
 		ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
 		
-		ArrayList<String> arrayList = new ArrayList<String>();;
+		SpsShopkeeper queryShopkeeperList = shopkeeperService.queryShopkeeperList(shopkeeperCustomerid);
 			
-			SpsShopkeeper queryShopkeeperList = shopkeeperService.queryShopkeeperList(shopkeeperCustomerid);
 			if(queryShopkeeperList != null){
+				String shopkeeperDefaultChannelNum = queryShopkeeperList.getShopkeeperDefaultChannelNum();
+				
 				List<SpsChannelEnterprise> queryBusinessForApi = null;
 
 				try {
-					//根据店主主营业务,获取相同主营业务的商户列表
-					if(StringUtil.isEmpty(shopkeeperCustomerid)){
-						queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, null , null);
+					if(!StringUtil.isEmpty(shopkeeperCustomerid)){
+						queryBusinessForApi = enterpriseDao.queryBusinessForApi(shopkeeperDefaultChannelNum, null , null);
 					}else{
-						//查询当前登录店主的主营业务
+/*						//查询当前登录店主的主营业务
 						String shopkeeperBusinessType = queryShopkeeperList.getShopkeeperBusinessType();
 						
 						String[] split = shopkeeperBusinessType.split(",");
 						
 						for (String string : split) {
 							arrayList.add(string);
-						}
-						queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, null);
+						}*/
+						queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, null, null);
 					}
 					for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
 						data = new HashMap<String, Object>();
@@ -88,6 +88,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 							map.put("shopNum", spsChannelEnterprise.getChannelNum());
 							map.put("recommend", "1");
 							map.put("orderType", "0");
+							map.put("flowStatus", "2");
 							//查询推荐中的商品
 							List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
 							String[] pro = new String[]{"gId","gPic","gSpuName","gMinPrice"};
@@ -132,7 +133,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 		ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
 			
 			try {
-				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(arrayList, 1, enterpriseId);
+				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, 1, enterpriseId);
 				//排序方式
 				if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
 					for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
@@ -143,6 +144,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 							map.put("goodsName", goodsName);
 							map.put("categorySelf", categoryId);
 							map.put("orderType", orderType);
+							map.put("flowStatus", "2");
 							//查询推荐中的商品
 							List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
 							String[] pro1 = new String[]{"gId","gPic","gSpuName","gMinPrice"};

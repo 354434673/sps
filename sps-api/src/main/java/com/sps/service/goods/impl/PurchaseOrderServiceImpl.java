@@ -97,20 +97,20 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                             SpsGoodShopSku sku = spsGoodShopSkuMapper.findById(orderList.getOrderSkuId());
                             //判断是否删除
                             if (sku.getgDeleteFlag() == 1) {
-                                map.put("flag", 1);
+                                map.put("flag", 2);
                                 map.put("goodsName", sku.getSpuName());
                                 return map;
                             }
                             //判断是否上架
-                            if (sku.getGroundingFlag() == 1) {
-                                map.put("flag", 2);
+                            if (sku.getGroundingFlag() != 2) {
+                                map.put("flag", 3);
                                 map.put("goodsName", sku.getSpuName());
                                 return map;
                             }
                             //判断价格是否发生变化
                             if (sku.getgPrice() != null) {
                                 if (!sku.getgPrice().setScale(4).equals(orderList.getPrice().setScale(4))) {
-                                    map.put("flag", 3);
+                                    map.put("flag", 4);
                                     map.put("goodsName", sku.getSpuName());
                                     return map;
                                 }
@@ -118,7 +118,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                             //判断库存是否充足
                             if (sku.getgStock() != null) {
                                 if (sku.getgStock() < orderList.getOrderGoodsNum()) {
-                                    map.put("flag", 4);
+                                    map.put("flag", 5);
                                     map.put("goodsName", sku.getSpuName());
                                     return map;
                                 }
@@ -171,7 +171,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                     spsOrderLogMapper.insert(log);
 
                 } else {
-                    map.put("flag", 5);
+                    map.put("flag", 6);
                     return map;
                 }
             }
@@ -197,7 +197,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                                 return map;
                             }
                             //判断是否上架
-                            if (sku.getGroundingFlag() == 1) {
+                            if (sku.getGroundingFlag() ==1 ) {
                                 map.put("flag", 3);
                                 map.put("goodsName", sku.getgSku().split("-")[1]);
                                 return map;

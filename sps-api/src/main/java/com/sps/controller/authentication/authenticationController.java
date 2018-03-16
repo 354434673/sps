@@ -1,23 +1,41 @@
 package com.sps.controller.authentication;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.juzifenqi.core.ServiceResult;
+import com.alibaba.fastjson.JSON;
 import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthApi;
+import com.jzfq.auth.core.api.JzfqAuthQueryApi;
 import com.jzfq.auth.core.api.entiy.AuthBasicDetail;
 import com.jzfq.auth.core.api.entiy.AuthHouseDetail;
 import com.jzfq.auth.core.api.entiy.AuthIdentityDetail;
 import com.jzfq.auth.core.api.entiy.AuthIousDetail;
 import com.jzfq.auth.core.api.entiy.AuthLinkDetail;
+import com.jzfq.auth.core.api.entiy.AuthResult;
 import com.jzfq.auth.core.api.entiy.AuthStoreDetail;
 import com.jzfq.auth.core.api.entiy.face.AuthFaceIdCard;
+import com.jzfq.auth.core.api.vo.AuthStateArray;
 import com.jzfq.auth.core.api.vo.JsonResult;
-
+import com.sps.common.HttpClientUtil;
+import com.sps.common.IdcardUtil;
+import com.sps.common.StringUtil;
+import com.sps.entity.shopkeeper.SpsShopkeeper;
+import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
+import com.sps.entity.shopkeeper.SpsShopkeeperCompany;
+import com.sps.entity.shopkeeper.SpsShopkeeperContact;
+import com.sps.entity.shopkeeper.SpsShopkeeperCredit;
+import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
+import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
+import com.sps.entity.shopkeeper.SpsShopkeeperPic;
+import com.sps.service.shopkeeper.ShopkeeperService;
 
 @RestController
 @RequestMapping("/authentication")
@@ -28,9 +46,19 @@ public class authenticationController {
 	private FaceAuthApi faceAuthApi;
 	@Resource
 	private JzfqAuthApi jzfqAuthApi;
+	@Resource
+	private JzfqAuthQueryApi jzfqAuthQueryApi;
+	@Resource
+	private ShopkeeperService shopkeeperService;
 /*	@Resource
 	private IUserCardService iUsercardService;*/
-	
+	@RequestMapping("/queryStateArray")
+	public JsonResult<Map<String, Object>> queryStateArray(AuthStateArray arg0){
+		
+		JsonResult<Map<String, Object>> queryStateArray = jzfqAuthQueryApi.queryStateArray(arg0 );
+		
+		return queryStateArray;
+	}
 	/**
 	 * 身份证反面认证
 	 * @Title: authBackIdCard   
@@ -42,22 +70,30 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/authBackIdCard")
-	public JsonResult<AuthFaceIdCard> authBackIdCard(String clientNum, String imagePath, String channel, String requestNo, String source, Integer userId){
+	public JsonResult<AuthFaceIdCard> authBackIdCard(String clientNum, AuthFaceIdCard arg0){
 		
-		AuthFaceIdCard arg0 = new AuthFaceIdCard();
+		JsonResult<AuthFaceIdCard> backIdCardResult = new JsonResult<AuthFaceIdCard>();
 		
-		arg0.setBackImagePath(imagePath);
-		
-		arg0.setChannel(channel);
-		
-		arg0.setRequestNo(requestNo);
-		
-		arg0.setSource(source);
-		
-		arg0.setUserId(userId);
-		
-		JsonResult<AuthFaceIdCard> backIdCardResult = faceAuthApi.getBackIdCardResult(arg0);
-		
+		if(!StringUtil.isEmpty(clientNum)){
+			
+			backIdCardResult = faceAuthApi.getBackIdCardResult(arg0);
+			
+			if(backIdCardResult.getCode().equals("SUCCESS")){
+				SpsShopkeeperPic pic = new SpsShopkeeperPic();
+				
+				pic.setPicType(3);
+				
+				pic.setShopkeeperCustomerid(clientNum);
+				
+				pic.setPicSrc(arg0.getBackImagePath());
+				
+				pic.setPicState(0);
+				
+				shopkeeperService.insertSpsShopkeeperPic(pic );
+			}
+		}else{
+			backIdCardResult.setMsg("clientNum字段不可为空");
+		}
 		return backIdCardResult;
 	}
 	/**
@@ -71,22 +107,29 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/authFrontIdCard")
-	public JsonResult<AuthFaceIdCard> authFrontIdCard(String clientNum, String imagePath, String channel, String requestNo, String source, Integer userId){
+	public JsonResult<AuthFaceIdCard> authFrontIdCard(String clientNum, AuthFaceIdCard arg0){
+		JsonResult<AuthFaceIdCard> backIdCardResult = new JsonResult<AuthFaceIdCard>();
 		
-		AuthFaceIdCard arg0 = new AuthFaceIdCard();
-		
-		arg0.setBackImagePath(imagePath);
-		
-		arg0.setChannel(channel);
-		
-		arg0.setRequestNo(requestNo);
-		
-		arg0.setSource(source);
-		
-		arg0.setUserId(userId);
-		
-		JsonResult<AuthFaceIdCard> backIdCardResult = faceAuthApi.getFrontIdCardResult(arg0);
-		
+		if(!StringUtil.isEmpty(clientNum)){
+			
+			backIdCardResult = faceAuthApi.getFrontIdCardResult(arg0);
+			
+			if(backIdCardResult.getCode().equals("SUCCESS")){
+				SpsShopkeeperPic pic = new SpsShopkeeperPic();
+				
+				pic.setPicType(2);
+				
+				pic.setShopkeeperCustomerid(clientNum);
+				
+				pic.setPicSrc(arg0.getFrontImagePath());
+				
+				pic.setPicState(0);
+				
+				shopkeeperService.insertSpsShopkeeperPic(pic);
+			}
+		}else{
+			backIdCardResult.setMsg("clientNum字段不可为空");
+		}
 		return backIdCardResult;
 	}
 	/** 认证保存通讯录信息
@@ -99,27 +142,61 @@ public class authenticationController {
 	 * @throws   
 	 */  
 	@RequestMapping("/saveLinkDetail")
-	public JsonResult saveLinkDetail(String clientNum, String channel, String effectiveTime, 
-			String linkInfoF, String linkInfoT, Integer source, 
-			String productLine, Integer type, Integer userId){
-		AuthLinkDetail arg0 = new AuthLinkDetail();
+	public JsonResult saveLinkDetail(String clientNum, AuthLinkDetail arg0){
 		
-		arg0.setChannel(channel);
+		JsonResult saveLinkDetail = new JsonResult<>();
 		
-		arg0.setLinkInfoF(linkInfoF);
-		
-		arg0.setLinkInfoT(linkInfoT);
-		
-		arg0.setProductLine(productLine);
-		
-		arg0.setSource(source);
-		
-		arg0.setType(type);
-		
-		arg0.setUserId(userId);
-		
-		JsonResult saveLinkDetail = jzfqAuthApi.saveLinkDetail(arg0);
-		
+		if(!StringUtil.isEmpty(clientNum)){
+			
+			saveLinkDetail = jzfqAuthApi.saveLinkDetail(arg0);
+			
+			if(saveLinkDetail.getCode().equals("SUCCESS")){
+				
+				String linkInfoF = arg0.getLinkInfoF();
+				
+				String[] first = linkInfoF.split("||");
+				
+				SpsShopkeeperContact contact = null;
+				
+				contact = new SpsShopkeeperContact();
+				
+				contact.setContactCreatTime(new Date());
+				
+				contact.setContactUpdateTime(new Date());
+				
+				contact.setContactRelation(first[0]);
+				
+				contact.setContactName(first[1]);
+				
+				contact.setContactPhone(first[1]);
+				
+				contact.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperContact(contact);
+				
+				String linkInfoT = arg0.getLinkInfoT();
+				
+				String[] sec = linkInfoT.split("||");
+				
+				contact = new SpsShopkeeperContact();
+				
+				contact.setContactCreatTime(new Date());
+				
+				contact.setContactUpdateTime(new Date());
+				
+				contact.setContactRelation(sec[0]);
+				
+				contact.setContactName(sec[1]);
+				
+				contact.setContactPhone(sec[1]);
+				
+				contact.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperContact(contact);
+			}
+		}else{
+			saveLinkDetail.setMsg("clientNum字段不可为空");
+		}
 		return saveLinkDetail;
 	}
 	/**
@@ -141,29 +218,38 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveIousDetail")
-	public JsonResult saveIousDetail(String clientNum, String channel, String plateType, 
-			String plateTypeStr, String frameNumber, Integer source, 
-			String productLine, Integer type, Integer userId){
+	public String saveIousDetail(String clientNum, String idCard, AuthIousDetail arg0){
 		
-		AuthIousDetail arg0 = new AuthIousDetail();
+		JsonResult saveLinkDetail = new JsonResult<>();
 		
-		arg0.setChannel(channel);
-		
-		arg0.setProductLine(productLine);
-		
-		arg0.setType(type);
-		
-		arg0.setPlateType(plateType);
-		
-		arg0.setPlateTypeStr(plateTypeStr);
-		
-		arg0.setFrameNumber(frameNumber);
-		
-		arg0.setUserId(userId);
-		
-		JsonResult saveLinkDetail = jzfqAuthApi.saveIousDetail(arg0 );
-		
-		return saveLinkDetail;
+		if(!StringUtil.isEmpty(clientNum)){
+			
+			saveLinkDetail = jzfqAuthApi.saveIousDetail(arg0 );
+			
+			if(saveLinkDetail.getCode().equals("SUCCESS")){
+				
+				SpsShopkeeperCarProperty carProperty = new SpsShopkeeperCarProperty();
+				
+				carProperty.setCarChassisNum(arg0.getFrameNumber());//车架号
+				
+				carProperty.setCarPlateNum(arg0.getPlateTypeStr());//车牌号
+				
+				carProperty.setCarBrand(arg0.getPlateType());//号牌种类
+				
+				carProperty.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertsShopkeeperCarProperty(carProperty );
+				//进行个人信用初始化
+				String accountInit = accountInit(new BigDecimal(10000.00), "dianfu", idCard);
+				//进行个人资金初始化
+				customerAccountInit("店付", idCard);
+				
+				return accountInit;
+			}
+		}else{
+			saveLinkDetail.setMsg("clientNum字段不可为空");
+		}
+		return null;
 	}
 	/**
 	 * 房产认证
@@ -188,39 +274,26 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveHouseDetail")
-	public JsonResult saveHouseDetail(String clientNum, String channel, Integer houseArea, 
-			String houseACode, String houseAName,String houseCCode,
-			String houseCName,String housePCode, String housePName, 
-			String productLine, String houseAddress,Integer type, Integer userId){
-		
-		AuthHouseDetail arg0 = new AuthHouseDetail();
-		
-		arg0.setChannel(channel);
-		
-		arg0.setHouseArea(houseArea);
-		
-		arg0.setHouseACode(houseACode);
-		
-		arg0.setHouseAName(houseAName);
-		
-		arg0.setHouseCCode(houseCCode);
-		
-		arg0.setHouseCName(houseCName);
-		
-		arg0.setHousePCode(housePCode);
-		
-		arg0.setHousePName(housePName);
-		
-		arg0.setHouseAddress(houseAddress);
-		
-		arg0.setProductLine(productLine);
-		
-		arg0.setType(type);
-		
-		arg0.setUserId(userId);
-		
-		JsonResult saveLinkDetail = jzfqAuthApi.saveHouseDetail(arg0 );
-		
+	public JsonResult saveHouseDetail(String clientNum, AuthHouseDetail arg0){
+		JsonResult saveLinkDetail = new JsonResult<>(); 
+		if(!StringUtil.isEmpty(clientNum)){
+			
+			saveLinkDetail = jzfqAuthApi.saveHouseDetail(arg0 );
+			
+			if(saveLinkDetail.getCode().equals("SUCCESS")){
+				SpsShopkeeperHouseProperty houseProperty = new SpsShopkeeperHouseProperty();
+				
+				houseProperty.setHouseArea((double)arg0.getHouseArea());
+				
+				houseProperty.setHouseAddr(arg0.getHousePName()+arg0.getHouseCName()+arg0.getHouseAName()+arg0.getHouseAddress());
+				
+				houseProperty.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperHouseProperty(houseProperty );
+			}
+		}else{
+			saveLinkDetail.setMsg("clientNum字段不可为空");
+		}
 		return saveLinkDetail;
 	}
 	/**
@@ -243,41 +316,32 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveBasicDetail")
-	public JsonResult saveBasicDetail(String clientNum, String channel, Integer source, Integer marriage, String liveAddress, 
-			String liveA, String liveACode, String liveC, String liveCCode, String liveP, String livePCode, 
-			Integer liveState, String productLine, Integer type, Integer userId){
+	public JsonResult saveBasicDetail(String clientNum, AuthBasicDetail arg0){
 		
-		AuthBasicDetail arg0 = new AuthBasicDetail();
-		arg0.setChannel(channel);
-		
-		arg0.setMarriage(marriage);
-		
-		arg0.setLiveState(liveState);
-		
-		arg0.setLiveAddress(liveAddress);
-		
-		arg0.setLiveA(liveA);
-		
-		arg0.setLiveACode(liveACode);
-		
-		arg0.setLiveC(liveC);
-		
-		arg0.setLiveCCode(liveCCode);
-		
-		arg0.setLiveP(liveP);
-
-		arg0.setLivePCode(livePCode);
-		
-		arg0.setProductLine(productLine);
-		
-		arg0.setSource(source);
-		
-		arg0.setType(type);
-		
-		arg0.setUserId(userId);
-		
-		JsonResult saveLinkDetail = jzfqAuthApi.saveBasicDetail(arg0);
-		
+		JsonResult saveLinkDetail = new JsonResult<>();
+		if(!StringUtil.isEmpty(clientNum)){
+			
+			saveLinkDetail = jzfqAuthApi.saveBasicDetail(arg0);
+			
+			if(saveLinkDetail.getCode().equals("SUCCESS")){
+				/**
+				 * 更改信息
+				 */
+				SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
+				
+				personal.setPersonalLivingAddress(arg0.getLiveP()+arg0.getLiveC()+arg0.getLiveA()+arg0.getLiveAddress());
+				
+				personal.setPersonalMaritalStatus(arg0.getMarriage()+"");
+				
+				personal.setPersonalLivingCondition(arg0.getLiveState()+"");
+				
+				personal.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.updateSpsShopkeeperPersonal(personal);
+			}
+		}else{
+			saveLinkDetail.setMsg("clientNum字段不可为空");
+		}
 		return saveLinkDetail;
 	}
 	/**
@@ -305,34 +369,43 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveIdentityDetail")
-	public JsonResult saveIdentityDetail(String clientNum, String channel, Integer source, String certAddress, 
-			String effectiveTime, String signingOrganization, String certNo, String name, 
-			String productLine, Integer type, Integer userId){
+	public JsonResult saveIdentityDetail(String clientNum, AuthIdentityDetail arg0){
 		
-		AuthIdentityDetail arg0 = new AuthIdentityDetail();
+		JsonResult saveLinkDetail = new JsonResult<>();
 		
-		arg0.setName(name);
-		
-		arg0.setCertNo(certNo);
-		
-		arg0.setSigningOrganization(signingOrganization);
-		
-		arg0.setEffectiveTime(effectiveTime);
-		
-		arg0.setCertAddress(certAddress);
-		
-		arg0.setChannel(channel);
-		
-		arg0.setProductLine(productLine);
-		
-		arg0.setSource(source);
-		
-		arg0.setType(type);
-		
-		arg0.setUserId(userId);
-		
-		JsonResult saveLinkDetail = jzfqAuthApi.saveIdentityDetail(arg0);
-		
+		if(!StringUtil.isEmpty(clientNum)){
+			
+			saveLinkDetail = jzfqAuthApi.saveIdentityDetail(arg0);
+			
+			if(saveLinkDetail.getCode().equals("SUCCESS")){
+				
+				SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
+				
+				personal.setPersonalClientName(arg0.getName());
+				
+				personal.setPersonalSex(IdcardUtil.getSex(arg0.getCertNo()));
+				
+				personal.setPersonalIdcard(arg0.getCertNo());
+
+				String effectiveTime = arg0.getEffectiveTime();
+				
+				String[] split = effectiveTime.split("-");
+				
+				personal.setPersonalIdcardValidityStart(split[0]);
+				
+				personal.setPersonalIdcardValidityEnd(split[1]);
+				
+				personal.setPersonalLicenceIssuingAuthority(arg0.getSigningOrganization());
+				
+				personal.setPersonalPlaceofdomicile(arg0.getCertAddress());
+				
+				personal.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperPersonal(personal );
+			}
+		}else{
+			saveLinkDetail.setMsg("clientNum字段不可为空");
+		}
 		return saveLinkDetail;
 	}
 	/**
@@ -364,54 +437,63 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveStoreDetail")
-	public JsonResult saveStoreDetail(String clientNum, String channel, String companyName, String storeName,Integer source,  
-			String actualACode, String actualAName, String actualCCode, String actualCName, String actualPCode, String actualPName,
-			String ownerShip, String actualAddress, Integer actualArea, Integer staffNum, String operateModel,
-			String majorBrand, String majorType, String majorBusiness, Integer type, Integer userId){
+	public JsonResult saveStoreDetail(String clientNum, AuthStoreDetail arg0){
 		
-		AuthStoreDetail arg0 = new AuthStoreDetail();
-		arg0.setChannel(channel);
+		JsonResult saveLinkDetail = new JsonResult<>();
 		
-		arg0.setCompanyName(companyName);
-		
-		arg0.setStoreName(storeName);
-		
-		arg0.setActualACode(actualACode);
+		if(!StringUtil.isEmpty(clientNum)){
+			
+			saveLinkDetail = jzfqAuthApi.saveStoreDetail(arg0);
+			
+			if(saveLinkDetail.getCode().equals("SUCCESS")){
+				/*
+				 * 添加到公司表
+				 */
+				SpsShopkeeperCompany company = new SpsShopkeeperCompany();
+				
+				company.setCompanyName(arg0.getCompanyName());
+				
+				company.setCompanyShopName(arg0.getStoreName());
+				
+				//company.setCompanyCorpName(companyCorpName);
+				
+				company.setCompanyBusinessAddr(arg0.getActualPName()+arg0.getActualCName()+arg0.getActualAName());
+				
+				company.setCompanyGpsAddr(arg0.getGpsAddress());
+				
+				company.setCompanyBusinessAddrOwnership(arg0.getOwnerShip());
+				
+				company.setCompanyOperatioTime(arg0.getStaffNum());
+				
+				company.setCompanyEmployeeNum(arg0.getStaffNum());
+				
+				company.setCompanyBusinessArea((double)arg0.getActualArea());
+				
+				company.setShopkeeperCustomerid(clientNum);
 
-		arg0.setActualAName(actualAName);
-		
-		arg0.setActualCCode(actualCCode);
-		
-		arg0.setActualCName(actualCName);
-		
-		arg0.setActualPCode(actualPCode);
-		
-		arg0.setActualPName(actualPName);
-		
-		arg0.setActualAddress(actualAddress);
-		
-		arg0.setOwnerShip(ownerShip);
-		
-		arg0.setActualArea(actualArea);
-		
-		arg0.setStaffNum(staffNum);
-		
-		arg0.setOperateModel(operateModel);
-		
-		arg0.setMajorBrand(majorBrand);
-		
-		arg0.setMajorType(majorType);
-		
-		arg0.setMajorBusiness(majorBusiness);
-		
-		arg0.setSource(source);
-		
-		arg0.setType(type);
-		
-		arg0.setUserId(userId);
-		
-		JsonResult saveLinkDetail = jzfqAuthApi.saveStoreDetail(arg0);
-		
+				shopkeeperService.insertShopkeeperCompany(company);
+				/**
+				 * 更改shopkeeper主表的内容
+				 */
+				SpsShopkeeper shopkeeper = new SpsShopkeeper();
+				
+				shopkeeper.setShopkeeperChannelType("店主");
+				
+				shopkeeper.setShopkeeperCommodityType(arg0.getMajorType());
+				
+				shopkeeper.setShopkeeperBusinessModel(arg0.getOperateModel());
+				
+				shopkeeper.setShopkeeperBrand(arg0.getMajorBrand());
+				
+				shopkeeper.setShopkeeperBusinessType(arg0.getMajorBusiness());
+				
+				shopkeeper.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.updateShopkeeper(shopkeeper);
+			}
+		}else{
+			saveLinkDetail.setMsg("clientNum字段不可为空");
+		}
 		return saveLinkDetail;
 	}
 /*	@RequestMapping("/saveUserCardByNo")
@@ -426,4 +508,104 @@ public class authenticationController {
 		
 		return saveUserCardByNo;
 	}*/
+	/**
+	 * 征信认证
+	 * @Title: saveMentionDetail   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param authState
+	 * @param: @param authType
+	 * @param: @param channel
+	 * @param: @param type
+	 * @param: @param userId
+	 * @param: @param clientNum
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月15日 上午10:58:12
+	 * @return: JsonResult      
+	 * @throws
+	 */
+	@RequestMapping("/saveMentionDetail")
+	public JsonResult saveMentionDetail(AuthResult arg0, String clientNum, SpsShopkeeperCredit credit){
+		
+		JsonResult saveMentionDetail = new JsonResult<>();
+		
+		if(!StringUtil.isEmpty(clientNum)){
+			saveMentionDetail = jzfqAuthApi.saveMentionDetail(arg0);
+			
+			if(saveMentionDetail.getCode().equals("SUCCESS")){
+				
+				credit.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperCredit(credit);
+			}
+		}else{
+			saveMentionDetail.setMsg("clientNum字段不可为空");
+		}
+		return saveMentionDetail;
+	}
+	@RequestMapping("/savePhonePassword")
+	public JsonResult savePhonePassword(String phonePwd, String clientNum){
+		
+		JsonResult saveMentionDetail = new JsonResult<>();
+		
+		if(!StringUtil.isEmpty(clientNum)){
+			
+		}else{
+			saveMentionDetail.setMsg("clientNum字段不可为空");
+		}
+		return saveMentionDetail;
+	}
+	/**
+	 * 个人信用账户
+	 * @Title: accountInit   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param amount
+	 * @param: @param application
+	 * @param: @param certNo
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月16日 上午11:31:57
+	 * @return: String      
+	 * @throws
+	 */
+	public String accountInit(BigDecimal amount, String application, String certNo){
+		
+		StringBuffer url = new StringBuffer("http://dev.app.chezhubaitiao.com/api/account/init?");
+		
+		url.append("amount="+amount);
+		
+		url.append("&application="+application);
+		
+		url.append("&certNo="+certNo);
+		
+		String doPost = HttpClientUtil.doPost(url.toString());
+		
+		String jsonString = JSON.toJSONString(doPost);
+		
+		return jsonString;
+	}
+	/**
+	 * 个人资金账户
+	 * @Title: customerAccountInit   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param application
+	 * @param: @param certNo
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月16日 上午11:31:49
+	 * @return: String      
+	 * @throws
+	 */
+	public String customerAccountInit(String application, String certNo){
+		
+		StringBuffer url = new StringBuffer("http://dev.app.chezhubaitiao.com/api/customerAccount/init?");
+		
+		url.append("application="+application);
+		
+		url.append("&certNo="+certNo);
+		
+		String doPost = HttpClientUtil.doPost(url.toString());
+		
+		return doPost;
+	}
 }
