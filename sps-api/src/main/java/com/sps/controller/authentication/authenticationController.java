@@ -2,7 +2,6 @@ package com.sps.controller.authentication;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthQueryApi;
@@ -26,6 +26,7 @@ import com.jzfq.auth.core.api.vo.AuthStateArray;
 import com.jzfq.auth.core.api.vo.JsonResult;
 import com.sps.common.HttpClientUtil;
 import com.sps.common.IdcardUtil;
+import com.sps.common.Message;
 import com.sps.common.StringUtil;
 import com.sps.entity.shopkeeper.SpsShopkeeper;
 import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
@@ -56,6 +57,8 @@ public class authenticationController {
 	public JsonResult<Map<String, Object>> queryStateArray(AuthStateArray arg0){
 		
 		JsonResult<Map<String, Object>> queryStateArray = jzfqAuthQueryApi.queryStateArray(arg0 );
+		
+		queryStateArray.setCode(queryStateArray.getCode().equals("SUCCESS") ? "1":"0");
 		
 		return queryStateArray;
 	}
@@ -90,9 +93,12 @@ public class authenticationController {
 				pic.setPicState(0);
 				
 				shopkeeperService.insertSpsShopkeeperPic(pic );
+				
+				backIdCardResult.setCode(Message.SUCCESS_CODE);
 			}
 		}else{
-			backIdCardResult.setMsg("clientNum字段不可为空");
+			backIdCardResult.setCode(Message.FAILURE_CODE);
+			backIdCardResult.setMsg(Message.FAILURE_CLIENTNUM);
 		}
 		return backIdCardResult;
 	}
@@ -126,9 +132,12 @@ public class authenticationController {
 				pic.setPicState(0);
 				
 				shopkeeperService.insertSpsShopkeeperPic(pic);
+				
+				backIdCardResult.setCode(Message.SUCCESS_CODE);
 			}
 		}else{
-			backIdCardResult.setMsg("clientNum字段不可为空");
+			backIdCardResult.setCode(Message.FAILURE_CODE);
+			backIdCardResult.setMsg(Message.FAILURE_CLIENTNUM);
 		}
 		return backIdCardResult;
 	}
@@ -193,9 +202,12 @@ public class authenticationController {
 				contact.setShopkeeperCustomerid(clientNum);
 				
 				shopkeeperService.insertSpsShopkeeperContact(contact);
+				
+				saveLinkDetail.setCode(Message.SUCCESS_CODE);
 			}
 		}else{
-			saveLinkDetail.setMsg("clientNum字段不可为空");
+			saveLinkDetail.setCode(Message.FAILURE_CODE);
+			saveLinkDetail.setMsg(Message.FAILURE_CLIENTNUM);
 		}
 		return saveLinkDetail;
 	}
@@ -237,17 +249,24 @@ public class authenticationController {
 				carProperty.setCarBrand(arg0.getPlateType());//号牌种类
 				
 				carProperty.setShopkeeperCustomerid(clientNum);
-				
+				//状态码,除了100000都是失败
 				shopkeeperService.insertsShopkeeperCarProperty(carProperty );
 				//进行个人信用初始化
 				String accountInit = accountInit(new BigDecimal(10000.00), "dianfu", idCard);
+				
+				JSONObject parseObject = JSON.parseObject(accountInit);
+				
+				parseObject.put("code", "1");
+				
+				String jsonString = JSON.toJSONString(parseObject);
 				//进行个人资金初始化
 				customerAccountInit("店付", idCard);
 				
-				return accountInit;
+				return jsonString;
 			}
 		}else{
-			saveLinkDetail.setMsg("clientNum字段不可为空");
+			saveLinkDetail.setCode(Message.FAILURE_CODE);
+			saveLinkDetail.setMsg(Message.FAILURE_CLIENTNUM);
 		}
 		return null;
 	}
@@ -290,9 +309,12 @@ public class authenticationController {
 				houseProperty.setShopkeeperCustomerid(clientNum);
 				
 				shopkeeperService.insertSpsShopkeeperHouseProperty(houseProperty );
+				
+				saveLinkDetail.setCode(Message.SUCCESS_CODE);
 			}
 		}else{
-			saveLinkDetail.setMsg("clientNum字段不可为空");
+			saveLinkDetail.setCode(Message.FAILURE_CODE);
+			saveLinkDetail.setMsg(Message.FAILURE_CLIENTNUM);
 		}
 		return saveLinkDetail;
 	}
@@ -338,9 +360,12 @@ public class authenticationController {
 				personal.setShopkeeperCustomerid(clientNum);
 				
 				shopkeeperService.updateSpsShopkeeperPersonal(personal);
+				
+				saveLinkDetail.setCode(Message.SUCCESS_CODE);
 			}
 		}else{
-			saveLinkDetail.setMsg("clientNum字段不可为空");
+			saveLinkDetail.setCode(Message.FAILURE_CODE);
+			saveLinkDetail.setMsg(Message.FAILURE_CLIENTNUM);
 		}
 		return saveLinkDetail;
 	}
@@ -402,9 +427,12 @@ public class authenticationController {
 				personal.setShopkeeperCustomerid(clientNum);
 				
 				shopkeeperService.insertSpsShopkeeperPersonal(personal );
+				
+				saveLinkDetail.setCode(Message.SUCCESS_CODE);
 			}
 		}else{
-			saveLinkDetail.setMsg("clientNum字段不可为空");
+			saveLinkDetail.setCode(Message.FAILURE_CODE);
+			saveLinkDetail.setMsg(Message.FAILURE_CLIENTNUM);
 		}
 		return saveLinkDetail;
 	}
@@ -490,9 +518,12 @@ public class authenticationController {
 				shopkeeper.setShopkeeperCustomerid(clientNum);
 				
 				shopkeeperService.updateShopkeeper(shopkeeper);
+				
+				saveLinkDetail.setCode(Message.SUCCESS_CODE);
 			}
 		}else{
-			saveLinkDetail.setMsg("clientNum字段不可为空");
+			saveLinkDetail.setCode(Message.FAILURE_CODE);
+			saveLinkDetail.setMsg(Message.FAILURE_CLIENTNUM);
 		}
 		return saveLinkDetail;
 	}
@@ -537,9 +568,12 @@ public class authenticationController {
 				credit.setShopkeeperCustomerid(clientNum);
 				
 				shopkeeperService.insertSpsShopkeeperCredit(credit);
+				
+				saveMentionDetail.setCode(Message.SUCCESS_CODE);
 			}
 		}else{
-			saveMentionDetail.setMsg("clientNum字段不可为空");
+			saveMentionDetail.setCode(Message.FAILURE_CODE);
+			saveMentionDetail.setMsg(Message.FAILURE_CLIENTNUM);
 		}
 		return saveMentionDetail;
 	}
@@ -549,9 +583,18 @@ public class authenticationController {
 		JsonResult saveMentionDetail = new JsonResult<>();
 		
 		if(!StringUtil.isEmpty(clientNum)){
+			SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
 			
+			personal.setPersonalPhonePassword(phonePwd);
+			
+			personal.setShopkeeperCustomerid(clientNum);
+			
+			shopkeeperService.updateSpsShopkeeperPersonal(personal );
+			
+			saveMentionDetail.setCode(Message.SUCCESS_CODE);
 		}else{
-			saveMentionDetail.setMsg("clientNum字段不可为空");
+			saveMentionDetail.setCode(Message.FAILURE_CODE);
+			saveMentionDetail.setMsg(Message.FAILURE_CLIENTNUM);
 		}
 		return saveMentionDetail;
 	}
@@ -580,9 +623,7 @@ public class authenticationController {
 		
 		String doPost = HttpClientUtil.doPost(url.toString());
 		
-		String jsonString = JSON.toJSONString(doPost);
-		
-		return jsonString;
+		return doPost;
 	}
 	/**
 	 * 个人资金账户
