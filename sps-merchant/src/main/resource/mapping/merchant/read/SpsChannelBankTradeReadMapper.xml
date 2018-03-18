@@ -342,4 +342,45 @@
 		  WHERE
 			  bt_trade_no=#{tradeSeriNum}
 	</select>
+
+	<select id="selectBankTradeTypeListByLoginName"  resultMap="cashAuditBashInfo">
+		SELECT
+		<include refid="join_listAudit" />
+		sps_bank_trade_info bt
+		join
+		sps_bank  b
+		on
+		bt.bt_user_id= b.b_user_id
+		JOIN
+		sps_channel_enterprise e
+		ON
+		e.channel_num=b.channl_num
+		<where>
+			  b.channl_num=#{channelNum,jdbcType=VARCHAR}
+			<if test="startTime != null and startTime != '' " >
+				and bt.bt_audit_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
+			</if>
+			<if test="endTime != null and endTime != '' " >
+				and bt.bt_audit_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
+			</if>
+			<if test="payType != null and payType != '' " >
+				and bt.bt_trade_type = #{payType,jdbcType=VARCHAR}
+			</if>
+
+			<if test="minAmount != null and minAmount != '' " >
+				and bt.bt_trade_amount  <![CDATA[ >= ]]>  #{minAmount,jdbcType=VARCHAR}
+			</if>
+			<if test="maxAmount != null and maxAmount != '' " >
+				and bt.bt_trade_amount <![CDATA[ <= ]]>  #{maxAmount,jdbcType=VARCHAR}
+			</if>
+			<if test="companyName != null and companyName != '' " >
+				and e.enterprise_company_name like CONCAT('%',#{companyName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="reamrk != null and reamrk != '' " >
+				and bt.standby1 like CONCAT('%',#{reamrk,jdbcType=VARCHAR},'%')
+			</if>
+		</where>
+		ORDER  BY   bt.bt_payment_date  desc
+	</select>
+
 </mapper>

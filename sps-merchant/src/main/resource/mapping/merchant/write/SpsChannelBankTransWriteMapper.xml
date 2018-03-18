@@ -48,19 +48,10 @@
       )
   </insert>
   
-  <update id="updateBankTrans" parameterType="org.sps.entity.merchant.SpsChannelBankTrans" >
+  <update id="updateBankTrans"  >
     update sps_bank_trans
     <set >
-      <if test="name != null" >
-        t_name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="bankName != null" >
-         t_bank_name = #{bankName,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        t_user_id = #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="loginName != null" >
+      <if test="loginName != null " >
         t_login_name = #{loginName,jdbcType=VARCHAR},
       </if>
       <if test="identity != null" >
@@ -94,8 +85,11 @@
     <if test="channlNum != null" >
         channl_num = #{channlNum,jdbcType=VARCHAR}
     </if>
+        <if test="serialYop != null" >
+            t_serial_yop = #{serialYop,jdbcType=VARCHAR}
+        </if>
     </set>
-     where  t_serial_sh=#{serialSh} and  t_serial_yop=#{serialYop}
+     where  t_serial_sh=#{seriNum}
   </update>
  
 </mapper>

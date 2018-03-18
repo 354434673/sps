@@ -9,6 +9,8 @@ import com.sps.common.Result;
 import com.sps.entity.user.SpsUser;
 import com.sps.service.user.UserAndRoleService;
 import com.sps.service.user.UserService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +38,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/bankCard")
 public class BankCardController {
+	private static  final Log logger= LogFactory.getLog(BankCardController.class);
 	
 	@Reference(check=false,group="dianfu")
 	private ChannelBankWriteService  bankWriteService;
@@ -68,8 +71,8 @@ public class BankCardController {
 
 	@RequestMapping("/getVerifyCode")
 	@ResponseBody
-	public ServiceResult<Boolean> getVerifyCode( Model model,String phone){
-
+	public ServiceResult<Boolean> getVerifyCode(String phone){
+		logger.info("getVerifyCode 方法 开始调用。。。。。。。");
 		ServiceResult<Boolean> result = ismsCommonService.sendForgetPasswordSms(phone, 3);
 		/*return sendRegisterSms;
 		//去后台下校验手机号

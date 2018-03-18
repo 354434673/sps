@@ -27,6 +27,7 @@ public class ChannelBankTransReadServiceImpl implements ChannelBankTransReadServ
 	public SpsChannelBankTrans findBankState(String requestNo, String yborderid) {
 		// TODO Auto-generated method stub
 		return bankRead.selectOne(requestNo, yborderid);
+
 	}
 	
 }

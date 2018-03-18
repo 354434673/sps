@@ -11,9 +11,11 @@ import org.sps.entity.merchant.SpsChannelBankTrade;
 import org.sps.entity.order.Order;
 import org.sps.entity.order.OrderGoods;
 import org.sps.entity.order.SpsOrderLogistics;
+import org.sps.service.finance.read.CashAuditReadService;
 import org.sps.service.merchant.read.ChannelBankTradeReadService;
 import org.sps.service.order.OrderService;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +30,19 @@ public class TradeFlowController {
     private ChannelBankTradeReadService bankTradereadService;
     @Reference(check=false,group="dianfu")
     private OrderService orderService;
+
+    @Reference(check=false,group="dianfu")
+    private CashAuditReadService cashAuditService;
+    @RequestMapping("/tradeFlowList")
+    @ResponseBody
+    public HashMap<String, Object> tradeFlowList(Integer page, Integer limit, String applicationDate, String payDate,
+                                                 BigDecimal minAmount, BigDecimal maxAmount, String payType, String companyName, String reamrk) {
+        String loginName = (String)SecurityUtils.getSubject().getPrincipal();
+        HashMap<String, Object> list = cashAuditService.getBankTradeIncomePayListByloginName(loginName,page,limit,applicationDate,payDate,minAmount,maxAmount,payType,companyName,reamrk);
+        return list;
+
+
+    }
 
     /**
      * 获取交易号获取订一切信息

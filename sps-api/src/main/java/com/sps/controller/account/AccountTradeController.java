@@ -43,12 +43,10 @@ public class AccountTradeController {
     private UserService userService;
 
 
-    @RequestMapping(value = "/findTradeList/{userMark}", method = RequestMethod.POST)
+    @RequestMapping(value = "/findTradeList/{userName}/{userMark}", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findTradeList( @PathVariable("userMark") Integer userMark ) {
+    public ReturnInfo findTradeList( @PathVariable("userMark") Integer userMark,@PathVariable("userName") String userName ) {
         ReturnInfo returnInfo = new ReturnInfo();
-      String userName = (String) SecurityUtils.getSubject().getPrincipal();
-
         //  根据登录用户名获取用户id
      SpsUser user = userService.findUserByUserName(userName);
         try {
@@ -74,10 +72,6 @@ public class AccountTradeController {
     @ResponseBody
     public ReturnInfo findTradeListByTradeType( @PathVariable("userName")String userName ,@PathVariable("userMark") Integer userMark, @PathVariable("tradeType") Integer tradeType ) {
         ReturnInfo returnInfo = new ReturnInfo();
-//        String userName = (String) SecurityUtils.getSubject().getPrincipal();
-
-        //  根据登录用户名获取用户id
-//        SpsUser user = userService.findUserByUserName(userName);
         List<BankTradeInfo> bankTrdeList=null;
         try {
             if (tradeType!=2){
@@ -110,10 +104,6 @@ public class AccountTradeController {
     @ResponseBody
     public ReturnInfo findTradeDetail(  @PathVariable("id") Integer id ) {
         ReturnInfo returnInfo = new ReturnInfo();
-//        String userName = (String) SecurityUtils.getSubject().getPrincipal();
-
-        //  根据登录用户名获取用户id
-//        SpsUser user = userService.findUserByUserName(userName);
         try {
             BankTradeInfo bankTradeDetail = bankTradeService.findBankTradeDetail(id);
             returnInfo.setResult(bankTradeDetail);
