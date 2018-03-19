@@ -6,6 +6,8 @@ import com.juzifenqi.core.ServiceResult;
 import com.juzifenqi.usercenter.entity.member.MemberInfo;
 import com.juzifenqi.usercenter.service.ISmsCommonService;
 import com.juzifenqi.usercenter.service.member.IMemberDianfuService;
+import com.sps.common.Message;
+import com.sps.common.ReturnInfo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.*;
@@ -43,10 +45,22 @@ public class SetLoginPwdController {
      */
     @RequestMapping(value = "/queryVerfilyCode/{phone}", method = RequestMethod.GET)
     @ResponseBody
-    public ServiceResult<Boolean> queryVerfilyCode(@PathVariable("phone") String phone) {
+    public ReturnInfo queryVerfilyCode(@PathVariable("phone") String phone) {
+
         logger.info("queryVerfilyCode 方法开始执行。。。。。。");
+        ReturnInfo returnInfo = new ReturnInfo();
         ServiceResult<Boolean> sendRegisterSms = ismsCommonService.sendForgetPasswordSms(phone, 3);
-        return sendRegisterSms;
+        if(sendRegisterSms.getSuccess()){
+            returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
+            returnInfo.setCode(Message.API_SUCCESS_CODE);
+            returnInfo.setMsg(Message.API_SUCCESS_MSG);
+            return  returnInfo;
+        }else{
+            returnInfo.setCode(Message.FAILURE_CODE);
+            returnInfo.setMsg(Message.FAILURE_MSG);
+            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+            return returnInfo;
+        }
     }
 
 
@@ -60,25 +74,50 @@ public class SetLoginPwdController {
      */
     @RequestMapping(value = "/modifyLoaginPwd", method = RequestMethod.POST)
     @ResponseBody
-    public  ServiceResult<MemberInfo> modifyLoaginPwd(String code,
+    public  ReturnInfo modifyLoaginPwd(String code,
                                       String mobile,
                                       String oldPwd,
                                       String newPwd) {
         //获取登录用户名---用户名就是手机号
         //  String userName = (String) SecurityUtils.getSubject().getPrincipal();
         ServiceResult<MemberInfo> memberInfoServiceResult=null;
+        ReturnInfo returnInfo = new ReturnInfo();
         if (StringUtils.isNotEmpty(code)) {
                 logger.info("editPasswordByMobile方法开始执行。。。。。。。。。。。");
                 //根据手机号修改登录密码
-                 memberInfoServiceResult = memberDianfuService.editPasswordByMobile(code, mobile, newPwd);
-                 return memberInfoServiceResult;
+            try{
+                memberInfoServiceResult = memberDianfuService.editPasswordByMobile(code, mobile, newPwd);
+                returnInfo.setResult(memberInfoServiceResult.getResult());
+                returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
+                returnInfo.setCode(Message.API_SUCCESS_CODE);
+                returnInfo.setMsg(Message.API_SUCCESS_MSG);
+
+            }catch(Exception e){
+                e.printStackTrace();
+                returnInfo.setCode(Message.FAILURE_CODE);
+                returnInfo.setMsg(Message.FAILURE_MSG);
+                returnInfo.setSuccess(Message.API_ERROR_FLAG);
+
+            }
+             return  returnInfo;
         } else {
                 //根据旧密码修改登录密码
             logger.info("editPasswordByOldPwd方法开始执行。。。。。。。。。。。");
+            try{
+                memberInfoServiceResult = memberDianfuService.editPasswordByOldPwd(oldPwd, newPwd, mobile);
+                returnInfo.setResult(memberInfoServiceResult.getResult());
+                returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
+                returnInfo.setCode(Message.API_SUCCESS_CODE);
+                returnInfo.setMsg(Message.API_SUCCESS_MSG);
 
-            memberInfoServiceResult = memberDianfuService.editPasswordByOldPwd(oldPwd, newPwd, mobile);
+            }catch(Exception e ){
+                e.printStackTrace();
+                returnInfo.setCode(Message.FAILURE_CODE);
+                returnInfo.setMsg(Message.FAILURE_MSG);
+                returnInfo.setSuccess(Message.API_ERROR_FLAG);
+            }
+            return  returnInfo;
 
-            return memberInfoServiceResult;
         }
     }
 
@@ -93,12 +132,24 @@ public class SetLoginPwdController {
      */
     @RequestMapping(value = "/forgetLoginPwd", method = RequestMethod.POST)
     @ResponseBody
-    public ServiceResult<MemberInfo>  forgetLoginPwd(String code,
+    public ReturnInfo  forgetLoginPwd(String code,
                                    String mobile,
                                    String newPwd) {
         logger.info("forgetPassword方法开始执行。。。。。。。。。。。");
-        ServiceResult<MemberInfo> memberInfoServiceResult = memberDianfuService.forgetPassword(code, mobile, newPwd);
-        return memberInfoServiceResult;
+        ReturnInfo returnInfo = new ReturnInfo();
+        try{
+            ServiceResult<MemberInfo> memberInfoServiceResult = memberDianfuService.forgetPassword(code, mobile, newPwd);
+            returnInfo.setResult(memberInfoServiceResult.getResult());
+            returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
+            returnInfo.setCode(Message.API_SUCCESS_CODE);
+            returnInfo.setMsg(Message.API_SUCCESS_MSG);
+        }catch(Exception e){
+            e.printStackTrace();
+            returnInfo.setCode(Message.FAILURE_CODE);
+            returnInfo.setMsg(Message.FAILURE_MSG);
+            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return returnInfo;
     }
 
 
