@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var _this = this;
             var tabList = document.querySelectorAll('.info-list');
             var tabLi = document.querySelectorAll('.details-tab li');
-            var getId = aspenLib.getQueryString('id');
+            var getId = aspenLib.getQueryString('pageId');
             if (tabLi && tabList) {
                 for (var k = 0; k < tabLi.length; k++) {
                     tabLi[k].classList.remove('hover');

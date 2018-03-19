@@ -1,6 +1,7 @@
 package com.sps.service.shopkeeper.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -244,5 +245,38 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		example.createCriteria().andShopkeeperCustomeridEqualTo(shopkeeper.getShopkeeperCustomerid());
 		
 		return spsShopkeeperDao.updateByExample(shopkeeper, example);
+	}
+	@Override
+	public HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation) {
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		
+		try {
+			invitation.setInvitationCreatTime(new Date());
+			
+			invitation.setInvitationUpdateTime(new Date());
+			
+			invitation.setInvitationType(1);
+			
+			invitationDao.insertSelective(invitation);
+			
+			hashMap.put("code", 1);
+			hashMap.put("msg", "邀请成功");
+			hashMap.put("success", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			hashMap.put("code", 0);
+			hashMap.put("msg", "邀请失败");
+			hashMap.put("success", false);
+		}
+		return hashMap;
+	}
+	@Override
+	public HashMap<String, Object> queryInvitationList(String salemanPhone) {
+		SpsShopkeeperInvitationExample example = new SpsShopkeeperInvitationExample();
+		
+		example.createCriteria().andInvitationSalemanPhoneEqualTo(salemanPhone);
+		
+		invitationDao.selectByExample(example);
+		return null;
 	}
 }
