@@ -65,7 +65,17 @@
                        placeholder="请输入银行卡预留手机号"
                        autocomplete="off" class="layui-input" lay-verify="required|phone" >
             </div>
+
         </div>
+      <%--  <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 136px;">短信验证码：</label>
+
+            <div class="layui-input-block" >
+                <input id="tradePwd" style="width: 187px;text-align: center;display: inline;"   value=""  autocomplete="off" class="layui-input"    lay-verify="required|number">
+                <button   style="color:red;" id="findSms">立即获取?</button>
+
+            </div>
+        </div>--%>
         <div class="layui-form-item" align="left" style="padding-left: 104px;">
            <button class="layui-btn" lay-filter="submitBankVerify" lay-submit  id="submitBankVerify">立即绑定</button>
         </div>
@@ -140,6 +150,28 @@
             return false;
         });
         lock = true;
+    });
+    $("#findSms").on("click",function(){
+        var mobile = $('#mobile').val().trim();
+        //发送ajax请求
+        $.ajax({
+            data: {phone:mobile},
+            url: "%=path%/bankCard/getVerifyCode",//确认请求
+            type: 'post',
+            dataType: 'json',
+            async: false,
+            success: function (res) {
+                alert(res.result);
+                if(res.result){
+                    layer.msg('获取验证码成功', {
+                        icon: 2,
+                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                    });
+                }
+
+            }
+        });
+
     });
     //短信验证码确认请求
     function smsConfirm(layer,result,resendCount){

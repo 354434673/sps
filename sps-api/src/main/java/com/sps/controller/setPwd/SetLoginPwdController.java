@@ -45,8 +45,6 @@ public class SetLoginPwdController {
     @ResponseBody
     public ServiceResult<Boolean> queryVerfilyCode(@PathVariable("phone") String phone) {
         logger.info("queryVerfilyCode 方法开始执行。。。。。。");
-        //  String userName = (String) SecurityUtils.getSubject().getPrincipal();
-        // 调用短信验证码接口--获取短信验证码  category 3  ISmsCommonService.sendEditPasswordSms
         ServiceResult<Boolean> sendRegisterSms = ismsCommonService.sendForgetPasswordSms(phone, 3);
         return sendRegisterSms;
     }

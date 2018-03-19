@@ -32,6 +32,22 @@ public interface CashAuditReadService {
     HashMap<String, Object> getBankTradeAuditList(Integer page, Integer limit, String userName);
 
     /**
+     * 根据用户名查询所有的交易记录
+     * @param loginName
+     * @param page
+     * @param limit
+     * @param startTime
+     * @param endTime
+     * @param minAmount
+     * @param maxAmount
+     * @param payType
+     * @param companyName
+     * @param reamrk
+     * @return
+     */
+    HashMap<String, Object> getBankTradeIncomePayListByloginName( String loginName, Integer page, Integer  limit, String startTime, String endTime, BigDecimal  minAmount,BigDecimal maxAmount, String payType, String companyName, String reamrk);
+
+    /**
      * 查看收支信息
      * @param id
      * @return

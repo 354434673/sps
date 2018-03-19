@@ -1,13 +1,10 @@
-package com.sps.controller.app;
+package com.sps.controller.system;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.sps.common.Common;
 import com.sps.common.Message;
+import com.sps.common.Result;
 import com.sps.common.ReturnInfo;
-import com.sps.entity.app.Help;
-import com.sps.entity.goods.SpsGoodShop;
-import com.sps.entity.goods.SpsGoodShopSku;
-import com.sps.service.app.help.HelpService;
+import com.sps.entity.helpAndFeedback.Help;
+import com.sps.service.help.help.HelpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2018-03-06.
@@ -30,7 +26,7 @@ import java.util.Map;
  * @createDate ${date}$ ${timme}$
  */
 @Controller
-@RequestMapping(value = "/api/help")
+@RequestMapping(value = "/help")
 public class HelpController {
     @Autowired
     private HelpService helpService;
@@ -64,8 +60,7 @@ public class HelpController {
     }
 
     /**
-     * 获取根据标题id
-     * 获取内容
+     * 获取所有的标题
      * @return
      */
     @RequestMapping(value = "/findContentById", method = RequestMethod.POST)
@@ -76,5 +71,23 @@ public class HelpController {
         return  hashMap;
     }
 
+    /**
+     *保存标题的方法
+     */
+    @RequestMapping(value = "/saveHelp", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<Boolean> saveHelp(String tittle, String content){
+        Result<Boolean> result = new Result<>();
+        Boolean flag = helpService.saveHelp(tittle, content);
+        if(flag){
+            result.setBody(true);
+            result.setMsg("保存成功");
+            return result;
+        }else{
+            result.setBody(false);
+            result.setMsg("保存失败");
+            return  result;
+        }
 
+    }
 }

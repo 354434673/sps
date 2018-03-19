@@ -25,7 +25,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 130px;">输入交易密码:</label>
             <div class="layui-input-inline">
-                <input id="tradePwd" type="text" name="tradePwd"  value=""
+                <input id="tradePwd" type="password" name="tradePwd"  value=""
                        placeholder="请输入6位数字的密码"
                        autocomplete="off" class="layui-input" lay-verify="required|pwdCheck">
             </div>
@@ -33,7 +33,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 130px;">确认交易密码 </label>
             <div class="layui-input-inline">
-                <input id="confirmPwd" type="text" name="confirmPwd"  value=""
+                <input id="confirmPwd" type="password" name="confirmPwd"  value=""
                        placeholder="请再输入一次密码"
                        autocomplete="off" class="layui-input" lay-verify="required|pwdCheck">
             </div>

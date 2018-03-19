@@ -119,7 +119,7 @@
             });
             table.render({
                 elem: '#drawAudioList'
-                ,url: '<%=path%>/incomePayment/findIncomePaymentList' //数据接口
+                ,url: '<%=path%>/tradeFlow/tradeFlowList' //数据接口
                 ,id:'id'
                 ,page:true
                 ,cols: [[ //表头

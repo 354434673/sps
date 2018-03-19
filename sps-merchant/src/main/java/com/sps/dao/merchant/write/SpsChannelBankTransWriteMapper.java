@@ -21,10 +21,14 @@ public interface SpsChannelBankTransWriteMapper {
      * @return
      */
     int insertBankTrans(SpsChannelBankTrans trans);
+
     /**
      * 更新流水帐号
-     * @param trans
+     * @param spsChannelBankTrans
+     * @param seriNum
      * @return
      */
-    int updateBankTrans(SpsChannelBankTrans trans);
+    int updateBankTrans(@Param("spsChannelBankTrans") SpsChannelBankTrans spsChannelBankTrans,@Param("seriNum") String seriNum);
+
+
 }
