@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+;(function () {
     var _this = this;
     var telNum = document.getElementById('telNum');
     var getCheckCode = document.getElementById('getCheckCode');
@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         getPhoneCode: function () {
             var _this = this;
-            var getCanvasCode = document.getElementById('checkCodeMask');
             var getCheckCode = document.getElementById('getCheckCode');
             if (getCheckCode) {
                 getCheckCode.addEventListener('click', function () {
@@ -77,59 +76,54 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else if (!/^[1][3,4,5,7,8][0-9]{9}$/.test(telNum.value)) {
                         aspenLib.tips('手机号格式不正确！');
                         return;
-                    }else if(getCanvasCode.className.indexOf('active') == -1){
+                    }else {
                         _this.imgCheckCode();
-                    } else {
-                        var telNum = document.getElementById('telNum');
-                        aspenLib.ajax({
-                            url: location.protocol + "//" + location.hostname + "/termi/sendVerifySMS.do",
-                            type: 'GET',
-                            dataType: 'json',
-                            data: {
-                                apiToken: '',
-                                userId: '',
-                                time: '',
-                                token: '',
-                                mobile: telNum.value
-                            },
-                            success: function (data) {
-                                if (data.result == 1) {
-                                    _this.countDown('getCheckCode');
-                                } else {
-                                    aspenLib.tips(data.msg);
-                                    return;
-                                }
-                            },
-                            error: function () {
-                                console.log('ajax error');
-                            }
-                        });
                     }
                 }, false);
             }
         },
         imgCheckCode: function(){
             var _this = this;
+            var verifyCanvas = document.getElementById('verifyCanvas');
             var checkCodeMask = document.getElementById('checkCodeMask');
-            var verifyCode = new GVerify("v_container");
-            checkCodeMask.style.display = 'block';
-
+            var JVerifyCode = document.getElementById('v_container');
             var subBtns = document.getElementById('subBtns');
             var canvasCode = document.getElementById('canvasCode');
-            var res = verifyCode.validate(document.getElementById("canvasCode").value);
-            subBtns.addEventListener('click', function(){
-                if(canvasCode.value == ''){
-                    aspenLib.tips('请输入图形验证码！');
-                }else if(canvasCode.value.length != 4){
-                    aspenLib.tips('图形验证码长度不正确！');
-                }else if(canvasCode.value != res){
-                    aspenLib.tips('图形验证码不正确！');
-                }else{
-                    alert(1)
-                }
-            }, false);
-
-            _this.closeMask();
+            checkCodeMask.style.display = 'block';
+            if(!verifyCanvas){
+                var verifyCode = new GVerify("v_container");
+                subBtns && subBtns.addEventListener('click', function(){
+                    if(!verifyCode.validate(canvasCode.value)){
+                        aspenLib.tips('图形验证码不正确！');
+                        canvasCode.value = '';
+                        return false;
+                    }else{
+                        canvasCode.value = '';
+                        checkCodeMask.style.display = 'none';
+                        // var telNum = document.getElementById('telNum');
+                        // aspenLib.ajax({
+                        //     url: location.protocol + "//" + location.hostname + "/termi/sendVerifySMS.do",
+                        //     type: 'GET',
+                        //     dataType: 'json',
+                        //     data: {
+                        //         mobile: telNum.value
+                        //     },
+                        //     success: function (data) {
+                        //         if (data.result == 1) {
+                        //             _this.countDown('getCheckCode');
+                        //         } else {
+                        //             aspenLib.tips(data.msg);
+                        //             return;
+                        //         }
+                        //     },
+                        //     error: function () {
+                        //         console.log('ajax error');
+                        //     }
+                        // });
+                    }
+                }, false);
+                _this.closeMask();
+            }
         },
         closeMask: function(){
             var closeBtn = document.querySelector('.closeBtn');
@@ -241,4 +235,4 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     register.init();
-});
+})();

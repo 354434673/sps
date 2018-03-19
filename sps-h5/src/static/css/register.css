@@ -1,5 +1,6 @@
 
 html,body,.web-wrap{ width: 100%; max-width: 750px; height: 100%; padding: .2rem; box-sizing: border-box; background: linear-gradient(to bottom, #5CB7FB, #3585F0); position: relative; margin: 0 auto; }
+.web-wrap{ overflow: hidden; }
 html{ background: #fff; }
 html,body{ margin: 0 auto; padding: 0; }
 .register-info-main{ width: 100%; padding-top: 1rem; position: relative; }

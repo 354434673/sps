@@ -110,6 +110,9 @@
             console.log(v_code);
             if (code == v_code) {
                 return true;
+            } else {
+                this.refresh();
+                return false;
             }
         }
     }
