@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (telNum.value == '' || telNum.value.length == 0) {
                         aspenLib.tips('请先输入手机号！');
                         return;
-                    } else if (!/^1\d{10}$/.test(telNum.value)) {
+                    } else if (!/^[1][3,4,5,7,8][0-9]{9}$/.test(telNum.value)) {
                         aspenLib.tips('手机号格式不正确！');
                         return;
                     } else {

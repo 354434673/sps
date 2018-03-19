@@ -82,21 +82,20 @@
         var shopTel = document.getElementById('shopTel');
         var supplierTel = document.getElementById('supplierTel');
         var qrcode = new QRCode("qrcode",{
-            width: 100,
-            height: 100
+            width: 150,
+            height: 150
         });
-        console.log(qrcode)
         createCode.addEventListener('click', function(){
             if(!shopTel || shopTel.value == ''){
                 aspenLib.tips('请输入店主手机号！');
                 shopTel.focus();
-            }else if(!/^1\d{10}$/.test(shopTel.value)){
+            }else if(!/^[1][3,4,5,7,8][0-9]{9}$/.test(shopTel.value)){
                 aspenLib.tips('手机号格式不正确！');
                 shopTel.focus();
             }else if(!supplierTel || supplierTel.value == ''){
                 aspenLib.tips('请输入供应商店主手机号！');
                 supplierTel.focus();
-            }else if(!/^1\d{10}$/.test(supplierTel.value)){
+            }else if(!/^[1][3,4,5,7,8][0-9]{9}$/.test(supplierTel.value)){
                 aspenLib.tips('供应商手机号格式不正确！');
                 supplierTel.focus();
             }else{
