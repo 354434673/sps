@@ -121,8 +121,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     aspenLib.tips('请输入图形验证码！');
                 }else if(canvasCode.value.length != 4){
                     aspenLib.tips('图形验证码长度不正确！');
+                }else if(canvasCode.value != canvasCode.value){
+                    aspenLib.tips('图形验证码长度不正确！');
                 }else{
-                    
+
                 }
             }, false);
 
