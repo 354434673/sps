@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
             this.checkbox();
             this.getPhoneCode();
             this.submitInformation();
-            this.testa();
         },
         keyFocus: function () {
             for (var i = 0; i < getInput.length; i++) {
@@ -61,16 +60,12 @@ document.addEventListener('DOMContentLoaded', function () {
         checkbox: function () {
             var _this = this;
             protocol.addEventListener('click', function () {
-
                 _this.toggleClassRun.toggleClassTest();
-
             }, false);
-        },
-        testa: function(){
-            var verifyCode = new GVerify("v_container");
         },
         getPhoneCode: function () {
             var _this = this;
+            var getCanvasCode = document.getElementById('checkCodeMask');
             var getCheckCode = document.getElementById('getCheckCode');
             if (getCheckCode) {
                 getCheckCode.addEventListener('click', function () {
@@ -82,6 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else if (!/^[1][3,4,5,7,8][0-9]{9}$/.test(telNum.value)) {
                         aspenLib.tips('手机号格式不正确！');
                         return;
+                    }else if(getCanvasCode.className.indexOf('active') == -1){
+                        _this.imgCheckCode();
                     } else {
                         var telNum = document.getElementById('telNum');
                         aspenLib.ajax({
@@ -97,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             },
                             success: function (data) {
                                 if (data.result == 1) {
-                                    _this.imgCheckCode();
                                     _this.countDown('getCheckCode');
                                 } else {
                                     aspenLib.tips(data.msg);
@@ -113,8 +109,31 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         imgCheckCode: function(){
+            var _this = this;
             var checkCodeMask = document.getElementById('checkCodeMask');
+            var verifyCode = new GVerify("v_container");
             checkCodeMask.style.display = 'block';
+
+            var subBtns = document.getElementById('subBtns');
+            var canvasCode = document.getElementById('canvasCode');
+            subBtns.addEventListener('click', function(){
+                if(canvasCode.value == ''){
+                    aspenLib.tips('请输入图形验证码！');
+                }else if(canvasCode.value.length != 4){
+                    aspenLib.tips('图形验证码长度不正确！');
+                }else{
+                    
+                }
+            }, false);
+
+            _this.closeMask();
+        },
+        closeMask: function(){
+            var closeBtn = document.querySelector('.closeBtn');
+            var checkCodeMask = document.getElementById('checkCodeMask');
+            closeBtn.addEventListener('click', function(){
+                checkCodeMask.style.display = 'none';
+            }, false);
         },
         countDown: function (id) {
             var _this = this;
