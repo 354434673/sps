@@ -53,8 +53,9 @@
     <div class="web-wrap clearfix">
         <ul class="user-addr">
             <li><em>店主名称</em><input type="text" placeholder="请输入店主名称" /></li>
-            <li><em>手机号</em><input type="text" placeholder="请输入店主手机号" maxlength="11" /></li>
+            <li><em>手机号</em><input id="shopTel" type="text" placeholder="请输入店主手机号" maxlength="11" /></li>
             <li><em>地址</em><input type="text" disabled placeholder="请选择省.市.区" /><span></span></li>
+            <li><em>供应商手机号</em><input id="supplierTel" type="text" placeholder="请输入店主手机号" maxlength="11" /></li>
         </ul>
         <ul class="detail-list">
             <li>
@@ -71,8 +72,38 @@
             </li>
         </ul>
         <a id="createCode" href="javascript:;">生成二维码</a>
+        <div id="qrcode"></div>
     </div>
     <script type="text/javascript" src="../static/js/aspen.lib.min.js"></script>
     <script type="text/javascript" src="../static/js/invitation.js"></script>
+    <script type="text/javascript" src="../static/js/qrcode.min.js"></script>
+    <script>
+        var createCode = document.getElementById('createCode');
+        var shopTel = document.getElementById('shopTel');
+        var supplierTel = document.getElementById('supplierTel');
+        var qrcode = new QRCode("qrcode",{
+            width: 100,
+            height: 100
+        });
+        console.log(qrcode)
+        createCode.addEventListener('click', function(){
+            if(!shopTel || shopTel.value == ''){
+                aspenLib.tips('请输入店主手机号！');
+                shopTel.focus();
+            }else if(!/^1\d{10}$/.test(shopTel.value)){
+                aspenLib.tips('手机号格式不正确！');
+                shopTel.focus();
+            }else if(!supplierTel || supplierTel.value == ''){
+                aspenLib.tips('请输入供应商店主手机号！');
+                supplierTel.focus();
+            }else if(!/^1\d{10}$/.test(supplierTel.value)){
+                aspenLib.tips('供应商手机号格式不正确！');
+                supplierTel.focus();
+            }else{
+                var setUrl = 'http://www.baidu.com?sTel=' + shopTel.value + '&supplierTel=' + supplierTel.value;
+                qrcode.makeCode(setUrl);
+            }
+        }, false);
+    </script>
 </body>
 </html>
