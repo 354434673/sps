@@ -3,8 +3,8 @@
         this.options = { //默认options参数值
             id: "", //容器Id
             canvasId: "verifyCanvas", //canvas的ID
-            width: "100", //默认canvas宽度
-            height: "30", //默认canvas高度
+            width: "100", 
+            height: "30", 
             type: "blend", //图形验证码默认类型blend:数字字母混合类型、number:纯数字、letter:纯字母
             code: ""
         }
@@ -25,9 +25,6 @@
     }
 
     GVerify.prototype = {
-        /**版本号**/
-        version: '1.0.0',
-
         /**初始化方法**/
         _init: function () {
             var con = document.getElementById(this.options.id);
@@ -58,7 +55,7 @@
 
             ctx.textBaseline = "middle";
 
-            ctx.fillStyle = randomColor(180, 240);
+            ctx.fillStyle = randomColor(255, 255, 255);
             ctx.fillRect(0, 0, this.options.width, this.options.height);
 
             if (this.options.type == "blend") { //判断验证码类型
@@ -72,8 +69,8 @@
             for (var i = 1; i <= 4; i++) {
                 var txt = txtArr[randomNum(0, txtArr.length)];
                 this.options.code += txt;
-                ctx.font = randomNum(this.options.height / 2, this.options.height) + 'px SimHei'; //随机生成字体大小
-                ctx.fillStyle = randomColor(50, 160); //随机生成字体颜色
+                ctx.font = randomNum(this.options.height / 1.2, this.options.height) + 'px SimHei'; //随机生成字体大小
+                ctx.fillStyle = randomColor(0, 0, 0); //随机生成字体颜色
                 ctx.shadowOffsetX = randomNum(-3, 3);
                 ctx.shadowOffsetY = randomNum(-3, 3);
                 ctx.shadowBlur = randomNum(-3, 3);
