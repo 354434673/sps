@@ -116,15 +116,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var subBtns = document.getElementById('subBtns');
             var canvasCode = document.getElementById('canvasCode');
+            var res = verifyCode.validate(document.getElementById("canvasCode").value);
             subBtns.addEventListener('click', function(){
                 if(canvasCode.value == ''){
                     aspenLib.tips('请输入图形验证码！');
                 }else if(canvasCode.value.length != 4){
                     aspenLib.tips('图形验证码长度不正确！');
-                }else if(canvasCode.value != canvasCode.value){
-                    aspenLib.tips('图形验证码长度不正确！');
+                }else if(canvasCode.value != res){
+                    aspenLib.tips('图形验证码不正确！');
                 }else{
-
+                    alert(1)
                 }
             }, false);
 
