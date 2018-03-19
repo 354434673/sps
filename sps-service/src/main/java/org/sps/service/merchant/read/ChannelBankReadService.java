@@ -1,8 +1,5 @@
 package org.sps.service.merchant.read;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.sps.entity.merchant.SpsChannelBank;
 
 /***
@@ -40,5 +37,12 @@ public interface ChannelBankReadService{
 	 * @return
 	 */
 	String  findMobileByUserName(String userName);
-	
+
+	/***
+	 * 根据用户名获取盐
+	 * @param userName
+	 * @return
+	 */
+	String  findSalt(String userName);
+
 }

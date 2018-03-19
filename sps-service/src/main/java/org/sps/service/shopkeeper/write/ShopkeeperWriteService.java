@@ -44,7 +44,7 @@ public interface ShopkeeperWriteService {
 	 * @return: HashMap<String,Object>      
 	 * @throws
 	 */
-	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation);
+	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation, String channelNum);
 	/**
 	 * 添加多次店主
 	 * @Title: insertManyInvitation   

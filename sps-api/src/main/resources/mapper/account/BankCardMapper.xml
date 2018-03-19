@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.account.BankCardInfoDao">
+
+	<select id="selectByUserName"   resultType="String">
+			SELECT
+					b_user_id userId
+			FROM
+					sps_bank
+			WHERE
+				user_mark=2  AND  b_user_name=#{userName}
+
+	</select>
+</mapper>

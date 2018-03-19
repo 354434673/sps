@@ -344,5 +344,16 @@ public class ShopkeeperReadServiceImpl implements ShopkeeperReadService{
 		
 		return hashMap;
 	}
+	@Override
+	public SpsShopkeeperInvitation queryInvitation(String name, String phone, String state) {
+		
+		SpsShopkeeperInvitationExample example = new SpsShopkeeperInvitationExample();
+		
+		example.createCriteria().andInvitationPhoneEqualTo(phone);
+		
+		List<SpsShopkeeperInvitation> selectByExample = invitationRead.selectByExample(example );
+		
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
+	}
 
 }

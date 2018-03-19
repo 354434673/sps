@@ -1,10 +1,10 @@
 package com.sps.dao.order;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 import org.sps.entity.order.SpsOrderLogistics;
 import org.sps.entity.order.SpsOrderLogisticsExample;
+
+import java.util.List;
 
 public interface SpsOrderLogisticsMapper {
     int countByExample(SpsOrderLogisticsExample example);
@@ -28,4 +28,11 @@ public interface SpsOrderLogisticsMapper {
     int updateByPrimaryKeySelective(SpsOrderLogistics record);
 
     int updateByPrimaryKey(SpsOrderLogistics record);
+
+    /**
+     * g根据订单号查询物流信息
+     * @param orderNo
+     * @return
+     */
+    SpsOrderLogistics  selectByOrderNo(String  orderNo);
 }

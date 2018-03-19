@@ -18,10 +18,10 @@
    <link rel="stylesheet" href="<%=request.getContextPath()%>/page/static/plugins/layui/css/layui.css" media="all"/>
  </head>
 <body>
-<div style="padding: 100px">
+<div style="padding: 40px;width: 600px;">
 
     <hr>
-    <form class="layui-form layui-form-pane"  style="padding-left: 500px;padding-right: 300px;width: 800px;">
+    <form class="layui-form layui-form-pane"  style="padding-left: 200px;padding-right: 300px;width: 800px;">
         <input type="hidden" id="isDEL" name="bankCard" autocomplete="off" class="layui-input" value="${isDEL}"/>
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 130px;">姓名 </label>
@@ -97,8 +97,8 @@
             lock = false;  //3.进来后，立马把锁锁住
             //解绑银行卡请求
             $.ajax({
-                data: {isDEL:isDEL},
-                url: "<%=path%>/bankCard/unbindBackCard",
+//                data: {isDEL:isDEL},
+                url: "<%=path%>/bankCard/unbindBackCard?",
                 type: 'post',
                 dataType: 'json',
                 async: false,
@@ -113,11 +113,14 @@
                                 time:1000
                             },function(){//关闭时，执行
                                 //跳转至详情页
-                                if(code == ok){
                                     if(result.body == true){
+                                        layer.msg("解卡成功");
+                                        window.location.reload();
+                                    }else{
+                                        layer.msg("解卡失敗");
                                         window.location.reload();
                                     }
-                                }
+
 
                             });
 

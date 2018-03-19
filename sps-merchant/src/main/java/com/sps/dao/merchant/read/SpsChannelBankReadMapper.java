@@ -1,9 +1,5 @@
 package com.sps.dao.merchant.read;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import org.sps.entity.merchant.SpsChannelAccount;
-import org.sps.entity.merchant.SpsChannelAccountExample;
 import org.sps.entity.merchant.SpsChannelBank;
 
 /**  银行卡绑定业务的读操作
@@ -18,10 +14,10 @@ public interface SpsChannelBankReadMapper {
      * @param identity
      * @return
      */
-    SpsChannelBank  selectByPrimaryKey(String identity);
+    SpsChannelBank  selectByPrimaryKey(String userName);
     /**
      * 根據登陸用戶查询用户信息
-     * @param identity
+     * @param userName
      * @return
      */
     SpsChannelBank  selectByLoginName(String userName);
@@ -34,7 +30,7 @@ public interface SpsChannelBankReadMapper {
 
     /**
      * 根据登录用户交易密码
-     * @param loginUser
+     * @param userName
      * @return
      */
     String   selectByLoginUser(String userName);
@@ -45,4 +41,12 @@ public interface SpsChannelBankReadMapper {
      * @return
      */
     String  selectMobileByLoginUser(String userName);
+    /**
+     * 根据用户名获取盐
+     * @param userName
+     * @return
+     */
+    String  selectSalt(String userName);
+
+
 }

@@ -6,8 +6,8 @@ import java.util.Date;
 
 public class SpsGoodShopSku implements Serializable {
     private String spuName;
-    private String colorSize;
-
+    private String gColorSize;
+    private Integer groundingFlag;
 
     private Integer gId;
     private Integer gGoodsId;
@@ -37,12 +37,20 @@ public class SpsGoodShopSku implements Serializable {
     private Date gUpdateTime;
 
 
-    public String getColorSize() {
-        return colorSize;
+    public Integer getGroundingFlag() {
+        return groundingFlag;
     }
 
-    public void setColorSize(String colorSize) {
-        this.colorSize = colorSize;
+    public void setGroundingFlag(Integer groundingFlag) {
+        this.groundingFlag = groundingFlag;
+    }
+
+    public String getgColorSize() {
+        return gColorSize;
+    }
+
+    public void setgColorSize(String gColorSize) {
+        this.gColorSize = gColorSize;
     }
 
     public Integer getgGoodsId() {

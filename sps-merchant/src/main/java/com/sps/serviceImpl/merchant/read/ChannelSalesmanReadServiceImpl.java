@@ -17,7 +17,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.merchant.read.SpsChannelSalesmanReadMapper;
 
-@Service(timeout=2000,group="dianfu")
+@Service(timeout=12000,group="dianfu")
 @Transactional(readOnly = true)
 public class ChannelSalesmanReadServiceImpl implements ChannelSalesmanReadService{
 	@Resource
@@ -31,6 +31,7 @@ public class ChannelSalesmanReadServiceImpl implements ChannelSalesmanReadServic
 			
 			Criteria createCriteria = example.createCriteria();
 			
+			createCriteria.andBei1NotEqualTo("3");
 			if(!StringUtil.isEmpty(salesmanName)){
 				createCriteria.andSalesmanNameLike("%"+salesmanName+"%");
 			}
@@ -45,10 +46,7 @@ public class ChannelSalesmanReadServiceImpl implements ChannelSalesmanReadServic
 			}
 			if(!StringUtil.isEmpty(bei1)){
 				createCriteria.andBei1EqualTo(bei1);
-			}else{
-				createCriteria.andBei1EqualTo("1");
 			}
-			
 			long count = 0;
 			List<SpsChannelSalesman> selectByExample = null;
 			if(page != null&&limit!=null){

@@ -62,7 +62,7 @@
     enterprise_employee_num, channel_num
   </sql>
   <sql id="Column_List" >
-    e1.enterprise_id, e1.channel_num,e1.enterprise_businesslicense_no, e1.enterprise_company_name, e1.enterprise_company_abbreviation,e1.enterprise_company_register_addr, 
+    DISTINCT e1.enterprise_id, e1.channel_num,e1.enterprise_businesslicense_no, e1.enterprise_company_name, e1.enterprise_company_abbreviation,e1.enterprise_company_register_addr, 
     e1.enterprise_company_realit_addr, e1.enterprise_corp, e1.enterprise_corp_idCard, e1.enterprise_operatio_time, 
     e1.enterprise_employee_num,b1.business_id,b1.business_product,p1.pic_type,p1.pic_src,g1.guarantee_corp_phone
   </sql>
@@ -104,10 +104,13 @@
 	JOIN 
 	   	sps_channel_guarantee g1 on b1.channel_num = g1.channel_num
 		<where>
-			<if test="businessProduct.size > 0">
+<!-- 			<if test="businessProduct.size > 0">
 				<foreach collection="businessProduct" separator="and" item="item">
 					FIND_IN_SET(#{item}, business_product)
 				</foreach>
+			</if> -->
+			<if test="channelNum != null">
+				and e1.channel_num = #{channelNum}
 			</if>
 			<if test="picType != null">
 				and p1.pic_type = #{picType}
@@ -116,5 +119,6 @@
 				and e1.enterprise_id = #{enterpriseId}
 			</if>
 		</where>
+	group by enterprise_id
   </select>
 </mapper>

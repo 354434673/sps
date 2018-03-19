@@ -1,6 +1,7 @@
 package com.sps.entity.shopkeeper;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class SpsShopkeeperPersonal implements Serializable{
@@ -8,6 +9,17 @@ public class SpsShopkeeperPersonal implements Serializable{
 	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
 	 */   
 	private static final long serialVersionUID = 1L;
+
+
+    private String url;
+    private BigDecimal balanceAmount;
+    private BigDecimal amountUsable;
+    private BigDecimal balance;
+    private BigDecimal threeDayRepayment;
+    private BigDecimal weekRepayment;
+    private BigDecimal repayAmount;
+
+
 
 	private Integer personalId;
 
@@ -40,8 +52,9 @@ public class SpsShopkeeperPersonal implements Serializable{
     private String personalLivingAddress;
 
     private String personalNoneCorp;
+    private String  personalNickname;
 
-    private String personalNickname;
+    private String shopkeeperCustomerid;
 
     private String personalUsername;
 
@@ -49,7 +62,24 @@ public class SpsShopkeeperPersonal implements Serializable{
 
     private Date personalUpdateTime;
 
-    private String shopkeeperCustomerid;
+    private SpsShopkeeperPic pic;
+
+
+    public String getPersonalNickname() {
+        return personalNickname;
+    }
+
+    public void setPersonalNickname(String personalNickname) {
+        this.personalNickname = personalNickname;
+    }
+
+    public SpsShopkeeperPic getPic() {
+        return pic;
+    }
+
+    public void setPic(SpsShopkeeperPic pic) {
+        this.pic = pic;
+    }
 
     public Integer getPersonalId() {
         return personalId;
@@ -179,12 +209,12 @@ public class SpsShopkeeperPersonal implements Serializable{
         this.personalNoneCorp = personalNoneCorp == null ? null : personalNoneCorp.trim();
     }
 
-    public String getPersonalNickname() {
-        return personalNickname;
+    public String getShopkeeperCustomerid() {
+        return shopkeeperCustomerid;
     }
 
-    public void setPersonalNickname(String personalNickname) {
-        this.personalNickname = personalNickname == null ? null : personalNickname.trim();
+    public void setShopkeeperCustomerid(String shopkeeperCustomerid) {
+        this.shopkeeperCustomerid = shopkeeperCustomerid == null ? null : shopkeeperCustomerid.trim();
     }
 
     public String getPersonalUsername() {
@@ -211,11 +241,59 @@ public class SpsShopkeeperPersonal implements Serializable{
         this.personalUpdateTime = personalUpdateTime;
     }
 
-    public String getShopkeeperCustomerid() {
-        return shopkeeperCustomerid;
+    public String getUrl() {
+        return url;
     }
 
-    public void setShopkeeperCustomerid(String shopkeeperCustomerid) {
-        this.shopkeeperCustomerid = shopkeeperCustomerid == null ? null : shopkeeperCustomerid.trim();
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public BigDecimal getBalanceAmount() {
+        return balanceAmount;
+    }
+
+    public void setBalanceAmount(BigDecimal balanceAmount) {
+        this.balanceAmount = balanceAmount;
+    }
+
+    public BigDecimal getAmountUsable() {
+        return amountUsable;
+    }
+
+    public void setAmountUsable(BigDecimal amountUsable) {
+        this.amountUsable = amountUsable;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public BigDecimal getThreeDayRepayment() {
+        return threeDayRepayment;
+    }
+
+    public void setThreeDayRepayment(BigDecimal threeDayRepayment) {
+        this.threeDayRepayment = threeDayRepayment;
+    }
+
+    public BigDecimal getWeekRepayment() {
+        return weekRepayment;
+    }
+
+    public void setWeekRepayment(BigDecimal weekRepayment) {
+        this.weekRepayment = weekRepayment;
+    }
+
+    public BigDecimal getRepayAmount() {
+        return repayAmount;
+    }
+
+    public void setRepayAmount(BigDecimal repayAmount) {
+        this.repayAmount = repayAmount;
     }
 }

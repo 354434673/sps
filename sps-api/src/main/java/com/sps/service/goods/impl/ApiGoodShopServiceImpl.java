@@ -1,5 +1,6 @@
 package com.sps.service.goods.impl;
 
+import com.sps.common.EntityUtiles;
 import com.sps.dao.goods.SpsGoodShopMapper;
 import com.sps.dao.goods.SpsGoodShopSkuMapper;
 import com.sps.dao.goods.SpsGoodsAlbumMapper;
@@ -55,8 +56,9 @@ public class ApiGoodShopServiceImpl implements ApiGoodShopService {
                         detailPic.add(pic);
                     }
                 }
-                goodShop.setAlbumList(mainPic);
-                goodShop.setAlbumDetailList(detailPic);
+                String[] pro1 = new String[]{"albumId","albumUrl","albumType"};
+                goodShop.setAlbumList((List<SpsGoodsAlbum>) EntityUtiles.reloadListPropertyValue(mainPic, pro1));
+                goodShop.setAlbumDetailList((List<SpsGoodsAlbum>) EntityUtiles.reloadListPropertyValue(detailPic, pro1));
             }
         }
         Map<String, Object> map = new HashMap<>();
@@ -69,9 +71,9 @@ public class ApiGoodShopServiceImpl implements ApiGoodShopService {
                 for (SpsGoodShopSku sku : skuList) {
                     price.add(sku.getgPrice());
                 }
-                goodShop.setMinPrice(Collections.min(price));
+                goodShop.setgMinPrice(Collections.min(price));
             } else {
-                goodShop.setMinPrice(skuList.get(0).getgPrice());
+                goodShop.setgMinPrice(skuList.get(0).getgPrice());
             }
 
         }

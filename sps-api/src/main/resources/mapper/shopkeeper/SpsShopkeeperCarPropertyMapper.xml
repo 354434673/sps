@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.SpsShopkeeperCarPrppertyDao" >
+  <insert id="saveCarInfo" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCarProperty">
+      INSERT INTO
+          sps_shopkeeper_car_property
+          (
+            car_is_have,
+            car_chassis_num,
+            car_plate_num,
+            car_brand,
+            shopkeeper_customerId,
+            car_username,
+            car_creat_time,
+            car_update_time
+         )
+    VALUES (
+
+       #{carIsHave,jdbcType=INTEGER},
+       #{carChassisNum,jdbcType=VARCHAR},
+       #{carPlateNum,jdbcType=VARCHAR},
+       #{carBrand,jdbcType=VARCHAR},
+       #{shopkeeperCustomerid,jdbcType=VARCHAR},
+       #{carUsername,jdbcType=VARCHAR},
+       #{carCreatTime,jdbcType=TIMESTAMP},
+       #{carUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+    <insert id="insertSelective" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCarProperty" >
+    insert into sps_shopkeeper_car_property
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="carId != null" >
+        car_id,
+      </if>
+      <if test="carIsHave != null" >
+        car_is_have,
+      </if>
+      <if test="carChassisNum != null" >
+        car_chassis_num,
+      </if>
+      <if test="carPlateNum != null" >
+        car_plate_num,
+      </if>
+      <if test="carBrand != null" >
+        car_brand,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
+      </if>
+      <if test="carUsername != null" >
+        car_username,
+      </if>
+      <if test="carCreatTime != null" >
+        car_creat_time,
+      </if>
+      <if test="carUpdateTime != null" >
+        car_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="carId != null" >
+        #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="carIsHave != null" >
+        #{carIsHave,jdbcType=INTEGER},
+      </if>
+      <if test="carChassisNum != null" >
+        #{carChassisNum,jdbcType=VARCHAR},
+      </if>
+      <if test="carPlateNum != null" >
+        #{carPlateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="carBrand != null" >
+        #{carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="carUsername != null" >
+        #{carUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="carCreatTime != null" >
+        #{carCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carUpdateTime != null" >
+        #{carUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

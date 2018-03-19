@@ -5,7 +5,7 @@
   <artifactId>sps-api</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>sps-admin Maven Webapp</name>
+  <name>sps-api Maven Webapp</name>
   <url>http://maven.apache.org</url>
 	<dependencies>
 		<!-- spring -->
@@ -14,17 +14,12 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
-		
+
 		<!-- Mybatis分页 -->
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
 			<version>5.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sps</groupId>
-			<artifactId>sps-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -334,9 +329,20 @@
 		<dependency>
 			<groupId>jzfq_auth</groupId>
 			<artifactId>auth_api</artifactId>
-			<version>1.7.1-SNAPSHOT</version>
+			<version>1.7.2-SNAPSHOT</version>
 		</dependency>
 		
+		<dependency>
+	      <groupId>com.juzifenqi</groupId>
+	      <artifactId>member-center-api</artifactId>
+	      <version>2.3.0.1-SNAPSHOT</version>
+	    </dependency>
+	    
+		<dependency>
+	      <groupId>com.juzifenqi</groupId>
+	      <artifactId>member-center-core</artifactId>
+	      <version>2.3.0.1-SNAPSHOT</version>
+	    </dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
@@ -353,9 +359,21 @@
 			<artifactId>zkclient</artifactId>
 			<version>${zkClient.version}</version>
 		</dependency>
+		    <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.20.0-GA</version>
+        </dependency>
+<!--         
+        <dependency>
+			 <groupId>com.yop</groupId>
+			 <artifactId>yop-sdk</artifactId>
+			 <version>1.2.1</version>
+		</dependency> -->
+		
     </dependencies>
 
-<!--     <distributionManagement>
+    <distributionManagement>
 		<repository>
 			<id>releases</id>
 			<url>http://git.juzifenqi.cn:8081/nexus/content/repositories/releases</url>
@@ -377,26 +395,56 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-	</repositories> -->
+	</repositories>
 	<profiles>
+		<!-- 开发环境 -->
 		<profile>
 			<id>dev</id>
 			<properties>
 				<env>dev</env>
+				<db.driver>com.mysql.jdbc.Driver</db.driver>
+				<db.connectionURL>jdbc:mysql://192.168.201.158:3306/sps</db.connectionURL>
+				<db.username>root</db.username>
+				<db.password>123456</db.password>
+				<dubbo.auth.group>auth_dev1</dubbo.auth.group>
+				<dubbo.member.group>member-center-dev1</dubbo.member.group>
+				<dubbo.capital.group>capital-dev1</dubbo.capital.group>
+				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-			
 		</profile>
-
+		<!-- 测试环境 -->
 		<profile>
-			<id>prod</id>
+			<id>test</id>
 			<properties>
-				<env>prod</env>
+				<env>test</env>
+				<db.driver>com.mysql.jdbc.Driver</db.driver>
+				<db.connectionURL>jdbc:mysql://47.93.43.48:3728/dianfu_test</db.connectionURL>
+				<db.username>dianfu_test_rw</db.username>
+				<db.password>dGlXkNJ38I2CHsYVVcUo</db.password>
+				<dubbo.auth.group>auth_dev1</dubbo.auth.group>
+				<dubbo.member.group>member-center-dev1</dubbo.member.group>
+				<dubbo.capital.group>capital-dev1</dubbo.capital.group>
+				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
 		</profile>
-		
+		<!-- 生产环境 -->
+		<profile>
+			<id>pro</id>
+			<properties>
+				<env>pro</env>
+				<db.driver>com.mysql.jdbc.Driver</db.driver>
+				<db.connectionURL>jdbc:mysql://47.93.43.48:3728/dianfu_test</db.connectionURL>
+				<db.username>dianfu_test_rw</db.username>
+				<db.password>dGlXkNJ38I2CHsYVVcUo</db.password>
+				<dubbo.auth.group>auth_dev1</dubbo.auth.group>
+				<dubbo.member.group>member-center-dev1</dubbo.member.group>
+				<dubbo.capital.group>capital-dev1</dubbo.capital.group>
+				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
+			</properties>
+		</profile>
 	</profiles>
 
 	<build>
@@ -411,7 +459,7 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering> <!-- 是否使用过滤器 -->
 			</resource>
-		</resources>
+		</resources>a
 
 		<plugins>
 			<plugin>
@@ -442,7 +490,7 @@
 	<properties>
 		<!-- 设置默认编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<dubbo.version>2.5.3</dubbo.version>
+		<dubbo.version>2.8.4</dubbo.version>
 		<zkClient.version>0.10</zkClient.version>
 	</properties>
 </project>

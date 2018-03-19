@@ -1,24 +1,18 @@
 package com.sps.serviceImpl.merchant.read;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.transaction.annotation.Transactional;
-import org.sps.entity.merchant.SpsChannelBank;
-import org.sps.entity.merchant.SpsChannelBankTrade;
-import org.sps.entity.shopkeeper.SpsShopkeeper;
-import org.sps.service.merchant.read.ChannelBankTradeReadService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sps.dao.merchant.read.SpsChannelBankReadMapper;
 import com.sps.dao.merchant.read.SpsChannelBankTradeReadMapper;
 import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
-import com.sps.dao.shopkeeper.read.SpsShopkeeperCarPropertyReadMapper;
+import org.springframework.transaction.annotation.Transactional;
+import org.sps.entity.merchant.SpsChannelBankTrade;
+import org.sps.service.merchant.read.ChannelBankTradeReadService;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 交易記錄的方法
@@ -26,7 +20,7 @@ import com.sps.dao.shopkeeper.read.SpsShopkeeperCarPropertyReadMapper;
  * @author juzi
  *
  */
-@Service(timeout = 2000, group = "dianfu")
+@Service(timeout = 12000, group = "dianfu")
 @Transactional
 public class ChannelBankTradeReadServiceImpl implements ChannelBankTradeReadService {
 	@Resource
@@ -40,14 +34,14 @@ public class ChannelBankTradeReadServiceImpl implements ChannelBankTradeReadServ
 
 	@Override
 	public HashMap<String, Object> getBankTradeList(Integer page, Integer limit, String applicationStartDate,
-			String paymentDate, String tradeStatus, String loginName) {
+			String paymentDate, String tradeStatus, String loginName,String tradeType) {
 		// 获取档期那登录用户的用户名进行查询
 		String channelNum = accountRead.selectByOpenAdminNum(loginName);
-
-		List<SpsChannelBankTrade> listBankTrade = bankTradeRead.selectListBankTrade(applicationStartDate, paymentDate,
-				tradeStatus, channelNum);
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		PageHelper.startPage(page, limit);
+		List<SpsChannelBankTrade> listBankTrade = bankTradeRead.selectListBankTrade(applicationStartDate, paymentDate,
+				tradeStatus, channelNum,tradeType);
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
 		PageInfo pageInfo = new PageInfo(listBankTrade);
 		hashMap.put("code", 0);
 		hashMap.put("msg", "获取成功");
@@ -64,9 +58,15 @@ public class ChannelBankTradeReadServiceImpl implements ChannelBankTradeReadServ
 	
 	@Override
 	public SpsChannelBankTrade getTradeDetail(String loginName, String tradeSerialNum) {
-		String channelNum = accountRead.selectByOpenAdminNum(loginName);
+	String channelNum = accountRead.selectByOpenAdminNum(loginName);
 		SpsChannelBankTrade bankTrade = bankTradeRead.selectBankTradeByUsername(channelNum,tradeSerialNum);
 		return bankTrade;		
+	}
+
+	@Override
+	public SpsChannelBankTrade getTradeInfo(String tradeSerialNum) {
+		SpsChannelBankTrade bankTrade = bankTradeRead.selectBankTradeByUsername(null,tradeSerialNum);
+		return bankTrade;
 	}
 
 	/**
@@ -84,10 +84,9 @@ public class ChannelBankTradeReadServiceImpl implements ChannelBankTradeReadServ
 	public HashMap<String, Object> getBankAuditInfo(Integer page, Integer limit, String applicationStartDate, String paymentDate, String tradeStatus, String enterpriseCompanyAbbreviation, String loginName) {
 		// 获取档期那登录用户的用户名进行查询
 		String channelNum = accountRead.selectByOpenAdminNum(loginName);
-		List<SpsChannelBankTrade> listBankTrade = bankTradeRead.selectListCashAudit(applicationStartDate, paymentDate,tradeStatus,enterpriseCompanyAbbreviation,loginName);
-
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		PageHelper.startPage(page, limit);
+		List<SpsChannelBankTrade> listBankTrade = bankTradeRead.selectListCashAudit(applicationStartDate, paymentDate,tradeStatus,enterpriseCompanyAbbreviation,loginName);
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		PageInfo pageInfo = new PageInfo(listBankTrade);
 		hashMap.put("code", 0);
 		hashMap.put("msg", "获取成功");

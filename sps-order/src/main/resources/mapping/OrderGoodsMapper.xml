@@ -45,7 +45,6 @@
 	     </if>
      </where>
   </select>
-
 <!-- 修改单个商品的价格和订货数量，并重新计算总金额 -->
 <!-- <update id="updatePrice" parameterType="com.sps.order.entity.OrderGoods">
         update 

@@ -255,7 +255,7 @@
         sps_good_shop_sku s
         WHERE
         s.g_gid = g.g_id
-        ) AS minPrice,
+        ) AS gMinPrice,
         (
         SELECT
         a.album_url
@@ -314,10 +314,13 @@
             order by g.g_sales_num desc ,  g.g_create_time desc
         </if>
         <if test="orderType== 2">
-            order by minPrice desc ,  g.g_create_time desc
+            order by gMinPrice desc ,  g.g_create_time desc
         </if>
         <if test="orderType== 3">
-            order by minPrice asc ,  g.g_create_time desc
+            order by gMinPrice asc ,  g.g_create_time desc
+        </if>
+        <if test="orderType== 4">
+            order by g.g_sales_num desc ,  g.g_create_time desc
         </if>
     </select>
     <select id="findLastId" parameterType="int" resultMap="BaseResultMap">

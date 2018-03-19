@@ -122,7 +122,7 @@
 		 			 	salesmanPhone:salesmanPhone,
 		 			 	salesmanEmail:salesmanEmail,
 		 			 	salesmanCity:salesmanCity,
-		 			 	bei1:0
+		 			 	bei1:1
 		 			 },
 		 			 success:function(data){
 		 				 if(data.state == 'success'){
@@ -221,7 +221,7 @@
 					15: '内蒙古',
 					21: '辽宁',
 					22: '吉林',
-					23: '黑龙江 ',
+					23: '黑龙江',
 					31: '上海',
 					32: '江苏',
 					33: '浙江',

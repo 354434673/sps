@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.SpsShopkeeperInvitationDao" >
+  <resultMap id="BaseResultMap" type="com.sps.entity.shopkeeper.SpsShopkeeperInvitation" >
+    <id column="invitation_id" property="invitationId" jdbcType="INTEGER" />
+    <result column="invitation_name" property="invitationName" jdbcType="VARCHAR" />
+    <result column="invitation_phone" property="invitationPhone" jdbcType="VARCHAR" />
+    <result column="invitation_time" property="invitationTime" jdbcType="TIMESTAMP" />
+    <result column="invitation_state" property="invitationState" jdbcType="VARCHAR" />
+    <result column="invitation_creat_time" property="invitationCreatTime" jdbcType="TIMESTAMP" />
+    <result column="invitation_update_time" property="invitationUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    invitation_id, invitation_name, invitation_phone, invitation_time, invitation_state, 
+    invitation_creat_time, invitation_update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperInvitationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_invitation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_invitation
+    where invitation_id = #{invitationId,jdbcType=INTEGER}
+  </select>
+  <select id="countByExample" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperInvitationExample" resultType="java.lang.Integer" >
+    select count(*) from sps_shopkeeper_invitation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_shopkeeper_invitation
+    where invitation_id = #{invitationId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperInvitationExample" >
+    delete from sps_shopkeeper_invitation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperInvitation" >
+    insert into sps_shopkeeper_invitation (invitation_id, invitation_name, invitation_phone, 
+      invitation_time, invitation_state, invitation_creat_time, 
+      invitation_update_time)
+    values (#{invitationId,jdbcType=INTEGER}, #{invitationName,jdbcType=VARCHAR}, #{invitationPhone,jdbcType=VARCHAR}, 
+      #{invitationTime,jdbcType=TIMESTAMP}, #{invitationState,jdbcType=VARCHAR}, #{invitationCreatTime,jdbcType=TIMESTAMP}, 
+      #{invitationUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperInvitation" >
+    insert into sps_shopkeeper_invitation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="invitationId != null" >
+        invitation_id,
+      </if>
+      <if test="invitationName != null" >
+        invitation_name,
+      </if>
+      <if test="invitationPhone != null" >
+        invitation_phone,
+      </if>
+      <if test="invitationTime != null" >
+        invitation_time,
+      </if>
+      <if test="invitationState != null" >
+        invitation_state,
+      </if>
+      <if test="invitationCreatTime != null" >
+        invitation_creat_time,
+      </if>
+      <if test="invitationUpdateTime != null" >
+        invitation_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="invitationId != null" >
+        #{invitationId,jdbcType=INTEGER},
+      </if>
+      <if test="invitationName != null" >
+        #{invitationName,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationPhone != null" >
+        #{invitationPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationTime != null" >
+        #{invitationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invitationState != null" >
+        #{invitationState,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationCreatTime != null" >
+        #{invitationCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invitationUpdateTime != null" >
+        #{invitationUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_shopkeeper_invitation
+    <set >
+      <if test="record.invitationId != null" >
+        invitation_id = #{record.invitationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.invitationName != null" >
+        invitation_name = #{record.invitationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invitationPhone != null" >
+        invitation_phone = #{record.invitationPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invitationTime != null" >
+        invitation_time = #{record.invitationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.invitationState != null" >
+        invitation_state = #{record.invitationState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invitationCreatTime != null" >
+        invitation_creat_time = #{record.invitationCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.invitationUpdateTime != null" >
+        invitation_update_time = #{record.invitationUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_shopkeeper_invitation
+    set invitation_id = #{record.invitationId,jdbcType=INTEGER},
+      invitation_name = #{record.invitationName,jdbcType=VARCHAR},
+      invitation_phone = #{record.invitationPhone,jdbcType=VARCHAR},
+      invitation_time = #{record.invitationTime,jdbcType=TIMESTAMP},
+      invitation_state = #{record.invitationState,jdbcType=VARCHAR},
+      invitation_creat_time = #{record.invitationCreatTime,jdbcType=TIMESTAMP},
+      invitation_update_time = #{record.invitationUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperInvitation" >
+    update sps_shopkeeper_invitation
+    <set >
+      <if test="invitationName != null" >
+        invitation_name = #{invitationName,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationPhone != null" >
+        invitation_phone = #{invitationPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationTime != null" >
+        invitation_time = #{invitationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invitationState != null" >
+        invitation_state = #{invitationState,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationCreatTime != null" >
+        invitation_creat_time = #{invitationCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invitationUpdateTime != null" >
+        invitation_update_time = #{invitationUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where invitation_id = #{invitationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperInvitation" >
+    update sps_shopkeeper_invitation
+    set invitation_name = #{invitationName,jdbcType=VARCHAR},
+      invitation_phone = #{invitationPhone,jdbcType=VARCHAR},
+      invitation_time = #{invitationTime,jdbcType=TIMESTAMP},
+      invitation_state = #{invitationState,jdbcType=VARCHAR},
+      invitation_creat_time = #{invitationCreatTime,jdbcType=TIMESTAMP},
+      invitation_update_time = #{invitationUpdateTime,jdbcType=TIMESTAMP}
+    where invitation_id = #{invitationId,jdbcType=INTEGER}
+  </update>
+</mapper>

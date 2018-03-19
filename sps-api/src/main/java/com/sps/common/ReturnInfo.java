@@ -17,19 +17,19 @@ public class ReturnInfo {
     /**
      * 详细信息，改对象可以是复杂的组合对象
      */
-    Object data;
+    Object result;
 
     String success;
+    
+	public Object getResult() {
+		return result;
+	}
 
-    public Object getData() {
-        return data;
-    }
+	public void setResult(Object result) {
+		this.result = result;
+	}
 
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    public String getSuccess() {
+	public String getSuccess() {
         return success;
     }
 

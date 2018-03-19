@@ -59,5 +59,7 @@ public interface OrderGoodsMapper {
     int updatePriceBatch(OrderGoods orderGoods);
     
     int updateByPrimaryKey(OrderGoods record);
-    
+
+
+
 }

@@ -2,8 +2,10 @@
 /target/ 
 .classpath
 .settings      
+/src/test
  ##filter databfile、sln file##
 *.mdb  
+*.idea 
 *.ldb  
 *.sln    
 ##class file##

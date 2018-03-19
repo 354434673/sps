@@ -12,6 +12,6 @@ public interface SpsChannelBankWriteMapper {
     int insertBank(SpsChannelBank bank);
 
     int updateBank(SpsChannelBank bank);
-    int updateTradePsw(@Param("userId") String userId,@Param("psw") String psw);
+    int updateTradePsw(@Param("userId") String userId,@Param("psw") String psw,@Param("salt") String salt);
     int updateAblance(@Param("userId") String userId, @Param("availableBalance") BigDecimal availableBalance);
 }

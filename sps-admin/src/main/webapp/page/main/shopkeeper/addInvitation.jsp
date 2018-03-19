@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>收款信息添加</title>
+<title>店主邀请</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -21,26 +21,30 @@
 </style>
 </head>
 <body>
-<div >
+<div id="div">
         <fieldset class="layui-elem-field layui-field-title">
  			<legend>店主信息</legend>
 		</fieldset>
-		<div class="layui-form">
-				  <div class="layui-form-item">
+		<div class="layui-form" style="padding-top: 100px">
+				  <div class="layui-form-item" id="nameDiv" style="padding-left: 36%;padding-right: 36%"">
+<!-- 				  	<div id="layer-photos-demo" class="layer-photos-demo">
+				  	<img id="picid" layer-pid="picid" layer-src="http://localhost:8080/sps-admin/shopkeeper/getQRcode" src="http://localhost:8080/sps-admin/shopkeeper/getQRcode" alt="二维码">
+				    </div> -->
 				    <label class="layui-form-label" style="width: 150px">*店主名称：</label>
 				    <div class="layui-input-inline">
 				      <input id="name" type="text" name="name"  lay-verify="required|IsChineseCharacter" placeholder="" autocomplete="off" class="layui-input">
 				    </div>
 				  </div>
-				  <div class="layui-form-item">
+				  <div class="layui-form-item" id="phoneDiv" style="padding-left: 36%;padding-right: 36%"">
 				    <label class="layui-form-label" style="width: 150px">*联系电话：</label>
 				    <div class="layui-input-inline">
 				      <input id="phone" type="phone" name="gatherBankId"  lay-verify="required|isPhone" placeholder="" autocomplete="off" class="layui-input">
 				    </div>
 				  </div>
 				   	<div class="layui-form-item" align="center" id="btn" style="padding-top: 10px">
-						<button class="layui-btn layui-btn-primary" id="close">返回</button>
+						<button class="layui-btn layui-btn-primary" onclick="javascript:history.back(-1)">返回</button>
 						<button class="layui-btn layui-btn-primary" lay-submit  lay-filter="submit"  id="submit">扫码邀请</button>
+						<!-- <button class="layui-btn layui-btn-primary" id="code">扫码邀请</button> -->
 					</div>
 					</div>
 </div>
@@ -48,11 +52,16 @@
 		src="<%=path%>/page/layui/layui.js"></script>
 <script type="text/javascript">
 	  var gatherListJson = []
-	layui.use(['form','table','element'], function(){
+	layui.use(['form','table','element','layer'], function(){
 	  var form = layui.form;
 	  var $ = layui.jquery;
+	  var layer = layui.layer;
 	  var element = layui.element;
 	  var index = 1;
+/* 	  var width = $('#div').width()
+	  console.log(width/2)
+	  console.log($('.layui-form-item').width())
+	  $("#nameDiv").css("padding-left",width/2-100); */
   	  form.on('submit(submit)', function(data){
 			 var name = $('#name').val()
 			 var phone = $('#phone').val()
@@ -64,9 +73,13 @@
 		 				invitationPhone:phone, 
 		 			 },
 		 			 success:function(data){
+		 				 console.log(data)
 		 				 //data.result 返回生成的客户编号
 		 				 if(data.state == 'success'){
-		 					layer.msg(data.msg,{icon: 1});
+		 					layer.msg(data.msg+",两秒后跳转的二维码页面",{icon: 1});
+                            setTimeout(function(){
+		 						location.href="<%=path%>/page/main/shopkeeper/QRcode.jsp?channelNum="+data.result.channelNum+"&clientNum="+data.result.clientNum
+                            },2000);
 		 				 }else if(data.state == 'exist'){
 		 					layer.msg(data.msg,{icon: 2});
 		 				 }else if(data.state == 'error'){
@@ -85,7 +98,7 @@
 				}
 			},			
 			isPhone: function(value) {
-				var regex = /^1[3|4|5|8][0-9]\d{4,8}$/;
+				var regex = /^1[3|4|5|6|8][0-9]\d{4,8}$/;
 				if(!value.match(regex)) {
 					return '手机号格式不正确!';
 				}
