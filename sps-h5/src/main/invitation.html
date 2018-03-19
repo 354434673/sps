@@ -9,7 +9,7 @@
     <meta name="sharedesc" content="">
     <meta name="sharelink" content="">
     <meta name="shareicon" content="">
-    <meta name="keywords" content="桔子分期" />
+    <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -77,32 +77,5 @@
     <script type="text/javascript" src="../static/js/aspen.lib.min.js"></script>
     <script type="text/javascript" src="../static/js/invitation.js"></script>
     <script type="text/javascript" src="../static/js/qrcode.min.js"></script>
-    <script>
-        var createCode = document.getElementById('createCode');
-        var shopTel = document.getElementById('shopTel');
-        var supplierTel = document.getElementById('supplierTel');
-        var qrcode = new QRCode("qrcode",{
-            width: 150,
-            height: 150
-        });
-        createCode.addEventListener('click', function(){
-            if(!shopTel || shopTel.value == ''){
-                aspenLib.tips('请输入店主手机号！');
-                shopTel.focus();
-            }else if(!/^[1][3,4,5,7,8][0-9]{9}$/.test(shopTel.value)){
-                aspenLib.tips('手机号格式不正确！');
-                shopTel.focus();
-            }else if(!supplierTel || supplierTel.value == ''){
-                aspenLib.tips('请输入供应商店主手机号！');
-                supplierTel.focus();
-            }else if(!/^[1][3,4,5,7,8][0-9]{9}$/.test(supplierTel.value)){
-                aspenLib.tips('供应商手机号格式不正确！');
-                supplierTel.focus();
-            }else{
-                var setUrl = 'http://www.baidu.com?sTel=' + shopTel.value + '&supplierTel=' + supplierTel.value;
-                qrcode.makeCode(setUrl);
-            }
-        }, false);
-    </script>
 </body>
 </html>
