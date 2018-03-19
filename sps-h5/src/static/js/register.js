@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             },
                             success: function (data) {
                                 if (data.result == 1) {
+                                    _this.imgCheckCode();
                                     _this.countDown('getCheckCode');
                                 } else {
                                     aspenLib.tips(data.msg);
@@ -108,7 +109,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         imgCheckCode: function(){
-
+            var checkCodeMask = document.getElementById('checkCodeMask');
+            checkCodeMask.style.display = 'block';
         },
         countDown: function (id) {
             var _this = this;
