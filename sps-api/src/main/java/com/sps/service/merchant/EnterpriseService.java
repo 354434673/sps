@@ -27,5 +27,5 @@ public interface EnterpriseService {
 	 * @return: List<SpsChannelEnterprise>
 	 * @throws
 	 */
-	HashMap<String,Object> queryMerchantDetail(Integer enterpriseId ,Integer categoryId, String orderType, String goodsName);
+	HashMap<String,Object> queryMerchantDetail(Integer enterpriseId ,Integer categoryId, String orderType, String goodsName,String shopkeeperCustomerId);
 }
