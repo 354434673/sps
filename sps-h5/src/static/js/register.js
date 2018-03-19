@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.checkbox();
             this.getPhoneCode();
             this.submitInformation();
+            this.testa();
         },
         keyFocus: function () {
             for (var i = 0; i < getInput.length; i++) {
@@ -64,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 _this.toggleClassRun.toggleClassTest();
 
             }, false);
+        },
+        testa: function(){
+            var verifyCode = new GVerify("v_container");
         },
         getPhoneCode: function () {
             var _this = this;
