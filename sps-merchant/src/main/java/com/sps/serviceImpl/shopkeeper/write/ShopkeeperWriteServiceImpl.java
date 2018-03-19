@@ -99,6 +99,7 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 				invitation.setInvitationUpdateTime(new Date());
 				invitation.setInvitationTime(new Date());
 				invitation.setInvitationState("0");
+				invitation.setInvitationType(0);
 				invitationWrite.insert(invitation);
 				/*
 				 * 添加后往店主信息表中差一条数据,店主账号,状态为邀请中(1)

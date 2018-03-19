@@ -10,6 +10,7 @@ import com.sps.entity.shopkeeper.SpsShopkeeperCompany;
 import com.sps.entity.shopkeeper.SpsShopkeeperContact;
 import com.sps.entity.shopkeeper.SpsShopkeeperCredit;
 import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
+import com.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 import com.sps.entity.shopkeeper.SpsShopkeeperRepayment;
@@ -28,6 +29,18 @@ public interface ShopkeeperService {
 	 * @throws
 	 */
 	SpsShopkeeper queryShopkeeperList(String shopkeeperCustomerid);
+	/**
+	 * 根据业务员的手机号查询相关的
+	 * @Title: queryInvitationList   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param salemanPhone
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月19日 下午6:33:19
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	HashMap<String, Object> queryInvitationList(String salemanPhone);
 	/**
 	 * 判断用户状态
 	 * @Title: queryAccount   
@@ -88,4 +101,6 @@ public interface ShopkeeperService {
 	int updateSpsShopkeeperPersonal(SpsShopkeeperPersonal personal);
 	
 	int updateShopkeeper(SpsShopkeeper shopkeeper);
+	
+	HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation);
 }
