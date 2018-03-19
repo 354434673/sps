@@ -40,6 +40,7 @@ public class SpsPurchaseOrder implements Serializable {
 
     //分割线
     private Integer orderId;
+    private Integer orderEnterpriseId;
 
     private Integer orderGoodsNum;
 
@@ -55,6 +56,14 @@ public class SpsPurchaseOrder implements Serializable {
 
     private Date orderUpdateTime;
 
+
+    public Integer getOrderEnterpriseId() {
+        return orderEnterpriseId;
+    }
+
+    public void setOrderEnterpriseId(Integer orderEnterpriseId) {
+        this.orderEnterpriseId = orderEnterpriseId;
+    }
 
     public String getOrderGoodsUrl() {
         return orderGoodsUrl;

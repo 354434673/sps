@@ -31,151 +31,190 @@ import com.sps.service.goods.ApiGoodShopService;
 import com.sps.service.goods.GoodCategoryService;
 import com.sps.service.merchant.EnterpriseService;
 import com.sps.service.shopkeeper.ShopkeeperService;
+
 @Service
 public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseService {
-	@Resource
-	private ChannelEnterpriseDao enterpriseDao;
-	@Resource
-	private ShopkeeperService shopkeeperService;
-	@Resource
-	private ApiGoodShopService goodShopService;
-	@Resource
-	private SpsGoodShopMapper spsGoodShopMapper;
-	@Resource
-	private SpsGoodsMapper spsGoodsMapper;
-	@Resource
-	private SpsGoodsAlbumMapper spsGoodsAlbumMapper;
-	@Resource
-	private SpsGoodShopSkuMapper spsGoodShopSkuMapper;
-	@Resource
-	private SpsCustomCategoryMapper spsCustomCategoryMapper;
-	@Resource
-	private GoodCategoryService goodCategoryService;
-	@Override
-	@Transactional(readOnly = true)
-	public HashMap<String, Object> queryMerchantList(String shopkeeperCustomerid) {
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		
-		HashMap<String, Object> data = new HashMap<String, Object>();//封装对象
-		
-		ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
-		
-		SpsShopkeeper queryShopkeeperList = shopkeeperService.queryShopkeeperList(shopkeeperCustomerid);
-			
-			if(queryShopkeeperList != null){
-				String shopkeeperDefaultChannelNum = queryShopkeeperList.getShopkeeperDefaultChannelNum();
-				
-				List<SpsChannelEnterprise> queryBusinessForApi = null;
+    @Resource
+    private ChannelEnterpriseDao enterpriseDao;
+    @Resource
+    private ShopkeeperService shopkeeperService;
+    @Resource
+    private ApiGoodShopService goodShopService;
+    @Resource
+    private SpsGoodShopMapper spsGoodShopMapper;
+    @Resource
+    private SpsGoodsMapper spsGoodsMapper;
+    @Resource
+    private SpsGoodsAlbumMapper spsGoodsAlbumMapper;
+    @Resource
+    private SpsGoodShopSkuMapper spsGoodShopSkuMapper;
+    @Resource
+    private SpsCustomCategoryMapper spsCustomCategoryMapper;
+    @Resource
+    private GoodCategoryService goodCategoryService;
 
-				try {
-					if(!StringUtil.isEmpty(shopkeeperCustomerid)){
-						queryBusinessForApi = enterpriseDao.queryBusinessForApi(shopkeeperDefaultChannelNum, null , null);
-					}else{
+    @Override
+    @Transactional(readOnly = true)
+    public HashMap<String, Object> queryMerchantList(String shopkeeperCustomerid) {
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+        HashMap<String, Object> data = new HashMap<String, Object>();//封装对象
+
+        ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
+
+        SpsShopkeeper queryShopkeeperList = shopkeeperService.queryShopkeeperList(shopkeeperCustomerid);
+
+        if (queryShopkeeperList != null) {
+            String shopkeeperDefaultChannelNum = queryShopkeeperList.getShopkeeperDefaultChannelNum();
+
+            List<SpsChannelEnterprise> queryBusinessForApi = null;
+
+            try {
+                if (!StringUtil.isEmpty(shopkeeperCustomerid)) {
+                    queryBusinessForApi = enterpriseDao.queryBusinessForApi(shopkeeperDefaultChannelNum, null, null);
+                } else {
 /*						//查询当前登录店主的主营业务
-						String shopkeeperBusinessType = queryShopkeeperList.getShopkeeperBusinessType();
-						
+                        String shopkeeperBusinessType = queryShopkeeperList.getShopkeeperBusinessType();
+
 						String[] split = shopkeeperBusinessType.split(",");
-						
+
 						for (String string : split) {
 							arrayList.add(string);
 						}*/
-						queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, null, null);
-					}
-					for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
-						data = new HashMap<String, Object>();
-						if(!"".equals(spsChannelEnterprise.getChannelNum())){
-							Map<String, Object> map = new HashMap<>();
-							map.put("shopNum", spsChannelEnterprise.getChannelNum());
-							map.put("recommend", "1");
-							map.put("orderType", "0");
-							map.put("flowStatus", "2");
-							//查询推荐中的商品
-							List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
-							String[] pro = new String[]{"gId","gPic","gSpuName","gMinPrice"};
-							if(goodShopList!=null&&goodShopList.size()>0){
-								spsChannelEnterprise.setGoodShops((List<SpsGoodShop>) EntityUtils.reloadListPropertyValue(goodShopList, pro));
-							}
-						}
-						data.put("id", spsChannelEnterprise.getEnterpriseId());
-						data.put("phone", spsChannelEnterprise.getGuarantee().getGuaranteeCorpPhone());
-						data.put("businessProduct", goodCategoryService.findListByIds(spsChannelEnterprise.getBusiness().getBusinessProduct()));
-						data.put("companyName", spsChannelEnterprise.getEnterpriseCompanyName());
-						data.put("picSrc", spsChannelEnterprise.getPic().getPicSrc());
-						data.put("goodsList", spsChannelEnterprise.getGoodShops());
-						result.add(data);
-					}
-					super.logger.error(Message.SUCCESS_MSG);
-					
-					hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG, 
-							Message.SUCCESS_MSG,queryBusinessForApi.size(), result);
-				} catch (Exception e) {
-					e.printStackTrace();
-					super.logger.error(Message.SYSTEM_ERROR_MSG);
-					
-					hashMap = Message.resultMap( Message.SYSTEM_ERROR_CODE, Message.SYSTEM_ERROR_MSG, 
-							Message.FAILURE_MSG,null, null);
-				}
-			}else{
-				hashMap = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG, 
-						Message.FAILURE_MSG,null, null);
-			}
-		return hashMap;
-	}
+                    queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, null, null);
+                }
+                for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
+                    data = new HashMap<String, Object>();
+                    if (!"".equals(spsChannelEnterprise.getChannelNum())) {
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("shopNum", spsChannelEnterprise.getChannelNum());
+                        map.put("recommend", "1");
+                        map.put("orderType", "0");
+                        map.put("flowStatus", "2");
+                        //查询推荐中的商品
+                        List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
+                        List<SpsGoodShop> shopList = new ArrayList<>();
+                        //过滤主营业务
+                        if (goodShopList != null && goodShopList.size() > 0) {
+                            for (SpsGoodShop goods : goodShopList) {
+                                String[] idList = queryShopkeeperList.getShopkeeperBusinessType().split(",");
+                                //判断数组是否包含id
+                                if (useLoop(idList, goods.getgCategoryIds().split(",")[0])) {
+                                    shopList.add(goods);
+                                }
+                            }
+                        }
+                        String[] pro = new String[]{"gId", "gPic", "gSpuName", "gMinPrice"};
+                        if (goodShopList != null && goodShopList.size() > 0) {
+                            spsChannelEnterprise.setGoodShops((List<SpsGoodShop>) EntityUtils.reloadListPropertyValue(shopList, pro));
+                        }
+                    }
+                    data.put("id", spsChannelEnterprise.getEnterpriseId());
+                    data.put("phone", spsChannelEnterprise.getGuarantee().getGuaranteeCorpPhone());
+                    data.put("businessProduct", goodCategoryService.findListByIds(spsChannelEnterprise.getBusiness().getBusinessProduct()));
+                    data.put("companyName", spsChannelEnterprise.getEnterpriseCompanyName());
+                    data.put("picSrc", spsChannelEnterprise.getPic().getPicSrc());
+                    data.put("goodsList", spsChannelEnterprise.getGoodShops());
+                    result.add(data);
+                }
+                super.logger.error(Message.SUCCESS_MSG);
 
-	@Override
-	@Transactional(readOnly = true)
-	public HashMap<String, Object> queryMerchantDetail(Integer enterpriseId ,Integer categoryId, String orderType, String goodsName) {
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		
-		ArrayList<String> arrayList = new ArrayList<String>();
-		HashMap<String, Object> data = new HashMap<String, Object>();//封装对象
+                hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
+                        Message.SUCCESS_MSG, queryBusinessForApi.size(), result);
+            } catch (Exception e) {
+                e.printStackTrace();
+                super.logger.error(Message.SYSTEM_ERROR_MSG);
 
-		ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
-			
-			try {
-				List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, 1, enterpriseId);
-				//排序方式
-				if(queryBusinessForApi!=null&&queryBusinessForApi.size()>0){
-					for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
-						data = new HashMap<String, Object>();
-						if(!"".equals(spsChannelEnterprise.getChannelNum())){
-							Map<String, Object> map = new HashMap<>();
-							map.put("shopNum", spsChannelEnterprise.getChannelNum());
-							map.put("goodsName", goodsName);
-							map.put("categorySelf", categoryId);
-							map.put("orderType", orderType);
-							map.put("flowStatus", "2");
-							//查询推荐中的商品
-							List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
-							String[] pro1 = new String[]{"gId","gPic","gSpuName","gMinPrice"};
-							if(goodShopList!=null&&goodShopList.size()>0){
-								spsChannelEnterprise.setGoodShops((List<SpsGoodShop>) EntityUtils.reloadListPropertyValue(goodShopList, pro1));
-							}
-							/*Map<String, Object> categoryMap = new HashMap<>();
-							categoryMap.put("customShopNum", spsChannelEnterprise.getChannelNum());
-							List<SpsCustomCategory> categoryList = spsCustomCategoryMapper.findListAllWithMap(categoryMap);
-							String[] pro = new String[]{"customName","customWide"};
-							data.put("categoryList",EntityUtiles.reloadListPropertyValue(categoryList, pro));*/
-						}
-						data.put("id", spsChannelEnterprise.getEnterpriseId());
-						data.put("phone", spsChannelEnterprise.getGuarantee().getGuaranteeCorpPhone());
-						data.put("businessProduct", goodCategoryService.findListByIds(spsChannelEnterprise.getBusiness().getBusinessProduct()));
-						data.put("companyName", spsChannelEnterprise.getEnterpriseCompanyName());
-						data.put("picSrc", spsChannelEnterprise.getPic().getPicSrc());
-						data.put("goodsList", spsChannelEnterprise.getGoodShops());
-						result.add(data);
-					}
-				}
-				super.logger.error(Message.SUCCESS_MSG);
-				hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
-						Message.SUCCESS_MSG,1, result.get(0));
-			} catch (Exception e) {
-				e.printStackTrace();
-				super.logger.error(Message.SYSTEM_ERROR_MSG);
+                hashMap = Message.resultMap(Message.SYSTEM_ERROR_CODE, Message.SYSTEM_ERROR_MSG,
+                        Message.FAILURE_MSG, null, null);
+            }
+        } else {
+            hashMap = Message.resultMap(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG,
+                    Message.FAILURE_MSG, null, null);
+        }
+        return hashMap;
+    }
 
-				hashMap = Message.resultMap( Message.SYSTEM_ERROR_CODE, Message.SYSTEM_ERROR_MSG,
-						Message.FAILURE_MSG,null, null);
-			}
-		return hashMap;
-	}
+
+    @Override
+    @Transactional(readOnly = true)
+    public HashMap<String, Object> queryMerchantDetail(Integer enterpriseId, Integer categoryId, String orderType, String goodsName, String shopkeeperCustomerId) {
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+        ArrayList<String> arrayList = new ArrayList<String>();
+        HashMap<String, Object> data = new HashMap<String, Object>();//封装对象
+
+        ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
+
+        try {
+            List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, 1, enterpriseId);
+            //排序方式
+            if (queryBusinessForApi != null && queryBusinessForApi.size() > 0) {
+                for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
+                    data = new HashMap<String, Object>();
+                    if (!"".equals(spsChannelEnterprise.getChannelNum())) {
+                        SpsShopkeeper queryShopkeeper = shopkeeperService.queryShopkeeperList(shopkeeperCustomerId);
+                        //查询当前登录店主的主营业务
+                        String shopkeeperBusinessType = queryShopkeeper.getShopkeeperBusinessType();
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("shopNum", spsChannelEnterprise.getChannelNum());
+                        map.put("goodsName", goodsName);
+                        map.put("categorySelf", categoryId);
+                        map.put("orderType", orderType);
+                        map.put("flowStatus", "2");
+                        //查询推荐中的商品
+                        List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
+                        List<SpsGoodShop> shopList = new ArrayList<>();
+                        //过滤主营业务
+                        if (goodShopList != null && goodShopList.size() > 0) {
+                            for (SpsGoodShop goods : goodShopList) {
+                                String[] idList = shopkeeperBusinessType.split(",");
+                                //判断数组是否包含id
+                                if (useLoop(idList, goods.getgCategoryIds().split(",")[0])) {
+                                    shopList.add(goods);
+                                }
+                            }
+                        }
+                        String[] pro1 = new String[]{"gId", "gPic", "gSpuName", "gMinPrice"};
+                        if (goodShopList != null && goodShopList.size() > 0) {
+                            spsChannelEnterprise.setGoodShops((List<SpsGoodShop>) EntityUtils.reloadListPropertyValue(shopList, pro1));
+                        }
+                    }
+                    data.put("id", spsChannelEnterprise.getEnterpriseId());
+                    data.put("phone", spsChannelEnterprise.getGuarantee().getGuaranteeCorpPhone());
+                    data.put("businessProduct", goodCategoryService.findListByIds(spsChannelEnterprise.getBusiness().getBusinessProduct()));
+                    data.put("companyName", spsChannelEnterprise.getEnterpriseCompanyName());
+                    data.put("picSrc", spsChannelEnterprise.getPic().getPicSrc());
+                    data.put("goodsList", spsChannelEnterprise.getGoodShops());
+                    result.add(data);
+                }
+            }
+            super.logger.error(Message.SUCCESS_MSG);
+            hashMap = Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG,
+                    Message.SUCCESS_MSG, 1, result.get(0));
+        } catch (Exception e) {
+            e.printStackTrace();
+            super.logger.error(Message.SYSTEM_ERROR_MSG);
+
+            hashMap = Message.resultMap(Message.SYSTEM_ERROR_CODE, Message.SYSTEM_ERROR_MSG,
+                    Message.FAILURE_MSG, null, null);
+        }
+        return hashMap;
+    }
+
+
+    /**
+     * 判断数组中是否包含某一元素
+     *
+     * @param arr
+     * @param targetValue
+     * @return
+     */
+    public static boolean useLoop(String[] arr, String targetValue) {
+        for (String s : arr) {
+            if (s.equals(targetValue))
+                return true;
+        }
+        return false;
+    }
 }
