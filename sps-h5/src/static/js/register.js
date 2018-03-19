@@ -107,6 +107,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }, false);
             }
         },
+        imgCheckCode: function(){
+
+        },
         countDown: function (id) {
             var _this = this;
             if (typeof id != 'undefined') {
