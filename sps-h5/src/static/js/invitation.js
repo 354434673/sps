@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
             for (var i = 0; i < getaArray.length; i++) {
                 getaArray[i].index = i;
                 getaArray[i].addEventListener('click', function () {
-                    this.href = 'details.html?id=' + this.index;
+                    this.href = 'details.html?pageId=' + this.index;
                 }, false);
             }
         },
