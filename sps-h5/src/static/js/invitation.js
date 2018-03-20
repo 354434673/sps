@@ -1,5 +1,5 @@
+document.addEventListener('DOMContentLoaded', function () {
 
-alert(2)
     var loadApp = {
         init: function () {
             var _this = this;
@@ -24,7 +24,6 @@ alert(2)
                 height: 150
             });
             createCode.addEventListener('click', function () {
-                alert(1)
                 if (!shopTel || shopTel.value == '') {
                     aspenLib.tips('请输入店主手机号！');
                     shopTel.focus();
@@ -45,3 +44,4 @@ alert(2)
         }
     }
     loadApp.init();
+});
