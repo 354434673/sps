@@ -19,6 +19,7 @@
     <meta name="copyright" content="Copyright (c) juzifenqi.com" />
     <title>店主邀请</title>
     <link rel="stylesheet" type="text/css" href="../static/css/h5reset.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/LArea.css" />
     <link rel="stylesheet" type="text/css" href="../static/css/invitation.css" />
     <script>
         var _hmt = _hmt || [];
@@ -45,12 +46,6 @@
             }
         }
     </script>
-    <link rel="stylesheet" href="../static/css/LArea.css">
-    <style type="text/css">
-        html,body,input{ margin: 0; padding: 0; }
-        /* input { width: 90%; height: 40px; font-size: 18px; border: 1px solid #b72f20; border-radius: 5px; margin: 20px 5% 0 5%; padding: 5px; box-sizing: border-box; } */
-    </style>
-
 </head>
 
 <body>
@@ -58,7 +53,12 @@
         <ul class="user-addr">
             <li><em>店主名称</em><input type="text" placeholder="请输入店主名称" /></li>
             <li><em>手机号</em><input id="shopTel" type="text" placeholder="请输入店主手机号" maxlength="11" /></li>
-            <li><em>地址</em><input type="text" disabled placeholder="请选择省.市.区" /><span></span></li>
+            <li><em>地址</em><input class="larea-inpt" type="text" disabled /><span></span>
+                <div class="content-block">
+                    <input id="demo2" type="text" readonly="" placeholder="请选择省.市.区" />
+                    <input id="value2" type="hidden" />
+                </div>
+            </li>
             <li><em>供应商手机号</em><input id="supplierTel" type="text" placeholder="请输入店主手机号" maxlength="11" /></li>
         </ul>
         <ul class="detail-list">
@@ -77,14 +77,13 @@
         </ul>
         <a id="createCode" href="javascript:;">生成二维码</a>
         <div id="qrcode"></div>
-
-        <div class="content-block">
-            <input id="demo2" type="text" readonly="" placeholder="城市选择特效" />
-            <input id="value2" type="hidden" />
-        </div>
-        <script src="../static/js/LAreaData2.js"></script>
-        <script src="../static/js/LArea.min.js"></script>
-        <script>
+    </div>
+    <script type="text/javascript" src="../static/js/aspen.lib.min.js"></script>
+    <script type="text/javascript" src="../static/js/invitation.js"></script>
+    <script type="text/javascript" src="../static/js/qrcode.min.js"></script>
+    <script src="../static/js/LAreaData2.js"></script>
+    <script src="../static/js/LArea.js"></script>
+    <script>
         var area2 = new LArea();
         area2.init({
             'trigger': '#demo2',
@@ -96,11 +95,6 @@
             'type': 2,
             'data': [provs_data, citys_data, dists_data]
         });
-        </script>
-
-    </div>
-    <script type="text/javascript" src="../static/js/aspen.lib.min.js"></script>
-    <script type="text/javascript" src="../static/js/invitation.js"></script>
-    <script type="text/javascript" src="../static/js/qrcode.min.js"></script>
+    </script>
 </body>
 </html>
