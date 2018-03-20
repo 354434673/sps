@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+
 alert(2)
     var loadApp = {
         init: function () {
@@ -45,4 +45,3 @@ alert(2)
         }
     }
     loadApp.init();
-});
