@@ -103,4 +103,6 @@ public interface ShopkeeperService {
 	int updateShopkeeper(SpsShopkeeper shopkeeper);
 	
 	HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation);
+	
+	SpsShopkeeperInvitation queryInvitation(String phone);
 }

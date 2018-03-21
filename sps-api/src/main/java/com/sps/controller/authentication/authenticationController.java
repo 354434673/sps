@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.juzifenqi.capital.entity.UserCard;
+import com.juzifenqi.capital.service.IUserCardNewService;
+import com.juzifenqi.core.ServiceResult;
 import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthQueryApi;
@@ -36,13 +39,12 @@ import com.sps.entity.shopkeeper.SpsShopkeeperCredit;
 import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import com.sps.entity.shopkeeper.SpsShopkeeperPic;
+import com.sps.entity.shopkeeper.SpsShopkeeperRepayment;
 import com.sps.service.shopkeeper.ShopkeeperService;
 
 @RestController
 @RequestMapping("/authentication")
 public class authenticationController {
-/*	@Reference(group = "${dubbo.group}")
-	private FaceAuthApi faceAuthApi;*/
 	@Resource
 	private FaceAuthApi faceAuthApi;
 	@Resource
@@ -51,8 +53,8 @@ public class authenticationController {
 	private JzfqAuthQueryApi jzfqAuthQueryApi;
 	@Resource
 	private ShopkeeperService shopkeeperService;
-/*	@Resource
-	private IUserCardService iUsercardService;*/
+	@Resource
+	private IUserCardNewService iUserCardNewService;
 	@RequestMapping("/queryStateArray")
 	public JsonResult<Map<String, Object>> queryStateArray(AuthStateArray arg0){
 		
@@ -81,20 +83,23 @@ public class authenticationController {
 			
 			backIdCardResult = faceAuthApi.getBackIdCardResult(arg0);
 			
-			if(backIdCardResult.getCode().equals("SUCCESS")){
-				SpsShopkeeperPic pic = new SpsShopkeeperPic();
-				
-				pic.setPicType(3);
-				
-				pic.setShopkeeperCustomerid(clientNum);
-				
-				pic.setPicSrc(arg0.getBackImagePath());
-				
-				pic.setPicState(0);
-				
-				shopkeeperService.insertSpsShopkeeperPic(pic );
-				
-				backIdCardResult.setCode(Message.SUCCESS_CODE);
+			String code = backIdCardResult.getCode();
+			if(code != null){
+				if(code.equals("SUCCESS")){
+					SpsShopkeeperPic pic = new SpsShopkeeperPic();
+					
+					pic.setPicType(3);
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicSrc(arg0.getBackImagePath());
+					
+					pic.setPicState(0);
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
+					
+					backIdCardResult.setCode(Message.SUCCESS_CODE);
+				}
 			}
 		}else{
 			backIdCardResult.setCode(Message.FAILURE_CODE);
@@ -120,20 +125,24 @@ public class authenticationController {
 			
 			backIdCardResult = faceAuthApi.getFrontIdCardResult(arg0);
 			
-			if(backIdCardResult.getCode().equals("SUCCESS")){
-				SpsShopkeeperPic pic = new SpsShopkeeperPic();
-				
-				pic.setPicType(2);
-				
-				pic.setShopkeeperCustomerid(clientNum);
-				
-				pic.setPicSrc(arg0.getFrontImagePath());
-				
-				pic.setPicState(0);
-				
-				shopkeeperService.insertSpsShopkeeperPic(pic);
-				
-				backIdCardResult.setCode(Message.SUCCESS_CODE);
+			String code = backIdCardResult.getCode();
+			
+			if(code != null){
+				if(code.equals("SUCCESS")){
+					SpsShopkeeperPic pic = new SpsShopkeeperPic();
+					
+					pic.setPicType(2);
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicSrc(arg0.getFrontImagePath());
+					
+					pic.setPicState(0);
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic);
+					
+					backIdCardResult.setCode(Message.SUCCESS_CODE);
+				}
 			}
 		}else{
 			backIdCardResult.setCode(Message.FAILURE_CODE);
@@ -159,51 +168,54 @@ public class authenticationController {
 			
 			saveLinkDetail = jzfqAuthApi.saveLinkDetail(arg0);
 			
-			if(saveLinkDetail.getCode().equals("SUCCESS")){
-				
-				String linkInfoF = arg0.getLinkInfoF();
-				
-				String[] first = linkInfoF.split("||");
-				
-				SpsShopkeeperContact contact = null;
-				
-				contact = new SpsShopkeeperContact();
-				
-				contact.setContactCreatTime(new Date());
-				
-				contact.setContactUpdateTime(new Date());
-				
-				contact.setContactRelation(first[0]);
-				
-				contact.setContactName(first[1]);
-				
-				contact.setContactPhone(first[1]);
-				
-				contact.setShopkeeperCustomerid(clientNum);
-				
-				shopkeeperService.insertSpsShopkeeperContact(contact);
-				
-				String linkInfoT = arg0.getLinkInfoT();
-				
-				String[] sec = linkInfoT.split("||");
-				
-				contact = new SpsShopkeeperContact();
-				
-				contact.setContactCreatTime(new Date());
-				
-				contact.setContactUpdateTime(new Date());
-				
-				contact.setContactRelation(sec[0]);
-				
-				contact.setContactName(sec[1]);
-				
-				contact.setContactPhone(sec[1]);
-				
-				contact.setShopkeeperCustomerid(clientNum);
-				
-				shopkeeperService.insertSpsShopkeeperContact(contact);
-				
-				saveLinkDetail.setCode(Message.SUCCESS_CODE);
+			String code = saveLinkDetail.getCode();
+			if(code != null){
+				if(code.equals("SUCCESS")){
+					
+					String linkInfoF = arg0.getLinkInfoF();
+					
+					String[] first = linkInfoF.split("||");
+					
+					SpsShopkeeperContact contact = null;
+					
+					contact = new SpsShopkeeperContact();
+					
+					contact.setContactCreatTime(new Date());
+					
+					contact.setContactUpdateTime(new Date());
+					
+					contact.setContactRelation(first[0]);
+					
+					contact.setContactName(first[1]);
+					
+					contact.setContactPhone(first[1]);
+					
+					contact.setShopkeeperCustomerid(clientNum);
+					
+					shopkeeperService.insertSpsShopkeeperContact(contact);
+					
+					String linkInfoT = arg0.getLinkInfoT();
+					
+					String[] sec = linkInfoT.split("||");
+					
+					contact = new SpsShopkeeperContact();
+					
+					contact.setContactCreatTime(new Date());
+					
+					contact.setContactUpdateTime(new Date());
+					
+					contact.setContactRelation(sec[0]);
+					
+					contact.setContactName(sec[1]);
+					
+					contact.setContactPhone(sec[1]);
+					
+					contact.setShopkeeperCustomerid(clientNum);
+					
+					shopkeeperService.insertSpsShopkeeperContact(contact);
+					
+					saveLinkDetail.setCode(Message.SUCCESS_CODE);
+				}
 			}
 		}else{
 			saveLinkDetail.setCode(Message.FAILURE_CODE);
@@ -238,31 +250,35 @@ public class authenticationController {
 			
 			saveLinkDetail = jzfqAuthApi.saveIousDetail(arg0 );
 			
-			if(saveLinkDetail.getCode().equals("SUCCESS")){
-				
-				SpsShopkeeperCarProperty carProperty = new SpsShopkeeperCarProperty();
-				
-				carProperty.setCarChassisNum(arg0.getFrameNumber());//车架号
-				
-				carProperty.setCarPlateNum(arg0.getPlateTypeStr());//车牌号
-				
-				carProperty.setCarBrand(arg0.getPlateType());//号牌种类
-				
-				carProperty.setShopkeeperCustomerid(clientNum);
-				//状态码,除了100000都是失败
-				shopkeeperService.insertsShopkeeperCarProperty(carProperty );
-				//进行个人信用初始化
-				String accountInit = accountInit(new BigDecimal(10000.00), "dianfu", idCard);
-				
-				JSONObject parseObject = JSON.parseObject(accountInit);
-				
-				parseObject.put("code", "1");
-				
-				String jsonString = JSON.toJSONString(parseObject);
-				//进行个人资金初始化
-				customerAccountInit("店付", idCard);
-				
-				return jsonString;
+			String code = saveLinkDetail.getCode();
+			
+			if(code != null){
+				if(code.equals("SUCCESS")){
+					
+					SpsShopkeeperCarProperty carProperty = new SpsShopkeeperCarProperty();
+					
+					carProperty.setCarChassisNum(arg0.getFrameNumber());//车架号
+					
+					carProperty.setCarPlateNum(arg0.getPlateTypeStr());//车牌号
+					
+					carProperty.setCarBrand(arg0.getPlateType());//号牌种类
+					
+					carProperty.setShopkeeperCustomerid(clientNum);
+					//状态码,除了100000都是失败
+					shopkeeperService.insertsShopkeeperCarProperty(carProperty );
+					//进行个人信用初始化
+					String accountInit = accountInit(new BigDecimal(10000.00), "dianfu", idCard);
+					
+					JSONObject parseObject = JSON.parseObject(accountInit);
+					
+					parseObject.put("code", "1");
+					
+					String jsonString = JSON.toJSONString(parseObject);
+					//进行个人资金初始化
+					customerAccountInit("店付", idCard);
+					
+					return jsonString;
+				}
 			}
 		}else{
 			saveLinkDetail.setCode(Message.FAILURE_CODE);
@@ -299,18 +315,22 @@ public class authenticationController {
 			
 			saveLinkDetail = jzfqAuthApi.saveHouseDetail(arg0 );
 			
-			if(saveLinkDetail.getCode().equals("SUCCESS")){
-				SpsShopkeeperHouseProperty houseProperty = new SpsShopkeeperHouseProperty();
-				
-				houseProperty.setHouseArea((double)arg0.getHouseArea());
-				
-				houseProperty.setHouseAddr(arg0.getHousePName()+arg0.getHouseCName()+arg0.getHouseAName()+arg0.getHouseAddress());
-				
-				houseProperty.setShopkeeperCustomerid(clientNum);
-				
-				shopkeeperService.insertSpsShopkeeperHouseProperty(houseProperty );
-				
-				saveLinkDetail.setCode(Message.SUCCESS_CODE);
+			String code = saveLinkDetail.getCode();
+			
+			if(code != null){
+				if(code.equals("SUCCESS")){
+					SpsShopkeeperHouseProperty houseProperty = new SpsShopkeeperHouseProperty();
+					
+					houseProperty.setHouseArea((double)arg0.getHouseArea());
+					
+					houseProperty.setHouseAddr(arg0.getHousePName()+arg0.getHouseCName()+arg0.getHouseAName()+arg0.getHouseAddress());
+					
+					houseProperty.setShopkeeperCustomerid(clientNum);
+					
+					shopkeeperService.insertSpsShopkeeperHouseProperty(houseProperty );
+					
+					saveLinkDetail.setCode(Message.SUCCESS_CODE);
+				}
 			}
 		}else{
 			saveLinkDetail.setCode(Message.FAILURE_CODE);
@@ -345,23 +365,27 @@ public class authenticationController {
 			
 			saveLinkDetail = jzfqAuthApi.saveBasicDetail(arg0);
 			
-			if(saveLinkDetail.getCode().equals("SUCCESS")){
-				/**
-				 * 更改信息
-				 */
-				SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
-				
-				personal.setPersonalLivingAddress(arg0.getLiveP()+arg0.getLiveC()+arg0.getLiveA()+arg0.getLiveAddress());
-				
-				personal.setPersonalMaritalStatus(arg0.getMarriage()+"");
-				
-				personal.setPersonalLivingCondition(arg0.getLiveState()+"");
-				
-				personal.setShopkeeperCustomerid(clientNum);
-				
-				shopkeeperService.updateSpsShopkeeperPersonal(personal);
-				
-				saveLinkDetail.setCode(Message.SUCCESS_CODE);
+			String code = saveLinkDetail.getCode();
+			
+			if(code != null){
+				if(code.equals("SUCCESS")){
+					/**
+					 * 更改信息
+					 */
+					SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
+					
+					personal.setPersonalLivingAddress(arg0.getLiveP()+arg0.getLiveC()+arg0.getLiveA()+arg0.getLiveAddress());
+					
+					personal.setPersonalMaritalStatus(arg0.getMarriage()+"");
+					
+					personal.setPersonalLivingCondition(arg0.getLiveState()+"");
+					
+					personal.setShopkeeperCustomerid(clientNum);
+					
+					shopkeeperService.updateSpsShopkeeperPersonal(personal);
+					
+					saveLinkDetail.setCode(Message.SUCCESS_CODE);
+				}
 			}
 		}else{
 			saveLinkDetail.setCode(Message.FAILURE_CODE);
@@ -402,33 +426,37 @@ public class authenticationController {
 			
 			saveLinkDetail = jzfqAuthApi.saveIdentityDetail(arg0);
 			
-			if(saveLinkDetail.getCode().equals("SUCCESS")){
-				
-				SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
-				
-				personal.setPersonalClientName(arg0.getName());
-				
-				personal.setPersonalSex(IdcardUtil.getSex(arg0.getCertNo()));
-				
-				personal.setPersonalIdcard(arg0.getCertNo());
-
-				String effectiveTime = arg0.getEffectiveTime();
-				
-				String[] split = effectiveTime.split("-");
-				
-				personal.setPersonalIdcardValidityStart(split[0]);
-				
-				personal.setPersonalIdcardValidityEnd(split[1]);
-				
-				personal.setPersonalLicenceIssuingAuthority(arg0.getSigningOrganization());
-				
-				personal.setPersonalPlaceofdomicile(arg0.getCertAddress());
-				
-				personal.setShopkeeperCustomerid(clientNum);
-				
-				shopkeeperService.insertSpsShopkeeperPersonal(personal );
-				
-				saveLinkDetail.setCode(Message.SUCCESS_CODE);
+			String code = saveLinkDetail.getCode();
+			
+			if(code != null){
+				if(code.equals("SUCCESS")){
+					
+					SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
+					
+					personal.setPersonalClientName(arg0.getName());
+					
+					personal.setPersonalSex(IdcardUtil.getSex(arg0.getCertNo()));
+					
+					personal.setPersonalIdcard(arg0.getCertNo());
+					
+					String effectiveTime = arg0.getEffectiveTime();
+					
+					String[] split = effectiveTime.split("-");
+					
+					personal.setPersonalIdcardValidityStart(split[0]);
+					
+					personal.setPersonalIdcardValidityEnd(split[1]);
+					
+					personal.setPersonalLicenceIssuingAuthority(arg0.getSigningOrganization());
+					
+					personal.setPersonalPlaceofdomicile(arg0.getCertAddress());
+					
+					personal.setShopkeeperCustomerid(clientNum);
+					
+					shopkeeperService.insertSpsShopkeeperPersonal(personal );
+					
+					saveLinkDetail.setCode(Message.SUCCESS_CODE);
+				}
 			}
 		}else{
 			saveLinkDetail.setCode(Message.FAILURE_CODE);
@@ -473,53 +501,57 @@ public class authenticationController {
 			
 			saveLinkDetail = jzfqAuthApi.saveStoreDetail(arg0);
 			
-			if(saveLinkDetail.getCode().equals("SUCCESS")){
-				/*
-				 * 添加到公司表
-				 */
-				SpsShopkeeperCompany company = new SpsShopkeeperCompany();
-				
-				company.setCompanyName(arg0.getCompanyName());
-				
-				company.setCompanyShopName(arg0.getStoreName());
-				
-				//company.setCompanyCorpName(companyCorpName);
-				
-				company.setCompanyBusinessAddr(arg0.getActualPName()+arg0.getActualCName()+arg0.getActualAName());
-				
-				company.setCompanyGpsAddr(arg0.getGpsAddress());
-				
-				company.setCompanyBusinessAddrOwnership(arg0.getOwnerShip());
-				
-				company.setCompanyOperatioTime(arg0.getStaffNum());
-				
-				company.setCompanyEmployeeNum(arg0.getStaffNum());
-				
-				company.setCompanyBusinessArea((double)arg0.getActualArea());
-				
-				company.setShopkeeperCustomerid(clientNum);
+			String code = saveLinkDetail.getCode();
+			
+			if(code != null){
+				if(code.equals("SUCCESS")){
+					/*
+					 * 添加到公司表
+					 */
+					SpsShopkeeperCompany company = new SpsShopkeeperCompany();
+					
+					company.setCompanyName(arg0.getCompanyName());
+					
+					company.setCompanyShopName(arg0.getStoreName());
+					
+					//company.setCompanyCorpName(companyCorpName);
+					
+					company.setCompanyBusinessAddr(arg0.getActualPName()+arg0.getActualCName()+arg0.getActualAName());
+					
+					company.setCompanyGpsAddr(arg0.getGpsAddress());
+					
+					company.setCompanyBusinessAddrOwnership(arg0.getOwnerShip());
+					
+					company.setCompanyOperatioTime(arg0.getStaffNum());
+					
+					company.setCompanyEmployeeNum(arg0.getStaffNum());
+					
+					company.setCompanyBusinessArea((double)arg0.getActualArea());
+					
+					company.setShopkeeperCustomerid(clientNum);
 
-				shopkeeperService.insertShopkeeperCompany(company);
-				/**
-				 * 更改shopkeeper主表的内容
-				 */
-				SpsShopkeeper shopkeeper = new SpsShopkeeper();
-				
-				shopkeeper.setShopkeeperChannelType("店主");
-				
-				shopkeeper.setShopkeeperCommodityType(arg0.getMajorType());
-				
-				shopkeeper.setShopkeeperBusinessModel(arg0.getOperateModel());
-				
-				shopkeeper.setShopkeeperBrand(arg0.getMajorBrand());
-				
-				shopkeeper.setShopkeeperBusinessType(arg0.getMajorBusiness());
-				
-				shopkeeper.setShopkeeperCustomerid(clientNum);
-				
-				shopkeeperService.updateShopkeeper(shopkeeper);
-				
-				saveLinkDetail.setCode(Message.SUCCESS_CODE);
+					shopkeeperService.insertShopkeeperCompany(company);
+					/**
+					 * 更改shopkeeper主表的内容
+					 */
+					SpsShopkeeper shopkeeper = new SpsShopkeeper();
+					
+					shopkeeper.setShopkeeperChannelType("店主");
+					
+					shopkeeper.setShopkeeperCommodityType(arg0.getMajorType());
+					
+					shopkeeper.setShopkeeperBusinessModel(arg0.getOperateModel());
+					
+					shopkeeper.setShopkeeperBrand(arg0.getMajorBrand());
+					
+					shopkeeper.setShopkeeperBusinessType(arg0.getMajorBusiness());
+					
+					shopkeeper.setShopkeeperCustomerid(clientNum);
+					
+					shopkeeperService.updateShopkeeper(shopkeeper);
+					
+					saveLinkDetail.setCode(Message.SUCCESS_CODE);
+				}
 			}
 		}else{
 			saveLinkDetail.setCode(Message.FAILURE_CODE);
@@ -527,18 +559,28 @@ public class authenticationController {
 		}
 		return saveLinkDetail;
 	}
-/*	@RequestMapping("/saveUserCardByNo")
-	public ServiceResult<Integer> saveUserCardByNo(String channel, String companyName, String storeName,Integer source,  
-			String actualACode, String actualAName, String actualCCode, String actualCName, String actualPCode, String actualPName,
-			String ownerShip, String actualAddress, Integer actualArea, Integer staffNum, String operateModel,
-			String majorBrand, String majorType, String majorBusiness, Integer type, Integer userId){
+	@RequestMapping("/saveUserCardByNo")
+	public ServiceResult<Integer> saveUserCardByNo(UserCard arg0, String clientNum){
+		ServiceResult<Integer> saveUserCardByNo = new ServiceResult<>();
 		
-		UserCard arg0 = new UserCard();
-		
-		ServiceResult<Integer> saveUserCardByNo = iUsercardService.saveUserCardByNo(arg0 );
-		
+		if(!StringUtil.isEmpty(clientNum)){
+			
+			saveUserCardByNo = iUserCardNewService.saveUserCardByNo(arg0 );
+			
+			String code = saveUserCardByNo.getCode();
+			
+			if(code != null){
+				if(code.equals("SUCCESS")){
+					SpsShopkeeperRepayment repayment = new SpsShopkeeperRepayment();
+					
+					shopkeeperService.insertSpsShopkeeperRepayment(repayment );
+				}
+			}
+		}else{
+			saveUserCardByNo.setMessage(Message.FAILURE_CLIENTNUM);
+		}
 		return saveUserCardByNo;
-	}*/
+	}
 	/**
 	 * 征信认证
 	 * @Title: saveMentionDetail   
@@ -563,13 +605,17 @@ public class authenticationController {
 		if(!StringUtil.isEmpty(clientNum)){
 			saveMentionDetail = jzfqAuthApi.saveMentionDetail(arg0);
 			
-			if(saveMentionDetail.getCode().equals("SUCCESS")){
-				
-				credit.setShopkeeperCustomerid(clientNum);
-				
-				shopkeeperService.insertSpsShopkeeperCredit(credit);
-				
-				saveMentionDetail.setCode(Message.SUCCESS_CODE);
+			String code = saveMentionDetail.getCode();
+			
+			if(code != null){
+				if(code.equals("SUCCESS")){
+					
+					credit.setShopkeeperCustomerid(clientNum);
+					
+					shopkeeperService.insertSpsShopkeeperCredit(credit);
+					
+					saveMentionDetail.setCode(Message.SUCCESS_CODE);
+				}
 			}
 		}else{
 			saveMentionDetail.setCode(Message.FAILURE_CODE);

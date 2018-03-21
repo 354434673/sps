@@ -23,7 +23,7 @@ import com.sps.service.area.AreasService;
 @RestController
 @RequestMapping("/option")
 public class OptionController {
-	//@Resource
+	@Resource
 	private IBinCodeService iBinCodeService;
 	@Resource
 	private AreasService areasService;
@@ -38,6 +38,7 @@ public class OptionController {
 	 * @return: void      
 	 * @throws
 	 */
+	@RequestMapping("/queryBankForId")
 	public ServiceResult<BinCode> queryBankForId(String bankId){
 		
 		ServiceResult<BinCode> binCodeById = iBinCodeService.getBinCodeById(bankId);

@@ -37,4 +37,9 @@ public class ShopkeeperController {
 		
 		return shopkeeperService.insertShopkeeperInvitation(invitation);
 	}
+	@RequestMapping("/queryInvitationList")
+	public HashMap<String, Object> queryInvitationList(String  salemanPhone){
+		
+		return shopkeeperService.queryInvitationList(salemanPhone);
+	}
 }
