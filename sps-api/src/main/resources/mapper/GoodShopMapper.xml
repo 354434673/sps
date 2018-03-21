@@ -272,6 +272,7 @@
         sps_good_shop g
         LEFT JOIN sps_custom_category b ON b.custom_id = g.g_category_self
         where 1=1
+
         <if test="goodsName !=null and goodsName != ''">
             and g.g_spu_name LIKE CONCAT('%',#{goodsName,jdbcType=VARCHAR},'%')
         </if>
@@ -318,6 +319,9 @@
         </if>
         <if test="orderType== 3">
             order by gMinPrice asc ,  g.g_create_time desc
+        </if>
+        <if test="orderType== 4">
+            order by g.g_sales_num desc ,  g.g_create_time desc
         </if>
     </select>
     <select id="findLastId" parameterType="int" resultMap="BaseResultMap">

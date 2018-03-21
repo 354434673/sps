@@ -15,9 +15,17 @@ public class SpsShopkeeperInvitation implements Serializable{
 
     private String invitationPhone;
 
+    private String invitationSalemanPhone;
+
     private Date invitationTime;
 
     private String invitationState;
+
+    private Integer invitationType;
+
+    private String invitationAddress;
+
+    private String invitationChannelPhone;
 
     private Date invitationCreatTime;
 
@@ -47,6 +55,14 @@ public class SpsShopkeeperInvitation implements Serializable{
         this.invitationPhone = invitationPhone == null ? null : invitationPhone.trim();
     }
 
+    public String getInvitationSalemanPhone() {
+        return invitationSalemanPhone;
+    }
+
+    public void setInvitationSalemanPhone(String invitationSalemanPhone) {
+        this.invitationSalemanPhone = invitationSalemanPhone == null ? null : invitationSalemanPhone.trim();
+    }
+
     public Date getInvitationTime() {
         return invitationTime;
     }
@@ -61,6 +77,30 @@ public class SpsShopkeeperInvitation implements Serializable{
 
     public void setInvitationState(String invitationState) {
         this.invitationState = invitationState == null ? null : invitationState.trim();
+    }
+
+    public Integer getInvitationType() {
+        return invitationType;
+    }
+
+    public void setInvitationType(Integer invitationType) {
+        this.invitationType = invitationType;
+    }
+
+    public String getInvitationAddress() {
+        return invitationAddress;
+    }
+
+    public void setInvitationAddress(String invitationAddress) {
+        this.invitationAddress = invitationAddress == null ? null : invitationAddress.trim();
+    }
+
+    public String getInvitationChannelPhone() {
+        return invitationChannelPhone;
+    }
+
+    public void setInvitationChannelPhone(String invitationChannelPhone) {
+        this.invitationChannelPhone = invitationChannelPhone == null ? null : invitationChannelPhone.trim();
     }
 
     public Date getInvitationCreatTime() {

@@ -16,5 +16,6 @@ public interface SpsShopkeeperHousePrppertyDao extends BaseDB<SpsShopkeeperPerso
      * @return
      */
     int  saveHouseInfo(SpsShopkeeperHouseProperty hourse);
-
+    
+    int insertSelective(SpsShopkeeperHouseProperty record);
 }

@@ -23,6 +23,7 @@ public class Message {
 
 	//请求失败
 	public static String FAILURE_CODE = "0";
+	public static String FAILURE_CLIENTNUM = "clientNum字段不可为空";
 	public static String FAILURE_MSG = "failure";
 	public static String ERROR_MSG = "缺少参数或参数为NUll";
 	public static String API_ERROR_FLAG = "false";

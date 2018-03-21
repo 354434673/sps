@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.SpsShopkeeperTakingDao" >
+  <resultMap id="BaseResultMap" type="com.sps.entity.shopkeeper.SpsShopkeeperTaking" >
+    <id column="taking_id" property="takingId" jdbcType="INTEGER" />
+    <result column="taking_month_avg_turnover" property="takingMonthAvgTurnover" jdbcType="DECIMAL" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+    <result column="taking_username" property="takingUsername" jdbcType="VARCHAR" />
+    <result column="taking_creat_time" property="takingCreatTime" jdbcType="TIMESTAMP" />
+    <result column="taking_update_time" property="takingUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_shopkeeper_taking
+    where taking_id = #{takingId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperTakingExample" >
+    delete from sps_shopkeeper_taking
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperTaking" >
+    insert into sps_shopkeeper_taking (taking_id, taking_month_avg_turnover, 
+      shopkeeper_customerId, taking_username, taking_creat_time, 
+      taking_update_time)
+    values (#{takingId,jdbcType=INTEGER}, #{takingMonthAvgTurnover,jdbcType=DECIMAL}, 
+      #{shopkeeperCustomerid,jdbcType=VARCHAR}, #{takingUsername,jdbcType=VARCHAR}, #{takingCreatTime,jdbcType=TIMESTAMP}, 
+      #{takingUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperTaking" >
+    insert into sps_shopkeeper_taking
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="takingId != null" >
+        taking_id,
+      </if>
+      <if test="takingMonthAvgTurnover != null" >
+        taking_month_avg_turnover,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
+      </if>
+      <if test="takingUsername != null" >
+        taking_username,
+      </if>
+      <if test="takingCreatTime != null" >
+        taking_creat_time,
+      </if>
+      <if test="takingUpdateTime != null" >
+        taking_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="takingId != null" >
+        #{takingId,jdbcType=INTEGER},
+      </if>
+      <if test="takingMonthAvgTurnover != null" >
+        #{takingMonthAvgTurnover,jdbcType=DECIMAL},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="takingUsername != null" >
+        #{takingUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="takingCreatTime != null" >
+        #{takingCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="takingUpdateTime != null" >
+        #{takingUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_shopkeeper_taking
+    <set >
+      <if test="record.takingId != null" >
+        taking_id = #{record.takingId,jdbcType=INTEGER},
+      </if>
+      <if test="record.takingMonthAvgTurnover != null" >
+        taking_month_avg_turnover = #{record.takingMonthAvgTurnover,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.takingUsername != null" >
+        taking_username = #{record.takingUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.takingCreatTime != null" >
+        taking_creat_time = #{record.takingCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.takingUpdateTime != null" >
+        taking_update_time = #{record.takingUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_shopkeeper_taking
+    set taking_id = #{record.takingId,jdbcType=INTEGER},
+      taking_month_avg_turnover = #{record.takingMonthAvgTurnover,jdbcType=DECIMAL},
+      shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      taking_username = #{record.takingUsername,jdbcType=VARCHAR},
+      taking_creat_time = #{record.takingCreatTime,jdbcType=TIMESTAMP},
+      taking_update_time = #{record.takingUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperTaking" >
+    update sps_shopkeeper_taking
+    <set >
+      <if test="takingMonthAvgTurnover != null" >
+        taking_month_avg_turnover = #{takingMonthAvgTurnover,jdbcType=DECIMAL},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="takingUsername != null" >
+        taking_username = #{takingUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="takingCreatTime != null" >
+        taking_creat_time = #{takingCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="takingUpdateTime != null" >
+        taking_update_time = #{takingUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where taking_id = #{takingId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperTaking" >
+    update sps_shopkeeper_taking
+    set taking_month_avg_turnover = #{takingMonthAvgTurnover,jdbcType=DECIMAL},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      taking_username = #{takingUsername,jdbcType=VARCHAR},
+      taking_creat_time = #{takingCreatTime,jdbcType=TIMESTAMP},
+      taking_update_time = #{takingUpdateTime,jdbcType=TIMESTAMP}
+    where taking_id = #{takingId,jdbcType=INTEGER}
+  </update>
+</mapper>

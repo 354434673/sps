@@ -32,7 +32,7 @@ public interface PurchaseOrderService {
      * 逻辑删除
      * @param id
      */
-    void falseDeletion(Integer id);
+    void falseDeletion(String ids);
 
     /**
      * 提交进货单

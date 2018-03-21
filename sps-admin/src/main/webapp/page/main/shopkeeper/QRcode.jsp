@@ -40,7 +40,7 @@
 	  var index = 1;
 	  var channelNum = getUrlParam("channelNum")
 	  var clientNum = getUrlParam("clientNum")
-	  var src = "http://localhost:8080/sps-admin/shopkeeper/getQRcode?channelNum="+channelNum+"&clientNum="+clientNum
+	  var src = "<%=path%>/shopkeeper/getQRcode?channelNum="+channelNum+"&clientNum="+clientNum
 	  var img = "<img src='"+src+"' alt='二维码'>"
 	  $('#pic').html(img)
 	  	        //获得url参数

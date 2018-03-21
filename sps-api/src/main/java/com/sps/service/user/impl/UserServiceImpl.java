@@ -1,14 +1,5 @@
 package com.sps.service.user.impl;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.juzifenqi.core.ServiceResult;
 import com.juzifenqi.usercenter.entity.member.LoginInfo;
 import com.sps.common.Md5Util;
@@ -25,6 +16,14 @@ import com.sps.entity.user.SpsUserExample;
 import com.sps.entity.user.SpsUserExample.Criteria;
 import com.sps.service.base.BaseOperate;
 import com.sps.service.user.UserService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
 @Service
 public class UserServiceImpl extends BaseOperate implements UserService{
 	@Resource
@@ -68,7 +67,7 @@ public class UserServiceImpl extends BaseOperate implements UserService{
 	return result;
 	}
 
-	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
+	@Transactional(readOnly=false, rollbackFor=Exception.class)
 	public SpsUser getUser(String userName){
 		SpsUserExample example = new SpsUserExample();
 
@@ -129,7 +128,8 @@ public class UserServiceImpl extends BaseOperate implements UserService{
 		}
 
 		return serviceResult;
-	}@Override
+	}
+	@Override
 	public SpsShopkeeperInvitation queryShopInvitation(String phone, String clientNum) {
 
 		SpsShopkeeperInvitationExample example = new SpsShopkeeperInvitationExample();

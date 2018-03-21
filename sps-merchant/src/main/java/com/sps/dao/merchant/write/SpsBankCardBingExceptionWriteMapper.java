@@ -1,7 +1,6 @@
 package com.sps.dao.merchant.write;
 
 import org.apache.ibatis.annotations.Param;
-import org.sps.entity.merchant.SpsBankCardBingException;
 import org.sps.entity.merchant.SpsChannelBankTrade;
 
 import java.util.Date;

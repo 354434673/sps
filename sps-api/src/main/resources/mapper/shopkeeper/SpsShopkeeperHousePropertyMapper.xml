@@ -23,4 +23,60 @@
            #{houseUpdateTime,jdbcType=TIMESTAMP}
           )
   </insert>
+  
+    <insert id="insertSelective" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty" >
+    insert into sps_shopkeeper_house_property
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="houseId != null" >
+        house_id,
+      </if>
+      <if test="houseIsHave != null" >
+        house_is_have,
+      </if>
+      <if test="houseArea != null" >
+        house_area,
+      </if>
+      <if test="houseAddr != null" >
+        house_addr,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
+      </if>
+      <if test="houseUsername != null" >
+        house_username,
+      </if>
+      <if test="houseCreatTime != null" >
+        house_creat_time,
+      </if>
+      <if test="houseUpdateTime != null" >
+        house_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="houseId != null" >
+        #{houseId,jdbcType=INTEGER},
+      </if>
+      <if test="houseIsHave != null" >
+        #{houseIsHave,jdbcType=INTEGER},
+      </if>
+      <if test="houseArea != null" >
+        #{houseArea,jdbcType=DOUBLE},
+      </if>
+      <if test="houseAddr != null" >
+        #{houseAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="houseUsername != null" >
+        #{houseUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCreatTime != null" >
+        #{houseCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="houseUpdateTime != null" >
+        #{houseUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
 </mapper>

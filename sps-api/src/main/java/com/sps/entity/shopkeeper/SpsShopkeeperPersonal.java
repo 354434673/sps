@@ -1,6 +1,7 @@
 package com.sps.entity.shopkeeper;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class SpsShopkeeperPersonal implements Serializable{
@@ -8,6 +9,17 @@ public class SpsShopkeeperPersonal implements Serializable{
 	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
 	 */   
 	private static final long serialVersionUID = 1L;
+
+
+    private String url;
+    private BigDecimal balanceAmount;
+    private BigDecimal amountUsable;
+    private BigDecimal balance;
+    private BigDecimal threeDayRepayment;
+    private BigDecimal weekRepayment;
+    private BigDecimal repayAmount;
+
+
 
 	private Integer personalId;
 
@@ -227,5 +239,61 @@ public class SpsShopkeeperPersonal implements Serializable{
 
     public void setPersonalUpdateTime(Date personalUpdateTime) {
         this.personalUpdateTime = personalUpdateTime;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public BigDecimal getBalanceAmount() {
+        return balanceAmount;
+    }
+
+    public void setBalanceAmount(BigDecimal balanceAmount) {
+        this.balanceAmount = balanceAmount;
+    }
+
+    public BigDecimal getAmountUsable() {
+        return amountUsable;
+    }
+
+    public void setAmountUsable(BigDecimal amountUsable) {
+        this.amountUsable = amountUsable;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public BigDecimal getThreeDayRepayment() {
+        return threeDayRepayment;
+    }
+
+    public void setThreeDayRepayment(BigDecimal threeDayRepayment) {
+        this.threeDayRepayment = threeDayRepayment;
+    }
+
+    public BigDecimal getWeekRepayment() {
+        return weekRepayment;
+    }
+
+    public void setWeekRepayment(BigDecimal weekRepayment) {
+        this.weekRepayment = weekRepayment;
+    }
+
+    public BigDecimal getRepayAmount() {
+        return repayAmount;
+    }
+
+    public void setRepayAmount(BigDecimal repayAmount) {
+        this.repayAmount = repayAmount;
     }
 }
