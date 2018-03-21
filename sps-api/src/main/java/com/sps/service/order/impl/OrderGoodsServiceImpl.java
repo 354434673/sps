@@ -3,10 +3,8 @@ package com.sps.service.order.impl;
 import com.sps.dao.goods.SpsBrandMapper;
 import com.sps.dao.goods.SpsGoodCategoryMapper;
 import com.sps.dao.goods.SpsGoodsMapper;
-import com.sps.entity.order.SpsOrder;
 import com.sps.entity.order.SpsOrderGoods;
 import com.sps.service.order.OrderGoodsService;
-import com.sps.service.order.OrderService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

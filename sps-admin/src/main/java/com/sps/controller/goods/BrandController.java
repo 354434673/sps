@@ -189,7 +189,7 @@ public class BrandController {
 
 
     /**
-     * 查询品牌列表
+     * 根据分类id差品牌
      *
      * @return
      */
