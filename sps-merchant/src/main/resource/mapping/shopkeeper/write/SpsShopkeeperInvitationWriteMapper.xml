@@ -80,10 +80,12 @@
   </delete>
   <insert id="insert" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperInvitation" >
     insert into sps_shopkeeper_invitation (invitation_id, invitation_name, invitation_phone, 
-      invitation_time, invitation_state, invitation_creat_time, 
+      invitation_time, invitation_state, invitation_type, 
+      invitation_address, invitation_creat_time, 
       invitation_update_time)
     values (#{invitationId,jdbcType=INTEGER}, #{invitationName,jdbcType=VARCHAR}, #{invitationPhone,jdbcType=VARCHAR}, 
-      #{invitationTime,jdbcType=TIMESTAMP}, #{invitationState,jdbcType=VARCHAR}, #{invitationCreatTime,jdbcType=TIMESTAMP}, 
+      #{invitationTime,jdbcType=TIMESTAMP}, #{invitationState,jdbcType=VARCHAR}, #{invitationType,jdbcType=INTEGER}, 
+      #{invitationAddress,jdbcType=VARCHAR}, #{invitationCreatTime,jdbcType=TIMESTAMP}, 
       #{invitationUpdateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperInvitation" >
@@ -103,6 +105,12 @@
       </if>
       <if test="invitationState != null" >
         invitation_state,
+      </if>
+      <if test="invitationType != null" >
+        invitation_type,
+      </if>
+      <if test="invitationAddress != null" >
+        invitation_address,
       </if>
       <if test="invitationCreatTime != null" >
         invitation_creat_time,
@@ -126,6 +134,12 @@
       </if>
       <if test="invitationState != null" >
         #{invitationState,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationType != null" >
+        #{invitationType,jdbcType=INTEGER},
+      </if>
+      <if test="invitationAddress != null" >
+        #{invitationAddress,jdbcType=VARCHAR},
       </if>
       <if test="invitationCreatTime != null" >
         #{invitationCreatTime,jdbcType=TIMESTAMP},
@@ -153,6 +167,12 @@
       <if test="record.invitationState != null" >
         invitation_state = #{record.invitationState,jdbcType=VARCHAR},
       </if>
+      <if test="record.invitationType != null" >
+        invitation_type = #{record.invitationType,jdbcType=INTEGER},
+      </if>
+      <if test="record.invitationAddress != null" >
+        invitation_address = #{record.invitationAddress,jdbcType=VARCHAR},
+      </if>
       <if test="record.invitationCreatTime != null" >
         invitation_creat_time = #{record.invitationCreatTime,jdbcType=TIMESTAMP},
       </if>
@@ -171,6 +191,8 @@
       invitation_phone = #{record.invitationPhone,jdbcType=VARCHAR},
       invitation_time = #{record.invitationTime,jdbcType=TIMESTAMP},
       invitation_state = #{record.invitationState,jdbcType=VARCHAR},
+      invitation_type = #{record.invitationType,jdbcType=INTEGER},
+      invitation_address = #{record.invitationAddress,jdbcType=VARCHAR},
       invitation_creat_time = #{record.invitationCreatTime,jdbcType=TIMESTAMP},
       invitation_update_time = #{record.invitationUpdateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -192,6 +214,12 @@
       <if test="invitationState != null" >
         invitation_state = #{invitationState,jdbcType=VARCHAR},
       </if>
+      <if test="invitationType != null" >
+        invitation_type = #{invitationType,jdbcType=INTEGER},
+      </if>
+      <if test="invitationAddress != null" >
+        invitation_address = #{invitationAddress,jdbcType=VARCHAR},
+      </if>
       <if test="invitationCreatTime != null" >
         invitation_creat_time = #{invitationCreatTime,jdbcType=TIMESTAMP},
       </if>
@@ -207,6 +235,8 @@
       invitation_phone = #{invitationPhone,jdbcType=VARCHAR},
       invitation_time = #{invitationTime,jdbcType=TIMESTAMP},
       invitation_state = #{invitationState,jdbcType=VARCHAR},
+      invitation_type = #{invitationType,jdbcType=INTEGER},
+      invitation_address = #{invitationAddress,jdbcType=VARCHAR},
       invitation_creat_time = #{invitationCreatTime,jdbcType=TIMESTAMP},
       invitation_update_time = #{invitationUpdateTime,jdbcType=TIMESTAMP}
     where invitation_id = #{invitationId,jdbcType=INTEGER}

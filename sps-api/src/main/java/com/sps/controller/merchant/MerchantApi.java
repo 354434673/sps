@@ -41,7 +41,7 @@ public class MerchantApi{
 	 * @throws
 	 */
 	@RequestMapping(value = "/queryMerchant", method = RequestMethod.POST)
-	public HashMap<String, Object> queryMerchant(String shopkeeperCustomerid) {
+		public HashMap<String, Object> queryMerchant(String shopkeeperCustomerid) {
 		
 		HashMap<String, Object> queryMerchantList = enterpriseService.queryMerchantList(shopkeeperCustomerid);
 		
@@ -59,9 +59,9 @@ public class MerchantApi{
 	 * @throws
 	 */
 	@RequestMapping(value = "/queryMerchantDetail", method = RequestMethod.POST)
-	public HashMap<String, Object> queryMerchantDetail(Integer enterpriseId ,Integer categoryId, String orderType, String goodsName) {
+	public HashMap<String, Object> queryMerchantDetail(Integer enterpriseId ,Integer categoryId, String orderType, String goodsName,String shopkeeperCustomerId) {
 
-		HashMap<String, Object> queryMerchantDetail = enterpriseService.queryMerchantDetail(enterpriseId, categoryId, orderType, goodsName);
+		HashMap<String, Object> queryMerchantDetail = enterpriseService.queryMerchantDetail(enterpriseId, categoryId, orderType, goodsName,shopkeeperCustomerId);
 
 		return queryMerchantDetail;
 	}

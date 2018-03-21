@@ -272,6 +272,7 @@
         sps_good_shop g
         LEFT JOIN sps_custom_category b ON b.custom_id = g.g_category_self
         where 1=1
+
         <if test="goodsName !=null and goodsName != ''">
             and g.g_spu_name LIKE CONCAT('%',#{goodsName,jdbcType=VARCHAR},'%')
         </if>

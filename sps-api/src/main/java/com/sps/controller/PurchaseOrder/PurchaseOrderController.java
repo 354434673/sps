@@ -1,19 +1,14 @@
 package com.sps.controller.PurchaseOrder;
 
 import com.sps.common.*;
-import com.sps.entity.goods.SpsGoodShop;
-import com.sps.entity.goods.SpsGoodShopSku;
 import com.sps.entity.goods.SpsPurchaseOrder;
 import com.sps.service.goods.ApiGoodShopService;
 import com.sps.service.goods.GoodShopSkuService;
-import com.sps.service.goods.GoodsService;
 import com.sps.service.goods.PurchaseOrderService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +17,6 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/api/purchaseOrder")
 public class PurchaseOrderController {
-
     @Resource
     private PurchaseOrderService purchaseOrderService;
     @Resource
@@ -59,13 +53,14 @@ public class PurchaseOrderController {
      */
     @RequestMapping(value = "/findListByCustomerNum", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findSkuById(String customerNum ) {
+    public ReturnInfo findSkuById(String customerNum,Integer id) {
         ReturnInfo ri = new ReturnInfo();
         try {
             Map<String, Object> map = new HashMap<>();
             map.put("customerNum", customerNum);
+            map.put("enterpriseId", id);
             List<SpsPurchaseOrder> purchaseOrderList = purchaseOrderService.findList(map);
-            String[] pro = new String[]{"orderId","orderSkuId","goodsName","price","quantity","size","url","stock","orderGoodsNum","color"};
+            String[] pro = new String[]{"orderId","orderEnterpriseId","orderSkuId","goodsName","price","quantity","size","url","stock","orderGoodsNum","color"};
             if (purchaseOrderList != null) {
                 ri.setResult(EntityUtiles.reloadListPropertyValue(purchaseOrderList, pro));
                 ri.setCode(Message.SUCCESS_CODE);

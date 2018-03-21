@@ -305,6 +305,76 @@ public class SpsShopkeeperInvitationExample {
             return (Criteria) this;
         }
 
+        public Criteria andInvitationSalemanPhoneIsNull() {
+            addCriterion("invitation_saleman_phone is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneIsNotNull() {
+            addCriterion("invitation_saleman_phone is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneEqualTo(String value) {
+            addCriterion("invitation_saleman_phone =", value, "invitationSalemanPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneNotEqualTo(String value) {
+            addCriterion("invitation_saleman_phone <>", value, "invitationSalemanPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneGreaterThan(String value) {
+            addCriterion("invitation_saleman_phone >", value, "invitationSalemanPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("invitation_saleman_phone >=", value, "invitationSalemanPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneLessThan(String value) {
+            addCriterion("invitation_saleman_phone <", value, "invitationSalemanPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneLessThanOrEqualTo(String value) {
+            addCriterion("invitation_saleman_phone <=", value, "invitationSalemanPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneLike(String value) {
+            addCriterion("invitation_saleman_phone like", value, "invitationSalemanPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneNotLike(String value) {
+            addCriterion("invitation_saleman_phone not like", value, "invitationSalemanPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneIn(List<String> values) {
+            addCriterion("invitation_saleman_phone in", values, "invitationSalemanPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneNotIn(List<String> values) {
+            addCriterion("invitation_saleman_phone not in", values, "invitationSalemanPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneBetween(String value1, String value2) {
+            addCriterion("invitation_saleman_phone between", value1, value2, "invitationSalemanPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationSalemanPhoneNotBetween(String value1, String value2) {
+            addCriterion("invitation_saleman_phone not between", value1, value2, "invitationSalemanPhone");
+            return (Criteria) this;
+        }
+
         public Criteria andInvitationTimeIsNull() {
             addCriterion("invitation_time is null");
             return (Criteria) this;
@@ -432,6 +502,206 @@ public class SpsShopkeeperInvitationExample {
 
         public Criteria andInvitationStateNotBetween(String value1, String value2) {
             addCriterion("invitation_state not between", value1, value2, "invitationState");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationTypeIsNull() {
+            addCriterion("invitation_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationTypeIsNotNull() {
+            addCriterion("invitation_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationTypeEqualTo(Integer value) {
+            addCriterion("invitation_type =", value, "invitationType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationTypeNotEqualTo(Integer value) {
+            addCriterion("invitation_type <>", value, "invitationType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationTypeGreaterThan(Integer value) {
+            addCriterion("invitation_type >", value, "invitationType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("invitation_type >=", value, "invitationType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationTypeLessThan(Integer value) {
+            addCriterion("invitation_type <", value, "invitationType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("invitation_type <=", value, "invitationType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationTypeIn(List<Integer> values) {
+            addCriterion("invitation_type in", values, "invitationType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationTypeNotIn(List<Integer> values) {
+            addCriterion("invitation_type not in", values, "invitationType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationTypeBetween(Integer value1, Integer value2) {
+            addCriterion("invitation_type between", value1, value2, "invitationType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("invitation_type not between", value1, value2, "invitationType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressIsNull() {
+            addCriterion("invitation_address is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressIsNotNull() {
+            addCriterion("invitation_address is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressEqualTo(String value) {
+            addCriterion("invitation_address =", value, "invitationAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressNotEqualTo(String value) {
+            addCriterion("invitation_address <>", value, "invitationAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressGreaterThan(String value) {
+            addCriterion("invitation_address >", value, "invitationAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressGreaterThanOrEqualTo(String value) {
+            addCriterion("invitation_address >=", value, "invitationAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressLessThan(String value) {
+            addCriterion("invitation_address <", value, "invitationAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressLessThanOrEqualTo(String value) {
+            addCriterion("invitation_address <=", value, "invitationAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressLike(String value) {
+            addCriterion("invitation_address like", value, "invitationAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressNotLike(String value) {
+            addCriterion("invitation_address not like", value, "invitationAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressIn(List<String> values) {
+            addCriterion("invitation_address in", values, "invitationAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressNotIn(List<String> values) {
+            addCriterion("invitation_address not in", values, "invitationAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressBetween(String value1, String value2) {
+            addCriterion("invitation_address between", value1, value2, "invitationAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationAddressNotBetween(String value1, String value2) {
+            addCriterion("invitation_address not between", value1, value2, "invitationAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneIsNull() {
+            addCriterion("invitation_channel_phone is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneIsNotNull() {
+            addCriterion("invitation_channel_phone is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneEqualTo(String value) {
+            addCriterion("invitation_channel_phone =", value, "invitationChannelPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneNotEqualTo(String value) {
+            addCriterion("invitation_channel_phone <>", value, "invitationChannelPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneGreaterThan(String value) {
+            addCriterion("invitation_channel_phone >", value, "invitationChannelPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("invitation_channel_phone >=", value, "invitationChannelPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneLessThan(String value) {
+            addCriterion("invitation_channel_phone <", value, "invitationChannelPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneLessThanOrEqualTo(String value) {
+            addCriterion("invitation_channel_phone <=", value, "invitationChannelPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneLike(String value) {
+            addCriterion("invitation_channel_phone like", value, "invitationChannelPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneNotLike(String value) {
+            addCriterion("invitation_channel_phone not like", value, "invitationChannelPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneIn(List<String> values) {
+            addCriterion("invitation_channel_phone in", values, "invitationChannelPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneNotIn(List<String> values) {
+            addCriterion("invitation_channel_phone not in", values, "invitationChannelPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneBetween(String value1, String value2) {
+            addCriterion("invitation_channel_phone between", value1, value2, "invitationChannelPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvitationChannelPhoneNotBetween(String value1, String value2) {
+            addCriterion("invitation_channel_phone not between", value1, value2, "invitationChannelPhone");
             return (Criteria) this;
         }
 

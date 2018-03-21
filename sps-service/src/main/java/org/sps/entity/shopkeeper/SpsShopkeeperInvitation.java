@@ -19,6 +19,10 @@ public class SpsShopkeeperInvitation implements Serializable{
 
     private String invitationState;
 
+    private Integer invitationType;
+
+    private String invitationAddress;
+
     private Date invitationCreatTime;
 
     private Date invitationUpdateTime;
@@ -61,6 +65,22 @@ public class SpsShopkeeperInvitation implements Serializable{
 
     public void setInvitationState(String invitationState) {
         this.invitationState = invitationState == null ? null : invitationState.trim();
+    }
+
+    public Integer getInvitationType() {
+        return invitationType;
+    }
+
+    public void setInvitationType(Integer invitationType) {
+        this.invitationType = invitationType;
+    }
+
+    public String getInvitationAddress() {
+        return invitationAddress;
+    }
+
+    public void setInvitationAddress(String invitationAddress) {
+        this.invitationAddress = invitationAddress == null ? null : invitationAddress.trim();
     }
 
     public Date getInvitationCreatTime() {

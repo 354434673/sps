@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+;(function () {
     var _this = this;
     var telNum = document.getElementById('telNum');
     var getCheckCode = document.getElementById('getCheckCode');
@@ -60,9 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
         checkbox: function () {
             var _this = this;
             protocol.addEventListener('click', function () {
-
                 _this.toggleClassRun.toggleClassTest();
-
             }, false);
         },
         getPhoneCode: function () {
@@ -75,37 +73,64 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (telNum.value == '' || telNum.value.length == 0) {
                         aspenLib.tips('请先输入手机号！');
                         return;
-                    } else if (!/^1\d{10}$/.test(telNum.value)) {
+                    } else if (!/^[1][3,4,5,7,8][0-9]{9}$/.test(telNum.value)) {
                         aspenLib.tips('手机号格式不正确！');
                         return;
-                    } else {
-                        var telNum = document.getElementById('telNum');
-                        aspenLib.ajax({
-                            url: location.protocol + "//" + location.hostname + "/termi/sendVerifySMS.do",
-                            type: 'GET',
-                            dataType: 'json',
-                            data: {
-                                apiToken: '',
-                                userId: '',
-                                time: '',
-                                token: '',
-                                mobile: telNum.value
-                            },
-                            success: function (data) {
-                                if (data.result == 1) {
-                                    _this.countDown('getCheckCode');
-                                } else {
-                                    aspenLib.tips(data.msg);
-                                    return;
-                                }
-                            },
-                            error: function () {
-                                console.log('ajax error');
-                            }
-                        });
+                    }else {
+                        _this.imgCheckCode();
                     }
                 }, false);
             }
+        },
+        imgCheckCode: function(){
+            var _this = this;
+            var verifyCanvas = document.getElementById('verifyCanvas');
+            var checkCodeMask = document.getElementById('checkCodeMask');
+            var JVerifyCode = document.getElementById('v_container');
+            var subBtns = document.getElementById('subBtns');
+            var canvasCode = document.getElementById('canvasCode');
+            checkCodeMask.style.display = 'block';
+            if(!verifyCanvas){
+                var verifyCode = new GVerify("v_container");
+                subBtns && subBtns.addEventListener('click', function(){
+                    if(!verifyCode.validate(canvasCode.value)){
+                        aspenLib.tips('图形验证码不正确！');
+                        canvasCode.value = '';
+                        return false;
+                    }else{
+                        canvasCode.value = '';
+                        checkCodeMask.style.display = 'none';
+                        // var telNum = document.getElementById('telNum');
+                        // aspenLib.ajax({
+                        //     url: location.protocol + "//" + location.hostname + "/termi/sendVerifySMS.do",
+                        //     type: 'GET',
+                        //     dataType: 'json',
+                        //     data: {
+                        //         mobile: telNum.value
+                        //     },
+                        //     success: function (data) {
+                        //         if (data.result == 1) {
+                        //             _this.countDown('getCheckCode');
+                        //         } else {
+                        //             aspenLib.tips(data.msg);
+                        //             return;
+                        //         }
+                        //     },
+                        //     error: function () {
+                        //         console.log('ajax error');
+                        //     }
+                        // });
+                    }
+                }, false);
+                _this.closeMask();
+            }
+        },
+        closeMask: function(){
+            var closeBtn = document.querySelector('.closeBtn');
+            var checkCodeMask = document.getElementById('checkCodeMask');
+            closeBtn.addEventListener('click', function(){
+                checkCodeMask.style.display = 'none';
+            }, false);
         },
         countDown: function (id) {
             var _this = this;
@@ -210,4 +235,4 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     register.init();
-});
+})();
