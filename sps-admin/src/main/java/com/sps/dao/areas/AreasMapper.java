@@ -30,6 +30,4 @@ public interface AreasMapper {
     int updateByPrimaryKeySelective(Areas record);
 
     int updateByPrimaryKey(Areas record);
-    
-    List<AreasVo> select();
 }
