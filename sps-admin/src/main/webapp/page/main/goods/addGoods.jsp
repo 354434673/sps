@@ -379,7 +379,7 @@
                 $.ajax(
                     {
                         data: {
-                            flowStatus: 1,
+                            flowStatus: 3,
                             gId: $('#goodsId').val(),
                             gCategoryIds: $('#gCategoryIds').val(),
                             gCategoryNames: $('#gCategoryNames').val(),

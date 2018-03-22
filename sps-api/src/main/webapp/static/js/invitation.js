@@ -38,7 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     aspenLib.tips('供应商手机号格式不正确！');
                     supplierTel.focus();
                 } else {
-                    var setUrl = 'http://www.baidu.com?sTel=' + shopTel.value + '&supplierTel=' + supplierTel.value;
+                    //var setUrl = 'http://www.baidu.com?sTel=' + shopTel.value + '&supplierTel=' + supplierTel.value;
+                    var setUrl = 'http://123.56.24.208:8480/register.html?source=1&channelPhone='+supplierTel.value;
                     aspenLib.ajax({
                         url: location.protocol + "//" + location.host+ "/sps-api/shopeeker/invitation",
                         //url: location.protocol + "//" + location.host + "/api/user/getPhoneCode/regist",
@@ -50,11 +51,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             invitationAddress: supplierTel.value
                         },
                         success: function (data) {
-                            if (data.success) {
-                            	aspenLib.tips(data.message);
+                            if (data.code == 1) {
+                            	aspenLib.tips(data.msg);
                                 qrcode.makeCode(setUrl);
                             } else {
-                                aspenLib.tips(data.message);
+                                aspenLib.tips(data.msg);
                                 return;
                             }
                         },

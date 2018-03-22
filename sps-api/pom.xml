@@ -414,12 +414,9 @@
 				<db.password>123456</db.password>
 				<dubbo.auth.group>auth_dev1</dubbo.auth.group>
 				<dubbo.member.group>member-center-dev1</dubbo.member.group>
-				<dubbo.capital.group>capital-dev1</dubbo.capital.group>
+				<dubbo.capital.group>capital-service-dev1</dubbo.capital.group>
 				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 		</profile>
 		<!-- 测试环境 -->
 		<profile>
@@ -432,9 +429,12 @@
 				<db.password>dGlXkNJ38I2CHsYVVcUo</db.password>
 				<dubbo.auth.group>auth_dev1</dubbo.auth.group>
 				<dubbo.member.group>member-center-dev1</dubbo.member.group>
-				<dubbo.capital.group>capital-dev1</dubbo.capital.group>
+				<dubbo.capital.group>capital-service-dev1</dubbo.capital.group>
 				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 		</profile>
 		<!-- 生产环境 -->
 		<profile>
@@ -447,7 +447,7 @@
 				<db.password>dGlXkNJ38I2CHsYVVcUo</db.password>
 				<dubbo.auth.group>auth_dev1</dubbo.auth.group>
 				<dubbo.member.group>member-center-dev1</dubbo.member.group>
-				<dubbo.capital.group>capital-dev1</dubbo.capital.group>
+				<dubbo.capital.group>capital-service-dev1</dubbo.capital.group>
 				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
 		</profile>

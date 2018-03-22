@@ -1,5 +1,6 @@
 package com.sps.service.shopkeeper.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.sps.common.Message;
 import com.sps.common.StringUtil;
 import com.sps.dao.shopkeeper.SpsShopkeeperAccountDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperCarPrppertyDao;
@@ -207,7 +209,6 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		
 		pic.setPicUploadTime(new Date());
 		
-		
 		return picDao.insertSelective(pic);
 	}
 	@Override
@@ -248,35 +249,83 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 	}
 	@Override
 	public HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation) {
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		
+		HashMap<String, Object> hashMap = null;
+		SpsShopkeeperInvitation queryInvitation = queryInvitation(invitation.getInvitationPhone());
 		try {
-			invitation.setInvitationCreatTime(new Date());
-			
-			invitation.setInvitationUpdateTime(new Date());
-			
-			invitation.setInvitationType(1);
-			
-			invitationDao.insertSelective(invitation);
-			
-			hashMap.put("code", 1);
-			hashMap.put("msg", "邀请成功");
-			hashMap.put("success", true);
+			if(queryInvitation == null){
+				
+				invitation.setInvitationCreatTime(new Date());
+				
+				invitation.setInvitationUpdateTime(new Date());
+				
+				invitation.setInvitationState("0");
+				
+				invitation.setInvitationType(1);
+				
+				invitationDao.insertSelective(invitation);
+				
+				hashMap = Message.resultMap(Message.SUCCESS_CODE, "邀请成功", Message.SUCCESS_MSG, 1, null);
+			}else{
+				hashMap = Message.resultMap(Message.FAILURE_CODE, "该店主已邀请", Message.FAILURE_MSG, 0, null);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			hashMap.put("code", 0);
-			hashMap.put("msg", "邀请失败");
-			hashMap.put("success", false);
+			hashMap = Message.resultMap(Message.FAILURE_CODE, "邀请失败", Message.FAILURE_MSG, 0, null);
 		}
 		return hashMap;
 	}
 	@Override
 	public HashMap<String, Object> queryInvitationList(String salemanPhone) {
+		
+		HashMap<String, Object> hashMap = null;
+		
+		HashMap<String, Object> data = null;
+		try {
+			SpsShopkeeperInvitationExample example = new SpsShopkeeperInvitationExample();
+			
+			example.createCriteria().andInvitationSalemanPhoneEqualTo(salemanPhone)
+									.andInvitationTypeEqualTo(1);
+			ArrayList<Object> accept = new ArrayList<Object>();
+			
+			ArrayList<Object> noAccept = new ArrayList<Object>();
+			
+			List<SpsShopkeeperInvitation> selectByExample = invitationDao.selectByExample(example);
+			
+/*			for (SpsShopkeeperInvitation spsShopkeeperInvitation : selectByExample) {
+				if(spsShopkeeperInvitation.getInvitationState().equals("1")){
+					accept.add(spsShopkeeperInvitation);
+				}else if(spsShopkeeperInvitation.getInvitationState().equals("0")){
+					noAccept.add(spsShopkeeperInvitation);
+				}
+			}*/
+			selectByExample.forEach(n -> {
+				if(n.getInvitationState().equals("1")){
+					accept.add(n);
+				}else if(n.getInvitationState().equals("0")){
+					noAccept.add(n);
+				}
+			});
+			data = new HashMap<String, Object>();
+			
+			data.put("accept", accept);
+			
+			data.put("noAccept", noAccept);
+			
+			hashMap = Message.resultMap(Message.SUCCESS_CODE, "查询成功", Message.SUCCESS_MSG, selectByExample.size(), data);
+		} catch (Exception e) {
+			hashMap = Message.resultMap(Message.FAILURE_CODE, "查询失败", Message.FAILURE_MSG, 0, null);
+			e.printStackTrace();
+		}
+		return hashMap;
+	}
+	@Override
+	public SpsShopkeeperInvitation queryInvitation(String phone) {
 		SpsShopkeeperInvitationExample example = new SpsShopkeeperInvitationExample();
 		
-		example.createCriteria().andInvitationSalemanPhoneEqualTo(salemanPhone);
+		example.createCriteria().andInvitationPhoneEqualTo(phone);
 		
-		invitationDao.selectByExample(example);
-		return null;
+		List<SpsShopkeeperInvitation> selectByExample = invitationDao.selectByExample(example );
+		
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
 	}
 }
