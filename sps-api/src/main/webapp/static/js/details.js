@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     var ajaxUrl = 'http://123.56.24.208:8480';
-    var getTel = aspenLib.getQueryString('tel');
+    var getTel = aspenLib.getQueryString('salemanPhone') || '';
     var tabAjax = {
         init: function () {
             var _this = this;
