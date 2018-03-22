@@ -105,7 +105,8 @@ public class UserController {
 	 * @throws
 	 */
 	@RequestMapping("/regist")
-	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc, String clientNum, String channelNum){
+	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc, 
+			String clientNum, String channelNum, String salemanPhone, String channelPhone){
 		
 			SpsShopkeeperInvitation queryShopInvitation = userService.queryShopInvitation(mobile, null);
 			
@@ -125,7 +126,7 @@ public class UserController {
 				serviceResult = iDianfuPassportService.memberRegister4Browser(arg0);
 				
 				if(serviceResult.getSuccess()){
-					serviceResult = userService.insertUser(mobile, password, clientNum);
+					serviceResult = userService.insertUser(mobile, password, clientNum, channelNum, salemanPhone, channelPhone);
 				}
 			}else{
 				serviceResult = new ServiceResult<LoginInfo>();

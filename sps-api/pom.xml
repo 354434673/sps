@@ -417,9 +417,6 @@
 				<dubbo.capital.group>capital-service-dev1</dubbo.capital.group>
 				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 		</profile>
 		<!-- 测试环境 -->
 		<profile>
@@ -435,7 +432,9 @@
 				<dubbo.capital.group>capital-service-dev1</dubbo.capital.group>
 				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
-
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 		</profile>
 		<!-- 生产环境 -->
 		<profile>

@@ -10,7 +10,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.sps.common.Message;
+import com.sps.common.RuleUtil;
 import com.sps.common.StringUtil;
+import com.sps.dao.merchant.SpsChannelGuaranteeDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperAccountDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperCarPrppertyDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperCompanyDao;
@@ -23,6 +25,8 @@ import com.sps.dao.shopkeeper.SpsShopkeeperPersonalDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperPicDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperRepaymentDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperTakingDao;
+import com.sps.entity.merchant.SpsChannelGuarantee;
+import com.sps.entity.merchant.SpsChannelGuaranteeExample;
 import com.sps.entity.shopkeeper.SpsShopkeeper;
 import com.sps.entity.shopkeeper.SpsShopkeeperAccount;
 import com.sps.entity.shopkeeper.SpsShopkeeperAccountExample;
@@ -40,7 +44,6 @@ import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 import com.sps.entity.shopkeeper.SpsShopkeeperRepayment;
 import com.sps.entity.shopkeeper.SpsShopkeeperTaking;
 import com.sps.service.shopkeeper.ShopkeeperService;
-import com.sun.org.apache.bcel.internal.generic.DADD;
 /**
  * 店主相关业务层
  * @ClassName:  ShopkeeperServiceImpl   
@@ -74,6 +77,8 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 	private SpsShopkeeperRepaymentDao repaymentDao;
 	@Resource
 	private SpsShopkeeperTakingDao takingDao;
+	@Resource
+	private SpsChannelGuaranteeDao guaranteeDao;
 	@Override
 	public SpsShopkeeper queryShopkeeperList(String shopkeeperCustomerid) {
 		
@@ -257,18 +262,57 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 			if(!StringUtil.isEmpty(invitationPhone)){
 				SpsShopkeeperInvitation queryInvitation = queryInvitation(invitationPhone);
 				if(queryInvitation == null){
+					SpsChannelGuaranteeExample example = new SpsChannelGuaranteeExample();
 					
-					invitation.setInvitationCreatTime(new Date());
+					example.createCriteria().andGuaranteeCorpPhoneEqualTo(invitation.getInvitationChannelPhone());
 					
-					invitation.setInvitationUpdateTime(new Date());
+					List<SpsChannelGuarantee> selectByExample = guaranteeDao.selectByExample(example);
 					
-					invitation.setInvitationState("0");
-					
-					invitation.setInvitationType(1);
-					
-					invitationDao.insertSelective(invitation);
-					
-					hashMap = Message.resultMap(Message.SUCCESS_CODE, "邀请成功", Message.SUCCESS_MSG, 1, null);
+					if(selectByExample.size() != 0){
+						
+						String channelNum = selectByExample.get(0).getChannelNum();
+						
+						invitation.setInvitationCreatTime(new Date());
+						
+						invitation.setInvitationUpdateTime(new Date());
+						
+						invitation.setInvitationState("0");
+						
+						invitation.setInvitationType(1);
+						
+						invitationDao.insertSelective(invitation);
+						
+						/**
+						 * 插到店主信息表中
+						 */
+						String clientNum = RuleUtil.getClientNum("SP");
+						SpsShopkeeper spsShopkeeper = new SpsShopkeeper();
+						spsShopkeeper.setShopkeeperUsername(invitation.getInvitationPhone());
+						spsShopkeeper.setShopkeeperCreatTime(new Date());
+						spsShopkeeper.setShopkeeperUpdateTime(new Date());
+						spsShopkeeper.setShopkeeperState(1);
+						spsShopkeeper.setShopkeeperCustomerid(clientNum);
+						spsShopkeeper.setShopkeeperDefaultChannelNum(channelNum);
+						spsShopkeeperDao.insertSelective(spsShopkeeper);
+						
+						/*
+						 * 往店主个人信息中添加,字段为店主名称
+						 */
+						SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
+						personal.setPersonalClientName(invitation.getInvitationName());
+						personal.setPersonalCreatTime(new Date());
+						personal.setPersonalUpdateTime(new Date());
+						personal.setShopkeeperCustomerid(clientNum);
+						personalDao.insertSelective(personal);
+						
+						HashMap<String, String> result = new HashMap<>();
+						result.put("channelNum", channelNum);
+						result.put("clientNum", clientNum);
+						
+						hashMap = Message.resultMap(Message.SUCCESS_CODE, "邀请成功", Message.SUCCESS_MSG, 1, null);
+					}else{
+						hashMap = Message.resultMap(Message.FAILURE_CODE, "该供应商不存在", Message.FAILURE_MSG, 0, null);
+					}
 				}else{
 					hashMap = Message.resultMap(Message.FAILURE_CODE, "该店主已邀请", Message.FAILURE_MSG, 0, null);
 				}

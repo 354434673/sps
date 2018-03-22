@@ -35,7 +35,8 @@ public interface UserService {
 	 * @return: HashMap<String,Object>      
 	 * @throws
 	 */
-	ServiceResult<LoginInfo> insertUser(String phone, String password, String clientNum);
+	ServiceResult<LoginInfo> insertUser(String phone, String password, String clientNum, 
+					String channelNum, String salemanPhone, String channelPhone);
 	/**
 	 * 查询店主是否邀请
 	 * @Title: queryShopInvitation   

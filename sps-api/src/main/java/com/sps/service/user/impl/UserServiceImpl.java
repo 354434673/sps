@@ -86,7 +86,8 @@ public class UserServiceImpl extends BaseOperate implements UserService{
 		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
 	}
 	@Override
-	public ServiceResult<LoginInfo> insertUser(String phone, String password, String clientNum) {
+	public ServiceResult<LoginInfo> insertUser(String phone, String password, String clientNum, 
+			String channelNum, String salemanPhone, String channelPhone) {
 		ServiceResult<LoginInfo> serviceResult = new ServiceResult<LoginInfo>();
 
 		try {
