@@ -1,203 +1,310 @@
 package com.sps.common;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class DateUtil {
+	private static ThreadLocal<DateFormat> dateFormatStore = new ThreadLocal<DateFormat>();
+
+	public static final String yyyyMMddHHmmss = "yyyy-MM-dd HH:mm:ss";
+	public static final String yyyyMMdd = "yyyy-MM-dd";
+	public static final String yyyyMM = "yyyy-MM";
+	public static final String yyyy = "yyyy";
+	public static final String HHmmss = "HH:mm:ss";
+	public static final String MM = "MM";
+	public static final String week = "E";
 
 	/**
-	 * 返回每天、每月、每年中每个时间点的对应的数据list
+	 * 通过格式获取格式化对象,线程安全
 	 * 
-	 * @param hasYield
-	 *            是否包括收益列表
-	 * @param datalist
-	 *            数据
-	 * @param sdf
-	 *            日期格式
-	 * @param starttime
-	 *            开始时间
-	 * @param endtime
-	 *            结束时间
-	 * @param datetype
-	 *            'hour'-每小时，'day'-每天,'month'-每月,'year'-每年
+	 * @param datePattern
 	 * @return
-	 * @throws Exception
 	 */
-	public static Map<String, Object> dateData(List<Map<String, Object>> datalist, String starttime, String endtime,
-			String datetype) throws Exception {
-		Map<String, Object> resultList = new HashMap<>();
-		List<String> dayList = new ArrayList<String>();
-		List<Double> data = new ArrayList<Double>();
-		List<Double> yield = new ArrayList<Double>();
-		List<Date> days = new ArrayList<>();
-		SimpleDateFormat sdf = null;
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		if (datalist != null && datalist.size() > 0) {
-			Date begin = format.parse(starttime);
-			Date end = format.parse(endtime);
-			if (datetype.equals("hour")) {
-				days = findDates(begin, end, Calendar.HOUR_OF_DAY);
-				sdf = new SimpleDateFormat("yyyyMMddHH");
-			} else if (datetype.equals("day")) {
-				days = findDates(begin, end, Calendar.DAY_OF_MONTH);
-				sdf = new SimpleDateFormat("yyyyMMdd");
-			} else if (datetype.equals("month")) {
-				days = findDates(begin, end, Calendar.MONTH);
-				sdf = new SimpleDateFormat("yyyyMM");
-			} else if (datetype.equals("year")) {
-				days = findDates(begin, end, Calendar.YEAR);
-				sdf = new SimpleDateFormat("yyyy");
-			}
-			int j = 0;
-			for (Map<String, Object> map : datalist) {
-				for (int i = j; i < days.size(); i++) {
-					String key = sdf.format(days.get(i));
-					dayList.add(key);
-					if (key.equals(sdf.format(map.get(datetype)))) {
-						data.add(Double.parseDouble(map.get("sum").toString()));
-						yield.add(Double.parseDouble(map.get("yield").toString()));
-						j = i + 1;
-						break;
-					} else {
-						data.add(0.00);
-						yield.add(0.00);
-					}
-				}
-			}
-			while (j < days.size()) {
-				String key = sdf.format(days.get(j));
-				dayList.add(key);
-				data.add(0.00);
-				yield.add(0.00);
-				j++;
-			}
+	public static DateFormat getDateFormat(String datePattern) {
+		DateFormat fmt = dateFormatStore.get();
+		if (fmt == null) {
+			fmt = new SimpleDateFormat(datePattern);
+			dateFormatStore.set(fmt);
 		}
-		resultList.put("time", dayList);
-		resultList.put("gener", data);
-		resultList.put("yield", yield);
-		return resultList;
+		return fmt;
 	}
 
 	/**
-	 * 返回每天、每月、每年中每个时间点的对应的数据list
+	 * 将字符串日期转换成Date对象
 	 * 
-	 * @param datalist
-	 *            数据
-	 * @param sdf
-	 *            日期格式
-	 * @param starttime
-	 *            开始时间
-	 * @param endtime
-	 *            结束时间
-	 * @param datetype
-	 *            'hour'-每小时，'day'-每天,'month'-每月,'year'-每年
+	 * @param dateStr 日期字符串
+	 * @param datePattern 日期格式
 	 * @return
-	 * @throws Exception
 	 */
-	public static Map<String, Object> powerDateData(List<Map<String, Object>> datalist, String starttime,
-			String endtime, String datetype) throws Exception {
-		Map<String, Object> resultList = new HashMap<>();
-		List<String> dayList = new ArrayList<String>();
-		List<Double> data = new ArrayList<Double>();
-		List<Date> days = new ArrayList<>();
-		SimpleDateFormat format = null;
-		// SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHHmmss");
-		if (datalist != null && datalist.size() > 0) {
-
-			if (datetype.equals("hour")) {
-				format = new SimpleDateFormat("yyyyMMddHH");
-				Date begin = format.parse(starttime);
-				Date end = format.parse(endtime);
-				days = findDates(begin, end, Calendar.HOUR_OF_DAY);
-			} else if (datetype.equals("day")) {
-				format = new SimpleDateFormat("yyyyMMdd");
-				Date begin = format.parse(starttime);
-				Date end = format.parse(endtime);
-				days = findDates(begin, end, Calendar.DAY_OF_MONTH);
-			} else if (datetype.equals("month")) {
-				format = new SimpleDateFormat("yyyyMM");
-				Date begin = format.parse(starttime);
-				Date end = format.parse(endtime);
-				days = findDates(begin, end, Calendar.MONTH);
-			} else if (datetype.equals("year")) {
-				format = new SimpleDateFormat("yyyy");
-				Date begin = format.parse(starttime);
-				Date end = format.parse(endtime);
-				days = findDates(begin, end, Calendar.YEAR);
-			}
-			int j = 0;
-			for (Map<String, Object> map : datalist) {
-				for (int i = j; i < days.size(); i++) {
-					String key = format.format(days.get(i));
-					dayList.add(key);
-					if (key.equals(map.get(datetype))) {
-						data.add(Double.parseDouble(map.get("sum").toString()));
-						j = i + 1;
-						break;
-					} else {
-						data.add(0.00);
-					}
-				}
-			}
-			while (j < days.size()) {
-				String key = format.format(days.get(j));
-				dayList.add(key);
-				data.add(0.00);
-				j++;
-			}
+	public static Date parse(String dateStr, String datePattern) {
+		try {
+			return getDateFormat(datePattern).parse(dateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
 		}
-		resultList.put("timelist", dayList);
-		resultList.put("powerlist", data);
-		return resultList;
 	}
 
-	public static List<Date> findDates(Date dBegin, Date dEnd, int param) {
-		List<Date> dateList = new ArrayList<Date>();
-		dateList.add(dBegin);
-		Calendar calBegin = Calendar.getInstance();
-		// 使用给定的 Date 设置此 Calendar 的时间
-		calBegin.setTime(dBegin);
-		Calendar calEnd = Calendar.getInstance();
-		// 使用给定的 Date 设置此 Calendar 的时间
-		calEnd.setTime(dEnd);
-		// 验证此日期是否在指定日期之后
-		while (dEnd.after(calBegin.getTime())) {
-			// 根据日历的规则，为给定的日历字段添加或减去指定的时间量
-			calBegin.add(param, 1);
-			dateList.add(calBegin.getTime());
-		}
-		return dateList;
+	/**
+	 * 将Date对象转换成字符串日期
+	 * 
+	 * @param date 日期对象
+	 * @param datePattern 日期格式
+	 * @return
+	 */
+	public static String format(Date date, String datePattern) {
+		return getDateFormat(datePattern).format(date);
+	}
+	
+	/**
+	 * 取得特定时间对应的字符串,格式化为yyyy-MM-dd HH:mm:ss
+	 * 
+	 * @param date 日期对象
+	 * @return
+	 */
+	public static String ymdhmsFormat(Date date) {
+		return format(date, yyyyMMddHHmmss);
 	}
 
-	public static String dateFormat(String date, String type) throws ParseException {
-		Date time = null;
-		if (type.equals("hour")) {
-			time = new SimpleDateFormat("yyyyMMddHH").parse(date);
-		} else if (type.equals("day")) {
-			time = new SimpleDateFormat("yyyyMMdd").parse(date);
-		} else if (type.equals("month")) {
-			time = new SimpleDateFormat("yyyyMM").parse(date);
-		} else if (type.equals("year")) {
-			time = new SimpleDateFormat("yyyy").parse(date);
-		}
-		return new SimpleDateFormat().format(time);
+	/**
+	 * 取得特定时间对应的字符串,格式化为yyyy-MM-dd
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static String ymdFormat(Date date) {
+		return format(date, yyyyMMdd);
 	}
 
-	public static String getYesterday(Date date) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.add(Calendar.DATE, -1);
-		return format.format(calendar.getTime());
+	/**
+	 * 根据当前日期,得到当前年月
+	 * 
+	 * @param date
+	 * @return str
+	 */
+	public static final String ymFormat(Date date) {
+		if (date == null)
+			return "";
+		return format(date, yyyyMM);
 	}
 
-	public static void main(String[] args) {
+	/**
+	 * 根据当前日期,得到当前年份
+	 * 
+	 * @param date
+	 * @return str
+	 */
+	public static final String yFormat(Date date) {
+		if (date == null)
+			return "";
+		return format(date, yyyy);
+	}
 
+	/**
+	 * 根据当前日期,得到当前月份
+	 * 
+	 * @param date
+	 * @return str
+	 */
+	public static final String mFormat(Date date) {
+		if (date == null)
+			return "";
+		return format(date, MM);
+	}
+	
+	/**
+	 * 返回当前的时间，格式为H:mm:ss
+	 * 
+	 * @return 时间字符串
+	 */
+	public static final String getTimeNow() {
+		return format(new Date(), HHmmss);
+	}
+
+	/**
+	 * 把字符串形式转换成日期形式，字符串的格式必须为yyyy-MM-dd
+	 * 
+	 * @param ymdStringDate
+	 * @return date
+	 */
+	public static final Date ymdString2Date(String ymdStringDate) {
+		if (ymdStringDate == null)
+			return null;
+		return parse(ymdStringDate, yyyyMMdd);
+	}
+
+	/**
+	 * 把字符串形式转换成日期形式，字符串的格式必须为yyyy-MM-dd
+	 * 
+	 * @param ymdhmsStringDate
+	 * @return date
+	 */
+	public static final Date ymdhmsString2Date(String ymdhmsStringDate) {
+		if (ymdhmsStringDate == null)
+			return null;
+		return parse(ymdhmsStringDate, yyyyMMddHHmmss);
+	}
+
+	/**
+	 * 
+	 * 得到当前时间,把日期后的时间归0 变成(yyyy-MM-dd 00:00:00:000)
+	 * 
+	 * @return date
+	 */
+	public static Date getCurrentDate() {
+		Date date = new Date();
+		return zerolizedTime(date);
+	}
+
+	/**
+	 * 把日期后的时间归0 变成(yyyy-MM-dd 00:00:00:000)
+	 * 
+	 * @param fullDate
+	 * @return Date
+	 */
+	public static final Date zerolizedTime(Date fullDate) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(fullDate);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal.getTime();
+	}
+
+	/**
+	 * 得到两个时间的间隔
+	 * 
+	 * @param bDate
+	 * @param eDate
+	 * @return
+	 */
+	static public long dateDiffByDay(Date bDate, Date eDate) {
+		if (bDate == null || eDate == null)
+			return 0L;
+		return (bDate.getTime() - eDate.getTime()) / (1000 * 3600 * 24);
+	}
+
+
+	/**
+	 * 取得指定日期的星期数
+	 * 
+	 * @return String
+	 */
+	public static final String getWeek(Date date) {
+		if (date == null)
+			return null;
+		return format(date, week);
+	}
+
+	/**
+	 * 判断两个日期字符串是否相等,格式必需为yyyy-MM-dd
+	 * 
+	 * @param one
+	 *            第一个日期字符串
+	 * @param two
+	 *            第二个日期字符串
+	 * @return Boolean
+	 */
+	public static final boolean  isEqual(String one, String two) {
+		return ymdString2Date(one).equals(ymdString2Date(two));
+	}
+
+	/**
+	 * 判断两个日期字符串是否相等
+	 * 
+	 * @param one
+	 *            第一个日期字符串
+	 * @param two
+	 *            第二个日期字符串
+	 * @param datePattern
+	 *            包含日期格式的字符串
+	 * @return Boolean
+	 */
+	public static final boolean  isEqual(String one, String two, String datePattern) {
+
+		return isEqual(one, two, datePattern, datePattern);
+	}
+
+	/**
+	 * 判断两个日期字符串是否相等
+	 * 
+	 * @param one
+	 *            第一个日期字符串
+	 * @param two
+	 *            第二个日期字符串
+	 * @param datePatternOne
+	 *            对应第一个日期字符串的包含日期格式的字符串
+	 * @param datePatternTwo
+	 *            对应第二个日期字符串的包含日期格式的字符串
+	 * @return Boolean
+	 */
+	public static final Boolean isEqual(String one, String two,
+			String datePatternOne, String datePatternTwo) {
+
+		return parse(one, datePatternOne).equals(parse(two, datePatternTwo));
+	}
+
+	/**
+	 * 返回两时间的时间间隔（以分计算）
+	 * 
+	 * @param date1
+	 * @param date2
+	 * @return
+	 */
+	static public long spaceMinute(Date date1, Date date2) {
+		Long num1 = date1.getTime();
+		Long num2 = date2.getTime();
+		Long space = (num2 - num1) / (1000 * 60);
+		return space;
+	}
+
+	/**
+	 * 返回两时间的时间间隔（以天计算）
+	 * 
+	 * @param time1
+	 * @param time2
+	 * @return
+	 */
+	static public Long spaceDay(Date date1, Date date2) {
+		Long num1 = date1.getTime();
+		Long num2 = date2.getTime();
+		Long space = (num2 - num1) / (1000 * 3600 * 24);
+		return space;
+	}
+
+	static public Date getDateAfterDay(Date somedate, int day) {
+		if (somedate == null)
+			return null;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(somedate);
+		cal.add(Calendar.DAY_OF_MONTH, day);
+		return new Date(cal.getTime().getTime());
+	}
+
+	static public Timestamp getDateAfterDay(int day) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.DAY_OF_MONTH, day);
+		return new Timestamp(cal.getTime().getTime());
+	}
+
+	static public Timestamp getTSAfterDay(Date somedate, int day) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(somedate);
+		cal.add(Calendar.DAY_OF_MONTH, day);
+		return new Timestamp(cal.getTime().getTime());
+	}
+
+	// 取得本月第一天时间
+	static public Date getFirstDayOfMonth(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		return cal.getTime();
 	}
 }
