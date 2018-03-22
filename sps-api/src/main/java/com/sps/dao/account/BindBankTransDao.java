@@ -34,6 +34,7 @@ public interface BindBankTransDao {
     int updateBankTrans(@Param("id") int id, @Param("status") String status,@Param("yopSerNO") String yopSerNO,@Param("endTime") Date endTime);
 
      BindBankTrans selectOne(@Param("requestno") String requestno, @Param("yborderid") String yborderid);
+     BindBankTrans selectByRequestNo(String requestno);
 
 
 }

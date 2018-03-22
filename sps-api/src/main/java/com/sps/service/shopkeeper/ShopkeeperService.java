@@ -3,7 +3,7 @@ package com.sps.service.shopkeeper;
 import java.util.HashMap;
 import java.util.List;
 
-import com.jzfq.auth.core.api.vo.JsonResult;
+//import com.jzfq.auth.core.api.vo.JsonResult;
 import com.sps.entity.shopkeeper.SpsShopkeeper;
 import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperCompany;

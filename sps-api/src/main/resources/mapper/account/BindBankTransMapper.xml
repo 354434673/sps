@@ -50,17 +50,10 @@
   
   <update id="updateBankTrans"  >
     update sps_bank_trans
-    <set >
-    <if test="endTime != null" >
+    SET
         t_stop_time = #{endTime,jdbcType=TIMESTAMP},
-    </if>
-    <if test="status != null" >
         t_state = #{status,jdbcType=VARCHAR},
-    </if>
-     <if test="yopSerNO != null" >
-          t_serial_yop = #{yopSerNO,jdbcType=VARCHAR}
-    </if>
-    </set>
+        t_serial_yop = #{yopSerNO,jdbcType=VARCHAR}
      where  id=#{id}
   </update>
     <select id="selectOne" resultType="com.sps.entity.account.BindBankTrans">
@@ -91,5 +84,28 @@
             and t_serial_yop=#{yborderid}
         </if>
     </where>
+    </select>
+    <select id="selectByRequestNo" resultType="com.sps.entity.account.BindBankTrans">
+        select
+        id        id,
+        t_name        		name,
+        t_bank_name    	bankName,
+        t_user_id     		userId,
+        t_identity         identity,
+        t_phone    		phone,
+        t_merchant_no	    merchantNo,
+        t_start_time    	startTime,
+        t_stop_time    	stopTime,
+        t_auth_type        authType,
+        t_serial_sh  		serialSh,
+        t_serial_yop 		serialYop,
+        t_bank_code  		bankCode,
+        t_state      		state,
+        t_remark    		 remark,
+        channl_num          channlNum
+        FROM
+        sps_bank_trans
+       WHERE
+                t_serial_sh=#{requestno}
     </select>
 </mapper>

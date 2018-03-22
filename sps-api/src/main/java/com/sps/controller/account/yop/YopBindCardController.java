@@ -58,9 +58,9 @@ public class YopBindCardController {
     @Autowired
     private BankCardService bankCardService;
     @Autowired
- private UserService userService;
- @Autowired
- BindCardTransService bindCardTransService;
+    private UserService userService;
+     @Autowired
+    BindCardTransService bindCardTransService;
 
    //调用绑卡接口
     @RequestMapping(value = "/bindBankCard/{userName}/{personName}/{cardNo}/{phone}/{idcardno}/{bankName}/{id}", method = RequestMethod.POST)
@@ -93,22 +93,18 @@ public class YopBindCardController {
 
         /**
          * 调用易宝进行鉴权绑卡
+         * 57dc8546-0f55-4e30-b73c-85bc760dab89
          */
-        String identityid1 = bindBankTrans.getUserId().split("-").toString();
+        String identityid1 = bindBankTrans.getUserId().replaceAll("-","");
         YopRequest yopRequest = new YopRequest(YEEPAY_APP_KEY, "", YEEPAY_SERVER_ROOT);
         yopRequest.addParam("merchantno", YEEPAY_MERCHANT_NO);
         yopRequest.addParam("requestno", bindBankTrans.getSerialSh());
         yopRequest.addParam("identityid", identityid1);
         yopRequest.addParam("identitytype", "ID_CARD");
         yopRequest.addParam("cardno", cardNo);
-        yopRequest.addParam("idcardno",idCard);
+        yopRequest.addParam("idcardno",idcardno);
         yopRequest.addParam("idcardtype", "ID");
-        try {
-         yopRequest.addParam("username", new String(personName.getBytes(), "GBK"));
-
-        } catch (UnsupportedEncodingException e) {
-         e.printStackTrace();
-        }
+         yopRequest.addParam("username", personName);
         yopRequest.addParam("phone", phone);
         yopRequest.addParam("issms", "true");
         yopRequest.addParam("advicesmstype", "MESSAGE");
@@ -125,36 +121,41 @@ public class YopBindCardController {
         });
        String resre =responseParames.get("yborderid");
         Boolean aBoolean = bindCardTransService.modifyBankTran(responseParames.get("requestno"), responseParames.get("yborderid"), responseParames.get("status"));
-        if ("TO_VALIDATE".equals(yopResponse.getState())) {
+        if ("TO_VALIDATE".equals(responseParames.get("status"))) {
          //调用短信验证接口
-         retrunInfo.setMsg("待短验");
-         return retrunInfo;
-        }
-        if ("BIND_FAIL".equals(yopResponse.getState())) {
-         //绑卡失败
+            retrunInfo.setResult(responseParames.get("requestno"));
+            retrunInfo.setMsg("待短验");
 
-         retrunInfo.setMsg("绑卡失败");
          return retrunInfo;
         }
-        if ("BIND_ERRORE".equals(yopResponse.getState())) {
+        if ("BIND_FAIL".equals(responseParames.get("status"))) {
+         //绑卡失败
+            retrunInfo.setResult(responseParames.get("requestno"));
+
+            retrunInfo.setMsg("绑卡失败");
+         return retrunInfo;
+        }
+        if ("BIND_ERRORE".equals(responseParames.get("status"))) {
 
          //绑卡异常
-         retrunInfo.setMsg("绑卡异常");
+            retrunInfo.setResult(responseParames.get("requestno"));
+            retrunInfo.setMsg("绑卡异常");
          return retrunInfo;
         }
-        if ("TIME_OUT".equals(yopResponse.getState())) {
+        if ("TIME_OUT".equals(responseParames.get("status"))) {
 
          //绑卡超时
          retrunInfo.setMsg("绑卡超时");
          return retrunInfo;
         }
-        if ("FAIL".equals(yopResponse.getState())) {
+        if ("FAIL".equals(responseParames.get("status"))) {
 
          //系统异常
-         retrunInfo.setMsg("系统异常");
+            retrunInfo.setResult(responseParames.get("requestno"));
+            retrunInfo.setMsg("系统异常");
          return retrunInfo;
         }
-        if ("BIND_SUCCESS".equals(yopResponse.getState())) {
+        if ("BIND_SUCCESS".equals(responseParames.get("status"))) {
          Boolean saveBankInfo = bankCardService.saveBankCardInfo(bankInfo, userName, user.getUserId(), user.getUserMark());
          //跟新绑卡状态
          if (saveBankInfo) {
@@ -195,32 +196,32 @@ public class YopBindCardController {
   });
   bindCardTransService.modifyBankTran((String) responseParames.get("requestno"), (String) responseParames.get("yborderid"), (String) responseParames.get("status"));
 
-  if ("TO_VALIDATE".equals(yopResponse.getState())) {
+  if ("TO_VALIDATE".equals(responseParames.get("status"))) {
    //调用短信验证接口
    returnInfo.setMsg("待短验");
    return returnInfo;
   }
-  if ("BIND_FAIL".equals(yopResponse.getState())) {
+  if ("BIND_FAIL".equals(responseParames.get("status"))) {
    //绑卡失败
    returnInfo.setMsg("绑卡失败");
    return returnInfo;
   }
-  if ("BIND_ERRORE".equals(yopResponse.getState())) {
+  if ("BIND_ERRORE".equals(responseParames.get("status"))) {
    //绑卡异常
    returnInfo.setMsg("绑卡异常");
    return returnInfo;
   }
-  if ("TIME_OUT".equals(yopResponse.getState())) {
+  if ("TIME_OUT".equals(responseParames.get("status"))) {
    //绑卡超时
    returnInfo.setMsg("绑卡超时");
    return returnInfo;
   }
-  if ("FAIL".equals(yopResponse.getState())) {
+  if ("FAIL".equals(responseParames.get("status"))) {
    //系统异常
    returnInfo.setMsg("系统异常");
    return returnInfo;
   }
-  if ("BIND_SUCCESS".equals(yopResponse.getState())) {
+  if ("BIND_SUCCESS".equals(responseParames.get("status"))) {
    //根据请求号获取信息
    //保存绑卡记录
    //跟新绑卡状态
@@ -253,29 +254,29 @@ public class YopBindCardController {
         TreeMap<String, String> responseParames = JSON.parseObject(yopResponse.getStringResult(), new TypeReference<TreeMap<String, String>>() {
         });
 
-        if ("TO_VALIDATE".equals(yopResponse.getState())) {
+        if ("TO_VALIDATE".equals(responseParames.get("status"))) {
             //调用短信验证接口
             returnInfo.setMsg("待短验");
         }
-        if ("BIND_FAIL".equals(yopResponse.getState())) {
+        if ("BIND_FAIL".equals(responseParames.get("status"))) {
             //绑卡失败
 
             returnInfo.setMsg("绑卡失败");
         }
-        if ("BIND_ERRORE".equals(yopResponse.getState())) {
+        if ("BIND_ERRORE".equals(responseParames.get("status"))) {
 
             //绑卡异常
             returnInfo.setMsg("绑卡异常");
         }
-        if ("TIME_OUT".equals(yopResponse.getState())) {
+        if ("TIME_OUT".equals(responseParames.get("status"))) {
             //绑卡超时
             returnInfo.setMsg("绑卡超时");
         }
-        if ("FAIL".equals(yopResponse.getState())) {
+        if ("FAIL".equals(responseParames.get("status"))) {
             //系统异常
             returnInfo.setMsg("系统异常");
         }
-        if("BIND_SUCCESS".equals(yopResponse.getState())){
+        if("BIND_SUCCESS".equals(responseParames.get("status"))){
                 returnInfo.setMsg("操作绑卡成功");
         }
 

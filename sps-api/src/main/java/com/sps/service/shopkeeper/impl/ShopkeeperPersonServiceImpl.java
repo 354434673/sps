@@ -1,7 +1,7 @@
 package com.sps.service.shopkeeper.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+//import com.github.pagehelper.PageHelper;
+//import com.github.pagehelper.PageInfo;
 import com.sps.dao.goods.SpsBrandMapper;
 import com.sps.dao.goods.SpsGoodCategoryMapper;
 import com.sps.dao.goods.SpsGoodsMapper;

@@ -74,10 +74,10 @@ public class BindCardTransServiceImpl implements BindCardTransService {
     public Boolean modifyBankTran(String seriNum, String yopSerNO, String status) {
         int m=0;
         if(StringUtil.isNotEmpty(yopSerNO)){
-            BindBankTrans bindBankTrans = bindBankTransDao.selectOne(seriNum, yopSerNO);
+            BindBankTrans bindBankTrans = bindBankTransDao.selectByRequestNo(seriNum);
            m= bindBankTransDao.updateBankTrans(bindBankTrans.getId(),status,yopSerNO,new Date());
         }else{
-            BindBankTrans bindBankTrans = bindBankTransDao.selectOne(seriNum, null);
+            BindBankTrans bindBankTrans = bindBankTransDao.selectByRequestNo(seriNum);
           m=  bindBankTransDao.updateBankTrans(bindBankTrans.getId(),status,null,new Date());
         }
         return m > 0 ? true : false;
