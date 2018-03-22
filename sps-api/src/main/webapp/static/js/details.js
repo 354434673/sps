@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var getTel = aspenLib.getQueryString();
+    var getTel = aspenLib.getQueryString('tel');
     var tabAjax = {
         init: function () {
             var _this = this;
             _this.tabRun();
+            _this.ajaxDetailsList();
         },
         tabRun: function () {
             var _this = this;
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 type: 'post',
                 dataType: 'json',
                 data: {
-                    mobile: telNum.value
+                    mobile: (getTel)
                 },
                 success: function (data) {
                     if (data.result == 1) {
