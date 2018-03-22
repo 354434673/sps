@@ -35,7 +35,8 @@ public interface BindCardTransService {
 	 * @param status
 	 * @return
      */
-    Boolean  modifyBankTran(String seriNum, String yopSerNO, String status);
+    Boolean  modifyBankTran(String seriNum, String yopSerNO, String status,String cardtop,String  cardlast, String authtype,String remark);
+
 	/***
             * 根据请求好与易宝号进行查询
 	 * @param requestNo

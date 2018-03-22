@@ -49,7 +49,7 @@ public class BindCardTransServiceImpl implements BindCardTransService {
         bindBankTrades.setName(bankCardInfo.getName());
         bindBankTrades.setBankName(bankCardInfo.getBank());
         bindBankTrades.setUserId(bankCardInfo.getUserId());
-        bindBankTrades.setLoginName(bankCardInfo.getUserName());
+        bindBankTrades.setLoginName(userName);
         bindBankTrades.setIdentity(bankCardInfo.getIdentity());
         bindBankTrades.setPhone(bankCardInfo.getPhone());
         bindBankTrades.setMerchantNo(marchantNo);
@@ -71,14 +71,14 @@ public class BindCardTransServiceImpl implements BindCardTransService {
     }
 
     @Override
-    public Boolean modifyBankTran(String seriNum, String yopSerNO, String status) {
+    public Boolean modifyBankTran(String seriNum, String yopSerNO, String status,String cardtop,String  cardlast, String authtype,String remark) {
         int m=0;
         if(StringUtil.isNotEmpty(yopSerNO)){
             BindBankTrans bindBankTrans = bindBankTransDao.selectByRequestNo(seriNum);
-           m= bindBankTransDao.updateBankTrans(bindBankTrans.getId(),status,yopSerNO,new Date());
+           m= bindBankTransDao.updateBankTrans(bindBankTrans.getId(),status,yopSerNO,new Date(),cardtop,cardlast,authtype,remark);
         }else{
             BindBankTrans bindBankTrans = bindBankTransDao.selectByRequestNo(seriNum);
-          m=  bindBankTransDao.updateBankTrans(bindBankTrans.getId(),status,null,new Date());
+            m=  bindBankTransDao.updateBankTrans(bindBankTrans.getId(),status,null,new Date(),cardtop,cardlast,authtype,remark);
         }
         return m > 0 ? true : false;
         //根据请求号查询信息

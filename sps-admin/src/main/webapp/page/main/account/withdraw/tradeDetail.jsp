@@ -26,69 +26,71 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">物流公司:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="wuliuName" lay-verify="required">
+                    <input type="text" class="layui-input layui-disabled" id="wuliuName" autocomplete="off" lay-verify="required">
                 </div>
                 <label class="layui-form-label">物流单号:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="wuOderNo"  lay-verify="required">
+                    <input type="text"  id="wuOderNo" class="layui-input layui-disabled" autocomplete="off"lay-verify="required">
                 </div>
             </div>
             基本信息
             <div class="layui-form-item">
                 <label class="layui-form-label">订单编号:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="orderid" lay-verify="required">
+                    <input type="text" class="layui-input layui-disabled" id="orderid" autocomplete="off" lay-verify="required">
                 </div>
                 <label class="layui-form-label">订单金额:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="money" lay-verify="required">
+                    <input type="text" class="layui-input layui-disabled" id="money" autocomplete="off" lay-verify="required">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">代销服务费率:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="servicescale" lay-verify="required">
+                    <input type="text" class="layui-input layui-disabled" id="servicescale" autocomplete="off" lay-verify="required">
                 </div>
                 <label class="layui-form-label">代销服务费:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="servicemoney" lay-verify="required">
+                    <input type="text" class="layui-input  layui-disabled" id="servicemoney" autocomplete="off" lay-verify="required">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">单位:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="unit" lay-verify="required">
+                    <input type="text" class="layui-input layui-disabled" id="unit"  autocomplete="off"lay-verify="required">
                 </div>
                 <label class="layui-form-label">订单申请日期:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="createtime" placeholder="年-月-日" lay-verify="required">
+                    <input type="text" class="layui-input layui-disabled" id="createtime" placeholder="年-月-日" lay-verify="required">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">店主名称:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="name" lay-verify="required">
+                    <input type="text" class="layui-input layui-disabled" id="name" autocomplete="off" lay-verify="required">
                 </div>
                 <label class="layui-form-label">联系电话:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="phone"  lay-verify="required">
+                    <input type="text" class="layui-input  layui-disabled" id="phone" autocomplete="off"  lay-verify="required">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">收货信息:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="address" lay-verify="required">
+                    <input type="text" class="layui-input layui-disabled" id="address" autocomplete="off" lay-verify="required">
                 </div>
                 <label class="layui-form-label">订单备注:</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="remark"  lay-verify="required">
+                    <input type="text" class="layui-input layui-disabled" id="remark" autocomplete="off"  lay-verify="required">
                 </div>
             </div>
         </div>
         商品列表:
          <table id="goodsList" lay-filter="drawAudioTables"></table>
         <label class="layui-form-label">说明:  同意</label>
-
+        <div class="layui-form-item" style="padding-left: 502px;" >
+            <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" style="border-left-width: 1px;" >返回</button>
+        </div>
     </div>
     <script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/js/jquery-1.10.2.min.js"></script>
     <script language="JavaScript"   src="<%=request.getContextPath() %>/page/static/plugins/layui/lay/dest/layui.all.js"></script>

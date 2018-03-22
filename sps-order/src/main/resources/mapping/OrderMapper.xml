@@ -260,7 +260,7 @@
                 and  orderid  like CONCAT('%',#{orderNo,jdbcType=VARCHAR},'%' )
             </if>
         </where>
-        order by loan_start_time  DESC ,loan_end_time
+        order by loan_start_time  DESC ,loan_end_time DESC
     </select>
 
     <!--   <select id="selectByParametersPage" resultMap="BaseOrderResultMap">

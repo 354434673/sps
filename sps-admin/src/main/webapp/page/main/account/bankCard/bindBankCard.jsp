@@ -29,7 +29,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 130px;">姓名 </label>
             <div class="layui-input-inline">
-                <input id="name" type="text" name="name"  value=""
+                <input id="userName" type="text" name="userName"  value=""
                        placeholder="请输入持卡人姓名"
                        autocomplete="off" class="layui-input" lay-verify="required">
             </div>
@@ -108,7 +108,7 @@
                 return false;
             }
             lock = false;  //3.进来后，立马把锁锁住
-            var name = $('#name').val().trim();
+            var name = $('#userName').val().trim();
             var idNo = $('#idNo').val().trim();
             var bankCard = $('#bankCard').val().trim();
             var bankName = $('#bankName').val().trim();

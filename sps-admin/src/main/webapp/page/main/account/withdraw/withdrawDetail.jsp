@@ -84,8 +84,10 @@
                        autocomplete="off" class="layui-input layui-disabled"   lay-verify="none">
             		</div>
             </div>
+        <div class="layui-form-item" style="border-left-width: 525px;padding-left: 175px;width: 10px;">
+            <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
         </div>
-       
+       </div>
     </form>
 </div>
 <script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/js/jquery-1.10.2.min.js"></script>

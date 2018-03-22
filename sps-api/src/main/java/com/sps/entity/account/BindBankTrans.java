@@ -22,9 +22,26 @@ public class BindBankTrans implements Serializable{
 	private String state  ; //状态
 	private String remark;  //备注信息
 	private String  channlNum;  //平台商户编号
-	
-	
-	
+	private String  cardlast;   //卡的后4位
+	private String  cardcardtop; //卡的 前6位
+
+
+	public String getCardlast() {
+		return cardlast;
+	}
+
+	public void setCardlast(String cardlast) {
+		this.cardlast = cardlast;
+	}
+
+	public String getCardcardtop() {
+		return cardcardtop;
+	}
+
+	public void setCardcardtop(String cardcardtop) {
+		this.cardcardtop = cardcardtop;
+	}
+
 	public String getChannlNum() {
 		return channlNum;
 	}

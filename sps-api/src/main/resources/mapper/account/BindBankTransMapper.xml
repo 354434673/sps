@@ -53,7 +53,11 @@
     SET
         t_stop_time = #{endTime,jdbcType=TIMESTAMP},
         t_state = #{status,jdbcType=VARCHAR},
-        t_serial_yop = #{yopSerNO,jdbcType=VARCHAR}
+        t_serial_yop = #{yopSerNO,jdbcType=VARCHAR},
+        t_auth_type=#{authtype,jdbcType=VARCHAR},
+        t_remark=#{remark,jdbcType=VARCHAR},
+        t_card_top=#{cardtop,jdbcType=VARCHAR},
+        t_card_last=#{cardlast,jdbcType=VARCHAR}
      where  id=#{id}
   </update>
     <select id="selectOne" resultType="com.sps.entity.account.BindBankTrans">

@@ -120,7 +120,7 @@ public class YopBindCardController {
         TreeMap<String, String> responseParames = JSON.parseObject(yopResponse.getStringResult(), new TypeReference<TreeMap<String, String>>() {
         });
        String resre =responseParames.get("yborderid");
-        Boolean aBoolean = bindCardTransService.modifyBankTran(responseParames.get("requestno"), responseParames.get("yborderid"), responseParames.get("status"));
+        Boolean aBoolean = bindCardTransService.modifyBankTran(responseParames.get("requestno"), responseParames.get("yborderid"), responseParames.get("status"),responseParames.get("cardtop"),responseParames.get("cardlast"),responseParames.get("authtype"),responseParames.get("remark"));
         if ("TO_VALIDATE".equals(responseParames.get("status"))) {
          //调用短信验证接口
             retrunInfo.setResult(responseParames.get("requestno"));
@@ -194,7 +194,7 @@ public class YopBindCardController {
   logger.info("易宝绑卡流水号：" + requestNo + ";返回参数：" + JSON.toJSONString(yopResponse));
   TreeMap<String, String> responseParames = JSON.parseObject(yopResponse.getStringResult(), new TypeReference<TreeMap<String, String>>() {
   });
-  bindCardTransService.modifyBankTran((String) responseParames.get("requestno"), (String) responseParames.get("yborderid"), (String) responseParames.get("status"));
+  bindCardTransService.modifyBankTran((String) responseParames.get("requestno"), (String) responseParames.get("yborderid"), (String) responseParames.get("status"), (String) responseParames.get("cardtop"), (String) responseParames.get("cardlast"), (String) responseParames.get("authtype"), (String) responseParames.get("remark"));
 
   if ("TO_VALIDATE".equals(responseParames.get("status"))) {
    //调用短信验证接口

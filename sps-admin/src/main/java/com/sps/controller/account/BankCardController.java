@@ -56,12 +56,12 @@ public class BankCardController {
 	private AuthBindCardWriteService authBindCardWrite;
 
 
-	@Reference(check = false, group = "member-center-dev1")
+	/*@Reference(check = false, group = "member-center-dev1")
 	private IMemberDianfuService memberDianfuService;
 
 
 	@Reference(group = "member-center-dev1")
-	private ISmsCommonService ismsCommonService;
+	private ISmsCommonService ismsCommonService;*/
 	
 	@Resource
 	private UserService userService;
@@ -69,18 +69,18 @@ public class BankCardController {
 	private UserAndRoleService userAndRoleService;
 
 
-	@RequestMapping("/getVerifyCode")
+	/*@RequestMapping("/getVerifyCode")
 	@ResponseBody
 	public ServiceResult<Boolean> getVerifyCode(String phone){
 		logger.info("getVerifyCode 方法 开始调用。。。。。。。");
 		ServiceResult<Boolean> result = ismsCommonService.sendForgetPasswordSms(phone, 3);
-		/*return sendRegisterSms;
+		*//*return sendRegisterSms;
 		//去后台下校验手机号
 		HashMap<String, Object> result=new HashMap<String, Object>();
-		//转发第三方支付平台*/
+		//转发第三方支付平台*//*
 		return  result;
 				
-	}
+	}*/
 	//调用绑卡接口
 	@RequestMapping("/bindBankCard")
 	@ResponseBody
