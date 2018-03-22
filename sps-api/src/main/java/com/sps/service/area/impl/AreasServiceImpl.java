@@ -1,5 +1,6 @@
 package com.sps.service.area.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class AreasServiceImpl implements AreasService{
 		try {
 			AreasExample example = new AreasExample();
 			example.createCriteria()
-					.andParentIdEqualTo(parentId);
+					.andParentIdEqualTo("100000");
 			selectByExample = areasMapper.selectByExample(example);
 			
 			hashMap.put("code", 1);
@@ -40,5 +41,4 @@ public class AreasServiceImpl implements AreasService{
 		}
 		return hashMap;
 	}
-
 }

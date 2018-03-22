@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.sps.entity.areas.Areas;
 import com.sps.entity.areas.AreasExample;
+import com.sps.entity.areas.AreasVo;
 
 public interface AreasMapper {
     int countByExample(AreasExample example);

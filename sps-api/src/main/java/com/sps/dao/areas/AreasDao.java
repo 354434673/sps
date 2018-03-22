@@ -10,4 +10,5 @@ import com.sps.service.base.BaseService;
 import com.sps.service.base.ServiceBase;
 
 public interface AreasDao extends ServiceBase<AreasExample, Areas>{
+	
 }

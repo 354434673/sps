@@ -18,6 +18,7 @@ import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthQueryApi;
 import com.jzfq.auth.core.api.entiy.AuthBasicDetail;
+import com.jzfq.auth.core.api.entiy.AuthFaceDetail;
 import com.jzfq.auth.core.api.entiy.AuthHouseDetail;
 import com.jzfq.auth.core.api.entiy.AuthIdentityDetail;
 import com.jzfq.auth.core.api.entiy.AuthIousDetail;
@@ -120,7 +121,6 @@ public class authenticationController {
 	@RequestMapping("/authFrontIdCard")
 	public JsonResult<AuthFaceIdCard> authFrontIdCard(String clientNum, AuthFaceIdCard arg0){
 		JsonResult<AuthFaceIdCard> backIdCardResult = new JsonResult<AuthFaceIdCard>();
-		
 		if(!StringUtil.isEmpty(clientNum)){
 			
 			backIdCardResult = faceAuthApi.getFrontIdCardResult(arg0);
@@ -149,6 +149,40 @@ public class authenticationController {
 			backIdCardResult.setMsg(Message.FAILURE_CLIENTNUM);
 		}
 		return backIdCardResult;
+	}
+	@RequestMapping("/saveFaceDetail")
+	public JsonResult<AuthFaceIdCard> saveFaceDetail(String clientNum, AuthFaceDetail arg0){
+		
+		JsonResult saveFaceDetail = null;
+		
+		if(!StringUtil.isEmpty(clientNum)){
+			
+			saveFaceDetail = jzfqAuthApi.saveFaceDetail(arg0 );
+					
+			String code = saveFaceDetail.getCode();
+			
+/*			if(code != null){
+				if(code.equals("SUCCESS")){
+					SpsShopkeeperPic pic = new SpsShopkeeperPic();
+					
+					pic.setPicType(2);
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicSrc(arg0.getFrontImagePath());
+					
+					pic.setPicState(0);
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic);
+					
+					backIdCardResult.setCode(Message.SUCCESS_CODE);
+				}
+			}*/
+		}else{
+			saveFaceDetail.setCode(Message.FAILURE_CODE);
+			saveFaceDetail.setMsg(Message.FAILURE_CLIENTNUM);
+		}
+		return saveFaceDetail;
 	}
 	/** 认证保存通讯录信息
 	 * @Title: saveLinkDetail   
