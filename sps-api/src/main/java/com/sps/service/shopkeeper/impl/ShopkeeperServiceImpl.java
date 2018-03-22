@@ -250,23 +250,30 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 	@Override
 	public HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation) {
 		HashMap<String, Object> hashMap = null;
-		SpsShopkeeperInvitation queryInvitation = queryInvitation(invitation.getInvitationPhone());
+		
+		String invitationPhone = invitation.getInvitationPhone();
+		
 		try {
-			if(queryInvitation == null){
-				
-				invitation.setInvitationCreatTime(new Date());
-				
-				invitation.setInvitationUpdateTime(new Date());
-				
-				invitation.setInvitationState("0");
-				
-				invitation.setInvitationType(1);
-				
-				invitationDao.insertSelective(invitation);
-				
-				hashMap = Message.resultMap(Message.SUCCESS_CODE, "邀请成功", Message.SUCCESS_MSG, 1, null);
+			if(!StringUtil.isEmpty(invitationPhone)){
+				SpsShopkeeperInvitation queryInvitation = queryInvitation(invitationPhone);
+				if(queryInvitation == null){
+					
+					invitation.setInvitationCreatTime(new Date());
+					
+					invitation.setInvitationUpdateTime(new Date());
+					
+					invitation.setInvitationState("0");
+					
+					invitation.setInvitationType(1);
+					
+					invitationDao.insertSelective(invitation);
+					
+					hashMap = Message.resultMap(Message.SUCCESS_CODE, "邀请成功", Message.SUCCESS_MSG, 1, null);
+				}else{
+					hashMap = Message.resultMap(Message.FAILURE_CODE, "该店主已邀请", Message.FAILURE_MSG, 0, null);
+				}
 			}else{
-				hashMap = Message.resultMap(Message.FAILURE_CODE, "该店主已邀请", Message.FAILURE_MSG, 0, null);
+				hashMap = Message.resultMap(Message.FAILURE_CODE, "店主手机号不可为空", Message.FAILURE_MSG, 0, null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

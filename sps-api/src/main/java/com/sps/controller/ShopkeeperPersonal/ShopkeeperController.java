@@ -37,6 +37,17 @@ public class ShopkeeperController {
 		
 		return shopkeeperService.insertShopkeeperInvitation(invitation);
 	}
+	/**
+	 * 查询邀请列表
+	 * @Title: queryInvitationList   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param salemanPhone
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月22日 下午1:36:18
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/queryInvitationList")
 	public HashMap<String, Object> queryInvitationList(String  salemanPhone){
 		

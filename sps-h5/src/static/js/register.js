@@ -100,26 +100,26 @@
                     }else{
                         canvasCode.value = '';
                         checkCodeMask.style.display = 'none';
-                        // var telNum = document.getElementById('telNum');
-                        // aspenLib.ajax({
-                        //     url: location.protocol + "//" + location.hostname + "/termi/sendVerifySMS.do",
-                        //     type: 'GET',
-                        //     dataType: 'json',
-                        //     data: {
-                        //         mobile: telNum.value
-                        //     },
-                        //     success: function (data) {
-                        //         if (data.result == 1) {
-                        //             _this.countDown('getCheckCode');
-                        //         } else {
-                        //             aspenLib.tips(data.msg);
-                        //             return;
-                        //         }
-                        //     },
-                        //     error: function () {
-                        //         console.log('ajax error');
-                        //     }
-                        // });
+                        var telNum = document.getElementById('telNum');
+                        aspenLib.ajax({
+                            url: location.protocol + "//" + location.hostname + "/termi/sendVerifySMS.do",
+                            type: 'GET',
+                            dataType: 'json',
+                            data: {
+                                mobile: telNum.value
+                            },
+                            success: function (data) {
+                                if (data.result == 1) {
+                                    _this.countDown('getCheckCode');
+                                } else {
+                                    aspenLib.tips(data.msg);
+                                    return;
+                                }
+                            },
+                            error: function () {
+                                console.log('ajax error');
+                            }
+                        });
                     }
                 }, false);
                 _this.closeMask();
@@ -197,14 +197,6 @@
                         type: 'post',
                         dataType: 'json',
                         data: {
-                            accurate: '',
-                            channelID: '',
-                            equipmentName: '',
-                            identity: '',
-                            latitude: '',
-                            longitude: '',
-                            recommendCode: '',
-                            time: '',
                             mobile: telNum.value,
                             password: password.value,
                             terminalType: getTerminalType,

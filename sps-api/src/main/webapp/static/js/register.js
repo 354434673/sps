@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+;(function () {
     var _this = this;
     var telNum = document.getElementById('telNum');
     var getCheckCode = document.getElementById('getCheckCode');
@@ -10,14 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var submitBtn = document.getElementById('submitBtn');
     var getInput = document.querySelectorAll('input');
     var protocol = document.querySelectorAll('.protocol')[0];
-    var channelNum = getUrlParam("channelNum")
-    var clientNum = getUrlParam("channelNum")
-    function getUrlParam(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]);
-        return null;
-    }
     var register = {
         init: function () {
             // this.keyFocus();
@@ -68,9 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
         checkbox: function () {
             var _this = this;
             protocol.addEventListener('click', function () {
-
                 _this.toggleClassRun.toggleClassTest();
-
             }, false);
         },
         getPhoneCode: function () {
@@ -83,26 +73,46 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (telNum.value == '' || telNum.value.length == 0) {
                         aspenLib.tips('请先输入手机号！');
                         return;
-                    } else if (!/^1\d{10}$/.test(telNum.value)) {
+                    } else if (!/^[1][3,4,5,7,8][0-9]{9}$/.test(telNum.value)) {
                         aspenLib.tips('手机号格式不正确！');
                         return;
-                    } else {
+                    }else {
+                        _this.imgCheckCode();
+                    }
+                }, false);
+            }
+        },
+        imgCheckCode: function(){
+            var _this = this;
+            var verifyCanvas = document.getElementById('verifyCanvas');
+            var checkCodeMask = document.getElementById('checkCodeMask');
+            var JVerifyCode = document.getElementById('v_container');
+            var subBtns = document.getElementById('subBtns');
+            var canvasCode = document.getElementById('canvasCode');
+            checkCodeMask.style.display = 'block';
+            if(!verifyCanvas){
+                var verifyCode = new GVerify("v_container");
+                subBtns && subBtns.addEventListener('click', function(){
+                    if(!verifyCode.validate(canvasCode.value)){
+                        aspenLib.tips('图形验证码不正确！');
+                        canvasCode.value = '';
+                        return false;
+                    }else{
+                        canvasCode.value = '';
+                        checkCodeMask.style.display = 'none';
                         var telNum = document.getElementById('telNum');
                         aspenLib.ajax({
-                            //url: location.protocol + "//" + location.host+ "/sps-api/api/user/getPhoneCode/regist",
-                            url: location.protocol + "//" + location.host + "/api/user/getPhoneCode/regist",
-                            type: 'POST',
+                            url: location.protocol + "//" + location.hostname + "/termi/sendVerifySMS.do",
+                            type: 'GET',
                             dataType: 'json',
                             data: {
-                                category : 3,
                                 mobile: telNum.value
                             },
                             success: function (data) {
-                                if (data.success) {
-                                	aspenLib.tips(data.message);
+                                if (data.result == 1) {
                                     _this.countDown('getCheckCode');
                                 } else {
-                                    aspenLib.tips(data.message);
+                                    aspenLib.tips(data.msg);
                                     return;
                                 }
                             },
@@ -112,7 +122,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         });
                     }
                 }, false);
+                _this.closeMask();
             }
+        },
+        closeMask: function(){
+            var closeBtn = document.querySelector('.closeBtn');
+            var checkCodeMask = document.getElementById('checkCodeMask');
+            closeBtn.addEventListener('click', function(){
+                checkCodeMask.style.display = 'none';
+            }, false);
         },
         countDown: function (id) {
             var _this = this;
@@ -130,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
                             if (s == 0) {
                                 getCode.innerHTML = '获取验证码';
-                                clearTimeout(setTimes);	
+                                clearTimeout(setTimes);
                                 return false;
                             }
                         }, 1000);
@@ -175,20 +193,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     var getTerminalType = document.querySelectorAll('body')[0].className.indexOf('ios') != -1 ? '3' : '2';
                     aspenLib.ajax({
-                        //url: location.protocol + "//" + location.host + "/sps-api/api/user/regist",
-                        url: location.protocol + "//" + location.host + "/api/user/regist",
+                        url: location.protocol + "//" + location.hostname + "/termi/doregister.html",
                         type: 'post',
                         dataType: 'json',
                         data: {
-                        	//saleSrc:'CH123456',
                             mobile: telNum.value,
                             password: password.value,
-                            code: checkCode.value,
-                            clientNum:clientNum,
-                            channelNum:channelNum,
+                            terminalType: getTerminalType,
+                            yzm: checkCode.value
                         },
                         success: function (data) {
-                            if (data.success) {
+                            if (data.result == 1) {
                                 aspenLib.tips('您已注册成功！');
                                 try {
                                     _hmt.push(['_trackEvent', aspenLib.getQueryString('channel') + 'zhuce', 'dianfu_register', 'click', aspenLib.getQueryString('channel') + 'zhuce']);
@@ -199,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     setClear = null;
                                 }, 1000);
                             } else {
-                                aspenLib.tips(data.message);
+                                aspenLib.tips(data.msg);
                                 return;
                             }
                         },
@@ -212,4 +227,4 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     register.init();
-});
+})();

@@ -20,6 +20,25 @@
     <result column="lat" property="lat" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <resultMap id="resultMap" type="com.sps.entity.areas.AreasVo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    	<collection property="cityList" javaType="list" ofType="com.sps.util.MenuUtil" select="queryCity" column="{area_id=area_id">
+		    <id column="id" property="id" jdbcType="INTEGER" />
+		    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+		    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+		    <result column="name" property="name" jdbcType="VARCHAR" />
+		   	<collection property="areaList" javaType="list" ofType="com.sps.util.MenuUtil" select="queryArea" column="{area_id=area_id">
+			    <id column="id" property="id" jdbcType="INTEGER" />
+			    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+			    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+			    <result column="name" property="name" jdbcType="VARCHAR" />
+			</collection>	
+		</collection>	
+  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -81,6 +100,9 @@
   <sql id="Base_Column_List" >
     id, area_id, parent_id, name, merger_name, short_name, merger_short_name, high_type, 
     level_type, city_code, zip_code, pinyin, jianpin, first_char, lng, lat, remark
+  </sql>
+  <sql id="Column_List" >
+    id, area_id, parent_id, name, merger_name, short_name
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.areas.AreasExample" >
     select
@@ -397,4 +419,24 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+   
+<!--     查询一级-->
+  <select id="select" resultMap="resultMap" parameterType="list">
+    select
+   <include refid="Column_List" />
+	FROM areas WHERE parent_id = '100000'
+  </select>
+  <!-- 查询二级  -->
+  <select id="queryCity" resultMap="resultMap">
+    select
+   <include refid="Base_Column_List" />
+	FROM areas WHERE parent_id = #{area_id}
+  </select>
+  <!-- 查询三级 -->
+  <select id="queryArea" resultMap="resultMap" >
+    select
+   <include refid="Base_Column_List" />
+	FROM areas WHERE parent_id = #{parentId}
+  </select> 
 </mapper>

@@ -25,9 +25,12 @@ input:-ms-input-placeholder{ color: #d9d9d9; }
 .user-addr li em{ display: block; width: 28%; height: 100%; float: left; font-size: .28rem; color: #666; }
 .user-addr li input{ display: block; width: 72%; height: 100%; float: left; font-size: .28rem; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.user-addr li:nth-of-type(3) input{ width: 50%; }
+.user-addr li input.larea-inpt{ width: 60%; }
 .user-addr li:nth-of-type(3) span{ display: block; width: .14rem; height: .14rem; border-bottom: 1px solid #9b9b9b; border-right: 1px solid #9b9b9b; transform: rotate(45deg); -ms-transform: rotate(45deg); -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -o-transform: rotate(45deg); float: right; position: relative; top: .08rem; right: .04rem; cursor: pointer; }
 
 #createCode{ display: block; width: 80%; height: .4rem; line-height: .4rem; margin: .3rem auto 0 auto; padding: .2rem 0; background: linear-gradient(to bottom, #08a3f4, #168ff0); text-align: center; border-radius: 4px; font-size: .32rem; }
 #qrcode{ width: 2.6rem; height: 2.6rem; margin: 15px auto; }  
 #qrcode img{ display: block; width: 100%; }
+.user-addr li:nth-of-type(3){ position: relative; color: #666; }
+.content-block{ position: absolute; top: 0; right: 0; width: 72%; height: 100%; padding-right: .4rem; box-sizing: border-box; }
+.user-addr li .content-block input{ width: 100%; }
