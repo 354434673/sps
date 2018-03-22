@@ -67,7 +67,7 @@ public class YopBindCardController {
     private UserService userService;
      @Autowired
     BindCardTransService bindCardTransService;
-    @Reference(group = "capital-dev1")
+  @Reference(group = "capital-dev1")
     private IBinCodeService iBinCodeService;
     //根据银行卡号获取银行名称的方法
     public ReturnInfo queryBankName(String binNo){
@@ -93,24 +93,25 @@ public class YopBindCardController {
     @ResponseBody
     public ReturnInfo bindBankCard(@PathVariable("userName") String userName,@PathVariable("personName") String personName,@PathVariable("cardNo") String cardNo,@PathVariable("phone") String phone,@PathVariable("idcardno") String idcardno,@PathVariable("bankName") String bankName,@PathVariable("id") Integer id) {
         ReturnInfo returnInfo = new ReturnInfo();
-        //根据personId获取
+        //根据personId获取----以后身份证为 idCard
        String idCard = shopkeeperPersonService.findPerson(id);
-     //根据登录用户查询是否绑卡
+         //根据登录用户查询是否绑卡
         String userId = bankCardService.findUserId(userName);
         //根据用户名获取userId
-      SpsUser user = userService.findUserByUserName(userName);
-     ReturnInfo retrunInfo = new ReturnInfo();
-     String identityid = UUID.randomUUID().toString();
-     BankCardInfo bankInfo = new BankCardInfo();
-     bankInfo.setUserId(identityid);
-     bankInfo.setAccounts(cardNo);
-     bankInfo.setBank(bankName);
-     bankInfo.setPhone(phone);
-     bankInfo.setIdentity(idcardno);
-     bankInfo.setName(personName);
-     //保存绑卡记录
+         SpsUser user = userService.findUserByUserName(userName);
+        ReturnInfo retrunInfo = new ReturnInfo();
+        BindBankTrans bindBankTrades = new BindBankTrans();
+        bindBankTrades.setBankName(bankName);
+        bindBankTrades.setPhone(phone);
+        bindBankTrades.setBankCode(cardNo);
+        bindBankTrades.setLoginName(userName);
+        bindBankTrades.setName(personName);
+        bindBankTrades.setMerchantNo(YEEPAY_MERCHANT_NO);
+        bindBankTrades.setIdentity(idcardno);
+        bindBankTrades.setUserId(UUID.randomUUID().toString());
+        //保存绑卡记录
      if (StringUtil.isNotEmpty(idCard) && StringUtil.isNotEmpty(userId)) {
-      HashMap<String, Object> map = bindCardTransService.saveBankTansInfos(bankInfo, userName, YEEPAY_MERCHANT_NO, userId);
+      HashMap<String, Object> map = bindCardTransService.saveBankTansInfos(bindBankTrades, userName, userId);
       if (map != null) {
        Boolean flag = (Boolean) map.get("flag");
        if (flag) {
@@ -180,7 +181,19 @@ public class YopBindCardController {
          return retrunInfo;
         }
         if ("BIND_SUCCESS".equals(responseParames.get("status"))) {
-         Boolean saveBankInfo = bankCardService.saveBankCardInfo(bankInfo, userName, user.getUserId(), user.getUserMark());
+            //根据请求号与易宝号获取信息
+            BindBankTrans bindBank = bindCardTransService.findBankState(responseParames.get("requestno"), responseParames.get("yborderid"));
+            BankCardInfo bankInfo = new BankCardInfo();
+            bankInfo.setUserId(bindBank.getUserId());
+            bankInfo.setAccounts(bindBank.getBankCode());
+            bankInfo.setBank(bindBank.getBankName());
+            bankInfo.setPhone(bindBank.getPhone());
+            bankInfo.setIdentity(bindBank.getIdentity());
+            bankInfo.setName(bindBank.getName());
+            bankInfo.setChannlNum(bindBank.getChannlNum());
+            bankInfo.setUserName(bindBank.getLoginName());
+            bankCardService.saveBankCardInfo(bankInfo,user.getUserId(),user.getUserMark());
+           Boolean saveBankInfo = bankCardService.saveBankCardInfo(bankInfo, user.getUserId(), user.getUserMark());
          //跟新绑卡状态
          if (saveBankInfo) {
           retrunInfo.setMsg("操作绑卡成功");
@@ -197,9 +210,9 @@ public class YopBindCardController {
      return retrunInfo;
     }
  //调用短信确认接口
- @RequestMapping(value = "/smsConfirm", method = RequestMethod.POST)
+ @RequestMapping(value = "/smsConfirm/{userName}/{validatecode}/{requestNo}", method = RequestMethod.POST)
  @ResponseBody
- public ReturnInfo smsConfirm(String validatecode, String requestNo) {
+ public ReturnInfo smsConfirm(@PathVariable("userName") String userName,@PathVariable("validatecode") String validatecode,@PathVariable("requestNo") String requestNo) {
   //根据请求号与易宝交易号获取交易信息
   BindBankTrans bankState = bindCardTransService.findBankState(requestNo, null);
 
@@ -246,21 +259,78 @@ public class YopBindCardController {
    return returnInfo;
   }
   if ("BIND_SUCCESS".equals(responseParames.get("status"))) {
-   //根据请求号获取信息
-   //保存绑卡记录
-   //跟新绑卡状态
-   returnInfo.setMsg("操作绑卡成功");
+      //根据登录用户查询是否绑卡
+      String userId = bankCardService.findUserId(userName);
+      //根据用户名获取userId
+      SpsUser user = userService.findUserByUserName(userName);
+      //根据请求号与易宝号获取信息
+      BindBankTrans bindBank = bindCardTransService.findBankState(responseParames.get("requestno"), responseParames.get("yborderid"));
+      //保存绑卡记录
+      BankCardInfo bankInfo = new BankCardInfo();
+      bankInfo.setUserId(bindBank.getUserId());
+      bankInfo.setAccounts(bindBank.getBankCode());
+      bankInfo.setBank(bindBank.getBankName());
+      bankInfo.setPhone(bindBank.getPhone());
+      bankInfo.setIdentity(bindBank.getIdentity());
+      bankInfo.setName(bindBank.getName());
+      bankInfo.setChannlNum(bindBank.getChannlNum());
+      bankInfo.setUserName(bindBank.getLoginName());
+      Boolean flag = bankCardService.saveBankCardInfo(bankInfo, user.getUserId(), user.getUserMark());
+      if(flag){
+          returnInfo.setMsg("操作绑卡成功");
+      }
+
    return returnInfo;
   }
   return returnInfo;
  }
+ //短信重发
+ @RequestMapping(value = "/smsResend/{requestNo}", method = RequestMethod.POST)
+ @ResponseBody
+ public ReturnInfo smsResend(@PathVariable("requestNo") String requestNo){
+     //根据请求号与易宝交易号获取交易信息
+     BindBankTrans bankState = bindCardTransService.findBankState(requestNo, null);
+
+     ReturnInfo returnInfo = new ReturnInfo();
+     /**
+      * 调用易宝进行鉴权绑卡
+      */
+     YopRequest yopRequest = new YopRequest(YEEPAY_APP_KEY, "", YEEPAY_SERVER_ROOT);
+     yopRequest.addParam("merchantno", YEEPAY_MERCHANT_NO);
+     yopRequest.addParam("requestno", requestNo);
+     logger.info("易宝绑卡流水号：" + ";请求参数：" + JSON.toJSONString(yopRequest));
+     YopResponse yopResponse = YopClient3.postRsa(YEEPAY_BIND_CARD_SMS_RESEND_URL, yopRequest);
+
+     logger.info("易宝绑卡流水号：" + requestNo + ";返回参数：" + JSON.toJSONString(yopResponse));
+     TreeMap<String, String> responseParames = JSON.parseObject(yopResponse.getStringResult(), new TypeReference<TreeMap<String, String>>() {
+     });
+     bindCardTransService.modifyBankTran((String) responseParames.get("requestno"), (String) responseParames.get("yborderid"), (String) responseParames.get("status"), (String) responseParames.get("cardtop"), (String) responseParames.get("cardlast"), (String) responseParames.get("authtype"), (String) responseParames.get("remark"));
+     if ("TO_VALIDATE".equals(responseParames.get("status"))) {
+         //调用短信验证接口
+         returnInfo.setMsg("待短验");
+         return returnInfo;
+     }
+     if ("TIME_OUT".equals(responseParames.get("status"))) {
+         //绑卡超时
+         returnInfo.setMsg("绑卡超时");
+         return returnInfo;
+     }
+     if ("FAIL".equals(responseParames.get("status"))) {
+         //系统异常
+         returnInfo.setMsg("系统异常");
+         return returnInfo;
+     }
+
+     return returnInfo;
+ }
+
 /**
  * 鉴权记录查询接口
  * @return
  */
-    @RequestMapping(value = "/query", method = RequestMethod.POST)
+    @RequestMapping(value = "/query/{requestNo}/{yborderid}", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo query(String requestNo,String yborderid){
+    public ReturnInfo query(@PathVariable("requestNo") String requestNo,@PathVariable("yborderid") String yborderid){
         //根据请求号与易宝交易号获取交易信息
         BindBankTrans bankState = bindCardTransService.findBankState(requestNo, null);
 
@@ -310,9 +380,9 @@ public class YopBindCardController {
  * 鉴权列表查询接口
  */
 
- @RequestMapping(value = "/queryList", method = RequestMethod.POST)
+ @RequestMapping(value = "/queryList/{userId}", method = RequestMethod.POST)
  @ResponseBody
- public ReturnInfo queryList(String userId){
+ public ReturnInfo queryList(@PathVariable("userId") String userId){
 
   ReturnInfo returnInfo = new ReturnInfo();
 

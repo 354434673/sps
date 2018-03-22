@@ -43,24 +43,15 @@ public class BindCardTransServiceImpl implements BindCardTransService {
     }
 
     @Override
-    public HashMap<String, Object> saveBankTansInfos(BankCardInfo bankCardInfo, String userName, String marchantNo, String UserId) {
+    public HashMap<String, Object> saveBankTansInfos(BindBankTrans bankCardInfo, String userName, String UserId) {
         String num = openAccount.selectByOpenAdminNum(userName);
-        BindBankTrans bindBankTrades = new BindBankTrans();
-        bindBankTrades.setName(bankCardInfo.getName());
-        bindBankTrades.setBankName(bankCardInfo.getBank());
-        bindBankTrades.setUserId(bankCardInfo.getUserId());
-        bindBankTrades.setLoginName(userName);
-        bindBankTrades.setIdentity(bankCardInfo.getIdentity());
-        bindBankTrades.setPhone(bankCardInfo.getPhone());
-        bindBankTrades.setMerchantNo(marchantNo);
-        bindBankTrades.setStartTime(new Date());
-        bindBankTrades.setSerialSh(UUID.randomUUID().toString());
-        bindBankTrades.setBankCode(bankCardInfo.getAccounts());
-        bindBankTrades.setChannlNum(num);
+        bankCardInfo.setStartTime(new Date());
+        bankCardInfo.setSerialSh(UUID.randomUUID().toString());
+        bankCardInfo.setChannlNum(num);
         HashMap<String, Object> map = new HashMap<>();
         try{
-            bindBankTransDao.insertBankTrans(bindBankTrades);
-            BindBankTrans bindBankTransNew = bindBankTransDao.selectOne(bindBankTrades.getSerialSh(), null);
+            bindBankTransDao.insertBankTrans(bankCardInfo);
+            BindBankTrans bindBankTransNew = bindBankTransDao.selectOne(bankCardInfo.getSerialSh(), null);
             map.put("flag",true);
             map.put("bindBankTransNew",bindBankTransNew);
         }catch(Exception e){

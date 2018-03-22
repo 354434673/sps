@@ -38,17 +38,15 @@ public class BankCardServiceImpl implements BankCardService {
     }
 
     @Override
-    public Boolean saveBankCardInfo(BankCardInfo bankInfo ,String loginName,Integer userId,Integer userMark) {
+    public Boolean saveBankCardInfo(BankCardInfo bankInfo ,Integer userId,Integer userMark) {
         //		根据用户名获取 余额表信息---存在取出余额---不存在 创建改用户的余额表信息
         try {
-            String num = openAccount.selectByOpenAdminNum(loginName);
 
             BigDecimal balance = accountBalanceDao.selectByUserId(userId, 2);
             bankInfo.setCreatetime(new Date());
             //绑卡
-            bankInfo.setState(1);
-            bankInfo.setUserName(loginName);
-            bankInfo.setChannlNum(num);
+             bankInfo.setState(1);
+             bankInfo.setCreatetime(new Date());
             if(balance !=null){
                 bankInfo.setAvailableBalance(balance);
             }else{

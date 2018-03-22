@@ -15,5 +15,5 @@ import com.sps.entity.account.BankCardInfo;
 public interface BankCardService {
     String findUserId(String userName);
     //保存绑卡信息的方法
-    Boolean saveBankCardInfo(BankCardInfo bankCardInfo, String loginName, Integer userId, Integer userMark);
+    Boolean saveBankCardInfo(BankCardInfo bankCardInfo, Integer userId, Integer userMark);
 }
