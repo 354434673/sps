@@ -343,6 +343,7 @@
 				<button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">返回</button>
 				<button class="layui-btn layui-btn-primary" lay-filter="submitAddChanel" lay-submit >保存并进入下一步</button>
 				<!--  <button class="layui-btn layui-btn-primary" id="next" >下一步</button>  -->
+				<button class="layui-btn layui-btn-primary" id="center" >测试</button> 
 			</div>
 	</div>
     </div>
@@ -463,6 +464,72 @@
 	  var logisticsWay = [];//发货方式
 	  var openApplyProduct = ['0'];//适用产品
 	  var gatherListJson = null;
+  	  /*
+	   	渠道属性
+	  */
+	  //地址
+	  var address = $('#province').find("option:selected").text()+
+	 				 $('#city').find("option:selected").text()+
+	 				 $('#area').find("option:selected").text();
+	  var channelSalesmanName = null;//店付业务员姓名
+	  var channelSalesmanNum = null;//店付业务员编号
+	  /*
+	   	企业基本信息
+	  */
+	  var enterpriseBusinesslicenseNo = null;//营业执照编号
+	  var enterpriseCompanyName = null;//公司名称
+	  //公司注册地址
+	  var registerAddress = $('#registerProvince').find("option:selected").text()+
+	 				 $('#registerCity').find("option:selected").text()+
+	 				 $('#registerArea').find("option:selected").text()+
+	 				 $('#registerAddress').val();
+	  //公司实际地址
+	  var realAddress = $('#realProvince').find("option:selected").text()+
+	 				 $('#realCity').find("option:selected").text()+
+	 				 $('#realArea').find("option:selected").text()+
+	 				 $('#realAddress').val();;
+	  var enterpriseCorp = null;//法人名称
+	  var enterpriseCorpIdcard = null;//法人身份证
+	  var enterpriseOperatioTime = null;//经营年限(年)
+	  var enterpriseEmployeeNum = null;//员工数量(人)
+	  var enterpriseCompanyAbbreviation = null;//公司简称
+	  /*
+	   	业务信息
+	  */
+	  businessScope = null;//业务覆盖地域范围
+	  /*
+	   	担保信息
+	  */
+	  var guaranteeSituation = null;//担保形式
+	  var guaranteeDeposit = null;//保证金金额
+	  var guaranteeCorpPhone = null;//法人手机
+	  var guaranteeFinanceContactname = null;//财务联系人姓名
+	  var guaranteeFinanceContactphone = null;//财务联系人手机号
+	  var guaranteeBusinessLeadername = null;//业务负责人姓名
+	  var guaranteeBusinessLeaderphone = null;//业务负责人手机
+	  var guaranteeBusinessPhonePassword = null;//服务密码
+	  /*
+	   	收款账号:窗口添加
+	  */
+	  //TODO:
+	  /*
+	   	财务指标
+	  */
+	  var targetLastSale = null;//保证金金额
+	  /*
+	   	物流配送
+	  */
+	  var logisticsCooperationName = null;//合作物流：
+	  var logisticsOther = null;//其他：
+	  var logisticsAllCost = null;//年物流总费用(万元)：
+	  /*
+	   	开户信息
+	  */
+	  //var openAdminNum = $('#adminNum').val();//管理员账号
+	  var openStartTime = null;//起始时间
+	  var openEndTime = null;//结束时间
+	  var openSellRate = null;//费率
+	  
 	  getProvince(100000)//先加载省
 	  getSalesman();
 	  form.render(); 
@@ -562,7 +629,7 @@
 		  }
 		}); 	
 	  $('#next').on('click',function(){
-		  intoNext()
+		  //intoNext()
 	  })
 	  $('#last').on('click',function(){
 		  element.tabChange('tab','channelInfo')
@@ -605,31 +672,31 @@
 		  	   	渠道属性
 		  	  */
 			  //地址
-			  var address = $('#province').find("option:selected").text()+
+			  address = $('#province').find("option:selected").text()+
 			 				 $('#city').find("option:selected").text()+
 			 				 $('#area').find("option:selected").text();
-		  	  var channelSalesmanName = $('#channelSalesmanName').find("option:selected").text();//店付业务员姓名
-		  	  var channelSalesmanNum = $('#channelSalesmanNum').val();//店付业务员编号
+		  	  channelSalesmanName = $('#channelSalesmanName').find("option:selected").text();//店付业务员姓名
+		  	  channelSalesmanNum = $('#channelSalesmanNum').val();//店付业务员编号
 		  	  /*
 		  	   	企业基本信息
 		  	  */
-			  var enterpriseBusinesslicenseNo = $('#enterpriseBusinesslicenseNo').val();//营业执照编号
-			  var enterpriseCompanyName = $('#enterpriseCompanyName').val();//公司名称
+			  enterpriseBusinesslicenseNo = $('#enterpriseBusinesslicenseNo').val();//营业执照编号
+			  enterpriseCompanyName = $('#enterpriseCompanyName').val();//公司名称
 			  //公司注册地址
-			  var registerAddress = $('#registerProvince').find("option:selected").text()+
+			  registerAddress = $('#registerProvince').find("option:selected").text()+
 			 				 $('#registerCity').find("option:selected").text()+
 			 				 $('#registerArea').find("option:selected").text()+
 			 				 $('#registerAddress').val();
 			  //公司实际地址
-			  var realAddress = $('#realProvince').find("option:selected").text()+
+			  realAddress = $('#realProvince').find("option:selected").text()+
 			 				 $('#realCity').find("option:selected").text()+
 			 				 $('#realArea').find("option:selected").text()+
 			 				 $('#realAddress').val();;
-			  var enterpriseCorp = $('#enterpriseCorp').val();//法人名称
-			  var enterpriseCorpIdcard = $('#enterpriseCorpIdcard').val();//法人身份证
-			  var enterpriseOperatioTime = $('#enterpriseOperatioTime').val();//经营年限(年)
-			  var enterpriseEmployeeNum = $('#enterpriseEmployeeNum').val();//员工数量(人)
-			  var enterpriseCompanyAbbreviation = $('#enterpriseCompanyAbbreviation').val();//公司简称
+			  enterpriseCorp = $('#enterpriseCorp').val();//法人名称
+			  enterpriseCorpIdcard = $('#enterpriseCorpIdcard').val();//法人身份证
+			  enterpriseOperatioTime = $('#enterpriseOperatioTime').val();//经营年限(年)
+			  enterpriseEmployeeNum = $('#enterpriseEmployeeNum').val();//员工数量(人)
+			  enterpriseCompanyAbbreviation = $('#enterpriseCompanyAbbreviation').val();//公司简称
 		  	  /*
 		  	   	业务信息
 		  	  */
@@ -637,14 +704,14 @@
 		  	  /*
 		  	   	担保信息
 		  	  */
-			  var guaranteeSituation = $('#guaranteeSituation').find("option:selected").text();//担保形式
-			  var guaranteeDeposit = $('#guaranteeDeposit').val();//保证金金额
-			  var guaranteeCorpPhone = $('#guaranteeCorpPhone').val();//法人手机
-			  var guaranteeFinanceContactname = $('#guaranteeFinanceContactname').val();//财务联系人姓名
-			  var guaranteeFinanceContactphone = $('#guaranteeFinanceContactphone').val();//财务联系人手机号
-			  var guaranteeBusinessLeadername = $('#guaranteeBusinessLeadername').val();//业务负责人姓名
-			  var guaranteeBusinessLeaderphone = $('#guaranteeBusinessLeaderphone').val();//业务负责人手机
-			  var guaranteeBusinessPhonePassword = $('#guaranteeBusinessPhonePassword').val();//服务密码
+			  guaranteeSituation = $('#guaranteeSituation').find("option:selected").text();//担保形式
+			  guaranteeDeposit = $('#guaranteeDeposit').val();//保证金金额
+			  guaranteeCorpPhone = $('#guaranteeCorpPhone').val();//法人手机
+			  guaranteeFinanceContactname = $('#guaranteeFinanceContactname').val();//财务联系人姓名
+			  guaranteeFinanceContactphone = $('#guaranteeFinanceContactphone').val();//财务联系人手机号
+			  guaranteeBusinessLeadername = $('#guaranteeBusinessLeadername').val();//业务负责人姓名
+			  guaranteeBusinessLeaderphone = $('#guaranteeBusinessLeaderphone').val();//业务负责人手机
+		  	  guaranteeBusinessPhonePassword = $('#guaranteeBusinessPhonePassword').val();//服务密码
 			  /*
 		  	   	收款账号:窗口添加
 		  	  */
@@ -652,21 +719,20 @@
 		  	  /*
 		  	   	财务指标
 		  	  */
-		  	  var targetLastSale = $('#targetLastSale').val();//保证金金额
+		  	   targetLastSale = $('#targetLastSale').val();//保证金金额
 		  	  /*
 		  	   	物流配送
 		  	  */
-		  	  var logisticsCooperationName = $('#logisticsCooperationName').val();//合作物流：
-		  	  var logisticsOther = $('#logisticsOther').val();//其他：
-		  	  var logisticsAllCost = $('#logisticsAllCost').val();//年物流总费用(万元)：
+		  	   logisticsCooperationName = $('#logisticsCooperationName').val();//合作物流：
+		  	   logisticsOther = $('#logisticsOther').val();//其他：
+		  	   logisticsAllCost = $('#logisticsAllCost').val();//年物流总费用(万元)：
 		  	  /*
 		  	   	开户信息
 		  	  */
 			  //var openAdminNum = $('#adminNum').val();//管理员账号
-			  var openStartTime = $('#startTime').val();//起始时间
-			  var openEndTime = $('#endTime').val();//结束时间
-			  var openSellRate = $('#sell').val();//费率
-			  
+			   openStartTime = $('#startTime').val();//起始时间
+			   openEndTime = $('#endTime').val();//结束时间
+			   openSellRate = $('#sell').val();//费率
  			  $.post({
 				  url:'<%=path%>/merchant/insertChannel',
 				  dataType:'json',
@@ -676,6 +742,7 @@
 		 				channelSalesmanName:channelSalesmanName,
 		 				channelSalesmanNum:channelSalesmanNum,
 		 				channelState:0,
+		 				channelFlowState:0,
 		 				//企业信息
   		 				enterpriseBusinesslicenseNo:enterpriseBusinesslicenseNo,
 		 				enterpriseCompanyName:enterpriseCompanyName,
@@ -1060,6 +1127,137 @@
 				   })
 			  })
 		  }
+ 		 $('#center').click(function(){
+		  	  /*
+		  	   	渠道属性
+		  	  */
+			  //地址
+			  address = $('#province').find("option:selected").text()+
+			 				 $('#city').find("option:selected").text()+
+			 				 $('#area').find("option:selected").text();
+		  	  channelSalesmanName = $('#channelSalesmanName').find("option:selected").text();//店付业务员姓名
+		  	  channelSalesmanNum = $('#channelSalesmanNum').val();//店付业务员编号
+		  	  /*
+		  	   	企业基本信息
+		  	  */
+			  enterpriseBusinesslicenseNo = $('#enterpriseBusinesslicenseNo').val();//营业执照编号
+			  enterpriseCompanyName = $('#enterpriseCompanyName').val();//公司名称
+			  //公司注册地址
+			  registerAddress = $('#registerProvince').find("option:selected").text()+
+			 				 $('#registerCity').find("option:selected").text()+
+			 				 $('#registerArea').find("option:selected").text()+
+			 				 $('#registerAddress').val();
+			  //公司实际地址
+			  realAddress = $('#realProvince').find("option:selected").text()+
+			 				 $('#realCity').find("option:selected").text()+
+			 				 $('#realArea').find("option:selected").text()+
+			 				 $('#realAddress').val();;
+			  enterpriseCorp = $('#enterpriseCorp').val();//法人名称
+			  enterpriseCorpIdcard = $('#enterpriseCorpIdcard').val();//法人身份证
+			  enterpriseOperatioTime = $('#enterpriseOperatioTime').val();//经营年限(年)
+			  enterpriseEmployeeNum = $('#enterpriseEmployeeNum').val();//员工数量(人)
+			  enterpriseCompanyAbbreviation = $('#enterpriseCompanyAbbreviation').val();//公司简称
+		  	  /*
+		  	   	业务信息
+		  	  */
+			  businessScope = $('#businessScope').find("option:selected").text();//业务覆盖地域范围
+		  	  /*
+		  	   	担保信息
+		  	  */
+			  guaranteeSituation = $('#guaranteeSituation').find("option:selected").text();//担保形式
+			  guaranteeDeposit = $('#guaranteeDeposit').val();//保证金金额
+			  guaranteeCorpPhone = $('#guaranteeCorpPhone').val();//法人手机
+			  guaranteeFinanceContactname = $('#guaranteeFinanceContactname').val();//财务联系人姓名
+			  guaranteeFinanceContactphone = $('#guaranteeFinanceContactphone').val();//财务联系人手机号
+			  guaranteeBusinessLeadername = $('#guaranteeBusinessLeadername').val();//业务负责人姓名
+			  guaranteeBusinessLeaderphone = $('#guaranteeBusinessLeaderphone').val();//业务负责人手机
+		  	  guaranteeBusinessPhonePassword = $('#guaranteeBusinessPhonePassword').val();//服务密码
+			  /*
+		  	   	收款账号:窗口添加
+		  	  */
+		  	  //TODO:
+		  	  /*
+		  	   	财务指标
+		  	  */
+		  	   targetLastSale = $('#targetLastSale').val();//保证金金额
+		  	  /*
+		  	   	物流配送
+		  	  */
+		  	   logisticsCooperationName = $('#logisticsCooperationName').val();//合作物流：
+		  	   logisticsOther = $('#logisticsOther').val();//其他：
+		  	   logisticsAllCost = $('#logisticsAllCost').val();//年物流总费用(万元)：
+		  	  /*
+		  	   	开户信息
+		  	  */
+			  //var openAdminNum = $('#adminNum').val();//管理员账号
+			   openStartTime = $('#startTime').val();//起始时间
+			   openEndTime = $('#endTime').val();//结束时间
+			   openSellRate = $('#sell').val();//费率
+ 			$.post({
+	 			 url:'<%=path%>/merchant/mytest',
+	 			 dataType:'json',
+	 			 data:{
+					  	//渠道信息
+		 				channelCity:realAddress,
+		 				channelSalesmanName:channelSalesmanName,
+		 				channelSalesmanNum:channelSalesmanNum,
+		 				channelState:0,
+		 				channelFlowState:0,
+		 				//企业信息
+		 				enterpriseBusinesslicenseNo:enterpriseBusinesslicenseNo,
+		 				enterpriseCompanyName:enterpriseCompanyName,
+		 				enterpriseCompanyRegisterAddr:registerAddress,
+		 				enterpriseCompanyRealitAddr:realAddress,
+		 				enterpriseCorp:enterpriseCorp,
+		 				enterpriseCorpIdcard:enterpriseCorpIdcard,
+		 				enterpriseOperatioTime:enterpriseOperatioTime,
+		 				enterpriseEmployeeNum:enterpriseEmployeeNum,
+		 				enterpriseCompanyAbbreviation:enterpriseCompanyAbbreviation,
+		 				//业务信息
+		 				businessProduct:businessProductArray.toString(),
+		 				businessType:businessTypeArray.toString(),
+		 				businessBrand:businessBrandArray.toString(),
+		 				businessScope:businessScope,
+		 				//担保信息
+		 				guaranteeSituation:guaranteeSituation,
+		 				guaranteeDeposit:guaranteeDeposit,
+		 				guaranteeCorpPhone:guaranteeCorpPhone,
+		 				guaranteeFinanceContactname:guaranteeFinanceContactname,
+		 				guaranteeFinanceContactphone:guaranteeFinanceContactphone,
+		 				guaranteeBusinessLeadername:guaranteeBusinessLeadername,
+		 				guaranteeBusinessLeaderphone:guaranteeBusinessLeaderphone,
+		 				guaranteeBusinessPhonePassword:guaranteeBusinessPhonePassword,
+		 				//财务指标
+		 				targetLastSale:targetLastSale,
+		 				//物流配送
+		 				logisticsWay:logisticsWay.toString(),
+		 				logisticsCooperationName:logisticsCooperationName,
+		 				logisticsAllCost:logisticsAllCost,
+		 				logisticsOther:logisticsOther, 
+		 				//开户
+		 				//管理员账户为业务负责人手机号+@+公司简称
+		 				openAdminNum:guaranteeBusinessLeaderphone+'@'+enterpriseCompanyAbbreviation,
+		 				//管理员手机号为业务负责人手机号
+		 				openAdminPhone:guaranteeBusinessLeaderphone,
+		 				openStartTime:openStartTime,
+		 				openEndTime:openEndTime,
+		 				//openApplyProduct:openApplyProduct.toString(),
+		 				openApplyProduct:openApplyProduct.toString(),
+		 				//openSellRate:openSellRate, 
+		 				openSellRate:7
+	 				 },
+	 			 success:function(data){
+					if(JSON.parse(data).success){
+						layer.msg('审核成功',{icon: 1});
+					}else{
+						layer.msg('审核失败',{icon: 2});
+					}
+	 			 },
+	 			 error:function(){
+	 				layer.msg('系统异常',{icon: 2});
+	 			 }
+	 		 })
+ 		 })
  		 $('#submit').click(function(){
  			$.post({
 	 			 url:'<%=path%>/merchant/init',
