@@ -102,18 +102,16 @@
                         checkCodeMask.style.display = 'none';
                         var telNum = document.getElementById('telNum');
                         aspenLib.ajax({
-                            url: location.protocol + "//" + location.hostname + "/termi/sendVerifySMS.do",
-                            type: 'GET',
+                            url: 'http://123.56.24.208:8480/api/user/getPhoneCode/regist',
+                            type: 'post',
                             dataType: 'json',
                             data: {
-                                mobile: telNum.value
+                                category: 3,
+                                mobile: String(telNum.value)
                             },
                             success: function (data) {
-                                if (data.result == 1) {
-                                    _this.countDown('getCheckCode');
-                                } else {
-                                    aspenLib.tips(data.msg);
-                                    return;
+                                if(data.result == true){
+                                    aspenLib.tips('发送成功');
                                 }
                             },
                             error: function () {
@@ -163,6 +161,7 @@
             var setClear = null;
             submitBtn.addEventListener('click', function () {
                 var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,21}$/;
+                var password = document.getElementById('password');
                 if (telNum.value == '' || telNum.value.length == 0) {
                     aspenLib.tips('手机号不能为空！');
                     return;
@@ -191,16 +190,27 @@
                     aspenLib.tips('请阅读协议！');
                     return;
                 } else {
-                    var getTerminalType = document.querySelectorAll('body')[0].className.indexOf('ios') != -1 ? '3' : '2';
+                    var channelNum = aspenLib.getQueryString('channelNum') || '';
+                    var clientNum = aspenLib.getQueryString('clientNum') || '';
+                    var code =  checkCode.value || '';
+                    var mobile = telNum.value || '';
+                    var password = document.getElementById('password').value || '';
+                    console.log(channelNum)
+                    console.log(clientNum)
+                    console.log(code)
+                    console.log(mobile)
+                    console.log(password)
                     aspenLib.ajax({
-                        url: location.protocol + "//" + location.hostname + "/termi/doregister.html",
+                        url: 'http://123.56.24.208:8480/api/user/regist',
                         type: 'post',
                         dataType: 'json',
                         data: {
-                            mobile: telNum.value,
-                            password: password.value,
-                            terminalType: getTerminalType,
-                            yzm: checkCode.value
+                            channelNum: String(channelNum),
+                            clientNum: String(clientNum),
+                            code: String(code),
+                            mobile: String(mobile),
+                            password: String(password),
+                            saleSrc: ''
                         },
                         success: function (data) {
                             if (data.result == 1) {
