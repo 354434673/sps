@@ -196,11 +196,6 @@
                     var code =  checkCode.value || '';
                     var mobile = telNum.value || '';
                     var password = document.getElementById('password').value || '';
-                    console.log(channelNum)
-                    console.log(clientNum)
-                    console.log(code)
-                    console.log(mobile)
-                    console.log(password)
                     aspenLib.ajax({
                         url: ajaxUrl + '/api/user/regist',
                         type: 'post',
