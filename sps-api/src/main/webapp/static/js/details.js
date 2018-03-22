@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 type: 'post',
                 dataType: 'json',
                 data: {
-                    mobile: (getTel)
+                    mobile: getTel
                 },
                 success: function (data) {
                     if (data.result == 1) {
