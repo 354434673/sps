@@ -10,6 +10,7 @@
     var submitBtn = document.getElementById('submitBtn');
     var getInput = document.querySelectorAll('input');
     var protocol = document.querySelectorAll('.protocol')[0];
+    var ajaxUrl = 'http://123.56.24.208:8480';
     var register = {
         init: function () {
             // this.keyFocus();
@@ -102,7 +103,7 @@
                         checkCodeMask.style.display = 'none';
                         var telNum = document.getElementById('telNum');
                         aspenLib.ajax({
-                            url: 'http://123.56.24.208:8480/api/user/getPhoneCode/regist',
+                            url: ajaxUrl + '/api/user/getPhoneCode/regist',
                             type: 'post',
                             dataType: 'json',
                             data: {
@@ -201,7 +202,7 @@
                     console.log(mobile)
                     console.log(password)
                     aspenLib.ajax({
-                        url: 'http://123.56.24.208:8480/api/user/regist',
+                        url: ajaxUrl + '/api/user/regist',
                         type: 'post',
                         dataType: 'json',
                         data: {
@@ -213,20 +214,15 @@
                             saleSrc: ''
                         },
                         success: function (data) {
-                            if (data.result == 1) {
-                                aspenLib.tips('您已注册成功！');
-                                try {
-                                    _hmt.push(['_trackEvent', aspenLib.getQueryString('channel') + 'zhuce', 'dianfu_register', 'click', aspenLib.getQueryString('channel') + 'zhuce']);
-                                } catch (e) { }
-                                setClear = setTimeout(function () {
-                                    location.href = 'http://mall.juzifenqi.com/top.html';
-                                    clearTimeout(setClear);
-                                    setClear = null;
-                                }, 1000);
-                            } else {
-                                aspenLib.tips(data.msg);
-                                return;
-                            }
+                            aspenLib.tips(data.message);
+                            try {
+                                _hmt.push(['_trackEvent', aspenLib.getQueryString('channel') + 'zhuce', 'dianfu_register', 'click', aspenLib.getQueryString('channel') + 'zhuce']);
+                            } catch (e) { }
+                            setClear = setTimeout(function () {
+                                location.href = 'http://www.baidu.com';
+                                clearTimeout(setClear);
+                                setClear = null;
+                            }, 1000);
                         },
                         error: function () {
                             console.log('ajax error');
