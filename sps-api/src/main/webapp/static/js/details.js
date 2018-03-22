@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    var ajaxUrl = 'http://123.56.24.208:8480';
     var getTel = aspenLib.getQueryString('tel');
     var tabAjax = {
         init: function () {
@@ -36,11 +37,11 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         ajaxDetailsList: function(){
             aspenLib.ajax({
-                url: 'http://123.56.24.208:8480/shopeeker/queryInvitationList',
+                url: ajaxUrl + '/shopeeker/queryInvitationList',
                 type: 'post',
                 dataType: 'json',
                 data: {
-                    mobile: (getTel)
+                    mobile: getTel
                 },
                 success: function (data) {
                     if (data.result == 1) {
