@@ -38,6 +38,36 @@ document.addEventListener('DOMContentLoaded', function () {
                     supplierTel.focus();
                 } else {
                     var setUrl = 'http://www.baidu.com?sTel=' + shopTel.value + '&supplierTel=' + supplierTel.value;
+                    aspenLib.ajax({
+                        url: "http://localhost:8181/sps-api/shopeeker/invitation",
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                        	invitationAddress: "地址",
+                        	invitationChannelPhone: supplierTel.value,
+                        	invitationName: "姓名",
+                        	invitationPhone: shopTel.value
+                        },
+                        success: function (data) {
+                            if (data.result == 1) {
+                                aspenLib.tips('您已注册成功！');
+                                try {
+                                    _hmt.push(['_trackEvent', aspenLib.getQueryString('channel') + 'zhuce', 'dianfu_register', 'click', aspenLib.getQueryString('channel') + 'zhuce']);
+                                } catch (e) { }
+                                setClear = setTimeout(function () {
+                                    location.href = 'http://mall.juzifenqi.com/top.html';
+                                    clearTimeout(setClear);
+                                    setClear = null;
+                                }, 1000);
+                            } else {
+                                aspenLib.tips(data.msg);
+                                return;
+                            }
+                        },
+                        error: function () {
+                            console.log('ajax error');
+                        }
+                    });
                     qrcode.makeCode(setUrl);
                 }
             }, false);
