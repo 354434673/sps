@@ -466,7 +466,7 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering> <!-- 是否使用过滤器 -->
 			</resource>
-		</resources>a
+		</resources>
 
 		<plugins>
 			<plugin>
