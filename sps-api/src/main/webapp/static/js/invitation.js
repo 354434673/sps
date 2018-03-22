@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         createCode: function () {
             var createCode = document.getElementById('createCode');
-            var shopname = document.getElementById('shopname');
             var shopTel = document.getElementById('shopTel');
             var supplierTel = document.getElementById('supplierTel');
             var qrcode = new QRCode("qrcode", {
@@ -38,31 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     aspenLib.tips('供应商手机号格式不正确！');
                     supplierTel.focus();
                 } else {
-                    //var setUrl = 'http://www.baidu.com?sTel=' + shopTel.value + '&supplierTel=' + supplierTel.value;
-                    var setUrl = 'http://123.56.24.208:8480/register.html?source=1&channelPhone='+supplierTel.value;
-                    aspenLib.ajax({
-                        url: location.protocol + "//" + location.host+ "/sps-api/shopeeker/invitation",
-                        //url: location.protocol + "//" + location.host + "/api/user/getPhoneCode/regist",
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                        	invitationName : shopname.value,
-                            invitationPhone: shopTel.value,
-                            invitationAddress: supplierTel.value
-                        },
-                        success: function (data) {
-                            if (data.code == 1) {
-                            	aspenLib.tips(data.msg);
-                                qrcode.makeCode(setUrl);
-                            } else {
-                                aspenLib.tips(data.msg);
-                                return;
-                            }
-                        },
-                        error: function () {
-                            console.log('ajax error');
-                        }
-                    });
+                    var setUrl = 'http://www.baidu.com?sTel=' + shopTel.value + '&supplierTel=' + supplierTel.value;
+                    qrcode.makeCode(setUrl);
                 }
             }, false);
         }

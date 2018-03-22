@@ -17,10 +17,9 @@
     <meta name="format-detection" content="address=no" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="copyright" content="Copyright (c) juzifenqi.com" />
-	<meta http-equiv="Access-Control-Allow-Origin" content="*" />
     <title>注册</title>
-    <link rel="stylesheet" type="text/css" href="./static/css/h5reset.css" />
-    <link rel="stylesheet" type="text/css" href="./static/css/register.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/h5reset.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/register.css" />
     <script>
         var _hmt = _hmt || [];
         (function () {
@@ -53,7 +52,7 @@
 <body>
     <div class="web-wrap clearfix">
         <ul class="register-info-main">
-            <li><input id="telNum" type="number" placeholder="请输入手机号（必须为实名办理）" maxlength="11" /><a id="getCheckCode" href="javascript:;">获取验证码</a></li>
+            <li><input id="telNum" type="text" placeholder="请输入手机号（必须为实名办理）" maxlength="11" /><a id="getCheckCode" href="javascript:;">获取验证码</a></li>
             <li><input id="checkCode" type="number" placeholder="请输入验证码" maxlength="8" /></li>
             <li><input id="password" type="password" placeholder="请输入8到20位密码" maxlength="20" /></li>
             <li><input id="passwordNum" type="password" placeholder="请再次输入密码" maxlength="20" /></li>
@@ -63,8 +62,18 @@
             </li>
         </ul>
         <a id="submitBtn" class="submit-btn" href="javascript:;">注册</a>
+        <div id="checkCodeMask" class="mask" style="display:none;">
+            <div class="checkCode-wrap">
+                <p class="tips">请输入图形验证码</p>
+                <span class="J-verifyCode" id="v_container"></span>
+                <div class="checkCode-txt"><input id="canvasCode" type="text" maxlength="4" /></div>
+                <span id="subBtns" class="submitBtn">提交</span>
+                <i class="closeBtn">×</i>
+            </div>
+        </div>
     </div>
-    <script type="text/javascript" src="./static/js/aspen.lib.min.js"></script>
-    <script type="text/javascript" src="./static/js/register.js"></script>
+    <script type="text/javascript" src="../static/js/aspen.lib.min.js"></script>
+    <script type="text/javascript" src="../static/js/GVerify.js"></script>
+    <script type="text/javascript" src="../static/js/register.js"></script>
 </body>
 </html>
