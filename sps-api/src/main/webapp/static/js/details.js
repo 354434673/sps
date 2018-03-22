@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
+    var getTel = aspenLib.getQueryString('tel');
     var tabAjax = {
         init: function () {
             var _this = this;
             _this.tabRun();
+            _this.ajaxDetailsList();
         },
         tabRun: function () {
             var _this = this;
@@ -31,6 +33,27 @@ document.addEventListener('DOMContentLoaded', function () {
                     }, false);
                 }
             }
+        },
+        ajaxDetailsList: function(){
+            aspenLib.ajax({
+                url: 'http://123.56.24.208:8480/shopeeker/queryInvitationList',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    mobile: (getTel)
+                },
+                success: function (data) {
+                    if (data.result == 1) {
+                        _this.countDown('getCheckCode');
+                    } else {
+                        aspenLib.tips(data.msg);
+                        return;
+                    }
+                },
+                error: function () {
+                    console.log('ajax error');
+                }
+            });
         }
     }
     tabAjax.init();
