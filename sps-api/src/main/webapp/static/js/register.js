@@ -209,15 +209,19 @@
                             saleSrc: ''
                         },
                         success: function (data) {
-                            aspenLib.tips(data.message);
-                            try {
-                                _hmt.push(['_trackEvent', aspenLib.getQueryString('channel') + 'zhuce', 'dianfu_register', 'click', aspenLib.getQueryString('channel') + 'zhuce']);
-                            } catch (e) { }
-                            setClear = setTimeout(function () {
-                                location.href = 'http://www.baidu.com';
-                                clearTimeout(setClear);
-                                setClear = null;
-                            }, 1000);
+                            if(data.success == true){
+                                try {
+                                    _hmt.push(['_trackEvent', aspenLib.getQueryString('channel') + 'zhuce', 'dianfu_register', 'click', aspenLib.getQueryString('channel') + 'zhuce']);
+                                } catch (e) { }
+                                aspenLib.tips(data.message);
+                                setClear = setTimeout(function () {
+                                    location.href = 'http://www.baidu.com';
+                                    clearTimeout(setClear);
+                                    setClear = null;
+                                }, 1000);
+                            }else{
+                                aspenLib.tips(data.message);
+                            }
                         },
                         error: function () {
                             console.log('ajax error');
