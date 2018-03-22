@@ -64,6 +64,16 @@ public class UserController {
 
 			return sendRegisterSms;
 	}
+	@RequestMapping("/sendCommonSms")
+	public ServiceResult<Boolean> sendCommonSms(String mobile, Integer category){
+		
+		String url = "http://123.56.24.208:8480/invitation.html?salemanPhone="+mobile;
+		
+		String content = "【店付】业务员您好，以下为店主邀请链接，请妥善保存此链接:"+url;
+		ServiceResult<Boolean> sendCommonSms = iSmsCommonService.sendCommonSms("18513967345", content, 3);
+		
+		return sendCommonSms;
+	}
 	/**
 	 * 修改密码短信验证码
 	 * @Title: updatePwsForPhoneCode
