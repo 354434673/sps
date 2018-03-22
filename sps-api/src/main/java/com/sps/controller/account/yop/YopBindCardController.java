@@ -1,8 +1,14 @@
 package com.sps.controller.account.yop;
 
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.juzifenqi.capital.entity.BinCode;
+import com.juzifenqi.capital.service.IBankCodeService;
+import com.juzifenqi.capital.service.IBinCodeService;
+import com.juzifenqi.core.ServiceResult;
+import com.sps.common.Message;
 import com.sps.common.ReturnInfo;
 import com.sps.common.StringUtil;
 import com.sps.entity.account.BankCardInfo;
@@ -61,6 +67,26 @@ public class YopBindCardController {
     private UserService userService;
      @Autowired
     BindCardTransService bindCardTransService;
+    @Reference(group = "capital-dev1")
+    private IBinCodeService iBinCodeService;
+    //根据银行卡号获取银行名称的方法
+    public ReturnInfo queryBankName(String binNo){
+        ServiceResult<BinCode> binCodeById = iBinCodeService.getBinCodeById(binNo);
+        ReturnInfo returnInfo = new ReturnInfo();
+        String shortName = binCodeById.getResult().getBankCode().getShortName();
+        if(StringUtil.isNotEmpty(shortName)){
+            returnInfo.setResult(shortName);
+            returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
+            returnInfo.setCode(Message.API_SUCCESS_CODE);
+            returnInfo.setMsg(Message.API_SUCCESS_MSG);
+        }else {
+            returnInfo.setResult(binCodeById.getMessage());
+            returnInfo.setCode(Message.FAILURE_CODE);
+            returnInfo.setMsg(Message.FAILURE_MSG);
+            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return returnInfo;
+    }
 
    //调用绑卡接口
     @RequestMapping(value = "/bindBankCard/{userName}/{personName}/{cardNo}/{phone}/{idcardno}/{bankName}/{id}", method = RequestMethod.POST)
@@ -89,8 +115,6 @@ public class YopBindCardController {
        Boolean flag = (Boolean) map.get("flag");
        if (flag) {
         BindBankTrans bindBankTrans = (BindBankTrans) map.get("bindBankTransNew");
-
-
         /**
          * 调用易宝进行鉴权绑卡
          * 57dc8546-0f55-4e30-b73c-85bc760dab89
