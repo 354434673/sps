@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     var ajaxUrl = 'http://123.56.24.208:8480';
-    var getTel = aspenLib.getQueryString('salemanPhone') || '';
+    var getTel = aspenLib.getQueryString('tel') || '';
+    var setAllHTML = '';
+    var setAcceptedHTML = '';
+    var setUnacceptedHTML = '';
     var tabAjax = {
         init: function () {
             var _this = this;
@@ -35,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         },
-        ajaxDetailsList: function(){
+        ajaxDetailsList: function () {
             aspenLib.ajax({
                 url: ajaxUrl + '/shopeeker/queryInvitationList',
                 type: 'post',
@@ -44,12 +47,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     mobile: getTel
                 },
                 success: function (data) {
-                    if (data.result == 1) {
-                        _this.countDown('getCheckCode');
-                    } else {
-                        aspenLib.tips(data.msg);
-                        return;
-                    }
+                    // if () {
+                    //     aspenLib.tips(data.msg);
+                    // } else {
+                    //     aspenLib.tips(data.msg);
+                    //     return;
+                    // }
+                    var ajaxListArr = [data.allAccepted,data.accepted,data.noAccepted];
+                    var getListWrap = document.querySelectorAll('.info-list')[0];
+                    setAllHTML += '<li>' +
+                        '<p><em>店主名称</em><i>' +  + '</i></p>' +
+                        '<p><em>手机号</em><i>' +  + '</i></p>' +
+                        '<p><em>地址</em><i>' +  + '</i></p>' +
+                        '<p><em>邀请时间</em><i>' +  + '</i></p>' +
+                        '</li>';
+                    getListWrap.innerHTML = setAllHTML;
                 },
                 error: function () {
                     console.log('ajax error');

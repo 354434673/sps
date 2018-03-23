@@ -28,22 +28,6 @@
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
         })();
-        function getMetaContentValue(name) {
-            var name = name || '';
-            var getMate = null;
-            document.querySelectorAll ? getMate = document.querySelectorAll('meta') : getMate = document.getElementsByTagName('meta');
-            if (getMate && getMate.length > 0) {
-                for (var i = 0; i < getMate.length; i++) {
-                    if (!getMate[i].getAttribute('name')) {
-                        continue;
-                    } else {
-                        if (getMate[i].getAttribute('name') == name.toString()) {
-                            return getMate[i].getAttribute('content');
-                        }
-                    }
-                }
-            }
-        }
     </script>
 </head>
 
@@ -55,28 +39,19 @@
             <li>待接受</li>
         </ul>
         <ul class="info-list" style="display:block;">
-            <li>
-                <p><em>店主名称</em><i>*******************</i></p>
-                <p><em>手机号</em><i>*******************</i></p>
-                <p><em>地址</em><i>*******************</i></p>
-                <p><em>邀请时间</em><i>*******************</i></p>
-            </li>
+            <!-- ajax load -->
+            <!-- <li>
+                <p><em>店主名称</em><i></i></p>
+                <p><em>手机号</em><i></i></p>
+                <p><em>地址</em><i></i></p>
+                <p><em>邀请时间</em><i></i></p>
+            </li> -->
         </ul>
         <ul class="info-list">
-            <li>
-                <p><em>店主名称</em><i>2</i></p>
-                <p><em>手机号</em><i>*******************</i></p>
-                <p><em>地址</em><i>*******************</i></p>
-                <p><em>邀请时间</em><i>*******************</i></p>
-            </li>
+            <!-- ajax load -->
         </ul>
         <ul class="info-list">
-            <li>
-                <p><em>店主名称</em><i>3</i></p>
-                <p><em>手机号</em><i>*******************</i></p>
-                <p><em>地址</em><i>*******************</i></p>
-                <p><em>邀请时间</em><i>*******************</i></p>
-            </li>
+            <!-- ajax load -->
         </ul>
     </div>
     <script type="text/javascript" src="./static/js/aspen.lib.min.js"></script>
