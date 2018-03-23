@@ -19,7 +19,7 @@
                             http://www.springframework.org/schema/beans 
                             http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
                             
-   <!--  <context:property-placeholder location="classpath:dubbo.properties" ignore-unresolvable="true" /> -->
+    <context:property-placeholder location="classpath:dubbo.properties" ignore-unresolvable="true" />
     
 	<!-- 先扫描dubbo注解,因为spring初始化会使dubbo注解失效 -->
 	<import resource="dubbo-consumer.xml" />

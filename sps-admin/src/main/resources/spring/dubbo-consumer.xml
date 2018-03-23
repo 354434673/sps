@@ -19,7 +19,7 @@
 	<!-- 使用注解方式暴露接口 -->     
     <dubbo:annotation package="com.sps.controller"/>
     
-    <!-- <dubbo:reference group = "${dubbo.member.group}" id="iSmsCommonService" interface="com.juzifenqi.usercenter.service.ISmsCommonService"/> -->
+    <dubbo:reference group = "${dubbo.member.group}" id="iSmsCommonService" interface="com.juzifenqi.usercenter.service.ISmsCommonService"/>
 </beans>
  
  
