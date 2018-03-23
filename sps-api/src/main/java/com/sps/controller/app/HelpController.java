@@ -10,10 +10,7 @@ import com.sps.entity.goods.SpsGoodShopSku;
 import com.sps.service.app.help.HelpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,12 +65,23 @@ public class HelpController {
      * 获取内容
      * @return
      */
-    @RequestMapping(value = "/findContentById", method = RequestMethod.POST)
+    @RequestMapping(value = "/findContentById/{helpId}", method = RequestMethod.POST)
     @ResponseBody
-    public HashMap<String, Object> findContentById(@RequestBody String data){
-
-        HashMap<String, Object> hashMap = helpService.queryContent(data);
-        return  hashMap;
+    public ReturnInfo findContentById( @PathVariable("helpId") Integer helpId){
+        ReturnInfo returnInfo = new ReturnInfo();
+        try{
+            Help help = helpService.queryContent(helpId);
+            returnInfo.setResult(help);
+            returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
+            returnInfo.setCode(Message.API_SUCCESS_CODE);
+            returnInfo.setMsg(Message.API_SUCCESS_MSG);
+        }catch(Exception e){
+            e.printStackTrace();
+            returnInfo.setCode(Message.FAILURE_CODE);
+            returnInfo.setMsg(Message.FAILURE_MSG);
+            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return  returnInfo;
     }
 
 
