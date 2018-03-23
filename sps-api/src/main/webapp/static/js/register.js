@@ -215,7 +215,7 @@
                                 } catch (e) { }
                                 aspenLib.tips(data.message);
                                 setClear = setTimeout(function () {
-                                    location.href = 'http://www.baidu.com';
+                                    location.href = ajaxUrl + '/download.html';
                                     clearTimeout(setClear);
                                     setClear = null;
                                 }, 1000);
