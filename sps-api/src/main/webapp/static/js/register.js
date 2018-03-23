@@ -5,6 +5,8 @@
     var checkCode = document.getElementById('checkCode');
     var password = document.getElementById('password');
     var passwordNum = document.getElementById('passwordNum');
+    var salemanPhone = aspenLib.getQueryString('salemanPhone') || '';
+    var invitationPhone = aspenLib.getQueryString('invitationPhone') || '';
     var isCheckbox = document.querySelectorAll('.is-checkbox')[0];
     var isCheckboxCur = document.querySelectorAll('.is-checkbox')[0].querySelectorAll('span')[0];
     var submitBtn = document.getElementById('submitBtn');
@@ -201,12 +203,14 @@
                         type: 'post',
                         dataType: 'json',
                         data: {
-                            channelNum: String(channelNum),
-                            clientNum: String(clientNum),
+                            channelNum: channelNum,
+                            clientNum: clientNum,
                             code: String(code),
                             mobile: String(mobile),
                             password: String(password),
-                            saleSrc: ''
+                            saleSrc: '',
+                            salemanPhone: salemanPhone,
+                            invitationPhone: invitationPhone
                         },
                         success: function (data) {
                             if(data.success == true){
