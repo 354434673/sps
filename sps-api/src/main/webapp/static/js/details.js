@@ -53,14 +53,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     //     aspenLib.tips(data.msg);
                     //     return;
                     // }
-                    var ajaxListArr = [data.allAccepted,data.accepted,data.noAccepted];
+                    var ajaxListArr = [data.allAccepted, data.accepted, data.noAccepted];
+                    console.log(ajaxListArr[0]);
                     var getListWrap = document.querySelectorAll('.info-list')[0];
-                    setAllHTML += '<li>' +
-                        '<p><em>店主名称</em><i>' +  + '</i></p>' +
-                        '<p><em>手机号</em><i>' +  + '</i></p>' +
-                        '<p><em>地址</em><i>' +  + '</i></p>' +
-                        '<p><em>邀请时间</em><i>' +  + '</i></p>' +
-                        '</li>';
+                    for (var i = 0; i < ajaxListArr[1].length; i++) {
+                        setAllHTML += '<li>' +
+                            '<p><em>店主名称</em><i>' + + '</i></p>' +
+                            '<p><em>手机号</em><i>' + + '</i></p>' +
+                            '<p><em>地址</em><i>' + + '</i></p>' +
+                            '<p><em>邀请时间</em><i>' + + '</i></p>' +
+                            '</li>';
+                    }
                     getListWrap.innerHTML = setAllHTML;
                 },
                 error: function () {
