@@ -3,6 +3,7 @@ package com.sps.dao.order;
 
 import com.sps.dao.base.ApiBaseDaoImpl;
 import com.sps.entity.goods.SpsBrand;
+import com.sps.entity.order.SpsOrder;
 import com.sps.entity.order.SpsOrderGoods;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +14,9 @@ public class SpsOrderGoodsMapper extends ApiBaseDaoImpl<SpsOrderGoods, Integer> 
     public String getNameSpace() {
         return "sqlmap.SpsOrderGoods";
     }
+
+    public int updateToOrderNum(SpsOrder order) {
+        return super.updateByValue("updateToOrderNum", order);
+    }
+
 }

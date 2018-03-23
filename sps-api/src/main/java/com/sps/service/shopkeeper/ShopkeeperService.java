@@ -112,5 +112,4 @@ public interface ShopkeeperService {
 	 * @return
 	 */
 	String queryByLoginName(String loginName);
-
 }

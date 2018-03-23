@@ -215,4 +215,31 @@ public class OrderController {
         return ri;
     }
 
+
+    /**
+     * 风控订单回调接口
+     *
+     * @return
+     */
+    @RequestMapping(value = "/orderCallback", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnInfo orderCallback(@RequestBody Map<String,Object> map) {
+        ReturnInfo ri =  Common.validate(map, "orderNum","orderStatus");
+        if ("0".equals(ri.getCode())) return ri;
+        try {
+            orderService.updateStatus(map);
+           /* orderService.cancelOrder(id);
+            ri.setResult(id);*/
+            ri.setSuccess(Message.SUCCESS_MSG);
+            ri.setCode(Message.SUCCESS_CODE);
+            ri.setMsg(Message.API_SUCCESS_MSG);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ri.setCode(Message.FAILURE_CODE);
+            ri.setMsg(Message.FAILURE_MSG);
+            ri.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return ri;
+    }
+
 }

@@ -9,13 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.alibaba.fastjson.JSON;
-import com.sps.common.Message;
-import com.sps.common.StringUtil;
-import com.sps.dao.GoodShopDao;
-import com.sps.entity.merchant.SpsChannelBusiness;
-import com.sps.service.goods.GoodCategoryService;
 import com.sps.service.merchant.EnterpriseService;
 /**
  * 商户相关api
@@ -31,7 +24,7 @@ public class MerchantApi{
 	private EnterpriseService enterpriseService;
 	/**
 	 * 获得商户列表(目前只有一个)
-	 * @Title: queryMerchant   
+	 * @Title: queryMerchant
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
 	 * @param: @param businessProduct
 	 * @param: @return  
