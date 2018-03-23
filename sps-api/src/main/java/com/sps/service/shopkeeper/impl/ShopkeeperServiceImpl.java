@@ -250,23 +250,69 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 	@Override
 	public HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation) {
 		HashMap<String, Object> hashMap = null;
-		SpsShopkeeperInvitation queryInvitation = queryInvitation(invitation.getInvitationPhone());
+
+		String invitationPhone = invitation.getInvitationPhone();
+
 		try {
-			if(queryInvitation == null){
-				
-				invitation.setInvitationCreatTime(new Date());
-				
-				invitation.setInvitationUpdateTime(new Date());
-				
-				invitation.setInvitationState("0");
-				
-				invitation.setInvitationType(1);
-				
-				invitationDao.insertSelective(invitation);
-				
-				hashMap = Message.resultMap(Message.SUCCESS_CODE, "邀请成功", Message.SUCCESS_MSG, 1, null);
+			if(!StringUtil.isEmpty(invitationPhone)){
+				SpsShopkeeperInvitation queryInvitation = queryInvitation(invitationPhone);
+				if(queryInvitation == null){
+					SpsChannelGuaranteeExample example = new SpsChannelGuaranteeExample();
+
+					example.createCriteria().andGuaranteeCorpPhoneEqualTo(invitation.getInvitationChannelPhone());
+
+					List<SpsChannelGuarantee> selectByExample = guaranteeDao.selectByExample(example);
+
+					if(selectByExample.size() != 0){
+
+						String channelNum = selectByExample.get(0).getChannelNum();
+
+						invitation.setInvitationCreatTime(new Date());
+
+						invitation.setInvitationUpdateTime(new Date());
+
+						invitation.setInvitationState("0");
+
+						invitation.setInvitationType(1);
+
+						invitationDao.insertSelective(invitation);
+
+						/**
+						 * 插到店主信息表中
+						 */
+						String clientNum = RuleUtil.getClientNum("SP");
+						SpsShopkeeper spsShopkeeper = new SpsShopkeeper();
+						spsShopkeeper.setShopkeeperUsername(invitation.getInvitationPhone());
+						spsShopkeeper.setShopkeeperCreatTime(new Date());
+						spsShopkeeper.setShopkeeperUpdateTime(new Date());
+						spsShopkeeper.setShopkeeperState(1);
+						spsShopkeeper.setShopkeeperCustomerid(clientNum);
+						spsShopkeeper.setShopkeeperDefaultChannelNum(channelNum);
+						spsShopkeeperDao.insertSelective(spsShopkeeper);
+
+						/*
+						 * 往店主个人信息中添加,字段为店主名称
+						 */
+						SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
+						personal.setPersonalClientName(invitation.getInvitationName());
+						personal.setPersonalCreatTime(new Date());
+						personal.setPersonalUpdateTime(new Date());
+						personal.setShopkeeperCustomerid(clientNum);
+						personalDao.insertSelective(personal);
+
+						HashMap<String, String> result = new HashMap<>();
+						result.put("channelNum", channelNum);
+						result.put("clientNum", clientNum);
+
+						hashMap = Message.resultMap(Message.SUCCESS_CODE, "邀请成功", Message.SUCCESS_MSG, 1, null);
+					}else{
+						hashMap = Message.resultMap(Message.FAILURE_CODE, "该供应商不存在", Message.FAILURE_MSG, 0, null);
+					}
+				}else{
+					hashMap = Message.resultMap(Message.FAILURE_CODE, "该店主已邀请", Message.FAILURE_MSG, 0, null);
+				}
 			}else{
-				hashMap = Message.resultMap(Message.FAILURE_CODE, "该店主已邀请", Message.FAILURE_MSG, 0, null);
+				hashMap = Message.resultMap(Message.FAILURE_CODE, "店主手机号不可为空", Message.FAILURE_MSG, 0, null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

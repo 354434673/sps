@@ -3,6 +3,7 @@ package com.sps.service.order.impl;
 import com.sps.dao.goods.SpsBrandMapper;
 import com.sps.dao.goods.SpsGoodCategoryMapper;
 import com.sps.dao.goods.SpsGoodsMapper;
+import com.sps.dao.order.SpsOrderLogMapper;
 import com.sps.entity.order.SpsLog;
 import com.sps.entity.order.SpsOrderLog;
 import com.sps.service.order.LogService;
@@ -17,7 +18,7 @@ import java.util.Map;
 @Service
 public class OrderLogServiceImpl implements OrderLogService {
     @Resource
-    private SpsBrandMapper spsBrandMapper;
+    private SpsOrderLogMapper spsOrderLogMapper;
     @Resource
     private SpsGoodsMapper SpsGoodsMapper;
     @Resource
@@ -26,7 +27,11 @@ public class OrderLogServiceImpl implements OrderLogService {
 
     @Override
     public void saveOrUpdate(SpsOrderLog log) {
+        if(log.getLogId()!=null){
 
+        }else {
+            spsOrderLogMapper.insert(log);
+        }
 
     }
 

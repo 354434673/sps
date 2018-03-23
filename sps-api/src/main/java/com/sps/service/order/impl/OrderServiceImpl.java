@@ -97,4 +97,15 @@ public class OrderServiceImpl implements OrderService {
         order.setIsdelete(1);
         spsOrderGoodsMapper.update(order);
     }
+
+    @Override
+    public void updateStatus(Map<String, Object> map) {
+        Integer status = (Integer) map.get("orderStatus");
+        String orderNum = (String) map.get("orderNum");
+        SpsOrder order = new SpsOrder();
+        order.setFlag(status);
+        order.setModifytime(new Date());
+        order.setOrderid(orderNum);
+        spsOrderGoodsMapper.updateToOrderNum(order);
+    }
 }

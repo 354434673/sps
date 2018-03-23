@@ -1,22 +1,20 @@
 package com.sps.controller.authentication;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
-
 import javax.annotation.Resource;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-
+import com.juzifenqi.capital.entity.UserCard;
+import com.juzifenqi.capital.service.IUserCardNewService;
 import com.juzifenqi.core.ServiceResult;
 import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthQueryApi;
 import com.jzfq.auth.core.api.entiy.AuthBasicDetail;
+import com.jzfq.auth.core.api.entiy.AuthFaceDetail;
 import com.jzfq.auth.core.api.entiy.AuthHouseDetail;
 import com.jzfq.auth.core.api.entiy.AuthIdentityDetail;
 import com.jzfq.auth.core.api.entiy.AuthIousDetail;
@@ -40,8 +38,6 @@ import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 import com.sps.entity.shopkeeper.SpsShopkeeperRepayment;
 import com.sps.service.shopkeeper.ShopkeeperService;
-
-/*
 @RestController
 @RequestMapping("/authentication")
 public class authenticationController {
@@ -64,8 +60,7 @@ public class authenticationController {
 		
 		return queryStateArray;
 	}
-	*/
-/**
+	/**
 	 * 身份证反面认证
 	 * @Title: authBackIdCard   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -74,8 +69,7 @@ public class authenticationController {
 	 * @date 2018年3月7日 下午4:56:02
 	 * @return: JsonResult<AuthFaceIdCard>      
 	 * @throws
-	 *//*
-
+	 */
 	@RequestMapping("/authBackIdCard")
 	public JsonResult<AuthFaceIdCard> authBackIdCard(String clientNum, AuthFaceIdCard arg0){
 		
@@ -109,8 +103,7 @@ public class authenticationController {
 		}
 		return backIdCardResult;
 	}
-	*/
-/**
+	/**
 	 * 身份证正面认证
 	 * @Title: authFrontIdCard   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -119,12 +112,10 @@ public class authenticationController {
 	 * @date 2018年3月7日 下午4:56:57
 	 * @return: JsonResult<AuthFaceIdCard>      
 	 * @throws
-	 *//*
-
+	 */
 	@RequestMapping("/authFrontIdCard")
 	public JsonResult<AuthFaceIdCard> authFrontIdCard(String clientNum, AuthFaceIdCard arg0){
 		JsonResult<AuthFaceIdCard> backIdCardResult = new JsonResult<AuthFaceIdCard>();
-		
 		if(!StringUtil.isEmpty(clientNum)){
 			
 			backIdCardResult = faceAuthApi.getFrontIdCardResult(arg0);
@@ -154,8 +145,41 @@ public class authenticationController {
 		}
 		return backIdCardResult;
 	}
-	*/
-/** 认证保存通讯录信息
+	@RequestMapping("/saveFaceDetail")
+	public JsonResult<AuthFaceIdCard> saveFaceDetail(String clientNum, AuthFaceDetail arg0){
+		
+		JsonResult saveFaceDetail = null;
+		
+		if(!StringUtil.isEmpty(clientNum)){
+			
+			saveFaceDetail = jzfqAuthApi.saveFaceDetail(arg0 );
+					
+			String code = saveFaceDetail.getCode();
+			
+/*			if(code != null){
+				if(code.equals("SUCCESS")){
+					SpsShopkeeperPic pic = new SpsShopkeeperPic();
+					
+					pic.setPicType(2);
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicSrc(arg0.getFrontImagePath());
+					
+					pic.setPicState(0);
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic);
+					
+					backIdCardResult.setCode(Message.SUCCESS_CODE);
+				}
+			}*/
+		}else{
+			saveFaceDetail.setCode(Message.FAILURE_CODE);
+			saveFaceDetail.setMsg(Message.FAILURE_CLIENTNUM);
+		}
+		return saveFaceDetail;
+	}
+	/** 认证保存通讯录信息
 	 * @Title: saveLinkDetail   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
 	 * @param: @return  
@@ -163,8 +187,7 @@ public class authenticationController {
 	 * @date 2018年3月12日 下午1:49:43
 	 * @return: JsonResult<AuthFaceIdCard>      
 	 * @throws   
-	 *//*
-
+	 */  
 	@RequestMapping("/saveLinkDetail")
 	public JsonResult saveLinkDetail(String clientNum, AuthLinkDetail arg0){
 		
@@ -229,8 +252,7 @@ public class authenticationController {
 		}
 		return saveLinkDetail;
 	}
-	*/
-/**
+	/**
 	 * 认证保存车辆信息
 	 * @Title: saveIousDetail   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -247,8 +269,7 @@ public class authenticationController {
 	 * @date 2018年3月12日 下午2:07:42
 	 * @return: JsonResult<AuthFaceIdCard>      
 	 * @throws
-	 *//*
-
+	 */
 	@RequestMapping("/saveIousDetail")
 	public String saveIousDetail(String clientNum, String idCard, AuthIousDetail arg0){
 		
@@ -294,8 +315,7 @@ public class authenticationController {
 		}
 		return null;
 	}
-	*/
-/**
+	/**
 	 * 房产认证
 	 * @Title: saveHouseDetail   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -316,8 +336,7 @@ public class authenticationController {
 	 * @date 2018年3月12日 下午3:55:57
 	 * @return: JsonResult      
 	 * @throws
-	 *//*
-
+	 */
 	@RequestMapping("/saveHouseDetail")
 	public JsonResult saveHouseDetail(String clientNum, AuthHouseDetail arg0){
 		JsonResult saveLinkDetail = new JsonResult<>(); 
@@ -348,8 +367,7 @@ public class authenticationController {
 		}
 		return saveLinkDetail;
 	}
-	*/
-/**
+	/**
 	 * @return 
 	 * 认证保存基本信息
 	 * @Title: saveIousDetail   
@@ -367,8 +385,7 @@ public class authenticationController {
 	 * @date 2018年3月12日 下午2:16:06
 	 * @return: JsonResult<AuthFaceIdCard>      
 	 * @throws
-	 *//*
-
+	 */
 	@RequestMapping("/saveBasicDetail")
 	public JsonResult saveBasicDetail(String clientNum, AuthBasicDetail arg0){
 		
@@ -381,11 +398,9 @@ public class authenticationController {
 			
 			if(code != null){
 				if(code.equals("SUCCESS")){
-					*/
-/**
+					/**
 					 * 更改信息
-					 *//*
-
+					 */
 					SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
 					
 					personal.setPersonalLivingAddress(arg0.getLiveP()+arg0.getLiveC()+arg0.getLiveA()+arg0.getLiveAddress());
@@ -407,8 +422,7 @@ public class authenticationController {
 		}
 		return saveLinkDetail;
 	}
-	*/
-/**
+	/**
 	 * 认证保存身份证信息
 	 * @Title: saveIdentityDetail   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -431,8 +445,7 @@ public class authenticationController {
 	 * @date 2018年3月13日 下午5:16:51
 	 * @return: JsonResult      
 	 * @throws
-	 *//*
-
+	 */
 	@RequestMapping("/saveIdentityDetail")
 	public JsonResult saveIdentityDetail(String clientNum, AuthIdentityDetail arg0){
 		
@@ -480,8 +493,7 @@ public class authenticationController {
 		}
 		return saveLinkDetail;
 	}
-	*/
-/**
+	/**
 	 * 公司店铺认证
 	 * @Title: saveStoreDetail   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -508,8 +520,7 @@ public class authenticationController {
 	 * @date 2018年3月12日 下午3:57:08
 	 * @return: JsonResult      
 	 * @throws
-	 *//*
-
+	 */
 	@RequestMapping("/saveStoreDetail")
 	public JsonResult saveStoreDetail(String clientNum, AuthStoreDetail arg0){
 		
@@ -523,11 +534,9 @@ public class authenticationController {
 			
 			if(code != null){
 				if(code.equals("SUCCESS")){
-					*/
-/*
+					/*
 					 * 添加到公司表
-					 *//*
-
+					 */
 					SpsShopkeeperCompany company = new SpsShopkeeperCompany();
 					
 					company.setCompanyName(arg0.getCompanyName());
@@ -549,13 +558,10 @@ public class authenticationController {
 					company.setCompanyBusinessArea((double)arg0.getActualArea());
 					
 					company.setShopkeeperCustomerid(clientNum);
-
 					shopkeeperService.insertShopkeeperCompany(company);
-					*/
-/**
+					/**
 					 * 更改shopkeeper主表的内容
-					 *//*
-
+					 */
 					SpsShopkeeper shopkeeper = new SpsShopkeeper();
 					
 					shopkeeper.setShopkeeperChannelType("店主");
@@ -603,8 +609,7 @@ public class authenticationController {
 		}
 		return saveUserCardByNo;
 	}
-	*/
-/**
+	/**
 	 * 征信认证
 	 * @Title: saveMentionDetail   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -619,8 +624,7 @@ public class authenticationController {
 	 * @date 2018年3月15日 上午10:58:12
 	 * @return: JsonResult      
 	 * @throws
-	 *//*
-
+	 */
 	@RequestMapping("/saveMentionDetail")
 	public JsonResult saveMentionDetail(AuthResult arg0, String clientNum, SpsShopkeeperCredit credit){
 		
@@ -668,8 +672,7 @@ public class authenticationController {
 		}
 		return saveMentionDetail;
 	}
-	*/
-/**
+	/**
 	 * 个人信用账户
 	 * @Title: accountInit   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -681,8 +684,7 @@ public class authenticationController {
 	 * @date 2018年3月16日 上午11:31:57
 	 * @return: String      
 	 * @throws
-	 *//*
-
+	 */
 	public String accountInit(BigDecimal amount, String application, String certNo){
 		
 		StringBuffer url = new StringBuffer("http://dev.app.chezhubaitiao.com/api/account/init?");
@@ -697,8 +699,7 @@ public class authenticationController {
 		
 		return doPost;
 	}
-	*/
-/**
+	/**
 	 * 个人资金账户
 	 * @Title: customerAccountInit   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -709,8 +710,7 @@ public class authenticationController {
 	 * @date 2018年3月16日 上午11:31:49
 	 * @return: String      
 	 * @throws
-	 *//*
-
+	 */
 	public String customerAccountInit(String application, String certNo){
 		
 		StringBuffer url = new StringBuffer("http://dev.app.chezhubaitiao.com/api/customerAccount/init?");
@@ -724,4 +724,3 @@ public class authenticationController {
 		return doPost;
 	}
 }
-*/

@@ -51,4 +51,10 @@ public interface OrderService {
      * @param id
      */
     void deleteOrder(Integer id);
+
+    /**
+     * 修改订单状态
+     * @param map
+     */
+    void updateStatus(Map<String, Object> map);
 }

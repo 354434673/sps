@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.SpsChannelGuaranteeDao" >
+  <resultMap id="BaseResultMap" type="com.sps.entity.merchant.SpsChannelGuarantee" >
+    <id column="guarantee_id" property="guaranteeId" jdbcType="INTEGER" />
+    <result column="guarantee_situation" property="guaranteeSituation" jdbcType="VARCHAR" />
+    <result column="guarantee_deposit" property="guaranteeDeposit" jdbcType="DECIMAL" />
+    <result column="guarantee_corp_phone" property="guaranteeCorpPhone" jdbcType="VARCHAR" />
+    <result column="guarantee_finance_contactName" property="guaranteeFinanceContactname" jdbcType="VARCHAR" />
+    <result column="guarantee_finance_contactPhone" property="guaranteeFinanceContactphone" jdbcType="VARCHAR" />
+    <result column="guarantee_business_LeaderName" property="guaranteeBusinessLeadername" jdbcType="VARCHAR" />
+    <result column="guarantee_business_LeaderPhone" property="guaranteeBusinessLeaderphone" jdbcType="VARCHAR" />
+    <result column="guarantee_business_phone_password" property="guaranteeBusinessPhonePassword" jdbcType="VARCHAR" />
+    <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    guarantee_id, guarantee_situation, guarantee_deposit, guarantee_corp_phone, guarantee_finance_contactName, 
+    guarantee_finance_contactPhone, guarantee_business_LeaderName, guarantee_business_LeaderPhone, 
+    guarantee_business_phone_password, channel_num
+  </sql>
+   <select id="countByExample" parameterType="com.sps.entity.merchant.SpsChannelGuaranteeExample" resultType="java.lang.Integer" >
+    select count(*) from sps_channel_guarantee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.merchant.SpsChannelGuaranteeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_channel_guarantee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_channel_guarantee
+    where guarantee_id = #{guaranteeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_channel_guarantee
+    where guarantee_id = #{guaranteeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sps.entity.merchant.SpsChannelGuaranteeExample" >
+    delete from sps_channel_guarantee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sps.entity.merchant.SpsChannelGuarantee" >
+    insert into sps_channel_guarantee (guarantee_id, guarantee_situation, 
+      guarantee_deposit, guarantee_corp_phone, guarantee_finance_contactName, 
+      guarantee_finance_contactPhone, guarantee_business_LeaderName, 
+      guarantee_business_LeaderPhone, guarantee_business_phone_password, 
+      channel_num)
+    values (#{guaranteeId,jdbcType=INTEGER}, #{guaranteeSituation,jdbcType=VARCHAR}, 
+      #{guaranteeDeposit,jdbcType=DECIMAL}, #{guaranteeCorpPhone,jdbcType=VARCHAR}, #{guaranteeFinanceContactname,jdbcType=VARCHAR}, 
+      #{guaranteeFinanceContactphone,jdbcType=VARCHAR}, #{guaranteeBusinessLeadername,jdbcType=VARCHAR}, 
+      #{guaranteeBusinessLeaderphone,jdbcType=VARCHAR}, #{guaranteeBusinessPhonePassword,jdbcType=VARCHAR}, 
+      #{channelNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sps.entity.merchant.SpsChannelGuarantee" >
+    insert into sps_channel_guarantee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="guaranteeId != null" >
+        guarantee_id,
+      </if>
+      <if test="guaranteeSituation != null" >
+        guarantee_situation,
+      </if>
+      <if test="guaranteeDeposit != null" >
+        guarantee_deposit,
+      </if>
+      <if test="guaranteeCorpPhone != null" >
+        guarantee_corp_phone,
+      </if>
+      <if test="guaranteeFinanceContactname != null" >
+        guarantee_finance_contactName,
+      </if>
+      <if test="guaranteeFinanceContactphone != null" >
+        guarantee_finance_contactPhone,
+      </if>
+      <if test="guaranteeBusinessLeadername != null" >
+        guarantee_business_LeaderName,
+      </if>
+      <if test="guaranteeBusinessLeaderphone != null" >
+        guarantee_business_LeaderPhone,
+      </if>
+      <if test="guaranteeBusinessPhonePassword != null" >
+        guarantee_business_phone_password,
+      </if>
+      <if test="channelNum != null" >
+        channel_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="guaranteeId != null" >
+        #{guaranteeId,jdbcType=INTEGER},
+      </if>
+      <if test="guaranteeSituation != null" >
+        #{guaranteeSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeDeposit != null" >
+        #{guaranteeDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="guaranteeCorpPhone != null" >
+        #{guaranteeCorpPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeFinanceContactname != null" >
+        #{guaranteeFinanceContactname,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeFinanceContactphone != null" >
+        #{guaranteeFinanceContactphone,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeBusinessLeadername != null" >
+        #{guaranteeBusinessLeadername,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeBusinessLeaderphone != null" >
+        #{guaranteeBusinessLeaderphone,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeBusinessPhonePassword != null" >
+        #{guaranteeBusinessPhonePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNum != null" >
+        #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_channel_guarantee
+    <set >
+      <if test="record.guaranteeId != null" >
+        guarantee_id = #{record.guaranteeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.guaranteeSituation != null" >
+        guarantee_situation = #{record.guaranteeSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteeDeposit != null" >
+        guarantee_deposit = #{record.guaranteeDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.guaranteeCorpPhone != null" >
+        guarantee_corp_phone = #{record.guaranteeCorpPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteeFinanceContactname != null" >
+        guarantee_finance_contactName = #{record.guaranteeFinanceContactname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteeFinanceContactphone != null" >
+        guarantee_finance_contactPhone = #{record.guaranteeFinanceContactphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteeBusinessLeadername != null" >
+        guarantee_business_LeaderName = #{record.guaranteeBusinessLeadername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteeBusinessLeaderphone != null" >
+        guarantee_business_LeaderPhone = #{record.guaranteeBusinessLeaderphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteeBusinessPhonePassword != null" >
+        guarantee_business_phone_password = #{record.guaranteeBusinessPhonePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelNum != null" >
+        channel_num = #{record.channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_channel_guarantee
+    set guarantee_id = #{record.guaranteeId,jdbcType=INTEGER},
+      guarantee_situation = #{record.guaranteeSituation,jdbcType=VARCHAR},
+      guarantee_deposit = #{record.guaranteeDeposit,jdbcType=DECIMAL},
+      guarantee_corp_phone = #{record.guaranteeCorpPhone,jdbcType=VARCHAR},
+      guarantee_finance_contactName = #{record.guaranteeFinanceContactname,jdbcType=VARCHAR},
+      guarantee_finance_contactPhone = #{record.guaranteeFinanceContactphone,jdbcType=VARCHAR},
+      guarantee_business_LeaderName = #{record.guaranteeBusinessLeadername,jdbcType=VARCHAR},
+      guarantee_business_LeaderPhone = #{record.guaranteeBusinessLeaderphone,jdbcType=VARCHAR},
+      guarantee_business_phone_password = #{record.guaranteeBusinessPhonePassword,jdbcType=VARCHAR},
+      channel_num = #{record.channelNum,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sps.entity.merchant.SpsChannelGuarantee" >
+    update sps_channel_guarantee
+    <set >
+      <if test="guaranteeSituation != null" >
+        guarantee_situation = #{guaranteeSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeDeposit != null" >
+        guarantee_deposit = #{guaranteeDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="guaranteeCorpPhone != null" >
+        guarantee_corp_phone = #{guaranteeCorpPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeFinanceContactname != null" >
+        guarantee_finance_contactName = #{guaranteeFinanceContactname,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeFinanceContactphone != null" >
+        guarantee_finance_contactPhone = #{guaranteeFinanceContactphone,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeBusinessLeadername != null" >
+        guarantee_business_LeaderName = #{guaranteeBusinessLeadername,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeBusinessLeaderphone != null" >
+        guarantee_business_LeaderPhone = #{guaranteeBusinessLeaderphone,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeBusinessPhonePassword != null" >
+        guarantee_business_phone_password = #{guaranteeBusinessPhonePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNum != null" >
+        channel_num = #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where guarantee_id = #{guaranteeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sps.entity.merchant.SpsChannelGuarantee" >
+    update sps_channel_guarantee
+    set guarantee_situation = #{guaranteeSituation,jdbcType=VARCHAR},
+      guarantee_deposit = #{guaranteeDeposit,jdbcType=DECIMAL},
+      guarantee_corp_phone = #{guaranteeCorpPhone,jdbcType=VARCHAR},
+      guarantee_finance_contactName = #{guaranteeFinanceContactname,jdbcType=VARCHAR},
+      guarantee_finance_contactPhone = #{guaranteeFinanceContactphone,jdbcType=VARCHAR},
+      guarantee_business_LeaderName = #{guaranteeBusinessLeadername,jdbcType=VARCHAR},
+      guarantee_business_LeaderPhone = #{guaranteeBusinessLeaderphone,jdbcType=VARCHAR},
+      guarantee_business_phone_password = #{guaranteeBusinessPhonePassword,jdbcType=VARCHAR},
+      channel_num = #{channelNum,jdbcType=VARCHAR}
+    where guarantee_id = #{guaranteeId,jdbcType=INTEGER}
+  </update>
+</mapper>

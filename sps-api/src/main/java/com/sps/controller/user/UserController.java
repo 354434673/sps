@@ -1,13 +1,9 @@
 package com.sps.controller.user;
-
 import java.util.HashMap;
-
 import javax.annotation.Resource;
-
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -61,8 +57,17 @@ public class UserController {
 	public ServiceResult<Boolean> registForPhoneCode(String mobile, Integer category){
 		
 			ServiceResult<Boolean> sendRegisterSms = iSmsCommonService.sendRegisterSms(mobile, category);
-
 			return sendRegisterSms;
+	}
+	@RequestMapping("/sendCommonSms")
+	public ServiceResult<Boolean> sendCommonSms(String mobile, Integer category){
+		
+		String url = "http://123.56.24.208:8480/invitation.html?salemanPhone="+mobile;
+		
+		String content = "【店付】业务员您好，以下为店主邀请链接，请妥善保存此链接:"+url;
+		ServiceResult<Boolean> sendCommonSms = iSmsCommonService.sendCommonSms("18513967345", content, 3);
+		
+		return sendCommonSms;
 	}
 	/**
 	 * 修改密码短信验证码
@@ -80,15 +85,10 @@ public class UserController {
 		
 		if(!StringUtil.isEmpty(data)){
 			JSONObject parseObject = JSON.parseObject(data);
-
 			String phone = parseObject.getString("phone");
-
 			Integer category = parseObject.getInteger("category");
-
 			ServiceResult<Boolean> sendRegisterSms = iSmsCommonService.sendForgetPasswordSms(phone, category);
-
 			return sendRegisterSms;
-
 		}else{
 			return null;
 		}
@@ -105,9 +105,10 @@ public class UserController {
 	 * @throws
 	 */
 	@RequestMapping("/regist")
-	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc, String clientNum, String channelNum){
+	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc, 
+			String clientNum, String channelNum, String salemanPhone, String channelPhone){
 		
-		SpsShopkeeperInvitation queryShopInvitation = userService.queryShopInvitation(mobile, null);
+			SpsShopkeeperInvitation queryShopInvitation = userService.queryShopInvitation(mobile, null);
 			
 			ServiceResult<LoginInfo> serviceResult = null;
 			if(queryShopInvitation != null){
@@ -125,7 +126,7 @@ public class UserController {
 				serviceResult = iDianfuPassportService.memberRegister4Browser(arg0);
 				
 				if(serviceResult.getSuccess()){
-				serviceResult = userService.insertUser(mobile, password, clientNum);
+					serviceResult = userService.insertUser(mobile, password, clientNum, channelNum, salemanPhone, channelPhone);
 				}
 			}else{
 				serviceResult = new ServiceResult<LoginInfo>();
@@ -134,7 +135,6 @@ public class UserController {
 				
 				serviceResult.setSuccess(false);
 			}
-
 			return serviceResult;
 	}
 	@RequestMapping("/login")
@@ -160,7 +160,7 @@ public class UserController {
 		
 		HashMap<String, Object> userLogin = null;
 		if(login4Browser.getSuccess()){
-//			userLogin = userService.userLogin(mobile, password, login4Browser.getResult().getMemberId());
+			userLogin = userService.userLogin(mobile, password, login4Browser.getResult().getMemberId());
 		}else{
 			userLogin = Message.resultMap(login4Browser.getCode(), login4Browser.getMessage(),
 					Message.SYSTEM_ERROR_MSG, 0, null);
