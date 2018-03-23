@@ -1,5 +1,7 @@
 package com.sps.service.account.bankCard;
 
+import com.sps.entity.account.BankCardInfo;
+
 /**
  * Created by Administrator on 2018-03-10.
  *
@@ -12,4 +14,6 @@ package com.sps.service.account.bankCard;
  */
 public interface BankCardService {
     String findUserId(String userName);
+    //保存绑卡信息的方法
+    Boolean saveBankCardInfo(BankCardInfo bankCardInfo, Integer userId, Integer userMark);
 }

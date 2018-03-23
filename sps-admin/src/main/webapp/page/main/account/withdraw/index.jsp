@@ -111,6 +111,9 @@
         });
 
         $('#add').on('click', function() {
+            /*
+            *
+            * */
             window.location.href="<%=path%>/page/main/account/withdraw/addWithdraw.jsp";
         });
         table.render({

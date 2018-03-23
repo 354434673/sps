@@ -1,11 +1,12 @@
 package com.sps.service.shopkeeper.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+//import com.github.pagehelper.PageHelper;
+//import com.github.pagehelper.PageInfo;
 import com.sps.dao.goods.SpsBrandMapper;
 import com.sps.dao.goods.SpsGoodCategoryMapper;
 import com.sps.dao.goods.SpsGoodsMapper;
 import com.sps.dao.goods.SpsShopkeeperPersonalMapper;
+import com.sps.dao.shopkeeper.SpsShopkeeperPersonalDao;
 import com.sps.entity.goods.SpsBrand;
 import com.sps.entity.goods.SpsGoodCategory;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
@@ -23,7 +24,8 @@ import java.util.Map;
 public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
     @Resource
     private SpsShopkeeperPersonalMapper spsShopkeeperPersonalMapper;
-
+    @Resource
+    private SpsShopkeeperPersonalDao spsShopkeeperPersonalDao;
 
     @Override
     public void saveOrUpdate(SpsShopkeeperPersonal spsShopkeeperPersonal) {
@@ -43,5 +45,11 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
     @Override
     public SpsShopkeeperPersonal findEntityByCustomerNum(String customerNum) {
         return spsShopkeeperPersonalMapper.findEntityByCustomerNum(customerNum);
+    }
+
+    @Override
+    public String  findPerson(Integer personId) {
+        SpsShopkeeperPersonal spsShopkeeperPersonal = spsShopkeeperPersonalDao.selectByPersonId(personId);
+        return spsShopkeeperPersonal.getPersonalIdcard();
     }
 }

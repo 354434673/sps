@@ -1,13 +1,9 @@
 package com.sps.controller.user;
-
 import java.util.HashMap;
-
 import javax.annotation.Resource;
-
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -61,7 +57,6 @@ public class UserController {
 	public ServiceResult<Boolean> registForPhoneCode(String mobile, Integer category){
 		
 			ServiceResult<Boolean> sendRegisterSms = iSmsCommonService.sendRegisterSms(mobile, category);
-
 			return sendRegisterSms;
 	}
 	@RequestMapping("/sendCommonSms")
@@ -90,15 +85,10 @@ public class UserController {
 		
 		if(!StringUtil.isEmpty(data)){
 			JSONObject parseObject = JSON.parseObject(data);
-
 			String phone = parseObject.getString("phone");
-
 			Integer category = parseObject.getInteger("category");
-
 			ServiceResult<Boolean> sendRegisterSms = iSmsCommonService.sendForgetPasswordSms(phone, category);
-
 			return sendRegisterSms;
-
 		}else{
 			return null;
 		}
@@ -145,7 +135,6 @@ public class UserController {
 				
 				serviceResult.setSuccess(false);
 			}
-
 			return serviceResult;
 	}
 	@RequestMapping("/login")

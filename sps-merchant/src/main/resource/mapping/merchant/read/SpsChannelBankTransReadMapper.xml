@@ -20,9 +20,14 @@
   	    	 channl_num          channlNum
   	    from 
   	    	sps_bank_trans
-  
-  		where 
-  			 t_serial_sh=#{requestno} and  t_serial_yop=#{yborderid}
+  	    <where>
+				<if test="requestno !=null and  requestno!=''">
+					t_serial_sh=#{requestno}
+				</if>
+			<if test="yborderid !=null and  yborderid!=''">
+				 and t_serial_yop=#{yborderid}
+			</if>
+		</where>
   </select>
   
 </mapper>

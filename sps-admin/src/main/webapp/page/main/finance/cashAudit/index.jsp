@@ -116,6 +116,7 @@
             ,page:true
             ,cols: [[ //表头
                  {type:'numbers', title: '序号',align:'center'}
+				,{field: 'id', title: 'id',align:'center'  }
                 ,{field: 'userName', title: '客户账号',align:'center'  }
                 ,{field: 'companyName', title: '客户名称',align:'center'  }
                 ,{field: 'amount', title: '提现金额',width:230,align:'center'}
@@ -124,7 +125,9 @@
                 ,{field: 'totalAmount', title: '累计提款合计金额',align:'center' }
                 ,{field: 'status', title: '流程状态',event: 'setStatus', width:140,align:'center',templet: '#withDrawStateTpl'}
                 ,{field: 'tool', title: '操作',width:270,align:'center', event: 'setSign' ,toolbar:'#bar'}
-            ]]
+            ]], done: function (res, page, count) {
+				$("[data-field='id']").css('display','none');
+			}
         });
       //查询
         $('#search').on('click',function(){
@@ -164,7 +167,7 @@
                 location.href = '<%=path%>/page/main/finance/cashAudit/historyInfo.jsp?userName='+data.userName;
             }
             if(layEvent === 'edit'){ //跳转至审核页面
-                location.href = '<%=path%>/page/main/finance/cashAudit/drawAudit.jsp?applicationDate='+data.applicationDate;
+                location.href = '<%=path%>/page/main/finance/cashAudit/drawAudit.jsp?id='+data.id;
             }
         });
     });

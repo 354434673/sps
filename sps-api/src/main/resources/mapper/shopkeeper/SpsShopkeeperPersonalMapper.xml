@@ -37,7 +37,7 @@
     </association>
   </resultMap>
 
-    <select id="getByPersonId" resultMap="BaseResultMap">
+  <select id="getByPersonId" resultMap="BaseResultMap">
         SELECT
               per.personal_phone,
               per.personal_nickname,
@@ -51,6 +51,13 @@
             per.shopkeeper_customerId=pi.shopkeeper_customerId
          WHERE per.personal_id=#{id}
     </select>
+  <select id="selectByPersonId"  resultMap="BaseResultMap">
+    SELECT
+      personal_idCard
+    FROM
+    sps_shopkeeper_personal
+    WHERE  personal_id=#{personId}
+  </select>
     <update id="saveSrc"  >
            UPDATE
               sps_shopkeeper_pic

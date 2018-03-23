@@ -57,9 +57,9 @@
 
         </div>
         <div class="layui-form-item"   style="padding-left: 103px;">
-            <button class="layui-btn" lay-filter="next" lay-submit  id="next">下一步 </button>
-            <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
-        </div>
+        <button class="layui-btn" lay-filter="next" lay-submit  id="next">下一步 </button>
+        <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
+    </div>
     </div>
 </div>
 
@@ -108,14 +108,23 @@
                             async: false,
                             success: function (result) {
                                 if(result.body == true){
+
                                     location.href = '<%=path%>/page/main/account/recharge/inputPwd.jsp?withdrawAmt='+amount;
                                     //若已经设置交易密码，则跳转至输入交易密码页面
                                 }
                                 if(result.body == false){
                                     //则跳转至设置交易密码页面
                                     lock =true;
-                                    location.href = '<%=path%>/page/main/account/recharge/resetTradePwd.jsp';
+                                    layer.msg('密码不存在，先设置密码',
+                                            {
+                                                icon: 16,
+                                                shade: 0.01,
+                                                time:1200
+                                            },
+                                            function(){
+                                                location.href = '<%=path%>/page/main/account/recharge/resetTradePwd.jsp';
 
+                                            });
                                 }
                             }
                         });

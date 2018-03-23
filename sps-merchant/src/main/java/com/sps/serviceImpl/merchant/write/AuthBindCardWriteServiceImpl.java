@@ -68,7 +68,7 @@ public class AuthBindCardWriteServiceImpl implements AuthBindCardWriteService{
                 authDealRecord.setState(authResult.getStatus());
                 authDealRecord.setSerialYop(authResult.getYborderid());
                 authDealRecord.setBankCode(authResult.getBankcode());
-                bankTransWrite.updateBankTrans(authDealRecord);
+//                bankTransWrite.updateBankTrans(authDealRecord);
                 if( AuthEnums.AuthStatus.BIND_SUCCESS.name().equals(authResult.getStatus())){
                     //添加绑卡信息
                	 bankWrite.insertBank(Converter.toBankCard(authResult));
@@ -100,7 +100,7 @@ public class AuthBindCardWriteServiceImpl implements AuthBindCardWriteService{
                 authDealRecord.setBankCode(confirmResult.getBankcode());
                 if(authDealRecord.getSerialYop().equals(confirmResult.getYborderid())){
                     //若易宝流水号相同，则更新流水
-                	bankTransWrite.updateBankTrans(authDealRecord);
+//                	bankTransWrite.updateBankTrans(authDealRecord);
                 }else{
                     //若易宝流水号不同，则插入一条新的流水
                 	bankTransWrite.insertBankTrans(authDealRecord);
@@ -133,7 +133,7 @@ public class AuthBindCardWriteServiceImpl implements AuthBindCardWriteService{
 	                authDealRecord.setSerialYop(resendResult.getYborderid());
 	                if(authDealRecord.getSerialYop().equals(resendResult.getYborderid())){
 	                    //若易宝流水号相同，则更新流水
-	                	bankTransWrite.updateBankTrans(authDealRecord);
+//	                	bankTransWrite.updateBankTrans(authDealRecord);
 	                }else{
 	                    //若易宝流水号不同，则插入一条新的流水
 	                	bankTransWrite.insertBankTrans(authDealRecord);

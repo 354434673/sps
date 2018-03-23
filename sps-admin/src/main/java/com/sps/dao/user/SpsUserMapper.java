@@ -27,4 +27,6 @@ public interface SpsUserMapper {
     int updateByPrimaryKeySelective(SpsUser record);
 
     int updateByPrimaryKey(SpsUser record);
+//根据用户名获取用户
+    SpsUser  selectByUserName(String userName);
 }

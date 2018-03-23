@@ -45,23 +45,9 @@ public class HelpServiceImpl implements HelpService {
     }
 
     @Override
-    public HashMap<String, Object> queryContent(String date) {
-        HashMap<String, Object> hashMap = new HashMap<String, Object>();
-        if(!StringUtil.isEmpty(date)){
-            try {
-                Help help = helpDao.selectContent(Integer.valueOf(date));
-
-                hashMap.put("help",help);
-                Message.resultMap(Message.SUCCESS_CODE, Message.SUCCESS_MSG, Message.SUCCESS_MSG,1,hashMap);
-            } catch(Exception e){
-                e.printStackTrace();
-               logger.info(Message.SYSTEM_ERROR_MSG);
-
-                hashMap = Message.resultMap( Message.SYSTEM_ERROR_CODE, Message.SYSTEM_ERROR_MSG,
-                        Message.FAILURE_MSG,null, null);
-            }
-        }
-        return hashMap;
+    public Help queryContent(Integer helpId) {
+        Help help = helpDao.selectContent(helpId);
+        return help;
     }
 }
 

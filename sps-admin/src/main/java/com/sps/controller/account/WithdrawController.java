@@ -4,6 +4,8 @@ import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Result;
+import com.sps.entity.user.SpsUser;
+import com.sps.service.user.UserService;
 import com.sps.util.Md5Util;
 import com.sps.util.ValidateImageCodeUtils;
 import org.apache.shiro.SecurityUtils;
@@ -21,6 +23,7 @@ import org.sps.service.merchant.read.ChannelReadService;
 import org.sps.service.merchant.write.ChannelBankTradeWriteService;
 import org.sps.service.merchant.write.ChannelBankWriteService;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +47,10 @@ public class WithdrawController {
 	private ChannelReadService  readService;
 	@Reference(check=false,group="dianfu")
 	private ChannelBankTradeReadService  bankTradereadService;
+    @Resource
+
+    private UserService userService;
+
     private static Logger logger = LoggerFactory.getLogger(WithdrawController.class);
     @RequestMapping("/findBankTradeList")
     @ResponseBody
@@ -64,9 +71,10 @@ public class WithdrawController {
 
         String pass=Md5Util.getMd5(tradePwd,salt);
         if(pass.equals(pwd)){
+            SpsUser user = userService.findByUserName(userName);
             //从当前登录用户中获取用户银行卡信息
             SpsChannelBank bankInfo = bankReadService.getBankInfoByUserName(userName);
-            String tradeSerialNum = bankTradeWriteService.saveBankTradeInfo(bankInfo, withdrawAmt, "0");
+            String tradeSerialNum = bankTradeWriteService.saveBankTradeInfo(bankInfo, withdrawAmt,"0",user.getUserId(),user.getUserMark());
             boolean flag = StringUtils.isNotEmpty(tradeSerialNum);
             result.setBody(flag);
             result.setMsg(flag ? "成功" : "保存失败");

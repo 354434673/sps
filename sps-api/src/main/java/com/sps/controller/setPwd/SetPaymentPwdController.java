@@ -6,6 +6,8 @@ import com.juzifenqi.core.ServiceResult;
 import com.juzifenqi.usercenter.entity.member.MemberInfo;
 import com.juzifenqi.usercenter.service.ISmsCommonService;
 import com.juzifenqi.usercenter.service.member.IMemberDianfuService;
+import com.sps.common.Message;
+import com.sps.common.ReturnInfo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.*;
@@ -42,13 +44,25 @@ public class SetPaymentPwdController {
      */
     @RequestMapping(value = "/queryVerfilyCode/{phone}", method = RequestMethod.GET)
     @ResponseBody
-    public ServiceResult<Boolean> queryVerfilyCode(@PathVariable("phone") String phone) {
+    public ReturnInfo queryVerfilyCode(@PathVariable("phone") String phone) {
         logger.info("queryVerfilyCode 方法开始执行。。。。。。");
         //  String userName = (String) SecurityUtils.getSubject().getPrincipal();
         // 调用短信验证码接口--获取短信验证码  category 3  ISmsCommonService.sendEditPasswordSms
+        ReturnInfo returnInfo = new ReturnInfo();
+        try{
+            ServiceResult<Boolean> sendRegisterSms = ismsCommonService.sendForgetBalancePwdSms(phone,3);
 
-        ServiceResult<Boolean> sendRegisterSms = ismsCommonService.sendForgetBalancePwdSms(phone,3);
-        return sendRegisterSms;
+            returnInfo.setResult(sendRegisterSms.getResult());
+            returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
+            returnInfo.setCode(Message.API_SUCCESS_CODE);
+            returnInfo.setMsg(Message.API_SUCCESS_MSG);
+        }catch(Exception e){
+            e.printStackTrace();
+            returnInfo.setCode(Message.FAILURE_CODE);
+            returnInfo.setMsg(Message.FAILURE_MSG);
+            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return returnInfo;
     }
 
     /**
@@ -62,12 +76,25 @@ public class SetPaymentPwdController {
      */
     @RequestMapping(value = "/modifyPaymentPwd", method = RequestMethod.POST)
     @ResponseBody
-    public ServiceResult<MemberInfo>  modifyPaymentPwd(
+    public ReturnInfo  modifyPaymentPwd(
             String mobile,
             String newPwd) {
         logger.info("editBalancePassword 方法开始执行。。。。。。。。。。。");
-        ServiceResult<MemberInfo> memberInfoServiceResult = memberDianfuService.editBalancePassword(mobile, newPwd);
-        return memberInfoServiceResult;
+        ReturnInfo returnInfo = new ReturnInfo();
+        try{
+            ServiceResult<MemberInfo> memberInfoServiceResult = memberDianfuService.editBalancePassword(mobile, newPwd);
+            returnInfo.setResult(memberInfoServiceResult.getResult());
+            returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
+            returnInfo.setCode(Message.API_SUCCESS_CODE);
+            returnInfo.setMsg(Message.API_SUCCESS_MSG);
+        }catch(Exception e){
+            e.printStackTrace();
+            returnInfo.setCode(Message.FAILURE_CODE);
+            returnInfo.setMsg(Message.FAILURE_MSG);
+            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return returnInfo;
+
     }
 
     /**
@@ -81,31 +108,25 @@ public class SetPaymentPwdController {
      */
     @RequestMapping(value = "/forgetPaymentPwd", method = RequestMethod.POST)
     @ResponseBody
-    public ServiceResult<MemberInfo>  forgetPaymentPwd(
+    public ReturnInfo forgetPaymentPwd(
             String code,
             String mobile,
             String newPwd) {
         logger.info("editBalancePassword 方法开始执行。。。。。。。。。。。");
-        ServiceResult<MemberInfo> memberInfoServiceResult = memberDianfuService.forgetBalancePassword(mobile, newPwd,code);
-        return memberInfoServiceResult;
+        ReturnInfo returnInfo = new ReturnInfo();
+        try{
+            ServiceResult<MemberInfo> memberInfoServiceResult = memberDianfuService.forgetBalancePassword(mobile, newPwd,code);
+            returnInfo.setResult(memberInfoServiceResult.getResult());
+            returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
+            returnInfo.setCode(Message.API_SUCCESS_CODE);
+            returnInfo.setMsg(Message.API_SUCCESS_MSG);
+        }catch(Exception e){
+            e.printStackTrace();
+            returnInfo.setCode(Message.FAILURE_CODE);
+            returnInfo.setMsg(Message.FAILURE_MSG);
+            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return returnInfo;
     }
-    /**
-     * 修改交易密码
-     *
-     * @param
-     * @param mobile
-     * @param
-     * @param newPwd
-     * @return
-     */
-    @RequestMapping(value = "/editPaymentPwd", method = RequestMethod.POST)
-    @ResponseBody
-    public ServiceResult<MemberInfo>  editPaymentPwd(
-            String code,
-            String mobile,
-            String newPwd) {
-        logger.info("editBalancePassword 方法开始执行。。。。。。。。。。。");
-        ServiceResult<MemberInfo> memberInfoServiceResult = memberDianfuService.editBalancePassword(mobile, newPwd);
-        return memberInfoServiceResult;
-    }
+
 }

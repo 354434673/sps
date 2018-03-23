@@ -13,7 +13,7 @@ public interface ChannelBankWriteService{
 	 * 插入绑卡信息
 	 * 
 	 */
-	Boolean  saveBankInfo(SpsChannelBank bankinfo, String loginName);
+	Boolean  saveBankInfo(SpsChannelBank bankinfo, String loginName,Integer userId,Integer userMark);
 	/**
 	 * 更新绑卡信息
 	 */

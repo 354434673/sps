@@ -101,14 +101,26 @@
   </update>
 
 
-    <update id="updateStatus" >
+    <update id="updateStatusAndContent" >
         update
            sps_bank_trade_info
-        SET  bt_trade_status=#{status,jdbcType=VARCHAR},
+        SET
+            bt_trade_status=#{status,jdbcType=VARCHAR},
             standby2=#{content,jdbcType=VARCHAR},
-            bt_application_stop_date=#{applicationStopDate,jdbcType=VARCHAR},
-            bt_audit_date=#{auditDate,jdbcType=VARCHAR}
+            bt_application_stop_date=#{applicationStopDate,jdbcType=TIMESTAMP},
+            bt_audit_date=#{auditDate,jdbcType=TIMESTAMP}
         WHERE
-        bt_application_start_date=#{applicationDate,jdbcType=VARCHAR}
+        id=#{id}
+    </update>
+
+    <update id="updateStatus" >
+        update
+        sps_bank_trade_info
+        SET
+        bt_trade_status=#{status,jdbcType=VARCHAR},
+        bt_application_stop_date=#{applicationStopDate,jdbcType=TIMESTAMP},
+        bt_audit_date=#{auditDate,jdbcType=TIMESTAMP}
+        WHERE
+        id=#{id}
     </update>
 </mapper>

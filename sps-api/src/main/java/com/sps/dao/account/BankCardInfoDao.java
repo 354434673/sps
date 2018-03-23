@@ -16,4 +16,6 @@ import org.apache.ibatis.annotations.Param;
 public interface BankCardInfoDao {
 //   根据登录用户获取绑卡信息
     String  selectByUserName(@Param("userName") String userName);
+    //保存绑卡记录
+    int insertBankCardInfo(BankCardInfo bankCardInfo);
 }

@@ -40,12 +40,10 @@ public class AccountBalanceController {
 
     @Autowired
     private UserService userService;
-    @RequestMapping(value = "/findBalance/{userMark}", method = RequestMethod.POST)
+    @RequestMapping(value = "/findBalance/{userName}/{userMark}", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findBalance( @PathVariable("userMark") Integer userMark ){
+    public ReturnInfo findBalance( @PathVariable("userMark") Integer userMark,@PathVariable("userName")String userName  ){
         ReturnInfo returnInfo = new ReturnInfo();
-        String userName = (String) SecurityUtils.getSubject().getPrincipal();
-
         //  根据登录用户名获取用户id
         SpsUser user = userService.findUserByUserName(userName);
         try {

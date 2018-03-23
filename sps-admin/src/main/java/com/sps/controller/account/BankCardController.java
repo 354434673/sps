@@ -2,10 +2,15 @@ package com.sps.controller.account;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSONObject;
+import com.juzifenqi.core.ServiceResult;
+import com.juzifenqi.usercenter.service.ISmsCommonService;
+import com.juzifenqi.usercenter.service.member.IMemberDianfuService;
 import com.sps.common.Result;
 import com.sps.entity.user.SpsUser;
 import com.sps.service.user.UserAndRoleService;
 import com.sps.service.user.UserService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.sps.entity.account.AuthEnums;
 import org.sps.entity.account.AuthRequest;
 import org.sps.entity.account.AuthResponse;
+import org.sps.entity.merchant.SpsChannelBalance;
 import org.sps.entity.merchant.SpsChannelBank;
 import org.sps.service.merchant.read.ChannelBankReadService;
 import org.sps.service.merchant.read.ChannelBankTransReadService;
+import org.sps.service.merchant.read.SpsBalanceReadService;
 import org.sps.service.merchant.write.AuthBindCardWriteService;
 import org.sps.service.merchant.write.ChannelBankTransWriteService;
 import org.sps.service.merchant.write.ChannelBankWriteService;
@@ -24,15 +31,21 @@ import org.sps.service.merchant.write.ChannelBankWriteService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/bankCard")
 public class BankCardController {
+	private static  final Log logger= LogFactory.getLog(BankCardController.class);
 	
 	@Reference(check=false,group="dianfu")
 	private ChannelBankWriteService  bankWriteService;
+	@Reference(check=false,group="dianfu")
+	private SpsBalanceReadService spsBalanceService;
+
+
 	@Reference(check=false,group="dianfu")
 	private ChannelBankReadService   bankReadService;
 	@Reference(check=false,group="dianfu")
@@ -41,20 +54,33 @@ public class BankCardController {
 	private ChannelBankTransWriteService bankTransWriteService;
 	@Reference(check=false,group="dianfu")
 	private AuthBindCardWriteService authBindCardWrite;
+
+
+	/*@Reference(check = false, group = "member-center-dev1")
+	private IMemberDianfuService memberDianfuService;
+
+
+	@Reference(group = "member-center-dev1")
+	private ISmsCommonService ismsCommonService;*/
 	
 	@Resource
 	private UserService userService;
 	@Resource
 	private UserAndRoleService userAndRoleService;
-	
+
+
+	/*@RequestMapping("/getVerifyCode")
 	@ResponseBody
-	public  Map<String, Object> getVerifyCode( Model model,String mobile){	
+	public ServiceResult<Boolean> getVerifyCode(String phone){
+		logger.info("getVerifyCode 方法 开始调用。。。。。。。");
+		ServiceResult<Boolean> result = ismsCommonService.sendForgetPasswordSms(phone, 3);
+		*//*return sendRegisterSms;
 		//去后台下校验手机号
 		HashMap<String, Object> result=new HashMap<String, Object>();
-		//转发第三方支付平台
+		//转发第三方支付平台*//*
 		return  result;
 				
-	}
+	}*/
 	//调用绑卡接口
 	@RequestMapping("/bindBankCard")
 	@ResponseBody
@@ -62,14 +88,16 @@ public class BankCardController {
 		JSONObject body = new JSONObject();
 		Result<JSONObject> result = new Result<JSONObject>(body);
 		String userName = (String)SecurityUtils.getSubject().getPrincipal();
+		//根据用户名 和用户类型查询Balance中是否存在 该用户
 		SpsChannelBank bankCard = bankReadService.getBankInfo(userName);
 		if(bankCard == null){
-			Boolean saveBankInfo = bankWriteService.saveBankInfo( bankInfo, userName);
+			SpsUser user = userService.findByUserName(userName);
+			Boolean saveBankInfo = bankWriteService.saveBankInfo( bankInfo, userName,user.getUserId(),user.getUserMark());
 			if(saveBankInfo){
 				result.success();
 				result.setMsg("操作成功");
 			}
-			return result;
+				return result;
 		}
 		result.setMsg("已绑过卡，请解绑卡之后再操作");
 		return result;

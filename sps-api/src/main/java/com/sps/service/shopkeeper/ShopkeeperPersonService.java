@@ -25,4 +25,5 @@ public interface ShopkeeperPersonService {
 
 
     SpsShopkeeperPersonal findEntityByCustomerNum(String customerNum);
+    String  findPerson(Integer personId);
 }

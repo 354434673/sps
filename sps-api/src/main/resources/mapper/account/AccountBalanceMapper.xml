@@ -13,4 +13,22 @@
 		AND
 		b_usertype=#{userType}
 	</select>
+	<insert id="insertAccountBalance" parameterType="com.sps.entity.account.AccountBalance" >
+		INSERT  INTO  sps_balance
+		(
+		b_balance,
+		b_userid,
+		b_usertype,
+		create_time,
+		update_time
+		)
+		VALUES
+		(
+		#{balance,jdbcType=DECIMAL},
+		#{userId,jdbcType=INTEGER},
+		#{userType,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
 </mapper>

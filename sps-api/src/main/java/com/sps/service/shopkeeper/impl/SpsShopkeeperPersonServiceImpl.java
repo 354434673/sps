@@ -46,13 +46,12 @@ public class SpsShopkeeperPersonServiceImpl  extends BaseOperate {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @ResponseBody
     public String queryPersonInfo(HttpServletRequest request, HttpServletResponse response,@RequestParam("id") int id) throws Exception {
-       /* //入参检查
+       //入参检查
         if (StringUtil.isEmpty(String.valueOf(id)))
-            return Message.responseStr(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG);*/
+            return Message.responseStr(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG);
         SpsShopkeeperPersonal person = personDao.getByPersonId(id);
         JSONObject jsonO = new JSONObject();
         if (StringUtil.isEmpty(person.getPersonalNickname())) {
-            System.out.println("name"+person.getPersonalNickname());
             String phone = person.getPersonalPhone();
             String src = person.getPic().getPicSrc();
             jsonO.put("name", phone);
@@ -90,7 +89,7 @@ public class SpsShopkeeperPersonServiceImpl  extends BaseOperate {
             return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG);
         }
     }
-    /**保存图像的方法
+    /**保存昵称的方法
      *
      * @param request
      * @param response
@@ -171,7 +170,7 @@ public class SpsShopkeeperPersonServiceImpl  extends BaseOperate {
         }
     }
     /**
-     * 保存车辆基本信息的方法
+     * 保存房子基本信息的方法
      * @param request
      * @param response
      * @return
