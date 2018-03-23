@@ -34,9 +34,9 @@ import com.sps.service.user.UserService;
 public class UserController {
 	@Resource
 	private UserService userService;
-	@Reference(group = "member-center-dev1")
+	@Resource
 	private ISmsCommonService iSmsCommonService;
-	@Reference(group = "member-center-dev1")
+	@Resource
 	private IDianfuPassportService iDianfuPassportService;
 	/**
 	 * 注册密码短信验证码
