@@ -9,7 +9,6 @@
   	<module>sps-parent</module>
     <module>sps-admin</module>
     <module>sps-service</module>
-    <module>sps-service-impl</module>
     <module>sps-h5</module>
     <module>sps-api</module>
     <module>sps-order</module>
