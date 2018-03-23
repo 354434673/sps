@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         ajaxDetailsList: function (num) {
+            var keyHtml = '';
             aspenLib.ajax({
                 url: ajaxUrl + '/shopeeker/queryInvitationList',
                 type: 'post',
@@ -50,20 +51,31 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 success: function (data) {
                     setAllHTML = '';
+                    var dataMain = data['result'];
                     if (data.code == '1') {
-                        var ajaxListArr = [];
-                        for(var key in data.result){
-                            ajaxListArr.unshift(data.result[key]);
-                        }
-
                         var getListWrap = document.querySelectorAll('.info-list')[num];
-                        for (var i = 0; i < ajaxListArr[num].length; i++) {
-                            setAllHTML += '<li>' +
-                                '<p><em>店主名称</em><i>' + ajaxListArr[num][i].invitationName + '</i></p>' +
-                                '<p><em>手机号</em><i>' + ajaxListArr[num][i].invitationPhone + '</i></p>' +
-                                '<p><em>地址</em><i>' + ajaxListArr[num][i].invitationAddress + '</i></p>' +
-                                '<p><em>邀请时间</em><i>' + ajaxListArr[num][i].invitationTime + '</i></p>' +
-                                '</li>';
+                        switch(num){
+                            case '0':
+                                keyHtml = 'allList';
+                            break;
+                            case '1':
+                                keyHtml = 'accept';
+                            break;
+                            case '2':
+                                keyHtml = 'noAccept';
+                            break;
+                        }
+                        if(dataMain[keyHtml] && dataMain[keyHtml].length > 0){
+                            for (var i = 0; i < dataMain[keyHtml].length; i++) {
+                                setAllHTML += '<li>' +
+                                    '<p><em>店主名称</em><i>' + dataMain[keyHtml][i].invitationName + '</i></p>' +
+                                    '<p><em>手机号</em><i>' + dataMain[keyHtml][i].invitationPhone + '</i></p>' +
+                                    '<p><em>地址</em><i>' + dataMain[keyHtml][i].invitationAddress + '</i></p>' +
+                                    '<p><em>邀请时间</em><i>' + dataMain[keyHtml][i].invitationTime + '</i></p>' +
+                                    '</li>';
+                            }
+                        }else{
+                            aspenLib.tips('没有数据');
                         }
                         getListWrap.innerHTML = setAllHTML;
                     } else {
