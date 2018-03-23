@@ -32,8 +32,8 @@ public class SalesmanController {
 	private ChannelSalesmanWriteService salesmanWrite;
 	@Reference(check = false, group = "dianfu")
 	private ChannelSalesmanReadService salesmanRead;
-	@Resource
-	private ISmsCommonService iSmsCommonService;
+/*	@Resource
+	private ISmsCommonService iSmsCommonService;*/
 
 	/**
 	 * 添加业务员 @Title: insertSalesman @Description:
@@ -50,10 +50,10 @@ public class SalesmanController {
 		
 		HashMap<String, Object> insertSalesman = salesmanWrite.insertSalesman(salesman);
 		
-		if(insertSalesman.get("state").equals("success")){
+/*		if(insertSalesman.get("state").equals("success")){
 			//业务员添加成功后调用短信接口给业务员发送短信
 			ServiceResult<Boolean> sendCommonSms = iSmsCommonService.sendCommonSms(salesman.getSalesmanPhone(), CONTENT, 3);
-		}
+		}*/
 		return insertSalesman;
 	};
 
