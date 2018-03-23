@@ -70,6 +70,8 @@ public class YopBindCardController {
   @Reference(group = "capital-dev1")
     private IBinCodeService iBinCodeService;
     //根据银行卡号获取银行名称的方法
+    @RequestMapping(value = "/queryBankName/{binNo}", method = RequestMethod.POST)
+    @ResponseBody
     public ReturnInfo queryBankName(String binNo){
         ServiceResult<BinCode> binCodeById = iBinCodeService.getBinCodeById(binNo);
         ReturnInfo returnInfo = new ReturnInfo();
@@ -89,12 +91,12 @@ public class YopBindCardController {
     }
 
    //调用绑卡接口
-    @RequestMapping(value = "/bindBankCard/{userName}/{personName}/{cardNo}/{phone}/{idcardno}/{bankName}/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/bindBankCard/{userName}/{personName}/{cardNo}/{phone}/{bankName}/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo bindBankCard(@PathVariable("userName") String userName,@PathVariable("personName") String personName,@PathVariable("cardNo") String cardNo,@PathVariable("phone") String phone,@PathVariable("idcardno") String idcardno,@PathVariable("bankName") String bankName,@PathVariable("id") Integer id) {
+    public ReturnInfo bindBankCard(@PathVariable("userName") String userName,@PathVariable("personName") String personName,@PathVariable("cardNo") String cardNo,@PathVariable("phone") String phone,@PathVariable("bankName") String bankName,@PathVariable("id") Integer id) {
         ReturnInfo returnInfo = new ReturnInfo();
         //根据personId获取----以后身份证为 idCard
-       String idCard = shopkeeperPersonService.findPerson(id);
+       String idcardno = shopkeeperPersonService.findPerson(id);
          //根据登录用户查询是否绑卡
         String userId = bankCardService.findUserId(userName);
         //根据用户名获取userId
@@ -110,7 +112,7 @@ public class YopBindCardController {
         bindBankTrades.setIdentity(idcardno);
         bindBankTrades.setUserId(UUID.randomUUID().toString());
         //保存绑卡记录
-     if (StringUtil.isNotEmpty(idCard) && StringUtil.isNotEmpty(userId)) {
+     if (StringUtil.isNotEmpty(idcardno) && StringUtil.isNotEmpty(userId)) {
       HashMap<String, Object> map = bindCardTransService.saveBankTansInfos(bindBankTrades, userName, userId);
       if (map != null) {
        Boolean flag = (Boolean) map.get("flag");
@@ -328,19 +330,16 @@ public class YopBindCardController {
  * 鉴权记录查询接口
  * @return
  */
-    @RequestMapping(value = "/query/{requestNo}/{yborderid}", method = RequestMethod.POST)
+    @RequestMapping(value = "/query/{requestNo}", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo query(@PathVariable("requestNo") String requestNo,@PathVariable("yborderid") String yborderid){
+    public ReturnInfo query(@PathVariable("requestNo") String requestNo){
         //根据请求号与易宝交易号获取交易信息
         BindBankTrans bankState = bindCardTransService.findBankState(requestNo, null);
-
         ReturnInfo returnInfo = new ReturnInfo();
-
-
         YopRequest yopRequest = new YopRequest(YEEPAY_APP_KEY, "", YEEPAY_SERVER_ROOT);
         yopRequest.addParam("merchantno", YEEPAY_MERCHANT_NO);
         yopRequest.addParam("requestno", requestNo);
-        yopRequest.addParam("yborderid", yborderid);
+        yopRequest.addParam("yborderid", bankState.getSerialYop());
         logger.info("易宝绑卡流水号：" +requestNo+ ";请求参数：" + JSON.toJSONString(yopRequest));
         YopResponse yopResponse = YopClient3.postRsa(YEEPAY_BIND_CARD_QUERY_URL, yopRequest);
 
@@ -371,7 +370,7 @@ public class YopBindCardController {
             returnInfo.setMsg("系统异常");
         }
         if("BIND_SUCCESS".equals(responseParames.get("status"))){
-                returnInfo.setMsg("操作绑卡成功");
+                returnInfo.setMsg("绑卡成功");
         }
 
         return returnInfo;
