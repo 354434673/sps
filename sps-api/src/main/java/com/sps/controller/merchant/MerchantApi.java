@@ -9,13 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.alibaba.fastjson.JSON;
-import com.sps.common.Message;
-import com.sps.common.StringUtil;
-import com.sps.dao.GoodShopDao;
-import com.sps.entity.merchant.SpsChannelBusiness;
-import com.sps.service.goods.GoodCategoryService;
 import com.sps.service.merchant.EnterpriseService;
 /**
  * 商户相关api
@@ -31,7 +24,7 @@ public class MerchantApi{
 	private EnterpriseService enterpriseService;
 	/**
 	 * 获得商户列表(目前只有一个)
-	 * @Title: queryMerchant   
+	 * @Title: queryMerchant
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
 	 * @param: @param businessProduct
 	 * @param: @return  
@@ -41,7 +34,7 @@ public class MerchantApi{
 	 * @throws
 	 */
 	@RequestMapping(value = "/queryMerchant", method = RequestMethod.POST)
-	public HashMap<String, Object> queryMerchant(String shopkeeperCustomerid) {
+		public HashMap<String, Object> queryMerchant(String shopkeeperCustomerid) {
 		
 		HashMap<String, Object> queryMerchantList = enterpriseService.queryMerchantList(shopkeeperCustomerid);
 		
@@ -59,9 +52,9 @@ public class MerchantApi{
 	 * @throws
 	 */
 	@RequestMapping(value = "/queryMerchantDetail", method = RequestMethod.POST)
-	public HashMap<String, Object> queryMerchantDetail(Integer enterpriseId ,Integer categoryId, String orderType, String goodsName) {
+	public HashMap<String, Object> queryMerchantDetail(Integer enterpriseId ,Integer categoryId, String orderType, String goodsName,String shopkeeperCustomerId) {
 
-		HashMap<String, Object> queryMerchantDetail = enterpriseService.queryMerchantDetail(enterpriseId, categoryId, orderType, goodsName);
+		HashMap<String, Object> queryMerchantDetail = enterpriseService.queryMerchantDetail(enterpriseId, categoryId, orderType, goodsName,shopkeeperCustomerId);
 
 		return queryMerchantDetail;
 	}

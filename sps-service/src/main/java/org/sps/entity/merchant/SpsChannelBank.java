@@ -38,6 +38,16 @@ public class SpsChannelBank implements Serializable{
 	private BigDecimal   availableBalance;
 //	交易密码
 	private String  transPassword   ;
+	private Integer userMark;
+
+	public Integer getUserMark() {
+		return userMark;
+	}
+
+	public void setUserMark(Integer userMark) {
+		this.userMark = userMark;
+	}
+
 	private String standby2;
 
 	public String getStandby2() {

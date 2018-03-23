@@ -322,7 +322,7 @@ public class ShopkeeperReadServiceImpl implements ShopkeeperReadService{
 		SpsShopkeeperInvitationExample example = new SpsShopkeeperInvitationExample();
 		
 		Criteria createCriteria = example.createCriteria();
-		
+		createCriteria.andInvitationTypeEqualTo(0);
 		if(!(name == null || name.equals(""))){
 			createCriteria.andInvitationNameLike("%"+name+"%");
 		}
@@ -343,6 +343,17 @@ public class ShopkeeperReadServiceImpl implements ShopkeeperReadService{
 		hashMap.put("data", selectByExample.size() != 0 ? selectByExample : null);
 		
 		return hashMap;
+	}
+	@Override
+	public SpsShopkeeperInvitation queryInvitation(String name, String phone, String state) {
+		
+		SpsShopkeeperInvitationExample example = new SpsShopkeeperInvitationExample();
+		
+		example.createCriteria().andInvitationPhoneEqualTo(phone);
+		
+		List<SpsShopkeeperInvitation> selectByExample = invitationRead.selectByExample(example );
+		
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
 	}
 
 }

@@ -7,6 +7,8 @@
     <result column="invitation_phone" property="invitationPhone" jdbcType="VARCHAR" />
     <result column="invitation_time" property="invitationTime" jdbcType="TIMESTAMP" />
     <result column="invitation_state" property="invitationState" jdbcType="VARCHAR" />
+    <result column="invitation_type" property="invitationType" jdbcType="INTEGER" />
+    <result column="invitation_address" property="invitationAddress" jdbcType="VARCHAR" />
     <result column="invitation_creat_time" property="invitationCreatTime" jdbcType="TIMESTAMP" />
     <result column="invitation_update_time" property="invitationUpdateTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -41,7 +43,7 @@
   </sql>
   <sql id="Base_Column_List" >
     invitation_id, invitation_name, invitation_phone, invitation_time, invitation_state, 
-    invitation_creat_time, invitation_update_time
+    invitation_type, invitation_address, invitation_creat_time, invitation_update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperInvitationExample" >
     select

@@ -56,6 +56,16 @@ public class UserController {
 
 			return sendRegisterSms;
 	}
+	@RequestMapping("/sendCommonSms")
+	public ServiceResult<Boolean> sendCommonSms(String mobile, Integer category){
+		
+		String url = "http://123.56.24.208:8480/invitation.html?salemanPhone="+mobile;
+		
+		String content = "【店付】业务员您好，以下为店主邀请链接，请妥善保存此链接:"+url;
+		ServiceResult<Boolean> sendCommonSms = iSmsCommonService.sendCommonSms("18513967345", content, 3);
+		
+		return sendCommonSms;
+	}
 	/**
 	 * 修改密码短信验证码
 	 * @Title: updatePwsForPhoneCode
@@ -97,7 +107,8 @@ public class UserController {
 	 * @throws
 	 */
 	@RequestMapping("/regist")
-	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc, String clientNum, String channelNum){
+	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc, 
+			String clientNum, String channelNum, String salemanPhone, String channelPhone){
 		
 			SpsShopkeeperInvitation queryShopInvitation = userService.queryShopInvitation(mobile, null);
 			
@@ -112,12 +123,12 @@ public class UserController {
 				
 				arg0.setPassword(password);
 				
-				arg0.setSaleSrc(saleSrc);
+				arg0.setSaleSrc(clientNum);
 				
 				serviceResult = iDianfuPassportService.memberRegister4Browser(arg0);
 				
 				if(serviceResult.getSuccess()){
-					serviceResult = userService.insertUser(mobile, password, clientNum);
+					serviceResult = userService.insertUser(mobile, password, clientNum, channelNum, salemanPhone, channelPhone);
 				}
 			}else{
 				serviceResult = new ServiceResult<LoginInfo>();
@@ -133,18 +144,26 @@ public class UserController {
 	public HashMap<String, Object> userLogin(String imei, String ip, String mobile,
 			String mobileBrand, String mobileMaker, String password, Integer source){
 		LoginDto arg0 = new LoginDto();
+		
 		arg0.setImei(imei);
+		
 		arg0.setIp(ip);
+		
 		arg0.setMobile(mobile);
+		
 		arg0.setMobileMaker(mobileMaker);
+		
 		arg0.setMobileBrand(mobileBrand);
+		
 		arg0.setPassword(password);
+		
 		arg0.setSource(source);
+		
 		ServiceResult<LoginInfo> login4Browser = iDianfuPassportService.login4Native(arg0);
 		
 		HashMap<String, Object> userLogin = null;
 		if(login4Browser.getSuccess()){
-			userLogin = userService.userLogin(mobile, password);
+			userLogin = userService.userLogin(mobile, password, login4Browser.getResult().getMemberId());
 		}else{
 			userLogin = Message.resultMap(login4Browser.getCode(), login4Browser.getMessage(),
 					Message.SYSTEM_ERROR_MSG, 0, null);

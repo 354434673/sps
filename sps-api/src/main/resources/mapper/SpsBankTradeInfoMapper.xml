@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsBankTradeInfo">
+  <resultMap id="BaseResultMap" type="SpsBankTradeInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="bt_trade_name" jdbcType="VARCHAR" property="btTradeName" />
+    <result column="bt_trade_serial_num" jdbcType="VARCHAR" property="btTradeSerialNum" />
+    <result column="bt_identity" jdbcType="VARCHAR" property="btIdentity" />
+    <result column="bt_application_start_date" jdbcType="TIMESTAMP" property="btApplicationStartDate" />
+    <result column="bt_application_stop_date" jdbcType="TIMESTAMP" property="btApplicationStopDate" />
+    <result column="bt_audit_date" jdbcType="TIMESTAMP" property="btAuditDate" />
+    <result column="bt_payment_date" jdbcType="TIMESTAMP" property="btPaymentDate" />
+    <result column="bt_trade_type" jdbcType="VARCHAR" property="btTradeType" />
+    <result column="bt_income_type" jdbcType="VARCHAR" property="btIncomeType" />
+    <result column="bt_expenditure_type" jdbcType="VARCHAR" property="btExpenditureType" />
+    <result column="bt_trade_Before_balanc" jdbcType="DECIMAL" property="btTradeBeforeBalanc" />
+    <result column="bt_trade_after_balanc" jdbcType="DECIMAL" property="btTradeAfterBalanc" />
+    <result column="bt_trade_amount" jdbcType="DECIMAL" property="btTradeAmount" />
+    <result column="bt_trade_status" jdbcType="VARCHAR" property="btTradeStatus" />
+    <result column="bt_user_id" jdbcType="VARCHAR" property="btUserId" />
+    <result column="standby1" jdbcType="VARCHAR" property="standby1" />
+    <result column="standby2" jdbcType="VARCHAR" property="standby2" />
+    <result column="standby3" jdbcType="VARCHAR" property="standby3" />
+    <result column="bt_trade_no" jdbcType="VARCHAR" property="btTradeNo" />
+    <result column="orderid" jdbcType="VARCHAR" property="orderid" />
+    <result column="first_money" jdbcType="DECIMAL" property="firstMoney" />
+    <result column="shop_pay_money" jdbcType="DECIMAL" property="shopPayMoney" />
+    <result column="service_money" jdbcType="DECIMAL" property="serviceMoney" />
+    <result column="sum_service_money" jdbcType="DECIMAL" property="sumServiceMoney" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, bt_trade_name, bt_trade_serial_num, bt_identity, bt_application_start_date, bt_application_stop_date, 
+    bt_audit_date, bt_payment_date, bt_trade_type, bt_income_type, bt_expenditure_type, 
+    bt_trade_Before_balanc, bt_trade_after_balanc, bt_trade_amount, bt_trade_status, 
+    bt_user_id, standby1, standby2, standby3, bt_trade_no, orderid, first_money, shop_pay_money, 
+    service_money, sum_service_money
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_bank_trade_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_bank_trade_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsBankTradeInfo">
+    insert into sps_bank_trade_info (id, bt_trade_name, bt_trade_serial_num, 
+      bt_identity, bt_application_start_date, bt_application_stop_date, 
+      bt_audit_date, bt_payment_date, bt_trade_type, 
+      bt_income_type, bt_expenditure_type, bt_trade_Before_balanc, 
+      bt_trade_after_balanc, bt_trade_amount, bt_trade_status, 
+      bt_user_id, standby1, standby2, 
+      standby3, bt_trade_no, orderid, 
+      first_money, shop_pay_money, service_money, 
+      sum_service_money)
+    values (#{id,jdbcType=INTEGER}, #{btTradeName,jdbcType=VARCHAR}, #{btTradeSerialNum,jdbcType=VARCHAR}, 
+      #{btIdentity,jdbcType=VARCHAR}, #{btApplicationStartDate,jdbcType=TIMESTAMP}, #{btApplicationStopDate,jdbcType=TIMESTAMP}, 
+      #{btAuditDate,jdbcType=TIMESTAMP}, #{btPaymentDate,jdbcType=TIMESTAMP}, #{btTradeType,jdbcType=VARCHAR}, 
+      #{btIncomeType,jdbcType=VARCHAR}, #{btExpenditureType,jdbcType=VARCHAR}, #{btTradeBeforeBalanc,jdbcType=DECIMAL}, 
+      #{btTradeAfterBalanc,jdbcType=DECIMAL}, #{btTradeAmount,jdbcType=DECIMAL}, #{btTradeStatus,jdbcType=VARCHAR}, 
+      #{btUserId,jdbcType=VARCHAR}, #{standby1,jdbcType=VARCHAR}, #{standby2,jdbcType=VARCHAR}, 
+      #{standby3,jdbcType=VARCHAR}, #{btTradeNo,jdbcType=VARCHAR}, #{orderid,jdbcType=VARCHAR}, 
+      #{firstMoney,jdbcType=DECIMAL}, #{shopPayMoney,jdbcType=DECIMAL}, #{serviceMoney,jdbcType=DECIMAL}, 
+      #{sumServiceMoney,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="SpsBankTradeInfo">
+    insert into sps_bank_trade_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="btTradeName != null">
+        bt_trade_name,
+      </if>
+      <if test="btTradeSerialNum != null">
+        bt_trade_serial_num,
+      </if>
+      <if test="btIdentity != null">
+        bt_identity,
+      </if>
+      <if test="btApplicationStartDate != null">
+        bt_application_start_date,
+      </if>
+      <if test="btApplicationStopDate != null">
+        bt_application_stop_date,
+      </if>
+      <if test="btAuditDate != null">
+        bt_audit_date,
+      </if>
+      <if test="btPaymentDate != null">
+        bt_payment_date,
+      </if>
+      <if test="btTradeType != null">
+        bt_trade_type,
+      </if>
+      <if test="btIncomeType != null">
+        bt_income_type,
+      </if>
+      <if test="btExpenditureType != null">
+        bt_expenditure_type,
+      </if>
+      <if test="btTradeBeforeBalanc != null">
+        bt_trade_Before_balanc,
+      </if>
+      <if test="btTradeAfterBalanc != null">
+        bt_trade_after_balanc,
+      </if>
+      <if test="btTradeAmount != null">
+        bt_trade_amount,
+      </if>
+      <if test="btTradeStatus != null">
+        bt_trade_status,
+      </if>
+      <if test="btUserId != null">
+        bt_user_id,
+      </if>
+      <if test="standby1 != null">
+        standby1,
+      </if>
+      <if test="standby2 != null">
+        standby2,
+      </if>
+      <if test="standby3 != null">
+        standby3,
+      </if>
+      <if test="btTradeNo != null">
+        bt_trade_no,
+      </if>
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="firstMoney != null">
+        first_money,
+      </if>
+      <if test="shopPayMoney != null">
+        shop_pay_money,
+      </if>
+      <if test="serviceMoney != null">
+        service_money,
+      </if>
+      <if test="sumServiceMoney != null">
+        sum_service_money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="btTradeName != null">
+        #{btTradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="btTradeSerialNum != null">
+        #{btTradeSerialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="btIdentity != null">
+        #{btIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="btApplicationStartDate != null">
+        #{btApplicationStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btApplicationStopDate != null">
+        #{btApplicationStopDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btAuditDate != null">
+        #{btAuditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btPaymentDate != null">
+        #{btPaymentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btTradeType != null">
+        #{btTradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="btIncomeType != null">
+        #{btIncomeType,jdbcType=VARCHAR},
+      </if>
+      <if test="btExpenditureType != null">
+        #{btExpenditureType,jdbcType=VARCHAR},
+      </if>
+      <if test="btTradeBeforeBalanc != null">
+        #{btTradeBeforeBalanc,jdbcType=DECIMAL},
+      </if>
+      <if test="btTradeAfterBalanc != null">
+        #{btTradeAfterBalanc,jdbcType=DECIMAL},
+      </if>
+      <if test="btTradeAmount != null">
+        #{btTradeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="btTradeStatus != null">
+        #{btTradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="btUserId != null">
+        #{btUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="standby1 != null">
+        #{standby1,jdbcType=VARCHAR},
+      </if>
+      <if test="standby2 != null">
+        #{standby2,jdbcType=VARCHAR},
+      </if>
+      <if test="standby3 != null">
+        #{standby3,jdbcType=VARCHAR},
+      </if>
+      <if test="btTradeNo != null">
+        #{btTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="firstMoney != null">
+        #{firstMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="shopPayMoney != null">
+        #{shopPayMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceMoney != null">
+        #{serviceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="sumServiceMoney != null">
+        #{sumServiceMoney,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="SpsBankTradeInfo">
+    update sps_bank_trade_info
+    <set>
+      <if test="btTradeName != null">
+        bt_trade_name = #{btTradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="btTradeSerialNum != null">
+        bt_trade_serial_num = #{btTradeSerialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="btIdentity != null">
+        bt_identity = #{btIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="btApplicationStartDate != null">
+        bt_application_start_date = #{btApplicationStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btApplicationStopDate != null">
+        bt_application_stop_date = #{btApplicationStopDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btAuditDate != null">
+        bt_audit_date = #{btAuditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btPaymentDate != null">
+        bt_payment_date = #{btPaymentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btTradeType != null">
+        bt_trade_type = #{btTradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="btIncomeType != null">
+        bt_income_type = #{btIncomeType,jdbcType=VARCHAR},
+      </if>
+      <if test="btExpenditureType != null">
+        bt_expenditure_type = #{btExpenditureType,jdbcType=VARCHAR},
+      </if>
+      <if test="btTradeBeforeBalanc != null">
+        bt_trade_Before_balanc = #{btTradeBeforeBalanc,jdbcType=DECIMAL},
+      </if>
+      <if test="btTradeAfterBalanc != null">
+        bt_trade_after_balanc = #{btTradeAfterBalanc,jdbcType=DECIMAL},
+      </if>
+      <if test="btTradeAmount != null">
+        bt_trade_amount = #{btTradeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="btTradeStatus != null">
+        bt_trade_status = #{btTradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="btUserId != null">
+        bt_user_id = #{btUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="standby1 != null">
+        standby1 = #{standby1,jdbcType=VARCHAR},
+      </if>
+      <if test="standby2 != null">
+        standby2 = #{standby2,jdbcType=VARCHAR},
+      </if>
+      <if test="standby3 != null">
+        standby3 = #{standby3,jdbcType=VARCHAR},
+      </if>
+      <if test="btTradeNo != null">
+        bt_trade_no = #{btTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        orderid = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="firstMoney != null">
+        first_money = #{firstMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="shopPayMoney != null">
+        shop_pay_money = #{shopPayMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceMoney != null">
+        service_money = #{serviceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="sumServiceMoney != null">
+        sum_service_money = #{sumServiceMoney,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsBankTradeInfo">
+    update sps_bank_trade_info
+    set bt_trade_name = #{btTradeName,jdbcType=VARCHAR},
+      bt_trade_serial_num = #{btTradeSerialNum,jdbcType=VARCHAR},
+      bt_identity = #{btIdentity,jdbcType=VARCHAR},
+      bt_application_start_date = #{btApplicationStartDate,jdbcType=TIMESTAMP},
+      bt_application_stop_date = #{btApplicationStopDate,jdbcType=TIMESTAMP},
+      bt_audit_date = #{btAuditDate,jdbcType=TIMESTAMP},
+      bt_payment_date = #{btPaymentDate,jdbcType=TIMESTAMP},
+      bt_trade_type = #{btTradeType,jdbcType=VARCHAR},
+      bt_income_type = #{btIncomeType,jdbcType=VARCHAR},
+      bt_expenditure_type = #{btExpenditureType,jdbcType=VARCHAR},
+      bt_trade_Before_balanc = #{btTradeBeforeBalanc,jdbcType=DECIMAL},
+      bt_trade_after_balanc = #{btTradeAfterBalanc,jdbcType=DECIMAL},
+      bt_trade_amount = #{btTradeAmount,jdbcType=DECIMAL},
+      bt_trade_status = #{btTradeStatus,jdbcType=VARCHAR},
+      bt_user_id = #{btUserId,jdbcType=VARCHAR},
+      standby1 = #{standby1,jdbcType=VARCHAR},
+      standby2 = #{standby2,jdbcType=VARCHAR},
+      standby3 = #{standby3,jdbcType=VARCHAR},
+      bt_trade_no = #{btTradeNo,jdbcType=VARCHAR},
+      orderid = #{orderid,jdbcType=VARCHAR},
+      first_money = #{firstMoney,jdbcType=DECIMAL},
+      shop_pay_money = #{shopPayMoney,jdbcType=DECIMAL},
+      service_money = #{serviceMoney,jdbcType=DECIMAL},
+      sum_service_money = #{sumServiceMoney,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

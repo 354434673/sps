@@ -328,4 +328,69 @@
     where o_id = #{oId,jdbcType=INTEGER}
     AND isdelete = 0
   </select>
+
+
+  <update id="updateToOrderNum" parameterType="SpsOrder">
+    update sps_order
+    <set>
+      <if test="shopkeeper != null">
+        shopkeeper = #{shopkeeper,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeepername != null">
+        shopkeepername = #{shopkeepername,jdbcType=VARCHAR},
+      </if>
+      <if test="selfemployed != null">
+        selfemployed = #{selfemployed,jdbcType=VARCHAR},
+      </if>
+      <if test="selfname != null">
+        selfname = #{selfname,jdbcType=VARCHAR},
+      </if>
+      <if test="scale != null">
+        scale = #{scale,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="payment != null">
+        payment = #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="isdelete != null">
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="servicescale != null">
+        servicescale = #{servicescale,jdbcType=DOUBLE},
+      </if>
+      <if test="servicemoney != null">
+        servicemoney = #{servicemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sumMoney != null">
+        sum_money = #{sumMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where orderid = #{orderid,jdbcType=VARCHAR}
+  </update>
 </mapper>

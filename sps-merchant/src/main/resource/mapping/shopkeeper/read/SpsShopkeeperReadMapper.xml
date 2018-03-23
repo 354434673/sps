@@ -94,12 +94,12 @@
 	s1.shopkeeper_default_channel_num,s1.shopkeeper_customerId,
 	s1.shopkeeper_username,s1.shopkeeper_state,
 	s1.shopkeeper_creat_time,s1.shopkeeper_salesman_name,
-	p1.personal_client_name,c1.company_shop_name FROM 
+	p1.personal_client_name,c1.company_shop_name 
   </sql>
   <select id="selectListForJoin" resultMap="BaseResultMap">
 	SELECT 
 	<include refid="join_list" />
-	sps_shopkeeper s1 
+	FROM sps_shopkeeper s1 
 	join 
 	sps_shopkeeper_personal p1 
 	on 

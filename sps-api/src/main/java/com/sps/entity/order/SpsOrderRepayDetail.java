@@ -5,123 +5,220 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class SpsOrderRepayDetail implements Serializable {
-    private Integer id;
+	private Integer days;
+	private Integer id;
+	
+	//订单金额
+	private BigDecimal orderMoney;
+	//商户名称
+	private String selfName;
+	//下单时间
+	private Date orderTime;
+	//首付金额
+	private BigDecimal payment;
+	//店付金额
+	private BigDecimal shopPayMoney;
+	//服务费
+	private BigDecimal serviceMoney;
 
-    private String customeNum;
+	private String customeNum;
 
-    private String orderStatus;
+	private String orderStatus;
 
-    private String orderNo;
+	private String orderNo;
 
-    private Date repayDate;
+	private Date repayDate;
 
-    private BigDecimal repayBenAmount;
+	private BigDecimal repayBenAmount;
 
-    private BigDecimal repayAccrualAmount;
+	private BigDecimal repayAccrualAmount;
 
-    private BigDecimal rapayPoundage;
+	private BigDecimal rapayPoundage;
 
-    private BigDecimal noRepayBenAmount;
+	private BigDecimal noRepayBenAmount;
 
-    private BigDecimal noReapayAccrualAmount;
+	private BigDecimal noReapayAccrualAmount;
 
-    private BigDecimal noRepayPoundage;
+	private BigDecimal noRepayPoundage;
 
-    private BigDecimal repayAmount;
+	private BigDecimal repayAmount;
+	private Date updateTime;
+	private Date createTime;
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-    public Integer getId() {
-        return id;
-    }
+	public BigDecimal getOrderMoney() {
+		return orderMoney;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setOrderMoney(BigDecimal orderMoney) {
+		this.orderMoney = orderMoney;
+	}
 
-    public String getCustomeNum() {
-        return customeNum;
-    }
+	public String getSelfName() {
+		return selfName;
+	}
 
-    public void setCustomeNum(String customeNum) {
-        this.customeNum = customeNum == null ? null : customeNum.trim();
-    }
+	public void setSelfName(String selfName) {
+		this.selfName = selfName;
+	}
 
-    public String getOrderStatus() {
-        return orderStatus;
-    }
+	public Date getOrderTime() {
+		return orderTime;
+	}
 
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus == null ? null : orderStatus.trim();
-    }
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
+	}
 
-    public String getOrderNo() {
-        return orderNo;
-    }
+	public BigDecimal getPayment() {
+		return payment;
+	}
 
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo == null ? null : orderNo.trim();
-    }
+	public void setPayment(BigDecimal payment) {
+		this.payment = payment;
+	}
 
-    public Date getRepayDate() {
-        return repayDate;
-    }
+	public BigDecimal getShopPayMoney() {
+		return shopPayMoney;
+	}
 
-    public void setRepayDate(Date repayDate) {
-        this.repayDate = repayDate;
-    }
+	public void setShopPayMoney(BigDecimal shopPayMoney) {
+		this.shopPayMoney = shopPayMoney;
+	}
 
-    public BigDecimal getRepayBenAmount() {
-        return repayBenAmount;
-    }
+	public BigDecimal getServiceMoney() {
+		return serviceMoney;
+	}
 
-    public void setRepayBenAmount(BigDecimal repayBenAmount) {
-        this.repayBenAmount = repayBenAmount;
-    }
+	public void setServiceMoney(BigDecimal serviceMoney) {
+		this.serviceMoney = serviceMoney;
+	}
 
-    public BigDecimal getRepayAccrualAmount() {
-        return repayAccrualAmount;
-    }
+	public Integer getDays() {
+		return days;
+	}
 
-    public void setRepayAccrualAmount(BigDecimal repayAccrualAmount) {
-        this.repayAccrualAmount = repayAccrualAmount;
-    }
+	public void setDays(Integer days) {
+		this.days = days;
+	}
 
-    public BigDecimal getRapayPoundage() {
-        return rapayPoundage;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public void setRapayPoundage(BigDecimal rapayPoundage) {
-        this.rapayPoundage = rapayPoundage;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public BigDecimal getNoRepayBenAmount() {
-        return noRepayBenAmount;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setNoRepayBenAmount(BigDecimal noRepayBenAmount) {
-        this.noRepayBenAmount = noRepayBenAmount;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public BigDecimal getNoReapayAccrualAmount() {
-        return noReapayAccrualAmount;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setNoReapayAccrualAmount(BigDecimal noReapayAccrualAmount) {
-        this.noReapayAccrualAmount = noReapayAccrualAmount;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public BigDecimal getNoRepayPoundage() {
-        return noRepayPoundage;
-    }
+	public String getCustomeNum() {
+		return customeNum;
+	}
 
-    public void setNoRepayPoundage(BigDecimal noRepayPoundage) {
-        this.noRepayPoundage = noRepayPoundage;
-    }
+	public void setCustomeNum(String customeNum) {
+		this.customeNum = customeNum == null ? null : customeNum.trim();
+	}
 
-    public BigDecimal getRepayAmount() {
-        return repayAmount;
-    }
+	public String getOrderStatus() {
+		return orderStatus;
+	}
 
-    public void setRepayAmount(BigDecimal repayAmount) {
-        this.repayAmount = repayAmount;
-    }
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus == null ? null : orderStatus.trim();
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo == null ? null : orderNo.trim();
+	}
+
+	public Date getRepayDate() {
+		return repayDate;
+	}
+
+	public void setRepayDate(Date repayDate) {
+		this.repayDate = repayDate;
+	}
+
+	public BigDecimal getRepayBenAmount() {
+		return repayBenAmount;
+	}
+
+	public void setRepayBenAmount(BigDecimal repayBenAmount) {
+		this.repayBenAmount = repayBenAmount;
+	}
+
+	public BigDecimal getRepayAccrualAmount() {
+		return repayAccrualAmount;
+	}
+
+	public void setRepayAccrualAmount(BigDecimal repayAccrualAmount) {
+		this.repayAccrualAmount = repayAccrualAmount;
+	}
+
+	public BigDecimal getRapayPoundage() {
+		return rapayPoundage;
+	}
+
+	public void setRapayPoundage(BigDecimal rapayPoundage) {
+		this.rapayPoundage = rapayPoundage;
+	}
+
+	public BigDecimal getNoRepayBenAmount() {
+		return noRepayBenAmount;
+	}
+
+	public void setNoRepayBenAmount(BigDecimal noRepayBenAmount) {
+		this.noRepayBenAmount = noRepayBenAmount;
+	}
+
+	public BigDecimal getNoReapayAccrualAmount() {
+		return noReapayAccrualAmount;
+	}
+
+	public void setNoReapayAccrualAmount(BigDecimal noReapayAccrualAmount) {
+		this.noReapayAccrualAmount = noReapayAccrualAmount;
+	}
+
+	public BigDecimal getNoRepayPoundage() {
+		return noRepayPoundage;
+	}
+
+	public void setNoRepayPoundage(BigDecimal noRepayPoundage) {
+		this.noRepayPoundage = noRepayPoundage;
+	}
+
+	public BigDecimal getRepayAmount() {
+		return repayAmount;
+	}
+
+	public void setRepayAmount(BigDecimal repayAmount) {
+		this.repayAmount = repayAmount;
+	}
 }

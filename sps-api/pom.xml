@@ -338,16 +338,16 @@
 	      <version>2.3.0.1-SNAPSHOT</version>
 	    </dependency>
 	    
-		<dependency>
-	      <groupId>com.juzifenqi</groupId>
-	      <artifactId>member-center-core</artifactId>
-	      <version>2.3.0.1-SNAPSHOT</version>
-	    </dependency>
-	    
 	    <dependency>
 	      <groupId>com.juzifenqi</groupId>
 	      <artifactId>capital-api</artifactId>
 	      <version>1.1.7-SNAPSHOT</version>
+	    </dependency>
+    
+		<dependency>
+	      <groupId>com.juzifenqi</groupId>
+	      <artifactId>member-center-core</artifactId>
+	      <version>2.3.0.1-SNAPSHOT</version>
 	    </dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -370,6 +370,13 @@
             <artifactId>javassist</artifactId>
             <version>3.20.0-GA</version>
         </dependency>
+<!--         
+        <dependency>
+			 <groupId>com.yop</groupId>
+			 <artifactId>yop-sdk</artifactId>
+			 <version>1.2.1</version>
+		</dependency> -->
+		
     </dependencies>
 
     <distributionManagement>
@@ -396,29 +403,54 @@
 		</repository>
 	</repositories>
 	<profiles>
+		<!-- 开发环境 -->
 		<profile>
 			<id>dev</id>
 			<properties>
 				<env>dev</env>
+				<db.driver>com.mysql.jdbc.Driver</db.driver>
+				<db.connectionURL>jdbc:mysql://192.168.201.158:3306/sps</db.connectionURL>
+				<db.username>root</db.username>
+				<db.password>123456</db.password>
+				<dubbo.auth.group>auth_dev1</dubbo.auth.group>
+				<dubbo.member.group>member-center-dev1</dubbo.member.group>
+				<dubbo.capital.group>capital-service-dev1</dubbo.capital.group>
+				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
+			</properties>
+		</profile>
+		<!-- 测试环境 -->
+		<profile>
+			<id>test</id>
+			<properties>
+				<env>test</env>
+				<db.driver>com.mysql.jdbc.Driver</db.driver>
+				<db.connectionURL>jdbc:mysql://47.93.43.48:3728/dianfu_test</db.connectionURL>
+				<db.username>dianfu_test_rw</db.username>
+				<db.password>dGlXkNJ38I2CHsYVVcUo</db.password>
+				<dubbo.auth.group>auth_dev1</dubbo.auth.group>
+				<dubbo.member.group>member-center-dev1</dubbo.member.group>
+				<dubbo.capital.group>capital-service-dev1</dubbo.capital.group>
+				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 		</profile>
-
-		<profile>
-			<id>test</id>
-			<properties>
-				<env>test</env>
-			</properties>
-		</profile>
+		<!-- 生产环境 -->
 		<profile>
 			<id>pro</id>
 			<properties>
 				<env>pro</env>
+				<db.driver>com.mysql.jdbc.Driver</db.driver>
+				<db.connectionURL>jdbc:mysql://47.93.43.48:3728/dianfu_test</db.connectionURL>
+				<db.username>dianfu_test_rw</db.username>
+				<db.password>dGlXkNJ38I2CHsYVVcUo</db.password>
+				<dubbo.auth.group>auth_dev1</dubbo.auth.group>
+				<dubbo.member.group>member-center-dev1</dubbo.member.group>
+				<dubbo.capital.group>capital-service-dev1</dubbo.capital.group>
+				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
 		</profile>
-		
 	</profiles>
 
 	<build>

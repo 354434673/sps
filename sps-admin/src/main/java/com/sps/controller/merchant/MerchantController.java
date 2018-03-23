@@ -26,6 +26,8 @@ import org.sps.service.merchant.write.ChannelPicUploadService;
 import org.sps.service.merchant.write.ChannelWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sps.dao.user.SpsRoleMapper;
 import com.sps.entity.user.SpsRole;
 import com.sps.entity.user.SpsRoleExample;
@@ -35,6 +37,7 @@ import com.sps.service.express.ExpressService;
 import com.sps.service.user.UserAndRoleService;
 import com.sps.service.user.UserService;
 import com.sps.util.CommonUtil;
+import com.sps.util.HttpClientUtil;
 
 /**
  * 核心商户控制层
@@ -137,6 +140,20 @@ public class MerchantController {
 		return gatherList;
 		
 	}
+	/**
+	 * 核心账户初始化
+	 * @Title: init   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param businessId
+	 * @param: @param totalQuota
+	 * @param: @param monthQuota
+	 * @param: @param firstMonthQuota
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月21日 下午3:38:26
+	 * @return: String      
+	 * @throws
+	 */
 	@RequestMapping(value = "/init",method = RequestMethod.POST)
 	public String init(String businessId, Double totalQuota, 
 			Double monthQuota, Double firstMonthQuota){
@@ -296,6 +313,92 @@ public class MerchantController {
 	public List<SpsChannelPic> getPicList(String channelNum, Integer type){
 		
 		return picReadService.getPicList(channelNum, type);
+	}
+	/**
+	 * 提交给风控审核
+	 * @Title: toRisk   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channel
+	 * @param: @param enterprise
+	 * @param: @param business
+	 * @param: @param guarantee
+	 * @param: @param financeTarget
+	 * @param: @param logistics
+	 * @param: @param openAccount
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月21日 下午3:33:45
+	 * @return: List<SpsChannelPic>      
+	 * @throws
+	 */
+	@RequestMapping("/toRisk")
+	public List<SpsChannelPic> toRisk(SpsChannel channel, 
+			SpsChannelEnterprise enterprise, 
+			SpsChannelBusiness business, 
+			SpsChannelGuarantee guarantee,
+			SpsChannelFinanceTarget financeTarget,
+			SpsChannelLogistics logistics , 
+			SpsChannelOpenAccount openAccount){
+		
+		final String  url = "";
+		JSONObject CenterCompanyInfo = new JSONObject();
+		
+		CenterCompanyInfo.put("merchantId", "merchantType");
+		CenterCompanyInfo.put("merchantType", "merchantType");
+		CenterCompanyInfo.put("companyName", "merchantType");
+		CenterCompanyInfo.put("bussinessType", "merchantType");
+		CenterCompanyInfo.put("businessLicenseNumber", "merchantType");
+		CenterCompanyInfo.put("corporateRepresent", "merchantType");
+		CenterCompanyInfo.put("businessYears", "merchantType");
+		CenterCompanyInfo.put("employeeNumber", "merchantType");
+		CenterCompanyInfo.put("registerMoney", "merchantType");
+		CenterCompanyInfo.put("registerProvinceCode", "merchantType");
+		CenterCompanyInfo.put("registerProvince", "merchantType");
+		CenterCompanyInfo.put("registerCityCode", "merchantType");
+		CenterCompanyInfo.put("registerCity", "merchantType");
+		CenterCompanyInfo.put("registerDistrictCode", "merchantType");
+		CenterCompanyInfo.put("registerDistrict", "merchantType");
+		CenterCompanyInfo.put("registerDetailAddress", "merchantType");
+		CenterCompanyInfo.put("actualProvinceCode", "merchantType");
+		CenterCompanyInfo.put("actualProvince", "merchantType");
+		CenterCompanyInfo.put("actualCityCode", "merchantType");
+		CenterCompanyInfo.put("actualCity", "merchantType");
+		CenterCompanyInfo.put("actualDistrictCode", "merchantType");
+		CenterCompanyInfo.put("actualDistrict", "merchantType");
+		CenterCompanyInfo.put("actualDetailAddress", "merchantType");
+		CenterCompanyInfo.put("mainBusiness", "merchantType");
+		CenterCompanyInfo.put("mainCommodityType", "merchantType");
+		CenterCompanyInfo.put("mainBrand", "merchantType");
+		CenterCompanyInfo.put("businessArea", "merchantType");
+		CenterCompanyInfo.put("guaranteeType", "merchantType");
+		CenterCompanyInfo.put("marginAmount", "merchantType");
+		CenterCompanyInfo.put("bankNo", "merchantType");
+		CenterCompanyInfo.put("cardOwnerName", "merchantType");
+		CenterCompanyInfo.put("certNo", "merchantType");
+		CenterCompanyInfo.put("bindMobile", "merchantType");
+		CenterCompanyInfo.put("depositBank", "merchantType");
+		CenterCompanyInfo.put("bankSeparate", "merchantType");
+		CenterCompanyInfo.put("bankBranch", "merchantType");
+		CenterCompanyInfo.put("previousYearSales", "merchantType");
+		
+		JSONObject CenterContactInfo = new JSONObject();
+		
+		JSONObject CenterImageInfo = new JSONObject();
+		
+		JSONObject CenterMerchantInfo = new JSONObject();
+		
+		JSONObject data = new JSONObject();
+		
+		data.put("CenterCompanyInfo", CenterCompanyInfo);
+		data.put("CenterContactInfo", CenterContactInfo);
+		data.put("CenterImageInfo", CenterImageInfo);
+		data.put("CenterMerchantInfo", CenterMerchantInfo);
+		
+		String jsonString = JSON.toJSONString(data);
+		
+		HttpClientUtil.doPostJson(url, jsonString);
+		
+		return null;
 	}
 	/**
 	 * 上传图片

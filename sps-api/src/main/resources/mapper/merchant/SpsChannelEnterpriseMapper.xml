@@ -104,10 +104,13 @@
 	JOIN 
 	   	sps_channel_guarantee g1 on b1.channel_num = g1.channel_num
 		<where>
-			<if test="businessProduct.size > 0">
+<!-- 			<if test="businessProduct.size > 0">
 				<foreach collection="businessProduct" separator="and" item="item">
 					FIND_IN_SET(#{item}, business_product)
 				</foreach>
+			</if> -->
+			<if test="channelNum != null">
+				and e1.channel_num = #{channelNum}
 			</if>
 			<if test="picType != null">
 				and p1.pic_type = #{picType}
@@ -116,5 +119,6 @@
 				and e1.enterprise_id = #{enterpriseId}
 			</if>
 		</where>
+	group by enterprise_id
   </select>
 </mapper>

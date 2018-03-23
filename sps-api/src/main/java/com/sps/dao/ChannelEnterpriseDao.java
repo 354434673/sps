@@ -24,7 +24,7 @@ public interface ChannelEnterpriseDao extends ServiceBase<SpsChannelEnterpriseEx
 	 * @throws
 	 */
     List<SpsChannelEnterprise> queryBusinessForApi(
-		    		@Param("businessProduct") List<String> businessProduct, 
+		    		@Param("channelNum") String channelNum, 
 		    		@Param("picType")Integer picType,
 		    		@Param("enterpriseId") Integer enterpriseId);
 }

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.shopkeeper.SpsShopkeeperCreditDao" >
+  <resultMap id="BaseResultMap" type="com.sps.entity.shopkeeper.SpsShopkeeperCredit" >
+    <id column="credit_id" property="creditId" jdbcType="INTEGER" />
+    <result column="credit_username" property="creditUsername" jdbcType="VARCHAR" />
+    <result column="credit_password" property="creditPassword" jdbcType="VARCHAR" />
+    <result column="credit_verify" property="creditVerify" jdbcType="VARCHAR" />
+    <result column="credit_creat_time" property="creditCreatTime" jdbcType="TIMESTAMP" />
+    <result column="credit_update_time" property="creditUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sps_shopkeeper_credit
+    where credit_id = #{creditId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCreditExample" >
+    delete from sps_shopkeeper_credit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCredit" >
+    insert into sps_shopkeeper_credit (credit_id, credit_username, credit_password, 
+      credit_verify, credit_creat_time, credit_update_time, 
+      shopkeeper_customerId)
+    values (#{creditId,jdbcType=INTEGER}, #{creditUsername,jdbcType=VARCHAR}, #{creditPassword,jdbcType=VARCHAR}, 
+      #{creditVerify,jdbcType=VARCHAR}, #{creditCreatTime,jdbcType=TIMESTAMP}, #{creditUpdateTime,jdbcType=TIMESTAMP}, 
+      #{shopkeeperCustomerid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCredit" >
+    insert into sps_shopkeeper_credit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="creditId != null" >
+        credit_id,
+      </if>
+      <if test="creditUsername != null" >
+        credit_username,
+      </if>
+      <if test="creditPassword != null" >
+        credit_password,
+      </if>
+      <if test="creditVerify != null" >
+        credit_verify,
+      </if>
+      <if test="creditCreatTime != null" >
+        credit_creat_time,
+      </if>
+      <if test="creditUpdateTime != null" >
+        credit_update_time,
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="creditId != null" >
+        #{creditId,jdbcType=INTEGER},
+      </if>
+      <if test="creditUsername != null" >
+        #{creditUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="creditPassword != null" >
+        #{creditPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="creditVerify != null" >
+        #{creditVerify,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCreatTime != null" >
+        #{creditCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creditUpdateTime != null" >
+        #{creditUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sps_shopkeeper_credit
+    <set >
+      <if test="record.creditId != null" >
+        credit_id = #{record.creditId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creditUsername != null" >
+        credit_username = #{record.creditUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creditPassword != null" >
+        credit_password = #{record.creditPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creditVerify != null" >
+        credit_verify = #{record.creditVerify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creditCreatTime != null" >
+        credit_creat_time = #{record.creditCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creditUpdateTime != null" >
+        credit_update_time = #{record.creditUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sps_shopkeeper_credit
+    set credit_id = #{record.creditId,jdbcType=INTEGER},
+      credit_username = #{record.creditUsername,jdbcType=VARCHAR},
+      credit_password = #{record.creditPassword,jdbcType=VARCHAR},
+      credit_verify = #{record.creditVerify,jdbcType=VARCHAR},
+      credit_creat_time = #{record.creditCreatTime,jdbcType=TIMESTAMP},
+      credit_update_time = #{record.creditUpdateTime,jdbcType=TIMESTAMP},
+      shopkeeper_customerId = #{record.shopkeeperCustomerid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCredit" >
+    update sps_shopkeeper_credit
+    <set >
+      <if test="creditUsername != null" >
+        credit_username = #{creditUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="creditPassword != null" >
+        credit_password = #{creditPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="creditVerify != null" >
+        credit_verify = #{creditVerify,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCreatTime != null" >
+        credit_creat_time = #{creditCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creditUpdateTime != null" >
+        credit_update_time = #{creditUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopkeeperCustomerid != null" >
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where credit_id = #{creditId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCredit" >
+    update sps_shopkeeper_credit
+    set credit_username = #{creditUsername,jdbcType=VARCHAR},
+      credit_password = #{creditPassword,jdbcType=VARCHAR},
+      credit_verify = #{creditVerify,jdbcType=VARCHAR},
+      credit_creat_time = #{creditCreatTime,jdbcType=TIMESTAMP},
+      credit_update_time = #{creditUpdateTime,jdbcType=TIMESTAMP},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR}
+    where credit_id = #{creditId,jdbcType=INTEGER}
+  </update>
+</mapper>

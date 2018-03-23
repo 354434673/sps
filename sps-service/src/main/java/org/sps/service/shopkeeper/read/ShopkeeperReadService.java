@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.sps.entity.shopkeeper.SpsShopkeeper;
+import org.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 
 public interface ShopkeeperReadService {
 	/**
@@ -168,6 +169,10 @@ public interface ShopkeeperReadService {
 	 * @throws
 	 */
 	HashMap<String,Object> queryInvitationList(Integer page, Integer limit, String name, String phone, String state);
+	
+	SpsShopkeeperInvitation queryInvitation(String name, String phone, String state);
+	
+	
 	
 	
 }
