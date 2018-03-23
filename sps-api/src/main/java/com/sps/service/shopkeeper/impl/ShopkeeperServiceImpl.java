@@ -358,6 +358,8 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 			});
 			data = new HashMap<String, Object>();
 			
+			data.put("allList", selectByExample);
+			
 			data.put("accept", accept);
 			
 			data.put("noAccept", noAccept);

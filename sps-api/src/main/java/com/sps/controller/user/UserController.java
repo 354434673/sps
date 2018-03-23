@@ -18,18 +18,10 @@ import com.juzifenqi.usercenter.service.authorization.IDianfuPassportService;
 import com.juzifenqi.usercenter.vo.LoginDto;
 import com.juzifenqi.usercenter.vo.RegisterDto;
 import com.sps.common.Message;
-/*import com.juzifenqi.core.ServiceResult;
-import com.juzifenqi.usercenter.entity.member.LoginInfo;
-import com.juzifenqi.usercenter.service.ISmsCommonService;
-import com.juzifenqi.usercenter.service.authorization.IDianfuPassportService;
-import com.juzifenqi.usercenter.vo.LoginDto;
-import com.juzifenqi.usercenter.vo.RegisterDto;
-import com.jzfq.auth.core.api.FaceAuthApi;
-import com.jzfq.auth.core.api.entiy.face.AuthFaceIdCard;
-import com.jzfq.auth.core.api.vo.JsonResult;*/
 import com.sps.common.StringUtil;
 import com.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 import com.sps.service.user.UserService;
+
 /**
  * 用户登录注册接口
  * @ClassName:  UserController   
