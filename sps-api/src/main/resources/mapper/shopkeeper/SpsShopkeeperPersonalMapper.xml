@@ -61,7 +61,7 @@
     <update id="saveSrc"  >
            UPDATE
               sps_shopkeeper_pic
-            SET   pic_src=#{src}
+            SET   pic_src=#{src,jdbcType=VARCHAR}
             WHERE
                 pic_id=#{id} AND  pic_type=11
     </update>
