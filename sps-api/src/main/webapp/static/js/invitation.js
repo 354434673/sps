@@ -55,7 +55,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         	invitationAddress: getAddress.value,
                         	invitationChannelPhone: supplierTel.value,
                         	invitationName: shopName.value,
-                        	invitationPhone: shopTel.value
+                            invitationPhone: shopTel.value,
+                            invitationSalemanPhone: salemanPhone
                         },
                         success: function (data) {
                             if(data.code == '1'){

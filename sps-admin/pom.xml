@@ -51,7 +51,18 @@
 		    <artifactId>core</artifactId>
 		    <version>3.3.2</version>
 		</dependency>
+		
+	   <dependency>
+	      <groupId>com.juzifenqi</groupId>
+	      <artifactId>member-center-api</artifactId>
+	      <version>2.3.0.1-SNAPSHOT</version>
+	    </dependency>
 	    
+		<dependency>
+	      <groupId>com.juzifenqi</groupId>
+	      <artifactId>member-center-core</artifactId>
+	      <version>2.3.0.1-SNAPSHOT</version>
+	    </dependency>
   </dependencies>
   <build>
     <finalName>sps-admin</finalName>
