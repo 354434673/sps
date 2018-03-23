@@ -105,4 +105,11 @@ public interface ShopkeeperService {
 	HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation);
 	
 	SpsShopkeeperInvitation queryInvitation(String phone);
+
+	/**
+	 * 根据登录用户获取shopkeeperCustomerid
+	 * @param loginName
+	 * @return
+	 */
+	String queryByLoginName(String loginName);
 }

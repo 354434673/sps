@@ -48,8 +48,7 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
     }
 
     @Override
-    public String  findPerson(Integer personId) {
-        SpsShopkeeperPersonal spsShopkeeperPersonal = spsShopkeeperPersonalDao.selectByPersonId(personId);
-        return spsShopkeeperPersonal.getPersonalIdcard();
+    public String  findPerson(String  personId) {
+        return  spsShopkeeperPersonalDao.selectByPersonId(personId);
     }
 }

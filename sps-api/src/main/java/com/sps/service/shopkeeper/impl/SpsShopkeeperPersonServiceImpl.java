@@ -7,11 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -68,15 +64,13 @@ public class SpsShopkeeperPersonServiceImpl  extends BaseOperate {
 
     /**保存图像的方法
      *
-     * @param request
-     * @param response
      * @param id
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/api/person/saveSrc/{id}/{src}", method = RequestMethod.POST)
     @ResponseBody
-    public String saveSrc(HttpServletRequest request, HttpServletResponse response,@RequestParam("id") int id,@RequestParam("src") String src) throws Exception {
+    public String saveSrc( @PathVariable("id") int id, @PathVariable("src") String src){
         //入参检查
        if (StringUtil.isEmpty(String.valueOf(id))|| StringUtil.isEmpty(src))
            return Message.responseStr(Message.PARAM_NONE_CODE, Message.PARAM_NONE_MSG);

@@ -18,6 +18,7 @@ import com.sps.entity.user.SpsUser;
 import com.sps.service.account.bankCard.BankCardService;
 import com.sps.service.account.bankCard.BindCardTransService;
 import com.sps.service.shopkeeper.ShopkeeperPersonService;
+import com.sps.service.shopkeeper.ShopkeeperService;
 import com.sps.service.user.UserService;
 import com.yeepay.g3.sdk.yop.client.YopClient3;
 import com.yeepay.g3.sdk.yop.client.YopRequest;
@@ -62,15 +63,17 @@ public class YopBindCardController {
     @Autowired
     private ShopkeeperPersonService shopkeeperPersonService;
     @Autowired
+    private ShopkeeperService shopkeeperService;
+    @Autowired
     private BankCardService bankCardService;
     @Autowired
     private UserService userService;
      @Autowired
     BindCardTransService bindCardTransService;
-  @Reference(group = "capital-dev1")
-    private IBinCodeService iBinCodeService;
+/*  @Reference(group = "capital-dev1")
+    private IBinCodeService iBinCodeService;*/
     //根据银行卡号获取银行名称的方法
-    @RequestMapping(value = "/queryBankName/{binNo}", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/queryBankName/{binNo}", method = RequestMethod.POST)
     @ResponseBody
     public ReturnInfo queryBankName(String binNo){
         ServiceResult<BinCode> binCodeById = iBinCodeService.getBinCodeById(binNo);
@@ -88,19 +91,20 @@ public class YopBindCardController {
             returnInfo.setSuccess(Message.API_ERROR_FLAG);
         }
         return returnInfo;
-    }
+    }*/
 
    //调用绑卡接口
-    @RequestMapping(value = "/bindBankCard/{userName}/{personName}/{cardNo}/{phone}/{bankName}/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/bindBankCard/{userName}/{personName}/{cardNo}/{phone}/{bankName}", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo bindBankCard(@PathVariable("userName") String userName,@PathVariable("personName") String personName,@PathVariable("cardNo") String cardNo,@PathVariable("phone") String phone,@PathVariable("bankName") String bankName,@PathVariable("id") Integer id) {
+    public ReturnInfo bindBankCard(@PathVariable("userName") String userName,@PathVariable("personName") String personName,@PathVariable("cardNo") String cardNo,@PathVariable("phone") String phone,@PathVariable("bankName") String bankName) {
         ReturnInfo returnInfo = new ReturnInfo();
-        //根据personId获取----以后身份证为 idCard
-       String idcardno = shopkeeperPersonService.findPerson(id);
-         //根据登录用户查询是否绑卡
-        String userId = bankCardService.findUserId(userName);
+
         //根据用户名获取userId
-         SpsUser user = userService.findUserByUserName(userName);
+        SpsUser user = userService.findUserByUserName(userName);
+        //根据登录用户名获取 获取consumerId;
+        String consumerId = shopkeeperService.queryByLoginName(userName);
+        //根据consumerId获取 查询yoghurt身份证；
+        String idcardno= shopkeeperPersonService.findPerson(consumerId);
         ReturnInfo retrunInfo = new ReturnInfo();
         BindBankTrans bindBankTrades = new BindBankTrans();
         bindBankTrades.setBankName(bankName);
@@ -111,8 +115,10 @@ public class YopBindCardController {
         bindBankTrades.setMerchantNo(YEEPAY_MERCHANT_NO);
         bindBankTrades.setIdentity(idcardno);
         bindBankTrades.setUserId(UUID.randomUUID().toString());
+        //根据登录用户查询是否绑
+        String userId = bankCardService.findUserId(userName);
         //保存绑卡记录
-     if (StringUtil.isNotEmpty(idcardno) && StringUtil.isNotEmpty(userId)) {
+     if ( StringUtil.isEmpty(userId)) {
       HashMap<String, Object> map = bindCardTransService.saveBankTansInfos(bindBankTrades, userName, userId);
       if (map != null) {
        Boolean flag = (Boolean) map.get("flag");

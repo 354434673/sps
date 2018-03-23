@@ -88,4 +88,12 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <select id="selectByLoginName" resultType="String"  parameterType="String">
+    SELECT
+    shopkeeper_customerId  shopkeeperCustomerid
+    FROM
+    sps_shopkeeper
+    WHERE
+      shopkeeper_username=#{userName}
+  </select>
 </mapper>

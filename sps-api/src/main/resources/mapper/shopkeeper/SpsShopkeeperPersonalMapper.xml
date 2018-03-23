@@ -51,12 +51,12 @@
             per.shopkeeper_customerId=pi.shopkeeper_customerId
          WHERE per.personal_id=#{id}
     </select>
-  <select id="selectByPersonId"  resultMap="BaseResultMap">
+  <select id="selectByPersonId"  resultType="String">
     SELECT
       personal_idCard
     FROM
     sps_shopkeeper_personal
-    WHERE  personal_id=#{personId}
+    WHERE  shopkeeper_customerId=#{personId}
   </select>
     <update id="saveSrc"  >
            UPDATE

@@ -328,4 +328,9 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		
 		return selectByExample.size() == 0 ? null : selectByExample.get(0);
 	}
+
+	@Override
+	public String queryByLoginName(String loginName) {
+		return spsShopkeeperDao.selectByLoginName(loginName);
+	}
 }
