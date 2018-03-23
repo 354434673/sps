@@ -1,5 +1,4 @@
 package com.sps.service.shopkeeper.impl;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,7 +9,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.sps.common.Message;
+import com.sps.common.RuleUtil;
 import com.sps.common.StringUtil;
+import com.sps.dao.merchant.SpsChannelGuaranteeDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperAccountDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperCarPrppertyDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperCompanyDao;
@@ -23,6 +24,8 @@ import com.sps.dao.shopkeeper.SpsShopkeeperPersonalDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperPicDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperRepaymentDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperTakingDao;
+import com.sps.entity.merchant.SpsChannelGuarantee;
+import com.sps.entity.merchant.SpsChannelGuaranteeExample;
 import com.sps.entity.shopkeeper.SpsShopkeeper;
 import com.sps.entity.shopkeeper.SpsShopkeeperAccount;
 import com.sps.entity.shopkeeper.SpsShopkeeperAccountExample;
@@ -40,7 +43,6 @@ import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 import com.sps.entity.shopkeeper.SpsShopkeeperRepayment;
 import com.sps.entity.shopkeeper.SpsShopkeeperTaking;
 import com.sps.service.shopkeeper.ShopkeeperService;
-import com.sun.org.apache.bcel.internal.generic.DADD;
 /**
  * 店主相关业务层
  * @ClassName:  ShopkeeperServiceImpl   
@@ -74,6 +76,8 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 	private SpsShopkeeperRepaymentDao repaymentDao;
 	@Resource
 	private SpsShopkeeperTakingDao takingDao;
+	@Resource
+	private SpsChannelGuaranteeDao guaranteeDao;
 	@Override
 	public SpsShopkeeper queryShopkeeperList(String shopkeeperCustomerid) {
 		
@@ -320,6 +324,7 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		}
 		return hashMap;
 	}
+
 	@Override
 	public HashMap<String, Object> queryInvitationList(String salemanPhone) {
 		

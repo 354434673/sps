@@ -51,7 +51,7 @@ public class authenticationController {
 	private ShopkeeperService shopkeeperService;
 	@Resource
 	private IUserCardNewService iUserCardNewService;
-	@RequestMapping("/queryStateArray")
+	//@RequestMapping("/queryStateArray")
 	public JsonResult<Map<String, Object>> queryStateArray(AuthStateArray arg0){
 		
 		JsonResult<Map<String, Object>> queryStateArray = jzfqAuthQueryApi.queryStateArray(arg0 );
@@ -156,7 +156,7 @@ public class authenticationController {
 					
 			String code = saveFaceDetail.getCode();
 			
-/*			if(code != null){
+		if(code != null){
 				if(code.equals("SUCCESS")){
 					SpsShopkeeperPic pic = new SpsShopkeeperPic();
 					
@@ -164,15 +164,15 @@ public class authenticationController {
 					
 					pic.setShopkeeperCustomerid(clientNum);
 					
-					pic.setPicSrc(arg0.getFrontImagePath());
+				//	pic.setPicSrc(arg0.getFrontImagePath());
 					
 					pic.setPicState(0);
 					
 					shopkeeperService.insertSpsShopkeeperPic(pic);
 					
-					backIdCardResult.setCode(Message.SUCCESS_CODE);
+				//	backIdCardResult.setCode(Message.SUCCESS_CODE);
 				}
-			}*/
+			}
 		}else{
 			saveFaceDetail.setCode(Message.FAILURE_CODE);
 			saveFaceDetail.setMsg(Message.FAILURE_CLIENTNUM);
