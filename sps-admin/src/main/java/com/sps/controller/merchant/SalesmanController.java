@@ -13,8 +13,6 @@ import org.sps.service.merchant.read.ChannelSalesmanReadService;
 import org.sps.service.merchant.write.ChannelSalesmanWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.juzifenqi.core.ServiceResult;
-import com.juzifenqi.usercenter.service.ISmsCommonService;
 
 /**
  * 业务员控制层

@@ -3,42 +3,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 					http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
-	<!-- 配置缓存管理器 -->
-	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"> 
-		<!-- 指定 ehcache 的配置文件 -->
-		<property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/> 
-	</bean> 
-	
-	<!-- 配置securityManager -->
-	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		<!-- 认证管理器-->  
-		<property name="realm" ref="customerMd5" />
-		<!-- 缓存管理器 -->  
-        <property name="cacheManager" ref="cacheManager" /> 
-	</bean>
-    
-	<!-- 自定义realm -->
-	<bean id="customerMd5" class="com.sps.realm.CustmerMd5">
-		<!-- 依赖凭证匹配器 -->
-		<property name="credentialsMatcher" ref="credentialsMatcher" />
-	</bean>
-
-	<!-- 创建凭证匹配器 -->
-	<bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-		<!-- 加密方式md5 -->
-		<property name="hashAlgorithmName" value="md5" />
-		<!-- 散列1024次 -->
-		<property name="hashIterations" value="1024" />
-	</bean>
-	
-	<bean
-		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-		<property name="securityManager" ref="securityManager" />
-	</bean>
-	
-	<!-- 配置 Bean 后置处理器: 会自动的调用和 Spring 整合后各个组件的生命周期方法. -->
-	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
-	
 	<!-- 启用shrio授权注解拦截方式 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<!-- 装配 securityManager -->
@@ -63,4 +27,38 @@
 			</value>
 		</property>
 	</bean>
+	<!-- 配置缓存管理器 -->
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"> 
+		<!-- 指定 ehcache 的配置文件 -->
+		<property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/> 
+	</bean> 
+	
+	<!-- 配置securityManager -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- 认证管理器-->  
+		<property name="realm" ref="customerMd5" />
+		<!-- 缓存管理器 -->  
+        <property name="cacheManager" ref="cacheManager" /> 
+	</bean>
+    
+	<!-- 自定义realm -->
+	<bean id="customerMd5" class="com.sps.realm.CustmerMd5">
+		<!-- 依赖凭证匹配器 -->
+		<property name="credentialsMatcher" ref="credentialsMatcher" />
+	</bean>
+	<!-- 创建凭证匹配器 -->
+	<bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+		<!-- 加密方式md5 -->
+		<property name="hashAlgorithmName" value="md5" />
+		<!-- 散列1024次 -->
+		<property name="hashIterations" value="1024" />
+	</bean>
+	
+	<bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+	
+	<!-- 配置 Bean 后置处理器: 会自动的调用和 Spring 整合后各个组件的生命周期方法. -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 </beans>  
