@@ -1,10 +1,14 @@
 package com.sps.controller.authentication;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
+
 import javax.annotation.Resource;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.juzifenqi.capital.entity.UserCard;
@@ -38,6 +42,7 @@ import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 import com.sps.entity.shopkeeper.SpsShopkeeperRepayment;
 import com.sps.service.shopkeeper.ShopkeeperService;
+
 @RestController
 @RequestMapping("/authentication")
 public class authenticationController {
@@ -51,7 +56,7 @@ public class authenticationController {
 	private ShopkeeperService shopkeeperService;
 	@Resource
 	private IUserCardNewService iUserCardNewService;
-	//@RequestMapping("/queryStateArray")
+	@RequestMapping("/queryStateArray")
 	public JsonResult<Map<String, Object>> queryStateArray(AuthStateArray arg0){
 		
 		JsonResult<Map<String, Object>> queryStateArray = jzfqAuthQueryApi.queryStateArray(arg0 );
@@ -156,7 +161,7 @@ public class authenticationController {
 					
 			String code = saveFaceDetail.getCode();
 			
-		if(code != null){
+/*			if(code != null){
 				if(code.equals("SUCCESS")){
 					SpsShopkeeperPic pic = new SpsShopkeeperPic();
 					
@@ -164,15 +169,15 @@ public class authenticationController {
 					
 					pic.setShopkeeperCustomerid(clientNum);
 					
-				//	pic.setPicSrc(arg0.getFrontImagePath());
+					pic.setPicSrc(arg0.getFrontImagePath());
 					
 					pic.setPicState(0);
 					
 					shopkeeperService.insertSpsShopkeeperPic(pic);
 					
-				//	backIdCardResult.setCode(Message.SUCCESS_CODE);
+					backIdCardResult.setCode(Message.SUCCESS_CODE);
 				}
-			}
+			}*/
 		}else{
 			saveFaceDetail.setCode(Message.FAILURE_CODE);
 			saveFaceDetail.setMsg(Message.FAILURE_CLIENTNUM);
@@ -558,6 +563,7 @@ public class authenticationController {
 					company.setCompanyBusinessArea((double)arg0.getActualArea());
 					
 					company.setShopkeeperCustomerid(clientNum);
+
 					shopkeeperService.insertShopkeeperCompany(company);
 					/**
 					 * 更改shopkeeper主表的内容

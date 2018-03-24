@@ -174,8 +174,8 @@ public class Order implements Serializable {
 	 */
 	private String unit;
 	private String loanCode;
-	private Date loanStartTime;
-	private Date loanEndTime;
+	private String loanStartTime;
+	private String loanEndTime;
 	private Double formalityRate;
 	private BigDecimal serviceCharge;
 	private BigDecimal loanBalance;
@@ -189,19 +189,19 @@ public class Order implements Serializable {
 		this.loanCode = loanCode;
 	}
 
-	public Date getLoanStartTime() {
+	public String getLoanStartTime() {
 		return loanStartTime;
 	}
 
-	public void setLoanStartTime(Date loanStartTime) {
+	public void setLoanStartTime(String loanStartTime) {
 		this.loanStartTime = loanStartTime;
 	}
 
-	public Date getLoanEndTime() {
+	public String getLoanEndTime() {
 		return loanEndTime;
 	}
 
-	public void setLoanEndTime(Date loanEndTime) {
+	public void setLoanEndTime(String loanEndTime) {
 		this.loanEndTime = loanEndTime;
 	}
 

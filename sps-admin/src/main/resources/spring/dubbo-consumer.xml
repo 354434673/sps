@@ -15,11 +15,13 @@
 	<dubbo:application name="sps-admin" />
 	<!-- 声明注册中心 -->
 	<!-- 这里读取配置文件中的address会报错~不清楚原因 -->
-	<dubbo:registry protocol="zookeeper" address="localhost:2181" />
+	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
 	<!-- <dubbo:registry protocol="zookeeper" address="123.56.30.114:2181" /> -->
 	<!-- 使用注解方式暴露接口 -->     
     <dubbo:annotation package="com.sps.controller"/>
-</beans>
+    
+<!--     <dubbo:reference group = "member-center-dev1" id="iSmsCommonService" interface="com.juzifenqi.usercenter.service.ISmsCommonService"/>
+ --></beans>
  
  
  

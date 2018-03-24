@@ -1,4 +1,5 @@
 package com.sps.service.shopkeeper.impl;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -254,33 +255,33 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 	@Override
 	public HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation) {
 		HashMap<String, Object> hashMap = null;
-
+		
 		String invitationPhone = invitation.getInvitationPhone();
-
+		
 		try {
 			if(!StringUtil.isEmpty(invitationPhone)){
 				SpsShopkeeperInvitation queryInvitation = queryInvitation(invitationPhone);
 				if(queryInvitation == null){
 					SpsChannelGuaranteeExample example = new SpsChannelGuaranteeExample();
-
+					
 					example.createCriteria().andGuaranteeCorpPhoneEqualTo(invitation.getInvitationChannelPhone());
-
+					
 					List<SpsChannelGuarantee> selectByExample = guaranteeDao.selectByExample(example);
-
+					
 					if(selectByExample.size() != 0){
-
+						
 						String channelNum = selectByExample.get(0).getChannelNum();
-
+						
 						invitation.setInvitationCreatTime(new Date());
-
+						
 						invitation.setInvitationUpdateTime(new Date());
-
+						
 						invitation.setInvitationState("0");
-
+						
 						invitation.setInvitationType(1);
-
+						
 						invitationDao.insertSelective(invitation);
-
+						
 						/**
 						 * 插到店主信息表中
 						 */
@@ -293,7 +294,7 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 						spsShopkeeper.setShopkeeperCustomerid(clientNum);
 						spsShopkeeper.setShopkeeperDefaultChannelNum(channelNum);
 						spsShopkeeperDao.insertSelective(spsShopkeeper);
-
+						
 						/*
 						 * 往店主个人信息中添加,字段为店主名称
 						 */
@@ -303,11 +304,11 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 						personal.setPersonalUpdateTime(new Date());
 						personal.setShopkeeperCustomerid(clientNum);
 						personalDao.insertSelective(personal);
-
+						
 						HashMap<String, String> result = new HashMap<>();
 						result.put("channelNum", channelNum);
 						result.put("clientNum", clientNum);
-
+						
 						hashMap = Message.resultMap(Message.SUCCESS_CODE, "邀请成功", Message.SUCCESS_MSG, 1, null);
 					}else{
 						hashMap = Message.resultMap(Message.FAILURE_CODE, "该供应商不存在", Message.FAILURE_MSG, 0, null);
@@ -324,7 +325,6 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		}
 		return hashMap;
 	}
-
 	@Override
 	public HashMap<String, Object> queryInvitationList(String salemanPhone) {
 		

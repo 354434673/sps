@@ -7,7 +7,8 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.juzifenqi.capital.entity.BinCode;
+import com.juzifenqi.capital.service.IBinCodeService;
 import com.juzifenqi.core.ServiceResult;
 import com.sps.service.area.AreasService;
 
@@ -19,7 +20,6 @@ import com.sps.service.area.AreasService;
  * @author YangNingSheng
  * @date 2018年3月19日 下午2:40:25
  */
-/*
 @RestController
 @RequestMapping("/option")
 public class OptionController {
@@ -27,8 +27,7 @@ public class OptionController {
 	private IBinCodeService iBinCodeService;
 	@Resource
 	private AreasService areasService;
-	*/
-/**
+	/**
 	 * @return 
 	 * 根据银行卡查询所属银行
 	 * @Title: queryBankForId   
@@ -38,8 +37,7 @@ public class OptionController {
 	 * @date 2018年3月19日 下午2:41:35
 	 * @return: void      
 	 * @throws
-	 *//*
-
+	 */
 	@RequestMapping("/queryBankForId")
 	public ServiceResult<BinCode> queryBankForId(String bankId){
 		
@@ -47,8 +45,7 @@ public class OptionController {
 		
 		return binCodeById;
 	}
-	*/
-/**
+	/**
 	 * 省市县三级
 	 * @Title: getAreas   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
@@ -58,8 +55,7 @@ public class OptionController {
 	 * @date 2018年3月19日 下午2:53:03
 	 * @return: List<Areas>      
 	 * @throws
-	 *//*
-
+	 */
 	@RequestMapping("/getAreasList")
 	public HashMap<String, Object> getAreas(String parentId){
 		
@@ -68,4 +64,3 @@ public class OptionController {
 		return areasList;
 	}
 }
-*/

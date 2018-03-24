@@ -1,10 +1,14 @@
 package com.sps.service.user.impl;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.juzifenqi.core.ServiceResult;
 import com.juzifenqi.usercenter.entity.member.LoginInfo;
 import com.sps.common.Md5Util;
@@ -72,15 +76,20 @@ public class UserServiceImpl extends BaseOperate implements UserService{
 	@Transactional(readOnly=false, rollbackFor=java.lang.Exception.class)
 	public SpsUser getUser(String userName){
 		SpsUserExample example = new SpsUserExample();
+
 		Criteria createCriteria = example.createCriteria();
+
 		createCriteria.andUserUsernameEqualTo(userName);
+
 		List<SpsUser> selectByExample = dao.selectByExample(example);
+
 		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
 	}
 	@Override
 	public ServiceResult<LoginInfo> insertUser(String phone, String password, String clientNum, 
 			String channelNum, String salemanPhone, String channelPhone) {
 		ServiceResult<LoginInfo> serviceResult = new ServiceResult<LoginInfo>();
+
 		try {
 			SpsUser u = getUser(phone);
 			
@@ -159,9 +168,13 @@ public class UserServiceImpl extends BaseOperate implements UserService{
 	@Override
 	public SpsUser findUserByUserName(String userName) {
 		SpsUserExample example = new SpsUserExample();
+
 		Criteria createCriteria = example.createCriteria();
+
 		createCriteria.andUserUsernameEqualTo(userName);
+
 		List<SpsUser> selectByExample = dao.selectByExample(example);
+
 		return selectByExample.size() != 0 ? selectByExample.get(0) : null;
 	}
 }
