@@ -1,5 +1,7 @@
 package com.sps.controller.merchant;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -342,50 +344,86 @@ public class MerchantController {
 		
 		final String  url = "";
 		JSONObject CenterCompanyInfo = new JSONObject();
-		
-		CenterCompanyInfo.put("merchantId", "merchantType");
-		CenterCompanyInfo.put("merchantType", "merchantType");
-		CenterCompanyInfo.put("companyName", "merchantType");
-		CenterCompanyInfo.put("bussinessType", "merchantType");
-		CenterCompanyInfo.put("businessLicenseNumber", "merchantType");
-		CenterCompanyInfo.put("corporateRepresent", "merchantType");
-		CenterCompanyInfo.put("businessYears", "merchantType");
-		CenterCompanyInfo.put("employeeNumber", "merchantType");
-		CenterCompanyInfo.put("registerMoney", "merchantType");
-		CenterCompanyInfo.put("registerProvinceCode", "merchantType");
-		CenterCompanyInfo.put("registerProvince", "merchantType");
-		CenterCompanyInfo.put("registerCityCode", "merchantType");
-		CenterCompanyInfo.put("registerCity", "merchantType");
-		CenterCompanyInfo.put("registerDistrictCode", "merchantType");
-		CenterCompanyInfo.put("registerDistrict", "merchantType");
-		CenterCompanyInfo.put("registerDetailAddress", "merchantType");
-		CenterCompanyInfo.put("actualProvinceCode", "merchantType");
-		CenterCompanyInfo.put("actualProvince", "merchantType");
-		CenterCompanyInfo.put("actualCityCode", "merchantType");
-		CenterCompanyInfo.put("actualCity", "merchantType");
-		CenterCompanyInfo.put("actualDistrictCode", "merchantType");
-		CenterCompanyInfo.put("actualDistrict", "merchantType");
-		CenterCompanyInfo.put("actualDetailAddress", "merchantType");
-		CenterCompanyInfo.put("mainBusiness", "merchantType");
-		CenterCompanyInfo.put("mainCommodityType", "merchantType");
-		CenterCompanyInfo.put("mainBrand", "merchantType");
-		CenterCompanyInfo.put("businessArea", "merchantType");
-		CenterCompanyInfo.put("guaranteeType", "merchantType");
-		CenterCompanyInfo.put("marginAmount", "merchantType");
-		CenterCompanyInfo.put("bankNo", "merchantType");
-		CenterCompanyInfo.put("cardOwnerName", "merchantType");
-		CenterCompanyInfo.put("certNo", "merchantType");
-		CenterCompanyInfo.put("bindMobile", "merchantType");
-		CenterCompanyInfo.put("depositBank", "merchantType");
-		CenterCompanyInfo.put("bankSeparate", "merchantType");
-		CenterCompanyInfo.put("bankBranch", "merchantType");
-		CenterCompanyInfo.put("previousYearSales", "merchantType");
+		//HashMap<String, Object> CenterCompanyInfo = new HashMap<String,Object>();
+		CenterCompanyInfo.put("merchantId", 30);
+		CenterCompanyInfo.put("merchantType", 1);
+		CenterCompanyInfo.put("companyName", enterprise.getEnterpriseCompanyName());
+		CenterCompanyInfo.put("bussinessType", 1);//业务类型
+		CenterCompanyInfo.put("businessLicenseNumber", enterprise.getEnterpriseBusinesslicenseNo());//营业执照编号
+		CenterCompanyInfo.put("corporateRepresent", enterprise.getEnterpriseCorp());//公司法人代表
+		CenterCompanyInfo.put("businessYears", enterprise.getEnterpriseOperatioTime());//经营年限
+		CenterCompanyInfo.put("employeeNumber", enterprise.getEnterpriseEmployeeNum());//员工数量
+		CenterCompanyInfo.put("registerMoney", new BigDecimal(18000000.00));//注册资金
+/*		CenterCompanyInfo.put("registerProvinceCode", "28288192");//注册省份
+		CenterCompanyInfo.put("registerProvince", "辽宁省");//注册省份名称
+		CenterCompanyInfo.put("registerCityCode", "783728738");//注册城市
+		CenterCompanyInfo.put("registerCity", "大连");//注册城市名称
+		CenterCompanyInfo.put("registerDistrictCode", "783728738");//注册城市地区
+		CenterCompanyInfo.put("registerDistrict", "不知道");//注册城市名称
+*/		CenterCompanyInfo.put("registerDetailAddress", enterprise.getEnterpriseCompanyRealitAddr());//注册详细地址
+/*		CenterCompanyInfo.put("actualProvinceCode", "783728738");//公司实际地址省份
+		CenterCompanyInfo.put("actualProvince", "大连");//公司实际地址省份
+		CenterCompanyInfo.put("actualCityCode", "783728738");
+		CenterCompanyInfo.put("actualCity", "大连");
+		CenterCompanyInfo.put("actualDistrictCode", "12");*/
+		//CenterCompanyInfo.put("actualDistrict", "");
+		CenterCompanyInfo.put("actualDetailAddress", enterprise.getEnterpriseCompanyRegisterAddr());//详细地址
+		CenterCompanyInfo.put("mainBusiness", "手机");//主营业务
+		CenterCompanyInfo.put("mainCommodityType", 1);//主营商品类型
+		CenterCompanyInfo.put("mainBrand", "iphone");//主营品牌
+		CenterCompanyInfo.put("businessArea", 1);//业务覆盖地域范围
+		CenterCompanyInfo.put("guaranteeType", 1);//担保形式
+		CenterCompanyInfo.put("marginAmount", new BigDecimal(18000000.45));//保证金金额
+/*		CenterCompanyInfo.put("bankNo", "12345677");//收款银行卡账号
+		CenterCompanyInfo.put("cardOwnerName", "杨XX");//银行卡所有人姓名
+		CenterCompanyInfo.put("certNo", "630103199307091211");//身份证号
+		CenterCompanyInfo.put("bindMobile", "18513967345");//银行卡绑定手机号
+		CenterCompanyInfo.put("depositBank", "开户银行");//开户银行
+		CenterCompanyInfo.put("bankSeparate", "开户行分行");//开户行分行
+		CenterCompanyInfo.put("bankBranch", "支行");//开户银行支行
+*/		CenterCompanyInfo.put("previousYearSales", financeTarget.getTargetLastSale());//上年销售额
 		
 		JSONObject CenterContactInfo = new JSONObject();
 		
+		CenterContactInfo.put("merchantId", guarantee.getGuaranteeId());//商户id
+		CenterContactInfo.put("mobile", guarantee.getGuaranteeCorpPhone());//法人代表手机号
+		CenterContactInfo.put("financeName", guarantee.getGuaranteeFinanceContactname());//财务联系人姓名
+		CenterContactInfo.put("financeMobile", guarantee.getGuaranteeFinanceContactphone());//财务联系人手机号
+		CenterContactInfo.put("businessName", guarantee.getGuaranteeBusinessLeadername());//业务负责人姓名
+		CenterContactInfo.put("businessMobile", guarantee.getGuaranteeBusinessLeaderphone());//业务负责人手机号
+		CenterContactInfo.put("businessMobilePassword", guarantee.getGuaranteeBusinessPhonePassword());//业务负责人手机号服务密码
+
 		JSONObject CenterImageInfo = new JSONObject();
 		
+		CenterImageInfo.put("merchantId", 1234);
+		CenterImageInfo.put("businessLicense", "123124124124");
+		CenterImageInfo.put("accountFlow", "123123123");
+		CenterImageInfo.put("certCard", "31312312");
+		CenterImageInfo.put("companyPicture", "q123123123we");
+		CenterImageInfo.put("cooperationContract", "123123");
+		CenterImageInfo.put("groupPhoto", "qw1312312312e");
+		CenterImageInfo.put("rentalAgreement", "qwe");
+		CenterImageInfo.put("others", "qwe");
+		
 		JSONObject CenterMerchantInfo = new JSONObject();
+		
+		CenterMerchantInfo.put("merchantCode", "test030");//商户编号
+		CenterMerchantInfo.put("merchantName", "商户名称");//商户名称
+		CenterMerchantInfo.put("approveCode", "108876-01");//审批编号
+		CenterMerchantInfo.put("approveType", 1);//审批类型
+		CenterMerchantInfo.put("approveUser", "杨XX");//审批人
+		CenterMerchantInfo.put("approveTime", new Date());//审批时间
+		CenterMerchantInfo.put("status", 1);//商户状态
+		CenterMerchantInfo.put("bussinessName", "XX");//店付业务员姓名
+		CenterMerchantInfo.put("certNo", "210283199003027519");//店付业务员身份证
+		CenterMerchantInfo.put("city", "北京");//所在城市
+		CenterMerchantInfo.put("cityCode", "100862");//所在城市code
+		CenterMerchantInfo.put("signBeginDate",  new Date());//签约开始日期
+		CenterMerchantInfo.put("signEndDate",  new Date());//签约结束日期
+		CenterMerchantInfo.put("createTime",  new Date());//创建时间
+		CenterMerchantInfo.put("updateTime",  new Date());//更新时间
+		CenterMerchantInfo.put("flag", 1);
+		CenterMerchantInfo.put("delFlag", 0);
 		
 		JSONObject data = new JSONObject();
 		

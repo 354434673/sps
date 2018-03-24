@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,6 +49,12 @@ public class SalesmanController {
 		final String URL = REQUEST_URL +"/invitation.html?salemanPhone="+salesman.getSalesmanPhone();
 		
 		final String CONTENT = "【店付】业务员您好，以下为店主邀请链接，请妥善保存此链接:"+URL;
+		
+		Subject subject = SecurityUtils.getSubject();
+		
+		String channelNum = (String)subject.getSession().getAttribute(subject.getPrincipal());
+
+		salesman.setSalesmaneChannelNum(channelNum);
 		
 		HashMap<String, Object> insertSalesman = salesmanWrite.insertSalesman(salesman);
 		

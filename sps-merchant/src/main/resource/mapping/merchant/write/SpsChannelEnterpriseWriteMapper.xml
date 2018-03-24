@@ -11,6 +11,7 @@
     <result column="enterprise_corp_idCard" property="enterpriseCorpIdcard" jdbcType="VARCHAR" />
     <result column="enterprise_operatio_time" property="enterpriseOperatioTime" jdbcType="INTEGER" />
     <result column="enterprise_employee_num" property="enterpriseEmployeeNum" jdbcType="INTEGER" />
+    <result column="enterprise_capital" property="enterpriseCapital" jdbcType="DECIMAL" />
     <result column="channel_num" property="channelNum" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -81,17 +82,19 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannelEnterprise">
+  <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannelEnterprise" >
     insert into sps_channel_enterprise (enterprise_id, enterprise_businesslicense_no, 
       enterprise_company_name, enterprise_company_abbreviation, 
       enterprise_company_register_addr, enterprise_company_realit_addr, 
       enterprise_corp, enterprise_corp_idCard, enterprise_operatio_time, 
-      enterprise_employee_num, channel_num)
+      enterprise_employee_num, channel_num, enterprise_capital
+      )
     values (#{enterpriseId,jdbcType=INTEGER}, #{enterpriseBusinesslicenseNo,jdbcType=VARCHAR}, 
       #{enterpriseCompanyName,jdbcType=VARCHAR}, #{enterpriseCompanyAbbreviation,jdbcType=VARCHAR}, 
       #{enterpriseCompanyRegisterAddr,jdbcType=VARCHAR}, #{enterpriseCompanyRealitAddr,jdbcType=VARCHAR}, 
       #{enterpriseCorp,jdbcType=VARCHAR}, #{enterpriseCorpIdcard,jdbcType=VARCHAR}, #{enterpriseOperatioTime,jdbcType=INTEGER}, 
-      #{enterpriseEmployeeNum,jdbcType=INTEGER}, #{channelNum,jdbcType=VARCHAR})
+      #{enterpriseEmployeeNum,jdbcType=INTEGER}, #{channelNum,jdbcType=VARCHAR}, #{enterpriseCapital,jdbcType=DECIMAL}
+      )
   </insert>
   <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelEnterprise" >
     insert into sps_channel_enterprise
@@ -105,7 +108,7 @@
       <if test="enterpriseCompanyName != null" >
         enterprise_company_name,
       </if>
-       <if test="enterpriseCompanyAbbreviation != null">
+      <if test="enterpriseCompanyAbbreviation != null" >
         enterprise_company_abbreviation,
       </if>
       <if test="enterpriseCompanyRegisterAddr != null" >
@@ -129,6 +132,9 @@
       <if test="channelNum != null" >
         channel_num,
       </if>
+      <if test="enterpriseCapital != null" >
+        enterprise_capital,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="enterpriseId != null" >
@@ -140,7 +146,7 @@
       <if test="enterpriseCompanyName != null" >
         #{enterpriseCompanyName,jdbcType=VARCHAR},
       </if>
-      <if test="enterpriseCompanyAbbreviation != null">
+      <if test="enterpriseCompanyAbbreviation != null" >
         #{enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
       </if>
       <if test="enterpriseCompanyRegisterAddr != null" >
@@ -164,6 +170,9 @@
       <if test="channelNum != null" >
         #{channelNum,jdbcType=VARCHAR},
       </if>
+      <if test="enterpriseCapital != null" >
+        #{enterpriseCapital,jdbcType=DECIMAL},
+      </if>
     </trim>
   </insert>
   <update id="updateByExampleSelective" parameterType="map" >
@@ -178,7 +187,7 @@
       <if test="record.enterpriseCompanyName != null" >
         enterprise_company_name = #{record.enterpriseCompanyName,jdbcType=VARCHAR},
       </if>
-      <if test="record.enterpriseCompanyAbbreviation != null">
+      <if test="record.enterpriseCompanyAbbreviation != null" >
         enterprise_company_abbreviation = #{record.enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
       </if>
       <if test="record.enterpriseCompanyRegisterAddr != null" >
@@ -202,6 +211,9 @@
       <if test="record.channelNum != null" >
         channel_num = #{record.channelNum,jdbcType=VARCHAR},
       </if>
+      <if test="record.enterpriseCapital != null" >
+        enterprise_capital = #{record.enterpriseCapital,jdbcType=DECIMAL},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -219,7 +231,8 @@
       enterprise_corp_idCard = #{record.enterpriseCorpIdcard,jdbcType=VARCHAR},
       enterprise_operatio_time = #{record.enterpriseOperatioTime,jdbcType=INTEGER},
       enterprise_employee_num = #{record.enterpriseEmployeeNum,jdbcType=INTEGER},
-      channel_num = #{record.channelNum,jdbcType=VARCHAR}
+      channel_num = #{record.channelNum,jdbcType=VARCHAR},
+      enterprise_capital = #{record.enterpriseCapital,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -233,7 +246,7 @@
       <if test="enterpriseCompanyName != null" >
         enterprise_company_name = #{enterpriseCompanyName,jdbcType=VARCHAR},
       </if>
-      <if test="enterpriseCompanyAbbreviation != null">
+      <if test="enterpriseCompanyAbbreviation != null" >
         enterprise_company_abbreviation = #{enterpriseCompanyAbbreviation,jdbcType=VARCHAR},
       </if>
       <if test="enterpriseCompanyRegisterAddr != null" >
@@ -257,6 +270,9 @@
       <if test="channelNum != null" >
         channel_num = #{channelNum,jdbcType=VARCHAR},
       </if>
+      <if test="enterpriseCapital != null" >
+        enterprise_capital = #{enterpriseCapital,jdbcType=DECIMAL},
+      </if>
     </set>
     where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
   </update>
@@ -271,7 +287,8 @@
       enterprise_corp_idCard = #{enterpriseCorpIdcard,jdbcType=VARCHAR},
       enterprise_operatio_time = #{enterpriseOperatioTime,jdbcType=INTEGER},
       enterprise_employee_num = #{enterpriseEmployeeNum,jdbcType=INTEGER},
-      channel_num = #{channelNum,jdbcType=VARCHAR}
+      channel_num = #{channelNum,jdbcType=VARCHAR},
+      enterprise_capital = #{enterpriseCapital,jdbcType=DECIMAL}
     where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
   </update>
 </mapper>
