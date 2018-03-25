@@ -32,8 +32,19 @@ public class SpsChannelEnterprise implements Serializable{
     private String channelNum;
 
     private BigDecimal enterpriseCapital;
+    
+    private SpsChannel channel;
+    
 
-    public Integer getEnterpriseId() {
+    public SpsChannel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(SpsChannel channel) {
+		this.channel = channel;
+	}
+
+	public Integer getEnterpriseId() {
         return enterpriseId;
     }
 

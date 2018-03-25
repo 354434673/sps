@@ -5,7 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.merchant.SpsChannel;
 import org.sps.entity.merchant.SpsChannelBusiness;
@@ -41,6 +42,7 @@ import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
 @Service(timeout=12000,group="dianfu")
 @Transactional(readOnly = true)
 public class ChannelReadServiceImpl implements ChannelReadService{
+	private final static Logger logger = LoggerFactory.getLogger(ChannelReadServiceImpl.class);
 	@Resource
 	private SpsChannelEnterpriseReadMapper enterpriseRead;
 	@Resource
@@ -58,7 +60,7 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 	@Override
 	public HashMap<String, Object> getChannelList(String channelNum, String name, Integer channelState, 
 			Integer channelFlowState, Integer page, Integer limit) {
-		
+		System.out.println("进入方法");
 		HashMap<String, Object> hashMap = new HashMap<String,Object>();
 		try {
 			SpsChannel channel = new SpsChannel();
@@ -71,6 +73,7 @@ public class ChannelReadServiceImpl implements ChannelReadService{
 			if(channelFlowState != null){
 				channel.setChannelFlowState(channelFlowState);
 			}
+			System.out.println(channel);
 			PageHelper.startPage(page, limit);
 			List<SpsChannelEnterprise> selectChannel = enterpriseRead.selectChannel(channel);
 			
