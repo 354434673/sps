@@ -66,6 +66,7 @@
     t_name        		name,
     t_bank_name    	bankName,
     t_user_id     		userId,
+    t_login_name       loginName,
     t_identity         identity,
     t_phone    		phone,
     t_merchant_no	    merchantNo,

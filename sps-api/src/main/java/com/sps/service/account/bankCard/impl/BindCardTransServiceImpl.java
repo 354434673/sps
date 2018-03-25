@@ -5,6 +5,7 @@ import com.sps.dao.account.AccountBalanceDao;
 import com.sps.dao.account.BankCardInfoDao;
 import com.sps.dao.account.BindBankTransDao;
 import com.sps.dao.marchant.SpsChannelOpenAccountReadMapper;
+import com.sps.dao.shopkeeper.SpsShopkeeperDao;
 import com.sps.entity.account.BankCardInfo;
 import com.sps.entity.account.BindBankTrans;
 import com.sps.service.account.bankCard.BindCardTransService;
@@ -35,6 +36,8 @@ public class BindCardTransServiceImpl implements BindCardTransService {
     private AccountBalanceDao accountBalanceDao;
     @Autowired
     private BindBankTransDao bindBankTransDao;
+    @Autowired
+    private SpsShopkeeperDao spsShopkeeperDao;
 
 
     @Override
@@ -43,11 +46,9 @@ public class BindCardTransServiceImpl implements BindCardTransService {
     }
 
     @Override
-    public HashMap<String, Object> saveBankTansInfos(BindBankTrans bankCardInfo, String userName, String UserId) {
-        String num = openAccount.selectByOpenAdminNum(userName);
+    public HashMap<String, Object> saveBankTansInfos(BindBankTrans bankCardInfo) {
         bankCardInfo.setStartTime(new Date());
         bankCardInfo.setSerialSh(UUID.randomUUID().toString());
-        bankCardInfo.setChannlNum(num);
         HashMap<String, Object> map = new HashMap<>();
         try{
             bindBankTransDao.insertBankTrans(bankCardInfo);
@@ -77,6 +78,9 @@ public class BindCardTransServiceImpl implements BindCardTransService {
 
     @Override
     public BindBankTrans findBankState(String requestNo, String yborderid) {
+        if(StringUtil.isEmpty(yborderid)){
+            return  bindBankTransDao.selectByRequestNo(requestNo);
+        }
         return bindBankTransDao.selectOne(requestNo, yborderid);
 
     }

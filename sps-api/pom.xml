@@ -370,12 +370,12 @@
             <artifactId>javassist</artifactId>
             <version>3.20.0-GA</version>
         </dependency>
-<!--         
+
         <dependency>
 			 <groupId>com.yop</groupId>
 			 <artifactId>yop-sdk</artifactId>
 			 <version>1.2.1</version>
-		</dependency> -->
+		</dependency>
 		
     </dependencies>
 
@@ -479,7 +479,7 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
+			<!--<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat8-maven-plugin</artifactId>
 				<version>2.2</version>
@@ -490,7 +490,7 @@
 				<finalName>sps-api</finalName>
 				<server>tomcat8</server>
 				</configuration>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</build>
 	<properties>

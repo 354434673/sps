@@ -33,7 +33,6 @@ public class PersonController {
     @Autowired
     private ShopkeeperPersonService shopkeeperPersonService;
 
-
     /**
      * 获取昵称和头像的方法
      * @param id
@@ -101,7 +100,7 @@ public class PersonController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/api/person/saveCarInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/saveCarInfo", method = RequestMethod.POST)
     @ResponseBody
     public String saveCarInfo( @RequestParam("flag") String flag,@RequestParam("carChassisNum") String carChassisNum,@RequestParam("carPlateNum") String carPlateNum,@RequestParam("carBrand") String carBrand,@RequestParam("carUsername") String carUsername,@RequestParam("shopkeeperCustomerid") String shopkeeperCustomerid)  {
         SpsShopkeeperCarProperty carInfo = new SpsShopkeeperCarProperty();

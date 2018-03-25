@@ -51,12 +51,14 @@
             per.shopkeeper_customerId=pi.shopkeeper_customerId
          WHERE per.personal_id=#{id}
     </select>
-  <select id="selectByPersonId"  resultType="String">
+  <select id="selectByPersonId"  parameterType="String" resultMap="BaseResultMap">
     SELECT
+      personal_client_name,
+      personal_username,
       personal_idCard
     FROM
     sps_shopkeeper_personal
-    WHERE  shopkeeper_customerId=#{personId}
+    WHERE  shopkeeper_customerId=#{customerId}
   </select>
     <update id="saveSrc"  >
            UPDATE
@@ -307,4 +309,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <select id="selectByConstomeId" parameterType="String" resultType="String">
+
+  </select>
 </mapper>

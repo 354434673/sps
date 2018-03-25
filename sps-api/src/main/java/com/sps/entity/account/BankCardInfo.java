@@ -42,6 +42,16 @@ public class BankCardInfo implements Serializable{
 	private String standby2;
 //	用户标识
 	private Integer userMark;
+//	删除标记 0 为有效，1 为删除
+	private  Integer flag;
+
+	public Integer getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Integer flag) {
+		this.flag = flag;
+	}
 
 	public Integer getUserMark() {
 		return userMark;

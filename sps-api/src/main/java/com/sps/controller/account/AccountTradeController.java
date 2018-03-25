@@ -14,6 +14,7 @@ import com.sps.service.user.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -29,7 +30,7 @@ import java.util.List;
  * @Author 刘彩玲
  * @createDate ${date}$ ${timme}$
  */
-@RestController
+@Controller
 @RequestMapping("/api/accountTrade")
 public class AccountTradeController {
     private static  final Log logger= LogFactory.getLog(AccountTradeController.class);
@@ -43,9 +44,9 @@ public class AccountTradeController {
     private UserService userService;
 
 
-    @RequestMapping(value = "/findTradeList/{userName}/{userMark}", method = RequestMethod.POST)
+    @RequestMapping(value = "/findTradeList", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findTradeList( @PathVariable("userMark") Integer userMark,@PathVariable("userName") String userName ) {
+    public ReturnInfo findTradeList( @RequestParam("userMark") Integer userMark,@RequestParam("userName") String userName ) {
         ReturnInfo returnInfo = new ReturnInfo();
         //  根据登录用户名获取用户id
      SpsUser user = userService.findUserByUserName(userName);
@@ -68,9 +69,9 @@ public class AccountTradeController {
      */
 
 
-    @RequestMapping(value = "/findTradeListByTradeType/{userName}/{userMark}/{tradeType}", method = RequestMethod.POST)
+    @RequestMapping(value = "/findTradeListByTradeType", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findTradeListByTradeType( @PathVariable("userName")String userName ,@PathVariable("userMark") Integer userMark, @PathVariable("tradeType") Integer tradeType ) {
+    public ReturnInfo findTradeListByTradeType( @RequestParam("userName")String userName ,@RequestParam("userMark") Integer userMark, @RequestParam("tradeType") Integer tradeType ) {
         ReturnInfo returnInfo = new ReturnInfo();
         List<BankTradeInfo> bankTrdeList=null;
         try {
@@ -100,9 +101,9 @@ public class AccountTradeController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/findTradeDetail/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/findTradeDetail", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findTradeDetail(  @PathVariable("id") Integer id ) {
+    public ReturnInfo findTradeDetail(  @RequestParam("id") Integer id ) {
         ReturnInfo returnInfo = new ReturnInfo();
         try {
             BankTradeInfo bankTradeDetail = bankTradeService.findBankTradeDetail(id);

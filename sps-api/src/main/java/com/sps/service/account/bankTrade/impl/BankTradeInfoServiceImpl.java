@@ -29,7 +29,7 @@ public class BankTradeInfoServiceImpl implements BankTradeService {
     @Override
     public List<BankTradeInfo> findBankTrdeList(String userName, Integer userType) {
 //        根据用户名查询userId
-       String userId = bankCardInfoDao.selectByUserName(userName);
+       String userId = bankCardInfoDao.selectByUserName(userName,userType);
 //        根据用户userId查询交易信息
         List<BankTradeInfo> bankTradeList = bankTradeInfoDao.selectListByUserName(userId);
         return bankTradeList;
@@ -37,7 +37,7 @@ public class BankTradeInfoServiceImpl implements BankTradeService {
 
     @Override
     public List<BankTradeInfo> findBankTrdeListByTradeType(String userName, Integer userType, String tradeType) {
-        String userId = bankCardInfoDao.selectByUserName(userName);
+        String userId = bankCardInfoDao.selectByUserName(userName,userType);
 //        根据用户userId查询交易信息
         List<BankTradeInfo> bankTradeList = bankTradeInfoDao.selectListByUserNameAndTradeType(userId,tradeType);
         return bankTradeList;

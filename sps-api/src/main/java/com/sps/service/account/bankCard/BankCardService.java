@@ -13,7 +13,9 @@ import com.sps.entity.account.BankCardInfo;
  * @createDate ${date}$ ${timme}$
  */
 public interface BankCardService {
-    String findUserId(String userName);
+    String findUserId(String userName,Integer userMark);
     //保存绑卡信息的方法
     Boolean saveBankCardInfo(BankCardInfo bankCardInfo, Integer userId, Integer userMark);
+    //删除绑卡记录
+    Boolean  removeBankCard(String userId);
 }

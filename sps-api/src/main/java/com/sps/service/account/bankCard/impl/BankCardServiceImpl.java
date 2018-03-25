@@ -32,8 +32,8 @@ public class BankCardServiceImpl implements BankCardService {
     @Autowired
     private AccountBalanceDao accountBalanceDao;
     @Override
-    public String findUserId(String userName) {
-        String userId = bankCardInfoDao.selectByUserName(userName);
+    public String findUserId(String userName,Integer userMark) {
+        String userId = bankCardInfoDao.selectByUserName(userName,userMark);
         return userId;
     }
 
@@ -42,8 +42,9 @@ public class BankCardServiceImpl implements BankCardService {
         //		根据用户名获取 余额表信息---存在取出余额---不存在 创建改用户的余额表信息
         try {
 
-            BigDecimal balance = accountBalanceDao.selectByUserId(userId, 2);
+            BigDecimal balance = accountBalanceDao.selectByUserId(userId,userMark);
             bankInfo.setCreatetime(new Date());
+            bankInfo.setUserMark(userMark);
             //绑卡
              bankInfo.setState(1);
              bankInfo.setCreatetime(new Date());
@@ -66,5 +67,11 @@ public class BankCardServiceImpl implements BankCardService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public Boolean removeBankCard(String userId) {
+        int m = bankCardInfoDao.deleteBankCard(userId);
+        return m >0? true:false;
     }
 }
