@@ -31,10 +31,6 @@ import java.util.Map;
 public class HelpController {
     @Autowired
     private HelpService helpService;
-
-
-
-
     /**
      * 获取所有的标题
      * @return
@@ -65,9 +61,9 @@ public class HelpController {
      * 获取内容
      * @return
      */
-    @RequestMapping(value = "/findContentById/{helpId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/findContentById", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findContentById( @PathVariable("helpId") Integer helpId){
+    public ReturnInfo findContentById( @RequestParam("helpId") Integer helpId){
         ReturnInfo returnInfo = new ReturnInfo();
         try{
             Help help = helpService.queryContent(helpId);

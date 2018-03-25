@@ -26,7 +26,7 @@ public interface BindCardTransService {
      * 根据页面绑卡记录 保存绑卡交易信息
 	 *
      */
-    HashMap<String,Object> saveBankTansInfos(BindBankTrans  bankCardInfo, String userName, String UserId);
+    HashMap<String,Object> saveBankTansInfos(BindBankTrans  bankCardInfo);
 
 	/**
             * 根据请求号更新绑卡记录表

@@ -69,9 +69,9 @@ public class FeedBackController {
      * 根据类型id，保存反馈意见的方法
      * @return
      */
-    @RequestMapping(value="/savaFeedBackInfo/{categoeyId}/{content}/{systype}",method = RequestMethod.POST)
+    @RequestMapping(value="/savaFeedBackInfo",method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo savaFeedBackInfo(@PathVariable("categoeyId") Integer categoeyId, @PathVariable("content") String content, @PathVariable("systype") String systype) {
+    public ReturnInfo savaFeedBackInfo(@RequestParam("categoeyId") Integer categoeyId, @RequestParam("content") String content, @RequestParam("systype") String systype) {
         logger.info("savaFeedBackInfo ....................");
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
         ReturnInfo returnInfo = new ReturnInfo();
