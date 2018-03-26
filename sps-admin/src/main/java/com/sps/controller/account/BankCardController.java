@@ -1,4 +1,4 @@
-/*package com.sps.controller.account;
+package com.sps.controller.account;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSONObject;
@@ -148,10 +148,10 @@ public class BankCardController {
 		Boolean delete = bankWriteService.removeBankInfo(userName);
 		msg = delete?"解绑成功":"解绑失败";
 //		boolean delete = true;
-		if("1".equals(isDEL)){
+	/*	if("1".equals(isDEL)){
 			delete = bankWriteService.removeBankInfo(userName);
 			msg = delete?"解绑成功":"解绑失败";
-		}
+		}*/
 //		result.success();
 		result.setBody(delete);
 		result.setMsg(msg);
@@ -161,4 +161,3 @@ public class BankCardController {
 
 }
 
-*/
