@@ -9,6 +9,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.sps.common.HttpClientUtil;
 import com.sps.common.Message;
 import com.sps.common.RuleUtil;
 import com.sps.common.StringUtil;
@@ -53,6 +56,7 @@ import com.sps.service.shopkeeper.ShopkeeperService;
  */
 @Service
 public class ShopkeeperServiceImpl implements ShopkeeperService{
+	private static final String URL = "";
 	@Resource
 	private SpsShopkeeperDao spsShopkeeperDao;
 	@Resource
@@ -177,6 +181,21 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		contact.setContactCreatTime(new Date());
 		
 		contact.setContactUpdateTime(new Date());
+			
+		/**
+		 * 推向风控审核
+		 */
+		JSONObject centerMerchantInfo = new JSONObject();
+		
+		centerMerchantInfo.put("relation", contact.getContactRelation());
+		
+		centerMerchantInfo.put("name", contact.getContactName());
+		
+		centerMerchantInfo.put("mobile",  contact.getContactPhone());
+
+		JSONObject data = new JSONObject();
+		
+		data.put("centerMerchantInfo", centerMerchantInfo);
 		
 		return contactDao.insertSelective(contact);
 	}
@@ -199,11 +218,29 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		return 	housePrppertyDao.insertSelective(houseProperty);
 	}
 	@Override
-	public int insertSpsShopkeeperPersonal(SpsShopkeeperPersonal personal) {
+	public int insertSpsShopkeeperPersonal(SpsShopkeeperPersonal personal, Integer userId) {
 		
 		personal.setPersonalCreatTime(new Date());
 		
 		personal.setPersonalUpdateTime(new Date());
+		
+		/**
+		 * 首次推向风控审核
+		 */
+		JSONObject centerMerchantInfo = new JSONObject();
+		
+		centerMerchantInfo.put("shopId", userId);
+		centerMerchantInfo.put("customerName",personal.getPersonalClientName());
+		centerMerchantInfo.put("sex", personal.getPersonalSex());
+		centerMerchantInfo.put("shopMasterCert",  personal.getPersonalIdcard());
+		centerMerchantInfo.put("effectBeginDate",  personal.getPersonalIdcardValidityStart());
+		centerMerchantInfo.put("effectEndDate",  personal.getPersonalIdcardValidityEnd());
+		centerMerchantInfo.put("age",  personal.getPersonalAge());
+		centerMerchantInfo.put("registAddress",  personal.getPersonalPlaceofdomicile());
+
+		JSONObject data = new JSONObject();
+		
+		data.put("centerMerchantInfo", centerMerchantInfo);
 		
 		return personalDao.insertSelective(personal);
 	}
@@ -217,13 +254,32 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		return picDao.insertSelective(pic);
 	}
 	@Override
-	public int insertSpsShopkeeperRepayment(SpsShopkeeperRepayment repayment) {
+	public int insertSpsShopkeeperRepayment(SpsShopkeeperRepayment repayment, Integer userId) {
 		
 		repayment.setRepaymentCreatTime(new Date());
 		
 		repayment.setRepaymentUpdateTime(new Date());
 		
-		return repaymentDao.insertSelective(repayment);
+		int insertSelective = repaymentDao.insertSelective(repayment);
+		//更新风控方数据
+		JSONObject centerMerchantInfo = new JSONObject();
+		
+		centerMerchantInfo.put("shopId", userId);
+		
+		centerMerchantInfo.put("bankNo",repayment.getRepaymentBankid());
+		
+		centerMerchantInfo.put("debitBank",  repayment.getRepaymentDepositBank());
+		
+		centerMerchantInfo.put("bindMobile", repayment.getRepaymentPhone());
+		
+		JSONObject data = new JSONObject();
+		
+		data.put("centerMerchantInfo", centerMerchantInfo);
+		
+		
+		HttpClientUtil.doPostJson(URL, JSON.toJSONString(data));
+		
+		return insertSelective;
 	}
 	@Override
 	public int insertSpsShopkeeperTaking(SpsShopkeeperTaking taking) {
@@ -232,16 +288,36 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		
 		taking.setTakingUpdateTime(new Date());
 		
-		return takingDao.insertSelective(taking);
+		int insertSelective = takingDao.insertSelective(taking);
+
+		return insertSelective;
 	}
 	@Override
-	public int updateSpsShopkeeperPersonal(SpsShopkeeperPersonal personal) {
+	public int updateSpsShopkeeperPersonal(SpsShopkeeperPersonal personal, Integer userId) {
+		
 		
 		SpsShopkeeperPersonalExample example = new SpsShopkeeperPersonalExample();
 		
 		example.createCriteria().andShopkeeperCustomeridEqualTo(personal.getShopkeeperCustomerid());
 		
-		return personalDao.updateByExampleSelective(personal, example );
+		int updateByExampleSelective = personalDao.updateByExampleSelective(personal, example );
+		
+		//更新风控方数据
+		JSONObject centerMerchantInfo = new JSONObject();
+		centerMerchantInfo.put("shopId", userId);
+		
+		centerMerchantInfo.put("marriage",personal.getPersonalClientName());
+		
+		centerMerchantInfo.put("homeAddress",  personal.getPersonalIdcard());
+		
+		centerMerchantInfo.put("mobileServicePassword", personal.getPersonalPhonePassword());
+		
+		JSONObject data = new JSONObject();
+		
+		data.put("centerMerchantInfo", centerMerchantInfo);
+		
+		
+		return updateByExampleSelective;
 	}
 	@Override
 	public int updateShopkeeper(SpsShopkeeper shopkeeper) {

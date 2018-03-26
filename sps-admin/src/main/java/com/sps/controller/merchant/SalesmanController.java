@@ -1,5 +1,6 @@
 package com.sps.controller.merchant;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
@@ -15,6 +16,7 @@ import org.sps.service.merchant.read.ChannelSalesmanReadService;
 import org.sps.service.merchant.write.ChannelSalesmanWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 业务员控制层
@@ -55,7 +57,7 @@ public class SalesmanController {
 		salesman.setSalesmaneChannelNum(channelNum);
 		
 		HashMap<String, Object> insertSalesman = salesmanWrite.insertSalesman(salesman);
-		
+
 /*		if(insertSalesman.get("state").equals("success")){
 			//业务员添加成功后调用短信接口给业务员发送短信
 			ServiceResult<Boolean> sendCommonSms = iSmsCommonService.sendCommonSms(salesman.getSalesmanPhone(), CONTENT, 3);

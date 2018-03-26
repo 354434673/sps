@@ -340,7 +340,8 @@ public class MerchantController {
 			SpsChannelGuarantee guarantee,
 			SpsChannelFinanceTarget financeTarget,
 			SpsChannelLogistics logistics , 
-			SpsChannelOpenAccount openAccount){
+			SpsChannelOpenAccount openAccount,
+			String channelNum){
 		
 		final String  url = "";
 		JSONObject CenterCompanyInfo = new JSONObject();
@@ -368,12 +369,12 @@ public class MerchantController {
 		CenterCompanyInfo.put("actualDistrictCode", "12");*/
 		//CenterCompanyInfo.put("actualDistrict", "");
 		CenterCompanyInfo.put("actualDetailAddress", enterprise.getEnterpriseCompanyRegisterAddr());//详细地址
-		CenterCompanyInfo.put("mainBusiness", "手机");//主营业务
-		CenterCompanyInfo.put("mainCommodityType", 1);//主营商品类型
-		CenterCompanyInfo.put("mainBrand", "iphone");//主营品牌
-		CenterCompanyInfo.put("businessArea", 1);//业务覆盖地域范围
-		CenterCompanyInfo.put("guaranteeType", 1);//担保形式
-		CenterCompanyInfo.put("marginAmount", new BigDecimal(18000000.45));//保证金金额
+		CenterCompanyInfo.put("mainBusiness", business.getBusinessProduct());//主营业务
+		CenterCompanyInfo.put("mainCommodityType", business.getBusinessType());//主营商品类型
+		CenterCompanyInfo.put("mainBrand", business.getBusinessBrand());//主营品牌
+		CenterCompanyInfo.put("businessArea", business.getBusinessScope());//业务覆盖地域范围
+		CenterCompanyInfo.put("guaranteeType", guarantee.getGuaranteeSituation());//担保形式
+		CenterCompanyInfo.put("marginAmount", guarantee.getGuaranteeDeposit());//保证金金额
 /*		CenterCompanyInfo.put("bankNo", "12345677");//收款银行卡账号
 		CenterCompanyInfo.put("cardOwnerName", "杨XX");//银行卡所有人姓名
 		CenterCompanyInfo.put("certNo", "630103199307091211");//身份证号
@@ -407,19 +408,10 @@ public class MerchantController {
 		
 		JSONObject CenterMerchantInfo = new JSONObject();
 		
-		CenterMerchantInfo.put("merchantCode", "test030");//商户编号
-		CenterMerchantInfo.put("merchantName", "商户名称");//商户名称
-		CenterMerchantInfo.put("approveCode", "108876-01");//审批编号
-		CenterMerchantInfo.put("approveType", 1);//审批类型
-		CenterMerchantInfo.put("approveUser", "杨XX");//审批人
-		CenterMerchantInfo.put("approveTime", new Date());//审批时间
-		CenterMerchantInfo.put("status", 1);//商户状态
-		CenterMerchantInfo.put("bussinessName", "XX");//店付业务员姓名
-		CenterMerchantInfo.put("certNo", "210283199003027519");//店付业务员身份证
-		CenterMerchantInfo.put("city", "北京");//所在城市
-		CenterMerchantInfo.put("cityCode", "100862");//所在城市code
-		CenterMerchantInfo.put("signBeginDate",  new Date());//签约开始日期
-		CenterMerchantInfo.put("signEndDate",  new Date());//签约结束日期
+		CenterMerchantInfo.put("merchantCode", channelNum);//商户编号
+		CenterMerchantInfo.put("status", 0);//商户状态
+		CenterMerchantInfo.put("signBeginDate",  openAccount.getOpenStartTime());//签约开始日期
+		CenterMerchantInfo.put("signEndDate",  openAccount.getOpenEndTime());//签约结束日期
 		CenterMerchantInfo.put("createTime",  new Date());//创建时间
 		CenterMerchantInfo.put("updateTime",  new Date());//更新时间
 		CenterMerchantInfo.put("flag", 1);
@@ -427,10 +419,10 @@ public class MerchantController {
 		
 		JSONObject data = new JSONObject();
 		
+		data.put("CenterMerchantInfo", CenterMerchantInfo);
 		data.put("CenterCompanyInfo", CenterCompanyInfo);
 		data.put("CenterContactInfo", CenterContactInfo);
 		data.put("CenterImageInfo", CenterImageInfo);
-		data.put("CenterMerchantInfo", CenterMerchantInfo);
 		
 		String jsonString = JSON.toJSONString(data);
 		

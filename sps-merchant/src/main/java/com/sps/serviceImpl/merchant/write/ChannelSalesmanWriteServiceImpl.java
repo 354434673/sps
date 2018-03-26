@@ -1,5 +1,6 @@
 package com.sps.serviceImpl.merchant.write;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.sps.service.merchant.write.ChannelSalesmanWriteService;
 import org.sps.util.FinalData;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSONObject;
 import com.sps.dao.merchant.read.SpsChannelSalesmanReadMapper;
 import com.sps.dao.merchant.write.SpsChannelSalesmanWriteMapper;
 @Service(timeout=2000,group="dianfu")
@@ -23,6 +25,7 @@ public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteServ
 	@Resource
 	private SpsChannelSalesmanReadMapper salesmanRead;
 	@Override
+	@Transactional(readOnly = false, rollbackFor=java.lang.Exception.class)
 	public HashMap<String, Object> insertSalesman(SpsChannelSalesman salesman) {
 		
 		SpsChannelSalesman channelSalesman = getSalesman(salesman.getSalesmanIdcard());
@@ -30,6 +33,8 @@ public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteServ
 		try {
 			if(channelSalesman == null){
 				salesmanWrite.insertSelective(salesman);
+				//风控进件
+				salesmanEntry(salesman);
 				hashMap.put("msg", "用户添加成功");
 				hashMap.put("state", FinalData.STATE_SUCCESS);
 			}else{
@@ -94,4 +99,22 @@ public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteServ
 		}
 		return hashMap;
 	};
+	private void salesmanEntry(SpsChannelSalesman salesman){
+		
+		JSONObject CenterMerchantInfo = new JSONObject();
+		/**
+		 * 推向风控
+		 */
+		CenterMerchantInfo.put("bussinessName", salesman.getSalesmanName());//店付业务员姓名
+		CenterMerchantInfo.put("certNo", salesman.getSalesmanIdcard());//店付业务员身份证
+		CenterMerchantInfo.put("city", salesman.getSalesmanCity());//所在城市
+		CenterMerchantInfo.put("updateTime",  new Date());//更新时间
+		
+		JSONObject data = new JSONObject();
+		
+		data.put("CenterMerchantInfo", CenterMerchantInfo);
+		
+		//风控方更新数据
+		
+	}
 }

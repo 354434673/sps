@@ -1244,7 +1244,9 @@
 		 				//openApplyProduct:openApplyProduct.toString(),
 		 				openApplyProduct:openApplyProduct.toString(),
 		 				//openSellRate:openSellRate, 
-		 				openSellRate:7
+		 				openSellRate:7,
+		 				channelNum:channelNum
+		 				
 	 				 },
 	 			 success:function(data){
 					if(JSON.parse(data).success){
