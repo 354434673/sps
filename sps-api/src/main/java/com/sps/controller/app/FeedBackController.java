@@ -8,8 +8,10 @@ import com.sps.common.ReturnInfo;
 import com.sps.entity.app.FeedBack;
 import com.sps.entity.app.FeedbackCategory;
 import com.sps.entity.app.Help;
+import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import com.sps.service.app.help.HelpService;
 import com.sps.service.app.help.feedBack.FeedBackService;
+import com.sps.service.shopkeeper.ShopkeeperPersonService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
@@ -39,6 +41,8 @@ public class FeedBackController {
     private static final Log logger= LogFactory.getLog(FeedBackController.class);
     @Autowired
     private FeedBackService feedBackService;
+    @Autowired
+    private ShopkeeperPersonService shopkeeperPersonService;
 
     /**
      * 查询所有反馈类型的方法
@@ -71,14 +75,14 @@ public class FeedBackController {
      */
     @RequestMapping(value="/savaFeedBackInfo",method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo savaFeedBackInfo(@RequestParam("categoeyId") Integer categoeyId, @RequestParam("content") String content, @RequestParam("systype") String systype) {
+    public ReturnInfo savaFeedBackInfo(@RequestParam("customerId") String customerId,@RequestParam("categoeyId") Integer categoeyId, @RequestParam("content") String content, @RequestParam("systype") String systype) {
         logger.info("savaFeedBackInfo ....................");
-        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        SpsShopkeeperPersonal person = shopkeeperPersonService.findPerson(customerId);
         ReturnInfo returnInfo = new ReturnInfo();
         FeedBack feedBack = new FeedBack();
         feedBack.setCategoeyId(categoeyId);
         feedBack.setContent(content);
-        feedBack.setCreater(userName);
+        feedBack.setCreater(person.getPersonalId());
         feedBack.setSystype(systype);
         Date date = new Date();
         //设置要获取到什么样的时间
