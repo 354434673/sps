@@ -69,4 +69,6 @@ public interface OrderMapper {
 	 * @return
 	 */
 	Order selectByTradeNO(String orderNo);
+
+	Order selectByOrderId(@Param(value="orderid") String orderid);
 }

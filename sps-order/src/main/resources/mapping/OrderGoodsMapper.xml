@@ -45,6 +45,23 @@
 	     </if>
      </where>
   </select>
+
+
+
+
+    <select id="selectOrderGood" resultMap="BaseOrderGoodsResultMap" parameterType="org.sps.entity.order.OrderGoods" >
+        select
+        og.*,gs.g_bprice  as  maxPrice,gs.g_size as size,gs.g_good_no as goodsNo ,g.g_category_ids as category ,g.g_brand_id as brand
+        from sps_order_goods og  LEFT JOIN sps_good_shop_sku ss on og.sku=ss.g_id
+        LEFT JOIN sps_good_sku gs on gs.g_id= ss.g_sku_id
+        LEFT JOIN sps_goods g on g.g_id=gs.g_gid
+        <where>
+            <if test="orderid != null and orderid !='' ">
+                og.orderid = #{orderid,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+    </select>
 <!-- 修改单个商品的价格和订货数量，并重新计算总金额 -->
 <!-- <update id="updatePrice" parameterType="com.sps.order.entity.OrderGoods">
         update 

@@ -6,8 +6,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.sps.dao.order.OrderRepayDetailMapper;
+import com.sps.util.HttpClientUtil;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.order.*;
 import org.sps.service.order.OrderService;
@@ -23,7 +30,10 @@ import com.sps.dao.order.SpsOrderLogisticsMapper;
 @Service(timeout = 2000, group = "dianfu")
 @org.springframework.stereotype.Service
 @Transactional
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:spring/spring-mybatis.xml")
 public class OrderServiceImpl implements OrderService {
+
 
 	@Autowired
 	private OrderMapper orderMapper;
@@ -468,6 +478,53 @@ public class OrderServiceImpl implements OrderService {
 			case "19":// 风控审核不通过
 				// 这里处理的逻辑，需要更新数据库的状态，如果有说明则将remark添加入说明中
 				result = orderMapper.updateOrderFlag(orderid, flag, remark, new Date());
+				if ("3".equals(flag)){
+					Order order = orderMapper.selectByOrderId(orderid);
+					JSONObject json = new JSONObject();
+					json.put("orderNo", order.getOrderid());
+					json.put("applyTime", new Date());
+					json.put("applyQuota", order.getMoney());
+					json.put("loanTerm", "7");
+					json.put("downPayments", order.getScale());
+					json.put("firstPayment", order.getPayment());
+					/*json.put("repaymentMethod", "df10481065917829");*/
+					json.put("shopCode", order.getCustomerId());
+					json.put("shopMainBussiness", order.getCommodityType());
+				/*	json.put("shopMainBussinessName",order.get);*/
+					/*json.put("shopRiskLevel", "北京");*/
+					json.put("shopCompanyName", order.getSelfname());
+					json.put("shopMainBrand", order.getBrand());
+					json.put("centerMerchantCode", order.getShopkeeper());
+					json.put("centerMerchantName", order.getShopkeepername());
+					json.put("shopMainCommodity", order.getCommodityType());
+					String jsonResult = HttpClientUtil.doPostJson("http://192.168.201.149:8080/sps/insertShopOrderInfo", json.toString());
+					System.out.println(jsonResult);
+					if (jsonResult != null) {
+						JSONArray orderGoodsJson = new JSONArray();
+						List<OrderGoods> orderGoods = orderGoodsMapper.selectOrderGood(orderid);
+						if(orderGoods!=null&&orderGoods.size()>0){
+							for(OrderGoods goods:orderGoods){
+								JSONObject content = new JSONObject();
+								content.put("applyTime", new Date());
+								content.put("brandType", goods.getCategory());
+								content.put("brand", goods.getBrand());
+								content.put("model", "暂无");
+								content.put("property", goods.getSize());
+								content.put("unit", "个");
+								content.put("count", goods.getAmount());
+								content.put("region", goods.getMaxPrice());
+								content.put("orderNo", goods.getOrderid());
+								content.put("color", goods.getColor());
+								content.put("spec", goods.getSize());
+								content.put("price", goods.getPrice());
+								content.put("totalPrice", goods.getSummation());
+								orderGoodsJson.add(content);
+							}
+						}
+						String res = HttpClientUtil.doPostJson("http://192.168.201.149:8080/sps/insertShopRegionInfo", orderGoodsJson.toString());
+						System.out.println(res);
+					}
+				}
 				hashMap.put("count", result);
 				hashMap.put("state", "success");
 				break;
@@ -492,6 +549,40 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return hashMap;
 	}
+
+	@Test
+	public void test2(){
+		String orderid = "df10484395138694";
+		Order order = orderMapper.selectByOrderId("df10484395138694");
+		JSONObject json = new JSONObject();
+		json.put("orderNo", order.getOrderid());
+		json.put("applyTime", new Date());
+		json.put("applyQuota", order.getMoney());
+		json.put("loanTerm", "7");
+		json.put("downPayments", order.getScale());
+		json.put("firstPayment", order.getPayment());
+					/*json.put("repaymentMethod", "df10481065917829");*/
+		json.put("shopCode", order.getCustomerId());
+		json.put("shopMainBussiness", order.getCommodityType());
+				/*	json.put("shopMainBussinessName",order.get);*/
+					/*json.put("shopRiskLevel", "北京");*/
+		json.put("shopCompanyName", order.getSelfname());
+		json.put("shopMainBrand", order.getBrand());
+		json.put("centerMerchantCode", order.getShopkeeper());
+		json.put("centerMerchantName", order.getShopkeepername());
+		json.put("shopMainCommodity", order.getCommodityType());
+		String jsonResult = HttpClientUtil.doPostJson("http://192.168.201.149:8080/sps/insertShopOrderInfo", json.toJSONString());
+		System.out.println(jsonResult);
+		if (jsonResult != null) {
+
+		}
+	}
+	public static void main(String[] args)
+	{
+
+}
+
+
 	/*
 	 * @Override public HashMap<String,Object> selectByExpressPrimaryKey(Integer
 	 * id) { HashMap<String, Object> hashMap = new HashMap<String, Object>();

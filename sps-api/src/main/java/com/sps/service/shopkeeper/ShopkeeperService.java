@@ -2,6 +2,7 @@ package com.sps.service.shopkeeper;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.jzfq.auth.core.api.vo.JsonResult;
 import com.sps.entity.shopkeeper.SpsShopkeeper;
@@ -105,4 +106,7 @@ public interface ShopkeeperService {
 	HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation);
 	
 	SpsShopkeeperInvitation queryInvitation(String phone);
+
+
+	int updateStatus(Map<String, Object> map);
 }
