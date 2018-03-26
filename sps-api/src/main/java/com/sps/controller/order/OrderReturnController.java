@@ -1,54 +1,42 @@
 package com.sps.controller.order;
 
-import com.sps.common.Common;
+import com.alibaba.fastjson.JSON;
+import com.sps.common.JsonResult;
 import com.sps.common.Message;
 import com.sps.common.ReturnInfo;
-import com.sps.entity.goods.SpsPurchaseOrder;
-import com.sps.entity.order.SpsOrder;
+import com.sps.controller.BaseApi;
 import com.sps.entity.order.SpsOrderReturn;
-import com.sps.service.goods.PurchaseOrderService;
 import com.sps.service.order.OrderReturnService;
-import com.sps.service.order.OrderService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/orderReturn")
-public class OrderReturnController {
+public class OrderReturnController extends BaseApi{
+
+    private static final Log log= LogFactory.getLog(OrderReturnController.class);
     @Resource
     private OrderReturnService orderReturnService;
 
     /**
-     * 进货单数据校验
-     *
+     * 退货申请
      * @return
      */
-    @RequestMapping(value = "/returnOrder", method = RequestMethod.POST)
-    @ResponseBody
-    public ReturnInfo saveOrUpdate(SpsOrderReturn order) {
-        ReturnInfo ri = new ReturnInfo();
+    @RequestMapping(value = "/returnOrder")
+    public JsonResult saveOrUpdate(SpsOrderReturn order) {
+        log.info("start--退货申请，请求参数{}"+ JSON.toJSONString(order));
         try {
-            orderReturnService.saveOrUpdate(order);
-            ri.setCode(Message.SUCCESS_CODE);
-            ri.setMsg(Message.API_SUCCESS_MSG);
-            ri.setSuccess(Message.API_SUCCESS_FLAG);
+            if(!orderReturnService.saveOrUpdate(order)){
+                return returnFaild();
+            }
+            log.info("end--退货申请");
+            return returnSuccess();
         } catch (Exception e) {
-            e.printStackTrace();
-            ri.setCode(Message.FAILURE_CODE);
-            ri.setMsg(Message.FAILURE_MSG);
-            ri.setSuccess(Message.API_ERROR_FLAG);
+            log.info("end--退货申请,异常{}"+e.getMessage());
+            return returnFaildSys();
         }
-        return ri;
     }
-
-
 }
