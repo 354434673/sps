@@ -361,7 +361,17 @@ public class StringUtil {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * 验证是否null
+	 * @param str
+	 * @return
+     */
+	public static boolean checkNotEmpty(String str) {
+		if (null == str || "".equals(str.trim()))
+			return false;
+		return true;
+	}
 	public static void main(String[] args) {
 		System.out.println(isPhone("13478089090"));
 	}
