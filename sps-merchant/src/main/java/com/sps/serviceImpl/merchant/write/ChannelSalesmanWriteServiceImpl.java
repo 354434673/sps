@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.security.auth.Subject;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.merchant.SpsChannelSalesman;
 import org.sps.entity.merchant.SpsChannelSalesmanExample;
-import org.sps.service.merchant.read.ChannelSalesmanReadService;
 import org.sps.service.merchant.write.ChannelSalesmanWriteService;
 import org.sps.util.FinalData;
 
@@ -24,6 +24,7 @@ public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteServ
 	private SpsChannelSalesmanReadMapper salesmanRead;
 	@Override
 	public HashMap<String, Object> insertSalesman(SpsChannelSalesman salesman) {
+		
 		SpsChannelSalesman channelSalesman = getSalesman(salesman.getSalesmanIdcard());
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		try {
