@@ -12,7 +12,10 @@ import com.sps.entity.order.SpsOrderLog;
 import com.sps.entity.order.SpsOrderReturn;
 import com.sps.service.order.OrderReturnService;
 import com.sps.service.order.OrderService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
@@ -24,6 +27,9 @@ import java.util.Map;
 
 @Service
 public class OrderReturnServiceImpl implements OrderReturnService {
+
+    private static final Log log = LogFactory.getLog(OrderReturnServiceImpl.class);
+
     @Resource
     private SpsOrderReturnMapper spsOrderReturnMapper;
     @Resource
@@ -31,7 +37,8 @@ public class OrderReturnServiceImpl implements OrderReturnService {
 
 
     @Override
-    public void saveOrUpdate(SpsOrderReturn order) {
+    @Transactional
+    public boolean saveOrUpdate(SpsOrderReturn order) {
         try {
             if (order.getId() != null) {
                 order.setUpdateTime(new Date());
@@ -49,8 +56,10 @@ public class OrderReturnServiceImpl implements OrderReturnService {
                 log.setLogDes("订单编号为：" + order.getOrderNum() + "的订单申请退货");
                 spsOrderLogMapper.insert(log);
             }
+            return true;
         } catch (ParseException e) {
-            e.printStackTrace();
+            log.info("退货申请，保存异常{}"+e.getMessage());
+            return false;
         }
     }
 
