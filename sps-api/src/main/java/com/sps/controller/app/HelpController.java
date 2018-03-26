@@ -1,6 +1,7 @@
 package com.sps.controller.app;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Common;
 import com.sps.common.Message;
 import com.sps.common.ReturnInfo;
@@ -8,9 +9,12 @@ import com.sps.entity.app.Help;
 import com.sps.entity.goods.SpsGoodShop;
 import com.sps.entity.goods.SpsGoodShopSku;
 import com.sps.service.app.help.HelpService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sun.reflect.generics.reflectiveObjects.LazyReflectiveObjectGenerator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +33,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/api/help")
 public class HelpController {
+    private static  final Log logger= LogFactory.getLog(HelpController.class);
     @Autowired
     private HelpService helpService;
     /**
@@ -37,23 +42,17 @@ public class HelpController {
      */
     @RequestMapping(value = "/findAllTittle", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findAllTittle(){
-        ReturnInfo returnInfo = new ReturnInfo();
-        try {
-            List<Help> helps = helpService.queryAllTittle();
-            if(helps.size()>0){
-                returnInfo.setResult(helps);
-                returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
-                returnInfo.setCode(Message.API_SUCCESS_CODE);
-                returnInfo.setMsg(Message.API_SUCCESS_MSG);
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-            returnInfo.setCode(Message.FAILURE_CODE);
-            returnInfo.setMsg(Message.FAILURE_MSG);
-            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+    public String findAllTittle(){
+        JSONObject jsonO = new JSONObject();
+        List<Help> helps = helpService.queryAllTittle();
+        if(helps.size()>0){
+            jsonO.put("helps",helps);
+            return Message.responseStr(Message.SUCCESS_CODE,Message.SUCCESS_MSG, jsonO);
+
         }
-        return returnInfo;
+        jsonO.put("helps",null);
+        logger.info("newssss" +Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG, jsonO));
+        return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG, jsonO);
     }
 
     /**
@@ -63,21 +62,15 @@ public class HelpController {
      */
     @RequestMapping(value = "/findContentById", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findContentById( @RequestParam("helpId") Integer helpId){
-        ReturnInfo returnInfo = new ReturnInfo();
-        try{
+    public String findContentById( @RequestParam("helpId") Integer helpId){
+        JSONObject jsonO = new JSONObject();
             Help help = helpService.queryContent(helpId);
-            returnInfo.setResult(help);
-            returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
-            returnInfo.setCode(Message.API_SUCCESS_CODE);
-            returnInfo.setMsg(Message.API_SUCCESS_MSG);
-        }catch(Exception e){
-            e.printStackTrace();
-            returnInfo.setCode(Message.FAILURE_CODE);
-            returnInfo.setMsg(Message.FAILURE_MSG);
-            returnInfo.setSuccess(Message.API_ERROR_FLAG);
-        }
-        return  returnInfo;
+            if(help !=null){
+                jsonO.put("help",help);
+                return Message.responseStr(Message.SUCCESS_CODE,Message.SUCCESS_MSG, jsonO);
+            }
+        jsonO.put("help",help);
+        return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG, jsonO);
     }
 
 

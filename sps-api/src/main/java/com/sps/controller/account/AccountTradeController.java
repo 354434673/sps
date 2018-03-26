@@ -36,9 +36,9 @@ public class AccountTradeController {
     private static  final Log logger= LogFactory.getLog(AccountTradeController.class);
     @Autowired
     private AccountBalanceService accountBalanceService;
-   @Autowired
-   private BankTradeService bankTradeService;
-  @Autowired
+     @Autowired
+     private BankTradeService bankTradeService;
+    @Autowired
     BankCardService bankCardService;
     @Autowired
     private UserService userService;

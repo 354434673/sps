@@ -1,6 +1,7 @@
 package com.sps.controller.app;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.sps.common.HttpClientUtil;
 import com.sps.common.Message;
@@ -50,23 +51,16 @@ public class FeedBackController {
      */
     @RequestMapping(value = "/findAllCatagory", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findAllCatagory(){
-        ReturnInfo returnInfo = new ReturnInfo();
-        try {
-            List<FeedbackCategory> catagorys = feedBackService.queryAllCtagory();
-            if(catagorys.size()>0){
-                returnInfo.setResult(catagorys);
-                returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
-                returnInfo.setCode(Message.API_SUCCESS_CODE);
-                returnInfo.setMsg(Message.API_SUCCESS_MSG);
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-            returnInfo.setCode(Message.FAILURE_CODE);
-            returnInfo.setMsg(Message.FAILURE_MSG);
-            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+    public String findAllCatagory(){
+        JSONObject jsonO = new JSONObject();
+        List<FeedbackCategory> catagorys = feedBackService.queryAllCtagory();
+        if(catagorys.size()>0){
+            jsonO.put("catagorys",catagorys);
+            return Message.responseStr(Message.SUCCESS_CODE,Message.SUCCESS_MSG, jsonO);
+
         }
-        return returnInfo;
+        jsonO.put("catagorys",null);
+        return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG, jsonO);
     }
 
     /**
@@ -75,33 +69,29 @@ public class FeedBackController {
      */
     @RequestMapping(value="/savaFeedBackInfo",method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo savaFeedBackInfo(@RequestParam("customerId") String customerId,@RequestParam("categoeyId") Integer categoeyId, @RequestParam("content") String content, @RequestParam("systype") String systype) {
+    public String savaFeedBackInfo(@RequestParam("customerId") String customerId,@RequestParam("categoeyId") Integer categoeyId, @RequestParam("content") String content, @RequestParam("systype") String systype) {
         logger.info("savaFeedBackInfo ....................");
         SpsShopkeeperPersonal person = shopkeeperPersonService.findPerson(customerId);
-        ReturnInfo returnInfo = new ReturnInfo();
-        FeedBack feedBack = new FeedBack();
-        feedBack.setCategoeyId(categoeyId);
-        feedBack.setContent(content);
-        feedBack.setCreater(person.getPersonalId());
-        feedBack.setSystype(systype);
-        Date date = new Date();
-        //设置要获取到什么样的时间
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //获取String类型的时间
-        String createdate = sdf.format(date);
-        feedBack.setCreatetime(createdate);
-
+        if(person !=null){
+            FeedBack feedBack = new FeedBack();
+            feedBack.setCategoeyId(categoeyId);
+            feedBack.setContent(content);
+            feedBack.setCreater(person.getPersonalId());
+            feedBack.setSystype(systype);
+            Date date = new Date();
+            //设置要获取到什么样的时间
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            //获取String类型的时间
+            String createdate = sdf.format(date);
+            feedBack.setCreatetime(createdate);
             Boolean flag= feedBackService.saveContent(feedBack);
-        if(flag){
-            returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
-            returnInfo.setCode(Message.API_SUCCESS_CODE);
-            returnInfo.setMsg(Message.API_SUCCESS_MSG);
-        }else{
-            returnInfo.setCode(Message.FAILURE_CODE);
-            returnInfo.setMsg(Message.FAILURE_MSG);
-            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+            if(flag){
+                return Message.responseStr(Message.SUCCESS_CODE,Message.SUCCESS_MSG);
+            }
+            return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG);
         }
-      return returnInfo;
+      return   Message.responseStr(Message.FAILURE_CODE,Message.PARAM_ILLEGAL_MSG);
+
     }
 
 

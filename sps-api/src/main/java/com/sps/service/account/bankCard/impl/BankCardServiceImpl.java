@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -40,17 +41,19 @@ public class BankCardServiceImpl implements BankCardService {
     @Override
     public Boolean saveBankCardInfo(BankCardInfo bankInfo ,Integer userId,Integer userMark) {
         //		根据用户名获取 余额表信息---存在取出余额---不存在 创建改用户的余额表信息
-        try {
-
             BigDecimal balance = accountBalanceDao.selectByUserId(userId,userMark);
             bankInfo.setCreatetime(new Date());
             bankInfo.setUserMark(userMark);
             //绑卡
              bankInfo.setState(1);
+             bankInfo.setFlag(0);
              bankInfo.setCreatetime(new Date());
+            int m;
             if(balance !=null){
                 bankInfo.setAvailableBalance(balance);
-            }else{
+                m=bankCardInfoDao.insertBankCardInfo(bankInfo);
+                return m >0 ? true:false;
+            }
                 bankInfo.setAvailableBalance(new BigDecimal(0));
                 //保存一条用户的余额信息
                 AccountBalance accountBalance = new AccountBalance();
@@ -58,20 +61,22 @@ public class BankCardServiceImpl implements BankCardService {
                 accountBalance.setCreateTime(new Date());
                 accountBalance.setUserId(userId);
                 accountBalance.setUserType(2);
-                accountBalanceDao.insertAccountBalance(accountBalance);
-            }
-            bankCardInfoDao.insertBankCardInfo(bankInfo);
-            return true;
+                m=bankCardInfoDao.insertBankCardInfo(bankInfo);
+                int n=accountBalanceDao.insertAccountBalance(accountBalance);
+                 return m >0 &&  n>0 ? true:false;
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     @Override
     public Boolean removeBankCard(String userId) {
         int m = bankCardInfoDao.deleteBankCard(userId);
         return m >0? true:false;
+    }
+
+    @Override
+    public List<BankCardInfo> findBindCardInfo(String customerId) {
+        List<BankCardInfo> bankCardInfos = bankCardInfoDao.selectByCustomerId(customerId);
+
+        return bankCardInfos;
     }
 }

@@ -1,6 +1,7 @@
 package com.sps.dao.account;
 
 import com.sps.entity.account.BankTradeInfo;
+import com.sps.entity.account.BindBankTrans;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,5 +23,6 @@ public interface BankTradeInfoDao {
     List<BankTradeInfo> selectListByUserNameAndTradeType(@Param("userId") String userId,@Param("tradeType") String tradeType);
 //根据主键查询详情
     BankTradeInfo selectDetail(Integer id);
+
 
 }

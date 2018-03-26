@@ -1,17 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sps.dao.account.BankCardInfoDao">
-
+	<resultMap id="BaseResultMap" type="com.sps.entity.account.BankCardInfo" >
+	<id column="id" property="id" jdbcType="INTEGER" />
+	<result column="b_name" property="name" jdbcType="VARCHAR" />
+	<result column="b_accounts" property="accounts" jdbcType="VARCHAR" />
+	<result column="b_identity" property="identity" jdbcType="VARCHAR" />
+	<result column="b_phone" property="phone" jdbcType="VARCHAR" />
+	<result column="b_createtime" property="createtime" jdbcType="TIMESTAMP" />
+	<result column="b_updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+	<result column="b_bank" property="bank" jdbcType="VARCHAR" />
+	<result column="b_state" property="state" jdbcType="INTEGER" />
+	<result column="b_remark" property="remark" jdbcType="VARCHAR" />
+	<result column="b_user_id" property="userId" jdbcType="VARCHAR" />
+	<result column="b_user_name" property="userName" jdbcType="VARCHAR" />
+	<result column="channl_num" property="channlNum" jdbcType="VARCHAR" />
+	<result column="b_available_balance" property="availableBalance" jdbcType="DECIMAL" />
+	<result column="b_trans_password" property="transPassword" jdbcType="VARCHAR" />
+	<result column="standby2" property="standby2" jdbcType="VARCHAR" />
+	<result column="user_mark" property="userMark" jdbcType="INTEGER" />
+	<result column="flag" property="flag" jdbcType="INTEGER" />
+	<result column="b_card_type" property="cardType" jdbcType="VARCHAR" />
+	</resultMap>
 	<select id="selectByUserName"   resultType="String">
 			SELECT
-					b_user_id userId
+					b_user_id  userId
 			FROM
 					sps_bank
 			WHERE
-				user_mark=#{userMark} AND  b_user_name=#{userName} AND  flag=0
+				user_mark=#{userMark}  AND  b_user_name=#{userName}  AND  flag=0
 
 	</select>
 	<insert id="insertBankCardInfo"  parameterType="com.sps.entity.account.BankCardInfo"  useGeneratedKeys="true" keyProperty="id" >
+
 		insert into sps_bank
 		(
 		b_name,
@@ -46,8 +67,8 @@
 		#{channlNum,jdbcType=VARCHAR},
 		#{availableBalance,jdbcType=DECIMAL},
 		#{transPassword,jdbcType=VARCHAR},
-		#{userMark,jdbcType=INTEGER}，
-		#{flag，jdbcType=INTEGER}
+		#{userMark,jdbcType=INTEGER},
+		#{flag,jdbcType=INTEGER}
 		)
 	</insert>
 	<update id="deleteBankCard" parameterType="String">
@@ -57,4 +78,16 @@
 		  		flag=1
 		  	WHERE  	b_user_id=#{userId}
 	</update>
+
+	<select id="selectByCustomerId" parameterType="String" resultMap="BaseResultMap">
+		SELECT
+			b_accounts,
+			b_name,
+			b_bank,
+			b_card_type
+	  	FROM
+			sps_bank
+	  	WHERE
+			channl_num=#{customerId} and flag=0
+	</select>
 </mapper>

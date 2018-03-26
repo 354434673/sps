@@ -69,6 +69,7 @@
     t_login_name       loginName,
     t_identity         identity,
     t_phone    		phone,
+    t_login_name    loginName,
     t_merchant_no	    merchantNo,
     t_start_time    	startTime,
     t_stop_time    	stopTime,
@@ -81,14 +82,9 @@
     channl_num          channlNum
     from
     sps_bank_trans
-    <where>
-        <if test="requestno !=null and  requestno!=''">
-            t_serial_sh=#{requestno}
-        </if>
-        <if test="yborderid !=null and  yborderid!=''">
-            and t_serial_yop=#{yborderid}
-        </if>
-    </where>
+    where
+            t_serial_sh=#{requestno}   and   t_serial_yop=#{yborderid}
+
     </select>
     <select id="selectByRequestNo" resultType="com.sps.entity.account.BindBankTrans">
         select
@@ -98,6 +94,7 @@
         t_user_id     		userId,
         t_identity         identity,
         t_phone    		phone,
+         t_login_name    loginName,
         t_merchant_no	    merchantNo,
         t_start_time    	startTime,
         t_stop_time    	stopTime,

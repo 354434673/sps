@@ -50,15 +50,15 @@ public class BindCardTransServiceImpl implements BindCardTransService {
         bankCardInfo.setStartTime(new Date());
         bankCardInfo.setSerialSh(UUID.randomUUID().toString());
         HashMap<String, Object> map = new HashMap<>();
-        try{
-            bindBankTransDao.insertBankTrans(bankCardInfo);
-            BindBankTrans bindBankTransNew = bindBankTransDao.selectOne(bankCardInfo.getSerialSh(), null);
+        int m = bindBankTransDao.insertBankTrans(bankCardInfo);
+        if(m >0){
+            BindBankTrans bindBankTransNew = bindBankTransDao.selectByRequestNo(bankCardInfo.getSerialSh());
             map.put("flag",true);
             map.put("bindBankTransNew",bindBankTransNew);
-        }catch(Exception e){
-            e.printStackTrace();
-            map.put("flag",false);
+            return  map;
         }
+        map.put("flag",false);
+        map.put("bindBankTransNew",null);
         return  map;
     }
 
