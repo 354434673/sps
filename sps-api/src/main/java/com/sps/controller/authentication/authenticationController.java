@@ -607,6 +607,44 @@ public class authenticationController {
 					company.setShopkeeperCustomerid(clientNum);
 
 					shopkeeperService.insertShopkeeperCompany(company);
+					
+					SpsShopkeeperPic pic = null;
+
+					pic = new SpsShopkeeperPic();
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicState(0);
+					
+					pic.setPicType(7);
+					
+					pic.setPicSrc(arg0.getStoreFrontPictures());
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
+					
+					pic = new SpsShopkeeperPic();
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicState(0);
+					
+					pic.setPicType(11);
+					
+					pic.setPicSrc(arg0.getStoreInPictures());
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
+					
+					pic = new SpsShopkeeperPic();
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicState(0);
+					
+					pic.setPicType(0);
+					
+					pic.setPicSrc(arg0.getLeasePictures());
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
 					/**
 					 * 更改shopkeeper主表的内容
 					 */
