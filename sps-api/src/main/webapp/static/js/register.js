@@ -114,6 +114,7 @@
                             },
                             success: function (data) {
                                 if(data.result == true){
+                                    _this.countDown();
                                     aspenLib.tips('发送成功');
                                 }
                             },
