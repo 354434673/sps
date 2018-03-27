@@ -13,7 +13,6 @@ import com.sps.entity.user.SpsUser;
 import com.sps.service.user.UserService;
 
 public class CustmerMd5 extends AuthenticatingRealm{
-	@Resource
 	private UserService userService;
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) {
@@ -27,5 +26,11 @@ public class CustmerMd5 extends AuthenticatingRealm{
 		}
 		return null;
 	}
-
+	public UserService getUserService() {
+		return userService;
+	}
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+	
 }
