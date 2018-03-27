@@ -14,11 +14,12 @@ import org.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import org.sps.service.shopkeeper.read.ShopkeeperReadService;
 import org.sps.service.shopkeeper.write.ShopkeeperWriteService;
 import org.sps.util.FinalData;
+import org.sps.util.HttpClientUtil;
 import org.sps.util.RuleUtil;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.sps.dao.merchant.write.SpsChannelWriteMapper;
-import com.sps.dao.shopkeeper.read.SpsShopkeeperInvitationReadMapper;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sps.dao.shopkeeper.write.SpsShopkeeperAccountWriteMapper;
 import com.sps.dao.shopkeeper.write.SpsShopkeeperInvitationWriteMapper;
 import com.sps.dao.shopkeeper.write.SpsShopkeeperPersonalWriteMapper;
@@ -26,6 +27,7 @@ import com.sps.dao.shopkeeper.write.SpsShopkeeperWriteMapper;
 @Service(timeout = 2000, group = "dianfu")
 @org.springframework.stereotype.Service
 public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
+	private static final String URL_APPLY_INSERT = "http://192.168.201.149:8080/sps/insertShopApplyInfo";	
 	@Resource
 	private SpsShopkeeperAccountWriteMapper accountWrite;
 	@Resource
@@ -129,6 +131,8 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 				personal.setShopkeeperCustomerid(clientNum);
 				personalWrite.insertSelective(personal);
 				
+				insert(invitation, clientNum, channelNum);
+				
 				HashMap<String, String> result = new HashMap<>();
 				result.put("channelNum", channelNum);
 				result.put("clientNum", clientNum);
@@ -154,6 +158,28 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 	public HashMap<String, Object> insertManyInvitation(SpsShopkeeperInvitation invitation) throws Exception {
 		
 		return null;
+	}
+	private void insert(SpsShopkeeperInvitation invitation, String clientNum, String channelNum){
+		
+		JSONObject shopApplyInfo = new JSONObject();
+		
+		shopApplyInfo.put("shopCode", clientNum);
+		
+		shopApplyInfo.put("applyTime", new Date());
+		
+		shopApplyInfo.put("registerChannel", "web");
+		
+		shopApplyInfo.put("customer_channel",  "商户邀请");
+		
+		shopApplyInfo.put("centerMerchantCode",  channelNum);
+		
+		shopApplyInfo.put("createTime",  new Date());
+
+		JSONObject data = new JSONObject();
+		
+		data.put("shopApplyInfo", shopApplyInfo);
+		
+		HttpClientUtil.doPostJson(URL_APPLY_INSERT, JSON.toJSONString(data));
 	}
 
 }

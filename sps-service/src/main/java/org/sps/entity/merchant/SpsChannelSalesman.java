@@ -20,6 +20,8 @@ public class SpsChannelSalesman implements Serializable{
 
     private String salesmanCity;
 
+    private String salesmaneChannelNum;
+
     private String bei1;
 
     private String bei2;
@@ -74,6 +76,14 @@ public class SpsChannelSalesman implements Serializable{
 
     public void setSalesmanCity(String salesmanCity) {
         this.salesmanCity = salesmanCity == null ? null : salesmanCity.trim();
+    }
+
+    public String getSalesmaneChannelNum() {
+        return salesmaneChannelNum;
+    }
+
+    public void setSalesmaneChannelNum(String salesmaneChannelNum) {
+        this.salesmaneChannelNum = salesmaneChannelNum == null ? null : salesmaneChannelNum.trim();
     }
 
     public String getBei1() {

@@ -47,13 +47,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<SpsOrder> findList(Map<String, Object> map) {
         List<SpsOrder> orderList = spsOrderMapper.findListAllWithMap(map);
-        if (orderList!=null&&orderList.size()>0){
-            for (SpsOrder  order:orderList) {
+        if (orderList != null && orderList.size() > 0) {
+            for (SpsOrder order : orderList) {
                 Map<String, Object> goodsMap = new HashMap<>();
                 goodsMap.put("orderNum", order.getOrderid());
                 List<SpsOrderGoods> goodsList = spsOrderGoodsMapper.findListAllWithMap(goodsMap);
-                String[] pro1 = new String[]{"skuname","price","url"};
-                if (goodsList!=null&&goodsList.size()>0){
+                String[] pro1 = new String[]{"skuname", "price", "url"};
+                if (goodsList != null && goodsList.size() > 0) {
                     order.setOrderGoodsList((List<SpsOrderGoods>) EntityUtiles.reloadListPropertyValue(goodsList, pro1));
                 }
             }
@@ -68,12 +68,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public SpsOrder findById(Integer id) {
-        SpsOrder  order = spsOrderMapper.findById(id);
-        if(order!=null){
+        SpsOrder order = spsOrderMapper.findById(id);
+        if (order != null) {
             Map<String, Object> goodsMap = new HashMap<>();
             goodsMap.put("orderNum", order.getOrderid());
             List<SpsOrderGoods> goodsList = spsOrderGoodsMapper.findListAllWithMap(goodsMap);
-            if (goodsList!=null&&goodsList.size()>0){
+            if (goodsList != null && goodsList.size() > 0) {
                 order.setOrderGoodsList(goodsList);
             }
         }
@@ -103,7 +103,11 @@ public class OrderServiceImpl implements OrderService {
         Integer status = (Integer) map.get("orderStatus");
         String orderNum = (String) map.get("orderNum");
         SpsOrder order = new SpsOrder();
-        order.setFlag(status);
+        if (status == 1) {
+            order.setFlag(5);
+        } else if (status == 0) {
+            order.setFlag(19);
+        }
         order.setModifytime(new Date());
         order.setOrderid(orderNum);
         spsOrderGoodsMapper.updateToOrderNum(order);

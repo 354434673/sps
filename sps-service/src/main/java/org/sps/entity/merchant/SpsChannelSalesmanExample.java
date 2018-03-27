@@ -514,6 +514,76 @@ public class SpsChannelSalesmanExample {
             return (Criteria) this;
         }
 
+        public Criteria andSalesmaneChannelNumIsNull() {
+            addCriterion("salesmane_channel_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumIsNotNull() {
+            addCriterion("salesmane_channel_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumEqualTo(String value) {
+            addCriterion("salesmane_channel_num =", value, "salesmaneChannelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumNotEqualTo(String value) {
+            addCriterion("salesmane_channel_num <>", value, "salesmaneChannelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumGreaterThan(String value) {
+            addCriterion("salesmane_channel_num >", value, "salesmaneChannelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumGreaterThanOrEqualTo(String value) {
+            addCriterion("salesmane_channel_num >=", value, "salesmaneChannelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumLessThan(String value) {
+            addCriterion("salesmane_channel_num <", value, "salesmaneChannelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumLessThanOrEqualTo(String value) {
+            addCriterion("salesmane_channel_num <=", value, "salesmaneChannelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumLike(String value) {
+            addCriterion("salesmane_channel_num like", value, "salesmaneChannelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumNotLike(String value) {
+            addCriterion("salesmane_channel_num not like", value, "salesmaneChannelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumIn(List<String> values) {
+            addCriterion("salesmane_channel_num in", values, "salesmaneChannelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumNotIn(List<String> values) {
+            addCriterion("salesmane_channel_num not in", values, "salesmaneChannelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumBetween(String value1, String value2) {
+            addCriterion("salesmane_channel_num between", value1, value2, "salesmaneChannelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmaneChannelNumNotBetween(String value1, String value2) {
+            addCriterion("salesmane_channel_num not between", value1, value2, "salesmaneChannelNum");
+            return (Criteria) this;
+        }
+
         public Criteria andBei1IsNull() {
             addCriterion("bei1 is null");
             return (Criteria) this;

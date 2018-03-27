@@ -8,6 +8,7 @@
     <result column="salesman_phone" property="salesmanPhone" jdbcType="VARCHAR" />
     <result column="salesman_email" property="salesmanEmail" jdbcType="VARCHAR" />
     <result column="salesman_city" property="salesmanCity" jdbcType="VARCHAR" />
+    <result column="salesmane_channel_num" property="salesmaneChannelNum" jdbcType="VARCHAR" />
     <result column="bei1" property="bei1" jdbcType="VARCHAR" />
     <result column="bei2" property="bei2" jdbcType="VARCHAR" />
     <result column="bei3" property="bei3" jdbcType="VARCHAR" />
@@ -44,7 +45,7 @@
   </sql>
   <sql id="Base_Column_List" >
     salesman_id, salesman_name, salesman_idCard, salesman_phone, salesman_email, salesman_city, 
-    bei1, bei2, bei3, bei4
+    salesmane_channel_num, bei1, bei2, bei3, bei4
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.merchant.SpsChannelSalesmanExample" >
     select

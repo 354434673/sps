@@ -27,19 +27,18 @@
 			</value>
 		</property>
 	</bean>
-
 	<!-- 配置缓存管理器 -->
-	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"> 
-		<!-- 指定 ehcache 的配置文件 -->
+<!-- 	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"> 
+		指定 ehcache 的配置文件
 		<property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/> 
-	</bean> 
+	</bean>  -->
 	
 	<!-- 配置securityManager -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<!-- 认证管理器-->  
 		<property name="realm" ref="customerMd5" />
 		<!-- 缓存管理器 -->  
-        <property name="cacheManager" ref="cacheManager" /> 
+       <!--  <property name="cacheManager" ref="cacheManager" />  -->
 	</bean>
     
 	<!-- 自定义realm -->
@@ -47,7 +46,6 @@
 		<!-- 依赖凭证匹配器 -->
 		<property name="credentialsMatcher" ref="credentialsMatcher" />
 	</bean>
-
 	<!-- 创建凭证匹配器 -->
 	<bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
 		<!-- 加密方式md5 -->

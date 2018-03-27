@@ -1,14 +1,15 @@
 package com.sps.service.merchant.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 
 import com.sps.common.EntityUtiles;
 import com.sps.common.EntityUtils;
+import com.sps.dao.shopkeeper.SpsChannelMapper;
+import com.sps.entity.merchant.SpsChannel;
+import com.sps.entity.merchant.SpsChannelExample;
+import com.sps.entity.shopkeeper.SpsShopkeeperExample;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,8 @@ import com.sps.service.shopkeeper.ShopkeeperService;
 public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseService {
     @Resource
     private ChannelEnterpriseDao enterpriseDao;
+    @Resource
+    private SpsChannelMapper spsChannelMapper;
     @Resource
     private ShopkeeperService shopkeeperService;
     @Resource
@@ -200,6 +203,25 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
                     Message.FAILURE_MSG, null, null);
         }
         return hashMap;
+    }
+
+    @Override
+    public int updateStatus(Map<String, Object> map) {
+        Integer status = (Integer) map.get("status");
+        String customerId = (String) map.get("customerId");
+        SpsChannel channel = new SpsChannel();
+        if (status == 1) {
+            channel.setChannelState(1);
+            channel.setChannelFlowState(2);
+        } else if (status == 0) {
+            channel.setChannelFlowState(3);
+            channel.setChannelState(2);
+        }
+        channel.setChannelNum(customerId);
+        channel.setChannelUpTime(new Date());
+        SpsChannelExample example = new SpsChannelExample();
+        example.createCriteria().andChannelNumEqualTo(channel.getChannelNum());
+        return spsChannelMapper.updateByExampleSelective(channel, example);
     }
 
 

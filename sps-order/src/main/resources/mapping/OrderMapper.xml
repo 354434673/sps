@@ -170,6 +170,27 @@
         </where>
     </select>
 
+    <select id="selectByOrderId" resultMap="BaseOrderResultMap" parameterType="java.lang.String" >
+        SELECT
+        o.*, ss.shopkeeper_commodity_type AS commodityType,
+        ss.shopkeeper_brand AS brand,
+        ss.shopkeeper_customerId AS customerId
+        FROM
+        sps_order o
+        LEFT JOIN sps_shopkeeper_account sa ON o.selfemployed = sa.account_num
+        LEFT JOIN sps_shopkeeper ss ON ss.shopkeeper_customerId = sa.shopkeeper_customerId
+        <where>
+            <!-- sps_order.orderid=sps_order_goods.orderid -->
+            <if test="orderid != null and orderid != '' ">
+                and o.orderid = #{orderid,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+
+
+
+
 
     <select id="selectByTradeNO" parameterType="String" resultMap="BaseOrderResultMap1">
         SELECT

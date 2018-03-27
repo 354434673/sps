@@ -1,5 +1,6 @@
 package org.sps.entity.merchant;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -301,6 +302,76 @@ public class SpsChannelEnterpriseExample {
 
         public Criteria andEnterpriseCompanyNameNotBetween(String value1, String value2) {
             addCriterion("enterprise_company_name not between", value1, value2, "enterpriseCompanyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationIsNull() {
+            addCriterion("enterprise_company_abbreviation is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationIsNotNull() {
+            addCriterion("enterprise_company_abbreviation is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationEqualTo(String value) {
+            addCriterion("enterprise_company_abbreviation =", value, "enterpriseCompanyAbbreviation");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationNotEqualTo(String value) {
+            addCriterion("enterprise_company_abbreviation <>", value, "enterpriseCompanyAbbreviation");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationGreaterThan(String value) {
+            addCriterion("enterprise_company_abbreviation >", value, "enterpriseCompanyAbbreviation");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationGreaterThanOrEqualTo(String value) {
+            addCriterion("enterprise_company_abbreviation >=", value, "enterpriseCompanyAbbreviation");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationLessThan(String value) {
+            addCriterion("enterprise_company_abbreviation <", value, "enterpriseCompanyAbbreviation");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationLessThanOrEqualTo(String value) {
+            addCriterion("enterprise_company_abbreviation <=", value, "enterpriseCompanyAbbreviation");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationLike(String value) {
+            addCriterion("enterprise_company_abbreviation like", value, "enterpriseCompanyAbbreviation");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationNotLike(String value) {
+            addCriterion("enterprise_company_abbreviation not like", value, "enterpriseCompanyAbbreviation");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationIn(List<String> values) {
+            addCriterion("enterprise_company_abbreviation in", values, "enterpriseCompanyAbbreviation");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationNotIn(List<String> values) {
+            addCriterion("enterprise_company_abbreviation not in", values, "enterpriseCompanyAbbreviation");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationBetween(String value1, String value2) {
+            addCriterion("enterprise_company_abbreviation between", value1, value2, "enterpriseCompanyAbbreviation");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCompanyAbbreviationNotBetween(String value1, String value2) {
+            addCriterion("enterprise_company_abbreviation not between", value1, value2, "enterpriseCompanyAbbreviation");
             return (Criteria) this;
         }
 
@@ -771,6 +842,66 @@ public class SpsChannelEnterpriseExample {
 
         public Criteria andChannelNumNotBetween(String value1, String value2) {
             addCriterion("channel_num not between", value1, value2, "channelNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCapitalIsNull() {
+            addCriterion("enterprise_capital is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCapitalIsNotNull() {
+            addCriterion("enterprise_capital is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCapitalEqualTo(BigDecimal value) {
+            addCriterion("enterprise_capital =", value, "enterpriseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCapitalNotEqualTo(BigDecimal value) {
+            addCriterion("enterprise_capital <>", value, "enterpriseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCapitalGreaterThan(BigDecimal value) {
+            addCriterion("enterprise_capital >", value, "enterpriseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCapitalGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("enterprise_capital >=", value, "enterpriseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCapitalLessThan(BigDecimal value) {
+            addCriterion("enterprise_capital <", value, "enterpriseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCapitalLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("enterprise_capital <=", value, "enterpriseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCapitalIn(List<BigDecimal> values) {
+            addCriterion("enterprise_capital in", values, "enterpriseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCapitalNotIn(List<BigDecimal> values) {
+            addCriterion("enterprise_capital not in", values, "enterpriseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCapitalBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("enterprise_capital between", value1, value2, "enterpriseCapital");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnterpriseCapitalNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("enterprise_capital not between", value1, value2, "enterpriseCapital");
             return (Criteria) this;
         }
     }

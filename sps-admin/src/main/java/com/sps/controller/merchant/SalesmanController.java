@@ -1,9 +1,12 @@
 package com.sps.controller.merchant;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,8 +16,7 @@ import org.sps.service.merchant.read.ChannelSalesmanReadService;
 import org.sps.service.merchant.write.ChannelSalesmanWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.juzifenqi.core.ServiceResult;
-import com.juzifenqi.usercenter.service.ISmsCommonService;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 业务员控制层
@@ -48,8 +50,14 @@ public class SalesmanController {
 		
 		final String CONTENT = "【店付】业务员您好，以下为店主邀请链接，请妥善保存此链接:"+URL;
 		
-		HashMap<String, Object> insertSalesman = salesmanWrite.insertSalesman(salesman);
+		Subject subject = SecurityUtils.getSubject();
 		
+		String channelNum = (String)subject.getSession().getAttribute(subject.getPrincipal());
+
+		salesman.setSalesmaneChannelNum(channelNum);
+		
+		HashMap<String, Object> insertSalesman = salesmanWrite.insertSalesman(salesman);
+
 /*		if(insertSalesman.get("state").equals("success")){
 			//业务员添加成功后调用短信接口给业务员发送短信
 			ServiceResult<Boolean> sendCommonSms = iSmsCommonService.sendCommonSms(salesman.getSalesmanPhone(), CONTENT, 3);

@@ -322,7 +322,9 @@ public class ShopkeeperReadServiceImpl implements ShopkeeperReadService{
 		SpsShopkeeperInvitationExample example = new SpsShopkeeperInvitationExample();
 		
 		Criteria createCriteria = example.createCriteria();
+		
 		createCriteria.andInvitationTypeEqualTo(0);
+		
 		if(!(name == null || name.equals(""))){
 			createCriteria.andInvitationNameLike("%"+name+"%");
 		}
