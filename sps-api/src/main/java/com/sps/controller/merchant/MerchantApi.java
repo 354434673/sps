@@ -2,13 +2,14 @@ package com.sps.controller.merchant;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.sps.common.Common;
+import com.sps.common.Message;
+import com.sps.common.ReturnInfo;
+import org.springframework.web.bind.annotation.*;
 import com.sps.service.merchant.EnterpriseService;
 /**
  * 商户相关api
@@ -22,6 +23,32 @@ import com.sps.service.merchant.EnterpriseService;
 public class MerchantApi{
 	@Resource
 	private EnterpriseService enterpriseService;
+
+
+
+	/**
+	 * 风控小B回调接口
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "/channelCallback", method = RequestMethod.POST)
+	@ResponseBody
+	public ReturnInfo orderCallback(@RequestBody Map<String,Object> map) {
+		ReturnInfo ri =  Common.validate(map, "status","customerId");
+		if ("0".equals(ri.getCode())) return ri;
+		try {
+			enterpriseService.updateStatus(map);
+			ri.setSuccess(Message.SUCCESS_MSG);
+			ri.setCode(Message.SUCCESS_CODE);
+			ri.setMsg(Message.API_SUCCESS_MSG);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ri.setCode(Message.FAILURE_CODE);
+			ri.setMsg(Message.FAILURE_MSG);
+			ri.setSuccess(Message.API_ERROR_FLAG);
+		}
+		return ri;
+	}
 	/**
 	 * 获得商户列表(目前只有一个)
 	 * @Title: queryMerchant

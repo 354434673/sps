@@ -2,6 +2,7 @@ package com.sps.service.merchant;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.sps.entity.merchant.SpsChannelEnterprise;
 
@@ -28,4 +29,11 @@ public interface EnterpriseService {
 	 * @throws
 	 */
 	HashMap<String,Object> queryMerchantDetail(Integer enterpriseId ,Integer categoryId, String orderType, String goodsName,String shopkeeperCustomerId);
+
+	/**
+	 * 修改状态
+	 * @param map
+	 * @return
+	 */
+    int updateStatus(Map<String, Object> map);
 }

@@ -61,5 +61,5 @@ public interface OrderGoodsMapper {
     int updateByPrimaryKey(OrderGoods record);
 
 
-
+    List<OrderGoods> selectOrderGood(@Param(value="orderid")String orderid);
 }

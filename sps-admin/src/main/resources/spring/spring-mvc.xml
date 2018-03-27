@@ -75,4 +75,5 @@
         </property>  
     </bean> 
 
+	<import resource="spring-shiro.xml" />
 </beans>
