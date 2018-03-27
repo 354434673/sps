@@ -409,7 +409,7 @@ public class authenticationController {
 					
 					personal.setShopkeeperCustomerid(clientNum);
 					
-					shopkeeperService.updateSpsShopkeeperPersonal(personal, arg0.getUserId());
+					shopkeeperService.updateSpsShopkeeperPersonal(personal);
 					
 					saveLinkDetail.setCode(Message.SUCCESS_CODE);
 				}
@@ -481,7 +481,7 @@ public class authenticationController {
 					
 					personal.setShopkeeperCustomerid(clientNum);
 					
-					shopkeeperService.insertSpsShopkeeperPersonal(personal ,arg0.getUserId());
+					shopkeeperService.insertSpsShopkeeperPersonal(personal);
 					
 					saveLinkDetail.setCode(Message.SUCCESS_CODE);
 				}
@@ -527,13 +527,13 @@ public class authenticationController {
 			
 			String code = saveLinkDetail.getCode();
 			
-			shopkeeperService.insertSpsShopkeeperRepayment(repayment, userId);
+			shopkeeperService.insertSpsShopkeeperRepayment(repayment);
 			
 			if(code != null){
 				if(code.equals("SUCCESS")){
 					repayment.setShopkeeperCustomerid(clientNum);
 					
-					shopkeeperService.insertSpsShopkeeperRepayment(repayment, userId);
+					shopkeeperService.insertSpsShopkeeperRepayment(repayment);
 					
 					saveLinkDetail.setCode(Message.SUCCESS_CODE);
 				}
@@ -694,7 +694,7 @@ public class authenticationController {
 			
 			personal.setShopkeeperCustomerid(clientNum);
 			
-			shopkeeperService.updateSpsShopkeeperPersonal(personal, userId);
+			shopkeeperService.updateSpsShopkeeperPersonal(personal);
 			
 			saveMentionDetail.setCode(Message.SUCCESS_CODE);
 		}else{

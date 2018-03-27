@@ -1,6 +1,5 @@
 package com.sps.serviceImpl.merchant.write;
 
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
@@ -17,11 +16,13 @@ import org.sps.entity.merchant.SpsChannelLogistics;
 import org.sps.entity.merchant.SpsChannelOpenAccount;
 import org.sps.service.merchant.read.ChannelReadService;
 import org.sps.service.merchant.write.ChannelWriteService;
-import org.sps.util.DateUtil;
 import org.sps.util.FinalData;
+import org.sps.util.HttpClientUtil;
 import org.sps.util.RuleUtil;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sps.dao.merchant.write.SpsChannelBusinessWriteMapper;
 import com.sps.dao.merchant.write.SpsChannelEnterpriseWriteMapper;
 import com.sps.dao.merchant.write.SpsChannelFinanceTargetWriteMapper;
@@ -33,6 +34,7 @@ import com.sps.dao.merchant.write.SpsChannelWriteMapper;
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelWriteServiceImpl implements ChannelWriteService{
+	private static final String URL = "http://192.168.201.149:8080/sps/insertCenterBank";	
 	@Resource
 	private SpsChannelWriteMapper channelWrite;
 	@Resource
@@ -128,16 +130,18 @@ public class ChannelWriteServiceImpl implements ChannelWriteService{
 	@Override
 	public HashMap<String, Object> insertGather(SpsChannelGather gather) {
 		
-		
 		HashMap<String, Object> hashMap = new HashMap<String,Object>();
 		
 		SpsChannelGather queryGather = channelReadService.getGather(gather);
+		
 		
 		if(queryGather == null){
 			try {
 				int insertSelective = gatherWrite.insertSelective(gather);
 				
 				Integer gatherId = gather.getGatherId();
+				
+				insertBank(gather);
 				
 				hashMap.put("msg", "银行卡添加成功");
 				hashMap.put("state", FinalData.STATE_SUCCESS);
@@ -197,5 +201,27 @@ public class ChannelWriteServiceImpl implements ChannelWriteService{
 		hashMap.put("state", FinalData.STATE_SUCCESS);
 		
 		return hashMap;
+	}
+	private void insertBank(SpsChannelGather channelGather){
+		JSONObject centerBankInfo = new JSONObject();
+		JSONObject centerMerchantInfo = new JSONObject();
+		/**
+		 * 推向风控
+		 */
+		centerMerchantInfo.put("merchantCode", channelGather.getChannelNum());//商户编号
+		centerBankInfo.put("bankNo", channelGather.getGatherBankId());//收款银行卡账号
+		centerBankInfo.put("cardOwnerName", channelGather.getGatherOwnerName());//银行卡所有人姓名
+		centerBankInfo.put("certNo", channelGather.getGatherIdcard());//身份证号
+		centerBankInfo.put("bindMobile", channelGather.getGatherPhone());//银行卡绑定手机号
+		centerBankInfo.put("depositBank",  channelGather.getGatherDepositBank());//开户银行
+		centerBankInfo.put("bankSeparate",  channelGather.getGatherBankSubbranch());//开户行分行
+		centerBankInfo.put("bankBranch",  channelGather.getGatherBankBranch());//开户银行支行
+		
+		JSONObject data = new JSONObject();
+		data.put("centerBankInfo", centerBankInfo);
+		data.put("merchantInfo", centerMerchantInfo);
+		String jsonString = JSON.toJSONString(data);
+		
+		HttpClientUtil.doPostJson(URL, jsonString);
 	}
 }

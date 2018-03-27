@@ -90,15 +90,15 @@ public interface ShopkeeperService {
 	
 	int insertSpsShopkeeperHouseProperty(SpsShopkeeperHouseProperty houseProperty);
 	
-	int insertSpsShopkeeperPersonal(SpsShopkeeperPersonal personal, Integer userId);
+	int insertSpsShopkeeperPersonal(SpsShopkeeperPersonal personal);
 	
 	int insertSpsShopkeeperPic(SpsShopkeeperPic pic);
 	
-	int insertSpsShopkeeperRepayment(SpsShopkeeperRepayment repayment, Integer userId);
+	int insertSpsShopkeeperRepayment(SpsShopkeeperRepayment repayment);
 	
 	int insertSpsShopkeeperTaking(SpsShopkeeperTaking taking);
 	
-	int updateSpsShopkeeperPersonal(SpsShopkeeperPersonal personal, Integer userId);
+	int updateSpsShopkeeperPersonal(SpsShopkeeperPersonal personal);
 	
 	int updateShopkeeper(SpsShopkeeper shopkeeper);
 	

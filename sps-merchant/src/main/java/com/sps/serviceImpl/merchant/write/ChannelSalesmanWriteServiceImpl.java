@@ -5,21 +5,23 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.security.auth.Subject;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.merchant.SpsChannelSalesman;
 import org.sps.entity.merchant.SpsChannelSalesmanExample;
 import org.sps.service.merchant.write.ChannelSalesmanWriteService;
 import org.sps.util.FinalData;
+import org.sps.util.HttpClientUtil;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sps.dao.merchant.read.SpsChannelSalesmanReadMapper;
 import com.sps.dao.merchant.write.SpsChannelSalesmanWriteMapper;
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteService{
+	private static final String URL = "http://192.168.201.149:8080/sps/updateMerchant";
 	@Resource
 	private SpsChannelSalesmanWriteMapper salesmanWrite;
 	@Resource
@@ -101,20 +103,23 @@ public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteServ
 	};
 	private void salesmanEntry(SpsChannelSalesman salesman){
 		
-		JSONObject CenterMerchantInfo = new JSONObject();
+		JSONObject centerMerchantInfo = new JSONObject();
 		/**
 		 * 推向风控
 		 */
-		CenterMerchantInfo.put("bussinessName", salesman.getSalesmanName());//店付业务员姓名
-		CenterMerchantInfo.put("certNo", salesman.getSalesmanIdcard());//店付业务员身份证
-		CenterMerchantInfo.put("city", salesman.getSalesmanCity());//所在城市
-		CenterMerchantInfo.put("updateTime",  new Date());//更新时间
+		centerMerchantInfo.put("merchantCode", salesman.getSalesmaneChannelNum());//商户编号
+		centerMerchantInfo.put("bussinessName", salesman.getSalesmanName());//店付业务员姓名
+		centerMerchantInfo.put("certNo", salesman.getSalesmanIdcard());//店付业务员身份证
+		centerMerchantInfo.put("city", salesman.getSalesmanCity());//所在城市
+		centerMerchantInfo.put("updateTime",  new Date());//更新时间
 		
 		JSONObject data = new JSONObject();
 		
-		data.put("CenterMerchantInfo", CenterMerchantInfo);
+		data.put("merchantInfo", centerMerchantInfo);
 		
-		//风控方更新数据
+		String jsonString = JSON.toJSONString(data);
+		
+		String doPostJson = HttpClientUtil.doPostJson(URL, jsonString);
 		
 	}
 }
