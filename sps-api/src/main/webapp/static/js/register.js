@@ -79,6 +79,9 @@
                     } else if (!/^[1][3,4,5,7,8][0-9]{9}$/.test(telNum.value)) {
                         aspenLib.tips('手机号格式不正确！');
                         return;
+                    } else if (getCheckCode.innerHTML != '获取验证码') {
+                        aspenLib.tips('请等待有效时间获取');
+                        return;
                     }else {
                         _this.imgCheckCode();
                     }
@@ -114,7 +117,7 @@
                             },
                             success: function (data) {
                                 if(data.result == true){
-                                    _this.countDown();
+                                    _this.countDown('getCheckCode');
                                     aspenLib.tips('发送成功');
                                 }
                             },
