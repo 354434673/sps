@@ -545,7 +545,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return hashMap;
 	}
-
+/*
 	@Test
 	public void test2(){
 		String orderid = "df10484395138694";
@@ -557,11 +557,11 @@ public class OrderServiceImpl implements OrderService {
 		json.put("loanTerm", "7");
 		json.put("downPayments", order.getScale());
 		json.put("firstPayment", order.getPayment());
-					/*json.put("repaymentMethod", "df10481065917829");*/
+					json.put("repaymentMethod", "df10481065917829");
 		json.put("shopCode", order.getCustomerId());
 		json.put("shopMainBussiness", order.getCommodityType());
-				/*	json.put("shopMainBussinessName",order.get);*/
-					/*json.put("shopRiskLevel", "北京");*/
+					json.put("shopMainBussinessName",order.get);
+					json.put("shopRiskLevel", "北京");
 		json.put("shopCompanyName", order.getSelfname());
 		json.put("shopMainBrand", order.getBrand());
 		json.put("centerMerchantCode", order.getShopkeeper());
@@ -572,45 +572,7 @@ public class OrderServiceImpl implements OrderService {
 		if (jsonResult != null) {
 
 		}
-	}
-	public static void main(String[] args)
-	{
+	}*/
 
 }
 
-
-	/*
-	 * @Override public HashMap<String,Object> selectByExpressPrimaryKey(Integer
-	 * id) { HashMap<String, Object> hashMap = new HashMap<String, Object>();
-	 * List<Express> list=new ArrayList<Express>(); Express
-	 * express=expressMapper.selectByExpressPrimaryKey(id); list.add(express);
-	 * hashMap.put("code", 0); hashMap.put("msg", "获取成功"); hashMap.put("data",
-	 * list); hashMap.put("count", list.size()); return hashMap; }
-	 */
-
-	// @Override
-	// public HashMap<String, Object> updatePriceBatch(Integer page, Integer
-	// limit, String orderid, BigDecimal price) {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
-
-	/*
-	 * @Override public HashMap<String, Object> selectBySku(Integer page,
-	 * Integer limit, String sku) { HashMap<String, Object> hashMap = new
-	 * HashMap<String, Object>();
-	 * 
-	 * // 分页 PageHelper.startPage(page, limit);
-	 * 
-	 * List<OrderGoods> orderGoods = orderGoodsMapper.getOrderGoods(sku);
-	 * 
-	 * // 转为pageinfo PageInfo pageInfo = new PageInfo(orderGoods);
-	 * 
-	 * hashMap.put("code", 0); hashMap.put("msg", "获取成功"); hashMap.put("count",
-	 * pageInfo.getTotal()); hashMap.put("data", orderGoods.size() > 0 ?
-	 * orderGoods : null);
-	 * 
-	 * return hashMap; }
-	 */
-
-}
