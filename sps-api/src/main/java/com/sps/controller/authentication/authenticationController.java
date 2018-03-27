@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.juzifenqi.capital.entity.BankCode;
-import com.juzifenqi.capital.entity.UserCard;
 import com.juzifenqi.capital.service.IUserCardNewService;
-import com.juzifenqi.core.ServiceResult;
 import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthQueryApi;
@@ -586,9 +583,7 @@ public class authenticationController {
 			
 			if(code != null){
 				if(code.equals("SUCCESS")){
-					/*
-					 * 添加到公司表
-					 */
+					
 					SpsShopkeeperCompany company = new SpsShopkeeperCompany();
 					
 					company.setCompanyName(arg0.getCompanyName());
