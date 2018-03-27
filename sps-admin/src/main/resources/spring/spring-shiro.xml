@@ -42,10 +42,9 @@
 	</bean>
     
 	<!-- 自定义realm -->
-	<bean id="customerMd5" class="com.sps.realm.CustmerMd5" depends-on="spsUserMapper,logMapper">
+	<bean id="customerMd5" class="com.sps.realm.CustmerMd5" >
 		<!-- 依赖凭证匹配器 -->
 		<property name="credentialsMatcher" ref="credentialsMatcher" />
-		<property name="userService" ref="userServiceImpl" />
 	</bean>
 	<!-- 创建凭证匹配器 -->
 	<bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
