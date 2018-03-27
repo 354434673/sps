@@ -586,9 +586,7 @@ public class authenticationController {
 			
 			if(code != null){
 				if(code.equals("SUCCESS")){
-					/*
-					 * 添加到公司表
-					 */
+					
 					SpsShopkeeperCompany company = new SpsShopkeeperCompany();
 					
 					company.setCompanyName(arg0.getCompanyName());

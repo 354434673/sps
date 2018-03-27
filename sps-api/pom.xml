@@ -418,18 +418,6 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat8-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-				<port>8181</port>
-				<path>/sps-api</path>
-				<uriEncoding>UTF-8</uriEncoding>
-				<finalName>sps-api</finalName>
-				<server>tomcat8</server>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 	<properties>
