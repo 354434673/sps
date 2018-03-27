@@ -30,8 +30,6 @@ import com.sps.dao.order.SpsOrderLogisticsMapper;
 @Service(timeout = 2000, group = "dianfu")
 @org.springframework.stereotype.Service
 @Transactional
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring/spring-mybatis.xml")
 public class OrderServiceImpl implements OrderService {
 
 
