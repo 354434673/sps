@@ -12,11 +12,13 @@ import com.sps.dao.goods.SpsShopkeeperPersonalMapper;
 import com.sps.dao.shopkeeper.SpsShopkeeperCarPrppertyDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperHousePrppertyDao;
 import com.sps.dao.shopkeeper.SpsShopkeeperPersonalDao;
+import com.sps.dao.shopkeeper.SpsShopkeeperPicDao;
 import com.sps.entity.goods.SpsBrand;
 import com.sps.entity.goods.SpsGoodCategory;
 import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
+import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 import com.sps.service.goods.BrandService;
 import com.sps.service.shopkeeper.ShopkeeperPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,8 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
     private SpsShopkeeperCarPrppertyDao carDao;
     @Autowired
     private SpsShopkeeperHousePrppertyDao houseDao;
+    @Autowired
+    private SpsShopkeeperPicDao spsShopkeeperPicDao;
 
     @Override
     public void saveOrUpdate(SpsShopkeeperPersonal spsShopkeeperPersonal) {
@@ -85,14 +89,31 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
     }
 
     @Override
-    public Boolean saveCarInfo(SpsShopkeeperCarProperty spsShopkeeperCarProperty) {
+    public Boolean saveCarInfo(SpsShopkeeperCarProperty spsShopkeeperCarProperty,String src) {
         int m = carDao.saveCarInfo(spsShopkeeperCarProperty);
-        return  m >0 ? true : false;
+        SpsShopkeeperPic spsShopkeeperPic = new SpsShopkeeperPic();
+        spsShopkeeperPic.setPicSrc(src);
+        spsShopkeeperPic.setPicType(12);
+        spsShopkeeperPic.setPicUploadTime(new Date());
+        spsShopkeeperPic.setPicCreatTime(new Date());
+        spsShopkeeperPic.setShopkeeperCustomerid(spsShopkeeperCarProperty.getShopkeeperCustomerid());
+        int n = spsShopkeeperPicDao.insert(spsShopkeeperPic);
+        return m > 0 && n > 0 ? true : false;
     }
 
     @Override
-    public Boolean saveHouseInfo(SpsShopkeeperHouseProperty spsShopkeeperHouseProperty) {
+    public Boolean saveHouseInfo(SpsShopkeeperHouseProperty spsShopkeeperHouseProperty,List<String> lists) {
         int m = houseDao.saveHouseInfo(spsShopkeeperHouseProperty);
-        return m >0 ? true :false;
+        int n=0;
+        for (int i=0;i<lists.size();i++){
+            SpsShopkeeperPic spsShopkeeperPic = new SpsShopkeeperPic();
+            spsShopkeeperPic.setPicSrc(lists.get(i));
+            spsShopkeeperPic.setPicType(11);
+            spsShopkeeperPic.setPicUploadTime(new Date());
+            spsShopkeeperPic.setPicCreatTime(new Date());
+            spsShopkeeperPic.setShopkeeperCustomerid(spsShopkeeperHouseProperty.getShopkeeperCustomerid());
+            n = spsShopkeeperPicDao.insert(spsShopkeeperPic);
+        }
+        return m > 0 && n > 0 ? true : false;
     }
 }

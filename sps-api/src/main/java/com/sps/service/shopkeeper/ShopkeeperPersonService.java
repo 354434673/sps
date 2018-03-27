@@ -2,6 +2,8 @@ package com.sps.service.shopkeeper;
 import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,12 +46,12 @@ public interface ShopkeeperPersonService {
      * @param spsShopkeeperCarProperty
      * @return
      */
-    Boolean  saveCarInfo(SpsShopkeeperCarProperty spsShopkeeperCarProperty);
+    Boolean  saveCarInfo(SpsShopkeeperCarProperty spsShopkeeperCarProperty,String src);
 
     /**
      * 保存房屋信息
      * @param spsShopkeeperHouseProperty
      * @return
      */
-    Boolean  saveHouseInfo(SpsShopkeeperHouseProperty spsShopkeeperHouseProperty);
+    Boolean  saveHouseInfo(SpsShopkeeperHouseProperty spsShopkeeperHouseProperty,List<String> lists);
 }

@@ -3,6 +3,7 @@ package com.sps.controller.app.person;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Message;
+import com.sps.common.OptionUtil;
 import com.sps.common.StringUtil;
 import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
+import java.util.*;
+
+import static com.juzifenqi.core.EjavashopSequence.getKey;
 
 /**
  * Created by Administrator on 2018-03-23.
@@ -92,6 +95,24 @@ public class PersonController {
         }
             return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG);
         }
+
+    /**
+     *   获取汽车类型
+      * @return
+     */
+    @RequestMapping(value = "/queryCarType", method = RequestMethod.POST)
+    @ResponseBody
+    public String queryCarType(){
+        JSONObject jsonO = new JSONObject();
+        String carBrandSmail = OptionUtil.CAR_BRAND_SMAIL;
+        String carBrandBig = OptionUtil.CAR_BRAND_BIG;
+        List<String> strings = new ArrayList<>();
+        strings.add(carBrandSmail);
+        strings.add(carBrandBig);
+        jsonO.put("map",strings);
+        return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG,jsonO);
+    }
+
     /**
      * 刘彩玲
      * 保存车辆基本信息
@@ -102,42 +123,37 @@ public class PersonController {
      */
     @RequestMapping(value = "/saveCarInfo", method = RequestMethod.POST)
     @ResponseBody
-    public String saveCarInfo( @RequestParam("flag") String flag,@RequestParam("carChassisNum") String carChassisNum,@RequestParam("carPlateNum") String carPlateNum,@RequestParam("carBrand") String carBrand,@RequestParam("carUsername") String carUsername,@RequestParam("shopkeeperCustomerid") String shopkeeperCustomerid)  {
+    public String saveCarInfo(@RequestParam("carChassisNum") String carChassisNum,@RequestParam("carPlateNum") String carPlateNum,@RequestParam("carBrand") String carBrand,@RequestParam("carUsername") String carUsername,@RequestParam("customerId") String customerId,@RequestParam("src") String src)  {
         SpsShopkeeperCarProperty carInfo = new SpsShopkeeperCarProperty();
+        Boolean flag;
         //上传行车证件的标志 ----"1"为已经上传，”0“ 为没有上传
-        Boolean falg;
-        try {
-            if ( "1".equals(flag)) {
-                //1表示有车
-                carInfo.setCarIsHave(1);
-                carInfo.setCarBrand(carBrand);
-                carInfo.setCarPlateNum(carPlateNum);
-                carInfo.setCarChassisNum(carChassisNum);
-                carInfo.setCarUsername(carUsername);
-                carInfo.setShopkeeperCustomerid(shopkeeperCustomerid);
-                carInfo.setCarCreatTime(new Date());
-                 falg = shopkeeperPersonService.saveCarInfo(carInfo);
-                if (falg){
-                    return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG);
-                }
-                return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG);
-            } else {
-                //0表示没车
-                carInfo.setCarIsHave(0);
-                carInfo.setCarBrand(carBrand);
-                carInfo.setCarPlateNum(carPlateNum);
-                carInfo.setCarChassisNum(carChassisNum);
-                carInfo.setCarUsername(carUsername);
-                carInfo.setShopkeeperCustomerid(shopkeeperCustomerid);
-                carInfo.setCarCreatTime(new Date());
-                 falg = shopkeeperPersonService.saveCarInfo(carInfo);
-                if(falg){
-                    return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG);
-                }
-                return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG);
+        if ( StringUtil.isNotEmpty(src)) {
+            //1表示有车
+            carInfo.setCarIsHave(1);
+            carInfo.setCarBrand(carBrand);
+            carInfo.setCarPlateNum(carPlateNum);
+            carInfo.setCarChassisNum(carChassisNum);
+            carInfo.setCarUsername(carUsername);
+            carInfo.setShopkeeperCustomerid(customerId);
+            carInfo.setCarCreatTime(new Date());
+             flag=shopkeeperPersonService.saveCarInfo(carInfo,src);
+            if (flag){
+                return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG);
             }
-        }catch(Exception e){
-            e.printStackTrace();
+            return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG);
+        } else {
+            //0表示没车
+            carInfo.setCarIsHave(0);
+            carInfo.setCarBrand(carBrand);
+            carInfo.setCarPlateNum(carPlateNum);
+            carInfo.setCarChassisNum(carChassisNum);
+            carInfo.setCarUsername(carUsername);
+            carInfo.setShopkeeperCustomerid(customerId);
+            carInfo.setCarCreatTime(new Date());
+            flag = shopkeeperPersonService.saveCarInfo(carInfo,src);
+            if(flag){
+                return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG);
+            }
             return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG);
         }
     }
@@ -148,40 +164,36 @@ public class PersonController {
      */
     @RequestMapping(value = "/saveHouseInfo", method = RequestMethod.POST)
     @ResponseBody
-    public String saveHouseInfo(@RequestParam("houseArea") Double  houseArea,@RequestParam("houseAddr") String houseAddr,@RequestParam("houseUsername") String  houseUsername,@RequestParam("id") String id,@RequestParam("flag") int flag)  {
+    public String saveHouseInfo(@RequestParam("houseArea") Double  houseArea,@RequestParam("houseAddr") String houseAddr,@RequestParam("houseUsername") String  houseUsername,@RequestParam("customerId") String customerId,@RequestParam("srcList") List<String> srcList)  {
         SpsShopkeeperHouseProperty houseInfo = new SpsShopkeeperHouseProperty();
         //上传行车证件的标志 ----"1"为已经上传，”0“ 为没有上传
-        Boolean falg;
-        try {
-            if ( flag==1) {
-                //1表示有房
-                houseInfo.setHouseIsHave(1);
-                houseInfo.setHouseArea(houseArea);
-                houseInfo.setHouseAddr(houseAddr);
-                houseInfo.setHouseUsername(houseUsername);
-                houseInfo.setShopkeeperCustomerid(id);
-                houseInfo.setHouseCreatTime(new Date());
-                falg= shopkeeperPersonService.saveHouseInfo(houseInfo);
-                if (falg){
-                    return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG);
-                }
+      //  List<String> srcs = (List<String>) JSONObject.parse(srcList);
+        Boolean flag;
+        if (srcList.size()>0) {
+            //1表示有房
+            houseInfo.setHouseIsHave(1);
+            houseInfo.setHouseArea(houseArea);
+            houseInfo.setHouseAddr(houseAddr);
+            houseInfo.setHouseUsername(houseUsername);
+            houseInfo.setShopkeeperCustomerid(customerId);
+            houseInfo.setHouseCreatTime(new Date());
+            flag= shopkeeperPersonService.saveHouseInfo(houseInfo, srcList);
+            if (flag) {
+                return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG);
+            }
                 return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG);
-            } else {
+         } else {
                 //0表示没房
                 houseInfo.setHouseIsHave(0);
                 houseInfo.setHouseArea(houseArea);
                 houseInfo.setHouseAddr(houseAddr);
                 houseInfo.setHouseUsername(houseUsername);
-                houseInfo.setShopkeeperCustomerid(id);
+                houseInfo.setShopkeeperCustomerid(customerId);
                 houseInfo.setHouseCreatTime(new Date());
-                falg= shopkeeperPersonService.saveHouseInfo(houseInfo);
-                if (falg){
+                 flag=shopkeeperPersonService.saveHouseInfo(houseInfo,null);
+                if (flag){
                     return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG);
                 }
-                return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
             return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG);
         }
     }
