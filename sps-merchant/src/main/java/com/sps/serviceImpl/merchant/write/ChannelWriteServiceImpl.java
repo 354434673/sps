@@ -24,7 +24,6 @@ import org.sps.entity.merchant.SpsChannelOpenAccount;
 import org.sps.service.merchant.read.ChannelReadService;
 import org.sps.service.merchant.write.ChannelWriteService;
 import org.sps.util.FinalData;
-import org.sps.util.HttpClientUtil;
 import org.sps.util.RuleUtil;
 
 import com.alibaba.dubbo.config.annotation.Service;
@@ -232,7 +231,7 @@ public class ChannelWriteServiceImpl implements ChannelWriteService{
 		data.put("merchantInfo", centerMerchantInfo);
 		String jsonString = JSON.toJSONString(data);
 
-		HttpClientUtil.doPostJson(URL, jsonString);
+		org.sps.util.HttpClientUtil.doPostJson(URL, jsonString);
 	}
 
 	@Override
@@ -247,7 +246,7 @@ public class ChannelWriteServiceImpl implements ChannelWriteService{
 		json.put("monthQuota", monthQuota);
 		json.put("signDateStart", df.format(System.currentTimeMillis()));
 		json.put("totalQuota", totalQuota);
-		String jsonResult = HttpClientUtil.doPostJson(initBusiness, json.toJSONString());
+		String jsonResult = com.sps.util.HttpClientUtil.doPostJson(initBusiness, json.toJSONString());
 		System.out.println(jsonResult);
 		if (jsonResult != null) {
 			JSONObject job = JSON.parseObject(jsonResult);
