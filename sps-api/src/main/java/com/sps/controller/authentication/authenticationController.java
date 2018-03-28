@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.ws.rs.POST;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -478,7 +479,7 @@ public class authenticationController {
 					
 					personal.setShopkeeperCustomerid(clientNum);
 					
-					shopkeeperService.insertSpsShopkeeperPersonal(personal);
+					//shopkeeperService.insertSpsShopkeeperPersonal(personal);
 					
 					saveLinkDetail.setCode(Message.SUCCESS_CODE);
 				}

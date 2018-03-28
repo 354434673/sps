@@ -280,11 +280,6 @@
 		    <version>3.0.7.Final</version>
 		</dependency>
 		<dependency>
-		    <groupId>javax.validation</groupId>
-		    <artifactId>validation-api</artifactId>
-		    <version>1.0.0.GA</version>
-		</dependency>
-		<dependency>
 			<groupId>jzfq_auth</groupId>
 			<artifactId>auth_api</artifactId>
 			<version>1.7.2-SNAPSHOT</version>
@@ -375,6 +370,24 @@
 				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
 		</profile>
+		<!-- 本地 -->
+		<profile>
+			<id>local</id>
+			<properties>
+				<env>local</env>
+				<db.driver>com.mysql.jdbc.Driver</db.driver>
+				<db.connectionURL>jdbc:mysql://localhost:3306/sps</db.connectionURL>
+				<db.username>root</db.username>
+				<db.password>root</db.password>
+				<dubbo.auth.group>auth_dev1</dubbo.auth.group>
+				<dubbo.member.group>member-center-dev1</dubbo.member.group>
+				<dubbo.capital.group>capital-service-dev1</dubbo.capital.group>
+				<dubbo.zookeeper>localhost:2181</dubbo.zookeeper>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
 		<!-- 测试环境 -->
 		<profile>
 			<id>test</id>
@@ -389,9 +402,6 @@
 				<dubbo.capital.group>capital-service-dev1</dubbo.capital.group>
 				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 		</profile>
 		<!-- 生产环境 -->
 		<profile>

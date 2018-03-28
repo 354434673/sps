@@ -16,15 +16,6 @@
 			<!-- 用来指定排除某个注解 -->
 		<!-- <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/> -->
 	</context:component-scan>
-	<!-- 引入配置文件 -->
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:properties/test.properties</value>
-			</list>
-		</property>
-	</bean>
 
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		destroy-method="close">

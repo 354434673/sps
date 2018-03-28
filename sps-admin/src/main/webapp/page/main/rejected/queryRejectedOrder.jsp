@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>退货管理</title>
-<!-- 待收货退货申请 -->
+<!-- 退货查询 -->
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -25,7 +25,7 @@
 </head>
 <body>
 	<div style="margin: 15px;">
-		<div class="layui-form layui-form-pane"  >
+		<div class="layui-form layui-form-pane" >
 		    <div class="layui-form-item">
 			    <label class="layui-form-label">店主名称:</label>
 			    <div class="layui-input-inline">
@@ -44,7 +44,7 @@
 			     <div class="layui-inline">
 				     <label class="layui-form-label">申请日期:</label>
 					    <div class="layui-input-inline">
-					      <input id="time" type="text" name="startTime"  placeholder="选择范围" autocomplete="off" class="layui-input">
+					      <input id="time" type="text" name="startTime"  lay-verify="" placeholder="选择范围" autocomplete="off" class="layui-input">
 					    </div>
 				</div>
 			</div> 
@@ -60,7 +60,6 @@
 </script>
 <script type="text/html" id="bar">
   <a class="layui-btn layui-btn-mini" lay-event="confirm" id="confirm">去确认</a>
-  <a class="layui-btn layui-btn-mini" lay-event="express" id="express">查看物流</a>
 </script>
 <script type="text/html" id="date">
 {{#  
@@ -95,18 +94,18 @@
 			  table.render({
 			    elem: '#orderList'
 			    ,url: '<%=path%>/order/show.json' //数据接口
-			    ,where:{flag:16} 
-			    ,id:'orderToBeRecieved'
+			    ,where:{flag:10} 
+			    ,id:'orderToBeRejected'
 			    ,page:true
 			    ,cols: [[ //表头
-					       {title: '序号', align:'center',type:'numbers'} 
-			 			  ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
-					      ,{field: 'name', title: '店主名称', align:'center'}
-					      ,{field: 'selfname', title: '店铺名称', align:'center'}
-					      ,{field: 'money', title: '退款金额',align:'center'}
-					      ,{field: 'createtime', title: '退货申请日期', templet:'#date', width:230, align:'center'}
-					      ,{field: 'tool', title: '操作', align:'center',toolbar:'#bar'}
-					    ]]
+			       {title: '序号', align:'center',type:'numbers'} 
+	 			  ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
+			      ,{field: 'name', title: '店主名称', align:'center'}
+			      ,{field: 'selfname', title: '店铺名称', align:'center'}
+			      ,{field: 'money', title: '退款金额',align:'center'}
+			      ,{field: 'createtime', title: '退货申请日期', templet:'#date', width:230, align:'center'}
+			      ,{field: 'tool', title: '操作', width:140,align:'center',toolbar:'#bar'}
+			    ]]
 			  });
 			  
 			  //查询
@@ -119,7 +118,7 @@
 				  var endTime = date[1];
 				  //var flag=1;//待确认订单1，已拒绝2，订单审核中3，订单审核不通过4，待签约5，待发货6......默认如果不输入的话查询全部
 				  //待确认的退货申请，flag未确定
-				  table.reload('orderToBeRecieved', {
+				  table.reload('orderToBeRejected', {
 					  page:{
 						  curr:1//重新从第一页开始
 					  },
@@ -135,9 +134,7 @@
 					 var data = obj.data,  //获得当前行数据
 					 layEvent = obj.event; //获得 lay-event 对应的值
 					 if(layEvent=='confirm'){//确认
-						  window.location.href="<%=path%>/page/main/rejected/toRecievedRejected.jsp?orderid="+data.orderid; 
-					 }else if(layEvent == 'express'){
-						 window.location.href="<%=path%>/page/main/order/queryExpress.jsp?orderid="+data.orderid;
+						   window.location.href="<%=path%>/page/main/rejected/toCondirmRejected.jsp?orderid="+data.orderid; 
 					 }
 				});
 			  //时间格式化

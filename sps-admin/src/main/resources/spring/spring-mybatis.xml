@@ -11,20 +11,9 @@
                             http://www.springframework.org/schema/tx/spring-tx.xsd
                             ">
 						
-	<!-- 自动扫描 -->
 	<context:component-scan base-package="com.sps" >
-			<!-- 用来指定排除某个注解 -->
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
-	<!-- 引入配置文件 -->
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:properties/test.properties</value>
-			</list>
-		</property>
-	</bean>
 
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		destroy-method="close">
@@ -39,16 +28,13 @@
 		<property name="maxWait" value="${db.pool.maxWait}"></property>
 	</bean>
 
-	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<!-- 自动扫描mapping.xml文件 -->
 		<property name="mapperLocations" value="classpath:mapping/*/*.xml"></property>
 		<property name="plugins">
 		    <array>
 		      <bean class="com.github.pagehelper.PageInterceptor">
 		        <property name="properties">
-		          <!--使用下面的方式配置参数，一行配置一个 -->
 		          <value>
 		            params=value1
 		          </value>
@@ -58,13 +44,11 @@
 		 </property>
 	</bean>
 
-	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.sps.dao.*" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 
-	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />

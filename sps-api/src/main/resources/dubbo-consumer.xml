@@ -26,7 +26,7 @@
     
     <dubbo:reference group = "${dubbo.auth.group}" id="faceAuthApi" interface="com.jzfq.auth.core.api.FaceAuthApi"/>
     
-    <dubbo:reference group = "${dubbo.auth.group}" id="jzfqAuthApi" interface="com.jzfq.auth.core.api.JzfqAuthApi"/>
+    <dubbo:reference protocol="dubbo" group = "${dubbo.auth.group}" id="jzfqAuthApi" interface="com.jzfq.auth.core.api.JzfqAuthApi"/>
     
     <dubbo:reference group = "${dubbo.auth.group}" id="jzfqAuthQueryApi" interface="com.jzfq.auth.core.api.JzfqAuthQueryApi"/>
     
