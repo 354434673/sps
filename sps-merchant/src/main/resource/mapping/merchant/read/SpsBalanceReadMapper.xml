@@ -8,8 +8,6 @@
 		FROM
 			sps_balance
 		WHERE
-			b_userid=#{userId,jdbcType=INTEGER}
-		  AND
-		  	b_usertype=#{userType,jdbcType=INTEGER}
+			b_user_no=#{userNo,jdbcType=VARCHAR}
 	</select>
 </mapper>

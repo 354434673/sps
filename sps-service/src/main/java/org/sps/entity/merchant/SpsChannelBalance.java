@@ -20,7 +20,7 @@ public class SpsChannelBalance  implements Serializable{
 //    余额
     private BigDecimal balance;
 //    外键用户id
-    private  Integer userId;
+    private  String userNo;
 //    用户类型
     private Integer userType;
 //    创建时间
@@ -44,12 +44,12 @@ public class SpsChannelBalance  implements Serializable{
         this.balance = balance;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUserNo() {
+        return userNo;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserNo(String userNo) {
+        this.userNo = userNo;
     }
 
     public Integer getUserType() {

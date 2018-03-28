@@ -15,9 +15,9 @@ import java.util.List;
  * @createDate ${date}$ ${timme}$
  */
 public interface BankCardService {
-    String findUserId(String userName,Integer userMark);
+    String findUserId(String customerId);
     //保存绑卡信息的方法
-    Boolean saveBankCardInfo(BankCardInfo bankCardInfo, Integer userId, Integer userMark);
+    Boolean saveBankCardInfo(BankCardInfo bankCardInfo);
     //删除绑卡记录
     Boolean  removeBankCard(String userId);
     //根据客户编号查询绑卡信息

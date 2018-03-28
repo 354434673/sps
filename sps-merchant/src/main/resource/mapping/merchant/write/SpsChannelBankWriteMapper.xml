@@ -1,46 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sps.dao.merchant.write.SpsChannelBankWriteMapper" >
-  <delete id="deleteByPrimaryKey"  parameterType="String">
-    delete from sps_bank  where  b_user_name= #{userName,jdbcType=VARCHAR}
-  </delete>
+  <update id="deleteByPrimaryKey"  parameterType="String">
+      UPDATE
+        sps_bank
+        SET
+        flag=1
+        WHERE  	b_user_name=#{userName}
+  </update>
+
 
   <insert id="insertBank"  parameterType="org.sps.entity.merchant.SpsChannelBank"  useGeneratedKeys="true" keyProperty="id" >
   	
-    insert into sps_bank(
-    	b_name, 
-    	b_accounts,
-    	b_identity, 
-        b_phone, 
-        b_createtime, 
-        b_updatetime,
-        b_bank,
-        b_state,
-        b_remark,
-        b_user_id,
-        b_user_name ,
-        channl_num,
-        b_available_balance,
-        b_trans_password   
-      )
-    values (
-    	
-       #{name,jdbcType=VARCHAR}, 
-       #{accounts,jdbcType=VARCHAR}, 
-       #{identity,jdbcType=VARCHAR},
-       #{phone,jdbcType=VARCHAR},
-       #{createtime,jdbcType=TIMESTAMP},
-       #{updatetime,jdbcType=TIMESTAMP},
-       #{bank,jdbcType=VARCHAR},
-       #{state,jdbcType=INTEGER},
-       #{remark,jdbcType=VARCHAR},
-       #{userId,jdbcType=VARCHAR},
-       #{userName,jdbcType=VARCHAR},
-       #{channlNum,jdbcType=VARCHAR},
-       #{availableBalance,jdbcType=DECIMAL},
-       #{transPassword,jdbcType=VARCHAR}
-      )
-        
+    insert into sps_bank
+		(
+		b_name,
+		b_accounts,
+		b_identity,
+		b_phone,
+		b_createtime,
+		b_updatetime,
+		b_bank,
+		b_state,
+		b_remark,
+		b_user_id,
+		b_user_name ,
+		channl_num,
+		b_available_balance,
+		b_trans_password,
+		user_mark,
+		flag
+		)
+		values (
+		#{name,jdbcType=VARCHAR},
+		#{accounts,jdbcType=VARCHAR},
+		#{identity,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP},
+		#{updatetime,jdbcType=TIMESTAMP},
+		#{bank,jdbcType=VARCHAR},
+		#{state,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR},
+		#{userId,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR},
+		#{channlNum,jdbcType=VARCHAR},
+		#{availableBalance,jdbcType=DECIMAL},
+		#{transPassword,jdbcType=VARCHAR},
+		#{userMark,jdbcType=INTEGER},
+		#{flag,jdbcType=INTEGER}
+        )
   </insert>
   
   <update id="updateBank" parameterType="org.sps.entity.merchant.SpsChannelBank" >
@@ -105,5 +113,6 @@
        standby2=#{salt,jdbcType=VARCHAR}
         where  b_user_id=#{userId}
     </update>
+
  
 </mapper>

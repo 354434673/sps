@@ -20,19 +20,19 @@
 </resultMap>
   <sql id="bankInfoSql">
   		select 
-  			id, b_name, b_accounts,b_identity,b_phone,b_bank,b_state,b_remark,b_user_id,b_user_name,b_available_balance
+  			id, b_name, b_accounts,b_identity,b_phone,b_bank,b_state,b_remark,b_user_id,b_user_name,channl_num,b_available_balance
   	    from 
   	    	sps_bank
   </sql>
   <select id="selectByPrimaryKey" parameterType="String" resultMap="BaseResultMap">
   	<include refid="bankInfoSql"/>
-  	where  b_user_name=#{userName}
+  	where  b_user_name=#{userName} AND  flag=0
   </select>
   
   <select id="selectByChannelNum" parameterType="String" resultMap="BaseResultMap">
   	<include refid="bankInfoSql"/>
   	where
-       channl_num=#{channelNum}
+       channl_num=#{channelNum} AND  flag=0
   </select>
     <select id="selectByLoginUser" parameterType="String" resultType="String">
        select
@@ -40,7 +40,7 @@
   	    from
   	    	sps_bank
   	   WHERE
-  	        b_user_name =#{userName}
+  	        b_user_name =#{userName}  AND  flag=0
     </select>
 
     <select id="selectMobileByLoginUser" parameterType="String" resultType="String">
@@ -49,19 +49,19 @@
         from
             sps_bank
         WHERE
-            b_user_name =#{userName}
+            b_user_name =#{userName}  AND  flag=0
     </select>
     
     
     <select id="selectByLoginName" parameterType="String" resultMap="BaseResultMap">
        	<include refid="bankInfoSql"/>
         WHERE
-            b_user_name =#{userName}
+            b_user_name =#{userName} AND  flag=0
     </select>
     <select id="selectSalt" parameterType="String" resultType="String">
       SELECT standby2  from sps_bank
         WHERE
-        b_user_name =#{userName}
+        b_user_name =#{userName}  AND  flag=0
     </select>
 
 </mapper>

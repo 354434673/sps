@@ -14,5 +14,5 @@ import java.math.BigDecimal;
  */
 public interface AccountBalanceService {
 //    查询账户余额
-    BigDecimal queryByUserIdAndUserTyoe(Integer userId, Integer userType);
+    BigDecimal queryByCustomerId(String customerId);
 }

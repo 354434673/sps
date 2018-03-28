@@ -58,7 +58,10 @@
         </div>
         <div class="layui-form-item"   style="padding-left: 103px;">
         <button class="layui-btn" lay-filter="next" lay-submit  id="next">下一步 </button>
-        <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>
+           <%-- <a href="javascript:window.opener=null;window.open('','_self');window.close();">返回</a>--%>
+            <button id="back" class="layui-btn layui-btn-primary" >返回</button>
+
+           <%-- <button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary" >返回</button>--%>
     </div>
     </div>
 </div>
@@ -79,6 +82,9 @@
                 $('#bankCard').val(result.accounts);
             }
         });
+    });
+    $("#back").on("click",function(){
+        location.href = '<%=path%>/page/main/main.html';
     });
     var lock =true;
     layui.use(['layer', 'form'], function () {

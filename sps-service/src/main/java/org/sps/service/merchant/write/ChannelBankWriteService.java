@@ -1,6 +1,7 @@
 package org.sps.service.merchant.write;
 
 import org.sps.entity.merchant.SpsChannelBank;
+import org.sps.entity.merchant.SpsChannelBankTrans;
 
 /***
  *  绑卡业务层
@@ -13,7 +14,7 @@ public interface ChannelBankWriteService{
 	 * 插入绑卡信息
 	 * 
 	 */
-	Boolean  saveBankInfo(SpsChannelBank bankinfo, String loginName,Integer userId,Integer userMark);
+	Boolean  saveBankInfo(SpsChannelBank bankinfo, Integer userId, Integer userMark);
 	/**
 	 * 更新绑卡信息
 	 */

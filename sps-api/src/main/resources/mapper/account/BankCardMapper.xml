@@ -28,7 +28,7 @@
 			FROM
 					sps_bank
 			WHERE
-				user_mark=#{userMark}  AND  b_user_name=#{userName}  AND  flag=0
+		    channl_num=#{customerId}  AND  flag=0
 
 	</select>
 	<insert id="insertBankCardInfo"  parameterType="com.sps.entity.account.BankCardInfo"  useGeneratedKeys="true" keyProperty="id" >

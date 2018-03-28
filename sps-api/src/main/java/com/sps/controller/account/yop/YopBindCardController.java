@@ -143,8 +143,6 @@ public class YopBindCardController {
         //根据customerId 获取登录用户名；
         SpsShopkeeperPersonal person = shopkeeperPersonService.findPerson(customerId);
         String loginName=person.getPersonalUsername();
-        //根据用户名获取userId,以及userMark
-        SpsUser user = userService.findUserByUserName(loginName);
         /**
          * 创建一条绑卡信息
          */
@@ -159,7 +157,7 @@ public class YopBindCardController {
         bindBankTrades.setUserId(UUID.randomUUID().toString());
         bindBankTrades.setChannlNum(customerId);
         //根据登录用户查询是否绑卡
-        String userId = bankCardService.findUserId(person.getPersonalUsername(),user.getUserMark());
+        String userId = bankCardService.findUserId(customerId);
         if ( StringUtil.isEmpty(userId)) {
             /**
              * 没有绑卡，保存一条绑卡记录
@@ -236,8 +234,7 @@ public class YopBindCardController {
                         bankInfo.setName(bindBank.getName());
                         bankInfo.setChannlNum(bindBank.getChannlNum());
                         bankInfo.setUserName(bindBank.getLoginName());
-                        bankCardService.saveBankCardInfo(bankInfo,user.getUserId(),user.getUserMark());
-                        Boolean saveBankInfo = bankCardService.saveBankCardInfo(bankInfo, user.getUserId(), user.getUserMark());
+                        Boolean saveBankInfo = bankCardService.saveBankCardInfo(bankInfo);
                         //更新绑卡状态
                         if (saveBankInfo) {
                             jsonO.put("requestno",responseParames.get("requestno"));
@@ -307,8 +304,8 @@ public class YopBindCardController {
             bankInfo.setName(bindBank.getName());
             bankInfo.setChannlNum(bindBank.getChannlNum());
             bankInfo.setUserName(bindBank.getLoginName());
-            Boolean flag = bankCardService.saveBankCardInfo(bankInfo, user.getUserId(), user.getUserMark());
-            if(flag){
+            Boolean saveBankInfo = bankCardService.saveBankCardInfo(bankInfo);
+            if(saveBankInfo){
                 return Message.responseStr(Message.SUCCESS_CODE, "绑卡成功");
             }
             return Message.responseStr(Message.FAILURE_CODE, "后台服务异常");
@@ -360,7 +357,7 @@ public class YopBindCardController {
         //根据用户名获取userId,以及userMark
         SpsUser user = userService.findUserByUserName(loginName);
         //查询绑卡信息
-        String userId = bankCardService.findUserId(person.getPersonalUsername(),user.getUserMark());
+        String userId = bankCardService.findUserId(customerId);
         if(StringUtil.isNotEmpty(userId)){
             //接触绑卡
             Boolean flag = bankCardService.removeBankCard(userId);

@@ -73,7 +73,6 @@ public class BindCardTransServiceImpl implements BindCardTransService {
             m=  bindBankTransDao.updateBankTrans(bindBankTrans.getId(),status,null,new Date(),cardtop,cardlast,authtype,remark);
         }
         return m > 0 ? true : false;
-        //根据请求号查询信息
     }
 
     @Override

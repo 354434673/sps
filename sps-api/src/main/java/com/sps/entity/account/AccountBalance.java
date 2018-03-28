@@ -23,7 +23,7 @@ public class AccountBalance implements Serializable {
 //    当前余额
     private BigDecimal balance;
 //    用户id
-    private Integer userId;
+    private String userNo;
 //    用户类型
     private Integer userType;
 //    创建时间
@@ -47,18 +47,17 @@ public class AccountBalance implements Serializable {
         this.balance = balance;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUserNo() {
+        return userNo;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserNo(String userNo) {
+        this.userNo = userNo;
     }
 
     public Integer getUserType() {
         return userType;
     }
-
     public void setUserType(Integer userType) {
         this.userType = userType;
     }

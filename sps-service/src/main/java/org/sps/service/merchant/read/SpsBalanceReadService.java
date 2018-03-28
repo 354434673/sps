@@ -15,5 +15,5 @@ import java.math.BigDecimal;
  * @createDate ${date}$ ${timme}$
  */
 public interface SpsBalanceReadService {
-    SpsChannelBalance  findByUserId(Integer userId, Integer userType);
+    SpsChannelBalance  findByUserId(String userNo, Integer userType);
 }

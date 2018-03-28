@@ -8,8 +8,7 @@
   </delete>
  
   <insert id="insertBankTrans" parameterType="org.sps.entity.merchant.SpsChannelBankTrans" >
-   	
-    insert into sps_bank_trans
+   	insert into sps_bank_trans
     (	
     	t_name, 
     	t_bank_name ,
@@ -48,48 +47,16 @@
       )
   </insert>
   
-  <update id="updateBankTrans"  >
-    update sps_bank_trans
-    <set >
-      <if test="loginName != null " >
-        t_login_name = #{loginName,jdbcType=VARCHAR},
-      </if>
-      <if test="identity != null" >
-        t_identity = #{identity,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        t_phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="merchantNo != null" >
-        t_merchant_no = #{merchantNo,jdbcType=VARCHAR},
-      </if>
-    
-    <if test="startTime != null" >
-        t_start_time= #{startTime,jdbcType=TIMESTAMP},
-    </if>
-    <if test="stopTime != null" >
-        t_stop_time = #{stopTime,jdbcType=TIMESTAMP},
-    </if>
-    <if test="authType != null" >
-        t_auth_type = #{authType,jdbcType=VARCHAR},
-    </if>
-    <if test="bankCode != null" >
-        t_bank_no = #{bankCode,jdbcType=VARCHAR},
-    </if>
-    <if test="state != null" >
-        t_state = #{state,jdbcType=VARCHAR},
-    </if>
-    <if test="remark != null" >
-        t_remark = #{remark,jdbcType=VARCHAR},
-    </if>
-    <if test="channlNum != null" >
-        channl_num = #{channlNum,jdbcType=VARCHAR}
-    </if>
-        <if test="serialYop != null" >
-            t_serial_yop = #{serialYop,jdbcType=VARCHAR}
-        </if>
-    </set>
-     where  t_serial_sh=#{seriNum}
-  </update>
- 
+    <update id="updateBankTrans"  >
+        update sps_bank_trans
+        SET
+        t_stop_time = #{endTime,jdbcType=TIMESTAMP},
+        t_state = #{status,jdbcType=VARCHAR},
+        t_serial_yop = #{yopSerNO,jdbcType=VARCHAR},
+        t_auth_type=#{authtype,jdbcType=VARCHAR},
+        t_remark=#{remark,jdbcType=VARCHAR},
+        t_card_top=#{cardtop,jdbcType=VARCHAR},
+        t_card_last=#{cardlast,jdbcType=VARCHAR}
+        where  id=#{id}
+    </update>
 </mapper>

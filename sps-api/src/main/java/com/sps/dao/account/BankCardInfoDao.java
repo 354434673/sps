@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface BankCardInfoDao {
 //   根据登录用户获取绑卡信息
-    String  selectByUserName(@Param("userName") String userName,@Param("userMark") Integer userMark);
+    String  selectByUserName(@Param("customerId") String customerId);
     //保存绑卡记录
     int insertBankCardInfo(BankCardInfo bankCardInfo);
     //删除绑卡记录

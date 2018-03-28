@@ -17,7 +17,7 @@ import java.math.BigDecimal;
  */
 public interface AccountBalanceDao {
 //    获取当前余额的方法
-    BigDecimal selectByUserId(@Param("userId") Integer userId, @Param("userType") Integer userType);
+    BigDecimal selectByUserId(String userNo);
     //保存余额记录的方法
     int insertAccountBalance(AccountBalance accountBalance);
 }
