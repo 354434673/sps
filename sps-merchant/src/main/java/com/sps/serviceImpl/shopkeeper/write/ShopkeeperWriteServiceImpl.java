@@ -2,9 +2,13 @@ package com.sps.serviceImpl.shopkeeper.write;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.sps.util.HttpClientUtils;
 import org.sps.entity.shopkeeper.SpsShopkeeper;
 import org.sps.entity.shopkeeper.SpsShopkeeperAccount;
 import org.sps.entity.shopkeeper.SpsShopkeeperAccountExample;
@@ -27,7 +31,9 @@ import com.sps.dao.shopkeeper.write.SpsShopkeeperWriteMapper;
 @Service(timeout = 2000, group = "dianfu")
 @org.springframework.stereotype.Service
 public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
-	private static final String URL_APPLY_INSERT = "http://192.168.201.149:8080/sps/insertShopApplyInfo";	
+	private static final String URL_APPLY_INSERT = "http://192.168.201.149:8080/sps/insertShopApplyInfo";
+	private static String initCustomerAccount = "http://dev.app.chezhubaitiao.com/api/customerAccount/init";
+	private static String initAccount = "http://dev.app.chezhubaitiao.com/api/account/init";
 	@Resource
 	private SpsShopkeeperAccountWriteMapper accountWrite;
 	@Resource
@@ -132,7 +138,7 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 				personalWrite.insertSelective(personal);
 				
 				insert(invitation, clientNum, channelNum);
-				
+
 				HashMap<String, String> result = new HashMap<>();
 				result.put("channelNum", channelNum);
 				result.put("clientNum", clientNum);
@@ -160,26 +166,71 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 		return null;
 	}
 	private void insert(SpsShopkeeperInvitation invitation, String clientNum, String channelNum){
-		
+
 		JSONObject shopApplyInfo = new JSONObject();
-		
+
 		shopApplyInfo.put("shopCode", clientNum);
-		
+
 		shopApplyInfo.put("applyTime", new Date());
-		
+
 		shopApplyInfo.put("registerChannel", "web");
-		
+
 		shopApplyInfo.put("customer_channel",  "商户邀请");
-		
+
 		shopApplyInfo.put("centerMerchantCode",  channelNum);
-		
+
 		shopApplyInfo.put("createTime",  new Date());
 
 		JSONObject data = new JSONObject();
-		
+
 		data.put("shopApplyInfo", shopApplyInfo);
-		
+
 		HttpClientUtil.doPostJson(URL_APPLY_INSERT, JSON.toJSONString(data));
+	}
+
+	@Override
+	public Map<String, Object> initCustomerAccount(String certNo) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		Map map = new HashMap<>();
+		map.put("application", "dianfu");
+		map.put("certNo", certNo);
+		String jsonResult = HttpClientUtils.post(initCustomerAccount, map);
+		System.out.println(jsonResult);
+		if (jsonResult != null) {
+			JSONObject job = JSON.parseObject(jsonResult);
+			String code = job.getString("code");
+			String msg = job.getString("msg");
+			String success = job.getString("success");
+			String result = job.getString("result");
+			resultMap.put("code", code);
+			resultMap.put("msg", msg);
+			resultMap.put("success", success);
+			resultMap.put("result", result);
+		}
+		return resultMap;
+	}
+
+	@Override
+	public HashMap<String, Object> initAccount(String amount, String certNo) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		Map map = new HashMap<>();
+		map.put("application", "dianfu");
+		map.put("amount", amount);
+		map.put("certNo", certNo);
+		String jsonResult = HttpClientUtils.post(initAccount, map);
+		System.out.println(jsonResult);
+		if (jsonResult != null) {
+			JSONObject job = JSON.parseObject(jsonResult);
+			String code = job.getString("code");
+			String msg = job.getString("msg");
+			String success = job.getString("success");
+			String result = job.getString("result");
+			resultMap.put("code", code);
+			resultMap.put("msg", msg);
+			resultMap.put("success", success);
+			resultMap.put("result", result);
+		}
+		return resultMap;
 	}
 
 }

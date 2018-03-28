@@ -1,15 +1,15 @@
 package com.sps.serviceImpl.order;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sps.dao.order.OrderRepayDetailMapper;
 import com.sps.util.HttpClientUtil;
+import com.sps.util.HttpClientUtils;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -29,6 +29,8 @@ import com.sps.dao.order.SpsOrderLogisticsMapper;
 @org.springframework.stereotype.Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
+	private static String orderFirst = "http://dev.app.chezhubaitiao.com/api/accountSystem/freezeConsumption";
+	private static String frozen = "http://dev.app.chezhubaitiao.com/api/accountSystem/freeze";
 
 
 	@Autowired
@@ -475,7 +477,19 @@ public class OrderServiceImpl implements OrderService {
 				// 这里处理的逻辑，需要更新数据库的状态，如果有说明则将remark添加入说明中
 				result = orderMapper.updateOrderFlag(orderid, flag, remark, new Date());
 				if ("3".equals(flag)){
+					//推风控
 					Order order = orderMapper.selectByOrderId(orderid);
+
+					Map map = new HashMap<>();
+					map.put("application", "dianfu");
+					map.put("amount", order.getPayment());
+					/*map.put("certNo", certNo);*/
+					map.put("businessId", order.getShopkeeper());
+					map.put("orderId", order.getOrderid());
+					String jsonRes = HttpClientUtils.post(frozen,map);
+
+
+
 					JSONObject json = new JSONObject();
 					json.put("orderNo", order.getOrderid());
 					json.put("applyTime", new Date());

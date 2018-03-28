@@ -287,7 +287,7 @@
     FROM
     sps_order_repay_detail
     WHERE
-    datediff(NOW(), repay_date) >= 3
+    datediff(repay_date,NOW() )<![CDATA[<=]]> 3
     AND custome_num =#{customerNum,jdbcType=VARCHAR}
     ) AS threeDayRepayment,
     (
@@ -296,7 +296,7 @@
     FROM
     sps_order_repay_detail
     WHERE
-    datediff(NOW(), repay_date) >= 7
+    datediff(repay_date,NOW()) <![CDATA[<=]]> 7
     AND custome_num = #{customerNum,jdbcType=VARCHAR}
     ) AS weekRepayment
     FROM

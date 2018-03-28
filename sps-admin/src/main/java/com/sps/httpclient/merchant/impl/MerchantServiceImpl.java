@@ -14,6 +14,7 @@ import com.sps.util.HttpClientUtil;
 @Transactional(readOnly = true)
 public class MerchantServiceImpl implements MerchantService{
 
+
 	@Override
 	public String init(String businessId, Double totalQuota, Double monthQuota, Double firstMonthQuota) {
 		final String url = "http://dev.app.chezhubaitiao.com/api/business/init";
@@ -32,5 +33,6 @@ public class MerchantServiceImpl implements MerchantService{
 		
 		return doPostJson;
 	}
+
 
 }

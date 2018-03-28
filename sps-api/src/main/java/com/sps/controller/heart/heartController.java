@@ -7,7 +7,7 @@ import com.juzifenqi.core.exception.BusinessException;
 import com.sps.common.HttpClientUtil;
 import com.sps.common.HttpClientUtils;
 import com.sps.common.RSAUtil;
-import com.sps.common.TestZx;
+import com.sps.entity.order.SpsBankTradeInfo;
 import com.sps.entity.order.SpsOrderLog;
 import com.sps.service.order.OrderLogService;
 import org.apache.http.Header;
@@ -44,9 +44,10 @@ import java.util.Map;
 public class heartController {
 
     private static String initCustomerAccount = "http://dev.app.chezhubaitiao.com/api/customerAccount/init";
-    private static String initAccount = "http://dev.app.chezhubaitiao.com/api/account/init";
+    private static String orderFirst = "http://dev.app.chezhubaitiao.com/api/accountSystem/freezeConsumption";
     private static String frozen = "http://dev.app.chezhubaitiao.com/api/accountSystem/freeze";
-    private static String pay = "http://dev.pay.juzifenqi.com/juzi-pay/payment/assembleReqParam";
+    //充值
+    private static String pay = "http://dev.pay.juzifenqi.com/juzi-pay/payment/dianfu";
     private static String rechargeMoney = "http://dev.app.chezhubaitiao.com/api/customerAccount/recharge";
     private static String deductMoney = "http://dev.app.chezhubaitiao.com/api/customerAccount/deduct";
     private static String bindingCard = "http://test.cap.chezhubaitiao.com/route/bankCapital";
@@ -76,64 +77,22 @@ public class heartController {
     @Resource
     private OrderLogService orderLogService;
 
+
+
     /**
-     * 初始化个人资金账户
+     * 支付
      * @return
      */
-    @RequestMapping(value = "/initCustomerAccount", method = RequestMethod.POST)
+    @RequestMapping(value = "/paymentOrder", method = RequestMethod.POST)
     @ResponseBody
-    public void initCustomerAccount(String certNo) {
+    public void frozen(SpsBankTradeInfo bankTrade, BigDecimal amount, Integer customerId, String certNo, String businessId, String orderId) {
         try {
             Map resultMap = new HashMap<>();
             resultMap.put("application", "dianfu");
-            resultMap.put("certNo", "142202199308070038");
-            String jsonResult = HttpClientUtils.post(initCustomerAccount, resultMap);
-            System.out.println(jsonResult);
-            if (jsonResult != null) {
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 初始化个人信用账户
-     *
-     * @return
-     */
-    @RequestMapping(value = "/initAccount", method = RequestMethod.POST)
-    @ResponseBody
-    public void initAccount(BigDecimal amount, String certNo) {
-        try {
-            Map resultMap = new HashMap<>();
-            resultMap.put("application", "dianfu");
-            resultMap.put("amount", "520.14");
-            resultMap.put("certNo", "142202199308070038");
-            String jsonResult = HttpClientUtils.post(initAccount, resultMap);
-            System.out.println(jsonResult);
-            if (jsonResult != null) {
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 冻结账户
-     * @return
-     */
-    @RequestMapping(value = "/frozen", method = RequestMethod.POST)
-    @ResponseBody
-    public void frozen(BigDecimal amount, String certNo, String businessId, String orderId) {
-        try {
-            Map resultMap = new HashMap<>();
-            resultMap.put("application", "dianfu");
-            resultMap.put("amount", "50");
-            resultMap.put("certNo", "142202199308070038");
-            resultMap.put("businessId", "DF20183201115152");
-            resultMap.put("orderId", "df10481065917829");
+            resultMap.put("amount", bankTrade.getFirstMoney());
+            resultMap.put("certNo", certNo);
+            resultMap.put("businessId", businessId);
+            resultMap.put("orderId", orderId);
             String jsonResult = HttpClientUtils.post(frozen, resultMap);
             System.out.println(jsonResult);
             if (jsonResult != null) {
@@ -148,12 +107,11 @@ public class heartController {
                       array.add("9");
                       JSONObject json = new JSONObject();
                       json.put("application", "DF");
-                      json.put("amount", 10);
+                      json.put("amount", bankTrade.getShopPayMoney());
                       json.put("authList", array);
-                      json.put("certNo", "142202199308070038");
-                      json.put("customerId", 1);
-                      json.put("certNo", "142202199308070038");
-                      json.put("orderId", "df10481065917829");
+                      json.put("certNo", certNo);
+                      json.put("customerId", customerId);
+                      json.put("orderId", orderId);
                       json.put("orderProvince", "北京");
                       json.put("period", 1);
                       json.put("periodType", 2);
@@ -164,11 +122,12 @@ public class heartController {
                           JSONObject jobt = JSON.parseObject(jsonRes);
                           String bindingCardCode = jobt.getString("code");
                           if("100000".equals(bindingCardCode)){
+                              SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
                               JSONObject baseInfoJson = new JSONObject();
-                              baseInfoJson.put("applDate", "2018-12-31 14:41:09");
-                              baseInfoJson.put("applNosInst", "12");
+                              baseInfoJson.put("applDate", df.format(System.currentTimeMillis()));
+                              baseInfoJson.put("applNosInst", "1");
                               baseInfoJson.put("applNosInstType", 2);
-                              baseInfoJson.put("applyAmt", 99.00);
+                              baseInfoJson.put("applyAmt", bankTrade.getShopPayMoney());
                               baseInfoJson.put("applyCurrency", "CNY");
                               baseInfoJson.put("capital", "0");
                               baseInfoJson.put("cardOpBankPhone", "13100000001");
@@ -291,6 +250,8 @@ public class heartController {
 
 
 
+                          }else if ("100000".equals(bindingCardCode)){
+
                           }
                       }
 
@@ -309,32 +270,30 @@ public class heartController {
      */
     @RequestMapping(value = "/payment", method = RequestMethod.POST)
     @ResponseBody
-    public void payment(BigDecimal amount, String certNo, String businessId, String orderId) {
+    public void payment(String amount, String certNo, String cardNo, String phone,String name) {
         try {
             Map resultMap = new HashMap<>();
-            resultMap.put("amount", "100");
+            resultMap.put("amount", amount);
             resultMap.put("application", "dianfu");
-            resultMap.put("callbackUrl", "http://www.baidu.com");
-            resultMap.put("cardNo", "6217000010076864704");
-            resultMap.put("certNo", "142202199308070038");
+            resultMap.put("cardNo", cardNo);
+            resultMap.put("certNo", certNo);
             resultMap.put("customerId", "pay");
-            resultMap.put("customerName", "张磊");
-       /*     resultMap.put("freeInterest ", "N");*/
-        /*    resultMap.put("loanAmount", "50");*/
-            resultMap.put("mobile", "18910548021");
-        /*    resultMap.put("monthRate", "0.05");*/
-            resultMap.put("notifyUrl", "http://www.baidu.com");
-            resultMap.put("orderId", "df10481047046932");
+            resultMap.put("customerName", name);
+            resultMap.put("mobile", phone);
+            resultMap.put("notifyUrl", "http://123.56.24.208:8480/api/heart/payCallback");
+            resultMap.put("orderId", "df2018328233");
             resultMap.put("payChannel", "baofu");
             resultMap.put("payGoal", "D");
             resultMap.put("payType", "pay");
-            resultMap.put("principal", "10");
-            resultMap.put("tradeName", "娃哈哈矿泉水");
-            resultMap.put("sign", "232332");
+            resultMap.put("tradeName", "店付充值");
             String jsonResult = HttpClientUtils.post(pay, resultMap);
             System.out.println(jsonResult);
             if (jsonResult != null) {
-
+                JSONObject object = JSONObject.parseObject(jsonResult);
+                String code = object.getString("code");
+                if("00000".equals(code)){
+                    String serialNumber = object.getJSONObject("data").getJSONObject("nomalReturn").getString("serialNumber");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -475,14 +434,42 @@ public class heartController {
      */
     @RequestMapping(value = "/freezeConsumption", method = RequestMethod.POST)
     @ResponseBody
-    public void freezeConsumption(String amount, String certNo, String orderId) {
+    public void freezeConsumption(String amount, String certNo, String orderId,String businessId) {
         try {
             Map resultMap = new HashMap<>();
             resultMap.put("amount", amount);
+            resultMap.put("businessId", businessId);
             resultMap.put("orderId", orderId);
             resultMap.put("application", "dianfu");
             resultMap.put("certNo", certNo);
-            String jsonResult = HttpClientUtils.post(freezeConsumption, resultMap);
+            String jsonResult = HttpClientUtils.post(orderFirst, resultMap);
+            System.out.println(jsonResult);
+            if (jsonResult != null) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+    /**
+     * 下单冻结
+     * @return
+     */
+    @RequestMapping(value = "/freeze", method = RequestMethod.POST)
+    @ResponseBody
+    public void freeze(String amount, String certNo, String orderId,String businessId) {
+        try {
+            Map resultMap = new HashMap<>();
+            resultMap.put("application", "dianfu");
+            resultMap.put("amount", amount);
+            resultMap.put("certNo", certNo);
+            resultMap.put("businessId", businessId);
+            resultMap.put("orderId", orderId);
+            String jsonResult = HttpClientUtils.post(frozen, resultMap);
             System.out.println(jsonResult);
             if (jsonResult != null) {
 

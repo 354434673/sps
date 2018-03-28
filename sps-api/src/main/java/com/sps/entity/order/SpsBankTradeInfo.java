@@ -54,6 +54,16 @@ public class SpsBankTradeInfo implements Serializable {
     private BigDecimal serviceMoney;
 
     private BigDecimal sumServiceMoney;
+    private BigDecimal goodsAmout;
+
+
+    public BigDecimal getGoodsAmout() {
+        return goodsAmout;
+    }
+
+    public void setGoodsAmout(BigDecimal goodsAmout) {
+        this.goodsAmout = goodsAmout;
+    }
 
     public Integer getId() {
         return id;

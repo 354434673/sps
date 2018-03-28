@@ -28,7 +28,6 @@ public class OrderController {
 
     @Resource
     private PurchaseOrderService purchaseOrderService;
-
     @Resource
     private OrderService orderService;
 
@@ -94,9 +93,21 @@ public class OrderController {
         ReturnInfo ri = new ReturnInfo();
         if ("0".equals(ri.getCode())) return ri;
         try {
+            HashMap<String, Object> data = new HashMap<>();
             SpsOrder order = orderService.findById(id);
             if (order != null) {
-                ri.setResult(order);
+                data.put("orderid", order.getOrderid());
+                data.put("selfname", order.getSelfname());
+                data.put("addTime", order.getCreatetime());
+                data.put("phone", order.getPhone());
+                data.put("address", order.getAddress());
+                data.put("name", order.getName());
+                data.put("scale", order.getScale());
+                data.put("status", order.getFlag());
+                data.put("shopPayMoney", order.getShopPayMoney());
+                data.put("servicemoney", order.getServicemoney());
+                data.put("orderGoodsList", order.getOrderGoodsList());
+                ri.setResult(data);
                 ri.setSuccess(Message.SUCCESS_MSG);
                 ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
@@ -152,7 +163,7 @@ public class OrderController {
     }
 
     /**
-     * 进货单数据校验
+     * 下单
      *
      * @return
      */
@@ -168,10 +179,9 @@ public class OrderController {
                 ri.setMsg(Message.API_SUCCESS_MSG);
                 ri.setSuccess(Message.API_SUCCESS_FLAG);
             } else {
-                ri.setCode(Message.FAILURE_CODE);
-                ri.setMsg(Message.FAILURE_MSG);
-                ri.setSuccess(Message.API_ERROR_FLAG);
-
+                ri.setSuccess(Message.API_SUCCESS_FLAG);
+                ri.setCode("" + (Integer) map.get("flag"));
+                ri.setMsg("" + (String) map.get("goodsName"));
             }
         } catch (Exception e) {
             e.printStackTrace();

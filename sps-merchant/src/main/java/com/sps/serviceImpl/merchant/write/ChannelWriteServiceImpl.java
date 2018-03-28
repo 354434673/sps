@@ -1,9 +1,16 @@
 package com.sps.serviceImpl.merchant.write;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.sps.util.HttpClientUtil;
+import com.sps.util.HttpClientUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.merchant.SpsChannel;
 import org.sps.entity.merchant.SpsChannelBusiness;
@@ -34,7 +41,10 @@ import com.sps.dao.merchant.write.SpsChannelWriteMapper;
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelWriteServiceImpl implements ChannelWriteService{
-	private static final String URL = "http://192.168.201.149:8080/sps/insertCenterBank";	
+	private static final String URL = "http://192.168.201.149:8080/sps/insertCenterBank";
+
+	private static String init = "http://dev.app.chezhubaitiao.com/api/merchantAccount/init";
+	private static String initBusiness = "http://dev.app.chezhubaitiao.com/api/business/init";
 	@Resource
 	private SpsChannelWriteMapper channelWrite;
 	@Resource
@@ -129,12 +139,12 @@ public class ChannelWriteServiceImpl implements ChannelWriteService{
 	}
 	@Override
 	public HashMap<String, Object> insertGather(SpsChannelGather gather) {
-		
+
 		HashMap<String, Object> hashMap = new HashMap<String,Object>();
 		
 		SpsChannelGather queryGather = channelReadService.getGather(gather);
 		
-		
+
 		if(queryGather == null){
 			try {
 				int insertSelective = gatherWrite.insertSelective(gather);
@@ -142,7 +152,7 @@ public class ChannelWriteServiceImpl implements ChannelWriteService{
 				Integer gatherId = gather.getGatherId();
 				
 				insertBank(gather);
-				
+
 				hashMap.put("msg", "银行卡添加成功");
 				hashMap.put("state", FinalData.STATE_SUCCESS);
 				hashMap.put("icon", 1);
@@ -216,12 +226,63 @@ public class ChannelWriteServiceImpl implements ChannelWriteService{
 		centerBankInfo.put("depositBank",  channelGather.getGatherDepositBank());//开户银行
 		centerBankInfo.put("bankSeparate",  channelGather.getGatherBankSubbranch());//开户行分行
 		centerBankInfo.put("bankBranch",  channelGather.getGatherBankBranch());//开户银行支行
-		
+
 		JSONObject data = new JSONObject();
 		data.put("centerBankInfo", centerBankInfo);
 		data.put("merchantInfo", centerMerchantInfo);
 		String jsonString = JSON.toJSONString(data);
-		
+
 		HttpClientUtil.doPostJson(URL, jsonString);
+	}
+
+	@Override
+	public HashMap<String, Object> initBusiness(String businessId,String firstMonthQuota,String monthQuota,String totalQuota) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		JSONObject json = new JSONObject();
+		json.put("application", "dianfu");
+		json.put("approvedDate", df.format(System.currentTimeMillis()));
+		json.put("businessId",businessId);
+		json.put("firstMonthQuota", firstMonthQuota);
+		json.put("monthQuota", monthQuota);
+		json.put("signDateStart", df.format(System.currentTimeMillis()));
+		json.put("totalQuota", totalQuota);
+		String jsonResult = HttpClientUtil.doPostJson(initBusiness, json.toJSONString());
+		System.out.println(jsonResult);
+		if (jsonResult != null) {
+			JSONObject job = JSON.parseObject(jsonResult);
+			String code = job.getString("code");
+			String msg = job.getString("msg");
+			String success = job.getString("success");
+			String result = job.getString("result");
+			resultMap.put("code", code);
+			resultMap.put("msg", msg);
+			resultMap.put("success", success);
+			resultMap.put("result", result);
+		}
+		return resultMap;
+	}
+
+	@Override
+	public HashMap<String, Object> initMerchantAccount(String businessId, String name) {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		Map map = new HashMap<>();
+		map.put("application", "dianfu");
+		map.put("businessId", businessId);
+		map.put("name", name);
+		String jsonResult = HttpClientUtils.post(init, map);
+		System.out.println(jsonResult);
+		if (jsonResult != null) {
+			JSONObject job = JSON.parseObject(jsonResult);
+			String code = job.getString("code");
+			String msg = job.getString("msg");
+			String success = job.getString("success");
+			String result = job.getString("result");
+			resultMap.put("code", code);
+			resultMap.put("msg", msg);
+			resultMap.put("success", success);
+			resultMap.put("result", result);
+		}
+		return resultMap;
 	}
 }
