@@ -10,6 +10,8 @@ import org.sps.entity.merchant.SpsChannelBankTrans;
 import org.sps.service.merchant.read.ChannelBankTransReadService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.read.SpsChannelBankTransReadMapper;
+import org.sps.util.StringUtil;
+
 @Service(timeout=12000,group="dianfu")
 @Transactional
 public class ChannelBankTransReadServiceImpl implements ChannelBankTransReadService{
@@ -25,9 +27,11 @@ public class ChannelBankTransReadServiceImpl implements ChannelBankTransReadServ
 
 	@Override
 	public SpsChannelBankTrans findBankState(String requestNo, String yborderid) {
-		// TODO Auto-generated method stub
+		if(StringUtil.isEmpty(yborderid)){
+			return  bankRead.selectByRequestNo(requestNo);
+		}
 		return bankRead.selectOne(requestNo, yborderid);
 
 	}
-	
+
 }

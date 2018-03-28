@@ -65,7 +65,7 @@
 <script type="text/javascript">
     $(function(){
         $.ajax({
-            url: "<%=path%>/bankCard/bankCardDetail",
+            url: "<%=path%>/yopBingCard/bankCardDetail",
             type: 'post',
             dataType: 'json',
             async: false,

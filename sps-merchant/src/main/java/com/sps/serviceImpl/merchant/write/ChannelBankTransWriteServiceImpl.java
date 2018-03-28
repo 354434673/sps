@@ -17,6 +17,8 @@ import org.sps.service.merchant.write.ChannelBankTransWriteService;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.write.SpsChannelBankTransWriteMapper;
+import org.sps.util.StringUtil;
+
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelBankTransWriteServiceImpl implements ChannelBankTransWriteService{
@@ -45,43 +47,36 @@ public class ChannelBankTransWriteServiceImpl implements ChannelBankTransWriteSe
 	}
 
 	@Override
-	public HashMap<String,Object> saveBankTansInfos(SpsChannelBank bankTransInfo, String userName, String marchantNo, String UserId) {
+	public HashMap<String,Object> saveBankTansInfos(SpsChannelBankTrans bankTransInfo, String userName) {
 		String num = openAccount.selectByOpenAdminNum(userName);
-		SpsChannelBankTrans spsChannelBankTrans = new SpsChannelBankTrans();
-		spsChannelBankTrans.setName(bankTransInfo.getName());
-		spsChannelBankTrans.setBankName(bankTransInfo.getBank());
-		spsChannelBankTrans.setUserId(bankTransInfo.getUserId());
-		spsChannelBankTrans.setLoginName(bankTransInfo.getUserName());
-		spsChannelBankTrans.setIdentity(bankTransInfo.getIdentity());
-		spsChannelBankTrans.setPhone(bankTransInfo.getPhone());
-		spsChannelBankTrans.setMerchantNo(marchantNo);
-		spsChannelBankTrans.setStartTime(new Date());
-		spsChannelBankTrans.setSerialSh(UUID.randomUUID().toString());
-		spsChannelBankTrans.setBankCode(bankTransInfo.getAccounts());
-		spsChannelBankTrans.setChannlNum(num);
+        bankTransInfo.setStartTime(new Date());
+        bankTransInfo.setChannlNum(num);
 		HashMap<String, Object> map = new HashMap<>();
-		try{
-			bankTrans.insertBankTrans(spsChannelBankTrans);
-			SpsChannelBankTrans spsChannelBankTrans1 = bankTransReadMapper.selectOne(spsChannelBankTrans.getSerialSh(), null);
+		int m = bankTrans.insertBankTrans(bankTransInfo);
+		if(m >0){
+			SpsChannelBankTrans spsChannelBankTrans1 = bankTransReadMapper.selectByRequestNo(bankTransInfo.getSerialSh());
 			map.put("flag",true);
 			map.put("spsChannelBankTrans1",spsChannelBankTrans1);
-		}catch(Exception e){
-			e.printStackTrace();
-			map.put("flag",false);
+			return  map;
 		}
+		map.put("flag",false);
+		map.put("spsChannelBankTrans1",null);
 		return  map;
 
 	}
 
 	@Override
-	public Boolean modifyBankTran(String seriNum, String yopSerNO, String status) {
+	public Boolean modifyBankTran(String seriNum, String yopSerNO, String status,String cardtop,String  cardlast, String authtype,String remark) {
+		int m=0;
+		if(StringUtil.isNotEmpty(yopSerNO)){
+			SpsChannelBankTrans bindBankTrans = bankTransRead.selectByRequestNo(seriNum);
+			m= bankTrans.updateBankTrans(bindBankTrans.getId(),status,yopSerNO,new Date(),cardtop,cardlast,authtype,remark);
+		}else{
+			SpsChannelBankTrans bindBankTrans = bankTransRead.selectByRequestNo(seriNum);
+			m=  bankTrans.updateBankTrans(bindBankTrans.getId(),status,null,new Date(),cardtop,cardlast,authtype,remark);
+		}
+		return m > 0 ? true : false;
 		//根据请求号查询信息
-		SpsChannelBankTrans spsChannelBankTrans1 = bankTransRead.selectOne(seriNum, null);
-		spsChannelBankTrans1.setSerialYop(yopSerNO);
-		spsChannelBankTrans1.setState(status);
-		spsChannelBankTrans1.setStopTime(new Date());
-		int m= bankTrans.updateBankTrans(spsChannelBankTrans1, seriNum);
-		return m>0? true:false;
 	}
 
 

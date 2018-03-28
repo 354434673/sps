@@ -92,7 +92,7 @@ public class BankCardController {
 		SpsChannelBank bankCard = bankReadService.getBankInfo(userName);
 		if(bankCard == null){
 			SpsUser user = userService.findByUserName(userName);
-			Boolean saveBankInfo = bankWriteService.saveBankInfo( bankInfo, userName,user.getUserId(),user.getUserMark());
+			Boolean saveBankInfo = bankWriteService.saveBankInfo(bankInfo, user.getUserId(), user.getUserMark());
 			if(saveBankInfo){
 				result.success();
 				result.setMsg("操作成功");

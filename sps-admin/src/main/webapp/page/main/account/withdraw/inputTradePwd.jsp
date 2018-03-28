@@ -48,7 +48,6 @@
             <div class="layui-input-block" >
                 <input id="tradePwd" style="width: 300px;text-align: center;display: inline" type="password"  value=""  autocomplete="off" class="layui-input"    lay-verify="required|number">
                 <button   style="color:red;" id="forgetPwd">忘记密码?</button>
-
             </div>
         </div>
         <div class="layui-form-item"   style="padding-left: 72px;">
@@ -130,7 +129,6 @@
                                 }
                             }
                         });
-
                     }
             );
             return false;

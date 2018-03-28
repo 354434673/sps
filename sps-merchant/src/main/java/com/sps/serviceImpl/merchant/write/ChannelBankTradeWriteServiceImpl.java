@@ -76,7 +76,7 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 		bankTrandeInfo.setTradeAfterBalanc(tradeAfter);
 		int num = bankTradeWrite.insertBankTrade(bankTrandeInfo);
 //		根据userId 和userMark 获取 id
-		SpsChannelBalance spsChannelBalance = spsBalanceReadMapper.selectByUserId(userId, userMark);
+		SpsChannelBalance spsChannelBalance = spsBalanceReadMapper.selectByUserId(bankInfo.getChannlNum());
 		if( num > 0){
 			num = bankWrite.updateAblance(bankInfo.getUserId(), tradeAfter);
 			num= spsBalanceWrite.updateBalance(spsChannelBalance.getId(), tradeAfter, new Date());

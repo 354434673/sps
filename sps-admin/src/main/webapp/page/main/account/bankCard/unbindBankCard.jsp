@@ -70,7 +70,7 @@
 <script type="text/javascript">
     $(function(){
         $.ajax({
-            url: "<%=path%>/bankCard/bankCardDetail",
+            url: "<%=path%>/yopBingCard/bankCardDetail",
             type: 'post',
             dataType: 'json',
             async: false,
@@ -98,7 +98,7 @@
             //解绑银行卡请求
             $.ajax({
 //                data: {isDEL:isDEL},
-                url: "<%=path%>/bankCard/unbindBackCard?",
+                url: "<%=path%>/yopBingCard/unbindBackCard?",
                 type: 'post',
                 dataType: 'json',
                 async: false,

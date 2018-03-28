@@ -11,12 +11,12 @@ public interface SpsChannelBankReadMapper {
 
     /**
      * 根據身份証查询用户信息
-     * @param identity
+     * @param userName
      * @return
      */
     SpsChannelBank  selectByPrimaryKey(String userName);
     /**
-     * 根據登陸用戶查询用户信息
+     * 根据用户名获取信息
      * @param userName
      * @return
      */

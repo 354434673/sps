@@ -65,39 +65,32 @@ public class ChannelBankWriteServiceImpl implements ChannelBankWriteService{
 	 * 保存绑卡信息
 	 */
 	@Override
-	public Boolean saveBankInfo(SpsChannelBank bankInfo,String loginName,Integer userId,Integer userMark) {
-
-//		根据用户名获取 余额表信息---存在取出余额---不存在 创建改用户的余额表信息
-		try {
-			String num = openAccount.selectByOpenAdminNum(loginName);
-
-			SpsChannelBalance spsChannelBalance = balanceReadMapper.selectByUserId(userId, userMark);
-			bankInfo.setCreatetime(new Date());
-			bankInfo.setUserId(UUID.randomUUID().toString());
-			//绑卡
-			bankInfo.setState(1);
-			bankInfo.setUserName(loginName);
-			bankInfo.setChannlNum(num);
-			if(spsChannelBalance!=null){
-				bankInfo.setAvailableBalance(spsChannelBalance.getBalance());
-			}else{
-				bankInfo.setAvailableBalance(new BigDecimal(0));
-				//保存一条用户的余额信息
-				SpsChannelBalance spsChannelBalanceinfo = new SpsChannelBalance();
-				spsChannelBalanceinfo.setBalance(new BigDecimal(0));
-				spsChannelBalanceinfo.setCreateTime(new Date());
-				spsChannelBalanceinfo.setUserId(userId);
-				spsChannelBalanceinfo.setUserType(userMark);
-				balanceWriteMapper.insertBalance(spsChannelBalanceinfo);
-			}
-			bankWrite.insertBank(bankInfo);
-			return true;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+	public Boolean saveBankInfo(SpsChannelBank bankInfo,Integer userId,Integer userMark) {
+		bankInfo.setCreatetime(new Date());
+		bankInfo.setUserMark(userMark);
+		bankInfo.setState(1);
+		bankInfo.setFlag(0);
+		//查询余额信息
+		SpsChannelBalance spsChannelBalance = balanceReadMapper.selectByUserId(bankInfo.getChannlNum());
+		int m;
+		if(spsChannelBalance !=null){
+			bankInfo.setAvailableBalance(spsChannelBalance.getBalance());
+			m=bankWrite.insertBank(bankInfo);
+			return m >0 ? true:false;
 		}
+		bankInfo.setAvailableBalance(new BigDecimal(0));
+		//保存一条用户的余额信息
+		SpsChannelBalance accountBalance = new SpsChannelBalance();
+		accountBalance.setBalance(new BigDecimal(0));
+		accountBalance.setCreateTime(new Date());
+		accountBalance.setUserNo(bankInfo.getChannlNum());
+		accountBalance.setUserType(userMark);
+		m=bankWrite.insertBank(bankInfo);
+		int n=balanceWriteMapper.insertBalance(accountBalance);
+		return m >0 &&  n>0 ? true:false;
+
 	}
+
 	@Override
 	public Boolean removeBankInfoOrNo(String userId) {
 		

@@ -27,8 +27,8 @@ public class SpsBalanceReadServiceImpl implements SpsBalanceReadService {
     private SpsBalanceReadMapper spsBalanceReadMapper;
 
     @Override
-    public SpsChannelBalance  findByUserId(Integer userId, Integer userType) {
+    public SpsChannelBalance  findByUserId(String userNo, Integer userType) {
 
-          return  spsBalanceReadMapper.selectByUserId(userId, userType);
+          return  spsBalanceReadMapper.selectByUserId(userNo);
     }
 }
