@@ -84,12 +84,12 @@
   <insert id="insert" parameterType="org.sps.entity.merchant.SpsChannelSalesman" >
     insert into sps_channel_salesman (salesman_id, salesman_name, salesman_idCard, 
       salesman_phone, salesman_email, salesman_city, 
-      bei1, bei2, bei3, bei4
-      )
+      salesmane_channel_num, bei1, bei2, 
+      bei3, bei4)
     values (#{salesmanId,jdbcType=INTEGER}, #{salesmanName,jdbcType=VARCHAR}, #{salesmanIdcard,jdbcType=VARCHAR}, 
       #{salesmanPhone,jdbcType=VARCHAR}, #{salesmanEmail,jdbcType=VARCHAR}, #{salesmanCity,jdbcType=VARCHAR}, 
-      #{bei1,jdbcType=VARCHAR}, #{bei2,jdbcType=VARCHAR}, #{bei3,jdbcType=VARCHAR}, #{bei4,jdbcType=VARCHAR}
-      )
+      #{salesmaneChannelNum,jdbcType=VARCHAR}, #{bei1,jdbcType=VARCHAR}, #{bei2,jdbcType=VARCHAR}, 
+      #{bei3,jdbcType=VARCHAR}, #{bei4,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.sps.entity.merchant.SpsChannelSalesman" >
     insert into sps_channel_salesman
@@ -111,6 +111,9 @@
       </if>
       <if test="salesmanCity != null" >
         salesman_city,
+      </if>
+      <if test="salesmaneChannelNum != null" >
+        salesmane_channel_num,
       </if>
       <if test="bei1 != null" >
         bei1,
@@ -143,6 +146,9 @@
       </if>
       <if test="salesmanCity != null" >
         #{salesmanCity,jdbcType=VARCHAR},
+      </if>
+      <if test="salesmaneChannelNum != null" >
+        #{salesmaneChannelNum,jdbcType=VARCHAR},
       </if>
       <if test="bei1 != null" >
         #{bei1,jdbcType=VARCHAR},
@@ -179,6 +185,9 @@
       <if test="record.salesmanCity != null" >
         salesman_city = #{record.salesmanCity,jdbcType=VARCHAR},
       </if>
+      <if test="record.salesmaneChannelNum != null" >
+        salesmane_channel_num = #{record.salesmaneChannelNum,jdbcType=VARCHAR},
+      </if>
       <if test="record.bei1 != null" >
         bei1 = #{record.bei1,jdbcType=VARCHAR},
       </if>
@@ -204,6 +213,7 @@
       salesman_phone = #{record.salesmanPhone,jdbcType=VARCHAR},
       salesman_email = #{record.salesmanEmail,jdbcType=VARCHAR},
       salesman_city = #{record.salesmanCity,jdbcType=VARCHAR},
+      salesmane_channel_num = #{record.salesmaneChannelNum,jdbcType=VARCHAR},
       bei1 = #{record.bei1,jdbcType=VARCHAR},
       bei2 = #{record.bei2,jdbcType=VARCHAR},
       bei3 = #{record.bei3,jdbcType=VARCHAR},
@@ -230,6 +240,9 @@
       <if test="salesmanCity != null" >
         salesman_city = #{salesmanCity,jdbcType=VARCHAR},
       </if>
+      <if test="salesmaneChannelNum != null" >
+        salesmane_channel_num = #{salesmaneChannelNum,jdbcType=VARCHAR},
+      </if>
       <if test="bei1 != null" >
         bei1 = #{bei1,jdbcType=VARCHAR},
       </if>
@@ -252,6 +265,7 @@
       salesman_phone = #{salesmanPhone,jdbcType=VARCHAR},
       salesman_email = #{salesmanEmail,jdbcType=VARCHAR},
       salesman_city = #{salesmanCity,jdbcType=VARCHAR},
+      salesmane_channel_num = #{salesmaneChannelNum,jdbcType=VARCHAR},
       bei1 = #{bei1,jdbcType=VARCHAR},
       bei2 = #{bei2,jdbcType=VARCHAR},
       bei3 = #{bei3,jdbcType=VARCHAR},

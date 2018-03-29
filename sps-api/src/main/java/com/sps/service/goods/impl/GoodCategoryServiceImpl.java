@@ -58,12 +58,16 @@ public class GoodCategoryServiceImpl implements GoodCategoryService {
                 List<SpsGoodCategory> childernList = new ArrayList<>();
                 for (SpsGoodCategory category : selectChildern) {
                     spsCategory = new SpsGoodCategory();
-                    spsCategory.setId(category.getCategoryId());
-                    spsCategory.setTitle(category.getCategoryName());
-                    childernList.add(spsCategory);
+                 /*   spsCategory.setId(category.getCategoryId());
+                    spsCategory.setTitle(category.getCategoryName());*/
+                    /*childernList.add(spsCategory);*/
                     List<SpsGoodCategory> getGrandson = getGrand(category.getCategoryId());
-                    spsCategory.setChildren(getGrandson);
-                    list.add(spsCategory);
+                    /*spsCategory.setChildren(getGrandson);*/
+                    if(getGrandson!=null&&getGrandson.size()>0){
+                        for (SpsGoodCategory categoryList : getGrandson) {
+                            list.add(categoryList);
+                        }
+                    }
                 }
             }
         }

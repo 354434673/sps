@@ -61,8 +61,8 @@ public class UserController {
 	 */
 	@RequestMapping("/userList.json")
 	public @ResponseBody HashMap<String, Object> userList(Integer page, Integer limit,
-			String username, String name, String phone, Integer mark) {
-		HashMap<String, Object> userList = userService.userList(page,limit, username, name, phone, mark);
+			String username, String name, String phone, String userSupplierNum,  Integer mark) {
+		HashMap<String, Object> userList = userService.userList(page,limit, username, name, phone, userSupplierNum, mark);
 		return userList;
 	}
 	/**

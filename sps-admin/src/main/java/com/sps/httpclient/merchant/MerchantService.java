@@ -1,6 +1,7 @@
 package com.sps.httpclient.merchant;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 
 public interface MerchantService {
 	
@@ -19,4 +20,7 @@ public interface MerchantService {
 	 * @throws
 	 */
 	String init(String businessId, Double totalQuota, Double monthQuota, Double firstMonthQuota);
+
+
+
 }

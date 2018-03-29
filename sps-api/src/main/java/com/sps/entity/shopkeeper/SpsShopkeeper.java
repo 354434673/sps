@@ -3,7 +3,6 @@ package com.sps.entity.shopkeeper;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-
 public class SpsShopkeeper implements Serializable{
     /**   
 	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   

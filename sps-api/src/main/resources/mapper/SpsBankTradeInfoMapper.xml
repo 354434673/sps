@@ -27,13 +27,14 @@
     <result column="shop_pay_money" jdbcType="DECIMAL" property="shopPayMoney" />
     <result column="service_money" jdbcType="DECIMAL" property="serviceMoney" />
     <result column="sum_service_money" jdbcType="DECIMAL" property="sumServiceMoney" />
+    <result column="goods_amout" jdbcType="DECIMAL" property="goodsAmout" />
   </resultMap>
   <sql id="Base_Column_List">
     id, bt_trade_name, bt_trade_serial_num, bt_identity, bt_application_start_date, bt_application_stop_date, 
     bt_audit_date, bt_payment_date, bt_trade_type, bt_income_type, bt_expenditure_type, 
     bt_trade_Before_balanc, bt_trade_after_balanc, bt_trade_amount, bt_trade_status, 
     bt_user_id, standby1, standby2, standby3, bt_trade_no, orderid, first_money, shop_pay_money, 
-    service_money, sum_service_money
+    service_money, sum_service_money,goods_amout
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -54,7 +55,7 @@
       bt_user_id, standby1, standby2, 
       standby3, bt_trade_no, orderid, 
       first_money, shop_pay_money, service_money, 
-      sum_service_money)
+      sum_service_money,goods_amout)
     values (#{id,jdbcType=INTEGER}, #{btTradeName,jdbcType=VARCHAR}, #{btTradeSerialNum,jdbcType=VARCHAR}, 
       #{btIdentity,jdbcType=VARCHAR}, #{btApplicationStartDate,jdbcType=TIMESTAMP}, #{btApplicationStopDate,jdbcType=TIMESTAMP}, 
       #{btAuditDate,jdbcType=TIMESTAMP}, #{btPaymentDate,jdbcType=TIMESTAMP}, #{btTradeType,jdbcType=VARCHAR}, 
@@ -63,7 +64,7 @@
       #{btUserId,jdbcType=VARCHAR}, #{standby1,jdbcType=VARCHAR}, #{standby2,jdbcType=VARCHAR}, 
       #{standby3,jdbcType=VARCHAR}, #{btTradeNo,jdbcType=VARCHAR}, #{orderid,jdbcType=VARCHAR}, 
       #{firstMoney,jdbcType=DECIMAL}, #{shopPayMoney,jdbcType=DECIMAL}, #{serviceMoney,jdbcType=DECIMAL}, 
-      #{sumServiceMoney,jdbcType=DECIMAL})
+      #{sumServiceMoney,jdbcType=DECIMAL},#{sumServiceMoney,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="SpsBankTradeInfo">
     insert into sps_bank_trade_info
@@ -296,6 +297,9 @@
       </if>
       <if test="sumServiceMoney != null">
         sum_service_money = #{sumServiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsAmout != null">
+        goods_amout = #{goodsAmout,jdbcType=DECIMAL},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

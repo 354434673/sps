@@ -1,6 +1,7 @@
 package org.sps.entity.merchant;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class SpsChannelEnterprise implements Serializable{
     /**   
@@ -13,15 +14,15 @@ public class SpsChannelEnterprise implements Serializable{
     private String enterpriseBusinesslicenseNo;
 
     private String enterpriseCompanyName;
-    
+
     private String enterpriseCompanyAbbreviation;
-    
+
     private String enterpriseCompanyRegisterAddr;
 
     private String enterpriseCompanyRealitAddr;
 
     private String enterpriseCorp;
-    
+
     private String enterpriseCorpIdcard;
 
     private Integer enterpriseOperatioTime;
@@ -29,10 +30,21 @@ public class SpsChannelEnterprise implements Serializable{
     private Integer enterpriseEmployeeNum;
 
     private String channelNum;
+
+    private BigDecimal enterpriseCapital;
     
     private SpsChannel channel;
+    
 
-    public Integer getEnterpriseId() {
+    public SpsChannel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(SpsChannel channel) {
+		this.channel = channel;
+	}
+
+	public Integer getEnterpriseId() {
         return enterpriseId;
     }
 
@@ -120,12 +132,11 @@ public class SpsChannelEnterprise implements Serializable{
         this.channelNum = channelNum == null ? null : channelNum.trim();
     }
 
-	public SpsChannel getChannel() {
-		return channel;
-	}
+    public BigDecimal getEnterpriseCapital() {
+        return enterpriseCapital;
+    }
 
-	public void setChannel(SpsChannel channel) {
-		this.channel = channel;
-	}
-    
+    public void setEnterpriseCapital(BigDecimal enterpriseCapital) {
+        this.enterpriseCapital = enterpriseCapital;
+    }
 }

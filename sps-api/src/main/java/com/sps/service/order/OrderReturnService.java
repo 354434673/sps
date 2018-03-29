@@ -11,7 +11,7 @@ public interface OrderReturnService {
     /**
      * 新增或者修改品牌
      */
-    void saveOrUpdate(SpsOrderReturn order);
+    boolean saveOrUpdate(SpsOrderReturn order);
 
     /**
      * 查看详情

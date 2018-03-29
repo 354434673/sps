@@ -5,15 +5,14 @@ import java.util.Date;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.ws.rs.POST;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.juzifenqi.capital.entity.UserCard;
 import com.juzifenqi.capital.service.IUserCardNewService;
-import com.juzifenqi.core.ServiceResult;
 import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthQueryApi;
@@ -56,6 +55,17 @@ public class authenticationController {
 	private ShopkeeperService shopkeeperService;
 	@Resource
 	private IUserCardNewService iUserCardNewService;
+	/**
+	 * 查询用户认证步骤
+	 * @Title: queryStateArray   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param arg0
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月26日 下午4:33:00
+	 * @return: JsonResult<Map<String,Object>>      
+	 * @throws
+	 */
 	@RequestMapping("/queryStateArray")
 	public JsonResult<Map<String, Object>> queryStateArray(AuthStateArray arg0){
 		
@@ -160,24 +170,6 @@ public class authenticationController {
 			saveFaceDetail = jzfqAuthApi.saveFaceDetail(arg0 );
 					
 			String code = saveFaceDetail.getCode();
-			
-/*			if(code != null){
-				if(code.equals("SUCCESS")){
-					SpsShopkeeperPic pic = new SpsShopkeeperPic();
-					
-					pic.setPicType(2);
-					
-					pic.setShopkeeperCustomerid(clientNum);
-					
-					pic.setPicSrc(arg0.getFrontImagePath());
-					
-					pic.setPicState(0);
-					
-					shopkeeperService.insertSpsShopkeeperPic(pic);
-					
-					backIdCardResult.setCode(Message.SUCCESS_CODE);
-				}
-			}*/
 		}else{
 			saveFaceDetail.setCode(Message.FAILURE_CODE);
 			saveFaceDetail.setMsg(Message.FAILURE_CLIENTNUM);
@@ -396,7 +388,6 @@ public class authenticationController {
 		
 		JsonResult saveLinkDetail = new JsonResult<>();
 		if(!StringUtil.isEmpty(clientNum)){
-			
 			saveLinkDetail = jzfqAuthApi.saveBasicDetail(arg0);
 			
 			String code = saveLinkDetail.getCode();
@@ -457,7 +448,6 @@ public class authenticationController {
 		JsonResult saveLinkDetail = new JsonResult<>();
 		
 		if(!StringUtil.isEmpty(clientNum)){
-			
 			saveLinkDetail = jzfqAuthApi.saveIdentityDetail(arg0);
 			
 			String code = saveLinkDetail.getCode();
@@ -477,6 +467,8 @@ public class authenticationController {
 					
 					String[] split = effectiveTime.split("-");
 					
+					personal.setPersonalAge(IdcardUtil.IdNOToAge(arg0.getCertNo()));
+					
 					personal.setPersonalIdcardValidityStart(split[0]);
 					
 					personal.setPersonalIdcardValidityEnd(split[1]);
@@ -487,7 +479,7 @@ public class authenticationController {
 					
 					personal.setShopkeeperCustomerid(clientNum);
 					
-					shopkeeperService.insertSpsShopkeeperPersonal(personal );
+					//shopkeeperService.insertSpsShopkeeperPersonal(personal);
 					
 					saveLinkDetail.setCode(Message.SUCCESS_CODE);
 				}
@@ -498,6 +490,59 @@ public class authenticationController {
 		}
 		return saveLinkDetail;
 	}
+	/**
+	 * 银行卡认证
+	 * @Title: saveBank   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param repayment
+	 * @param: @param clientNum
+	 * @param: @param userId
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年3月26日 下午4:40:16
+	 * @return: JsonResult      
+	 * @throws
+	 */
+	@RequestMapping("/saveBank")
+	public JsonResult saveBank(SpsShopkeeperRepayment repayment, String clientNum, Integer userId){
+		
+		JsonResult saveLinkDetail = new JsonResult<>();
+		
+		if(!StringUtil.isEmpty(clientNum)){
+			AuthIdentityDetail arg0 = new AuthIdentityDetail();
+			
+			arg0.setBankNo(repayment.getRepaymentBankid());
+			
+			arg0.setUserId(userId);
+			
+			arg0.setChannel("3");
+			
+			arg0.setProductLine("auth");
+			
+			arg0.setType(1);
+			
+			saveLinkDetail = jzfqAuthApi.saveIdentityDetail(arg0 );
+			
+			String code = saveLinkDetail.getCode();
+			
+			shopkeeperService.insertSpsShopkeeperRepayment(repayment);
+			
+			if(code != null){
+				if(code.equals("SUCCESS")){
+					repayment.setShopkeeperCustomerid(clientNum);
+					
+					shopkeeperService.insertSpsShopkeeperRepayment(repayment);
+					
+					saveLinkDetail.setCode(Message.SUCCESS_CODE);
+				}
+			}
+		}else{
+			saveLinkDetail.setCode(Message.FAILURE_CODE);
+			saveLinkDetail.setMsg(Message.FAILURE_CLIENTNUM);
+		}
+		return saveLinkDetail;
+	}
+	
 	/**
 	 * 公司店铺认证
 	 * @Title: saveStoreDetail   
@@ -539,9 +584,7 @@ public class authenticationController {
 			
 			if(code != null){
 				if(code.equals("SUCCESS")){
-					/*
-					 * 添加到公司表
-					 */
+					
 					SpsShopkeeperCompany company = new SpsShopkeeperCompany();
 					
 					company.setCompanyName(arg0.getCompanyName());
@@ -565,6 +608,44 @@ public class authenticationController {
 					company.setShopkeeperCustomerid(clientNum);
 
 					shopkeeperService.insertShopkeeperCompany(company);
+					
+					SpsShopkeeperPic pic = null;
+
+					pic = new SpsShopkeeperPic();
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicState(0);
+					
+					pic.setPicType(7);
+					
+					pic.setPicSrc(arg0.getStoreFrontPictures());
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
+					
+					pic = new SpsShopkeeperPic();
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicState(0);
+					
+					pic.setPicType(11);
+					
+					pic.setPicSrc(arg0.getStoreInPictures());
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
+					
+					pic = new SpsShopkeeperPic();
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicState(0);
+					
+					pic.setPicType(0);
+					
+					pic.setPicSrc(arg0.getLeasePictures());
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
 					/**
 					 * 更改shopkeeper主表的内容
 					 */
@@ -592,28 +673,6 @@ public class authenticationController {
 			saveLinkDetail.setMsg(Message.FAILURE_CLIENTNUM);
 		}
 		return saveLinkDetail;
-	}
-	@RequestMapping("/saveUserCardByNo")
-	public ServiceResult<Integer> saveUserCardByNo(UserCard arg0, String clientNum){
-		ServiceResult<Integer> saveUserCardByNo = new ServiceResult<>();
-		
-		if(!StringUtil.isEmpty(clientNum)){
-			
-			saveUserCardByNo = iUserCardNewService.saveUserCardByNo(arg0 );
-			
-			String code = saveUserCardByNo.getCode();
-			
-			if(code != null){
-				if(code.equals("SUCCESS")){
-					SpsShopkeeperRepayment repayment = new SpsShopkeeperRepayment();
-					
-					shopkeeperService.insertSpsShopkeeperRepayment(repayment );
-				}
-			}
-		}else{
-			saveUserCardByNo.setMessage(Message.FAILURE_CLIENTNUM);
-		}
-		return saveUserCardByNo;
 	}
 	/**
 	 * 征信认证
@@ -658,7 +717,7 @@ public class authenticationController {
 		return saveMentionDetail;
 	}
 	@RequestMapping("/savePhonePassword")
-	public JsonResult savePhonePassword(String phonePwd, String clientNum){
+	public JsonResult savePhonePassword(String phonePwd, String clientNum, Integer userId){
 		
 		JsonResult saveMentionDetail = new JsonResult<>();
 		
@@ -669,7 +728,7 @@ public class authenticationController {
 			
 			personal.setShopkeeperCustomerid(clientNum);
 			
-			shopkeeperService.updateSpsShopkeeperPersonal(personal );
+			shopkeeperService.updateSpsShopkeeperPersonal(personal);
 			
 			saveMentionDetail.setCode(Message.SUCCESS_CODE);
 		}else{
