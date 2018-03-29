@@ -58,7 +58,6 @@ public class CashAuditController {
     @RequestMapping("/saveAuditStatus")
     @ResponseBody
     public Result saveAuditStatus(int   id,String type,String content){
-
         Boolean flag = bankTradeWriteService.modifyBankTradeByApplicateDate(id,type,content);
         //审核通过--调用别的接口进行体现
         Result<Boolean> result = new Result<Boolean>();

@@ -70,6 +70,22 @@ public class YopBindCardController {
     BindCardTransService bindCardTransService;
     @Reference(group = "capital-service-dev1")
     private IBinCodeService iBinCodeService;
+    /**
+     * 获取所支持银行的方法
+     */
+    @RequestMapping(value = "/queryBankNameList", method = RequestMethod.POST)
+    @ResponseBody
+    public String queryBankNameList(@RequestParam("binNo") String binNo){
+        JSONObject jsonO = new JSONObject();
+        ServiceResult<BinCode> binCodeById = iBinCodeService.getBinCodeById(binNo);
+        String shortName = binCodeById.getResult().getBankCode().getShortName();
+        if(StringUtil.isNotEmpty(shortName)) {
+            jsonO.put("shortName",shortName);
+            return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG, jsonO);
+        }
+        jsonO.put("shortName",null);
+        return Message.responseStr(Message.FAILURE_CODE, Message.FAILURE_MSG, jsonO);
+    }
 
     /**
      * 根据银行卡号获取银行名称的方法

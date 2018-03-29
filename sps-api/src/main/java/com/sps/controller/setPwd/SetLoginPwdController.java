@@ -27,9 +27,9 @@ import javax.annotation.Resource;
 @RequestMapping(value = "/api/setLoginPwd")
 public class SetLoginPwdController {
     private static final Log logger = LogFactory.getLog(SetLoginPwdController.class);
-    @Reference(check = false, group = "member-center-dev1")
-    private IMemberDianfuService memberDianfuService;
 
+    @Reference(check = false, group = "member-center-dev1")
+    private IMemberDianfuService   memberDianfuService;
     @Reference(group = "member-center-dev1")
     private ISmsCommonService ismsCommonService;
 
@@ -39,7 +39,7 @@ public class SetLoginPwdController {
      * @param phone
      * @return
      */
-    @RequestMapping(value = "/queryVerfilyCode", method = RequestMethod.GET)
+    @RequestMapping(value = "/queryVerfilyCode", method = RequestMethod.POST)
     @ResponseBody
     public ServiceResult<Boolean> queryVerfilyCode(@RequestParam("phone") String phone) {
         logger.info("queryVerfilyCode 方法开始执行。。。。。。");
@@ -50,36 +50,49 @@ public class SetLoginPwdController {
 
 
     /***
-     * 修改登录密码（两种方式：按照手机号修改，方式二:按照原密码修改）
-     * @param code
+     * 按照原密码修改修改登录密码
      * @param mobile
      * @param oldPwd
      * @param newPwd
      * @return
      */
-    @RequestMapping(value = "/modifyLoaginPwd", method = RequestMethod.POST)
+    @RequestMapping(value = "/modifyLoaginPwdByOldPwd", method = RequestMethod.POST)
     @ResponseBody
-    public  ServiceResult<MemberInfo> modifyLoaginPwd(@RequestParam("code") String code,
+    public  ServiceResult<MemberInfo> modifyLoaginPwdByOldPwd(
                                                       @RequestParam("mobile") String mobile,
                                                       @RequestParam("oldPwd") String oldPwd,
                                                       @RequestParam("newPwd") String newPwd) {
-        //获取登录用户名---用户名就是手机号
-        //  String userName = (String) SecurityUtils.getSubject().getPrincipal();
-        ServiceResult<MemberInfo> memberInfoServiceResult=null;
-        if (StringUtils.isNotEmpty(code)) {
-            logger.info("editPasswordByMobile方法开始执行。。。。。。。。。。。");
-            //根据手机号修改登录密码
-            memberInfoServiceResult = memberDianfuService.editPasswordByMobile(code, mobile, newPwd);
-            return memberInfoServiceResult;
-        } else {
             //根据旧密码修改登录密码
             logger.info("editPasswordByOldPwd方法开始执行。。。。。。。。。。。");
 
-            memberInfoServiceResult = memberDianfuService.editPasswordByOldPwd(oldPwd, newPwd, mobile);
+            ServiceResult<MemberInfo> memberInfoServiceResult= memberDianfuService.editPasswordByOldPwd(oldPwd, newPwd, mobile);
 
             return memberInfoServiceResult;
-        }
+
     }
+
+    /**
+     * 按照手机号修改修改登录密码
+     * @param mobile
+     * @param code
+     * @param newPwd
+     * @return
+     */
+    @RequestMapping(value = "/modifyLoaginPwdByPhone", method = RequestMethod.POST)
+    @ResponseBody
+    public  ServiceResult<MemberInfo> modifyLoaginPwdByPhone(
+            @RequestParam("code") String code,
+            @RequestParam("mobile") String mobile,
+            @RequestParam("newPwd") String newPwd) {
+        //根据旧密码修改登录密码
+        logger.info("editPasswordByOldPwd方法开始执行。。。。。。。。。。。");
+
+        ServiceResult<MemberInfo> memberInfoServiceResult= memberDianfuService.editPasswordByOldPwd(newPwd, mobile, code);
+
+        return memberInfoServiceResult;
+
+    }
+
 
     /**
      * 忘记登录密码

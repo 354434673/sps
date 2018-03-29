@@ -37,7 +37,7 @@ public class SetPaymentPwdController {
      * @param phone
      * @return
      */
-    @RequestMapping(value = "/queryVerfilyCode", method = RequestMethod.GET)
+    @RequestMapping(value = "/queryVerfilyCode", method = RequestMethod.POST)
     @ResponseBody
     public ServiceResult<Boolean> queryVerfilyCode(@RequestParam("phone") String phone) {
         logger.info("queryVerfilyCode 方法开始执行。。。。。。");
@@ -84,23 +84,5 @@ public class SetPaymentPwdController {
         ServiceResult<MemberInfo> memberInfoServiceResult = memberDianfuService.forgetBalancePassword(mobile, newPwd,code);
         return memberInfoServiceResult;
     }
-    /**
-     * 修改交易密码
-     *
-     * @param
-     * @param mobile
-     * @param
-     * @param newPwd
-     * @return
-     */
-    @RequestMapping(value = "/editPaymentPwd", method = RequestMethod.POST)
-    @ResponseBody
-    public ServiceResult<MemberInfo>  editPaymentPwd(
-            @RequestParam("code") String code,
-            @RequestParam("mobile") String mobile,
-            @RequestParam("newPwd") String newPwd) {
-        logger.info("editBalancePassword 方法开始执行。。。。。。。。。。。");
-        ServiceResult<MemberInfo> memberInfoServiceResult = memberDianfuService.editBalancePassword(mobile, newPwd);
-        return memberInfoServiceResult;
-    }
+
 }
