@@ -80,16 +80,6 @@
 		<!-- Shiro -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-core</artifactId>
-			<version>1.2.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-spring</artifactId>
-			<version>1.2.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-cas</artifactId>
 			<version>1.2.3</version>
 			<exclusions>
@@ -98,16 +88,6 @@
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-web</artifactId>
-			<version>1.2.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-ehcache</artifactId>
-			<version>1.2.3</version>
 		</dependency>
 		<!-- log -->
 		<dependency>
@@ -269,16 +249,7 @@
 			<artifactId>spring-test</artifactId>
 			<version>4.1.7.RELEASE</version>
 		</dependency>
-		<dependency>
-		    <groupId>org.jboss.resteasy</groupId>
-		    <artifactId>resteasy-jaxrs</artifactId>
-		    <version>3.0.7.Final</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.jboss.resteasy</groupId>
-		    <artifactId>resteasy-client</artifactId>
-		    <version>3.0.7.Final</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>jzfq_auth</groupId>
 			<artifactId>auth_api</artifactId>
@@ -370,22 +341,6 @@
 				<dubbo.zookeeper>123.56.30.114:2181</dubbo.zookeeper>
 			</properties>
 		</profile>
-		<!-- 本地 -->
-		<profile>
-			<id>local</id>
-			<properties>
-				<env>local</env>
-				<db.driver>com.mysql.jdbc.Driver</db.driver>
-				<db.connectionURL>jdbc:mysql://localhost:3306/sps</db.connectionURL>
-				<db.username>root</db.username>
-				<db.password>root</db.password>
-				<dubbo.auth.group>auth_dev1</dubbo.auth.group>
-				<dubbo.member.group>member-center-dev1</dubbo.member.group>
-				<dubbo.capital.group>capital-service-dev1</dubbo.capital.group>
-				<dubbo.zookeeper>localhost:2181</dubbo.zookeeper>
-			</properties>
-
-		</profile>
 		<!-- 测试环境 -->
 		<profile>
 			<id>test</id>
@@ -443,6 +398,18 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			<!--<plugin> -->
+			<!--<groupId>org.apache.tomcat.maven</groupId> -->
+			<!--<artifactId>tomcat7-maven-plugin</artifactId> -->
+			<!--<version>2.2</version> -->
+			<!--<configuration> -->
+			<!--<port>8080</port> -->
+			<!--<path>/sps-api</path> -->
+			<!--<uriEncoding>UTF-8</uriEncoding> -->
+			<!--<finalName>sps-api</finalName> -->
+			<!--<server>tomcat7</server> -->
+			<!--</configuration> -->
+			<!--</plugin> -->
 		</plugins>
 	</build>
 	<properties>
