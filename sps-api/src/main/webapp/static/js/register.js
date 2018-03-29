@@ -153,7 +153,7 @@
         submitInformation: function () {
             var setClear = null;
             submitBtn.addEventListener('click', function () {
-                if (!/sTel/.test(location.search)) {
+                if (/sTel/.test(location.search)) {
                     if (telNum.value == invitationPhone) {
                         _this.submitAjax();
                     } else {
