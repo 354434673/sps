@@ -303,7 +303,7 @@
     sps_shopkeeper_personal sp
     LEFT JOIN sps_shopkeeper_pic ssp ON sp.shopkeeper_customerId = ssp.shopkeeper_customerId
     LEFT JOIN balance b ON sp.shopkeeper_customerId = b.balance_client_num
-    LEFT JOIN sps_balance sb ON sb.b_userid = b.balance_client_num
+    LEFT JOIN sps_balance sb ON sb.b_user_no = b.balance_client_num
     WHERE
     sp.shopkeeper_customerId = #{customerNum,jdbcType=VARCHAR}
     AND ssp.pic_type = 7;

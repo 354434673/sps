@@ -194,8 +194,13 @@
       and datediff(repay_date,NOW())<![CDATA[>=]]> 0
       and d.order_status = 20
     </if>
+    <if test="type==0">
+      and d.order_status = 20
+    </if>
+    <if test="type==1">
+      and d.order_status = 21
+    </if>
     ORDER BY  days desc
-
   </select>
 
 
