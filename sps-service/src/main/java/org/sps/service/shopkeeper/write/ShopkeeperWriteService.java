@@ -1,6 +1,8 @@
 package org.sps.service.shopkeeper.write;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.sps.entity.shopkeeper.SpsShopkeeperAccount;
 import org.sps.entity.shopkeeper.SpsShopkeeperInvitation;
@@ -58,4 +60,18 @@ public interface ShopkeeperWriteService {
 	 * @throws
 	 */
 	public HashMap<String, Object> insertManyInvitation(SpsShopkeeperInvitation invitation) throws Exception;
+
+
+	/**
+	 * 初始化个人资金账户
+	 * @return
+	 */
+	Map<String, Object> initCustomerAccount(String certNo);
+	/**
+	 * 初始化个人信用账户
+	 *
+	 * @return
+	 */
+	HashMap<String, Object> initAccount(String amount, String certNo);
+
 }

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.juzifenqi.core.ServiceResult;
@@ -21,7 +20,6 @@ import com.sps.common.Message;
 import com.sps.common.StringUtil;
 import com.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 import com.sps.service.user.UserService;
-
 /**
  * 用户登录注册接口
  * @ClassName:  UserController   
@@ -55,16 +53,6 @@ public class UserController {
 			ServiceResult<Boolean> sendRegisterSms = iSmsCommonService.sendRegisterSms(mobile, category);
 
 			return sendRegisterSms;
-	}
-	@RequestMapping("/sendCommonSms")
-	public ServiceResult<Boolean> sendCommonSms(String mobile, Integer category){
-		
-		String url = "http://123.56.24.208:8480/invitation.html?salemanPhone="+mobile;
-		
-		String content = "【店付】业务员您好，以下为店主邀请链接，请妥善保存此链接:"+url;
-		ServiceResult<Boolean> sendCommonSms = iSmsCommonService.sendCommonSms("18513967345", content, 3);
-		
-		return sendCommonSms;
 	}
 	/**
 	 * 修改密码短信验证码

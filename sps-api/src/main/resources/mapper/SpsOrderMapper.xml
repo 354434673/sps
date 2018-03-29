@@ -328,6 +328,13 @@
     where o_id = #{oId,jdbcType=INTEGER}
     AND isdelete = 0
   </select>
+  <select id="findByCode" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_order
+    where orderid = #{orderCode,jdbcType=VARCHAR}
+    AND isdelete = 0
+  </select>
 
 
   <update id="updateToOrderNum" parameterType="SpsOrder">

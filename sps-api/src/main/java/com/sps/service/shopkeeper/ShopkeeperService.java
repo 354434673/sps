@@ -112,4 +112,7 @@ public interface ShopkeeperService {
 	 * @return
 	 */
 	String queryByLoginName(String loginName);
+
+
+	int updateStatus(Map<String, Object> map);
 }

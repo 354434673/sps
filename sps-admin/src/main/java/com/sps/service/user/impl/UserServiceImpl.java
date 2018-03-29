@@ -11,6 +11,8 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -55,7 +57,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public HashMap<String, Object> userList(Integer page, Integer limit, String username, String name, String phone,
+	public HashMap<String, Object> userList(Integer page, Integer limit, String username, String name, String phone, String userSupplierNum,
 			Integer mark) {
 		SpsUserExample example = new SpsUserExample();
 
@@ -70,6 +72,9 @@ public class UserServiceImpl implements UserService {
 		}
 		if (!(phone == null || phone.equals(""))) {
 			createCriteria.andUserPhoneLike("%" + phone + "%");
+		}
+		if (!(userSupplierNum == null || userSupplierNum.equals(""))) {
+			createCriteria.andUserSupplierNumEqualTo(userSupplierNum);
 		}
 		// 分页
 		PageHelper.startPage(page, limit);
@@ -112,7 +117,15 @@ public class UserServiceImpl implements UserService {
 				user.setUserUpdatetime(new Date());
 				
 				if(user.getUserMark() == 3 || user.getUserMark().equals("3")){
-					user.setUserSupplierNum((String) SecurityUtils.getSubject().getPrincipal());
+					Subject subject = SecurityUtils.getSubject();
+					
+					Session session = subject.getSession();
+					
+					String userName = (String) subject.getPrincipal();
+
+					String channelNum = (String) session.getAttribute(userName);
+					
+					user.setUserSupplierNum(channelNum);
 				}
 
 				int insertSelective = spsUserMapper.insertSelective(user);

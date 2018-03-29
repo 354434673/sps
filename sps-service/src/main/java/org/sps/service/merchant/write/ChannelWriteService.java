@@ -1,7 +1,5 @@
 package org.sps.service.merchant.write;
 
-import java.io.Serializable;
-import java.util.HashMap;
 
 import org.sps.entity.merchant.SpsChannel;
 import org.sps.entity.merchant.SpsChannelBusiness;
@@ -11,6 +9,10 @@ import org.sps.entity.merchant.SpsChannelGather;
 import org.sps.entity.merchant.SpsChannelGuarantee;
 import org.sps.entity.merchant.SpsChannelLogistics;
 import org.sps.entity.merchant.SpsChannelOpenAccount;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * 写相关
  */
@@ -136,4 +138,16 @@ public interface ChannelWriteService{
 	 * @throws
 	 */
 	HashMap<String, String> deleteChannel(String channelNum, Integer state);
+
+	/**
+	 * 商户账户初始化
+	 * @return
+	 */
+	Map<String, Object> initBusiness(String businessId,String firstMonthQuota,String monthQuota,String totalQuota);
+	/**
+	 * 商户资金账户初始化
+	 *
+	 * @return
+	 */
+	HashMap<String, Object> initMerchantAccount(String businessId, String name);
 }

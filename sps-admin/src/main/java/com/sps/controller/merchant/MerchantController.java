@@ -1,5 +1,7 @@
 package com.sps.controller.merchant;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,6 +51,7 @@ import com.sps.util.HttpClientUtil;
 @RestController
 @RequestMapping(value="/merchant")
 public class MerchantController {
+	private static final String URL = "http://192.168.201.149:8080/sps/centerEnter";	
 	@Reference(check=false,group="dianfu")
 	private ChannelWriteService chanelWriteService;
 	@Reference(check=false,group="dianfu")
@@ -338,66 +341,72 @@ public class MerchantController {
 			SpsChannelGuarantee guarantee,
 			SpsChannelFinanceTarget financeTarget,
 			SpsChannelLogistics logistics , 
-			SpsChannelOpenAccount openAccount){
+			SpsChannelOpenAccount openAccount,
+			String channelNum){
+
+		JSONObject centerCompanyInfo = new JSONObject();
+		centerCompanyInfo.put("merchantType", 1);
+		centerCompanyInfo.put("companyName", enterprise.getEnterpriseCompanyName());
+		centerCompanyInfo.put("bussinessType", 1);//业务类型
+		centerCompanyInfo.put("businessLicenseNumber", enterprise.getEnterpriseBusinesslicenseNo());//营业执照编号
+		centerCompanyInfo.put("corporateRepresent", enterprise.getEnterpriseCorp());//公司法人代表
+		centerCompanyInfo.put("businessYears", enterprise.getEnterpriseOperatioTime());//经营年限
+		centerCompanyInfo.put("employeeNumber", enterprise.getEnterpriseEmployeeNum());//员工数量
+		centerCompanyInfo.put("registerMoney", new BigDecimal(18000000.00));//注册资金
+		centerCompanyInfo.put("registerDetailAddress", enterprise.getEnterpriseCompanyRealitAddr());//注册详细地址
+		centerCompanyInfo.put("actualDetailAddress", enterprise.getEnterpriseCompanyRegisterAddr());//详细地址
+		centerCompanyInfo.put("mainBusiness", business.getBusinessProduct());//主营业务
+		centerCompanyInfo.put("mainCommodityType", business.getBusinessType());//主营商品类型
+		centerCompanyInfo.put("mainBrand", business.getBusinessBrand());//主营品牌
+		centerCompanyInfo.put("businessArea", business.getBusinessScope());//业务覆盖地域范围
+		centerCompanyInfo.put("guaranteeType", guarantee.getGuaranteeSituation());//担保形式
+		centerCompanyInfo.put("marginAmount", guarantee.getGuaranteeDeposit());//保证金金额
+		centerCompanyInfo.put("previousYearSales", financeTarget.getTargetLastSale());//上年销售额
 		
-		final String  url = "";
-		JSONObject CenterCompanyInfo = new JSONObject();
+		JSONObject centerContactInfo = new JSONObject();
 		
-		CenterCompanyInfo.put("merchantId", "merchantType");
-		CenterCompanyInfo.put("merchantType", "merchantType");
-		CenterCompanyInfo.put("companyName", "merchantType");
-		CenterCompanyInfo.put("bussinessType", "merchantType");
-		CenterCompanyInfo.put("businessLicenseNumber", "merchantType");
-		CenterCompanyInfo.put("corporateRepresent", "merchantType");
-		CenterCompanyInfo.put("businessYears", "merchantType");
-		CenterCompanyInfo.put("employeeNumber", "merchantType");
-		CenterCompanyInfo.put("registerMoney", "merchantType");
-		CenterCompanyInfo.put("registerProvinceCode", "merchantType");
-		CenterCompanyInfo.put("registerProvince", "merchantType");
-		CenterCompanyInfo.put("registerCityCode", "merchantType");
-		CenterCompanyInfo.put("registerCity", "merchantType");
-		CenterCompanyInfo.put("registerDistrictCode", "merchantType");
-		CenterCompanyInfo.put("registerDistrict", "merchantType");
-		CenterCompanyInfo.put("registerDetailAddress", "merchantType");
-		CenterCompanyInfo.put("actualProvinceCode", "merchantType");
-		CenterCompanyInfo.put("actualProvince", "merchantType");
-		CenterCompanyInfo.put("actualCityCode", "merchantType");
-		CenterCompanyInfo.put("actualCity", "merchantType");
-		CenterCompanyInfo.put("actualDistrictCode", "merchantType");
-		CenterCompanyInfo.put("actualDistrict", "merchantType");
-		CenterCompanyInfo.put("actualDetailAddress", "merchantType");
-		CenterCompanyInfo.put("mainBusiness", "merchantType");
-		CenterCompanyInfo.put("mainCommodityType", "merchantType");
-		CenterCompanyInfo.put("mainBrand", "merchantType");
-		CenterCompanyInfo.put("businessArea", "merchantType");
-		CenterCompanyInfo.put("guaranteeType", "merchantType");
-		CenterCompanyInfo.put("marginAmount", "merchantType");
-		CenterCompanyInfo.put("bankNo", "merchantType");
-		CenterCompanyInfo.put("cardOwnerName", "merchantType");
-		CenterCompanyInfo.put("certNo", "merchantType");
-		CenterCompanyInfo.put("bindMobile", "merchantType");
-		CenterCompanyInfo.put("depositBank", "merchantType");
-		CenterCompanyInfo.put("bankSeparate", "merchantType");
-		CenterCompanyInfo.put("bankBranch", "merchantType");
-		CenterCompanyInfo.put("previousYearSales", "merchantType");
+		centerContactInfo.put("merchantId", guarantee.getGuaranteeId());//商户id
+		centerContactInfo.put("mobile", guarantee.getGuaranteeCorpPhone());//法人代表手机号
+		centerContactInfo.put("financeName", guarantee.getGuaranteeFinanceContactname());//财务联系人姓名
+		centerContactInfo.put("financeMobile", guarantee.getGuaranteeFinanceContactphone());//财务联系人手机号
+		centerContactInfo.put("businessName", guarantee.getGuaranteeBusinessLeadername());//业务负责人姓名
+		centerContactInfo.put("businessMobile", guarantee.getGuaranteeBusinessLeaderphone());//业务负责人手机号
+		centerContactInfo.put("businessMobilePassword", guarantee.getGuaranteeBusinessPhonePassword());//业务负责人手机号服务密码
+
+		JSONObject centerImageInfo = new JSONObject();
 		
-		JSONObject CenterContactInfo = new JSONObject();
+/*		centerImageInfo.put("merchantId", 1234);
+		centerImageInfo.put("businessLicense", "123124124124");
+		centerImageInfo.put("accountFlow", "123123123");
+		centerImageInfo.put("certCard", "31312312");
+		centerImageInfo.put("companyPicture", "q123123123we");
+		centerImageInfo.put("cooperationContract", "123123");
+		centerImageInfo.put("groupPhoto", "qw1312312312e");
+		centerImageInfo.put("rentalAgreement", "qwe");
+		centerImageInfo.put("others", "qwe");*/
 		
-		JSONObject CenterImageInfo = new JSONObject();
+		JSONObject centerMerchantInfo = new JSONObject();
 		
-		JSONObject CenterMerchantInfo = new JSONObject();
+		centerMerchantInfo.put("merchantCode", channelNum);//商户编号
+		centerMerchantInfo.put("status", 0);//商户状态
+		centerMerchantInfo.put("signBeginDate",  openAccount.getOpenStartTime());//签约开始日期
+		centerMerchantInfo.put("signEndDate",  openAccount.getOpenEndTime());//签约结束日期
+		centerMerchantInfo.put("createTime",  new Date());//创建时间
+		centerMerchantInfo.put("updateTime",  new Date());//更新时间
+		centerMerchantInfo.put("flag", 1);
+		centerMerchantInfo.put("delFlag", 0);
 		
 		JSONObject data = new JSONObject();
 		
-		data.put("CenterCompanyInfo", CenterCompanyInfo);
-		data.put("CenterContactInfo", CenterContactInfo);
-		data.put("CenterImageInfo", CenterImageInfo);
-		data.put("CenterMerchantInfo", CenterMerchantInfo);
+		data.put("centerMerchantInfo", centerMerchantInfo);
+		data.put("centerCompanyInfo", centerCompanyInfo);
+		data.put("centerContactInfo", centerContactInfo);
+		//data.put("centerImageInfo", centerImageInfo);
 		
 		String jsonString = JSON.toJSONString(data);
 		
-		HttpClientUtil.doPostJson(url, jsonString);
 		
+		HttpClientUtil.doPostJson(URL, jsonString);
 		return null;
 	}
 	/**

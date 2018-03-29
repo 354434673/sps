@@ -115,9 +115,10 @@
 <script src="<%=path%>/page/static/js/index.js"></script>
 <script>
 			var pathStr = "${pageContext.request.contextPath}";//项目名称,方便js获取
-			layui.use('layer', function() {
+			layui.use(['layer','navbar'], function() {
 				var $ = layui.jquery, 
 				layer = layui.layer;
+				 navbar = layui.navbar();
 				$('#pay').on('click', function() {
 					layer.open({
 						title : false,
@@ -128,6 +129,17 @@
 					});
 				});
 
+			    //设置navbar
+			    navbar.set({
+			        spreadOne: true,
+			        elem: '#admin-navbar-side',
+			        cached: true,
+			        //data: navs,
+					/*cached:true,*/
+					url: pathStr+'/menu/getMenu.json'
+			    });
+			    //渲染navbar
+			    navbar.render();
 			});
 </script>
 </body>

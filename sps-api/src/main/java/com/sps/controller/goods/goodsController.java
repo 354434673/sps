@@ -185,7 +185,6 @@ public class goodsController {
             } else {
                 List<SpsGoodCategory> goodCategoryList = new ArrayList<>();
                 String[] idList = ids.split(",");
-
                 for (String id : idList) {
                     map.put("id", id);
                     List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);

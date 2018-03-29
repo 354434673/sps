@@ -138,7 +138,7 @@
 						<%-- window.location.href='<%=path%>/order/showOrderGoods='+data.orderid;   --%>
 						<%-- window.location.href='<%=path%>/order/showSingle.json?orderid='+data.orderid; --%>
 						   /* layer.msg(data.orderid); */
-						   window.location.href="<%=path%>/page/main/order/confimed.jsp?orderid="+data.orderid; 
+						   window.location.href="<%=path%>/page/main/order/confimed.jsp?orderid="+data.orderid;
 					 }else if(layEvent=='detail'){//详情
 						 /* layer.msg('详情');  */
 						  window.location.href="<%=path%>/page/main/order/detail.jsp?orderid="+data.orderid;

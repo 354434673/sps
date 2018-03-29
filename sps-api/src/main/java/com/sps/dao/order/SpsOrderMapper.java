@@ -13,4 +13,8 @@ public class SpsOrderMapper extends ApiBaseDaoImpl<SpsOrder, Integer> {
     public String getNameSpace() {
         return "sqlmap.SpsOrder";
     }
+
+    public SpsOrder findByCode(String orderCode) {
+        return super.selectOne(getStatement("findByCode"),orderCode);
+    }
 }

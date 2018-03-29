@@ -1,31 +1,33 @@
 <?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.sps</groupId>
-		<artifactId>sps-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../sps-parent/pom.xml</relativePath>
-	</parent>
-	<groupId>com.sps</groupId>
-	<artifactId>sps-admin</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
-	<name>sps-admin Maven Webapp</name>
-	<url>http://maven.apache.org</url>
-	<properties>
-		<shiro-version>1.2.2</shiro-version>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.sps</groupId>
+    <artifactId>sps-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../sps-parent/pom.xml</relativePath>
+  </parent>
+  <groupId>com.sps</groupId>
+  <artifactId>sps-admin</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>sps-admin Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  	<properties>
+  		<!-- 设置默认编码 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<shiro-version>1.3.2</shiro-version>
 	</properties>
-	<dependencies>
-		<dependency>
+  <dependencies>
+  		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<!-- 表示开发的时候引入，发布的时候不会加载此包 -->
 			<scope>test</scope>
 		</dependency>
-		<!-- shiro仅web -->
+  		<!-- shiro仅web -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
@@ -47,29 +49,45 @@
 			<version>${shiro-version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>core</artifactId>
-			<version>3.3.2</version>
+		    <groupId>com.google.zxing</groupId>
+		    <artifactId>core</artifactId>
+		    <version>3.3.2</version>
 		</dependency>
+		  <dependency>
+		      <groupId>javax.validation</groupId>
+		      <artifactId>validation-api</artifactId>
+		      <version>2.0.0.CR3</version>
+		    </dependency>
+		<dependency>
+		    <groupId>com.aliyun.oss</groupId>
+		    <artifactId>aliyun-sdk-oss</artifactId>
+		    <version>2.8.2</version>
+		</dependency>
+<!-- 	   <dependency>
+	      <groupId>com.juzifenqi</groupId>
+	      <artifactId>member-center-api</artifactId>
+	      <version>2.3.0.1-SNAPSHOT</version>
+	    </dependency>
 
 		<dependency>
-			<groupId>com.juzifenqi</groupId>
-			<artifactId>member-center-api</artifactId>
-			<version>2.3.0.1-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.juzifenqi</groupId>
-			<artifactId>member-center-core</artifactId>
-			<version>2.3.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.yop</groupId>
-			<artifactId>yop-sdk</artifactId>
-			<version>1.2.1</version>
-		</dependency>
-	</dependencies>
-	<build>
-		<finalName>sps-admin</finalName>
-	</build>
+	      <groupId>com.juzifenqi</groupId>
+	      <artifactId>member-center-core</artifactId>
+	      <version>2.3.0.1-SNAPSHOT</version>
+	    </dependency>
+	     -->
+  </dependencies>
+  
+  <build>
+    <finalName>sps-admin</finalName>
+<!--     	<filters>获得过滤使用的源文件 即有实际数据的地方
+			<filter>src/main/resources/properties/${env}.properties</filter>
+		</filters>
+		
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering> 是否使用过滤器
+			</resource>
+		</resources> -->
+  </build>
 </project>
