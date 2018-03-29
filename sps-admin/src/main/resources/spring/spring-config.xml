@@ -14,7 +14,7 @@
 			</list>
 		</property>
 	</bean> -->
-	<context:property-placeholder location="classpath:properties/local.properties" ignore-unresolvable="true" />
+	<context:property-placeholder location="classpath:properties/test.properties" ignore-unresolvable="true" />
 	<import resource="spring-mybatis.xml" />
 	<import resource="spring-aop.xml" />
 	<import resource="spring-mvc.xml" />

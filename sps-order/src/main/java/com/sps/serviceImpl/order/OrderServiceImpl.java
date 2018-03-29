@@ -31,8 +31,8 @@ import com.sps.dao.order.SpsOrderLogisticsMapper;
 public class OrderServiceImpl implements OrderService {
     private static String orderFirst = "http://dev.app.chezhubaitiao.com/api/accountSystem/freezeConsumption";
     private static String frozen = "http://dev.app.chezhubaitiao.com/api/accountSystem/freeze";
-    @Autowired
-    private GoodCategoryService goodCategoryService;
+/*    @Autowired
+    private GoodCategoryService goodCategoryService;*/
 
     @Autowired
     private OrderMapper orderMapper;
@@ -488,12 +488,12 @@ public class OrderServiceImpl implements OrderService {
                         String[] idList = order.getCommodityType().split(",");
                         for (String id : idList) {
                             map.put("id", id);
-                            List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
+/*                            List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
                             if (categoryList != null && categoryList.size() > 0) {
                                 for (SpsGoodCategory category : categoryList) {
                                     categoryNames += "," + category.getCategoryName();
                                 }
-                            }
+                            }*/
                         }
                     }
                     json.put("orderNo", order.getOrderid());
@@ -524,12 +524,12 @@ public class OrderServiceImpl implements OrderService {
                                     String[] idList = goods.getCategory().split(",");
                                     for (String id : idList) {
                                         map.put("id", id);
-                                        List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
+ /*                                       List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
                                         if (categoryList != null && categoryList.size() > 0) {
                                             for (SpsGoodCategory category : categoryList) {
                                                 categoryName += "," + category.getCategoryName();
                                             }
-                                        }
+                                        }*/
                                     }
                                 }
                                 JSONObject content = new JSONObject();
