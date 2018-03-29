@@ -50,11 +50,18 @@
 
 
     <select id="selectOrderGood" resultMap="BaseOrderGoodsResultMap" parameterType="org.sps.entity.order.OrderGoods" >
-        select
-        og.*,gs.g_bprice  as  maxPrice,gs.g_size as size,gs.g_good_no as goodsNo ,g.g_category_ids as category ,g.g_brand_id as brand
-        from sps_order_goods og  LEFT JOIN sps_good_shop_sku ss on og.sku=ss.g_id
-        LEFT JOIN sps_good_sku gs on gs.g_id= ss.g_sku_id
-        LEFT JOIN sps_goods g on g.g_id=gs.g_gid
+        SELECT
+        og.*, gs.g_bprice AS maxPrice,
+        gs.g_size AS size,
+        gs.g_good_no AS goodsNo,
+        g.g_category_ids AS category,
+        b.brand_name AS brand
+        FROM
+        sps_order_goods og
+        LEFT JOIN sps_good_shop_sku ss ON og.sku = ss.g_id
+        LEFT JOIN sps_good_sku gs ON gs.g_id = ss.g_sku_id
+        LEFT JOIN sps_goods g ON g.g_id = gs.g_gid
+        LEFT JOIN sps_brand b ON b.brand_id = g.g_brand_id
         <where>
             <if test="orderid != null and orderid !='' ">
                 og.orderid = #{orderid,jdbcType=VARCHAR}
