@@ -10,4 +10,12 @@ public class SpsBankTradeInfoMapper extends ApiBaseDaoImpl<SpsBankTradeInfo, Int
     public String getNameSpace() {
         return "sqlmap.SpsBankTradeInfo";
     }
+
+    public SpsBankTradeInfo findBySerialNumber(String serialNumber) {
+        return super.selectOne(getStatement("findBySerialNumber"), serialNumber);
+    }
+
+    public int updateBySerialNumber(SpsBankTradeInfo bankTradeInfo) {
+        return super.updateByValue(getStatement("updateBySerialNumber"), bankTradeInfo);
+    }
 }

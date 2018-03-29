@@ -28,13 +28,14 @@
     <result column="service_money" jdbcType="DECIMAL" property="serviceMoney" />
     <result column="sum_service_money" jdbcType="DECIMAL" property="sumServiceMoney" />
     <result column="goods_amout" jdbcType="DECIMAL" property="goodsAmout" />
+    <result column="recharge_status" jdbcType="INTEGER" property="rechargeStatus" />
   </resultMap>
   <sql id="Base_Column_List">
     id, bt_trade_name, bt_trade_serial_num, bt_identity, bt_application_start_date, bt_application_stop_date, 
     bt_audit_date, bt_payment_date, bt_trade_type, bt_income_type, bt_expenditure_type, 
     bt_trade_Before_balanc, bt_trade_after_balanc, bt_trade_amount, bt_trade_status, 
     bt_user_id, standby1, standby2, standby3, bt_trade_no, orderid, first_money, shop_pay_money, 
-    service_money, sum_service_money,goods_amout
+    service_money, sum_service_money,goods_amout,recharge_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -55,7 +56,7 @@
       bt_user_id, standby1, standby2, 
       standby3, bt_trade_no, orderid, 
       first_money, shop_pay_money, service_money, 
-      sum_service_money,goods_amout)
+      sum_service_money,goods_amout,recharge_status)
     values (#{id,jdbcType=INTEGER}, #{btTradeName,jdbcType=VARCHAR}, #{btTradeSerialNum,jdbcType=VARCHAR}, 
       #{btIdentity,jdbcType=VARCHAR}, #{btApplicationStartDate,jdbcType=TIMESTAMP}, #{btApplicationStopDate,jdbcType=TIMESTAMP}, 
       #{btAuditDate,jdbcType=TIMESTAMP}, #{btPaymentDate,jdbcType=TIMESTAMP}, #{btTradeType,jdbcType=VARCHAR}, 
@@ -64,7 +65,7 @@
       #{btUserId,jdbcType=VARCHAR}, #{standby1,jdbcType=VARCHAR}, #{standby2,jdbcType=VARCHAR}, 
       #{standby3,jdbcType=VARCHAR}, #{btTradeNo,jdbcType=VARCHAR}, #{orderid,jdbcType=VARCHAR}, 
       #{firstMoney,jdbcType=DECIMAL}, #{shopPayMoney,jdbcType=DECIMAL}, #{serviceMoney,jdbcType=DECIMAL}, 
-      #{sumServiceMoney,jdbcType=DECIMAL},#{sumServiceMoney,jdbcType=DECIMAL})
+      #{sumServiceMoney,jdbcType=DECIMAL},#{sumServiceMoney,jdbcType=DECIMAL},#{rechargeStatus,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="SpsBankTradeInfo">
     insert into sps_bank_trade_info
@@ -301,9 +302,100 @@
       <if test="goodsAmout != null">
         goods_amout = #{goodsAmout,jdbcType=DECIMAL},
       </if>
+      <if test="rechargeStatus != null">
+        recharge_status = #{rechargeStatus,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="updateBySerialNumber" parameterType="SpsBankTradeInfo">
+    update sps_bank_trade_info
+    <set>
+      <if test="btTradeName != null">
+        bt_trade_name = #{btTradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="btTradeSerialNum != null">
+        bt_trade_serial_num = #{btTradeSerialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="btIdentity != null">
+        bt_identity = #{btIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="btApplicationStartDate != null">
+        bt_application_start_date = #{btApplicationStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btApplicationStopDate != null">
+        bt_application_stop_date = #{btApplicationStopDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btAuditDate != null">
+        bt_audit_date = #{btAuditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btPaymentDate != null">
+        bt_payment_date = #{btPaymentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="btTradeType != null">
+        bt_trade_type = #{btTradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="btIncomeType != null">
+        bt_income_type = #{btIncomeType,jdbcType=VARCHAR},
+      </if>
+      <if test="btExpenditureType != null">
+        bt_expenditure_type = #{btExpenditureType,jdbcType=VARCHAR},
+      </if>
+      <if test="btTradeBeforeBalanc != null">
+        bt_trade_Before_balanc = #{btTradeBeforeBalanc,jdbcType=DECIMAL},
+      </if>
+      <if test="btTradeAfterBalanc != null">
+        bt_trade_after_balanc = #{btTradeAfterBalanc,jdbcType=DECIMAL},
+      </if>
+      <if test="btTradeAmount != null">
+        bt_trade_amount = #{btTradeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="btTradeStatus != null">
+        bt_trade_status = #{btTradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="btUserId != null">
+        bt_user_id = #{btUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="standby1 != null">
+        standby1 = #{standby1,jdbcType=VARCHAR},
+      </if>
+      <if test="standby2 != null">
+        standby2 = #{standby2,jdbcType=VARCHAR},
+      </if>
+      <if test="standby3 != null">
+        standby3 = #{standby3,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        orderid = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="firstMoney != null">
+        first_money = #{firstMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="shopPayMoney != null">
+        shop_pay_money = #{shopPayMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceMoney != null">
+        service_money = #{serviceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="sumServiceMoney != null">
+        sum_service_money = #{sumServiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsAmout != null">
+        goods_amout = #{goodsAmout,jdbcType=DECIMAL},
+      </if>
+      <if test="rechargeStatus != null">
+        recharge_status = #{rechargeStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+      where  bt_trade_no = #{btTradeNo,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+
   <update id="updateByPrimaryKey" parameterType="SpsBankTradeInfo">
     update sps_bank_trade_info
     set bt_trade_name = #{btTradeName,jdbcType=VARCHAR},
@@ -332,4 +424,12 @@
       sum_service_money = #{sumServiceMoney,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="findBySerialNumber" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_bank_trade_info
+    where bt_trade_no = #{serialNumber,jdbcType=VARCHAR}
+  </select>
+
+
 </mapper>

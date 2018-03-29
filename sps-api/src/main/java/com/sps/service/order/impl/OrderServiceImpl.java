@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
                 Map<String, Object> goodsMap = new HashMap<>();
                 goodsMap.put("orderNum", order.getOrderid());
                 List<SpsOrderGoods> goodsList = spsOrderGoodsMapper.findListAllWithMap(goodsMap);
-                String[] pro1 = new String[]{"skuname", "price", "url"};
+                String[] pro1 = new String[]{"skuname", "price", "url","size"};
                 if (goodsList != null && goodsList.size() > 0) {
                     order.setOrderGoodsList((List<SpsOrderGoods>) EntityUtiles.reloadListPropertyValue(goodsList, pro1));
                 }
@@ -73,7 +73,7 @@ public class OrderServiceImpl implements OrderService {
             Map<String, Object> goodsMap = new HashMap<>();
             goodsMap.put("orderNum", order.getOrderid());
             List<SpsOrderGoods> goodsList = spsOrderGoodsMapper.findListAllWithMap(goodsMap);
-            String[] pro1 = new String[]{"skuname", "price", "url","amount"};
+            String[] pro1 = new String[]{"skuname", "price", "url","amount","size"};
             if (goodsList != null && goodsList.size() > 0) {
                 order.setOrderGoodsList((List<SpsOrderGoods>) EntityUtiles.reloadListPropertyValue(goodsList, pro1));
             }
@@ -121,7 +121,7 @@ public class OrderServiceImpl implements OrderService {
             Map<String, Object> goodsMap = new HashMap<>();
             goodsMap.put("orderNum", order.getOrderid());
             List<SpsOrderGoods> goodsList = spsOrderGoodsMapper.findListAllWithMap(goodsMap);
-            String[] pro1 = new String[]{"skuname", "price", "url","amount"};
+            String[] pro1 = new String[]{"skuname", "price", "url","amount","size"};
             if (goodsList != null && goodsList.size() > 0) {
                 order.setOrderGoodsList((List<SpsOrderGoods>) EntityUtiles.reloadListPropertyValue(goodsList, pro1));
             }

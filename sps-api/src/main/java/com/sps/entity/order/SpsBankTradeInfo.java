@@ -56,6 +56,16 @@ public class SpsBankTradeInfo implements Serializable {
     private BigDecimal sumServiceMoney;
     private BigDecimal goodsAmout;
 
+    private Integer rechargeStatus;
+
+
+    public Integer getRechargeStatus() {
+        return rechargeStatus;
+    }
+
+    public void setRechargeStatus(Integer rechargeStatus) {
+        this.rechargeStatus = rechargeStatus;
+    }
 
     public BigDecimal getGoodsAmout() {
         return goodsAmout;

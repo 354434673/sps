@@ -96,6 +96,7 @@ public class OrderController {
             HashMap<String, Object> data = new HashMap<>();
             SpsOrder order = orderService.findById(id);
             if (order != null) {
+                data.put("remark", order.getRemark());
                 data.put("orderid", order.getOrderid());
                 data.put("selfname", order.getSelfname());
                 data.put("addTime", order.getCreatetime());
@@ -138,6 +139,7 @@ public class OrderController {
             if (order != null) {
                 data.put("orderid", order.getOrderid());
                 data.put("selfname", order.getSelfname());
+                data.put("remark", order.getRemark());
                 data.put("addTime", order.getCreatetime());
                 data.put("phone", order.getPhone());
                 data.put("address", order.getAddress());
@@ -182,6 +184,7 @@ public class OrderController {
                 data.put("orderid", list.getOrderid());
                 data.put("selfname", list.getSelfname());
                 data.put("scale", list.getScale());
+                data.put("remark", list.getRemark());
                 data.put("shopPayMoney", list.getShopPayMoney());
                 data.put("servicemoney", list.getServicemoney());
                 data.put("orderGoodsList", list.getOrderGoodsList());

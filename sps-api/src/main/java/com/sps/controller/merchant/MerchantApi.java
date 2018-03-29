@@ -67,6 +67,26 @@ public class MerchantApi{
 		
 		return queryMerchantList;
 	}
+
+
+	/**
+	 * 首页搜索(目前只有一个)
+	 * @Title: queryMerchant
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @param: @param businessProduct
+	 * @param: @return
+	 * @author YangNingSheng
+	 * @date 2018年2月8日 上午11:57:02
+	 * @return: HashMap<String,Object>
+	 * @throws
+	 */
+	@RequestMapping(value = "/homeSearch", method = RequestMethod.POST)
+	public HashMap<String, Object> homeSearch(String shopkeeperCustomerid,String goodsName,String merchantName) {
+
+		HashMap<String, Object> queryMerchantList = enterpriseService.homeSearch(shopkeeperCustomerid,goodsName,merchantName);
+
+		return queryMerchantList;
+	}
 	/**
 	 * 获得商户列表(目前只有一个)
 	 * @Title: queryMerchant
