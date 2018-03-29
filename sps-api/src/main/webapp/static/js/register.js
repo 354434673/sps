@@ -151,6 +151,7 @@
             }
         },
         submitInformation: function () {
+            var _this = this;
             var setClear = null;
             submitBtn.addEventListener('click', function () {
                 if (/sTel/.test(location.search)) {
