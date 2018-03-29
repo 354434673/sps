@@ -57,4 +57,6 @@ public interface OrderService {
      * @param map
      */
     void updateStatus(Map<String, Object> map);
+
+    SpsOrder findByCode(String orderCode);
 }

@@ -169,13 +169,14 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                     log.setLogType(1);
                     log.setLogDes("订单编号为：" + orderCode + "的订单创建成功,订单商品信息： " + sb.toString());
                     spsOrderLogMapper.insert(log);
-
+                    map.put("orderCode", orderCode);
                 } else {
                     map.put("flag", 6);
                     return map;
                 }
             }
         }
+
         map.put("flag", 0);
         return map;
     }

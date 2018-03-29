@@ -123,6 +123,46 @@ public class OrderController {
 
 
     /**
+     * 根据ID订单详情
+     *
+     * @return
+     */
+    @RequestMapping(value = "/findByOrderCode", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnInfo findByOrderCode(String orderCode) {
+        ReturnInfo ri = new ReturnInfo();
+        if ("0".equals(ri.getCode())) return ri;
+        try {
+            HashMap<String, Object> data = new HashMap<>();
+            SpsOrder order = orderService.findByCode(orderCode);
+            if (order != null) {
+                data.put("orderid", order.getOrderid());
+                data.put("selfname", order.getSelfname());
+                data.put("addTime", order.getCreatetime());
+                data.put("phone", order.getPhone());
+                data.put("address", order.getAddress());
+                data.put("name", order.getName());
+                data.put("scale", order.getScale());
+                data.put("status", order.getFlag());
+                data.put("shopPayMoney", order.getShopPayMoney());
+                data.put("servicemoney", order.getServicemoney());
+                data.put("orderGoodsList", order.getOrderGoodsList());
+                ri.setResult(data);
+                ri.setSuccess(Message.SUCCESS_MSG);
+                ri.setCode(Message.SUCCESS_CODE);
+                ri.setMsg(Message.API_SUCCESS_MSG);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ri.setCode(Message.FAILURE_CODE);
+            ri.setMsg(Message.FAILURE_MSG);
+            ri.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return ri;
+    }
+
+
+    /**
      * 根据用户编号商家编号查询订单列表
      *
      * @return
@@ -175,6 +215,7 @@ public class OrderController {
             Map<String, Object> map = purchaseOrderService.saveOrder(order);
             //成功返回当前用户地址个人信息
             if ((Integer) map.get("flag") == 0) {
+                ri.setResult((String) map.get("orderCode"));
                 ri.setCode(Message.SUCCESS_CODE);
                 ri.setMsg(Message.API_SUCCESS_MSG);
                 ri.setSuccess(Message.API_SUCCESS_FLAG);

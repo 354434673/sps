@@ -113,4 +113,19 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderid(orderNum);
         spsOrderGoodsMapper.updateToOrderNum(order);
     }
+
+    @Override
+    public SpsOrder findByCode(String orderCode) {
+        SpsOrder order = spsOrderMapper.findByCode(orderCode);
+        if (order != null) {
+            Map<String, Object> goodsMap = new HashMap<>();
+            goodsMap.put("orderNum", order.getOrderid());
+            List<SpsOrderGoods> goodsList = spsOrderGoodsMapper.findListAllWithMap(goodsMap);
+            String[] pro1 = new String[]{"skuname", "price", "url","amount"};
+            if (goodsList != null && goodsList.size() > 0) {
+                order.setOrderGoodsList((List<SpsOrderGoods>) EntityUtiles.reloadListPropertyValue(goodsList, pro1));
+            }
+        }
+        return order;
+    }
 }
