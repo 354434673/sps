@@ -99,11 +99,12 @@ public class OrderRepayDetailController {
      */
     @RequestMapping(value = "/orderList", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo orderList(String customerNum) {
+    public ReturnInfo orderList(String customerNum,String type) {
         ReturnInfo ri = new ReturnInfo();
         Map<String, Object> map = new HashMap<>();
         try {
             map.put("customerNum", customerNum);
+            map.put("type", type);
             List<SpsOrderRepayDetail> orderRepayList = orderRepayDetailService.findList(map);
             String[] pro = new String[]{"id","orderStatus","repayAmount","orderNo","days"};
             if (orderRepayList != null) {

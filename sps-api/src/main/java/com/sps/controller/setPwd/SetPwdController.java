@@ -1,5 +1,13 @@
 package com.sps.controller.setPwd;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.juzifenqi.core.ServiceResult;
 import com.juzifenqi.usercenter.entity.member.MemberInfo;
@@ -8,11 +16,6 @@ import com.juzifenqi.usercenter.service.authorization.IDianfuPassportService;
 import com.juzifenqi.usercenter.service.member.IMemberDianfuService;
 import com.sps.common.Message;
 import com.sps.common.ReturnInfo;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.web.bind.annotation.*;
-
-import javax.faces.annotation.RequestMap;
 
 /**
  * Created by Administrator on 2018-03-12.
@@ -29,8 +32,8 @@ import javax.faces.annotation.RequestMap;
 public class SetPwdController {
     private static final Log logger= LogFactory.getLog(SetPwdController.class);
 
- /* @Reference(check=false,group="auth_dev1")
-    private IDianfuPassportService idianPaswwService;*/
+  @Reference(check=false,group="auth_dev1")
+    private IDianfuPassportService idianPaswwService;
 
     @Reference(group="member-center-dev1")
     private IMemberDianfuService memberDianfuService;
@@ -61,7 +64,7 @@ public class SetPwdController {
         //获取登录用户名---用户名就是手机号
         //  String userName = (String) SecurityUtils.getSubject().getPrincipal();
         ServiceResult<MemberInfo> result = memberDianfuService.editPasswordByOldPwd(oldPwd,newPwd, mobile);
-/*        ReturnInfo returnInfo = new ReturnInfo();
+        ReturnInfo returnInfo = new ReturnInfo();
         if(result.getSuccess()){
             logger.info("返回code " + result.getCode());
             logger.info("返回信息"+    result.getMessage());
@@ -73,7 +76,7 @@ public class SetPwdController {
             returnInfo.setCode(Message.FAILURE_CODE);
             returnInfo.setMsg(Message.FAILURE_MSG);
             returnInfo.setSuccess(Message.API_ERROR_FLAG);
-        }*/
+        }
         return result;
     }
 }

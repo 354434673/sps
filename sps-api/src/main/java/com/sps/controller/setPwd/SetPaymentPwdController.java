@@ -1,14 +1,19 @@
 package com.sps.controller.setPwd;
 
-import com.alibaba.dubbo.common.utils.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.juzifenqi.core.ServiceResult;
 import com.juzifenqi.usercenter.entity.member.MemberInfo;
 import com.juzifenqi.usercenter.service.ISmsCommonService;
+import com.juzifenqi.usercenter.service.authorization.IDianfuPassportService;
 import com.juzifenqi.usercenter.service.member.IMemberDianfuService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Administrator on 2018-03-12.
@@ -25,8 +30,8 @@ import org.springframework.web.bind.annotation.*;
 public class SetPaymentPwdController {
     private static final Log logger = LogFactory.getLog(SetPaymentPwdController.class);
 
- /* @Reference(check=false,group="auth_dev1")
-    private IDianfuPassportService idianPaswwService;*/
+  @Reference(check=false,group="auth_dev1")
+    private IDianfuPassportService idianPaswwService;
 
     @Reference(check = false, group = "member-center-dev1")
     private IMemberDianfuService memberDianfuService;

@@ -5,16 +5,14 @@ import java.util.Date;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.ws.rs.POST;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.juzifenqi.capital.entity.BankCode;
-import com.juzifenqi.capital.entity.UserCard;
 import com.juzifenqi.capital.service.IUserCardNewService;
-import com.juzifenqi.core.ServiceResult;
 import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthQueryApi;
@@ -481,7 +479,7 @@ public class authenticationController {
 					
 					personal.setShopkeeperCustomerid(clientNum);
 					
-					shopkeeperService.insertSpsShopkeeperPersonal(personal);
+					//shopkeeperService.insertSpsShopkeeperPersonal(personal);
 					
 					saveLinkDetail.setCode(Message.SUCCESS_CODE);
 				}
@@ -586,9 +584,7 @@ public class authenticationController {
 			
 			if(code != null){
 				if(code.equals("SUCCESS")){
-					/*
-					 * 添加到公司表
-					 */
+					
 					SpsShopkeeperCompany company = new SpsShopkeeperCompany();
 					
 					company.setCompanyName(arg0.getCompanyName());
@@ -612,6 +608,44 @@ public class authenticationController {
 					company.setShopkeeperCustomerid(clientNum);
 
 					shopkeeperService.insertShopkeeperCompany(company);
+					
+					SpsShopkeeperPic pic = null;
+
+					pic = new SpsShopkeeperPic();
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicState(0);
+					
+					pic.setPicType(7);
+					
+					pic.setPicSrc(arg0.getStoreFrontPictures());
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
+					
+					pic = new SpsShopkeeperPic();
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicState(0);
+					
+					pic.setPicType(11);
+					
+					pic.setPicSrc(arg0.getStoreInPictures());
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
+					
+					pic = new SpsShopkeeperPic();
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicState(0);
+					
+					pic.setPicType(0);
+					
+					pic.setPicSrc(arg0.getLeasePictures());
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
 					/**
 					 * 更改shopkeeper主表的内容
 					 */

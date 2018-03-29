@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsBank">
+  <resultMap id="BaseResultMap" type="SpsBank">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="b_name" jdbcType="VARCHAR" property="bName" />
+    <result column="b_accounts" jdbcType="VARCHAR" property="bAccounts" />
+    <result column="b_identity" jdbcType="VARCHAR" property="bIdentity" />
+    <result column="b_phone" jdbcType="VARCHAR" property="bPhone" />
+    <result column="b_createtime" jdbcType="TIMESTAMP" property="bCreatetime" />
+    <result column="b_updatetime" jdbcType="TIMESTAMP" property="bUpdatetime" />
+    <result column="b_bank" jdbcType="VARCHAR" property="bBank" />
+    <result column="b_state" jdbcType="INTEGER" property="bState" />
+    <result column="b_remark" jdbcType="VARCHAR" property="bRemark" />
+    <result column="b_user_id" jdbcType="VARCHAR" property="bUserId" />
+    <result column="b_user_name" jdbcType="VARCHAR" property="bUserName" />
+    <result column="channl_num" jdbcType="VARCHAR" property="channlNum" />
+    <result column="b_available_balance" jdbcType="DECIMAL" property="bAvailableBalance" />
+    <result column="b_trans_password" jdbcType="VARCHAR" property="bTransPassword" />
+    <result column="b_password_state" jdbcType="VARCHAR" property="bPasswordState" />
+    <result column="standby2" jdbcType="VARCHAR" property="standby2" />
+    <result column="user_mark" jdbcType="INTEGER" property="userMark" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="SpsBank">
+    <result column="b_card_type" jdbcType="VARBINARY" property="bCardType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, b_name, b_accounts, b_identity, b_phone, b_createtime, b_updatetime, b_bank, 
+    b_state, b_remark, b_user_id, b_user_name, channl_num, b_available_balance, b_trans_password, 
+    b_password_state, standby2, user_mark, flag
+  </sql>
+  <sql id="Blob_Column_List">
+    b_card_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sps_bank
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_bank
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsBank">
+    insert into sps_bank (id, b_name, b_accounts, 
+      b_identity, b_phone, b_createtime, 
+      b_updatetime, b_bank, b_state, 
+      b_remark, b_user_id, b_user_name, 
+      channl_num, b_available_balance, b_trans_password, 
+      b_password_state, standby2, user_mark, 
+      flag, b_card_type)
+    values (#{id,jdbcType=INTEGER}, #{bName,jdbcType=VARCHAR}, #{bAccounts,jdbcType=VARCHAR}, 
+      #{bIdentity,jdbcType=VARCHAR}, #{bPhone,jdbcType=VARCHAR}, #{bCreatetime,jdbcType=TIMESTAMP}, 
+      #{bUpdatetime,jdbcType=TIMESTAMP}, #{bBank,jdbcType=VARCHAR}, #{bState,jdbcType=INTEGER}, 
+      #{bRemark,jdbcType=VARCHAR}, #{bUserId,jdbcType=VARCHAR}, #{bUserName,jdbcType=VARCHAR}, 
+      #{channlNum,jdbcType=VARCHAR}, #{bAvailableBalance,jdbcType=DECIMAL}, #{bTransPassword,jdbcType=VARCHAR}, 
+      #{bPasswordState,jdbcType=VARCHAR}, #{standby2,jdbcType=VARCHAR}, #{userMark,jdbcType=INTEGER}, 
+      #{flag,jdbcType=INTEGER}, #{bCardType,jdbcType=VARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="SpsBank">
+    insert into sps_bank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bName != null">
+        b_name,
+      </if>
+      <if test="bAccounts != null">
+        b_accounts,
+      </if>
+      <if test="bIdentity != null">
+        b_identity,
+      </if>
+      <if test="bPhone != null">
+        b_phone,
+      </if>
+      <if test="bCreatetime != null">
+        b_createtime,
+      </if>
+      <if test="bUpdatetime != null">
+        b_updatetime,
+      </if>
+      <if test="bBank != null">
+        b_bank,
+      </if>
+      <if test="bState != null">
+        b_state,
+      </if>
+      <if test="bRemark != null">
+        b_remark,
+      </if>
+      <if test="bUserId != null">
+        b_user_id,
+      </if>
+      <if test="bUserName != null">
+        b_user_name,
+      </if>
+      <if test="channlNum != null">
+        channl_num,
+      </if>
+      <if test="bAvailableBalance != null">
+        b_available_balance,
+      </if>
+      <if test="bTransPassword != null">
+        b_trans_password,
+      </if>
+      <if test="bPasswordState != null">
+        b_password_state,
+      </if>
+      <if test="standby2 != null">
+        standby2,
+      </if>
+      <if test="userMark != null">
+        user_mark,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="bCardType != null">
+        b_card_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bName != null">
+        #{bName,jdbcType=VARCHAR},
+      </if>
+      <if test="bAccounts != null">
+        #{bAccounts,jdbcType=VARCHAR},
+      </if>
+      <if test="bIdentity != null">
+        #{bIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="bPhone != null">
+        #{bPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="bCreatetime != null">
+        #{bCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bUpdatetime != null">
+        #{bUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bBank != null">
+        #{bBank,jdbcType=VARCHAR},
+      </if>
+      <if test="bState != null">
+        #{bState,jdbcType=INTEGER},
+      </if>
+      <if test="bRemark != null">
+        #{bRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="bUserId != null">
+        #{bUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="bUserName != null">
+        #{bUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="channlNum != null">
+        #{channlNum,jdbcType=VARCHAR},
+      </if>
+      <if test="bAvailableBalance != null">
+        #{bAvailableBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="bTransPassword != null">
+        #{bTransPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="bPasswordState != null">
+        #{bPasswordState,jdbcType=VARCHAR},
+      </if>
+      <if test="standby2 != null">
+        #{standby2,jdbcType=VARCHAR},
+      </if>
+      <if test="userMark != null">
+        #{userMark,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="bCardType != null">
+        #{bCardType,jdbcType=VARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="SpsBank">
+    update sps_bank
+    <set>
+      <if test="bName != null">
+        b_name = #{bName,jdbcType=VARCHAR},
+      </if>
+      <if test="bAccounts != null">
+        b_accounts = #{bAccounts,jdbcType=VARCHAR},
+      </if>
+      <if test="bIdentity != null">
+        b_identity = #{bIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="bPhone != null">
+        b_phone = #{bPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="bCreatetime != null">
+        b_createtime = #{bCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bUpdatetime != null">
+        b_updatetime = #{bUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bBank != null">
+        b_bank = #{bBank,jdbcType=VARCHAR},
+      </if>
+      <if test="bState != null">
+        b_state = #{bState,jdbcType=INTEGER},
+      </if>
+      <if test="bRemark != null">
+        b_remark = #{bRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="bUserId != null">
+        b_user_id = #{bUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="bUserName != null">
+        b_user_name = #{bUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="channlNum != null">
+        channl_num = #{channlNum,jdbcType=VARCHAR},
+      </if>
+      <if test="bAvailableBalance != null">
+        b_available_balance = #{bAvailableBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="bTransPassword != null">
+        b_trans_password = #{bTransPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="bPasswordState != null">
+        b_password_state = #{bPasswordState,jdbcType=VARCHAR},
+      </if>
+      <if test="standby2 != null">
+        standby2 = #{standby2,jdbcType=VARCHAR},
+      </if>
+      <if test="userMark != null">
+        user_mark = #{userMark,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="bCardType != null">
+        b_card_type = #{bCardType,jdbcType=VARBINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="SpsBank">
+    update sps_bank
+    set b_name = #{bName,jdbcType=VARCHAR},
+      b_accounts = #{bAccounts,jdbcType=VARCHAR},
+      b_identity = #{bIdentity,jdbcType=VARCHAR},
+      b_phone = #{bPhone,jdbcType=VARCHAR},
+      b_createtime = #{bCreatetime,jdbcType=TIMESTAMP},
+      b_updatetime = #{bUpdatetime,jdbcType=TIMESTAMP},
+      b_bank = #{bBank,jdbcType=VARCHAR},
+      b_state = #{bState,jdbcType=INTEGER},
+      b_remark = #{bRemark,jdbcType=VARCHAR},
+      b_user_id = #{bUserId,jdbcType=VARCHAR},
+      b_user_name = #{bUserName,jdbcType=VARCHAR},
+      channl_num = #{channlNum,jdbcType=VARCHAR},
+      b_available_balance = #{bAvailableBalance,jdbcType=DECIMAL},
+      b_trans_password = #{bTransPassword,jdbcType=VARCHAR},
+      b_password_state = #{bPasswordState,jdbcType=VARCHAR},
+      standby2 = #{standby2,jdbcType=VARCHAR},
+      user_mark = #{userMark,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      b_card_type = #{bCardType,jdbcType=VARBINARY}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsBank">
+    update sps_bank
+    set b_name = #{bName,jdbcType=VARCHAR},
+      b_accounts = #{bAccounts,jdbcType=VARCHAR},
+      b_identity = #{bIdentity,jdbcType=VARCHAR},
+      b_phone = #{bPhone,jdbcType=VARCHAR},
+      b_createtime = #{bCreatetime,jdbcType=TIMESTAMP},
+      b_updatetime = #{bUpdatetime,jdbcType=TIMESTAMP},
+      b_bank = #{bBank,jdbcType=VARCHAR},
+      b_state = #{bState,jdbcType=INTEGER},
+      b_remark = #{bRemark,jdbcType=VARCHAR},
+      b_user_id = #{bUserId,jdbcType=VARCHAR},
+      b_user_name = #{bUserName,jdbcType=VARCHAR},
+      channl_num = #{channlNum,jdbcType=VARCHAR},
+      b_available_balance = #{bAvailableBalance,jdbcType=DECIMAL},
+      b_trans_password = #{bTransPassword,jdbcType=VARCHAR},
+      b_password_state = #{bPasswordState,jdbcType=VARCHAR},
+      standby2 = #{standby2,jdbcType=VARCHAR},
+      user_mark = #{userMark,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findByChannlNum" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_bank
+    where channl_num = #{channl_num,jdbcType=VARCHAR}
+  </select>
+</mapper>

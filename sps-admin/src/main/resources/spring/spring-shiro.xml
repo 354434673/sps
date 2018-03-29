@@ -28,21 +28,21 @@
 		</property>
 	</bean>
 	<!-- 配置缓存管理器 -->
-<!-- 	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"> 
-		指定 ehcache 的配置文件
-		<property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/> 
-	</bean>  -->
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"> 
+		<!-- 指定 ehcache 的配置文件 -->
+		<property name="cacheManagerConfigFile" value="classpath:spring/ehcache-shiro.xml"/> 
+	</bean> 
 	
 	<!-- 配置securityManager -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<!-- 认证管理器-->  
 		<property name="realm" ref="customerMd5" />
 		<!-- 缓存管理器 -->  
-       <!--  <property name="cacheManager" ref="cacheManager" />  -->
+        <property name="cacheManager" ref="cacheManager" /> 
 	</bean>
     
 	<!-- 自定义realm -->
-	<bean id="customerMd5" class="com.sps.realm.CustmerMd5">
+	<bean id="customerMd5" class="com.sps.realm.CustmerMd5" >
 		<!-- 依赖凭证匹配器 -->
 		<property name="credentialsMatcher" ref="credentialsMatcher" />
 	</bean>
@@ -54,8 +54,7 @@
 		<property name="hashIterations" value="1024" />
 	</bean>
 	
-	<bean
-		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
 		<property name="securityManager" ref="securityManager" />
 	</bean>
 	

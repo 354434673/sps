@@ -58,7 +58,7 @@ public interface UserService {
 	 * @throws
 	 */
 	HashMap<String, Object> userList(Integer page, Integer limit, 
-					String username, String name, String phone, Integer mark);
+					String username, String name, String phone,  String userSupplierNum, Integer mark);
 	/**
 	 * 添加用户
 	 * @Title: insertUser   

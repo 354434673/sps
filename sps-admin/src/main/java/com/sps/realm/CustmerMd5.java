@@ -27,5 +27,4 @@ public class CustmerMd5 extends AuthenticatingRealm{
 		}
 		return null;
 	}
-
 }

@@ -169,13 +169,14 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                     log.setLogType(1);
                     log.setLogDes("订单编号为：" + orderCode + "的订单创建成功,订单商品信息： " + sb.toString());
                     spsOrderLogMapper.insert(log);
-
+                    map.put("orderCode", orderCode);
                 } else {
                     map.put("flag", 6);
                     return map;
                 }
             }
         }
+
         map.put("flag", 0);
         return map;
     }
@@ -193,20 +194,20 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                             //判断是否删除
                             if (sku.getgDeleteFlag() == 1) {
                                 map.put("flag", 2);
-                                map.put("goodsName", sku.getgSku().split("-")[1]);
+                                map.put("goodsName", sku.getSpuName());
                                 return map;
                             }
                             //判断是否上架
                             if (sku.getGroundingFlag() ==1 ) {
                                 map.put("flag", 3);
-                                map.put("goodsName", sku.getgSku().split("-")[1]);
+                                map.put("goodsName", sku.getSpuName());
                                 return map;
                             }
                             //判断价格是否发生变化
                             if (sku.getgPrice() != null) {
                                 if (!sku.getgPrice().setScale(4).equals(orderList.getPrice().setScale(4))) {
                                     map.put("flag", 4);
-                                    map.put("goodsName", sku.getgSku().split("-")[1]);
+                                    map.put("goodsName", sku.getSpuName());
                                     return map;
                                 }
                             }
@@ -214,7 +215,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                             if (sku.getgStock() != null) {
                                 if (sku.getgStock() < orderList.getOrderGoodsNum()) {
                                     map.put("flag",5);
-                                    map.put("goodsName", sku.getgSku().split("-")[1]);
+                                    map.put("goodsName", sku.getSpuName());
                                     return map;
                                 }
                             }
