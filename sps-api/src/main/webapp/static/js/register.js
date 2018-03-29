@@ -1,5 +1,6 @@
-;(function () {
+; (function () {
     var _this = this;
+    var getInvitationTel = aspenLib.getQueryString('');
     var telNum = document.getElementById('telNum');
     var getCheckCode = document.getElementById('getCheckCode');
     var checkCode = document.getElementById('checkCode');
@@ -82,13 +83,13 @@
                     } else if (getCheckCode.innerHTML != '获取验证码') {
                         aspenLib.tips('请等待有效时间获取');
                         return;
-                    }else {
+                    } else {
                         _this.imgCheckCode();
                     }
                 }, false);
             }
         },
-        imgCheckCode: function(){
+        imgCheckCode: function () {
             var _this = this;
             var verifyCanvas = document.getElementById('verifyCanvas');
             var checkCodeMask = document.getElementById('checkCodeMask');
@@ -96,14 +97,14 @@
             var subBtns = document.getElementById('subBtns');
             var canvasCode = document.getElementById('canvasCode');
             checkCodeMask.style.display = 'block';
-            if(!verifyCanvas){
+            if (!verifyCanvas) {
                 var verifyCode = new GVerify("v_container");
-                subBtns && subBtns.addEventListener('click', function(){
-                    if(!verifyCode.validate(canvasCode.value)){
+                subBtns && subBtns.addEventListener('click', function () {
+                    if (!verifyCode.validate(canvasCode.value)) {
                         aspenLib.tips('图形验证码不正确！');
                         canvasCode.value = '';
                         return false;
-                    }else{
+                    } else {
                         canvasCode.value = '';
                         checkCodeMask.style.display = 'none';
                         var telNum = document.getElementById('telNum');
@@ -116,7 +117,7 @@
                                 mobile: String(telNum.value)
                             },
                             success: function (data) {
-                                if(data.result == true){
+                                if (data.result == true) {
                                     _this.countDown('getCheckCode');
                                     aspenLib.tips('发送成功');
                                 }
@@ -130,10 +131,10 @@
                 _this.closeMask();
             }
         },
-        closeMask: function(){
+        closeMask: function () {
             var closeBtn = document.querySelector('.closeBtn');
             var checkCodeMask = document.getElementById('checkCodeMask');
-            closeBtn.addEventListener('click', function(){
+            closeBtn.addEventListener('click', function () {
                 checkCodeMask.style.display = 'none';
             }, false);
         },
@@ -167,74 +168,78 @@
         submitInformation: function () {
             var setClear = null;
             submitBtn.addEventListener('click', function () {
-                var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,21}$/;
-                var password = document.getElementById('password');
-                if (telNum.value == '' || telNum.value.length == 0) {
-                    aspenLib.tips('手机号不能为空！');
-                    return;
-                } else if (!/^1\d{10}$/.test(telNum.value)) {
-                    aspenLib.tips('手机号格式不正确！');
-                    return;
-                } else if (checkCode.value == '' || checkCode.value.length == 0) {
-                    aspenLib.tips('验证码不能为空！');
-                    return;
-                } else if (password.value == '' || password.value.length == 0) {
-                    aspenLib.tips('密码不能为空！');
-                    return;
-                } else if (password.value.length < 8) {
-                    aspenLib.tips('密码长度必须大于8位！');
-                    return;
-                } else if (!reg.test(password.value)) {
-                    aspenLib.tips('密码必须由数字和字母组成！');
-                    return;
-                } else if (passwordNum.value == '') {
-                    aspenLib.tips('请再次输入密码！');
-                    return;
-                } else if (passwordNum.value != password.value) {
-                    aspenLib.tips('密码不一致！');
-                    return;
-                } else if (isCheckboxCur.className.indexOf('active') == -1) {
-                    aspenLib.tips('请阅读协议！');
-                    return;
-                } else {
-                    var channelNum = aspenLib.getQueryString('channelNum') || '';
-                    var clientNum = aspenLib.getQueryString('clientNum') || '';
-                    var code =  checkCode.value || '';
-                    var mobile = telNum.value || '';
-                    var password = document.getElementById('password').value || '';
-                    aspenLib.ajax({
-                        url: ajaxUrl + '/api/user/regist',
-                        type: 'post',
-                        dataType: 'json',
-                        data: {
-                            channelNum: channelNum,
-                            clientNum: clientNum,
-                            code: String(code),
-                            mobile: String(mobile),
-                            password: String(password),
-                            saleSrc: '',
-                            salemanPhone: salemanPhone,
-                            invitationPhone: invitationPhone
-                        },
-                        success: function (data) {
-                            if(data.success == true){
-                                try {
-                                    _hmt.push(['_trackEvent', aspenLib.getQueryString('channel') + 'zhuce', 'dianfu_register', 'click', aspenLib.getQueryString('channel') + 'zhuce']);
-                                } catch (e) { }
-                                aspenLib.tips('注册成功！');
-                                setClear = setTimeout(function () {
-                                    location.href = ajaxUrl + '/download.html';
-                                    clearTimeout(setClear);
-                                    setClear = null;
-                                }, 2000);
-                            }else{
-                                aspenLib.tips(data.message);
+                if (telNum.value == getInvitationTel) {
+                    var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,21}$/;
+                    var password = document.getElementById('password');
+                    if (telNum.value == '' || telNum.value.length == 0) {
+                        aspenLib.tips('手机号不能为空！');
+                        return;
+                    } else if (!/^1\d{10}$/.test(telNum.value)) {
+                        aspenLib.tips('手机号格式不正确！');
+                        return;
+                    } else if (checkCode.value == '' || checkCode.value.length == 0) {
+                        aspenLib.tips('验证码不能为空！');
+                        return;
+                    } else if (password.value == '' || password.value.length == 0) {
+                        aspenLib.tips('密码不能为空！');
+                        return;
+                    } else if (password.value.length < 8) {
+                        aspenLib.tips('密码长度必须大于8位！');
+                        return;
+                    } else if (!reg.test(password.value)) {
+                        aspenLib.tips('密码必须由数字和字母组成！');
+                        return;
+                    } else if (passwordNum.value == '') {
+                        aspenLib.tips('请再次输入密码！');
+                        return;
+                    } else if (passwordNum.value != password.value) {
+                        aspenLib.tips('密码不一致！');
+                        return;
+                    } else if (isCheckboxCur.className.indexOf('active') == -1) {
+                        aspenLib.tips('请阅读协议！');
+                        return;
+                    } else {
+                        var channelNum = aspenLib.getQueryString('channelNum') || '';
+                        var clientNum = aspenLib.getQueryString('clientNum') || '';
+                        var code = checkCode.value || '';
+                        var mobile = telNum.value || '';
+                        var password = document.getElementById('password').value || '';
+                        aspenLib.ajax({
+                            url: ajaxUrl + '/api/user/regist',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                channelNum: channelNum,
+                                clientNum: clientNum,
+                                code: String(code),
+                                mobile: String(mobile),
+                                password: String(password),
+                                saleSrc: '',
+                                salemanPhone: salemanPhone,
+                                invitationPhone: invitationPhone
+                            },
+                            success: function (data) {
+                                if (data.success == true) {
+                                    try {
+                                        _hmt.push(['_trackEvent', aspenLib.getQueryString('channel') + 'zhuce', 'dianfu_register', 'click', aspenLib.getQueryString('channel') + 'zhuce']);
+                                    } catch (e) { }
+                                    aspenLib.tips('注册成功！');
+                                    setClear = setTimeout(function () {
+                                        location.href = ajaxUrl + '/download.html';
+                                        clearTimeout(setClear);
+                                        setClear = null;
+                                    }, 2000);
+                                } else {
+                                    aspenLib.tips(data.message);
+                                }
+                            },
+                            error: function () {
+                                console.log('ajax error');
                             }
-                        },
-                        error: function () {
-                            console.log('ajax error');
-                        }
-                    });
+                        });
+                    }
+                } else {
+                    aspenLib.tips('您还没有被邀请');
                 }
             }, false);
         }
