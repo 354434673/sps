@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.juzifenqi.capital.entity.BinCode;
-import com.juzifenqi.capital.service.IBankCodeService;
 import com.juzifenqi.capital.service.IBinCodeService;
 import com.juzifenqi.core.ServiceResult;
 import com.sps.common.Message;
@@ -113,9 +112,9 @@ public class YopBindCardController {
         }
         jsonO.put("cardNO",null);
         jsonO.put("bankName",null);
-        jsonO.put("clientName",null);
+        jsonO.put("clientName",person.getPersonalClientName());
         jsonO.put("cardType",null);
-        return Message.responseStr(Message.FAILURE_CODE, Message.FAILURE_MSG, jsonO);
+        return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG, jsonO);
     }
 
     /**
@@ -138,11 +137,12 @@ public class YopBindCardController {
     //调用绑卡接口
     @RequestMapping(value = "/bindBankCard", method = RequestMethod.POST)
     @ResponseBody
-    public String bindBankCard(@RequestParam("customerId") String customerId,@RequestParam("idcardno") String idcardno,@RequestParam("personName") String personName,@RequestParam("cardNo") String cardNo,@RequestParam("phone") String phone,@RequestParam("bankName") String bankName) {
+    public String bindBankCard(@RequestParam("customerId") String customerId,@RequestParam("personName") String personName,@RequestParam("cardNo") String cardNo,@RequestParam("phone") String phone,@RequestParam("bankName") String bankName) {
         JSONObject jsonO = new JSONObject();
         //根据customerId 获取登录用户名；
         SpsShopkeeperPersonal person = shopkeeperPersonService.findPerson(customerId);
         String loginName=person.getPersonalUsername();
+
         /**
          * 创建一条绑卡信息
          */
@@ -153,14 +153,14 @@ public class YopBindCardController {
         bindBankTrades.setLoginName(loginName);
         bindBankTrades.setName(personName);
         bindBankTrades.setMerchantNo(YEEPAY_MERCHANT_NO);
-        bindBankTrades.setIdentity(idcardno);
+        bindBankTrades.setIdentity(person.getPersonalIdcard());
         bindBankTrades.setUserId(UUID.randomUUID().toString());
         bindBankTrades.setChannlNum(customerId);
         //根据登录用户查询是否绑卡
         String userId = bankCardService.findUserId(customerId);
         if ( StringUtil.isEmpty(userId)) {
             /**
-             * 没有绑卡，保存一条绑卡记录
+             * 没有绑卡，保存一条绑卡交易记录
              *
              */
             bindBankTrades.setUserId(UUID.randomUUID().toString());
@@ -180,7 +180,7 @@ public class YopBindCardController {
                     yopRequest.addParam("identityid", identityid1);
                     yopRequest.addParam("identitytype", "ID_CARD");
                     yopRequest.addParam("cardno", cardNo);
-                    yopRequest.addParam("idcardno",idcardno);
+                    yopRequest.addParam("idcardno",person.getPersonalIdcard());
                     yopRequest.addParam("idcardtype", "ID");
                     yopRequest.addParam("username", personName);
                     yopRequest.addParam("phone", phone);

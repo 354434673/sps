@@ -27,17 +27,17 @@ public class BankTradeInfoServiceImpl implements BankTradeService {
     @Autowired
     private BankTradeInfoDao bankTradeInfoDao;
     @Override
-    public List<BankTradeInfo> findBankTrdeList(String userName, Integer userType) {
+    public List<BankTradeInfo> findBankTrdeList(String constomeId) {
 //        根据用户名查询userId
-       String userId = bankCardInfoDao.selectByUserName(userName);
+       String userId = bankCardInfoDao.selectByUserName(constomeId);
 //        根据用户userId查询交易信息
         List<BankTradeInfo> bankTradeList = bankTradeInfoDao.selectListByUserName(userId);
         return bankTradeList;
     }
 
     @Override
-    public List<BankTradeInfo> findBankTrdeListByTradeType(String userName, Integer userType, String tradeType) {
-        String userId = bankCardInfoDao.selectByUserName(userName);
+    public List<BankTradeInfo> findBankTrdeListByTradeType(String constomId,  String tradeType) {
+        String userId = bankCardInfoDao.selectByUserName(constomId);
 //        根据用户userId查询交易信息
         List<BankTradeInfo> bankTradeList = bankTradeInfoDao.selectListByUserNameAndTradeType(userId,tradeType);
         return bankTradeList;

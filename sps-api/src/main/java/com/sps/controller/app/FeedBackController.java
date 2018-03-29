@@ -53,6 +53,7 @@ public class FeedBackController {
     @ResponseBody
     public String findAllCatagory(){
         JSONObject jsonO = new JSONObject();
+
         List<FeedbackCategory> catagorys = feedBackService.queryAllCtagory();
         if(catagorys.size()>0){
             jsonO.put("catagorys",catagorys);

@@ -43,12 +43,11 @@ public class AccountBalanceController {
     private UserService userService;
     @RequestMapping(value = "/findBalance", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnInfo findBalance( @RequestParam("userMark") Integer userMark,@RequestParam("userName")String userName  ){
+    public ReturnInfo findBalance( @RequestParam("customerId") String customerId ){
         ReturnInfo returnInfo = new ReturnInfo();
         //  根据登录用户名获取用户id
-        SpsUser user = userService.findUserByUserName(userName);
         try {
-            BigDecimal balance = accountBalanceService.queryByUserIdAndUserTyoe(user.getUserId(), userMark);
+            BigDecimal balance = accountBalanceService.queryByCustomerId(customerId);
                 returnInfo.setResult(balance);
                 returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
                 returnInfo.setCode(Message.API_SUCCESS_CODE);

@@ -106,10 +106,10 @@ public class PersonController {
         JSONObject jsonO = new JSONObject();
         String carBrandSmail = OptionUtil.CAR_BRAND_SMAIL;
         String carBrandBig = OptionUtil.CAR_BRAND_BIG;
-        List<String> strings = new ArrayList<>();
-        strings.add(carBrandSmail);
-        strings.add(carBrandBig);
-        jsonO.put("map",strings);
+        List<String> carType = new ArrayList<>();
+        carType.add(carBrandSmail);
+        carType.add(carBrandBig);
+        jsonO.put("carType",carType);
         return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG,jsonO);
     }
 

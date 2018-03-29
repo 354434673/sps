@@ -2,6 +2,7 @@ package com.sps.controller.account;
 
 import com.alibaba.druid.support.logging.Log;
 import com.alibaba.druid.support.logging.LogFactory;
+import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Message;
 import com.sps.common.ReturnInfo;
 import com.sps.common.StringUtil;
@@ -10,6 +11,8 @@ import com.sps.entity.user.SpsUser;
 import com.sps.service.account.balance.AccountBalanceService;
 import com.sps.service.account.bankCard.BankCardService;
 import com.sps.service.account.bankTrade.BankTradeService;
+import com.sps.service.shopkeeper.ShopkeeperPersonService;
+import com.sps.service.shopkeeper.ShopkeeperService;
 import com.sps.service.user.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -36,33 +39,30 @@ public class AccountTradeController {
     private static  final Log logger= LogFactory.getLog(AccountTradeController.class);
     @Autowired
     private AccountBalanceService accountBalanceService;
-     @Autowired
-     private BankTradeService bankTradeService;
+    @Autowired
+    private BankTradeService bankTradeService;
     @Autowired
     BankCardService bankCardService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ShopkeeperPersonService shopkeeperPersonService;
+    @Autowired
+    private ShopkeeperService shopkeeperService;
 
 
     @RequestMapping(value = "/findTradeList", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findTradeList( @RequestParam("userMark") Integer userMark,@RequestParam("userName") String userName ) {
-        ReturnInfo returnInfo = new ReturnInfo();
+    public String findTradeList( @RequestParam("customerId") String customerId) {
         //  根据登录用户名获取用户id
-     SpsUser user = userService.findUserByUserName(userName);
-        try {
-            List<BankTradeInfo> bankTrdeList = bankTradeService.findBankTrdeList(userName, userMark);
-            returnInfo.setResult(bankTrdeList);
-            returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
-            returnInfo.setCode(Message.API_SUCCESS_CODE);
-            returnInfo.setMsg(Message.API_SUCCESS_MSG);
-        } catch (Exception e) {
-            e.printStackTrace();
-            returnInfo.setCode(Message.FAILURE_CODE);
-            returnInfo.setMsg(Message.FAILURE_MSG);
-            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+        JSONObject jsonObject = new JSONObject();
+        List<BankTradeInfo> bankTrdeList = bankTradeService.findBankTrdeList(customerId);
+        if(bankTrdeList.size() > 0){
+            jsonObject.put("bankTrdeList",bankTrdeList);
+            return Message.responseStr(Message.SUCCESS_CODE,Message.SUCCESS_MSG,jsonObject);
         }
-        return returnInfo;
+        jsonObject.put("bankTrdeList",null);
+        return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG,jsonObject);
     }
     /**
      * 根据交易类型获取信息 0 标识支出 1标识收入 ,2标识全部
@@ -71,27 +71,23 @@ public class AccountTradeController {
 
     @RequestMapping(value = "/findTradeListByTradeType", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findTradeListByTradeType( @RequestParam("userName")String userName ,@RequestParam("userMark") Integer userMark, @RequestParam("tradeType") Integer tradeType ) {
+    public String findTradeListByTradeType(  @RequestParam("customerId") String customerId, @RequestParam("tradeType") Integer tradeType ) {
         ReturnInfo returnInfo = new ReturnInfo();
+        JSONObject jsonO = new JSONObject();
         List<BankTradeInfo> bankTrdeList=null;
         try {
             if (tradeType!=2){
-                bankTrdeList= bankTradeService.findBankTrdeListByTradeType(userName,userMark,String.valueOf(tradeType));
+                bankTrdeList= bankTradeService.findBankTrdeListByTradeType(customerId,String.valueOf(tradeType));
             }else{
-                bankTrdeList = bankTradeService.findBankTrdeList(userName, userMark);
-
+                bankTrdeList = bankTradeService.findBankTrdeList(customerId);
             }
-            returnInfo.setResult(bankTrdeList);
-            returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
-            returnInfo.setCode(Message.API_SUCCESS_CODE);
-            returnInfo.setMsg(Message.API_SUCCESS_MSG);
+            jsonO.put("bankTrdeList",bankTrdeList);
+           return  Message.responseStr(Message.SUCCESS_CODE,Message.SUCCESS_MSG,jsonO);
         } catch (Exception e) {
             e.printStackTrace();
-            returnInfo.setCode(Message.FAILURE_CODE);
-            returnInfo.setMsg(Message.FAILURE_MSG);
-            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+            jsonO.put("bankTrdeList",null);
+            return  Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG,jsonO);
         }
-        return returnInfo;
     }
 
     /**
@@ -103,21 +99,15 @@ public class AccountTradeController {
      */
     @RequestMapping(value = "/findTradeDetail", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo findTradeDetail(  @RequestParam("id") Integer id ) {
-        ReturnInfo returnInfo = new ReturnInfo();
-        try {
-            BankTradeInfo bankTradeDetail = bankTradeService.findBankTradeDetail(id);
-            returnInfo.setResult(bankTradeDetail);
-            returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
-            returnInfo.setCode(Message.API_SUCCESS_CODE);
-            returnInfo.setMsg(Message.API_SUCCESS_MSG);
-        } catch (Exception e) {
-            e.printStackTrace();
-            returnInfo.setCode(Message.FAILURE_CODE);
-            returnInfo.setMsg(Message.FAILURE_MSG);
-            returnInfo.setSuccess(Message.API_ERROR_FLAG);
+    public String findTradeDetail(  @RequestParam("id") Integer id ) {
+        JSONObject jsonO = new JSONObject();
+        BankTradeInfo bankTradeDetail = bankTradeService.findBankTradeDetail(id);
+        if(bankTradeDetail != null){
+            jsonO.put("bankTradeDetail",bankTradeDetail);
+            return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG, jsonO);
         }
-        return returnInfo;
+        jsonO.put("bankTradeDetail",null);
+        return Message.responseStr(Message.FAILURE_CODE, Message.FAILURE_MSG, jsonO);
     }
 }
 
