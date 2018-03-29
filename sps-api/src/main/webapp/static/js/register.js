@@ -103,6 +103,8 @@
                                 if (data.result == true) {
                                     _this.countDown('getCheckCode');
                                     aspenLib.tips('发送成功');
+                                }else{
+                                    aspenLib.tips(data.message);
                                 }
                             },
                             error: function () {
