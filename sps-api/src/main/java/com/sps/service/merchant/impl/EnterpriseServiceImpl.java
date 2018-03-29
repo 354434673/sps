@@ -88,7 +88,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
                 }
                 for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
                     data = new HashMap<String, Object>();
-                    if (!"".equals(spsChannelEnterprise.getChannelNum())) {
+                 /*   if (!"".equals(spsChannelEnterprise.getChannelNum())) {
                         Map<String, Object> map = new HashMap<>();
                         map.put("shopNum", spsChannelEnterprise.getChannelNum());
                         map.put("recommend", "1");
@@ -113,13 +113,13 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
                         if (goodShopList != null && goodShopList.size() > 0) {
                             spsChannelEnterprise.setGoodShops((List<SpsGoodShop>) EntityUtils.reloadListPropertyValue(shopList, pro));
                         }
-                    }
+                    }*/
                     data.put("id", spsChannelEnterprise.getEnterpriseId());
                     data.put("phone", spsChannelEnterprise.getGuarantee().getGuaranteeCorpPhone());
                     data.put("businessProduct", goodCategoryService.findListByIds(spsChannelEnterprise.getBusiness().getBusinessProduct()));
                     data.put("companyName", spsChannelEnterprise.getEnterpriseCompanyName());
                     data.put("picSrc", spsChannelEnterprise.getPic().getPicSrc());
-                    data.put("goodsList", spsChannelEnterprise.getGoodShops());
+                  /*  data.put("goodsList", spsChannelEnterprise.getGoodShops());*/
                     result.add(data);
                 }
                 super.logger.error(Message.SUCCESS_MSG);
@@ -156,7 +156,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
             if (queryBusinessForApi != null && queryBusinessForApi.size() > 0) {
                 for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
                     data = new HashMap<String, Object>();
-                 /*   if (!"".equals(spsChannelEnterprise.getChannelNum())) {
+                    if (!"".equals(spsChannelEnterprise.getChannelNum())) {
                         SpsShopkeeper queryShopkeeper = shopkeeperService.queryShopkeeperList(shopkeeperCustomerId);
                         //查询当前登录店主的主营业务
                         String shopkeeperBusinessType = queryShopkeeper.getShopkeeperBusinessType();
@@ -183,13 +183,13 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
                         if (goodShopList != null && goodShopList.size() > 0) {
                             spsChannelEnterprise.setGoodShops((List<SpsGoodShop>) EntityUtils.reloadListPropertyValue(shopList, pro1));
                         }
-                    }*/
+                    }
                     data.put("id", spsChannelEnterprise.getEnterpriseId());
                     data.put("phone", spsChannelEnterprise.getGuarantee().getGuaranteeCorpPhone());
                     data.put("businessProduct", goodCategoryService.findListByIds(spsChannelEnterprise.getBusiness().getBusinessProduct()));
                     data.put("companyName", spsChannelEnterprise.getEnterpriseCompanyName());
                     data.put("picSrc", spsChannelEnterprise.getPic().getPicSrc());
-                 /*   data.put("goodsList", spsChannelEnterprise.getGoodShops());*/
+                    data.put("goodsList", spsChannelEnterprise.getGoodShops());
                     result.add(data);
                 }
             }
