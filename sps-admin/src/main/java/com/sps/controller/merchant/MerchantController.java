@@ -51,7 +51,7 @@ import com.sps.util.HttpClientUtil;
 @RestController
 @RequestMapping(value="/merchant")
 public class MerchantController {
-	private static final String URL = "http://192.168.201.149:8080/sps/centerEnter";	
+	private static final String URL = "http://test1-spay.juzifenqi.com/sps/centerEnter";	
 	@Reference(check=false,group="dianfu")
 	private ChannelWriteService chanelWriteService;
 	@Reference(check=false,group="dianfu")

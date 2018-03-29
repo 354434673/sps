@@ -180,15 +180,15 @@
 		    	<div class="layui-form-mid layui-word-aux" id="scale"> </div>
 		    </div>
 		 </div>
-		
-      	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+		<!-- 目前隐藏 -->
+<!--       	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>合同文本</legend>
 		</fieldset>
 		 <div class="layui-form-item" >
 			 <div style="padding-left: 90px">
 			    <button class="layui-btn layui-btn-primary" id="queryOrders">查看</button>
 			 </div>
-		 </div>
+		 </div> -->
       	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>商品列表</legend>
 		</fieldset>

@@ -95,7 +95,7 @@ public class UserController {
 	 * @throws
 	 */
 	@RequestMapping("/regist")
-	public ServiceResult<LoginInfo> userL(String mobile, String code, String password, String saleSrc, 
+	public ServiceResult<LoginInfo> insertUser(String mobile, String code, String password, String saleSrc, 
 			String clientNum, String channelNum, String salemanPhone, String channelPhone){
 		
 			SpsShopkeeperInvitation queryShopInvitation = userService.queryShopInvitation(mobile, null);

@@ -73,15 +73,7 @@
 		src="<%=path%>/page/static/datas/area_data.js"></script>
 <script type="text/html" id="bar">
 	
-  <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
-  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="del">删除</a>
-{{}}
-{{#  if(d.channel.channelState != 2){ }}
-  <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="freeze">冻结</a>
-{{#  } else if(d.channel.channelState = 2){ }}
-  <a class="layui-btn layui-btn-mini " lay-event="recover">恢复</a>
-{{#  }  }}
+  <a class="layui-btn layui-btn-mini" lay-event="risk">审核</a>
 </script>
 <!-- 进行数据渲染 -->
 <script type="text/html" id="channelTpl">
