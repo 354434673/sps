@@ -221,12 +221,12 @@
                                 try {
                                     _hmt.push(['_trackEvent', aspenLib.getQueryString('channel') + 'zhuce', 'dianfu_register', 'click', aspenLib.getQueryString('channel') + 'zhuce']);
                                 } catch (e) { }
-                                aspenLib.tips(data.message);
+                                aspenLib.tips('注册成功！');
                                 setClear = setTimeout(function () {
                                     location.href = ajaxUrl + '/download.html';
                                     clearTimeout(setClear);
                                     setClear = null;
-                                }, 1000);
+                                }, 2000);
                             }else{
                                 aspenLib.tips(data.message);
                             }
