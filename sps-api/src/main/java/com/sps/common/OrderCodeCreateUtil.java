@@ -1,6 +1,7 @@
 package com.sps.common;
 
 
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -9,11 +10,13 @@ import java.util.Random;
  */
 public class OrderCodeCreateUtil {
 
-    public static String orderCode(){
-        StringBuffer sb = new StringBuffer("df");
-        sb.append(UUIDFactory.getNumberUUIDStr());
-        Random random = new Random();
-        sb.append(random.nextInt(10));
-        return sb.toString();
+    public static String orderCode(String mark){
+        String numRandom = RuleUtil.getNumRandom(6);
+
+        String DateFormat = DateUtil.format(new Date(), "yyyyMMss");
+
+        String channelNum = mark+DateFormat+numRandom;
+
+        return channelNum;
     }
 }

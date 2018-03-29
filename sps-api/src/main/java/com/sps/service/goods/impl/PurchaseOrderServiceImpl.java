@@ -86,7 +86,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     @Override
     public Map<String, Object> saveOrder(List<SpsPurchaseOrder> order) {
         Map<String, Object> map = new HashMap<>();
-        String orderCode = OrderCodeCreateUtil.orderCode();
+        String orderCode = OrderCodeCreateUtil.orderCode("df");
         StringBuffer sb = new StringBuffer();
         if (order != null && order.size() > 0) {
             if (order.get(0).getCustomerId() != null) {

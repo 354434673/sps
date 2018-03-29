@@ -31,8 +31,10 @@ import com.sps.dao.order.SpsOrderLogisticsMapper;
 public class OrderServiceImpl implements OrderService {
     private static String orderFirst = "http://dev.app.chezhubaitiao.com/api/accountSystem/freezeConsumption";
     private static String frozen = "http://dev.app.chezhubaitiao.com/api/accountSystem/freeze";
-    @Autowired
-    private GoodCategoryService goodCategoryService;
+    private static String URL_INSERT_SHOPORDER = "http://test1-spay.juzifenqi.com/sps/insertShopOrderInfo";
+    private static String URL_INSERT_REGION= "http://test1-spay.juzifenqi.com/sps/insertShopRegionInfo";
+/*    @Autowired
+    private GoodCategoryService goodCategoryService;*/
 
     @Autowired
     private OrderMapper orderMapper;
@@ -488,12 +490,12 @@ public class OrderServiceImpl implements OrderService {
                         String[] idList = order.getCommodityType().split(",");
                         for (String id : idList) {
                             map.put("id", id);
-                            List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
+/*                            List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
                             if (categoryList != null && categoryList.size() > 0) {
                                 for (SpsGoodCategory category : categoryList) {
                                     categoryNames += "," + category.getCategoryName();
                                 }
-                            }
+                            }*/
                         }
                     }
                     json.put("orderNo", order.getOrderid());
@@ -512,7 +514,7 @@ public class OrderServiceImpl implements OrderService {
                     json.put("centerMerchantCode", order.getShopkeeper());
                     json.put("centerMerchantName", order.getShopkeepername());
                     json.put("shopMainCommodity", categoryNames.substring(1));
-                    String jsonResult = HttpClientUtil.doPostJson("http://192.168.201.149:8080/sps/insertShopOrderInfo", json.toString());
+                    String jsonResult = HttpClientUtil.doPostJson(URL_INSERT_SHOPORDER, json.toString());
                     System.out.println(jsonResult);
                     if (jsonResult != null) {
                         JSONArray orderGoodsJson = new JSONArray();
@@ -524,12 +526,12 @@ public class OrderServiceImpl implements OrderService {
                                     String[] idList = goods.getCategory().split(",");
                                     for (String id : idList) {
                                         map.put("id", id);
-                                        List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
+ /*                                       List<SpsGoodCategory> categoryList = goodCategoryService.findList(map);
                                         if (categoryList != null && categoryList.size() > 0) {
                                             for (SpsGoodCategory category : categoryList) {
                                                 categoryName += "," + category.getCategoryName();
                                             }
-                                        }
+                                        }*/
                                     }
                                 }
                                 JSONObject content = new JSONObject();
@@ -549,7 +551,7 @@ public class OrderServiceImpl implements OrderService {
                                 orderGoodsJson.add(content);
                             }
                         }
-                        String res = HttpClientUtil.doPostJson("http://192.168.201.149:8080/sps/insertShopRegionInfo", orderGoodsJson.toString());
+                        String res = HttpClientUtil.doPostJson(URL_INSERT_REGION, orderGoodsJson.toString());
                         System.out.println(res);
                     }
                 }

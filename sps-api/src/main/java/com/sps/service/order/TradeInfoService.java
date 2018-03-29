@@ -11,8 +11,17 @@ public interface TradeInfoService {
      */
     void saveOrUpdate(SpsBankTradeInfo order);
 
+    /**
+     * 根据交易流水查询交易明细
+     * @param serialNumber
+     * @return
+     */
+    SpsBankTradeInfo findBySerialNumber(String serialNumber);
 
-
-
-
+    /**
+     * 根据交易流水修改明细
+     * @param bankTradeInfo
+     * @return
+     */
+    int updateBySerialNumber(SpsBankTradeInfo bankTradeInfo);
 }

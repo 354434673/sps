@@ -21,7 +21,7 @@ import com.sps.dao.merchant.write.SpsChannelSalesmanWriteMapper;
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteService{
-	private static final String URL = "http://192.168.201.149:8080/sps/updateMerchant";
+	private static final String URL = "http://test1-spay.juzifenqi.com/sps/updateMerchant";
 	@Resource
 	private SpsChannelSalesmanWriteMapper salesmanWrite;
 	@Resource

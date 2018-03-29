@@ -1,22 +1,20 @@
 package com.sps.controller.merchant;
 
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.sps.entity.merchant.SpsChannelSalesman;
 import org.sps.service.merchant.read.ChannelSalesmanReadService;
 import org.sps.service.merchant.write.ChannelSalesmanWriteService;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.fastjson.JSONObject;
+import com.juzifenqi.core.ServiceResult;
+import com.juzifenqi.usercenter.service.ISmsCommonService;
 
 /**
  * 业务员控制层
@@ -34,8 +32,8 @@ public class SalesmanController {
 	private ChannelSalesmanWriteService salesmanWrite;
 	@Reference(check = false, group = "dianfu")
 	private ChannelSalesmanReadService salesmanRead;
-/*	@Resource
-	private ISmsCommonService iSmsCommonService;*/
+	@Resource
+	private ISmsCommonService iSmsCommonService;
 
 	/**
 	 * 添加业务员 @Title: insertSalesman @Description:

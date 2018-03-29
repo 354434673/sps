@@ -179,7 +179,7 @@
   <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
     select
     s.o_id,  s.orderid,  s.sku,  s.skuname,  s.color,  s.memory,  s.price,  s.amount,  s.summation,  s.pre_price,
-    s.modifytime,  s.pre_amount,
+    s.modifytime,  s.pre_amount,ss.g_size as size,
     (
     SELECT
     a.album_url

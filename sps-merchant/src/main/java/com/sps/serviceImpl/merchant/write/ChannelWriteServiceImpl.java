@@ -40,7 +40,7 @@ import com.sps.dao.merchant.write.SpsChannelWriteMapper;
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelWriteServiceImpl implements ChannelWriteService{
-	private static final String URL = "http://192.168.201.149:8080/sps/insertCenterBank";
+	private static final String URL = "http://test1-spay.juzifenqi.com/sps/insertCenterBank";
 
 	private static String init = "http://dev.app.chezhubaitiao.com/api/merchantAccount/init";
 	private static String initBusiness = "http://dev.app.chezhubaitiao.com/api/business/init";

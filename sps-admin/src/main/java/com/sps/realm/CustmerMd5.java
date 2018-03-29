@@ -21,9 +21,14 @@ public class CustmerMd5 extends AuthenticatingRealm{
 		String userName = (String) token.getPrincipal();
 		
 		SpsUser user = userService.getUser(userName);
-		//根据主身份查询数据库
-		if(userName.equals(user.getUserUsername())){
-			return new SimpleAuthenticationInfo(userName, user.getUserPassword(),ByteSource.Util.bytes(user.getUserSalt()) ,this.getName());
+		
+		Integer userMark = user.getUserMark();
+		
+		if(userMark != 2){//店主不能登录
+			//根据主身份查询数据库
+			if(userName.equals(user.getUserUsername())){
+				return new SimpleAuthenticationInfo(userName, user.getUserPassword(),ByteSource.Util.bytes(user.getUserSalt()) ,this.getName());
+			}
 		}
 		return null;
 	}
