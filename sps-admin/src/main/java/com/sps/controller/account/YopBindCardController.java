@@ -89,7 +89,7 @@ public class YopBindCardController {
     @Resource
     private UserAndRoleService userAndRoleService;
 
-     @RequestMapping("/getVerifyCode")
+    /* @RequestMapping("/getVerifyCode")
     @ResponseBody
     public Result getVerifyCode(String phone) {
         logger.info("getVerifyCode 方法 开始调用");
@@ -105,7 +105,7 @@ public class YopBindCardController {
         result.setMsg(msg);
         return result;
 
-    }
+    }*/
 
     //调用绑卡接口
     @RequestMapping("/bindBankCard")

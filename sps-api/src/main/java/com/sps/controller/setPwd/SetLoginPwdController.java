@@ -2,10 +2,12 @@ package com.sps.controller.setPwd;
 
 import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSONObject;
 import com.juzifenqi.core.ServiceResult;
 import com.juzifenqi.usercenter.entity.member.MemberInfo;
 import com.juzifenqi.usercenter.service.ISmsCommonService;
 import com.juzifenqi.usercenter.service.member.IMemberDianfuService;
+import com.sps.common.Message;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -41,11 +43,17 @@ public class SetLoginPwdController {
      */
     @RequestMapping(value = "/queryVerfilyCode", method = RequestMethod.POST)
     @ResponseBody
-    public ServiceResult<Boolean> queryVerfilyCode(@RequestParam("phone") String phone) {
+    public String  queryVerfilyCode(@RequestParam("phone") String phone) {
+        JSONObject json = new JSONObject ();
         logger.info("queryVerfilyCode 方法开始执行。。。。。。");
-        // 调用短信验证码接口--获取短信验证码  category 3  ISmsCommonService.sendEditPasswordSms
         ServiceResult<Boolean> sendRegisterSms = ismsCommonService.sendForgetPasswordSms(phone,3);
-        return sendRegisterSms;
+        if(sendRegisterSms.getSuccess()){
+            json.put("success",sendRegisterSms.getSuccess());
+            return  Message.responseStr(Message.SUCCESS_CODE,Message.SUCCESS_MSG,json);
+        }
+        json.put("success",sendRegisterSms.getSuccess());
+        return  Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG, json);
+
     }
 
 
@@ -58,16 +66,21 @@ public class SetLoginPwdController {
      */
     @RequestMapping(value = "/modifyLoaginPwdByOldPwd", method = RequestMethod.POST)
     @ResponseBody
-    public  ServiceResult<MemberInfo> modifyLoaginPwdByOldPwd(
+    public  String modifyLoaginPwdByOldPwd(
                                                       @RequestParam("mobile") String mobile,
                                                       @RequestParam("oldPwd") String oldPwd,
                                                       @RequestParam("newPwd") String newPwd) {
-            //根据旧密码修改登录密码
-            logger.info("editPasswordByOldPwd方法开始执行。。。。。。。。。。。");
+        JSONObject json = new JSONObject ();
+        //根据旧密码修改登录密码
+        logger.info("editPasswordByOldPwd方法开始执行。。。。。。。。。。。");
 
-            ServiceResult<MemberInfo> memberInfoServiceResult= memberDianfuService.editPasswordByOldPwd(oldPwd, newPwd, mobile);
-
-            return memberInfoServiceResult;
+        ServiceResult<MemberInfo> memberInfoServiceResult= memberDianfuService.editPasswordByOldPwd(oldPwd, newPwd, mobile);
+        if(memberInfoServiceResult.getSuccess()){
+            json.put("success",memberInfoServiceResult.getSuccess());
+            return  Message.responseStr(Message.SUCCESS_CODE,Message.SUCCESS_MSG,json);
+        }
+        json.put("success",memberInfoServiceResult.getSuccess());
+        return  Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG, json);
 
     }
 
@@ -80,20 +93,21 @@ public class SetLoginPwdController {
      */
     @RequestMapping(value = "/modifyLoaginPwdByPhone", method = RequestMethod.POST)
     @ResponseBody
-    public  ServiceResult<MemberInfo> modifyLoaginPwdByPhone(
+    public String  modifyLoaginPwdByPhone(
             @RequestParam("code") String code,
             @RequestParam("mobile") String mobile,
             @RequestParam("newPwd") String newPwd) {
-        //根据旧密码修改登录密码
-        logger.info("editPasswordByOldPwd方法开始执行。。。。。。。。。。。");
-
+        //按照手机号修改修改登录密码
+        JSONObject json = new JSONObject ();
         ServiceResult<MemberInfo> memberInfoServiceResult= memberDianfuService.editPasswordByOldPwd(newPwd, mobile, code);
-
-        return memberInfoServiceResult;
+        if(memberInfoServiceResult.getSuccess()){
+            json.put("success",memberInfoServiceResult.getSuccess());
+            return  Message.responseStr(Message.SUCCESS_CODE,Message.SUCCESS_MSG,json);
+        }
+        json.put("success",memberInfoServiceResult.getSuccess());
+        return  Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG, json);
 
     }
-
-
     /**
      * 忘记登录密码
      *
@@ -105,13 +119,18 @@ public class SetLoginPwdController {
      */
     @RequestMapping(value = "/forgetLoginPwd", method = RequestMethod.POST)
     @ResponseBody
-    public ServiceResult<MemberInfo>  forgetLoginPwd(@RequestParam("code") String code,
+    public String   forgetLoginPwd(@RequestParam("code") String code,
                                                      @RequestParam("mobile") String mobile,
                                                      @RequestParam("newPwd") String newPwd) {
+            //忘记登录密码
+            JSONObject json = new JSONObject ();
         logger.info("forgetPassword方法开始执行。。。。。。。。。。。");
-        ServiceResult<MemberInfo> memberInfoServiceResult = memberDianfuService.forgetPassword(code, mobile, newPwd);
-        return memberInfoServiceResult;
+            ServiceResult<MemberInfo> memberInfoServiceResult = memberDianfuService.forgetPassword(code, mobile, newPwd);
+            if(memberInfoServiceResult.getSuccess()){
+                json.put("success",memberInfoServiceResult.getSuccess());
+                return  Message.responseStr(Message.SUCCESS_CODE,Message.SUCCESS_MSG,json);
+            }
+            json.put("success",memberInfoServiceResult.getSuccess());
+            return  Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG, json);
     }
-
-
 }
