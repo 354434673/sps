@@ -78,30 +78,34 @@ public class YopBindCardController {
     @Reference(check = false, group = "dianfu")
     private ChannelBankTransReadService bankTransReadService;
 
- @Reference(check = false, group = "dianfu")
+    @Reference(check = false, group = "dianfu")
     private ChannelBankTransWriteService bankTransWriteService;
 
-   /* @Reference(check = false,group = "member-center-dev1")
-    private ISmsCommonService ismsCommonService;*/
+    @Reference(check = false,group = "member-center-dev1")
+    private ISmsCommonService ismsCommonService;
 
     @Resource
     private UserService userService;
     @Resource
     private UserAndRoleService userAndRoleService;
 
-  /* @RequestMapping("/getVerifyCode")
+     @RequestMapping("/getVerifyCode")
     @ResponseBody
     public Result getVerifyCode(String phone) {
         logger.info("getVerifyCode 方法 开始调用");
         Result result = new Result<Boolean>();
         ServiceResult<Boolean> results = ismsCommonService.sendForgetPasswordSms(phone, 3);
+         if(!results.getSuccess()){
+             result.setBody(results.getSuccess());
+             result.setMsg(results.getMessage());
+         }
         String msg = "获取成功";
         msg= results.getResult()?"获取成功":"获取失败";
         result.setBody(results);
         result.setMsg(msg);
         return result;
 
-    }*/
+    }
 
     //调用绑卡接口
     @RequestMapping("/bindBankCard")

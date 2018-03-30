@@ -160,6 +160,13 @@
     });
     $("#findSms").on("click",function(){
         var mobile = $('#mobile').val().trim();
+        if(mobile==''){
+            layer.msg('手机号不可为空', {
+                icon: 2,
+                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+            });
+            return ;
+        }
         //发送ajax请求
         $.ajax({
             data: {phone:mobile},
