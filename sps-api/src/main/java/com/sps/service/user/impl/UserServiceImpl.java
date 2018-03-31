@@ -78,8 +78,8 @@ public class UserServiceImpl extends BaseOperate implements UserService{
 		SpsUserExample example = new SpsUserExample();
 
 		Criteria createCriteria = example.createCriteria();
-
-		createCriteria.andUserUsernameEqualTo(userName);
+		//只查询mark为2的
+		createCriteria.andUserMarkEqualTo(2).andUserUsernameEqualTo(userName);
 
 		List<SpsUser> selectByExample = dao.selectByExample(example);
 
