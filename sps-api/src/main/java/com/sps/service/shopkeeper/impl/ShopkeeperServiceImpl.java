@@ -418,7 +418,7 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		
 		HttpClientUtil.doPostJson(URL_APPLY_UPDATE, JSON.toJSONString(data));
 		
-		return spsShopkeeperDao.updateByExample(shopkeeper, example);
+		return spsShopkeeperDao.updateByExampleSelective(shopkeeper, example);
 	}
 	@Override
 	public HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation) {

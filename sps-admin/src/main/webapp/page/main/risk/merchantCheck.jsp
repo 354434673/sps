@@ -72,7 +72,6 @@
 <script type="text/javascript"
 		src="<%=path%>/page/static/datas/area_data.js"></script>
 <script type="text/html" id="bar">
-	
   <a class="layui-btn layui-btn-mini" lay-event="risk">审核</a>
 </script>
 <!-- 进行数据渲染 -->
@@ -105,8 +104,8 @@
 			      ,{field: 'channelNum', title: '核心账户编号',align:'center'}
 			      ,{field: 'enterpriseCompanyName', title: '公司名称',width:240,align:'center'}
 			      ,{field: 'enterpriseBusinesslicenseNo', title: '营业执照编号', width:230, align:'center'}
-			      ,{field: 'channel', title: '核心商户状态', align:'center',templet: '#channelTpl'} 
-			      ,{field: 'tool', title: '操作',align:'center',toolbar:'#bar'}
+			      ,{field: 'channel', title: '核心商户状态', align:'center',width:240,templet: '#channelTpl'} 
+			      ,{field: 'tool', title: '操作',align:'center',width:130,toolbar:'#bar'}
 			    ]]
 			  });
 			  //查询
@@ -137,8 +136,8 @@
 					 var data = obj.data;
 					  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 					  var tr = obj.tr; //获得当前行 tr 的DOM对象
-					  if(layEvent === 'detail'){ //查看
-						  location.href = '<%=path%>/page/main/merchant/queryMerchant.jsp?channelNum='+data.channelNum
+					  if(layEvent === 'risk'){ //查看
+						  location.href = '<%=path%>/page/main/risk/queryMerchant.jsp?channelNum='+data.channelNum
 					  } else if(layEvent === 'del'){ //删除
 	 					    layer.confirm('真的删除该商户么', function(index){
 						      layer.close(index);

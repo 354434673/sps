@@ -342,8 +342,8 @@
 		 	<div class="layui-form-item" align="center" id="btn" >
 				<button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">返回</button>
 				<button class="layui-btn layui-btn-primary" lay-filter="submitAddChanel" lay-submit >保存并进入下一步</button>
-				<!--  <button class="layui-btn layui-btn-primary" id="next" >下一步</button>  -->
-				<button class="layui-btn layui-btn-primary" id="center" >测试</button> 
+<!-- 			<button class="layui-btn layui-btn-primary" id="next" >下一步</button> 
+				<button class="layui-btn layui-btn-primary" id="center" >测试</button>  -->
 			</div>
 	</div>
     </div>
@@ -628,9 +628,9 @@
 			}
 		  }
 		}); 	
-	  $('#next').on('click',function(){
-		  //intoNext()
-	  })
+/* 	  $('#next').on('click',function(){
+		  intoNext()
+	  }) */
 	  $('#last').on('click',function(){
 		  element.tabChange('tab','channelInfo')
 
