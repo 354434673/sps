@@ -85,6 +85,19 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 		return num > 0?uuid:"";
 	}
 
+	@Override
+	public Boolean saveBankRechangeTradeInfo(SpsChannelBankTrade bankTrandeInfo) {
+		int n = bankWrite.updateBalance(bankTrandeInfo.getUserId(), bankTrandeInfo.getTradeAfterBalanc());
+		int m = bankTradeWrite.insertBankTrade(bankTrandeInfo);
+		return m >0 && n>0? true:false ;
+	}
+
+	@Override
+	public Boolean modifyRechangeStatus(SpsChannelBankTrade spsChannelBankTrade) {
+		int m = bankTradeWrite.updateRechangeStatus(spsChannelBankTrade);
+		return m > 0 ? true:false;
+	}
+
 
 	@Override
 	public void modifyBankTradeInfo(SpsChannelBankTrade bankTrade) {
@@ -107,7 +120,7 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 			return m >0;
 		}else{
 //			建议存在
-			 m = bankTradeWrite.updateStatusAndContent(id, status,content,date,date);
+			m = bankTradeWrite.updateStatusAndContent(id, status,content,date,date);
 			return m >0;
 		}
 

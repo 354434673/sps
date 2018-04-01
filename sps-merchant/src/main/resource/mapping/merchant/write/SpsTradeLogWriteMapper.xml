@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.write.SpsTradeLogMapper" >
+	<insert id=" insertTradeLog" parameterType="org.sps.entity.merchant.SpsTradeLog" useGeneratedKeys="true" keyColumn="log_id" keyProperty="logId">
+		sps_order_log
+		(
+			log_name,
+			log_type,
+			log_des,
+			log_create_time,
+			log_update_time
+		)
+		values
+		 (
+		 	#{logName,jdbcType=VARCHAR},
+		 	#{logType,jdbcType=INTEGER},
+			#{logDes,jdbcType=VARCHAR},
+			#{logCreateTime,jdbcType=TIMESTAMP},
+			#{logUpdateTime,jdbcType=TIMESTAMP}
+	</insert>
+
+</mapper>

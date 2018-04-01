@@ -44,14 +44,14 @@ public class ChannelBankWriteServiceImpl implements ChannelBankWriteService{
 			e.printStackTrace();
 			return false;
 		}
-		
+
 	}
 	/**
 	 * 删除绑卡信息
 	 */
 	@Override
 	public Boolean removeBankInfo(String userName) {
-		
+
 		try {
 
 			bankWrite.deleteByPrimaryKey(userName);
@@ -92,8 +92,14 @@ public class ChannelBankWriteServiceImpl implements ChannelBankWriteService{
 	}
 
 	@Override
+	public Boolean modifyBalance(String userName, BigDecimal balance) {
+		int m = bankWrite.updateBalance(userName, balance);
+		return m >0 ? true :false;
+	}
+
+	@Override
 	public Boolean removeBankInfoOrNo(String userId) {
-		
+
 		return false;
 	}
 

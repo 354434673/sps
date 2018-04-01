@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * 交易流水账号的DAO
- * @author liucialing 
+ * @author liucialing
  *
  */
 public interface SpsChannelBankTradeWriteMapper {
@@ -17,6 +17,14 @@ public interface SpsChannelBankTradeWriteMapper {
 	 * @return
 	 */
 	int insertBankTrade(SpsChannelBankTrade bankTrade);
+
+	/**
+	 * 更新充值状态
+	 * @param bankTrade
+	 * @return
+	 */
+	int updateRechangeStatus(@Param("bankTrade") SpsChannelBankTrade bankTrade);
+
 	/**
 	 * 更新交易的方法
 	 * @param bankTrade
@@ -39,7 +47,7 @@ public interface SpsChannelBankTradeWriteMapper {
 	 */
 	int updateStatusAndContent(@Param("id") int  id,
 							   @Param("status") String status,
-								 @Param("content")String content,
+							   @Param("content")String content,
 							   @Param("applicationStopDate")Date applicationStopDate,
 							   @Param("auditDate")Date auditDate);
 
@@ -53,7 +61,7 @@ public interface SpsChannelBankTradeWriteMapper {
 	 */
 	int updateStatus(@Param("id") int  id,
 					 @Param("status") String status,
-					@Param("applicationStopDate")Date applicationStopDate,
+					 @Param("applicationStopDate")Date applicationStopDate,
 					 @Param("auditDate")Date auditDate);
 
 }
