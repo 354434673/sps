@@ -150,6 +150,25 @@
 			 //TODO
 			 //目前只是改状态,后期要去和核心进行数据对接,进行退货处理
 			 $(document).on("click","#refundment",function(){
+
+				 alert(amount);
+			 	//去核心查询当前余额是否 大于等于退款金额
+				 $.post({
+					 url:'<%=path%>/payRechange/getMerchantAccount',
+					 dataType:'json',
+					 success:function(data){
+						var amount= data.body;
+						 var money = $('#money').var();
+						 if(parseInt(amount)>=parseInt(money)){
+						 	//直接跳转到--输入交易密码页面
+							 window.location.href='<%=path%>/page/main/rejected/refundment.jsp?money='+money;
+						 }
+						 if (parseInt(amount) < parseInt(money)){
+						 	//跳转到充值页面---进行充值
+						 }
+					 }
+
+				 })
 				 window.location.href='<%=path%>/page/main/rejected/refundment.jsp';
 				 //update(17,remark,"已确认收货,1秒后跳转")
 			 });

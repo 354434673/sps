@@ -48,7 +48,6 @@ public class ReChargeController {
         Result<String> result = new Result<String>();
         //比对交易密码是否正确
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
-
         String pwd = bankReadService.findTradePassword(userName);
         String salt = bankReadService.findSalt(userName);
 
@@ -57,11 +56,13 @@ public class ReChargeController {
             SpsUser user = userService.findByUserName(userName);
             //从当前登录用户中获取用户银行卡信息
             SpsChannelBank bankInfo = bankReadService.getBankInfoByUserName(userName);
-            String tradeSerialNum = bankTradeWriteService.saveBankTradeInfo(bankInfo, withdrawAmt,"1",user.getUserId(),user.getUserMark());
-            boolean flag = StringUtils.isNotEmpty(tradeSerialNum);
-            result.setBody(tradeSerialNum);
-            result.setMsg(flag ? "成功" : "保存失败");
-            return result;
+            if(bankInfo !=null){
+                String tradeSerialNum = bankTradeWriteService.saveBankTradeInfo(bankInfo, withdrawAmt,"1",user.getUserId(),user.getUserMark());
+                boolean flag = StringUtils.isNotEmpty(tradeSerialNum);
+                result.setBody(tradeSerialNum);
+                result.setMsg(flag ? "成功" : "保存失败");
+                return result;
+            }
         }
         result.setBody("");
         result.setMsg("密码输入有误");

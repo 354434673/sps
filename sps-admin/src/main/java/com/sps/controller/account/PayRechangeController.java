@@ -47,6 +47,8 @@ import java.util.UUID;
 @RequestMapping("/payRechange")
 public class PayRechangeController {
     private  static  final Log Logger= LogFactory.getLog(PayRechangeController.class);
+
+    private static String getMerchantAccount = "http://dev.app.chezhubaitiao.com/api/merchantAccount/getMerchantAccount";
     private static String pay = "http://dev.pay.juzifenqi.com/juzi-pay/payment/dianfu";
     private static String getCustomerAccount = "http://dev.app.chezhubaitiao.com/api/customerAccount/getCustomerAccount";
     private static String rechargeMoney = "http://dev.app.chezhubaitiao.com/api/customerAccount/recharge";
@@ -74,7 +76,7 @@ public class PayRechangeController {
      */
     @RequestMapping(value = "/payment", method = RequestMethod.POST)
     @ResponseBody
-    public Result payment(BigDecimal withdrawAmt, String tradePwd) {
+    public Result payment(String  withdrawAmt, String tradePwd) {
         Logger.info("保存充值方法"+"   payment"+"开始");
         Result<String> result = new Result<String>();
         //比对交易密码是否正确
@@ -96,12 +98,12 @@ public class PayRechangeController {
             Logger.info("发送保护组装请求参数"+"   getBankInfoByUserName"+"开始");
             resultMap.put("amount", withdrawAmt);
             resultMap.put("application", "dianfu");
-            resultMap.put("cardNo", bankInfo.getIdentity());
-            resultMap.put("certNo", bankInfo.getAccounts());
-            resultMap.put("customerId", "pay");
+            resultMap.put("cardNo", bankInfo.getAccounts());
+            resultMap.put("certNo", bankInfo.getIdentity());
+            resultMap.put("customerId", "DF20180136191770");
             resultMap.put("customerName", bankInfo.getName());
             resultMap.put("mobile", bankInfo.getPhone());
-            resultMap.put("notifyUrl", "http://123.56.24.208:8080/api/heart/payCallback");
+            resultMap.put("notifyUrl", "http://123.56.24.208:8080/payRechange/payCallback");
             resultMap.put("orderId", "df2018328233");
             resultMap.put("payChannel", "baofu");
             resultMap.put("payGoal", "D");
@@ -130,7 +132,7 @@ public class PayRechangeController {
                         //交易状态 0 代表待审批，2 审批通过，1审批不通过
                         bankTradeInfo.setTradeStatus("2");
                         bankTradeInfo.setTradeName(bankInfo.getUserName());
-                        bankTradeInfo.setTradeAmount(withdrawAmt);
+                        bankTradeInfo.setTradeAmount(new BigDecimal(withdrawAmt));
                         bankTradeInfo.setAuditDate(new Date());
                         bankTradeInfo.setTradeBeforeBalanc(bankInfo.getAvailableBalance());
                         bankTradeInfo.setTradeName(bankInfo.getChannlNum());
@@ -141,10 +143,10 @@ public class PayRechangeController {
                          */
                         Map map = new HashMap<>();
                         map.put("application", "dianfu");
-                        map.put("certNo", bankInfo.getIdentity());
+                        resultMap.put("businessId", bankInfo.getChannlNum());
                         Logger.info("根据身份证去核心查询个人资金账户余额 开始" );
                         //发送请求查询个人资金账户余额
-                        String jsonRes = HttpClientUtils.post(getCustomerAccount, map);
+                        String jsonRes = HttpClientUtils.post(getMerchantAccount, map);
                         Logger.info("根据身份证去核心查询个人资金账户余额 结束" );
                         System.out.println(jsonRes);
                         String validAmount;
@@ -153,7 +155,7 @@ public class PayRechangeController {
                                 JSONObject obj = JSONObject.parseObject(jsonRes);
                                 validAmount = obj.getJSONObject("result").getString("validAmount");
                                 //更新交易前余额
-                                bankTradeInfo.setTradeBeforeBalanc(new BigDecimal(validAmount).subtract(withdrawAmt));
+                                bankTradeInfo.setTradeBeforeBalanc(new BigDecimal(validAmount).subtract(new BigDecimal(withdrawAmt)));
                             }
                         }
                         bankTradeInfo.setTradeNo(serialNumber);
@@ -204,8 +206,8 @@ public class PayRechangeController {
                        // SpsChannelBankTrade bankTradeInfo = new SpsChannelBankTrade();
                         Map map = new HashMap<>();
                         map.put("application", "dianfu");
-                        map.put("certNo", spsBankTradeInfo.getIdentity());
-                        String jsonRes = HttpClientUtils.post(getCustomerAccount, map);
+                        resultMap.put("businessId", spsBankTradeInfo.getChannel());
+                        String jsonRes = HttpClientUtils.post(getMerchantAccount, map);
                         System.out.println(jsonRes);
                         if (jsonRes != null) {
                             if ("100000".equals(code)) {
@@ -248,5 +250,41 @@ public class PayRechangeController {
             ri.setSuccess(Message.API_ERROR_FLAG);
         }
         return ri;
+    }
+
+    /**
+     * 商户资金账户查询
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getMerchantAccount", method = RequestMethod.POST)
+    @ResponseBody
+    public Result  getMerchantAccount() {
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        SpsChannelBank bankInfo = bankReadService.getBankInfoByUserName(userName);
+        Result<BigDecimal> result = new Result<>();
+        try {
+            Map resultMap = new HashMap<>();
+            resultMap.put("application", "dianfu");
+            resultMap.put("businessId", bankInfo.getChannlNum());
+            String jsonResult = HttpClientUtils.post(getMerchantAccount, resultMap);
+            System.out.println(jsonResult);
+            if (jsonResult != null) {
+                JSONObject object = JSONObject.parseObject(jsonResult);
+                String code = object.getString("code");
+                if ("100000".equals(code)) {
+                    String validAmount = object.getJSONObject("result").getString("validAmount");
+                    result.setBody(new BigDecimal(validAmount));
+                    result.setMsg("获取成功");
+                    return result;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setBody(null);
+            result.setMsg("获取金额失败");
+
+        }
+        return result;
     }
 }
