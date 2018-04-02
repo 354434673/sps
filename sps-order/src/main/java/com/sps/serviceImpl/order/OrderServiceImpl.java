@@ -29,7 +29,7 @@ import com.sps.dao.order.SpsOrderLogisticsMapper;
 @org.springframework.stereotype.Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
-    private static String orderFirst = "http://dev.app.chezhubaitiao.com/api/accountSystem/freezeConsumption";
+    private static String returnGoods = "http://dev.app.chezhubaitiao.com/api/customerAccount/returnGoods";
     private static String frozen = "http://dev.app.chezhubaitiao.com/api/accountSystem/freeze";
     private static String URL_INSERT_SHOPORDER = "http://test1-spay.juzifenqi.com/sps/insertShopOrderInfo";
     private static String URL_INSERT_REGION= "http://test1-spay.juzifenqi.com/sps/insertShopRegionInfo";
@@ -555,6 +555,31 @@ public class OrderServiceImpl implements OrderService {
                         System.out.println(res);
                     }
                 }
+
+                if ("17".equals(flag)) {
+                    //退货接口
+                    Order order = orderMapper.selectByOrderId(orderid);
+                    if(order.getScale()!=100){
+                        Map map = new HashMap<>();
+                        map.put("amount",order.getShopPayMoney());
+                        map.put("application", "dianfu");
+                        map.put("certNo", order.getIdCard());
+                        map.put("businessId", order.getCustomerId());
+                        map.put("orderId", order.getOrderid());
+                        String jsonRes = HttpClientUtils.post(returnGoods, map);
+                    }
+
+
+
+                }
+
+
+
+
+
+
+
+
                 hashMap.put("count", result);
                 hashMap.put("state", "success");
                 break;

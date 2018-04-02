@@ -17,6 +17,10 @@ public class DateUtil {
 	public static final String HHmmss = "HH:mm:ss";
 	public static final String MM = "MM";
 	public static final String week = "E";
+	/**
+	 * yyyy-MM-dd
+	 */
+	public final static String PNYYYYMMDD = "yyyyMMdd";
 
 	/**
 	 * 通过格式获取格式化对象,线程安全
@@ -199,6 +203,74 @@ public class DateUtil {
 		if (date == null)
 			return null;
 		return format(date, week);
+	}
+	/**
+	 * 获得指定日期的前一天或者后一天（由传入的num决定）的 date 对象 后几天的日期
+	 * @param date
+	 * @param num：0表示当前天 -1 表示上一天，1表示后一天，其他以此类推
+	 * @return
+	 */
+	public static Date dateGapDays(Date date, int num) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, num);
+		return cal.getTime();
+	}
+	/**
+	 * 获取系统当前时间，精确到天
+	 * @return
+	 */
+	public static Date getNowDD(){
+		Date date = new Date();
+		String dateStr = dateToStr(date, PNYYYYMMDD);
+		return strToDate(dateStr, PNYYYYMMDD);
+	}
+	/**
+	 * 字符串格式日期转日期格式日期
+	 * @param date
+	 * @param pattern
+	 * @return
+	 */
+	public static Date strToDate(String date,String pattern){
+		if(isEmpty(date) || isEmpty(pattern)){
+			return null ;
+		}
+		SimpleDateFormat format = new SimpleDateFormat(pattern);
+		try {
+			return format.parse(date) ;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null ;
+		}
+	}
+	/**
+	 * 检测Date
+	 * @param date
+	 * @return
+	 */
+	private static boolean isEmpty(Date date){
+		return null == date ? true : isEmpty(date.toString()) ;
+	}
+	/**
+	 * 日期格式日期转字符串格式日期
+	 * @param date
+	 * @param pattern
+	 * @return
+	 */
+	public static String dateToStr(Date date,String pattern){
+		if(isEmpty(date) || isEmpty(pattern)){
+			return null ;
+		}
+		SimpleDateFormat format = new SimpleDateFormat(pattern);
+		return format.format(date) ;
+	}
+	/**
+	 * 检查字符串
+	 * @param str
+	 * @return
+	 */
+	private static boolean isEmpty(String str) {
+		return null == str ? true : "".equals(str.replaceAll(" +", ""));
 	}
 
 	/**

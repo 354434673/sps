@@ -5,10 +5,23 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.juzifenqi.core.exception.BusinessException;
 import com.sps.common.*;
+import com.sps.entity.bank.SpsBank;
+import com.sps.entity.order.Order;
 import com.sps.entity.order.SpsBankTradeInfo;
+import com.sps.entity.order.SpsOrder;
 import com.sps.entity.order.SpsOrderLog;
+import com.sps.entity.shopkeeper.SpsShopkeeperCompany;
+import com.sps.entity.shopkeeper.SpsShopkeeperContact;
+import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
+import com.sps.entity.shopkeeper.SpsShopkeeperPic;
+import com.sps.service.bank.BankService;
 import com.sps.service.order.OrderLogService;
+import com.sps.service.order.OrderService;
 import com.sps.service.order.TradeInfoService;
+import com.sps.service.shopkeeper.ShopkeeperCompanyService;
+import com.sps.service.shopkeeper.ShopkeeperContactService;
+import com.sps.service.shopkeeper.ShopkeeperPersonService;
+import com.sps.service.shopkeeper.ShopkeeperPicService;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -36,13 +49,27 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/api/heart")
 public class heartController {
 
-    private static String initCustomerAccount = "http://dev.app.chezhubaitiao.com/api/customerAccount/init";
+    @Resource
+    private BankService bankService;
+    @Resource
+    private OrderService orderService;
+    @Resource
+    private ShopkeeperCompanyService shopkeeperCompanyService;
+    @Resource
+    private ShopkeeperContactService shopkeeperContactService;
+    @Resource
+    private ShopkeeperPicService shopkeeperPicService;
+    @Resource
+    private ShopkeeperPersonService shopkeeperPersonService;
+
+    private static String getMerchantAccount = "http://dev.app.chezhubaitiao.com/api/merchantAccount/getMerchantAccount";
     private static String orderFirst = "http://dev.app.chezhubaitiao.com/api/accountSystem/freezeConsumption";
     private static String frozen = "http://dev.app.chezhubaitiao.com/api/accountSystem/freeze";
     //充值
@@ -76,27 +103,53 @@ public class heartController {
     private TradeInfoService tradeInfoService;
 
 
+
+
     /**
-     * 支付
-     *
+     * 订单支付
+     * @param firstMoney 首付
+     * @param shopPayMoney  店付金额
+     * @param amount   全款金额
+     * @param customerId  客户id
+     * @param shopkeeperNum  客户编号
+     * @param certNo  身份证号
+     * @param businessId  商户编号
+     * @param orderId  订单编号
      * @return
      */
     @RequestMapping(value = "/paymentOrder", method = RequestMethod.POST)
     @ResponseBody
-    public void frozen(SpsBankTradeInfo bankTrade, BigDecimal amount, Integer customerId, String certNo, String businessId, String orderId) {
+    public ReturnInfo paymentOrder(BigDecimal firstMoney,BigDecimal shopPayMoney, BigDecimal amount, Integer customerId, String shopkeeperNum, String certNo, String businessId, String orderId) {
+        ReturnInfo ri = new ReturnInfo();
         try {
-            Map resultMap = new HashMap<>();
-            resultMap.put("application", "dianfu");
-            resultMap.put("amount", bankTrade.getFirstMoney());
-            resultMap.put("certNo", certNo);
-            resultMap.put("businessId", businessId);
-            resultMap.put("orderId", orderId);
-            String jsonResult = HttpClientUtils.post(frozen, resultMap);
-            System.out.println(jsonResult);
-            if (jsonResult != null) {
-                JSONObject job = JSON.parseObject(jsonResult);
-                String code = job.getString("code");
-                if ("100000".equals(code)) {
+            SpsOrder order = orderService.findByCode(orderId);
+            SpsBank bank = bankService.findEntityByNo(shopkeeperNum);
+            SpsShopkeeperPersonal personInfo = shopkeeperPersonService.findByCustomerNum(shopkeeperNum);
+            SpsShopkeeperCompany company = shopkeeperCompanyService.findByCustomerNum(shopkeeperNum);
+            if (order != null) {
+                //如果全额直接走扣减金额接口 首付走 资金匹配 走总线进件 再走核心冻结后扣款
+                if (order.getScale() == 100) {
+                    Map resultMap = new HashMap<>();
+                    resultMap.put("amount", amount);
+                    resultMap.put("application", "dianfu");
+                    resultMap.put("certNo", bank.getbIdentity());
+                    resultMap.put("logType", "015");
+                    //提现需要传
+                   /* resultMap.put("payOrder", payOrder);*/
+                    resultMap.put("payType", "5");
+                    resultMap.put("orderId", orderId);
+                    String jsonResult = HttpClientUtils.post(deductMoney, resultMap);
+                    if (jsonResult != null) {
+                        JSONObject job = JSON.parseObject(jsonResult);
+                        String code = job.getString("code");
+                        if ("100000".equals(code)) {
+                            ri.setCode(Message.SUCCESS_CODE);
+                            ri.setMsg(Message.API_SUCCESS_MSG);
+                            ri.setSuccess(Message.API_SUCCESS_FLAG);
+                        }
+                    }
+                } else {
+                    //冻结个人 商户信用额度   个人资金额度   这块放在平台商户确认订单
                     JSONArray array = new JSONArray();
                     array.add("1");
                     array.add("2");
@@ -105,9 +158,9 @@ public class heartController {
                     array.add("9");
                     JSONObject json = new JSONObject();
                     json.put("application", "DF");
-                    json.put("amount", bankTrade.getShopPayMoney());
+                    json.put("amount", shopPayMoney);
                     json.put("authList", array);
-                    json.put("certNo", certNo);
+                    json.put("certNo", bank.getbIdentity());
                     json.put("customerId", customerId);
                     json.put("orderId", orderId);
                     json.put("orderProvince", "北京");
@@ -119,117 +172,136 @@ public class heartController {
                     if (jsonRes != null) {
                         JSONObject jobt = JSON.parseObject(jsonRes);
                         String bindingCardCode = jobt.getString("code");
+                        //最优资金方
+                        String goodCapital = jobt.getJSONObject("result").getString("capital");
                         if ("100000".equals(bindingCardCode)) {
                             SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
                             JSONObject baseInfoJson = new JSONObject();
                             baseInfoJson.put("applDate", df.format(System.currentTimeMillis()));
                             baseInfoJson.put("applNosInst", "1");
                             baseInfoJson.put("applNosInstType", 2);
-                            baseInfoJson.put("applyAmt", bankTrade.getShopPayMoney());
+                            baseInfoJson.put("applyAmt", shopPayMoney);
                             baseInfoJson.put("applyCurrency", "CNY");
-                            baseInfoJson.put("capital", "0");
-                            baseInfoJson.put("cardOpBankPhone", "13100000001");
-                            baseInfoJson.put("policyNo", "DF20180316000001");
-                            baseInfoJson.put("repayBankNum", "6228400000000000001");
-                            baseInfoJson.put("custName", "北冰洋");
+                            baseInfoJson.put("capital", goodCapital);
+                            baseInfoJson.put("cardOpBankPhone", bank.getbPhone());
+                            baseInfoJson.put("policyNo", orderId);
+                            baseInfoJson.put("repayBankNum", bank.getbAccounts());
+                            baseInfoJson.put("custName", bank.getbName());
+                            //银行卡开户行编码（暂时没有）
                             baseInfoJson.put("repayBankCd", "1");
-                            baseInfoJson.put("repayBankName", "中国建设银行");
+                            baseInfoJson.put("repayBankName", bank.getbBank());
                             baseInfoJson.put("chnlTxNo", "1");
-                           /*   baseInfoJson.put("commodityMoney", "198.00");
-                              baseInfoJson.put("commodityName", "iphone手机壳");
-                              baseInfoJson.put("commodityNumber", "1");*/
-                            baseInfoJson.put("cooprProdCd", "CP20180313001");
-                            baseInfoJson.put("coperCd", "QD20180313002");
-                            baseInfoJson.put("downpayment", "99");
+
+                            baseInfoJson.put("cooprProdCd", "010207");
+                            //渠道方代码 暂时不知道
+                            baseInfoJson.put("coperCd", "DF");
+                            baseInfoJson.put("downpayment", firstMoney);
                             baseInfoJson.put("fixRateInd", "Y");
-                            baseInfoJson.put("intAdjPct", "11");
-                            baseInfoJson.put("intStartDt", "20180220");
-                            baseInfoJson.put("isFree", "1");
-                            baseInfoJson.put("isOverInterest", "1");
+                            baseInfoJson.put("intAdjPct", "0");
+                            //起息日待定
+                            baseInfoJson.put("intStartDt", DateUtil.dateGapDays(DateUtil.getNowDD(), 1));
+                            baseInfoJson.put("isFree", "0");
+                            baseInfoJson.put("isOverInterest", "0");
                             baseInfoJson.put("isSafe", "1");
                             baseInfoJson.put("loanInitState", "0");
-                            baseInfoJson.put("loanPurpose", "购买IphoneX手机壳");
+                            //申请用途待定
+                            baseInfoJson.put("loanPurpose", "进货贷款");
+                            //下单区域省 待定
                             baseInfoJson.put("orderProvince", "北京");
+                            //费率 待定
                             baseInfoJson.put("rate", "2");
                             baseInfoJson.put("rateMode", "FX");
-                            baseInfoJson.put("repayFristDate", "2018-03-30");
-                            baseInfoJson.put("sysCode", "1");
-                            baseInfoJson.put("txDt", "20180101");
-                            baseInfoJson.put("txTm", "08:00:00");
-                            baseInfoJson.put("userType", "1");
+                            baseInfoJson.put("repayFristDate", DateUtil.dateGapDays(DateUtil.getNowDD(), 8));
+                            //系统编码 待定
+                            baseInfoJson.put("sysCode", "0");
 
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                            baseInfoJson.put("txDt", simpleDateFormat.format(order.getCreatetime()));
+                            baseInfoJson.put("txTm", sdf.format(order.getCreatetime()));
+                            baseInfoJson.put("userType", "0");
+                            //联系人
                             JSONArray loanContactList = new JSONArray();
                             JSONObject content = new JSONObject();
-                            content.put("contactName", "哈哈哈");
-                            content.put("contactPhone", "189105778885");
-                            loanContactList.add(content);
-                            baseInfoJson.put("loanContactList", loanContactList);
-                            JSONObject loanMerchant = new JSONObject();
-                            loanMerchant.put("areaStore", "1");
-                            loanMerchant.put("areaStoreCd", "1");
-                            loanMerchant.put("cityStore", "1");
-                            loanMerchant.put("cityStoreCd", "1");
-                              /*loanMerchant.put("employeeNo", "1");*/
-                            loanMerchant.put("isLegalMan", "1");
-                            loanMerchant.put("latitude", "1");
-                            loanMerchant.put("legalMan", "1");
-                            loanMerchant.put("legalManId", "1");
-                            loanMerchant.put("legalManMatrlSts", "1");
-                            loanMerchant.put("licenseNo", "1");
-                             /* loanMerchant.put("licenseRegistTime", "1");*/
-                            loanMerchant.put("longitude", "1");
-                            loanMerchant.put("merchantAddr", "1");
-                            loanMerchant.put("merchantId", "1");
-                            loanMerchant.put("merchantName", "1");
-                            loanMerchant.put("merchantType", "1");
-                            loanMerchant.put("offSpace", "1");
-                            loanMerchant.put("provinceStore", "1");
-                            loanMerchant.put("provinceStoreCd", "1");
-                            baseInfoJson.put("loanMerchant", loanMerchant);
+                            List<SpsShopkeeperContact> shopkeeperContactList = shopkeeperContactService.findList(shopkeeperNum);
+                            if(shopkeeperContactList!=null&&shopkeeperContactList.size()>0){
+                                for (SpsShopkeeperContact   contactList: shopkeeperContactList){
+                                    content.put("contactName", contactList.getContactName());
+                                    content.put("contactPhone", contactList.getContactPhone());
+                                    loanContactList.add(content);
+                                }
+                            }
 
+                            baseInfoJson.put("loanContactList", loanContactList);
+                            //小B基本信息
+                            JSONObject loanMerchant = new JSONObject();
+                            loanMerchant.put("areaStore", personInfo.getPersonalLivingAddress());
+                            //区域编码
+                            loanMerchant.put("areaStoreCd", personInfo.getPersonalLivingAreaCode());
+                            loanMerchant.put("cityStore", personInfo.getPersonalLivingCityName());
+                            //市编码
+                            loanMerchant.put("cityStoreCd", personInfo.getPersonalLivingCityCode());
+                            //是否法人代表待定
+                            loanMerchant.put("isLegalMan", "1");
+                            //经纬度
+                            loanMerchant.put("latitude", company.getCompanyBusinessLat());
+                            //法人代表关联公司表查
+                            loanMerchant.put("legalMan", company.getCompanyCorpName());
+                            loanMerchant.put("legalManId", bank.getbIdentity());
+                            if("1".equals(personInfo.getPersonalMaritalStatus())){
+                                loanMerchant.put("legalManMatrlSts", "已婚");
+                            }else  if("2".equals(personInfo.getPersonalMaritalStatus())){
+                                loanMerchant.put("legalManMatrlSts", "未婚");
+
+                            }else  if("3".equals(personInfo.getPersonalMaritalStatus())){
+                                loanMerchant.put("legalManMatrlSts", "离异");
+                            }
+                            //营业执照
+                            loanMerchant.put("licenseNo", "1");
+                            //经度也没有
+                            loanMerchant.put("longitude", company.getCompanyBusinessLng());
+                            loanMerchant.put("merchantAddr", company.getCompanyBusinessAddr());
+                            loanMerchant.put("merchantId", company.getCompanyId());
+                            loanMerchant.put("merchantName",company.getCompanyName());
+                            //店铺类型
+                            loanMerchant.put("merchantType", "1");
+                            loanMerchant.put("offSpace", company.getCompanyBusinessArea());
+                            loanMerchant.put("provinceStore", company.getCompanyBusinessCityName());
+                            loanMerchant.put("provinceStoreCd",company.getCompanyBusinessCityCode());
+                            baseInfoJson.put("loanMerchant", loanMerchant);
                             //图片
                             JSONArray loanPhotoList = new JSONArray();
                             JSONObject photoContent = new JSONObject();
-                            photoContent.put("photoType", "1");
-                            photoContent.put("photoFormat", "图片");
-                            photoContent.put("photoUrl", "/12121.jpg");
-                            loanPhotoList.add(photoContent);
+                            List<SpsShopkeeperPic> spsShopkeeperPicList = shopkeeperPicService.findList(shopkeeperNum);
+                            if(spsShopkeeperPicList!=null&&spsShopkeeperPicList.size()>0){
+                                for (SpsShopkeeperPic   picList: spsShopkeeperPicList){
+                                    photoContent.put("photoType", picList.getPicType());
+                                    photoContent.put("photoFormat", "jpg");
+                                    photoContent.put("photoUrl",picList.getPicSrc());
+                                    loanPhotoList.add(photoContent);
+                                }
+                            }
                             baseInfoJson.put("loanContactList", loanPhotoList);
                             //用户信息
                             JSONObject loanUser = new JSONObject();
                             loanUser.put("activePhoto", "1");
-                            loanUser.put("areaZip", "图片");
-                            loanUser.put("cityZip", "/12121.jpg");
-                            loanUser.put("custId", "1");
-                            loanUser.put("custName", "图片");
-                            loanUser.put("dtOfBirth", "/12121.jpg");
-                            loanUser.put("empr", "1");
-                            loanUser.put("homeAddr", "图片");
-                            loanUser.put("idNo", "/12121.jpg");
-                            loanUser.put("idNoAddre", "1");
-                            loanUser.put("idType", "图片");
-                            loanUser.put("idValidEnd", "/12121.jpg");
-                            loanUser.put("idValidStart", "1");
-                            loanUser.put("sex", "1");
-                            loanUser.put("provinceZip", "/12121.jpg");
-                            baseInfoJson.put("loanUser", loanUser);
-                               /*baseInfoJson.put("cooprProdType", "01");
-                              baseInfoJson.put("coperName", "渠道商B-TEST进件01");
-                              baseInfoJson.put("productName", "产品B-TEST进件01");
-                              baseInfoJson.put("loanType", "桔子分期");
-                              baseInfoJson.put("isFreeze", "0");
-                              baseInfoJson.put("orderTime", "2017-12-30 12:00:00");
-                              baseInfoJson.put("receiptProvinceCd", "130000");
-                              baseInfoJson.put("receiptCityCd", "130300");
-                              baseInfoJson.put("receiptAreaCd", "130321");
-                              baseInfoJson.put("receiptAddr", "青龙街道1号");
-                              baseInfoJson.put("receiptName", "爆冷门");
-                              baseInfoJson.put("receiptPhone", "13100000002");
-                              baseInfoJson.put("receiptZip", "066500");
-                              baseInfoJson.put("seg1", " ");
-                              baseInfoJson.put("paymentRatio", "50");
-                              baseInfoJson.put("productRate", 14);*/
+                            loanUser.put("areaZip",personInfo.getPersonalLivingAreaCode());
+                            loanUser.put("cityZip", personInfo.getPersonalLivingCityCode());
+                            loanUser.put("custId", personInfo.getPersonalId());
+                            loanUser.put("custName",personInfo.getPersonalClientName());
 
+                            loanUser.put("dtOfBirth", CutId(personInfo.getPersonalIdcard()));
+                            //小B工作地址待定
+                            loanUser.put("empr", company.getCompanyBusinessAddr());
+                            loanUser.put("homeAddr", personInfo.getPersonalLivingAddress());
+                            loanUser.put("idNo", personInfo.getPersonalIdcard());
+                            loanUser.put("idNoAddre", personInfo.getPersonalPlaceofdomicile());
+                            loanUser.put("idType", "身份证");
+                            loanUser.put("idValidEnd", personInfo.getPersonalIdcardValidityEnd());
+                            loanUser.put("idValidStart", personInfo.getPersonalIdcardValidityStart());
+                            loanUser.put("sex", personInfo.getPersonalSex());
+                            loanUser.put("provinceZip", personInfo.getPersonalLivingProvinceCode());
+                            baseInfoJson.put("loanUser", loanUser);
 
                             JSONObject res = encrytSignRSA2Json(privateKey, baseInfoJson.toString());
                             JSONObject jsonObject = new JSONObject();
@@ -239,25 +311,46 @@ public class heartController {
                             String rest = postHttpJson(main, jsonObject);
                             System.out.println(rest);
                             if (rest != null) {
-
+                                JSONObject jsonRest = JSON.parseObject(rest);
+                                String resCode = jsonRest.getString("code");
+                                if ("0000".equals(resCode)) {
+                                    Map resMap = new HashMap<>();
+                                    resMap.put("amount", shopPayMoney);
+                                    resMap.put("businessId", businessId);
+                                    resMap.put("orderId", orderId);
+                                    resMap.put("firstPayAmount", firstMoney);
+                                    resMap.put("application", "dianfu");
+                                    resMap.put("certNo", bank.getbIdentity());
+                                    String restParam = HttpClientUtils.post(orderFirst, resMap);
+                                    System.out.println(restParam);
+                                    if (restParam != null) {
+                                        JSONObject lastRest = JSON.parseObject(restParam);
+                                        String lastRestCode = lastRest.getString("code");
+                                        if ("0000".equals(lastRestCode)) {
+                                            ri.setCode(Message.SUCCESS_CODE);
+                                            ri.setMsg(Message.API_SUCCESS_MSG);
+                                            ri.setSuccess(Message.API_SUCCESS_FLAG);
+                                        }
+                                    }
+                                }
                             }
-
-
                         } else if ("100000".equals(bindingCardCode)) {
-
                         }
                     }
-
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
+            ri.setCode(Message.FAILURE_CODE);
+            ri.setMsg(Message.FAILURE_MSG);
+            ri.setSuccess(Message.API_ERROR_FLAG);
         }
+
+        return ri;
     }
 
     /**
-     * 支付接口
+     * 充值接口
      *
      * @return
      */
@@ -293,7 +386,8 @@ public class heartController {
                         bankTradeInfo.setBtIdentity(certNo);
                         bankTradeInfo.setBtPaymentDate(new Date());
                         bankTradeInfo.setBtTradeName(customerId);
-                        bankTradeInfo.setBtTradeType("2");
+                        //充值代表收入
+                        bankTradeInfo.setBtTradeType("1");
                         bankTradeInfo.setBtIncomeType("充值");
                         bankTradeInfo.setRechargeStatus(2);
                         bankTradeInfo.setBtTradeAmount(new BigDecimal(amount));
@@ -812,8 +906,105 @@ public class heartController {
     }
 
 
+    /**
+     * 商户资金账户查询
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getMerchantAccount", method = RequestMethod.POST)
+    @ResponseBody
+    public void getMerchantAccount(String businessId) {
+        try {
+            Map resultMap = new HashMap<>();
+            resultMap.put("application", "dianfu");
+            resultMap.put("businessId", businessId);
+            String jsonResult = HttpClientUtils.post(getMerchantAccount, resultMap);
+            System.out.println(jsonResult);
+            if (jsonResult != null) {
+                JSONObject object = JSONObject.parseObject(jsonResult);
+                String code = object.getString("code");
+                if ("100000".equals(code)) {
+                    String validAmount = object.getJSONObject("result").getString("validAmount");
+                    System.out.println(validAmount);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 退货接口
+     *
+     * @return
+     */
+    @RequestMapping(value = "/returnGoods", method = RequestMethod.POST)
+    @ResponseBody
+    public void returnGoods(String businessId) {
+        try {
+            Map map = new HashMap<>();
+            map.put("amount","0.1");
+            map.put("application", "dianfu");
+            map.put("certNo", "142202199308070038");
+            map.put("businessId", "DF20183201115152");
+            map.put("orderId", "df10489728549887");
+            String jsonRes = HttpClientUtils.post("http://dev.app.chezhubaitiao.com/api/customerAccount/returnGoods", map);
+            if (jsonRes != null) {
+                JSONObject object = JSONObject.parseObject(jsonRes);
+                String code = object.getString("code");
+                if ("100000".equals(code)) {
+                  /*  Map resMap = new HashMap<>();
+                    resMap.put("amount","0.1");
+                    resMap.put("application", "dianfu");
+                    resMap.put("certNo", "142202199308070038");
+                    resMap.put("businessId", "DF20183201115152");
+                    resMap.put("orderId", "DF201803270000035");
+                    String json = HttpClientUtils.post("http://dev.app.chezhubaitiao.com/api/customerAccount/userRepayment", resMap);*/
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
 // ------------------------------------分割线-------------------------------------------------------------------------------
 
+      /* loanMerchant.put("licenseRegistTime", "1");*/
+                               /*loanMerchant.put("employeeNo", "1");*/
+                              /*   baseInfoJson.put("commodityMoney", "198.00");
+                              baseInfoJson.put("commodityName", "iphone手机壳");
+                              baseInfoJson.put("commodityNumber", "1");*/
+                             /*baseInfoJson.put("cooprProdType", "01");
+                            baseInfoJson.put("coperName", "渠道商B-TEST进件01");
+                            baseInfoJson.put("productName", "产品B-TEST进件01");
+                            baseInfoJson.put("loanType", "桔子分期");
+                            baseInfoJson.put("isFreeze", "0");
+                            baseInfoJson.put("orderTime", "2017-12-30 12:00:00");
+                            baseInfoJson.put("receiptProvinceCd", "130000");
+                            baseInfoJson.put("receiptCityCd", "130300");
+                            baseInfoJson.put("receiptAreaCd", "130321");
+                            baseInfoJson.put("receiptAddr", "青龙街道1号");
+                            baseInfoJson.put("receiptName", "爆冷门");
+                            baseInfoJson.put("receiptPhone", "13100000002");
+                            baseInfoJson.put("receiptZip", "066500");
+                            baseInfoJson.put("seg1", " ");
+                            baseInfoJson.put("paymentRatio", "50");
+                            baseInfoJson.put("productRate", 14);*/
+
+
+    public String CutId(String id){
+        String rest = "";
+        String  year = id.substring(6, 10);// 截取年
+        String  month = id.substring(10, 12);// 截取月份
+        String day = id.substring(12, 14);// 截取天
+        rest  = year + month + day;
+        return rest;
+    }
     /**
      * 初始化
      *
@@ -846,7 +1037,7 @@ public class heartController {
             baseInfoJson.put("coperCd", "QD20180313002");
             baseInfoJson.put("downpayment", "99");
             baseInfoJson.put("fixRateInd", "Y");
-            baseInfoJson.put("intAdjPct", "11");
+            baseInfoJson.put("intAdjPct", "0");
             baseInfoJson.put("intStartDt", "20180220");
             baseInfoJson.put("isFree", "1");
             baseInfoJson.put("isOverInterest", "1");
@@ -880,6 +1071,7 @@ public class heartController {
             loanMerchant.put("legalMan", "1");
             loanMerchant.put("legalManId", "1");
             loanMerchant.put("legalManMatrlSts", "1");
+            //营业执照号
             loanMerchant.put("licenseNo", "1");
                              /* loanMerchant.put("licenseRegistTime", "1");*/
             loanMerchant.put("longitude", "1");

@@ -59,4 +59,18 @@ public class MenuController {
 		return specificMenu;
 	}
 
+	/**
+	 * 获取菜单管理分页
+	 * @param page
+	 * @param limit
+	 * @param roleName
+     * @return
+     */
+//	@RequestMapping(value = "menuList.json")
+//	public @ResponseBody HashMap<String, Object> getMenuList(Integer page, Integer limit, String roleName) {
+//
+//		HashMap<String, Object> roleList = menuService.getRoleList(page, limit, roleName);
+//		return roleList;
+//	}
+
 }

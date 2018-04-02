@@ -15,6 +15,7 @@ public enum ReturnCode {
     ERROR_HEADER_NOT_NULL(04, "请求头不能为空"),
     ERROR_BODY_NOT_NULL(05, "请求体不能为空"),
     ERROR_PARAMS_AMOUNT(06, "参数金额有误"),
+    ERROR_SELECT_IS_NULL(07, "根据请求未获取有效参数"),
     REQUEST_SUCCESS(200, "请求成功"),
     ERROR_PARAMS(400, "参数不完整"),
     ERROR_DUPLICATE(401, "重复操作"),

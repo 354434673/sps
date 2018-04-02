@@ -23,6 +23,7 @@
         <result column="sum_money" property="sumMoney" jdbcType="DECIMAL" />
         <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="unit" property="unit" jdbcType="VARCHAR" />
+        <result column="shop_pay_money" property="shopPayMoney" jdbcType="DECIMAL" />
         <!-- <collection property="orderGoods" resultMap="BaseOrderGoodsResultMap" javaType="list"> -->
         <!--  <collection property="orderGoods" javaType="List" ofType="com.sps.order.entity.OrderGoods" select="query" column="orderid" >
                  <id column="o_id" property="oId" jdbcType="INTEGER" />
@@ -67,6 +68,7 @@
         <result column="formality_rate" property="formalityRate" jdbcType="DOUBLE" />
         <result column="service_charge" property="serviceCharge" jdbcType="DECIMAL" />
         <result column="loan_balance" property="loanBalance" jdbcType="DECIMAL" />
+        <result column="shop_pay_money" property="shopPayMoney" jdbcType="DECIMAL" />
         <association property="logs" javaType="org.sps.entity.order.SpsOrderLogistics">
             <id column="logistics_id" property="logisticsId" jdbcType="INTEGER" />
             <result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
@@ -110,6 +112,7 @@
         ,sps_order.sum_money
         ,sps_order.name
         ,sps_order.unit
+        ,sps_order.shop_pay_money
     </sql>
 
     <sql id="Base_Order_Goods_Column_List" >
@@ -174,12 +177,13 @@
         SELECT
         o.*, ss.shopkeeper_commodity_type AS commodityType,
         b.brand_name AS brand,
-        ss.shopkeeper_customerId AS customerId
+        ss.shopkeeper_customerId AS customerId,sp.personal_idCard as idCard
         FROM
         sps_order o
         LEFT JOIN sps_shopkeeper_account sa ON o.selfemployed = sa.account_num
         LEFT JOIN sps_shopkeeper ss ON ss.shopkeeper_customerId = sa.shopkeeper_customerId
         LEFT JOIN sps_brand b ON b.brand_id = ss.shopkeeper_brand
+        LEFT JOIN sps_shopkeeper_personal sp ON ss.shopkeeper_customerId = sp.shopkeeper_customerId
         <where>
             <!-- sps_order.orderid=sps_order_goods.orderid -->
             <if test="orderid != null and orderid != '' ">
