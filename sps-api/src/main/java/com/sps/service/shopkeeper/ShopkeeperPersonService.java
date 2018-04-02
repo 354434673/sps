@@ -2,9 +2,7 @@ package com.sps.service.shopkeeper;
 import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
-
-import java.util.HashMap;
-import java.util.List;
+import com.sps.entity.shopkeeper.vo.SpsShopFindPersonInfoVo;import java.util.HashMap;import java.util.List;
 import java.util.Map;
 
 public interface ShopkeeperPersonService {
@@ -28,7 +26,7 @@ public interface ShopkeeperPersonService {
     List<SpsShopkeeperPersonal> findList(Map<String, Object> map);
 
 
-    SpsShopkeeperPersonal findEntityByCustomerNum(String customerNum);
+    SpsShopFindPersonInfoVo findEntityByCustomerNum(String customerNum);
 
     /**
      * 根据客户编号获取个人信息

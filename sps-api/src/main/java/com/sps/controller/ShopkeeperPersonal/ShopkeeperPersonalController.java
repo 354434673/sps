@@ -4,7 +4,7 @@ import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.sps.common.*;
 import com.sps.controller.BaseApi;
-import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
+import com.sps.entity.shopkeeper.vo.SpsShopFindPersonInfoVo;
 import com.sps.enums.ReturnCode;
 import com.sps.service.shopkeeper.ShopkeeperPersonService;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class ShopkeeperPersonalController extends BaseApi {
             return returnFaild(ReturnCode.ERROR_PARAMS_NOT_NULL.getMsg());
         }
         try {
-            SpsShopkeeperPersonal personInfo = shopkeeperPersonService.findEntityByCustomerNum(customerNum);
+            SpsShopFindPersonInfoVo personInfo = shopkeeperPersonService.findEntityByCustomerNum(customerNum);
             if(personInfo == null){
                 return returnFaild(ReturnCode.ERROR_SELECT_IS_NULL.getMsg());
             }
