@@ -43,7 +43,6 @@
 
 	  order by  b.a DESC
 	</select>
-
 	<select id="selectListByUserNameAndTradeType" resultMap="BaseResultMap">
 		SELECT
 		x.id,x.bt_trade_amount,x.bt_trade_status,x.bt_trade_type,x.bt_application_start_date
@@ -84,6 +83,22 @@
 			sps_bank_trade_info
 		  WHERE
 		   id=#{id}
+	</select>
+	<select id="selectListByConstomeId" resultType="com.sps.entity.account.vo.BankTradeInfoVo" parameterType="java.lang.String">
+		SELECT
+		tr.id,
+		tr.bt_trade_amount,
+		tr.bt_trade_status,
+		tr.bt_trade_type,
+		tr.bt_application_start_date,
+		tr.recharge_status,
+		DATE_FORMAT( tr.bt_application_start_date,"%Y-%m-%d ")  AS dateDesc
+		FROM
+		sps_bank_trade_info tr
+		WHERE
+		tr.bt_trade_name =#{constomeId}
+		AND tr.bt_application_start_date > DATE_SUB(NOW(),INTERVAL 2 MONTH)
+		ORDER BY tr.bt_application_start_date DESC
 	</select>
 
 </mapper>

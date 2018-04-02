@@ -4,6 +4,7 @@ import com.sps.dao.account.BankCardInfoDao;
 import com.sps.dao.account.BankTradeInfoDao;
 import com.sps.entity.account.BankCardInfo;
 import com.sps.entity.account.BankTradeInfo;
+import com.sps.entity.account.vo.BankTradeInfoVo;
 import com.sps.service.account.bankTrade.BankTradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,6 @@ public class BankTradeInfoServiceImpl implements BankTradeService {
         List<BankTradeInfo> bankTradeList = bankTradeInfoDao.selectListByUserName(userId);
         return bankTradeList;
     }
-
     @Override
     public List<BankTradeInfo> findBankTrdeListByTradeType(String constomId,  String tradeType) {
         String userId = bankCardInfoDao.selectByUserName(constomId);
@@ -48,4 +48,11 @@ public class BankTradeInfoServiceImpl implements BankTradeService {
         BankTradeInfo bankTradeInfo = bankTradeInfoDao.selectDetail(id);
         return bankTradeInfo;
     }
+
+    @Override
+    public List<BankTradeInfoVo> findBankTrdeShowList(String constomeId) {
+        List<BankTradeInfoVo> bankTradeList = bankTradeInfoDao.selectListByConstomeId(constomeId);
+        return bankTradeList;
+    }
+
 }
