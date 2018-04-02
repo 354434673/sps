@@ -312,6 +312,13 @@
     GROUP BY personalNickname
 
   </select>
-
+  <select id="findByCustomerNum" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    sps_shopkeeper_personal
+    WHERE
+    shopkeeper_customerId = #{shopkeeperNum,jdbcType=VARCHAR}
+  </select>
 
 </mapper>

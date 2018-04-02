@@ -20,4 +20,7 @@ public class SpsShopkeeperPersonalMapper extends ApiBaseDaoImpl<SpsShopkeeperPer
         return super.selectOne(getStatement("findEntityByCustomerNum"),customerNum);
     }
 
+    public SpsShopkeeperPersonal findByCustomerNum(String shopkeeperNum) {
+        return super.selectOne(getStatement("findByCustomerNum"),shopkeeperNum);
+    }
 }

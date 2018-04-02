@@ -40,9 +40,7 @@ public interface EnterpriseService {
 	/**
 	 * 首页搜索
 	 * @param shopkeeperCustomerid
-	 * @param goodsName
-	 * @param merchantName
 	 * @return
 	 */
-	HashMap<String,Object> homeSearch(String shopkeeperCustomerid, String goodsName, String merchantName);
+	HashMap<String,Object> homeSearch(String shopkeeperCustomerid, String keyWord);
 }

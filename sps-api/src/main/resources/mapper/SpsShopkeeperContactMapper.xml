@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsShopkeeperContact">
+  <resultMap id="BaseResultMap" type="SpsShopkeeperContact">
+    <id column="contact_id" jdbcType="INTEGER" property="contactId" />
+    <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+    <result column="contact_relation" jdbcType="VARCHAR" property="contactRelation" />
+    <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" />
+    <result column="shopkeeper_customerId" jdbcType="VARCHAR" property="shopkeeperCustomerid" />
+    <result column="contact_username" jdbcType="VARCHAR" property="contactUsername" />
+    <result column="contact_creat_time" jdbcType="TIMESTAMP" property="contactCreatTime" />
+    <result column="contact_update_time" jdbcType="TIMESTAMP" property="contactUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    contact_id, contact_name, contact_relation, contact_phone, shopkeeper_customerId, 
+    contact_username, contact_creat_time, contact_update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_contact
+    where contact_id = #{contactId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_shopkeeper_contact
+    where contact_id = #{contactId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsShopkeeperContact">
+    insert into sps_shopkeeper_contact (contact_id, contact_name, contact_relation, 
+      contact_phone, shopkeeper_customerId, contact_username, 
+      contact_creat_time, contact_update_time
+      )
+    values (#{contactId,jdbcType=INTEGER}, #{contactName,jdbcType=VARCHAR}, #{contactRelation,jdbcType=VARCHAR}, 
+      #{contactPhone,jdbcType=VARCHAR}, #{shopkeeperCustomerid,jdbcType=VARCHAR}, #{contactUsername,jdbcType=VARCHAR}, 
+      #{contactCreatTime,jdbcType=TIMESTAMP}, #{contactUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="SpsShopkeeperContact">
+    insert into sps_shopkeeper_contact
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="contactId != null">
+        contact_id,
+      </if>
+      <if test="contactName != null">
+        contact_name,
+      </if>
+      <if test="contactRelation != null">
+        contact_relation,
+      </if>
+      <if test="contactPhone != null">
+        contact_phone,
+      </if>
+      <if test="shopkeeperCustomerid != null">
+        shopkeeper_customerId,
+      </if>
+      <if test="contactUsername != null">
+        contact_username,
+      </if>
+      <if test="contactCreatTime != null">
+        contact_creat_time,
+      </if>
+      <if test="contactUpdateTime != null">
+        contact_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="contactId != null">
+        #{contactId,jdbcType=INTEGER},
+      </if>
+      <if test="contactName != null">
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactRelation != null">
+        #{contactRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null">
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="contactUsername != null">
+        #{contactUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="contactCreatTime != null">
+        #{contactCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contactUpdateTime != null">
+        #{contactUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="SpsShopkeeperContact">
+    update sps_shopkeeper_contact
+    <set>
+      <if test="contactName != null">
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactRelation != null">
+        contact_relation = #{contactRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopkeeperCustomerid != null">
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+      <if test="contactUsername != null">
+        contact_username = #{contactUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="contactCreatTime != null">
+        contact_creat_time = #{contactCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contactUpdateTime != null">
+        contact_update_time = #{contactUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where contact_id = #{contactId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsShopkeeperContact">
+    update sps_shopkeeper_contact
+    set contact_name = #{contactName,jdbcType=VARCHAR},
+      contact_relation = #{contactRelation,jdbcType=VARCHAR},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      contact_username = #{contactUsername,jdbcType=VARCHAR},
+      contact_creat_time = #{contactCreatTime,jdbcType=TIMESTAMP},
+      contact_update_time = #{contactUpdateTime,jdbcType=TIMESTAMP}
+    where contact_id = #{contactId,jdbcType=INTEGER}
+  </update>
+  <select id="findByNum" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_contact
+    where shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -52,4 +52,6 @@ public interface ShopkeeperPersonService {
      * @return
      */
     Boolean  saveHouseInfo(SpsShopkeeperHouseProperty spsShopkeeperHouseProperty,List<String> lists);
+
+    SpsShopkeeperPersonal findByCustomerNum(String shopkeeperNum);
 }

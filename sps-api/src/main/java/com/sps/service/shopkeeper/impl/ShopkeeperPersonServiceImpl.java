@@ -66,6 +66,11 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
     }
 
     @Override
+    public SpsShopkeeperPersonal findByCustomerNum(String shopkeeperNum) {
+        return spsShopkeeperPersonalMapper.findByCustomerNum(shopkeeperNum);
+    }
+
+    @Override
     public SpsShopkeeperPersonal  findPerson(String  customerId) {
         return  spsShopkeeperPersonalDao.selectByPersonId(customerId);
     }

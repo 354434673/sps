@@ -93,31 +93,53 @@
     where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
   </select>
   <select id="queryBusinessForApi" resultMap="BaseResultMap">
-	SELECT
-	<include refid="Column_List" />
-	FROM
-		sps_channel_business b1
-	JOIN 
-		sps_channel_enterprise e1 ON b1.channel_num = e1.channel_num
-	JOIN 
-		sps_channel_pic p1 on b1.channel_num = p1.channel_num	
-	JOIN 
-	   	sps_channel_guarantee g1 on b1.channel_num = g1.channel_num
-		<where>
+      SELECT
+      el.`enterprise_id`,
+      el.`channel_num`,
+      el.`enterprise_businesslicense_no`,
+      el.`enterprise_company_name`,
+      el.enterprise_company_abbreviation,
+      el.enterprise_company_register_addr,
+      el.enterprise_company_realit_addr,
+      el.enterprise_corp,
+      el.enterprise_corp_idCard,
+      el.enterprise_operatio_time,
+      el.enterprise_employee_num,
+      b1.business_id,
+      b1.business_product,
+      p1.pic_type,
+      p1.pic_src,
+      g1.guarantee_corp_phone
+      FROM
+      sps_channel_enterprise el
+      LEFT JOIN sps_channel_business b1
+      ON b1.channel_num = el.channel_num
+      LEFT JOIN sps_channel_pic p1
+      ON p1.channel_num = el.channel_num
+      LEFT JOIN sps_channel_guarantee g1
+      ON g1.channel_num = el.channel_num
+      <where>
 <!-- 			<if test="businessProduct.size > 0">
 				<foreach collection="businessProduct" separator="and" item="item">
 					FIND_IN_SET(#{item}, business_product)
 				</foreach>
 			</if> -->
 			<if test="channelNum != null">
-				and e1.channel_num = #{channelNum}
+				and el.channel_num in(#{channelNum})
 			</if>
 			<if test="picType != null">
 				and p1.pic_type = #{picType}
 			</if>
 			<if test="enterpriseId != null">
-				and e1.enterprise_id = #{enterpriseId}
+				and el.enterprise_id = #{enterpriseId}
 			</if>
+            <if test="keyWord !=null">
+               and   el.channel_num IN(
+                SELECT channel_num AS ss FROM sps_channel_business WHERE enterprise_company_name LIKE  CONCAT('%',#{keyWord,jdbcType=VARCHAR},'%')
+                UNION ALL
+                SELECT g_shop_id AS ss FROM sps_good_shop WHERE g_spu_name LIKE  CONCAT('%',#{keyWord,jdbcType=VARCHAR},'%')
+                )
+            </if>
 		</where>
 	group by enterprise_id
   </select>

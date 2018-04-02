@@ -99,6 +99,7 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
  			<legend>基本信息</legend>
 		</fieldset>
+		<input type="hidden" id="orderNum" value="<%=request.getParameter("orderid")%>">
 				<div class="layui-form-item" >
 		    <label class="layui-form-label" style="width:152px">订单编号：</label>
 		    <div class="layui-input-inline">
@@ -180,10 +181,14 @@
 			  var laypage = layui.laypage;
 			  var layer = layui.layer;
 			  var $ = layui.jquery;
+
+
+
+
 			  $.post({//获得信息
 				  url:'<%=path%>/order/showOrder.json'
 				  ,dataType:'json'
-				  ,data:{orderid:<%=request.getParameter("orderid")%>}
+				  ,data:{orderid:$('#orderNum').val()}
 				  ,success:function(result){
 					  console.log(result.data[0])
 					  $('#orderid').html(result.data[0].orderid)//订单编号

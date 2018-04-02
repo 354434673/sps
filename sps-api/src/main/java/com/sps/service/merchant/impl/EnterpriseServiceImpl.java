@@ -74,7 +74,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 
             try {
                 if (!StringUtil.isEmpty(shopkeeperCustomerid)) {
-                    queryBusinessForApi = enterpriseDao.queryBusinessForApi(shopkeeperDefaultChannelNum, null, null);
+                    queryBusinessForApi = enterpriseDao.queryBusinessForApi(shopkeeperDefaultChannelNum, null, null,null);
                 } else {
 /*						//查询当前登录店主的主营业务
                         String shopkeeperBusinessType = queryShopkeeperList.getShopkeeperBusinessType();
@@ -84,7 +84,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 						for (String string : split) {
 							arrayList.add(string);
 						}*/
-                    queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, null, null);
+                    queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, null, null,null);
                 }
                 for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
                     data = new HashMap<String, Object>();
@@ -151,7 +151,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 
         ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
         try {
-            List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, 1, enterpriseId);
+            List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, 1, enterpriseId,null);
             //排序方式
             if (queryBusinessForApi != null && queryBusinessForApi.size() > 0) {
                 for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
@@ -226,7 +226,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
     }
 
     @Override
-    public HashMap<String, Object> homeSearch(String shopkeeperCustomerid, String goodsName, String merchantName) {
+    public HashMap<String, Object> homeSearch(String shopkeeperCustomerid, String keyWord) {
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
         HashMap<String, Object> data = new HashMap<String, Object>();//封装对象
         ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
@@ -236,7 +236,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
             List<SpsChannelEnterprise> queryBusinessForApi = null;
             try {
                 if (!StringUtil.isEmpty(shopkeeperCustomerid)) {
-                    queryBusinessForApi = enterpriseDao.queryBusinessForApi(shopkeeperDefaultChannelNum, null, null);
+                    queryBusinessForApi = enterpriseDao.queryBusinessForApi(shopkeeperDefaultChannelNum, null, null,keyWord);
                 } else {
 /*						//查询当前登录店主的主营业务
                     String shopkeeperBusinessType = queryShopkeeperList.getShopkeeperBusinessType();
@@ -246,7 +246,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
                     for (String string : split) {
                         arrayList.add(string);
                     }*/
-                    queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, null, null);
+                    queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, null, null,keyWord);
                 }
                 for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
                     data = new HashMap<String, Object>();
@@ -256,7 +256,6 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
                         map.put("recommend", "1");
                         map.put("orderType", "0");
                         map.put("flowStatus", "2");
-                      /*  map.put("goodsName", goodsName);*/
                         //查询推荐中的商品
                         List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
                         List<SpsGoodShop> shopList = new ArrayList<>();

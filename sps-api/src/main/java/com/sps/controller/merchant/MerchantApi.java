@@ -81,9 +81,9 @@ public class MerchantApi{
 	 * @throws
 	 */
 	@RequestMapping(value = "/homeSearch", method = RequestMethod.POST)
-	public HashMap<String, Object> homeSearch(String shopkeeperCustomerid,String goodsName,String merchantName) {
+	public HashMap<String, Object> homeSearch(String shopkeeperCustomerid,String keyWord) {
 
-		HashMap<String, Object> queryMerchantList = enterpriseService.homeSearch(shopkeeperCustomerid,goodsName,merchantName);
+		HashMap<String, Object> queryMerchantList = enterpriseService.homeSearch(shopkeeperCustomerid,keyWord);
 
 		return queryMerchantList;
 	}
