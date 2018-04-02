@@ -54,11 +54,11 @@ import com.sps.service.shopkeeper.ShopkeeperService;
  */
 @Service
 public class ShopkeeperServiceImpl implements ShopkeeperService{
-	private static final String URL_PERSONAL_INSERT = "http://192.168.201.149:8080/sps/insertShopPersonalInfo";
-	private static final String URL_PERSONAL_UPDATE = "http://192.168.201.149:8080/sps/updateaShopPersonalInfo";
-	private static final String URL_CONTACT_INSERT = "http://192.168.201.149:8080/sps/insertShopContactInfo";
-	private static final String URL_APPLY_UPDATE = "http://192.168.201.149:8080/sps/updateaShopApplyInfo";
-	private static final String URL_INSERT_COMPANY = "http://192.168.201.149:8080/sps/insertShopCompanyInfo";
+	private static final String URL_PERSONAL_INSERT = "http://test1-spay.juzifenqi.com/sps/insertShopPersonalInfo";
+	private static final String URL_PERSONAL_UPDATE = "http://test1-spay.juzifenqi.com/sps/updateaShopPersonalInfo";
+	private static final String URL_CONTACT_INSERT = "http://test1-spay.juzifenqi.com/sps/insertShopContactInfo";
+	private static final String URL_APPLY_UPDATE = "http://test1-spay.juzifenqi.com/sps/updateaShopApplyInfo";
+	private static final String URL_INSERT_COMPANY = "http://test1-spay.juzifenqi.com/sps/insertShopCompanyInfo";
 	@Resource
 	private SpsShopkeeperDao spsShopkeeperDao;
 	@Resource

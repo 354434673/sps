@@ -2,7 +2,6 @@ package com.sps.service.account.bankCard.impl;
 
 import com.sps.dao.account.AccountBalanceDao;
 import com.sps.dao.account.BankCardInfoDao;
-import com.sps.dao.marchant.SpsChannelOpenAccountReadMapper;
 import com.sps.entity.account.AccountBalance;
 import com.sps.entity.account.BankCardInfo;
 import com.sps.service.account.bankCard.BankCardService;
@@ -28,8 +27,8 @@ import java.util.UUID;
 public class BankCardServiceImpl implements BankCardService {
     @Autowired
     private BankCardInfoDao bankCardInfoDao;
-    @Autowired
-    private SpsChannelOpenAccountReadMapper openAccount;
+/*    @Autowired
+    private SpsChannelOpenAccountReadMapper openAccount;*/
     @Autowired
     private AccountBalanceDao accountBalanceDao;
     @Override

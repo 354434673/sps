@@ -96,6 +96,11 @@
     company_employee_num, company_business_area, shopkeeper_customerId, company_username, 
     company_creat_time, company_update_time
   </sql>
+  <sql id="Column_List" >
+		c1.company_shop_name,
+		c1.company_business_addr,
+		p1.personal_phone
+  </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompanyExample" >
     select
     <if test="distinct" >

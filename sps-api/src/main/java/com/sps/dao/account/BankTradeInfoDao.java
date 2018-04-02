@@ -1,7 +1,6 @@
 package com.sps.dao.account;
 
 import com.sps.entity.account.BankTradeInfo;
-import com.sps.entity.account.BindBankTrans;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
