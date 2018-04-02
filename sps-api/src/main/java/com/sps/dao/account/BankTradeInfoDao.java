@@ -1,6 +1,7 @@
 package com.sps.dao.account;
 
 import com.sps.entity.account.BankTradeInfo;
+import com.sps.entity.account.vo.BankTradeInfoVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -16,12 +17,13 @@ import java.util.List;
  * @createDate ${date}$ ${timme}$
  */
 public interface BankTradeInfoDao {
-//    获取当前登录用户的所有交易记录
+    //   获取当前登录用户的所有交易记录
     List<BankTradeInfo> selectListByUserName(@Param("userId") String userId);
-//根据类型查询交易信息
+    //根据类型查询交易信息
     List<BankTradeInfo> selectListByUserNameAndTradeType(@Param("userId") String userId,@Param("tradeType") String tradeType);
-//根据主键查询详情
+    //根据主键查询详情
     BankTradeInfo selectDetail(Integer id);
-
+    //   获取当前登录用户的所有交易记录
+    List<BankTradeInfoVo> selectListByConstomeId(String constomeId);
 
 }

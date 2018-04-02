@@ -1,6 +1,7 @@
 package com.sps.service.account.bankTrade;
 
 import com.sps.entity.account.BankTradeInfo;
+import com.sps.entity.account.vo.BankTradeInfoVo;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,4 +23,8 @@ public interface BankTradeService {
     List<BankTradeInfo> findBankTrdeListByTradeType(String constomeId,String tradeType);
 //查询交易详情
     BankTradeInfo findBankTradeDetail(Integer id);
+
+    //   根据用户名查询交易信息
+    List<BankTradeInfoVo> findBankTrdeShowList(String constomeId);
+
 }

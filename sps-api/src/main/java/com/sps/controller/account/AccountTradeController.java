@@ -3,11 +3,14 @@ package com.sps.controller.account;
 import com.alibaba.druid.support.logging.Log;
 import com.alibaba.druid.support.logging.LogFactory;
 import com.alibaba.fastjson.JSONObject;
+import com.sps.common.JsonResult;
 import com.sps.common.Message;
 import com.sps.common.ReturnInfo;
-import com.sps.common.StringUtil;
+import com.sps.controller.BaseApi;
 import com.sps.entity.account.BankTradeInfo;
+import com.sps.entity.account.vo.BankTradeInfoVo;
 import com.sps.entity.user.SpsUser;
+import com.sps.enums.ReturnCode;
 import com.sps.service.account.balance.AccountBalanceService;
 import com.sps.service.account.bankCard.BankCardService;
 import com.sps.service.account.bankTrade.BankTradeService;
@@ -33,16 +36,16 @@ import java.util.List;
  * @Author 刘彩玲
  * @createDate ${date}$ ${timme}$
  */
-@Controller
+@RestController
 @RequestMapping("/api/accountTrade")
-public class AccountTradeController {
-    private static  final Log logger= LogFactory.getLog(AccountTradeController.class);
+public class AccountTradeController extends BaseApi{
+    private static  final Log log = LogFactory.getLog(AccountTradeController.class);
     @Autowired
     private AccountBalanceService accountBalanceService;
     @Autowired
     private BankTradeService bankTradeService;
     @Autowired
-    BankCardService bankCardService;
+    private BankCardService bankCardService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -51,26 +54,30 @@ public class AccountTradeController {
     private ShopkeeperService shopkeeperService;
 
 
-    @RequestMapping(value = "/findTradeList", method = RequestMethod.POST)
-    @ResponseBody
-    public String findTradeList( @RequestParam("customerId") String customerId) {
+    @RequestMapping(value = "/findTradeList")
+    public JsonResult findTradeList( @RequestParam("customerId") String customerId) {
         //  根据登录用户名获取用户id
-        JSONObject jsonObject = new JSONObject();
-        List<BankTradeInfo> bankTrdeList = bankTradeService.findBankTrdeList(customerId);
-        if(bankTrdeList.size() > 0){
-            jsonObject.put("bankTrdeList",bankTrdeList);
-            return Message.responseStr(Message.SUCCESS_CODE,Message.SUCCESS_MSG,jsonObject);
+        try{
+            if(StringUtils.isBlank(customerId)){
+                return returnFaild(ReturnCode.ERROR_PARAMS_NOT_NULL.getMsg());
+            }
+            log.info("start--请求获取最近三个月交易明细，请求参数 "+customerId);
+            List<BankTradeInfoVo> bankTrdeList = bankTradeService.findBankTrdeShowList(customerId);
+            if(bankTrdeList==null){
+                return returnFaild();
+            }
+            return returnSuccess(bankTrdeList);
+        }catch (Exception e){
+            log.info("end--请求获取最近三个月交易明细，异常 "+e.getMessage());
+            return returnFaild();
         }
-        jsonObject.put("bankTrdeList",null);
-        return Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG,jsonObject);
     }
     /**
      * 根据交易类型获取信息 0 标识支出 1标识收入 ,2标识全部
      */
 
 
-    @RequestMapping(value = "/findTradeListByTradeType", method = RequestMethod.POST)
-    @ResponseBody
+    @RequestMapping(value = "/findTradeListByTradeType")
     public String findTradeListByTradeType(  @RequestParam("customerId") String customerId, @RequestParam("tradeType") Integer tradeType ) {
         ReturnInfo returnInfo = new ReturnInfo();
         JSONObject jsonO = new JSONObject();
@@ -97,9 +104,8 @@ public class AccountTradeController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/findTradeDetail", method = RequestMethod.POST)
-    @ResponseBody
-    public String findTradeDetail(  @RequestParam("id") Integer id ) {
+    @RequestMapping(value = "/findTradeDetail")
+    public String findTradeDetail( @RequestParam("id") Integer id ) {
         JSONObject jsonO = new JSONObject();
         BankTradeInfo bankTradeDetail = bankTradeService.findBankTradeDetail(id);
         if(bankTradeDetail != null){
@@ -109,5 +115,14 @@ public class AccountTradeController {
         jsonO.put("bankTradeDetail",null);
         return Message.responseStr(Message.FAILURE_CODE, Message.FAILURE_MSG, jsonO);
     }
+
+
+
+    public JsonResult getTreeMonthDetial(String customerNum){
+
+
+        return returnFaild();
+    }
+
 }
 
