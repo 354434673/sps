@@ -27,13 +27,13 @@
 	  		<div class="layui-form" style="margin-left: 100px;margin-right: 100px">
 		    	<div class="layui-row layui-col-space10">
 				    <div class="layui-col-md4">
-				      	<label class="layui-form-label" >请输入额度：</label>
+				      	<label class="layui-form-label" style="width:152px">请输入额度：</label>
 				    <div class="layui-input-inline">
 				      <input id="channelNum" type="text" name="username"  lay-verify="" placeholder="请输入额度" autocomplete="off" class="layui-input">
 				    </div>
 				    </div>
 				    <div class="layui-col-md8">
-				     	<label class="layui-form-label" >请输入额度：</label>
+				     	<label class="layui-form-label" style="width:152px">请输入额度：</label>
 				    <div class="layui-input-inline">
 				      <input id="channelNum" type="text" name="username"  lay-verify="" placeholder="请输入额度" autocomplete="off" class="layui-input">
 				    </div>
@@ -470,6 +470,8 @@
     	  </div>
 	</fieldset>
     <div class="layui-form-item" align="center">
+        <button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">同意</button>
+        <button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">拒绝</button>
         <button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">返回</button>
     </div>
     <script type="text/javascript"

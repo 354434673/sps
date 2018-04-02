@@ -20,8 +20,7 @@ public class SpsShopkeeperPersonal implements Serializable{
     private BigDecimal repayAmount;
 
 
-
-	private Integer personalId;
+    private Integer personalId;
 
     private String personalClientName;
 
@@ -49,18 +48,31 @@ public class SpsShopkeeperPersonal implements Serializable{
 
     private String personalLivingConditionOther;
 
+    private String personalLivingProvinceName;
+
+    private String personalLivingProvinceCode;
+
+    private String personalLivingCityName;
+
+    private String personalLivingCityCode;
+
+    private String personalLivingAreaName;
+
+    private String personalLivingAreaCode;
+
     private String personalLivingAddress;
 
     private String personalNoneCorp;
-    private String  personalNickname;
 
-    private String shopkeeperCustomerid;
+    private String personalNickname;
 
     private String personalUsername;
 
     private Date personalCreatTime;
 
     private Date personalUpdateTime;
+
+    private String shopkeeperCustomerid;
 
     private SpsShopkeeperPic pic;
 
@@ -296,4 +308,53 @@ public class SpsShopkeeperPersonal implements Serializable{
     public void setRepayAmount(BigDecimal repayAmount) {
         this.repayAmount = repayAmount;
     }
+
+	public String getPersonalLivingProvinceName() {
+		return personalLivingProvinceName;
+	}
+
+	public void setPersonalLivingProvinceName(String personalLivingProvinceName) {
+		this.personalLivingProvinceName = personalLivingProvinceName;
+	}
+
+	public String getPersonalLivingProvinceCode() {
+		return personalLivingProvinceCode;
+	}
+
+	public void setPersonalLivingProvinceCode(String personalLivingProvinceCode) {
+		this.personalLivingProvinceCode = personalLivingProvinceCode;
+	}
+
+	public String getPersonalLivingCityName() {
+		return personalLivingCityName;
+	}
+
+	public void setPersonalLivingCityName(String personalLivingCityName) {
+		this.personalLivingCityName = personalLivingCityName;
+	}
+
+	public String getPersonalLivingCityCode() {
+		return personalLivingCityCode;
+	}
+
+	public void setPersonalLivingCityCode(String personalLivingCityCode) {
+		this.personalLivingCityCode = personalLivingCityCode;
+	}
+
+	public String getPersonalLivingAreaName() {
+		return personalLivingAreaName;
+	}
+
+	public void setPersonalLivingAreaName(String personalLivingAreaName) {
+		this.personalLivingAreaName = personalLivingAreaName;
+	}
+
+	public String getPersonalLivingAreaCode() {
+		return personalLivingAreaCode;
+	}
+
+	public void setPersonalLivingAreaCode(String personalLivingAreaCode) {
+		this.personalLivingAreaCode = personalLivingAreaCode;
+	}
+    
 }

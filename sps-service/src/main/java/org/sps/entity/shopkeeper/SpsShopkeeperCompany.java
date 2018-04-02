@@ -17,6 +17,22 @@ public class SpsShopkeeperCompany implements Serializable{
 
     private String companyCorpName;
 
+    private String companyBusinessProvinceName;
+
+    private String companyBusinessProvinceCode;
+
+    private String companyBusinessCityName;
+
+    private String companyBusinessCityCode;
+
+    private String companyBusinessAreaName;
+
+    private String companyBusinessAreaCode;
+
+    private String companyBusinessLng;
+
+    private String companyBusinessLat;
+
     private String companyBusinessAddr;
 
     private String companyGpsAddr;
@@ -67,6 +83,70 @@ public class SpsShopkeeperCompany implements Serializable{
 
     public void setCompanyCorpName(String companyCorpName) {
         this.companyCorpName = companyCorpName == null ? null : companyCorpName.trim();
+    }
+
+    public String getCompanyBusinessProvinceName() {
+        return companyBusinessProvinceName;
+    }
+
+    public void setCompanyBusinessProvinceName(String companyBusinessProvinceName) {
+        this.companyBusinessProvinceName = companyBusinessProvinceName == null ? null : companyBusinessProvinceName.trim();
+    }
+
+    public String getCompanyBusinessProvinceCode() {
+        return companyBusinessProvinceCode;
+    }
+
+    public void setCompanyBusinessProvinceCode(String companyBusinessProvinceCode) {
+        this.companyBusinessProvinceCode = companyBusinessProvinceCode == null ? null : companyBusinessProvinceCode.trim();
+    }
+
+    public String getCompanyBusinessCityName() {
+        return companyBusinessCityName;
+    }
+
+    public void setCompanyBusinessCityName(String companyBusinessCityName) {
+        this.companyBusinessCityName = companyBusinessCityName == null ? null : companyBusinessCityName.trim();
+    }
+
+    public String getCompanyBusinessCityCode() {
+        return companyBusinessCityCode;
+    }
+
+    public void setCompanyBusinessCityCode(String companyBusinessCityCode) {
+        this.companyBusinessCityCode = companyBusinessCityCode == null ? null : companyBusinessCityCode.trim();
+    }
+
+    public String getCompanyBusinessAreaName() {
+        return companyBusinessAreaName;
+    }
+
+    public void setCompanyBusinessAreaName(String companyBusinessAreaName) {
+        this.companyBusinessAreaName = companyBusinessAreaName == null ? null : companyBusinessAreaName.trim();
+    }
+
+    public String getCompanyBusinessAreaCode() {
+        return companyBusinessAreaCode;
+    }
+
+    public void setCompanyBusinessAreaCode(String companyBusinessAreaCode) {
+        this.companyBusinessAreaCode = companyBusinessAreaCode == null ? null : companyBusinessAreaCode.trim();
+    }
+
+    public String getCompanyBusinessLng() {
+        return companyBusinessLng;
+    }
+
+    public void setCompanyBusinessLng(String companyBusinessLng) {
+        this.companyBusinessLng = companyBusinessLng == null ? null : companyBusinessLng.trim();
+    }
+
+    public String getCompanyBusinessLat() {
+        return companyBusinessLat;
+    }
+
+    public void setCompanyBusinessLat(String companyBusinessLat) {
+        this.companyBusinessLat = companyBusinessLat == null ? null : companyBusinessLat.trim();
     }
 
     public String getCompanyBusinessAddr() {

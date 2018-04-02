@@ -121,7 +121,7 @@
 			    ,cols: [[ //表头
 			      {title: '序号', type:'numbers',width:70,align:'center',sort:true}
 			      ,{field: 'orderid', title: '订单编号',align:'center',sort:true}
-			      ,{field: 'name', title: '店主名称',align:'center'}
+			      ,{field: 'selfname', title: '店主名称',align:'center'}
 			      ,{field: 'shopkeeper', title: '核心商户名称',align:'center'}
 			      ,{field: 'money', title: '订单金额',align:'center'}
 			      ,{field: 'payment', title: '订单首付',align:'center'}

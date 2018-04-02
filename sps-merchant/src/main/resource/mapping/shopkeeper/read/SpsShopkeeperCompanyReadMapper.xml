@@ -6,6 +6,14 @@
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
     <result column="company_shop_name" property="companyShopName" jdbcType="VARCHAR" />
     <result column="company_corp_name" property="companyCorpName" jdbcType="VARCHAR" />
+    <result column="company_business_province_name" property="companyBusinessProvinceName" jdbcType="VARCHAR" />
+    <result column="company_business_province_code" property="companyBusinessProvinceCode" jdbcType="VARCHAR" />
+    <result column="company_business_city_name" property="companyBusinessCityName" jdbcType="VARCHAR" />
+    <result column="company_business_city_code" property="companyBusinessCityCode" jdbcType="VARCHAR" />
+    <result column="company_business_area_name" property="companyBusinessAreaName" jdbcType="VARCHAR" />
+    <result column="company_business_area_code" property="companyBusinessAreaCode" jdbcType="VARCHAR" />
+    <result column="company_business_lng" property="companyBusinessLng" jdbcType="VARCHAR" />
+    <result column="company_business_lat" property="companyBusinessLat" jdbcType="VARCHAR" />
     <result column="company_business_addr" property="companyBusinessAddr" jdbcType="VARCHAR" />
     <result column="company_gps_addr" property="companyGpsAddr" jdbcType="VARCHAR" />
     <result column="company_business_addr_ownership" property="companyBusinessAddrOwnership" jdbcType="VARCHAR" />
@@ -47,10 +55,12 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    company_id, company_name, company_shop_name, company_corp_name, company_business_addr, 
-    company_gps_addr, company_business_addr_ownership, company_operatio_time, company_employee_num, 
-    company_business_area, shopkeeper_customerId, company_username, company_creat_time, 
-    company_update_time
+    company_id, company_name, company_shop_name, company_corp_name, company_business_province_name, 
+    company_business_province_code, company_business_city_name, company_business_city_code, 
+    company_business_area_name, company_business_area_code, company_business_lng, company_business_lat, 
+    company_business_addr, company_gps_addr, company_business_addr_ownership, company_operatio_time, 
+    company_employee_num, company_business_area, shopkeeper_customerId, company_username, 
+    company_creat_time, company_update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperCompanyExample" >
     select

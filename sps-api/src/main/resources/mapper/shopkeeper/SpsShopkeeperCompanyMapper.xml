@@ -6,6 +6,14 @@
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
     <result column="company_shop_name" property="companyShopName" jdbcType="VARCHAR" />
     <result column="company_corp_name" property="companyCorpName" jdbcType="VARCHAR" />
+    <result column="company_business_province_name" property="companyBusinessProvinceName" jdbcType="VARCHAR" />
+    <result column="company_business_province_code" property="companyBusinessProvinceCode" jdbcType="VARCHAR" />
+    <result column="company_business_city_name" property="companyBusinessCityName" jdbcType="VARCHAR" />
+    <result column="company_business_city_code" property="companyBusinessCityCode" jdbcType="VARCHAR" />
+    <result column="company_business_area_name" property="companyBusinessAreaName" jdbcType="VARCHAR" />
+    <result column="company_business_area_code" property="companyBusinessAreaCode" jdbcType="VARCHAR" />
+    <result column="company_business_lng" property="companyBusinessLng" jdbcType="VARCHAR" />
+    <result column="company_business_lat" property="companyBusinessLat" jdbcType="VARCHAR" />
     <result column="company_business_addr" property="companyBusinessAddr" jdbcType="VARCHAR" />
     <result column="company_gps_addr" property="companyGpsAddr" jdbcType="VARCHAR" />
     <result column="company_business_addr_ownership" property="companyBusinessAddrOwnership" jdbcType="VARCHAR" />
@@ -81,15 +89,12 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    company_id, company_name, company_shop_name, company_corp_name, company_business_addr, 
-    company_gps_addr, company_business_addr_ownership, company_operatio_time, company_employee_num, 
-    company_business_area, shopkeeper_customerId, company_username, company_creat_time, 
-    company_update_time
-  </sql>
-  <sql id="Column_List" >
-		c1.company_shop_name,
-		c1.company_business_addr,
-		p1.personal_phone
+    company_id, company_name, company_shop_name, company_corp_name, company_business_province_name, 
+    company_business_province_code, company_business_city_name, company_business_city_code, 
+    company_business_area_name, company_business_area_code, company_business_lng, company_business_lat, 
+    company_business_addr, company_gps_addr, company_business_addr_ownership, company_operatio_time, 
+    company_employee_num, company_business_area, shopkeeper_customerId, company_username, 
+    company_creat_time, company_update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompanyExample" >
     select
@@ -111,26 +116,7 @@
     from sps_shopkeeper_company
     where company_id = #{companyId,jdbcType=INTEGER}
   </select>
-  <select id="queryCompanyJoin" resultMap="BaseResultMap" parameterType="java.lang.String" >
-	SELECT
-	<include refid="Column_List" />
-	FROM
-		sps_shopkeeper_company c1
-	JOIN 
-		sps_shopkeeper_personal p1 ON c1.shopkeeper_customerId = p1.shopkeeper_customerId
-	<where>
-		 <if test="customerId != null" >
-		 	p1.shopkeeper_customerId = #{customerId}
-		 </if>
-	</where>
-  </select>
-  <select id="countByExample" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompanyExample" resultType="java.lang.Integer" >
-    select count(*) from sps_shopkeeper_company
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sps_shopkeeper_company
     where company_id = #{companyId,jdbcType=INTEGER}
   </delete>
@@ -142,18 +128,26 @@
   </delete>
   <insert id="insert" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompany" >
     insert into sps_shopkeeper_company (company_id, company_name, company_shop_name, 
-      company_corp_name, company_business_addr, company_gps_addr, 
-      company_business_addr_ownership, company_operatio_time, 
-      company_employee_num, company_business_area, 
-      shopkeeper_customerId, company_username, 
-      company_creat_time, company_update_time
+      company_corp_name, company_business_province_name, 
+      company_business_province_code, company_business_city_name, 
+      company_business_city_code, company_business_area_name, 
+      company_business_area_code, company_business_lng, 
+      company_business_lat, company_business_addr, 
+      company_gps_addr, company_business_addr_ownership, 
+      company_operatio_time, company_employee_num, 
+      company_business_area, shopkeeper_customerId, 
+      company_username, company_creat_time, company_update_time
       )
     values (#{companyId,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, #{companyShopName,jdbcType=VARCHAR}, 
-      #{companyCorpName,jdbcType=VARCHAR}, #{companyBusinessAddr,jdbcType=VARCHAR}, #{companyGpsAddr,jdbcType=VARCHAR}, 
-      #{companyBusinessAddrOwnership,jdbcType=VARCHAR}, #{companyOperatioTime,jdbcType=INTEGER}, 
-      #{companyEmployeeNum,jdbcType=INTEGER}, #{companyBusinessArea,jdbcType=DOUBLE}, 
-      #{shopkeeperCustomerid,jdbcType=VARCHAR}, #{companyUsername,jdbcType=VARCHAR}, 
-      #{companyCreatTime,jdbcType=TIMESTAMP}, #{companyUpdateTime,jdbcType=TIMESTAMP}
+      #{companyCorpName,jdbcType=VARCHAR}, #{companyBusinessProvinceName,jdbcType=VARCHAR}, 
+      #{companyBusinessProvinceCode,jdbcType=VARCHAR}, #{companyBusinessCityName,jdbcType=VARCHAR}, 
+      #{companyBusinessCityCode,jdbcType=VARCHAR}, #{companyBusinessAreaName,jdbcType=VARCHAR}, 
+      #{companyBusinessAreaCode,jdbcType=VARCHAR}, #{companyBusinessLng,jdbcType=VARCHAR}, 
+      #{companyBusinessLat,jdbcType=VARCHAR}, #{companyBusinessAddr,jdbcType=VARCHAR}, 
+      #{companyGpsAddr,jdbcType=VARCHAR}, #{companyBusinessAddrOwnership,jdbcType=VARCHAR}, 
+      #{companyOperatioTime,jdbcType=INTEGER}, #{companyEmployeeNum,jdbcType=INTEGER}, 
+      #{companyBusinessArea,jdbcType=DOUBLE}, #{shopkeeperCustomerid,jdbcType=VARCHAR}, 
+      #{companyUsername,jdbcType=VARCHAR}, #{companyCreatTime,jdbcType=TIMESTAMP}, #{companyUpdateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompany" >
@@ -170,6 +164,30 @@
       </if>
       <if test="companyCorpName != null" >
         company_corp_name,
+      </if>
+      <if test="companyBusinessProvinceName != null" >
+        company_business_province_name,
+      </if>
+      <if test="companyBusinessProvinceCode != null" >
+        company_business_province_code,
+      </if>
+      <if test="companyBusinessCityName != null" >
+        company_business_city_name,
+      </if>
+      <if test="companyBusinessCityCode != null" >
+        company_business_city_code,
+      </if>
+      <if test="companyBusinessAreaName != null" >
+        company_business_area_name,
+      </if>
+      <if test="companyBusinessAreaCode != null" >
+        company_business_area_code,
+      </if>
+      <if test="companyBusinessLng != null" >
+        company_business_lng,
+      </if>
+      <if test="companyBusinessLat != null" >
+        company_business_lat,
       </if>
       <if test="companyBusinessAddr != null" >
         company_business_addr,
@@ -215,6 +233,30 @@
       <if test="companyCorpName != null" >
         #{companyCorpName,jdbcType=VARCHAR},
       </if>
+      <if test="companyBusinessProvinceName != null" >
+        #{companyBusinessProvinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessProvinceCode != null" >
+        #{companyBusinessProvinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessCityName != null" >
+        #{companyBusinessCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessCityCode != null" >
+        #{companyBusinessCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessAreaName != null" >
+        #{companyBusinessAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessAreaCode != null" >
+        #{companyBusinessAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessLng != null" >
+        #{companyBusinessLng,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessLat != null" >
+        #{companyBusinessLat,jdbcType=VARCHAR},
+      </if>
       <if test="companyBusinessAddr != null" >
         #{companyBusinessAddr,jdbcType=VARCHAR},
       </if>
@@ -247,6 +289,12 @@
       </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCompanyExample" resultType="java.lang.Integer" >
+    select count(*) from sps_shopkeeper_company
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update sps_shopkeeper_company
     <set >
@@ -261,6 +309,30 @@
       </if>
       <if test="record.companyCorpName != null" >
         company_corp_name = #{record.companyCorpName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyBusinessProvinceName != null" >
+        company_business_province_name = #{record.companyBusinessProvinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyBusinessProvinceCode != null" >
+        company_business_province_code = #{record.companyBusinessProvinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyBusinessCityName != null" >
+        company_business_city_name = #{record.companyBusinessCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyBusinessCityCode != null" >
+        company_business_city_code = #{record.companyBusinessCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyBusinessAreaName != null" >
+        company_business_area_name = #{record.companyBusinessAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyBusinessAreaCode != null" >
+        company_business_area_code = #{record.companyBusinessAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyBusinessLng != null" >
+        company_business_lng = #{record.companyBusinessLng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyBusinessLat != null" >
+        company_business_lat = #{record.companyBusinessLat,jdbcType=VARCHAR},
       </if>
       <if test="record.companyBusinessAddr != null" >
         company_business_addr = #{record.companyBusinessAddr,jdbcType=VARCHAR},
@@ -303,6 +375,14 @@
       company_name = #{record.companyName,jdbcType=VARCHAR},
       company_shop_name = #{record.companyShopName,jdbcType=VARCHAR},
       company_corp_name = #{record.companyCorpName,jdbcType=VARCHAR},
+      company_business_province_name = #{record.companyBusinessProvinceName,jdbcType=VARCHAR},
+      company_business_province_code = #{record.companyBusinessProvinceCode,jdbcType=VARCHAR},
+      company_business_city_name = #{record.companyBusinessCityName,jdbcType=VARCHAR},
+      company_business_city_code = #{record.companyBusinessCityCode,jdbcType=VARCHAR},
+      company_business_area_name = #{record.companyBusinessAreaName,jdbcType=VARCHAR},
+      company_business_area_code = #{record.companyBusinessAreaCode,jdbcType=VARCHAR},
+      company_business_lng = #{record.companyBusinessLng,jdbcType=VARCHAR},
+      company_business_lat = #{record.companyBusinessLat,jdbcType=VARCHAR},
       company_business_addr = #{record.companyBusinessAddr,jdbcType=VARCHAR},
       company_gps_addr = #{record.companyGpsAddr,jdbcType=VARCHAR},
       company_business_addr_ownership = #{record.companyBusinessAddrOwnership,jdbcType=VARCHAR},
@@ -328,6 +408,30 @@
       </if>
       <if test="companyCorpName != null" >
         company_corp_name = #{companyCorpName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessProvinceName != null" >
+        company_business_province_name = #{companyBusinessProvinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessProvinceCode != null" >
+        company_business_province_code = #{companyBusinessProvinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessCityName != null" >
+        company_business_city_name = #{companyBusinessCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessCityCode != null" >
+        company_business_city_code = #{companyBusinessCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessAreaName != null" >
+        company_business_area_name = #{companyBusinessAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessAreaCode != null" >
+        company_business_area_code = #{companyBusinessAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessLng != null" >
+        company_business_lng = #{companyBusinessLng,jdbcType=VARCHAR},
+      </if>
+      <if test="companyBusinessLat != null" >
+        company_business_lat = #{companyBusinessLat,jdbcType=VARCHAR},
       </if>
       <if test="companyBusinessAddr != null" >
         company_business_addr = #{companyBusinessAddr,jdbcType=VARCHAR},
@@ -367,6 +471,14 @@
     set company_name = #{companyName,jdbcType=VARCHAR},
       company_shop_name = #{companyShopName,jdbcType=VARCHAR},
       company_corp_name = #{companyCorpName,jdbcType=VARCHAR},
+      company_business_province_name = #{companyBusinessProvinceName,jdbcType=VARCHAR},
+      company_business_province_code = #{companyBusinessProvinceCode,jdbcType=VARCHAR},
+      company_business_city_name = #{companyBusinessCityName,jdbcType=VARCHAR},
+      company_business_city_code = #{companyBusinessCityCode,jdbcType=VARCHAR},
+      company_business_area_name = #{companyBusinessAreaName,jdbcType=VARCHAR},
+      company_business_area_code = #{companyBusinessAreaCode,jdbcType=VARCHAR},
+      company_business_lng = #{companyBusinessLng,jdbcType=VARCHAR},
+      company_business_lat = #{companyBusinessLat,jdbcType=VARCHAR},
       company_business_addr = #{companyBusinessAddr,jdbcType=VARCHAR},
       company_gps_addr = #{companyGpsAddr,jdbcType=VARCHAR},
       company_business_addr_ownership = #{companyBusinessAddrOwnership,jdbcType=VARCHAR},
@@ -379,4 +491,17 @@
       company_update_time = #{companyUpdateTime,jdbcType=TIMESTAMP}
     where company_id = #{companyId,jdbcType=INTEGER}
   </update>
+  <select id="queryCompanyJoin" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	SELECT
+	<include refid="Column_List" />
+	FROM
+		sps_shopkeeper_company c1
+	JOIN 
+		sps_shopkeeper_personal p1 ON c1.shopkeeper_customerId = p1.shopkeeper_customerId
+	<where>
+		 <if test="customerId != null" >
+		 	p1.shopkeeper_customerId = #{customerId}
+		 </if>
+	</where>
+  </select>
 </mapper>
