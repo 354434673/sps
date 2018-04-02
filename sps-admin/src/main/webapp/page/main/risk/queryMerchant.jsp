@@ -20,8 +20,7 @@
     </style>
 </head>
 <body>
-<div class="layui-tab layui-tab-brie" lay-filter="tab" style="padding:10px;">
-	<fieldset class="layui-elem-field layui-field-title">
+<fieldset class="layui-elem-field layui-field-title">
 	  <legend>商 户 审 核</legend>
 	  <div class="layui-field-box">
 	  		<div class="layui-form" style="margin-left: 100px;margin-right: 100px">
@@ -41,10 +40,12 @@
 				  </div>
 			  </div>
 	  </div>
-	</fieldset>
-	<fieldset class="layui-elem-field layui-field-title">
+</fieldset>
+<fieldset class="layui-elem-field layui-field-title">
 	  <legend>商 户 信 息</legend>
-	  <div class="layui-field-box" style="padding-top: 10px">
+	  <div class="layui-field-box">
+
+<div class="layui-tab layui-tab-brie" lay-filter="tab" style="padding:10px;">
     <ul class="layui-tab-title">
         <li lay-id="channelInfo" class="layui-this">基本信息</li>
         <li lay-id="goodsInfo" id="goodsInfo">商品信息</li>
@@ -53,7 +54,7 @@
         <li lay-id="picInfo" id="picInfo">图片资料</li>
     </ul>
     <div class="layui-tab-content">
-        <div class="layui-tab-item layui-show" id="123">
+        <div class="layui-tab-item layui-show"  >
             <div class="layui-form" style="margin-left: 100px;margin-right: 100px">
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                     <legend>属性信息</legend>
@@ -467,8 +468,9 @@
             </div>
         </div>
     </div>
-    	  </div>
-	</fieldset>
+    </div>
+    </div>
+</fieldset>
     <div class="layui-form-item" align="center">
         <button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">同意</button>
         <button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">拒绝</button>
@@ -776,31 +778,31 @@
                     var photoList = '';
                     $.each(result, function (i, data) {
                         if (data.picType == 0) {
-                            businessList += '<img alt="" src="<%=path%>/upload/' + data.picSrc + data.picNewName + '">'
+                            businessList += '<img alt="" src="'+data.picSrc+'">'
                             $('#businessList').html(businessList)
                         } else if (data.picType == 1) {
-                            corpIdCardfrontList += '<img alt="" src="<%=path%>/upload/' + data.picSrc + data.picNewName + '">'
+                            corpIdCardfrontList += '<img alt="" src="'+data.picSrc+'">'
                             $('#corpIdCard-frontList').html(corpIdCardfrontList)
                         } else if (data.picType == 2) {
-                            corpIdCardreverseList += '<img alt="" src="<%=path%>/upload/' + data.picSrc + data.picNewName + '">'
+                            corpIdCardreverseList += '<img alt="" src="'+data.picSrc+'">'
                             $('#corpIdCard-reverseList').html(corpIdCardreverseList)
                         } else if (data.picType == 3) {
-                            businessIdCardfrontList += '<img alt="" src="<%=path%>/upload/' + data.picSrc + data.picNewName + '">'
+                            businessIdCardfrontList += '<img alt="" src="'+data.picSrc+'">'
                             $('#businessIdCard-frontList').html(businessIdCardfrontList)
                         } else if (data.picType == 4) {
-                            businessIdCardreverseList += '<img alt="" src="<%=path%>/upload/' + data.picSrc + data.picNewName + '">'
+                            businessIdCardreverseList += '<img alt="" src="'+data.picSrc+'">'
                             $('#businessIdCard-reverseList').html(businessIdCardreverseList)
                         } else if (data.picType == 5) {
-                            panoramaList += '<img alt="" src="<%=path%>/upload/' + data.picSrc + data.picNewName + '">'
+                            panoramaList += '<img alt="" src="'+data.picSrc+'">'
                             $('#panoramaList').html(panoramaList)
                         } else if (data.picType == 6) {
-                            gateList += '<img alt="" src="<%=path%>/upload/' + data.picSrc + data.picNewName + '">'
+                            gateList += '<img alt="" src="'+data.picSrc+'">'
                             $('#gateList').html(gateList)
                         } else if (data.picType == 7) {
-                            contractList += '<img alt="" src="<%=path%>/upload/' + data.picSrc + data.picNewName + '">'
+                            contractList += '<img alt="" src="'+data.picSrc+'">'
                             $('#contractList').html(contractList)
                         } else if (data.picType == 8) {
-                            photoList += '<img alt="" src="<%=path%>/upload/' + data.picSrc + data.picNewName + '">'
+                            photoList += '<img alt="" src="'+data.picSrc+'">'
                             $('#photoList').html(photoList)
                         }
                     })

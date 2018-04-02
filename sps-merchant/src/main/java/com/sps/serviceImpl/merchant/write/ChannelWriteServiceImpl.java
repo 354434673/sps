@@ -24,6 +24,7 @@ import org.sps.entity.merchant.SpsChannelOpenAccount;
 import org.sps.service.merchant.read.ChannelReadService;
 import org.sps.service.merchant.write.ChannelWriteService;
 import org.sps.util.FinalData;
+import org.sps.util.FinalUrl;
 import org.sps.util.RuleUtil;
 
 import com.alibaba.dubbo.config.annotation.Service;
@@ -40,10 +41,11 @@ import com.sps.dao.merchant.write.SpsChannelWriteMapper;
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelWriteServiceImpl implements ChannelWriteService{
-	private static final String URL = "http://test1-spay.juzifenqi.com/sps/insertCenterBank";
+	private static final String URL = FinalUrl.RISK_URL+"/sps/insertCenterBank";
 
-	private static String init = "http://dev.app.chezhubaitiao.com/api/merchantAccount/init";
-	private static String initBusiness = "http://dev.app.chezhubaitiao.com/api/business/init";
+	private static final String init = FinalUrl.CHEZHUBAITIAO_URL+"/api/merchantAccount/init";
+	
+	private static final String initBusiness = FinalUrl.CHEZHUBAITIAO_URL+"/api/business/init";
 	@Resource
 	private SpsChannelWriteMapper channelWrite;
 	@Resource

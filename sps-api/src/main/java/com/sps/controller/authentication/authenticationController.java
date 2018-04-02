@@ -532,9 +532,6 @@ public class authenticationController {
 			saveLinkDetail = jzfqAuthApi.saveIdentityDetail(arg0 );
 			
 			String code = saveLinkDetail.getCode();
-			
-			shopkeeperService.insertSpsShopkeeperRepayment(repayment);
-			
 			if(code != null){
 				if(code.equals("SUCCESS")){
 					repayment.setShopkeeperCustomerid(clientNum);

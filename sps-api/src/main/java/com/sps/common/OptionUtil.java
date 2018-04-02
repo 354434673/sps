@@ -55,4 +55,17 @@ public class OptionUtil {
 	public static final String CAR_BRAND_SMAIL = "1";//小型车
 	
 	public static final String CAR_BRAND_BIG = "2";//大型车
+	
+	/*
+	 * 状态(
+		1邀请中：核心商户或业务员录入店主信息，发送请至店主
+		2待激活：店主已注册未提交认证信息
+		3运营审核中：店主提交认证信息后，运营审核中
+		4运营审核不通过：店主提交认证信息后，运营审不通
+		5风控审核中：运营审核通过后，风控审核中
+		6风控审核不通过：风控审核不通过
+		7已激活：风控审核通过
+		8冻结：运营修改店主状态
+		)
+	 */
 }

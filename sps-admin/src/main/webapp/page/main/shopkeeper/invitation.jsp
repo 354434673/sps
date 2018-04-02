@@ -54,6 +54,9 @@
 				<a href="<%=path %>/shopkeeper/exportExcel" target="_self" class="layui-btn layui-btn-normal">
 					<i class="layui-icon">&#xe601;</i> 模板下载
 				</a>
+				<a href="<%=path%>/page/main/shopkeeper/QRcode.jsp" target="_self" class="layui-btn">
+					<i class="layui-icon">&#xe601;</i> 二维码
+				</a>
 				<a href="javascript:;" class="layui-btn layui-btn-warm" id="upload">
 					<i class="layui-icon">&#xe608;</i> 批量新增
 				</a>
