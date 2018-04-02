@@ -266,9 +266,9 @@
 
 
 
-  <select id="findEntityByCustomerNum" parameterType="String" resultMap="BaseResultMap">
+  <select id="findEntityByCustomerNum" parameterType="String" resultType="com.sps.entity.shopkeeper.SpsShopkeeperPersonal">
      SELECT
-    sp.personal_nickname,
+    sp.personal_nickname AS personalNickname,
     ssp.pic_src AS url,
     b.balance_amount AS balanceAmount,
     b.balance_amount_usable AS amountUsable,
@@ -306,7 +306,9 @@
     LEFT JOIN sps_balance sb ON sb.b_user_no = b.balance_client_num
     WHERE
     sp.shopkeeper_customerId = #{customerNum,jdbcType=VARCHAR}
-    AND ssp.pic_type = 7;
+    AND ssp.pic_type = 7
+    GROUP BY personalNickname
+
   </select>
 
 
