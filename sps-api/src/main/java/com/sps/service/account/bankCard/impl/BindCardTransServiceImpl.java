@@ -4,7 +4,6 @@ import com.sps.common.StringUtil;
 import com.sps.dao.account.AccountBalanceDao;
 import com.sps.dao.account.BankCardInfoDao;
 import com.sps.dao.account.BindBankTransDao;
-import com.sps.dao.marchant.SpsChannelOpenAccountReadMapper;
 import com.sps.dao.shopkeeper.SpsShopkeeperDao;
 import com.sps.entity.account.BankCardInfo;
 import com.sps.entity.account.BindBankTrans;
@@ -30,8 +29,6 @@ import java.util.UUID;
 public class BindCardTransServiceImpl implements BindCardTransService {
     @Autowired
     private BankCardInfoDao bankCardInfoDao;
-    @Autowired
-    private SpsChannelOpenAccountReadMapper openAccount;
     @Autowired
     private AccountBalanceDao accountBalanceDao;
     @Autowired
