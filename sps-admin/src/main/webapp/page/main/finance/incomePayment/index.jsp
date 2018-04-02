@@ -49,7 +49,7 @@
 				</div>
 				<label class="layui-form-label">交易方:</label>
 				<div class="layui-input-inline">
-					<input type="text" class="layui-input" id="account"  lay-verify="required">
+					<input type="text" class="layui-input" id="name"  lay-verify="required">
 				</div>
 
 			</div>
