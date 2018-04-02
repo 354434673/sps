@@ -3,6 +3,8 @@ package com.sps.controller.account;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSONObject;
+import com.juzifenqi.core.ServiceResult;
+import com.juzifenqi.usercenter.service.ISmsCommonService;
 import com.sps.common.Result;
 import com.sps.entity.user.SpsUser;
 import com.sps.service.user.UserService;
@@ -48,8 +50,11 @@ public class WithdrawController {
 	@Reference(check=false,group="dianfu")
 	private ChannelBankTradeReadService  bankTradereadService;
     @Resource
-
     private UserService userService;
+
+    @Reference(check=false,group="member-center-dev1")
+    private ISmsCommonService ismsCommonService;
+
 
     private static Logger logger = LoggerFactory.getLogger(WithdrawController.class);
     @RequestMapping("/findBankTradeList")
@@ -164,7 +169,7 @@ public class WithdrawController {
             SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeDetail(userName, tradeSerialNum);
             return tradeDetail;
         }
-        @RequestMapping("/getVerifyCode")
+     /*   @RequestMapping("/getVerifyCode")
         @ResponseBody
         public Result<String> getVerifyCode(HttpServletRequest request, String phone){
             String numricCode = ValidateImageCodeUtils.getRandNum();
@@ -174,15 +179,35 @@ public class WithdrawController {
             result.success();
             result.setMsg("成功");
             return result;
+    }*/
+
+    /**
+     * 获取短信验证码
+     * @param
+     * @param phone
+     * @return
+     */
+     @RequestMapping("/getVerifyCode")
+     @ResponseBody
+     public Result<String> getVerifyCode( String phone){
+         logger.info("getVerifyCode 方法 开始调用");
+         Result result = new Result<Boolean>();
+         ServiceResult<Boolean> results = ismsCommonService.sendForgetPasswordSms(phone, 3);
+         String msg = "获取成功";
+         msg= results.getResult()?"获取成功":"获取失败";
+         result.setBody(results);
+         result.setMsg(msg);
+         return result;
     }
     @RequestMapping("/getPhone")
     @ResponseBody
     public Result<JSONObject> getPhoneAndImgCode(){
         String userName = (String)SecurityUtils.getSubject().getPrincipal();
-        String phone= bankReadService.findMobileByUserName(userName);
+        SpsUser user = userService.findByUserName(userName);
+       // String phone= bankReadService.findMobileByUserName(userName);
         JSONObject body = new JSONObject();
         Result<JSONObject> result = new Result<JSONObject>(body);
-        body.put("phone",phone);
+        body.put("phone",user.getUserPhone());
         result.success();
         result.setMsg("成功");
         return result;

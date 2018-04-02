@@ -359,7 +359,8 @@
   <select id="selectByUserName"  parameterType="String" resultMap="BaseResultMap">
     select
          user_id,
-        user_mark
+        user_mark,
+        user_phone
     from
     sps_user
     where
