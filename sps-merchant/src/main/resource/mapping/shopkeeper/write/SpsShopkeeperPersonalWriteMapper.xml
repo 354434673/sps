@@ -16,6 +16,12 @@
     <result column="personal_placeOfDomicile" property="personalPlaceofdomicile" jdbcType="VARCHAR" />
     <result column="personal_living_condition" property="personalLivingCondition" jdbcType="VARCHAR" />
     <result column="personal_living_condition_other" property="personalLivingConditionOther" jdbcType="VARCHAR" />
+    <result column="personal_living_province_name" property="personalLivingProvinceName" jdbcType="VARCHAR" />
+    <result column="personal_living_province_code" property="personalLivingProvinceCode" jdbcType="VARCHAR" />
+    <result column="personal_living_city_name" property="personalLivingCityName" jdbcType="VARCHAR" />
+    <result column="personal_living_city_code" property="personalLivingCityCode" jdbcType="VARCHAR" />
+    <result column="personal_living_area_name" property="personalLivingAreaName" jdbcType="VARCHAR" />
+    <result column="personal_living_area_code" property="personalLivingAreaCode" jdbcType="VARCHAR" />
     <result column="personal_living_address" property="personalLivingAddress" jdbcType="VARCHAR" />
     <result column="personal_none_corp" property="personalNoneCorp" jdbcType="VARCHAR" />
     <result column="personal_nickname" property="personalNickname" jdbcType="VARCHAR" />
@@ -99,6 +105,9 @@
       personal_age, personal_marital_status, personal_phone, 
       personal_phone_password, personal_placeOfDomicile, 
       personal_living_condition, personal_living_condition_other, 
+      personal_living_province_name, personal_living_province_code, 
+      personal_living_city_name, personal_living_city_code, 
+      personal_living_area_name, personal_living_area_code, 
       personal_living_address, personal_none_corp, 
       personal_nickname, personal_username, personal_creat_time, 
       personal_update_time, shopkeeper_customerId
@@ -109,6 +118,9 @@
       #{personalAge,jdbcType=INTEGER}, #{personalMaritalStatus,jdbcType=VARCHAR}, #{personalPhone,jdbcType=VARCHAR}, 
       #{personalPhonePassword,jdbcType=VARCHAR}, #{personalPlaceofdomicile,jdbcType=VARCHAR}, 
       #{personalLivingCondition,jdbcType=VARCHAR}, #{personalLivingConditionOther,jdbcType=VARCHAR}, 
+      #{personalLivingProvinceName,jdbcType=VARCHAR}, #{personalLivingProvinceCode,jdbcType=VARCHAR}, 
+      #{personalLivingCityName,jdbcType=VARCHAR}, #{personalLivingCityCode,jdbcType=VARCHAR}, 
+      #{personalLivingAreaName,jdbcType=VARCHAR}, #{personalLivingAreaCode,jdbcType=VARCHAR}, 
       #{personalLivingAddress,jdbcType=VARCHAR}, #{personalNoneCorp,jdbcType=VARCHAR}, 
       #{personalNickname,jdbcType=VARCHAR}, #{personalUsername,jdbcType=VARCHAR}, #{personalCreatTime,jdbcType=TIMESTAMP}, 
       #{personalUpdateTime,jdbcType=TIMESTAMP}, #{shopkeeperCustomerid,jdbcType=VARCHAR}
@@ -158,6 +170,24 @@
       </if>
       <if test="personalLivingConditionOther != null" >
         personal_living_condition_other,
+      </if>
+      <if test="personalLivingProvinceName != null" >
+        personal_living_province_name,
+      </if>
+      <if test="personalLivingProvinceCode != null" >
+        personal_living_province_code,
+      </if>
+      <if test="personalLivingCityName != null" >
+        personal_living_city_name,
+      </if>
+      <if test="personalLivingCityCode != null" >
+        personal_living_city_code,
+      </if>
+      <if test="personalLivingAreaName != null" >
+        personal_living_area_name,
+      </if>
+      <if test="personalLivingAreaCode != null" >
+        personal_living_area_code,
       </if>
       <if test="personalLivingAddress != null" >
         personal_living_address,
@@ -224,6 +254,24 @@
       <if test="personalLivingConditionOther != null" >
         #{personalLivingConditionOther,jdbcType=VARCHAR},
       </if>
+      <if test="personalLivingProvinceName != null" >
+        #{personalLivingProvinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingProvinceCode != null" >
+        #{personalLivingProvinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingCityName != null" >
+        #{personalLivingCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingCityCode != null" >
+        #{personalLivingCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingAreaName != null" >
+        #{personalLivingAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingAreaCode != null" >
+        #{personalLivingAreaCode,jdbcType=VARCHAR},
+      </if>
       <if test="personalLivingAddress != null" >
         #{personalLivingAddress,jdbcType=VARCHAR},
       </if>
@@ -247,12 +295,6 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPersonalExample" resultType="java.lang.Integer" >
-    select count(*) from sps_shopkeeper_personal
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update sps_shopkeeper_personal
     <set >
@@ -298,6 +340,24 @@
       <if test="record.personalLivingConditionOther != null" >
         personal_living_condition_other = #{record.personalLivingConditionOther,jdbcType=VARCHAR},
       </if>
+      <if test="record.personalLivingProvinceName != null" >
+        personal_living_province_name = #{record.personalLivingProvinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalLivingProvinceCode != null" >
+        personal_living_province_code = #{record.personalLivingProvinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalLivingCityName != null" >
+        personal_living_city_name = #{record.personalLivingCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalLivingCityCode != null" >
+        personal_living_city_code = #{record.personalLivingCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalLivingAreaName != null" >
+        personal_living_area_name = #{record.personalLivingAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalLivingAreaCode != null" >
+        personal_living_area_code = #{record.personalLivingAreaCode,jdbcType=VARCHAR},
+      </if>
       <if test="record.personalLivingAddress != null" >
         personal_living_address = #{record.personalLivingAddress,jdbcType=VARCHAR},
       </if>
@@ -340,6 +400,12 @@
       personal_placeOfDomicile = #{record.personalPlaceofdomicile,jdbcType=VARCHAR},
       personal_living_condition = #{record.personalLivingCondition,jdbcType=VARCHAR},
       personal_living_condition_other = #{record.personalLivingConditionOther,jdbcType=VARCHAR},
+      personal_living_province_name = #{record.personalLivingProvinceName,jdbcType=VARCHAR},
+      personal_living_province_code = #{record.personalLivingProvinceCode,jdbcType=VARCHAR},
+      personal_living_city_name = #{record.personalLivingCityName,jdbcType=VARCHAR},
+      personal_living_city_code = #{record.personalLivingCityCode,jdbcType=VARCHAR},
+      personal_living_area_name = #{record.personalLivingAreaName,jdbcType=VARCHAR},
+      personal_living_area_code = #{record.personalLivingAreaCode,jdbcType=VARCHAR},
       personal_living_address = #{record.personalLivingAddress,jdbcType=VARCHAR},
       personal_none_corp = #{record.personalNoneCorp,jdbcType=VARCHAR},
       personal_nickname = #{record.personalNickname,jdbcType=VARCHAR},
@@ -393,6 +459,24 @@
       <if test="personalLivingConditionOther != null" >
         personal_living_condition_other = #{personalLivingConditionOther,jdbcType=VARCHAR},
       </if>
+      <if test="personalLivingProvinceName != null" >
+        personal_living_province_name = #{personalLivingProvinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingProvinceCode != null" >
+        personal_living_province_code = #{personalLivingProvinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingCityName != null" >
+        personal_living_city_name = #{personalLivingCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingCityCode != null" >
+        personal_living_city_code = #{personalLivingCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingAreaName != null" >
+        personal_living_area_name = #{personalLivingAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLivingAreaCode != null" >
+        personal_living_area_code = #{personalLivingAreaCode,jdbcType=VARCHAR},
+      </if>
       <if test="personalLivingAddress != null" >
         personal_living_address = #{personalLivingAddress,jdbcType=VARCHAR},
       </if>
@@ -432,6 +516,12 @@
       personal_placeOfDomicile = #{personalPlaceofdomicile,jdbcType=VARCHAR},
       personal_living_condition = #{personalLivingCondition,jdbcType=VARCHAR},
       personal_living_condition_other = #{personalLivingConditionOther,jdbcType=VARCHAR},
+      personal_living_province_name = #{personalLivingProvinceName,jdbcType=VARCHAR},
+      personal_living_province_code = #{personalLivingProvinceCode,jdbcType=VARCHAR},
+      personal_living_city_name = #{personalLivingCityName,jdbcType=VARCHAR},
+      personal_living_city_code = #{personalLivingCityCode,jdbcType=VARCHAR},
+      personal_living_area_name = #{personalLivingAreaName,jdbcType=VARCHAR},
+      personal_living_area_code = #{personalLivingAreaCode,jdbcType=VARCHAR},
       personal_living_address = #{personalLivingAddress,jdbcType=VARCHAR},
       personal_none_corp = #{personalNoneCorp,jdbcType=VARCHAR},
       personal_nickname = #{personalNickname,jdbcType=VARCHAR},

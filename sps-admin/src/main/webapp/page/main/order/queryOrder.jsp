@@ -74,7 +74,7 @@
 			    	<button class="layui-btn layui-btn-primary" id="queryOrders">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="resetInput">重置</button>
 	        </div>  
-		<table id="orderList" lay-filter="orderTables"></table>m
+		<table id="orderList" lay-filter="orderTables"></table>
         </div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
@@ -159,7 +159,7 @@
 				      ,{field: 'selfname', title: '核心商户名称',align:'center'}
 				      ,{field: 'money', title: '订单金额',align:'center'}
 				      ,{field: 'payment', title: '订单首付',align:'center'}
-				      ,{field: 'sum_money', title: '店付金额',align:'center'}
+				      ,{field: 'shopPayMoney', title: '店付金额',align:'center'}
 				      ,{field: 'createtime', title: '订单申请日期',templet:'#date',width:150, align:'center'}
 				      ,{field: 'flag', title: '订单状态',templet:'#state',align:'center'}
 				      ,{field: 'tool', title: '操作', width:200,align:'center',toolbar:'#bar'}

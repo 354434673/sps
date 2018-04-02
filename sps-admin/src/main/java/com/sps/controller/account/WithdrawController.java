@@ -203,8 +203,7 @@ public class WithdrawController {
     @ResponseBody
     public Result<JSONObject> getPhoneAndImgCode(){
         String userName = (String)SecurityUtils.getSubject().getPrincipal();
-        SpsUser user = userService.findByUserName(userName);
-       // String phone= bankReadService.findMobileByUserName(userName);
+        String phone= bankReadService.findMobileByUserName(userName);
         JSONObject body = new JSONObject();
         Result<JSONObject> result = new Result<JSONObject>(body);
         body.put("phone",user.getUserPhone());

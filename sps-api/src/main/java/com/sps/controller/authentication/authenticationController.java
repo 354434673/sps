@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.ws.rs.POST;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -74,6 +75,13 @@ public class authenticationController {
 		queryStateArray.setCode(queryStateArray.getCode().equals("SUCCESS") ? "1":"0");
 		
 		return queryStateArray;
+	}
+	@RequestMapping("/test")
+	public JsonResult<Map<String, Object>> test(@RequestBody String data){
+		
+		System.out.println(data);
+		
+		return null;
 	}
 	/**
 	 * 身份证反面认证
@@ -200,7 +208,7 @@ public class authenticationController {
 					
 					String linkInfoF = arg0.getLinkInfoF();
 					
-					String[] first = linkInfoF.split("||");
+					String[] first = linkInfoF.split("\\|\\|");
 					
 					SpsShopkeeperContact contact = null;
 					
@@ -222,7 +230,7 @@ public class authenticationController {
 					
 					String linkInfoT = arg0.getLinkInfoT();
 					
-					String[] sec = linkInfoT.split("||");
+					String[] sec = linkInfoT.split("\\|\\|");
 					
 					contact = new SpsShopkeeperContact();
 					

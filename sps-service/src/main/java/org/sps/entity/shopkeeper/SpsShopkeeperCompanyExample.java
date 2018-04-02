@@ -375,6 +375,566 @@ public class SpsShopkeeperCompanyExample {
             return (Criteria) this;
         }
 
+        public Criteria andCompanyBusinessProvinceNameIsNull() {
+            addCriterion("company_business_province_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameIsNotNull() {
+            addCriterion("company_business_province_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameEqualTo(String value) {
+            addCriterion("company_business_province_name =", value, "companyBusinessProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameNotEqualTo(String value) {
+            addCriterion("company_business_province_name <>", value, "companyBusinessProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameGreaterThan(String value) {
+            addCriterion("company_business_province_name >", value, "companyBusinessProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameGreaterThanOrEqualTo(String value) {
+            addCriterion("company_business_province_name >=", value, "companyBusinessProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameLessThan(String value) {
+            addCriterion("company_business_province_name <", value, "companyBusinessProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameLessThanOrEqualTo(String value) {
+            addCriterion("company_business_province_name <=", value, "companyBusinessProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameLike(String value) {
+            addCriterion("company_business_province_name like", value, "companyBusinessProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameNotLike(String value) {
+            addCriterion("company_business_province_name not like", value, "companyBusinessProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameIn(List<String> values) {
+            addCriterion("company_business_province_name in", values, "companyBusinessProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameNotIn(List<String> values) {
+            addCriterion("company_business_province_name not in", values, "companyBusinessProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameBetween(String value1, String value2) {
+            addCriterion("company_business_province_name between", value1, value2, "companyBusinessProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceNameNotBetween(String value1, String value2) {
+            addCriterion("company_business_province_name not between", value1, value2, "companyBusinessProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeIsNull() {
+            addCriterion("company_business_province_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeIsNotNull() {
+            addCriterion("company_business_province_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeEqualTo(String value) {
+            addCriterion("company_business_province_code =", value, "companyBusinessProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeNotEqualTo(String value) {
+            addCriterion("company_business_province_code <>", value, "companyBusinessProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeGreaterThan(String value) {
+            addCriterion("company_business_province_code >", value, "companyBusinessProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("company_business_province_code >=", value, "companyBusinessProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeLessThan(String value) {
+            addCriterion("company_business_province_code <", value, "companyBusinessProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeLessThanOrEqualTo(String value) {
+            addCriterion("company_business_province_code <=", value, "companyBusinessProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeLike(String value) {
+            addCriterion("company_business_province_code like", value, "companyBusinessProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeNotLike(String value) {
+            addCriterion("company_business_province_code not like", value, "companyBusinessProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeIn(List<String> values) {
+            addCriterion("company_business_province_code in", values, "companyBusinessProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeNotIn(List<String> values) {
+            addCriterion("company_business_province_code not in", values, "companyBusinessProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeBetween(String value1, String value2) {
+            addCriterion("company_business_province_code between", value1, value2, "companyBusinessProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessProvinceCodeNotBetween(String value1, String value2) {
+            addCriterion("company_business_province_code not between", value1, value2, "companyBusinessProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameIsNull() {
+            addCriterion("company_business_city_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameIsNotNull() {
+            addCriterion("company_business_city_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameEqualTo(String value) {
+            addCriterion("company_business_city_name =", value, "companyBusinessCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameNotEqualTo(String value) {
+            addCriterion("company_business_city_name <>", value, "companyBusinessCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameGreaterThan(String value) {
+            addCriterion("company_business_city_name >", value, "companyBusinessCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameGreaterThanOrEqualTo(String value) {
+            addCriterion("company_business_city_name >=", value, "companyBusinessCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameLessThan(String value) {
+            addCriterion("company_business_city_name <", value, "companyBusinessCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameLessThanOrEqualTo(String value) {
+            addCriterion("company_business_city_name <=", value, "companyBusinessCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameLike(String value) {
+            addCriterion("company_business_city_name like", value, "companyBusinessCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameNotLike(String value) {
+            addCriterion("company_business_city_name not like", value, "companyBusinessCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameIn(List<String> values) {
+            addCriterion("company_business_city_name in", values, "companyBusinessCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameNotIn(List<String> values) {
+            addCriterion("company_business_city_name not in", values, "companyBusinessCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameBetween(String value1, String value2) {
+            addCriterion("company_business_city_name between", value1, value2, "companyBusinessCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityNameNotBetween(String value1, String value2) {
+            addCriterion("company_business_city_name not between", value1, value2, "companyBusinessCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeIsNull() {
+            addCriterion("company_business_city_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeIsNotNull() {
+            addCriterion("company_business_city_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeEqualTo(String value) {
+            addCriterion("company_business_city_code =", value, "companyBusinessCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeNotEqualTo(String value) {
+            addCriterion("company_business_city_code <>", value, "companyBusinessCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeGreaterThan(String value) {
+            addCriterion("company_business_city_code >", value, "companyBusinessCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("company_business_city_code >=", value, "companyBusinessCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeLessThan(String value) {
+            addCriterion("company_business_city_code <", value, "companyBusinessCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeLessThanOrEqualTo(String value) {
+            addCriterion("company_business_city_code <=", value, "companyBusinessCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeLike(String value) {
+            addCriterion("company_business_city_code like", value, "companyBusinessCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeNotLike(String value) {
+            addCriterion("company_business_city_code not like", value, "companyBusinessCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeIn(List<String> values) {
+            addCriterion("company_business_city_code in", values, "companyBusinessCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeNotIn(List<String> values) {
+            addCriterion("company_business_city_code not in", values, "companyBusinessCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeBetween(String value1, String value2) {
+            addCriterion("company_business_city_code between", value1, value2, "companyBusinessCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessCityCodeNotBetween(String value1, String value2) {
+            addCriterion("company_business_city_code not between", value1, value2, "companyBusinessCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameIsNull() {
+            addCriterion("company_business_area_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameIsNotNull() {
+            addCriterion("company_business_area_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameEqualTo(String value) {
+            addCriterion("company_business_area_name =", value, "companyBusinessAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameNotEqualTo(String value) {
+            addCriterion("company_business_area_name <>", value, "companyBusinessAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameGreaterThan(String value) {
+            addCriterion("company_business_area_name >", value, "companyBusinessAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameGreaterThanOrEqualTo(String value) {
+            addCriterion("company_business_area_name >=", value, "companyBusinessAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameLessThan(String value) {
+            addCriterion("company_business_area_name <", value, "companyBusinessAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameLessThanOrEqualTo(String value) {
+            addCriterion("company_business_area_name <=", value, "companyBusinessAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameLike(String value) {
+            addCriterion("company_business_area_name like", value, "companyBusinessAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameNotLike(String value) {
+            addCriterion("company_business_area_name not like", value, "companyBusinessAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameIn(List<String> values) {
+            addCriterion("company_business_area_name in", values, "companyBusinessAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameNotIn(List<String> values) {
+            addCriterion("company_business_area_name not in", values, "companyBusinessAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameBetween(String value1, String value2) {
+            addCriterion("company_business_area_name between", value1, value2, "companyBusinessAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaNameNotBetween(String value1, String value2) {
+            addCriterion("company_business_area_name not between", value1, value2, "companyBusinessAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeIsNull() {
+            addCriterion("company_business_area_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeIsNotNull() {
+            addCriterion("company_business_area_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeEqualTo(String value) {
+            addCriterion("company_business_area_code =", value, "companyBusinessAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeNotEqualTo(String value) {
+            addCriterion("company_business_area_code <>", value, "companyBusinessAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeGreaterThan(String value) {
+            addCriterion("company_business_area_code >", value, "companyBusinessAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("company_business_area_code >=", value, "companyBusinessAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeLessThan(String value) {
+            addCriterion("company_business_area_code <", value, "companyBusinessAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeLessThanOrEqualTo(String value) {
+            addCriterion("company_business_area_code <=", value, "companyBusinessAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeLike(String value) {
+            addCriterion("company_business_area_code like", value, "companyBusinessAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeNotLike(String value) {
+            addCriterion("company_business_area_code not like", value, "companyBusinessAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeIn(List<String> values) {
+            addCriterion("company_business_area_code in", values, "companyBusinessAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeNotIn(List<String> values) {
+            addCriterion("company_business_area_code not in", values, "companyBusinessAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeBetween(String value1, String value2) {
+            addCriterion("company_business_area_code between", value1, value2, "companyBusinessAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessAreaCodeNotBetween(String value1, String value2) {
+            addCriterion("company_business_area_code not between", value1, value2, "companyBusinessAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngIsNull() {
+            addCriterion("company_business_lng is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngIsNotNull() {
+            addCriterion("company_business_lng is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngEqualTo(String value) {
+            addCriterion("company_business_lng =", value, "companyBusinessLng");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngNotEqualTo(String value) {
+            addCriterion("company_business_lng <>", value, "companyBusinessLng");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngGreaterThan(String value) {
+            addCriterion("company_business_lng >", value, "companyBusinessLng");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngGreaterThanOrEqualTo(String value) {
+            addCriterion("company_business_lng >=", value, "companyBusinessLng");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngLessThan(String value) {
+            addCriterion("company_business_lng <", value, "companyBusinessLng");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngLessThanOrEqualTo(String value) {
+            addCriterion("company_business_lng <=", value, "companyBusinessLng");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngLike(String value) {
+            addCriterion("company_business_lng like", value, "companyBusinessLng");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngNotLike(String value) {
+            addCriterion("company_business_lng not like", value, "companyBusinessLng");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngIn(List<String> values) {
+            addCriterion("company_business_lng in", values, "companyBusinessLng");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngNotIn(List<String> values) {
+            addCriterion("company_business_lng not in", values, "companyBusinessLng");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngBetween(String value1, String value2) {
+            addCriterion("company_business_lng between", value1, value2, "companyBusinessLng");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLngNotBetween(String value1, String value2) {
+            addCriterion("company_business_lng not between", value1, value2, "companyBusinessLng");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatIsNull() {
+            addCriterion("company_business_lat is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatIsNotNull() {
+            addCriterion("company_business_lat is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatEqualTo(String value) {
+            addCriterion("company_business_lat =", value, "companyBusinessLat");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatNotEqualTo(String value) {
+            addCriterion("company_business_lat <>", value, "companyBusinessLat");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatGreaterThan(String value) {
+            addCriterion("company_business_lat >", value, "companyBusinessLat");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatGreaterThanOrEqualTo(String value) {
+            addCriterion("company_business_lat >=", value, "companyBusinessLat");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatLessThan(String value) {
+            addCriterion("company_business_lat <", value, "companyBusinessLat");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatLessThanOrEqualTo(String value) {
+            addCriterion("company_business_lat <=", value, "companyBusinessLat");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatLike(String value) {
+            addCriterion("company_business_lat like", value, "companyBusinessLat");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatNotLike(String value) {
+            addCriterion("company_business_lat not like", value, "companyBusinessLat");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatIn(List<String> values) {
+            addCriterion("company_business_lat in", values, "companyBusinessLat");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatNotIn(List<String> values) {
+            addCriterion("company_business_lat not in", values, "companyBusinessLat");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatBetween(String value1, String value2) {
+            addCriterion("company_business_lat between", value1, value2, "companyBusinessLat");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBusinessLatNotBetween(String value1, String value2) {
+            addCriterion("company_business_lat not between", value1, value2, "companyBusinessLat");
+            return (Criteria) this;
+        }
+
         public Criteria andCompanyBusinessAddrIsNull() {
             addCriterion("company_business_addr is null");
             return (Criteria) this;
