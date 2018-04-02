@@ -107,6 +107,13 @@ public interface ShopkeeperService {
 	
 	SpsShopkeeperInvitation queryInvitation(String phone);
 
+	/**
+	 * 根据登录用户获取shopkeeperCustomerid
+	 * @param loginName
+	 * @return
+	 */
+	String queryByLoginName(String loginName);
+
 
 	int updateStatus(Map<String, Object> map);
 }

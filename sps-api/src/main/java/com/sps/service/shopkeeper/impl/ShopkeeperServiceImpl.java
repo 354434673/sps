@@ -4,12 +4,12 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
-import com.sps.entity.order.SpsOrder;
-import org.springframework.stereotype.Service;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sps.common.HttpClientUtil;
+import com.sps.entity.order.SpsOrder;
+import org.springframework.stereotype.Service;
+
 import com.sps.common.Message;
 import com.sps.common.RuleUtil;
 import com.sps.common.StringUtil;
@@ -54,11 +54,11 @@ import com.sps.service.shopkeeper.ShopkeeperService;
  */
 @Service
 public class ShopkeeperServiceImpl implements ShopkeeperService{
-	private static final String URL_PERSONAL_INSERT = "http://test1-spay.juzifenqi.com/sps/insertShopPersonalInfo";	
-	private static final String URL_PERSONAL_UPDATE = "http://test1-spay.juzifenqi.com/sps/updateaShopPersonalInfo";	
-	private static final String URL_CONTACT_INSERT = "http://test1-spay.juzifenqi.com/sps/insertShopContactInfo";	
-	private static final String URL_APPLY_UPDATE = "http://test1-spay.juzifenqi.com/sps/updateaShopApplyInfo";	
-	private static final String URL_INSERT_COMPANY = "http://test1-spay.juzifenqi.com/sps/insertShopCompanyInfo";	
+	private static final String URL_PERSONAL_INSERT = "http://192.168.201.149:8080/sps/insertShopPersonalInfo";
+	private static final String URL_PERSONAL_UPDATE = "http://192.168.201.149:8080/sps/updateaShopPersonalInfo";
+	private static final String URL_CONTACT_INSERT = "http://192.168.201.149:8080/sps/insertShopContactInfo";
+	private static final String URL_APPLY_UPDATE = "http://192.168.201.149:8080/sps/updateaShopApplyInfo";
+	private static final String URL_INSERT_COMPANY = "http://192.168.201.149:8080/sps/insertShopCompanyInfo";
 	@Resource
 	private SpsShopkeeperDao spsShopkeeperDao;
 	@Resource
@@ -169,19 +169,19 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		int insertSelective = carPrppertyDao.insertSelective(carProperty);
 		//更新风控方数据
 		JSONObject shopPersonalInfo = new JSONObject();
-		
+
 		shopPersonalInfo.put("carChassisNum",carProperty.getCarChassisNum());
-		
+
 		JSONObject data = new JSONObject();
-		
+
 		JSONObject shopApplyInfo = new JSONObject();
-		
+
 		shopApplyInfo.put("shopCode", carProperty.getShopkeeperCustomerid());
-		
+
 		data.put("shopPersonalInfo", shopPersonalInfo);
 		data.put("shopApplyInfo", shopApplyInfo);
 		HttpClientUtil.doPostJson(URL_PERSONAL_UPDATE, JSON.toJSONString(data));
-		
+
 		return insertSelective;
 	}
 	@Override
@@ -192,27 +192,27 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		company.setCompanyUpdateTime(new Date());
 		
 		int insertSelective = companyDao.insertSelective(company);
-		
+
 		JSONObject shopPersonalInfo = new JSONObject();
-		
+
 		shopPersonalInfo.put("shopCode", company.getShopkeeperCustomerid());
-		
+
 		shopPersonalInfo.put("companyName",company.getCompanyName());
-		
+
 		shopPersonalInfo.put("shopName",  company.getCompanyShopName());
-		
+
 		shopPersonalInfo.put("actualDetailAddress", company.getCompanyBusinessAddr());
-		
+
 		shopPersonalInfo.put("operateOwnership", company.getCompanyBusinessAddrOwnership());
-		
+
 		shopPersonalInfo.put("employeeNumber", company.getCompanyEmployeeNum());
-		
+
 		shopPersonalInfo.put("operateArea", company.getCompanyBusinessArea());
-		
+
 		JSONObject data = new JSONObject();
-		
+
 		data.put("shopPersonalInfo", shopPersonalInfo);
-		
+
 		HttpClientUtil.doPostJson(URL_INSERT_COMPANY, JSON.toJSONString(data));
 		return insertSelective;
 	}
@@ -226,9 +226,9 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		 * 推向风控审核
 		 */
 		JSONObject shopContactInfo = new JSONObject();
-		
+
 		JSONObject shopApplyInfo = new JSONObject();
-		
+
 		shopApplyInfo.put("shopCode", contact.getShopkeeperCustomerid());
 		shopContactInfo.put("relation", contact.getContactRelation());
 
@@ -239,9 +239,9 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		JSONObject data = new JSONObject();
 
 		data.put("centerMerchantInfo", shopContactInfo);
-		
+
 		data.put("shopApplyInfo", shopApplyInfo);
-		
+
 		HttpClientUtil.doPostJson(URL_CONTACT_INSERT, JSON.toJSONString(data));
 		return contactDao.insertSelective(contact);
 	}
@@ -264,21 +264,21 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		int insertSelective = housePrppertyDao.insertSelective(houseProperty);
 		//更新风控方数据
 		JSONObject shopPersonalInfo = new JSONObject();
-		
+
 		JSONObject shopApplyInfo = new JSONObject();
-		
+
 		shopApplyInfo.put("shopCode", houseProperty.getShopkeeperCustomerid());
-		
+
 		shopPersonalInfo.put("houseArea",houseProperty.getHouseArea());
-		
+
 		shopPersonalInfo.put("houseAddr",  houseProperty.getHouseAddr());
-		
+
 		JSONObject data = new JSONObject();
-		
+
 		data.put("shopPersonalInfo", shopPersonalInfo);
 		data.put("shopApplyInfo", shopApplyInfo);
 		HttpClientUtil.doPostJson(URL_PERSONAL_UPDATE, JSON.toJSONString(data));
-		
+
 		return 	insertSelective;
 	}
 	@Override
@@ -292,11 +292,11 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		 * 首次推向风控审核
 		 */
 		JSONObject shopPersonalInfo = new JSONObject();
-		
+
 		JSONObject shopApplyInfo = new JSONObject();
-		
+
 		shopApplyInfo.put("shopCode", personal.getShopkeeperCustomerid());
-		
+
 		shopPersonalInfo.put("customerName",personal.getPersonalClientName());
 		shopPersonalInfo.put("sex", personal.getPersonalSex());
 		shopPersonalInfo.put("shopMasterCert",  personal.getPersonalIdcard());
@@ -306,7 +306,7 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		shopPersonalInfo.put("registAddress",  personal.getPersonalPlaceofdomicile());
 
 		JSONObject data = new JSONObject();
-		
+
 		data.put("shopPersonalInfo", shopPersonalInfo);
 		data.put("shopApplyInfo", shopApplyInfo);
 		HttpClientUtil.doPostJson(URL_PERSONAL_INSERT, JSON.toJSONString(data));
@@ -331,21 +331,21 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		int insertSelective = repaymentDao.insertSelective(repayment);
 		//更新风控方数据
 		JSONObject shopPersonalInfo = new JSONObject();
-		
+
 		JSONObject shopApplyInfo = new JSONObject();
-		
+
 		shopApplyInfo.put("shopCode", repayment.getShopkeeperCustomerid());
-		
+
 		shopPersonalInfo.put("bankNo",repayment.getRepaymentBankid());
-		
+
 		shopPersonalInfo.put("debitBank",  repayment.getRepaymentDepositBank());
-		
+
 		shopPersonalInfo.put("bindMobile", repayment.getRepaymentPhone());
 		JSONObject data = new JSONObject();
-		
+
 		data.put("shopPersonalInfo", shopPersonalInfo);
 		data.put("shopApplyInfo", shopApplyInfo);
-		
+
 		HttpClientUtil.doPostJson(URL_PERSONAL_UPDATE, JSON.toJSONString(data));
 		return insertSelective;
 	}
@@ -363,7 +363,7 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 	@Override
 	public int updateSpsShopkeeperPersonal(SpsShopkeeperPersonal personal) {
 
-		
+
 		SpsShopkeeperPersonalExample example = new SpsShopkeeperPersonalExample();
 		
 		example.createCriteria().andShopkeeperCustomeridEqualTo(personal.getShopkeeperCustomerid());
@@ -372,21 +372,21 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 
 		//更新风控方数据
 		JSONObject shopPersonalInfo = new JSONObject();
-		
+
 		JSONObject shopApplyInfo = new JSONObject();
-		
+
 		shopApplyInfo.put("shopCode", personal.getShopkeeperCustomerid());
-		
+
 		shopPersonalInfo.put("marriage",personal.getPersonalClientName());
-		
+
 		shopPersonalInfo.put("homeAddress",  personal.getPersonalIdcard());
-		
+
 		shopPersonalInfo.put("mobileServicePassword", personal.getPersonalPhonePassword());
-		
+
 		JSONObject data = new JSONObject();
 		data.put("shopApplyInfo", shopApplyInfo);
 		data.put("shopPersonalInfo", shopPersonalInfo);
-		
+
 		HttpClientUtil.doPostJson(URL_PERSONAL_UPDATE, JSON.toJSONString(data));
 
 		return updateByExampleSelective;
@@ -399,23 +399,23 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		example.createCriteria().andShopkeeperCustomeridEqualTo(shopkeeper.getShopkeeperCustomerid());
 		
 		JSONObject shopApplyInfo = new JSONObject();
-		
+
 		shopApplyInfo.put("shopCode", shopkeeper.getShopkeeperCustomerid());
-		
+
 		shopApplyInfo.put("mainBussiness",shopkeeper.getShopkeeperProduct());
-		
+
 		shopApplyInfo.put("commodityType",  shopkeeper.getShopkeeperCommodityType());
-		
+
 		shopApplyInfo.put("managementModel", shopkeeper.getShopkeeperBusinessModel());
-		
+
 		shopApplyInfo.put("managementBrand", shopkeeper.getShopkeeperBrand());
-		
+
 		shopApplyInfo.put("bussinessType", shopkeeper.getShopkeeperBusinessType());
-		
+
 		JSONObject data = new JSONObject();
-		
+
 		data.put("shopApplyInfo", shopApplyInfo);
-		
+
 		HttpClientUtil.doPostJson(URL_APPLY_UPDATE, JSON.toJSONString(data));
 		
 		return spsShopkeeperDao.updateByExampleSelective(shopkeeper, example);
@@ -568,4 +568,9 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		example.createCriteria().andShopkeeperCustomeridEqualTo(shopkeeper.getShopkeeperCustomerid());
 		return spsShopkeeperDao.updateByExampleSelective(shopkeeper, example);
     }
+
+	@Override
+	public String queryByLoginName(String loginName) {
+		return spsShopkeeperDao.selectByLoginName(loginName);
+	}
 }

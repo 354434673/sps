@@ -28,7 +28,7 @@
 			#{categoeyId},
 			#{content,jdbcType=VARCHAR},
 			#{createtime,jdbcType=VARCHAR},
-			#{creater,jdbcType=VARCHAR},
+			#{creater,jdbcType=INTEGER},
 			#{systype,jdbcType=VARCHAR}
 		)
 	</insert>

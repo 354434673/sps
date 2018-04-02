@@ -3,6 +3,8 @@ package com.sps.controller.account;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sps.common.Result;
+import com.sps.entity.user.SpsUser;
+import com.sps.service.user.UserService;
 import com.sps.util.Md5Util;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.sps.service.merchant.read.ChannelReadService;
 import org.sps.service.merchant.write.ChannelBankTradeWriteService;
 import org.sps.service.merchant.write.ChannelBankWriteService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -36,6 +39,8 @@ public class ReChargeController {
 	private ChannelReadService  readService;
 	@Reference(check=false,group="dianfu")
 	private ChannelBankTradeReadService  bankTradereadService;
+    @Resource
+    private UserService userService;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
@@ -43,19 +48,21 @@ public class ReChargeController {
         Result<String> result = new Result<String>();
         //比对交易密码是否正确
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
-
         String pwd = bankReadService.findTradePassword(userName);
         String salt = bankReadService.findSalt(userName);
 
         String pass=Md5Util.getMd5(tradePwd,salt);
         if(pass.equals(pwd)){
+            SpsUser user = userService.findByUserName(userName);
             //从当前登录用户中获取用户银行卡信息
             SpsChannelBank bankInfo = bankReadService.getBankInfoByUserName(userName);
-            String tradeSerialNum = bankTradeWriteService.saveBankTradeInfo(bankInfo, withdrawAmt,"1");
-            boolean flag = StringUtils.isNotEmpty(tradeSerialNum);
-            result.setBody(tradeSerialNum);
-            result.setMsg(flag ? "成功" : "保存失败");
-            return result;
+            if(bankInfo !=null){
+                String tradeSerialNum = bankTradeWriteService.saveBankTradeInfo(bankInfo, withdrawAmt,"1",user.getUserId(),user.getUserMark());
+                boolean flag = StringUtils.isNotEmpty(tradeSerialNum);
+                result.setBody(tradeSerialNum);
+                result.setMsg(flag ? "成功" : "保存失败");
+                return result;
+            }
         }
         result.setBody("");
         result.setMsg("密码输入有误");

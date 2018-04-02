@@ -29,7 +29,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 130px;">姓名 </label>
             <div class="layui-input-inline">
-                <input id="name" type="text" name="name"  value=""
+                <input id="userName" type="text" name="userName"  value=""
                        placeholder="请输入持卡人姓名"
                        autocomplete="off" class="layui-input" lay-verify="required">
             </div>
@@ -65,12 +65,20 @@
                        placeholder="请输入银行卡预留手机号"
                        autocomplete="off" class="layui-input" lay-verify="required|phone" >
             </div>
+
         </div>
+      <%-- <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 136px;">短信验证码：</label>
+            <div class="layui-input-block" >
+                <input id="tradePwd" style="width: 187px;text-align: center;display: inline;"   value=""  autocomplete="off" class="layui-input"    lay-verify="required">
+                <span style="color: cornflowerblue" id="findSms">立即获取?</span>
+            </div>
+        </div>--%>
         <div class="layui-form-item" align="left" style="padding-left: 104px;">
            <button class="layui-btn" lay-filter="submitBankVerify" lay-submit  id="submitBankVerify">立即绑定</button>
         </div>
     </form>
-    
+
 </div>
 
 
@@ -98,7 +106,7 @@
                 return false;
             }
             lock = false;  //3.进来后，立马把锁锁住
-            var name = $('#name').val().trim();
+            var name = $('#userName').val().trim();
             var idNo = $('#idNo').val().trim();
             var bankCard = $('#bankCard').val().trim();
             var bankName = $('#bankName').val().trim();
@@ -115,21 +123,30 @@
                             name: name, identity: idNo, accounts: bankCard,
                             bank: bankName, phone: mobile
                         },
-                        url: "<%=path%>/bankCard/bindBankCard",//绑定银行卡请求
+                        url: "<%=path%>/yopBingCard/bindBankCard",//绑定银行卡请求
                         type: 'post',
                         dataType: 'json',
                         async: false,
                         success: function (result) {
-                            console.log(result);
                             var code =result.code;
-                            var ok = result.ok;
                             var  msg = result.msg;
-                            if(code == ok){
+                            var requestNo=result.body;
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                            });
+                            if(code == '0'){
                                 var resendCount = 0;
                                 smsConfirm(layer,result,resendCount);
                             }
-                            if(code == result.fail){
-                                layer.msg(msg);
+                            if(code =='5'){
+                                window.location.href="<%=path%>/page/main/account/bankCard/bankCardDetail.jsp";
+                            }
+                            if(code =='7'){
+                                layer.msg(result.msg, {
+                                    icon: 2,
+                                    time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                                });
                                 window.location.href="<%=path%>/page/main/account/bankCard/unbindBankCard.jsp";
                             }
                         }
@@ -140,6 +157,34 @@
             return false;
         });
         lock = true;
+    });
+  /*  $("#findSms").on("click",function(){
+     var mobile = $('#mobile').val().trim();
+     if(mobile==''){
+     layer.msg('手机号不可为空', {
+     icon: 2,
+     time: 1000 //2秒关闭（如果不配置，默认是3秒）
+     });
+     return ;
+     }*/
+        //发送ajax请求
+        $.ajax({
+            data: {phone:mobile},
+            url: "<%=path%>/yopBingCard/getVerifyCode",//确认请求
+            type: 'post',
+            dataType: 'json',
+            async: false,
+            success: function (res) {
+                if(res.result){
+                    layer.msg('获取验证码成功', {
+                        icon: 2,
+                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                    });
+                }
+
+            }
+        });
+
     });
     //短信验证码确认请求
     function smsConfirm(layer,result,resendCount){
@@ -159,12 +204,12 @@
                     }
                 },
                 function(value, index, elem){
-                    layer.msg('绑卡成功', {
+                    layer.msg('短信验证码', {
                         icon: 2,
                         time: 1000 //2秒关闭（如果不配置，默认是3秒）
                     });
-                    window.location.href = "<%=path%>/page/main/account/bankCard/bankCardDetail.jsp";
-                   /* var reg = new RegExp("^[0-9]{6}$");
+
+                   var reg = new RegExp("^[0-9]{6}$");
                     if(!reg.test(value)){
                         layer.msg('请输入六位数字的短信验证码', {
                             icon: 2,
@@ -172,45 +217,40 @@
                         });
                     }
                     if(reg.test(value)){
-                        console.log(result);
                         layer.close(index);
                         //发短信验证码确认情求
                         $.ajax({
-                            data: {validatecode:value.trim(),requestno:result.body.requestno,yborderid:result.body.yborderid},
-                            url: "%=path%/bankCard/confirm",//确认请求
+                            data: {validatecode:value.trim(),requestNo:result.body},
+                            url: "<%=path%>/yopBingCard/smsConfirm",//确认请求
                             type: 'post',
                             dataType: 'json',
                             async: false,
                             success: function (res) {
-                                console.log(res);
-                                if(res.code == res.ok){
-                                    if(res.body.code == 1){ //绑卡成功
-                                        layer.msg(res.msg,
-                                                {
-                                                    icon: 16,
-                                                    shade: 0.01,
-                                                    time:1000
-                                                },function(){//关闭时，执行
-                                                    //跳转至详情页
-                                                });
-
-                                        return ;
-                                    }
-                                    if(res.body.code == 2){
-                                        //重发短信请求
-                                        resend(layer,res,resendCount);
-                                    }
-
+                                var code =res.code;
+                                var  msg = res.msg;
+                                layer.msg(msg, {
+                                    icon: 2,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                });
+                                if(code == '0'){
+                                    var resendCount = 0;
+                                    smsConfirm(layer,result,resendCount);
                                 }
-                                if(res.code == res.fail){
-                                    window.clearTimeout(timer);
-                                    layer.msg(msg);
+                                if(code == '5'){
+                                    layer.msg(msg,
+                                            {
+                                                icon: 16,
+                                                shade: 0.01,
+                                                time:1000
+                                            },function(){//关闭时，执行
+                                                //跳转至详情页
+                                            });
+                                    window.location.href = "<%=path%>/page/main/account/bankCard/bankCardDetail.jsp";
                                     return ;
                                 }
-
                             }
                         });
-                    }*/
+                    }
                 }
         );
     }
@@ -230,8 +270,8 @@
             if(continueFlag){
                 timer = window.setTimeout(function(){
                     $.ajax({
-                        data: {requestno:res.body.requestno,yborderid:res.body.yborderid},
-                        url: "<%=path%>/bankCard/resend",
+                        data: {requestNo:res.body.requestno},
+                        url: "<%=path%>/yopBingCard/smsResend",
                         type: 'post',
                         dataType: 'json',
                         async: false,
@@ -338,7 +378,6 @@
 			return false;
 		}
 	} 
-
 </script>
 </body>
 </html>

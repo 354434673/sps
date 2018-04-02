@@ -18,6 +18,13 @@ public interface SpsShopkeeperPersonalDao extends BaseDB<SpsShopkeeperPersonal> 
      */
   SpsShopkeeperPersonal getByPersonId(@Param("id") Integer id);
 
+  /**
+   * 根据客户户编号获取客户名称
+   * @param customerId
+   * @return
+   */
+  SpsShopkeeperPersonal   selectByPersonId(@Param("customerId") String customerId);
+
     /**
      * 鏍规嵁鐢ㄦ埛id锛屼繚瀛樺浘鐗囦俊鎭�
      * @param id
@@ -30,5 +37,9 @@ public interface SpsShopkeeperPersonalDao extends BaseDB<SpsShopkeeperPersonal> 
     int insertSelective(SpsShopkeeperPersonal personal);
     
     int updateByExampleSelective(@Param("record") SpsShopkeeperPersonal record, @Param("example") SpsShopkeeperPersonalExample example);
-    
+
+    SpsShopkeeperPersonal selectById(@Param("id") Integer id);
+
+
+
 }

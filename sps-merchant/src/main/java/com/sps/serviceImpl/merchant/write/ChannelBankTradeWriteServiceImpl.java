@@ -1,11 +1,16 @@
 package com.sps.serviceImpl.merchant.write;
 
+import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.sps.dao.merchant.read.SpsBalanceReadMapper;
 import com.sps.dao.merchant.read.SpsChannelBankReadMapper;
 import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
+import com.sps.dao.merchant.write.SpsBalanceWriteMapper;
 import com.sps.dao.merchant.write.SpsChannelBankTradeWriteMapper;
 import com.sps.dao.merchant.write.SpsChannelBankWriteMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.sps.entity.merchant.SpsChannelBalance;
 import org.sps.entity.merchant.SpsChannelBank;
 import org.sps.entity.merchant.SpsChannelBankTrade;
 import org.sps.service.merchant.write.ChannelBankTradeWriteService;
@@ -19,25 +24,28 @@ import java.util.UUID;
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteService{
-	@Resource
+	@Autowired
 	private SpsChannelBankTradeWriteMapper bankTradeWrite;
-	@Resource
+	@Autowired
+	private SpsBalanceReadMapper  spsBalanceReadMapper;
+	@Autowired
+	private SpsBalanceWriteMapper spsBalanceWrite;
+	@Autowired
 	private SpsChannelBankReadMapper bankRead;
-	@Resource
+	@Autowired
 	private SpsChannelBankWriteMapper bankWrite;
-	@Resource
+	@Autowired
 	private SpsChannelOpenAccountReadMapper openAccount;
+
 	/**
 	 * 保存交易记录的方法
 	 */
 	@Override
-	public String  saveBankTradeInfo(SpsChannelBank bankInfo,BigDecimal amount,String tradeType) {
+	public String  saveBankTradeInfo(SpsChannelBank bankInfo,BigDecimal amount,String tradeType,Integer userId, Integer userMark) {
+
 		SpsChannelBankTrade bankTrandeInfo = new SpsChannelBankTrade();
 		String uuid = UUID.randomUUID().toString();
 		bankTrandeInfo.setIdentity(bankInfo.getIdentity());
-		/*Date date = new Date();
-		DateFormat timeInstance = SimpleDateFormat.getDateTimeInstance();
-		String format = timeInstance.format(date);*/
 		bankTrandeInfo.setApplicationStartDate(new Date());
 		bankTrandeInfo.setTradeSerialNum(uuid);
 		//0代表支出（提现），1代表收入（充值）
@@ -67,10 +75,27 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 
 		bankTrandeInfo.setTradeAfterBalanc(tradeAfter);
 		int num = bankTradeWrite.insertBankTrade(bankTrandeInfo);
+//		根据userId 和userMark 获取 id
+		SpsChannelBalance spsChannelBalance = spsBalanceReadMapper.selectByUserId(bankInfo.getChannlNum());
 		if( num > 0){
 			num = bankWrite.updateAblance(bankInfo.getUserId(), tradeAfter);
+			num= spsBalanceWrite.updateBalance(spsChannelBalance.getId(), tradeAfter, new Date());
+//			更新余额
 		}
 		return num > 0?uuid:"";
+	}
+
+	@Override
+	public Boolean saveBankRechangeTradeInfo(SpsChannelBankTrade bankTrandeInfo) {
+		int n = bankWrite.updateBalance(bankTrandeInfo.getUserId(), bankTrandeInfo.getTradeAfterBalanc());
+		int m = bankTradeWrite.insertBankTrade(bankTrandeInfo);
+		return m >0 && n>0? true:false ;
+	}
+
+	@Override
+	public Boolean modifyRechangeStatus(SpsChannelBankTrade spsChannelBankTrade) {
+		int m = bankTradeWrite.updateRechangeStatus(spsChannelBankTrade);
+		return m > 0 ? true:false;
 	}
 
 
@@ -85,16 +110,20 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 	}
 
 	@Override
-	public Boolean modifyBankTradeByApplicateDate(String applicationDate, String status,String content) {
-		//设置审核结束时间,申请结束时间
-
+	public Boolean modifyBankTradeByApplicateDate(int id, String status,String content) {
 		Date date = new Date();
-		DateFormat timeInstance = SimpleDateFormat.getDateTimeInstance();
-		String  applicationStopDate = timeInstance.format(date);
-		String  auditDate = timeInstance.format(date);
+		//设置审核结束时间,申请结束时间
+		int m=0;
+		if(StringUtils.isEmpty(content)){
+//			建议为空
+			m = bankTradeWrite.updateStatus(id, status, date, date);
+			return m >0;
+		}else{
+//			建议存在
+			m = bankTradeWrite.updateStatusAndContent(id, status,content,date,date);
+			return m >0;
+		}
 
-		int m = bankTradeWrite.updateStatus(applicationDate, status,content,applicationStopDate,auditDate);
-		return m >0;
 	}
 
 

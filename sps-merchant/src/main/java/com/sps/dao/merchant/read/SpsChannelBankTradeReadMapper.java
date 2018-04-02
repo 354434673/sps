@@ -24,7 +24,30 @@ public interface SpsChannelBankTradeReadMapper {
             @Param("paymentDate") String paymentDate,
             @Param("tradeStatus") String tradeStatus,
             @Param("channelNum") String channelNum,
-			@Param("tradeType") String tradeType);
+					@Param("tradeType") String tradeType);
+
+	/**
+	 * 根据登录用户名查询交易记录
+	 * @param channelNum
+	 * @param startTime
+	 * @param endTime
+	 * @param minAmount
+	 * @param maxAmount
+	 * @param payType
+	 * @param companyName
+	 * @param reamrk
+	 * @return
+	 */
+
+	List<SpsChannelBankTrade>  selectBankTradeTypeListByLoginName(
+			@Param("channelNum") String channelNum,
+			@Param("startTime") String startTime,
+			@Param("endTime") String endTime,
+			@Param("minAmount") BigDecimal minAmount,
+			@Param("maxAmount") BigDecimal maxAmount,
+			@Param("payType") String payType,
+			@Param("companyName") String companyName,
+			@Param("reamrk") String reamrk);
 
 	/**
 	 * 根据商户编号进行查询
@@ -112,10 +135,10 @@ public interface SpsChannelBankTradeReadMapper {
 
 	/**
 	 * 根据申请日期查询提现交易信息
-	 * @param applicationDate
+	 * @param id
 	 * @return
 	 */
-	SpsChannelBankTrade selectBankTradeInfo(String  applicationDate);
+	SpsChannelBankTrade selectBankTradeInfo(int   id);
 
 	/**
 	 * 根据交易号查询订单号

@@ -22,9 +22,9 @@ public class AccountBalanceServiceImpl implements AccountBalanceService {
     @Autowired
     private AccountBalanceDao accountBalanceDao;
     @Override
-    public BigDecimal queryByUserIdAndUserTyoe(Integer userId, Integer userType) {
+    public BigDecimal queryByCustomerId(String customerId) {
         //根据登录用户名获取用户id
-        BigDecimal balance = accountBalanceDao.selectByUserId(userId, userType);
+        BigDecimal balance = accountBalanceDao.selectByUserId(customerId);
         return balance;
     }
 }

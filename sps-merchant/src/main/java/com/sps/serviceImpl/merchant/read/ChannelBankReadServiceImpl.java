@@ -64,6 +64,7 @@ public class ChannelBankReadServiceImpl implements ChannelBankReadService {
 
 	@Override
 	public SpsChannelBank getBankInfoByUserName(String userName) {
+
 		
 		return bankRead.selectByLoginName(userName);
 	}

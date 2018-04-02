@@ -20,9 +20,32 @@
   	    	 channl_num          channlNum
   	    from 
   	    	sps_bank_trans
-  
-  		where 
-  			 t_serial_sh=#{requestno} and  t_serial_yop=#{yborderid}
+  	 	WHERE
+  	  	t_serial_sh=#{requestno} AND  t_serial_yop=#{yborderid}
   </select>
-  
+	<select id="selectByRequestNo" resultType="org.sps.entity.merchant.SpsChannelBankTrans">
+		select
+			id        id,
+			t_name        		name,
+			t_bank_name    	bankName,
+			t_user_id     		userId,
+			t_identity         identity,
+			t_phone    		phone,
+			 t_login_name    loginName,
+			t_merchant_no	    merchantNo,
+			t_start_time    	startTime,
+			t_stop_time    	stopTime,
+			t_auth_type        authType,
+			t_serial_sh  		serialSh,
+			t_serial_yop 		serialYop,
+			t_bank_code  		bankCode,
+			t_state      		state,
+			t_remark    		 remark,
+			channl_num          channlNum
+			FROM
+			sps_bank_trans
+       WHERE
+                t_serial_sh=#{requestno}
+    </select>
+
 </mapper>

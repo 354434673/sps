@@ -24,8 +24,8 @@ public interface HelpService {
 
     /**
      * 根据id，查询内容信息
-     * @param date
+     * @param helpId
      * @return
      */
-    HashMap<String, Object> queryContent(String date);
+   Help  queryContent(Integer helpId);
 }

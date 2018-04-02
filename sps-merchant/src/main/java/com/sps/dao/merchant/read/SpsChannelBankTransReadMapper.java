@@ -12,5 +12,7 @@ public interface SpsChannelBankTransReadMapper {
 	//根据请求号与易宝订单号查询
 	public SpsChannelBankTrans selectOne(@Param("requestno") String requestno, @Param("yborderid") String yborderid);
 	//   生成请求号
-	public String generateNo();
+	SpsChannelBankTrans selectByRequestNo(String requestno);
+
+
 }

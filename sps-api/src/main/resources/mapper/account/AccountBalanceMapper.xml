@@ -2,15 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sps.dao.account.AccountBalanceDao">
 
-	<select id="selectByUserId" parameterType="int" resultType="java.math.BigDecimal">
+	<select id="selectByUserId"  resultType="java.math.BigDecimal">
 	SELECT
 			b_balance  balance
 	FROM
 			sps_balance
 
 	WHERE
-		b_userid=#{userId}
-		AND
-		b_usertype=#{userType}
+		b_user_no=#{userNo}
+
 	</select>
+	<insert id="insertAccountBalance" parameterType="com.sps.entity.account.AccountBalance" >
+		INSERT  INTO  sps_balance
+		(
+		b_balance,
+		b_user_no,
+		b_usertype,
+		create_time,
+		update_time
+		)
+		VALUES
+		(
+		#{balance,jdbcType=DECIMAL},
+		#{userNo,jdbcType=VARCHAR},
+		#{userType,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
 </mapper>

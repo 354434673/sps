@@ -49,18 +49,17 @@ public class CashAuditController {
 
     @RequestMapping("/findAuditDetailByApplicationDate")
     @ResponseBody
-    public  BankDrawAudio findAuditDetailByApplicationDate(String  applicationDate){
-        BankDrawAudio bankTradeAuditInfo = cashAuditService.getBankTradeAuditInfo(applicationDate);
+    public  BankDrawAudio findAuditDetailByApplicationDate(int  id){
+        BankDrawAudio bankTradeAuditInfo = cashAuditService.getBankTradeAuditInfo(id);
         return bankTradeAuditInfo;
     }
 
 
     @RequestMapping("/saveAuditStatus")
     @ResponseBody
-    public Result saveAuditStatus(String  applicationDate,String type,String content){
-
-        Boolean flag = bankTradeWriteService.modifyBankTradeByApplicateDate(applicationDate,type,content);
-
+    public Result saveAuditStatus(int   id,String type,String content){
+        Boolean flag = bankTradeWriteService.modifyBankTradeByApplicateDate(id,type,content);
+        //审核通过--调用别的接口进行体现
         Result<Boolean> result = new Result<Boolean>();
         result.setBody(flag);
         result.setMsg(flag ? "成功" : "保存失败");

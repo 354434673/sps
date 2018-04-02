@@ -39,6 +39,26 @@ public class SpsChannelBank implements Serializable{
 //	交易密码
 	private String  transPassword   ;
 	private Integer userMark;
+	//	删除标记 0 为有效，1 为删除
+	private  Integer flag;
+	//银行卡类型
+	private  String cardType;
+
+	public Integer getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Integer flag) {
+		this.flag = flag;
+	}
+
+	public String getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
+	}
 
 	public Integer getUserMark() {
 		return userMark;

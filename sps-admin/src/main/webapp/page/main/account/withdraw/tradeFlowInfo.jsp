@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>收支明细</title>
+    <title>交易流水</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -119,7 +119,7 @@
             });
             table.render({
                 elem: '#drawAudioList'
-                ,url: '<%=path%>/incomePayment/findIncomePaymentList' //数据接口
+                ,url: '<%=path%>/tradeFlow/tradeFlowList' //数据接口
                 ,id:'id'
                 ,page:true
                 ,cols: [[ //表头

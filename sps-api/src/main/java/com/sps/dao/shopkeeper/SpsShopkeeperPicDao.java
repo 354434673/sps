@@ -5,5 +5,6 @@ import com.sps.entity.shopkeeper.SpsShopkeeperPicExample;
 import com.sps.service.base.ServiceBase;
 
 public interface SpsShopkeeperPicDao extends ServiceBase<SpsShopkeeperPicExample, SpsShopkeeperPic>{
+    int insertHouseUrl(SpsShopkeeperPic spsShopkeeperPic);
 
 }

@@ -47,16 +47,9 @@ public class FeedBackServiceImpl implements FeedBackService {
 
     @Override
     public Boolean saveContent(FeedBack feedBack) {
-        Boolean flag=true;
-        try{
-            feedBackDao.insertFeedBack(feedBack);
-        }catch(Exception e){
-            e.printStackTrace();
-            flag=false;
-        }
+        int m = feedBackDao.insertFeedBack(feedBack);
+        return m > 0 ? true : false;
 
-        return flag ;
     }
-
 
 }

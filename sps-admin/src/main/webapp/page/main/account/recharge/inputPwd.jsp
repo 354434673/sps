@@ -65,7 +65,7 @@
     $(function () {
         var withdrawAmt = getUrlParam("withdrawAmt");
         $.ajax({
-            url:'<%=path%>/bankCard/bankCardDetail'
+            url:'<%=path%>/yopBingCard/bankCardDetail'
             ,type: 'post'
             ,dataType:'json'
             ,async:false
@@ -128,7 +128,8 @@
     $("#forgetPwd").on("click",function(){
         //跳转至找回密码页面，即设置交易密码页面；
         var withdrawAmt = getUrlParam("withdrawAmt");
-        window.location.href='<%=path%>/page/main/account/recharge/resetTradePwd.jsp';
+        window.location.href='<%=path%>/page/main/account/recharge/modifyTradePwd.jsp?withdrawAmt='+withdrawAmt;
+
     });
     //获得url参数
     function getUrlParam(name) {

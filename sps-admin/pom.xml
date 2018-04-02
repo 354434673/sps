@@ -74,7 +74,39 @@
 	      <artifactId>member-center-core</artifactId>
 	      <version>2.3.0.1-SNAPSHOT</version>
 	    </dependency>
-	    
+	  <dependency>
+		  <groupId>com.juzifenqi</groupId>
+		  <artifactId>capital-api</artifactId>
+		  <version>1.1.7-SNAPSHOT</version>
+	  </dependency>
+
+
+	  <dependency>
+		  <groupId>com.yop</groupId>
+		  <artifactId>yop-sdk</artifactId>
+		  <version>1.2.1</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpcore</artifactId>
+		  <version>4.4.6</version>
+	  </dependency>
+	 <!-- <dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpclient</artifactId>
+		  <version>4.5.3</version>
+	  </dependency>-->
+	 <!-- <dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpclient</artifactId>
+		  <version>4.5.2</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpcore</artifactId>
+		  <version>4.4.6</version>
+	  </dependency>-->
+
   </dependencies>
   
   <build>

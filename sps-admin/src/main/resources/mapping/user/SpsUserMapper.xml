@@ -355,4 +355,14 @@
     on u.role_id =r.role_id 
     where u.user_id = #{userId,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByUserName"  parameterType="String" resultMap="BaseResultMap">
+    select
+         user_id,
+        user_mark
+    from
+    sps_user
+    where
+      user_username=#{userName}
+  </select>
 </mapper>

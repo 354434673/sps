@@ -12,6 +12,7 @@ import com.sps.service.account.bankTrade.BankTradeService;
 import com.sps.service.user.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -27,7 +28,7 @@ import java.util.List;
  * @Author 刘彩玲
  * @createDate ${date}$ ${timme}$
  */
-@RestController
+@Controller
 @RequestMapping("/api/accountBalance")
 public class AccountBalanceController {
     private static  final Log logger= LogFactory.getLog(AccountBalanceController.class);
@@ -40,16 +41,13 @@ public class AccountBalanceController {
 
     @Autowired
     private UserService userService;
-    @RequestMapping(value = "/findBalance/{userMark}", method = RequestMethod.POST)
+    @RequestMapping(value = "/findBalance", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnInfo findBalance( @PathVariable("userMark") Integer userMark ){
+    public ReturnInfo findBalance( @RequestParam("customerId") String customerId ){
         ReturnInfo returnInfo = new ReturnInfo();
-        String userName = (String) SecurityUtils.getSubject().getPrincipal();
-
         //  根据登录用户名获取用户id
-        SpsUser user = userService.findUserByUserName(userName);
         try {
-            BigDecimal balance = accountBalanceService.queryByUserIdAndUserTyoe(user.getUserId(), userMark);
+            BigDecimal balance = accountBalanceService.queryByCustomerId(customerId);
                 returnInfo.setResult(balance);
                 returnInfo.setSuccess(Message.API_SUCCESS_FLAG);
                 returnInfo.setCode(Message.API_SUCCESS_CODE);

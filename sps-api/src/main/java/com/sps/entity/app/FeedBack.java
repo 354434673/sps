@@ -18,7 +18,7 @@ public class FeedBack implements Serializable {
     private Integer categoeyId;
     private String content;
     private String  createtime;
-    private String creater;
+    private Integer creater;
     private  String systype;
 
     public Integer getCategoeyId() {
@@ -45,11 +45,11 @@ public class FeedBack implements Serializable {
         this.createtime = createtime;
     }
 
-    public String getCreater() {
+    public Integer getCreater() {
         return creater;
     }
 
-    public void setCreater(String creater) {
+    public void setCreater(Integer creater) {
         this.creater = creater;
     }
 

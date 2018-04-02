@@ -2,6 +2,9 @@ package com.sps.dao.merchant.write;
 
 import org.apache.ibatis.annotations.Param;
 import org.sps.entity.merchant.SpsChannelBankTrans;
+
+import java.util.Date;
+
 /**
  * 绑卡交易流水帐号的DAO
  * @author 刘彩玲
@@ -21,10 +24,27 @@ public interface SpsChannelBankTransWriteMapper {
      * @return
      */
     int insertBankTrans(SpsChannelBankTrans trans);
+
     /**
-     * 更新流水帐号
-     * @param trans
+     * 更新状态码
+     * @param id
+     * @param status
+     * @param yopSerNO
+     * @param endTime
+     * @param cardtop
+     * @param cardlast
+     * @param authtype
+     * @param remark
      * @return
      */
-    int updateBankTrans(SpsChannelBankTrans trans);
+
+    int updateBankTrans(@Param("id") int id,
+                        @Param("status") String status,
+                        @Param("yopSerNO") String yopSerNO,
+                        @Param("endTime") Date endTime,
+                        @Param("cardtop") String cardtop,
+                        @Param("cardlast") String cardlast,
+                        @Param("authtype") String authtype,
+                        @Param("remark") String remark );
+
 }

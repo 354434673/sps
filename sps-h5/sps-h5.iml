@@ -20,7 +20,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:3.8.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.9" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="module" module-name="sps-service" />
     <orderEntry type="library" name="Maven: com.alibaba:dubbo:2.8.4" level="project" />
     <orderEntry type="library" name="Maven: com.101tec:zkclient:0.10" level="project" />
