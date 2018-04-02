@@ -17,7 +17,19 @@ import java.util.Date;
  * @createDate ${date}$ ${timme}$
  */
 public interface SpsBalanceWriteMapper {
+    /**
+     *
+     * @param id
+     * @param balance
+     * @param updateTime
+     * @return
+     */
     int updateBalance(@Param("id") Integer id,@Param("balance") BigDecimal balance, @Param("updateTime") Date updateTime);
 
+    /**
+     *
+     * @param spsChannelBalance
+     * @return
+     */
     int insertBalance(  SpsChannelBalance spsChannelBalance );
 }

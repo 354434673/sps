@@ -16,5 +16,10 @@ import java.math.BigDecimal;
  * @createDate ${date}$ ${timme}$
  */
 public interface SpsBalanceReadMapper {
+    /**
+     *
+     * @param userNo
+     * @return
+     */
     SpsChannelBalance selectByUserId(@Param("userNo") String userNo);
 }

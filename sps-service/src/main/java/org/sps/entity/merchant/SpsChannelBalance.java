@@ -27,7 +27,7 @@ public class SpsChannelBalance  implements Serializable{
     private Date createTime;
 //    更新时间
     private Date  updateTime;
-
+//get与set方法
     public Integer getId() {
         return id;
     }
