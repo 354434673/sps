@@ -5,6 +5,8 @@ import com.sps.dao.base.ApiBaseDaoImpl;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @SuppressWarnings("unchecked")
 @Repository
 public class SpsShopkeeperPersonalMapper extends ApiBaseDaoImpl<SpsShopkeeperPersonal, Integer> {
