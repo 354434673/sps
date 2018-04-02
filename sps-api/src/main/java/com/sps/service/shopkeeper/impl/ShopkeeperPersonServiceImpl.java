@@ -9,6 +9,7 @@ import com.sps.dao.goods.SpsShopkeeperPersonalMapper;
 import com.sps.entity.goods.SpsBrand;
 import com.sps.entity.goods.SpsGoodCategory;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
+import com.sps.entity.shopkeeper.vo.SpsShopFindPersonInfoVo;
 import com.sps.service.goods.BrandService;
 import com.sps.service.shopkeeper.ShopkeeperPersonService;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
     }
 
     @Override
-    public SpsShopkeeperPersonal findEntityByCustomerNum(String customerNum) {
+    public SpsShopFindPersonInfoVo findEntityByCustomerNum(String customerNum) {
         return spsShopkeeperPersonalMapper.findEntityByCustomerNum(customerNum);
     }
 }

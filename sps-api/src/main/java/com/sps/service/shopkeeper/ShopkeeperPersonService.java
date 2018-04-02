@@ -1,5 +1,7 @@
 package com.sps.service.shopkeeper;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
+import com.sps.entity.shopkeeper.vo.SpsShopFindPersonInfoVo;
+
 import java.util.List;
 import java.util.Map;
 
@@ -24,5 +26,5 @@ public interface ShopkeeperPersonService {
     List<SpsShopkeeperPersonal> findList(Map<String, Object> map);
 
 
-    SpsShopkeeperPersonal findEntityByCustomerNum(String customerNum);
+    SpsShopFindPersonInfoVo findEntityByCustomerNum(String customerNum);
 }
