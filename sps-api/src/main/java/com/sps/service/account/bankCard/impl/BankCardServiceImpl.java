@@ -79,4 +79,10 @@ public class BankCardServiceImpl implements BankCardService {
 
         return bankCardInfos;
     }
+
+    @Override
+    public Boolean modifyBankInfo(BankCardInfo bankCardInfo) {
+        int m = bankCardInfoDao.updateBankInfo(bankCardInfo);
+        return m > 0 ? true:false;
+    }
 }

@@ -13,6 +13,7 @@ import com.sps.common.ReturnInfo;
 import com.sps.common.StringUtil;
 import com.sps.entity.account.BankCardInfo;
 import com.sps.entity.account.BindBankTrans;
+import com.sps.entity.bank.SpsBank;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import com.sps.entity.user.SpsUser;
 import com.sps.service.account.bankCard.BankCardService;
@@ -73,7 +74,7 @@ public class YopBindCardController {
     /**
      * 获取所支持银行的方法
      */
-    @RequestMapping(value = "/queryBankNameList", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/queryBankNameList", method = RequestMethod.POST)
     @ResponseBody
     public String queryBankNameList(@RequestParam("binNo") String binNo){
         JSONObject jsonO = new JSONObject();
@@ -85,7 +86,7 @@ public class YopBindCardController {
         }
         jsonO.put("shortName",null);
         return Message.responseStr(Message.FAILURE_CODE, Message.FAILURE_MSG, jsonO);
-    }
+    }*/
 
     /**
      * 根据银行卡号获取银行名称的方法
@@ -94,16 +95,28 @@ public class YopBindCardController {
      */
    @RequestMapping(value = "/queryBankName", method = RequestMethod.POST)
     @ResponseBody
-   public String queryBankName(@RequestParam("binNo") String binNo){
+   public String queryBankName(@RequestParam("binNo") String binNo,@RequestParam("customerId") String customerId ){
        JSONObject jsonO = new JSONObject();
        ServiceResult<BinCode> binCodeById = iBinCodeService.getBinCodeById(binNo);
-        String shortName = binCodeById.getResult().getBankCode().getShortName();
-        if(StringUtil.isNotEmpty(shortName)) {
-            jsonO.put("shortName",shortName);
-            return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG, jsonO);
-        }
-       jsonO.put("shortName",null);
-       return Message.responseStr(Message.FAILURE_CODE, Message.FAILURE_MSG, jsonO);
+       if(binCodeById.getResult() !=null){
+           //更新 银行编号，银行图片，一家银行简称
+           String shortName = binCodeById.getResult().getBankCode().getShortName();
+           BankCardInfo bankInfo = new BankCardInfo();
+           bankInfo.setCardType(binCodeById.getResult().getCardType());
+           bankInfo.setBankCode(binCodeById.getResult().getBankCode().getCode());
+           bankInfo.setBankName(shortName);
+           bankInfo.setBankPic(binCodeById.getResult().getBankCode().getPictrue());
+           bankInfo.setChannlNum(customerId);
+           //调用更新银行卡信息的方法
+           Boolean flag = bankCardService.modifyBankInfo(bankInfo);
+           if(StringUtil.isNotEmpty(shortName)) {
+               jsonO.put("shortName",shortName);
+               return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG, jsonO);
+           }
+           jsonO.put("shortName",null);
+           return Message.responseStr(Message.FAILURE_CODE, Message.FAILURE_MSG, jsonO);
+       }
+       return Message.responseStr(Message.FAILURE_MSG,Message.ERROR_MSG);
     }
 
     /**
