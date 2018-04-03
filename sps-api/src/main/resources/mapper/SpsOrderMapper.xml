@@ -283,12 +283,41 @@
 
   <!-- 查询所有 -->
   <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
-    select
-    o.o_id, o.orderid, o.shopkeeper, o.shopkeepername, o.selfemployed, o.selfname, o.scale, o.createtime,
-    o.flag, o.payment, o.isdelete, o.remark, o.money, o.servicescale, o.servicemoney, o.phone, o.address,
-    o.modifytime, o.sum_money, o.name, o.unit
-    from sps_order o
-    where 1=1
+    SELECT
+    o.o_id,
+    o.orderid,
+    o.shopkeeper,
+    o.shopkeepername,
+    o.selfemployed,
+    o.selfname,
+    o.scale,
+    o.createtime,
+    o.flag,
+    o.payment,
+    o.isdelete,
+    o.remark,
+    o.money,
+    o.servicescale,
+    o.servicemoney,
+    o.phone,
+    o.address,
+    o.modifytime,
+    o.sum_money,
+    o. NAME,
+    o.unit,
+    (
+    SELECT
+    datediff(repay_date, NOW())
+    FROM
+    sps_order_repay_detail od
+    WHERE
+    od.order_no = o.orderid
+    ) AS days,d.repay_date as repayDate
+    FROM
+    sps_order o
+    LEFT JOIN sps_order_repay_detail d on	d.order_no = o.orderid
+    WHERE
+    1 = 1
     <if test="goodsName !=null and goodsName != ''">
       and
       o.orderid IN (
@@ -314,6 +343,27 @@
     </if>
     <if test="flag !=null and flag != ''">
       and o.flag =#{flag,jdbcType=INTEGER}
+    </if>
+    <if test="type==1">
+      and o.flag = 1 or o.flag = 2
+    </if>
+    <if test="type== 2">
+      and o.flag = 18 or o.flag = 3 or o.flag = 4 or o.flag = 7 or o.flag = 8 or o.flag=19
+    </if>
+    <if test="type== 3">
+      and o.flag = 5
+    </if>
+    <if test="type== 4">
+      and o.flag = 6  or  o.flag = 9
+    </if>
+    <if test="type== 5">
+      and o.flag = 23 or  o.flag = 20 or  o.flag = 21 or  o.flag = 22
+    </if>
+    <if test="type== 6">
+      and o.flag = 11
+    </if>
+    <if test="type== 7">
+      and o.flag = 10  or o.flag =12 or o.flag = 13  or o.flag = 14  or o.flag = 15  or o.flag = 16  or o.flag =17
     </if>
     AND o.isdelete = 0
     order by o.createtime desc

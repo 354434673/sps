@@ -7,6 +7,13 @@ import java.util.List;
 
 public class SpsOrder implements Serializable {
 
+    private Integer sumCount;
+    private String url;
+    private String days;
+
+    private Date repayDate;
+
+
     private String customerId;
 
     private BigDecimal shopPayMoney;
@@ -55,6 +62,38 @@ public class SpsOrder implements Serializable {
 
     private List<SpsOrderGoods>  orderGoodsList;
 
+
+    public Date getRepayDate() {
+        return repayDate;
+    }
+
+    public void setRepayDate(Date repayDate) {
+        this.repayDate = repayDate;
+    }
+
+    public Integer getSumCount() {
+        return sumCount;
+    }
+
+    public void setSumCount(Integer sumCount) {
+        this.sumCount = sumCount;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getDays() {
+        return days;
+    }
+
+    public void setDays(String days) {
+        this.days = days;
+    }
 
     public List<SpsOrderGoods> getOrderGoodsList() {
         return orderGoodsList;

@@ -6,6 +6,14 @@
     <result column="company_name" jdbcType="VARCHAR" property="companyName" />
     <result column="company_shop_name" jdbcType="VARCHAR" property="companyShopName" />
     <result column="company_corp_name" jdbcType="VARCHAR" property="companyCorpName" />
+    <result column="company_business_province_name" jdbcType="VARCHAR" property="companyBusinessProvinceName" />
+    <result column="company_business_province_code" jdbcType="VARCHAR" property="companyBusinessProvinceCode" />
+    <result column="company_business_city_name" jdbcType="VARCHAR" property="companyBusinessCityName" />
+    <result column="company_business_city_code" jdbcType="VARCHAR" property="companyBusinessCityCode" />
+    <result column="company_business_area_name" jdbcType="VARCHAR" property="companyBusinessAreaName" />
+    <result column="company_business_area_code" jdbcType="VARCHAR" property="companyBusinessAreaCode" />
+    <result column="company_business_lng" jdbcType="VARCHAR" property="companyBusinessLng" />
+    <result column="company_business_lat" jdbcType="VARCHAR" property="companyBusinessLat" />
     <result column="company_business_addr" jdbcType="VARCHAR" property="companyBusinessAddr" />
     <result column="company_gps_addr" jdbcType="VARCHAR" property="companyGpsAddr" />
     <result column="company_business_addr_ownership" jdbcType="VARCHAR" property="companyBusinessAddrOwnership" />
@@ -18,10 +26,12 @@
     <result column="company_update_time" jdbcType="TIMESTAMP" property="companyUpdateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    company_id, company_name, company_shop_name, company_corp_name, company_business_addr, 
-    company_gps_addr, company_business_addr_ownership, company_operatio_time, company_employee_num, 
-    company_business_area, shopkeeper_customerId, company_username, company_creat_time, 
-    company_update_time
+    company_id, company_name, company_shop_name, company_corp_name, company_business_province_name,
+    company_business_province_code, company_business_city_name, company_business_city_code,
+    company_business_area_name, company_business_area_code, company_business_lng, company_business_lat,
+    company_business_addr, company_gps_addr, company_business_addr_ownership, company_operatio_time,
+    company_employee_num, company_business_area, shopkeeper_customerId, company_username,
+    company_creat_time, company_update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
