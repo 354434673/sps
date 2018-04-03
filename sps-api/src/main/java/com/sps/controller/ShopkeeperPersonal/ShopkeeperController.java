@@ -11,6 +11,7 @@ import com.sps.common.ReturnInfo;
 import org.springframework.web.bind.annotation.*;
 
 import com.sps.entity.shopkeeper.SpsShopkeeperInvitation;
+import com.sps.entity.shopkeeper.SpsShopkeeperRepayment;
 import com.sps.service.shopkeeper.ShopkeeperService;
 /**
  * 店主相关接口
@@ -49,7 +50,26 @@ public class ShopkeeperController {
 		}
 		return ri;
 	}
-
+	/**
+	 * 根据客户编号和卡号查询
+	 * @Title: queryRepayment   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param clientNum
+	 * @param: @param bankId
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年4月3日 下午2:44:59
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	@RequestMapping(value = "/queryRepayment", method = RequestMethod.POST)
+	public HashMap<String, Object> queryRepayment(String clientNum, String bankId) {
+		
+		HashMap<String, Object> queryRepayment = shopkeeperService.queryRepayment(clientNum, bankId);
+		
+		return queryRepayment;
+	}
+	
 
 	/**
 	 * @return 

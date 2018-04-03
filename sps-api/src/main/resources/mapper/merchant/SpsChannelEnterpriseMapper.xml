@@ -107,15 +107,15 @@
       el.enterprise_employee_num,
       b1.business_id,
       b1.business_product,
-      p1.pic_type,
-      p1.pic_src,
+<!--       p1.pic_type,
+      p1.pic_src, -->
       g1.guarantee_corp_phone
       FROM
       sps_channel_enterprise el
       LEFT JOIN sps_channel_business b1
       ON b1.channel_num = el.channel_num
-      LEFT JOIN sps_channel_pic p1
-      ON p1.channel_num = el.channel_num
+<!--       LEFT JOIN sps_channel_pic p1
+      ON p1.channel_num = el.channel_num -->
       LEFT JOIN sps_channel_guarantee g1
       ON g1.channel_num = el.channel_num
       <where>
@@ -127,9 +127,9 @@
 			<if test="channelNum != null">
 				and el.channel_num in(#{channelNum})
 			</if>
-			<if test="picType != null">
+<!-- 			<if test="picType != null">
 				and p1.pic_type = #{picType}
-			</if>
+			</if> -->
 			<if test="enterpriseId != null">
 				and el.enterprise_id = #{enterpriseId}
 			</if>

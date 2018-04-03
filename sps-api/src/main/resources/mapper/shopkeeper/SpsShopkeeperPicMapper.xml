@@ -71,6 +71,36 @@
       </foreach>
     </where>
   </sql>
+  <sql id="Base_Column_List" >
+    pic_id, pic_src, pic_type, pic_upload_time, pic_old_name, pic_new_name, pic_state, 
+    pic_creat_time, pic_update_time, shopkeeper_customerId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperPicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_pic
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </select>
+  <select id="countByExample" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperPicExample" resultType="java.lang.Integer" >
+    select count(*) from sps_shopkeeper_pic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sps_shopkeeper_pic
     where pic_id = #{picId,jdbcType=INTEGER}

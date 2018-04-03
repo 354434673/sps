@@ -76,13 +76,6 @@ public class authenticationController {
 		
 		return queryStateArray;
 	}
-	@RequestMapping("/test")
-	public JsonResult<Map<String, Object>> test(@RequestBody String data){
-		
-		System.out.println(data);
-		
-		return null;
-	}
 	/**
 	 * 身份证反面认证
 	 * @Title: authBackIdCard   
@@ -113,13 +106,29 @@ public class authenticationController {
 					
 					pic.setPicSrc(arg0.getBackImagePath());
 					
-					pic.setPicState(0);
-					
 					shopkeeperService.insertSpsShopkeeperPic(pic );
 					
 					backIdCardResult.setCode(Message.SUCCESS_CODE);
 				}
 			}
+		}else{
+			backIdCardResult.setCode(Message.FAILURE_CODE);
+			backIdCardResult.setMsg(Message.FAILURE_CLIENTNUM);
+		}
+		return backIdCardResult;
+	}
+	@RequestMapping("/savePic")
+	public JsonResult<AuthFaceIdCard> savePic(String clientNum, SpsShopkeeperPic pic){
+		
+		JsonResult<AuthFaceIdCard> backIdCardResult = new JsonResult<AuthFaceIdCard>();
+		
+		if(!StringUtil.isEmpty(clientNum)){
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
+					
+					backIdCardResult.setCode(Message.SUCCESS_CODE);
 		}else{
 			backIdCardResult.setCode(Message.FAILURE_CODE);
 			backIdCardResult.setMsg(Message.FAILURE_CLIENTNUM);
@@ -154,8 +163,6 @@ public class authenticationController {
 					pic.setShopkeeperCustomerid(clientNum);
 					
 					pic.setPicSrc(arg0.getFrontImagePath());
-					
-					pic.setPicState(0);
 					
 					shopkeeperService.insertSpsShopkeeperPic(pic);
 					
@@ -276,7 +283,7 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveIousDetail")
-	public String saveIousDetail(String clientNum, String idCard, AuthIousDetail arg0){
+	public String saveIousDetail(String clientNum, String picUrl, String idCard, AuthIousDetail arg0){
 		
 		JsonResult saveLinkDetail = new JsonResult<>();
 		
@@ -300,6 +307,16 @@ public class authenticationController {
 					carProperty.setShopkeeperCustomerid(clientNum);
 					//状态码,除了100000都是失败
 					shopkeeperService.insertsShopkeeperCarProperty(carProperty );
+					
+					SpsShopkeeperPic pic = new SpsShopkeeperPic();
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicSrc(picUrl);
+					
+					pic.setPicType(12);
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
 					//进行个人信用初始化
 					String accountInit = accountInit(new BigDecimal(10000.00), "dianfu", idCard);
 					
@@ -343,7 +360,7 @@ public class authenticationController {
 	 * @throws
 	 */
 	@RequestMapping("/saveHouseDetail")
-	public JsonResult saveHouseDetail(String clientNum, AuthHouseDetail arg0){
+	public JsonResult saveHouseDetail(String clientNum, String picUrl, AuthHouseDetail arg0){
 		JsonResult saveLinkDetail = new JsonResult<>(); 
 		if(!StringUtil.isEmpty(clientNum)){
 			
@@ -354,7 +371,6 @@ public class authenticationController {
 			if(code != null){
 				if(code.equals("SUCCESS")){
 					SpsShopkeeperHouseProperty houseProperty = new SpsShopkeeperHouseProperty();
-					
 					houseProperty.setHouseArea((double)arg0.getHouseArea());
 					
 					houseProperty.setHouseAddr(arg0.getHousePName()+arg0.getHouseCName()+arg0.getHouseAName()+arg0.getHouseAddress());
@@ -362,6 +378,16 @@ public class authenticationController {
 					houseProperty.setShopkeeperCustomerid(clientNum);
 					
 					shopkeeperService.insertSpsShopkeeperHouseProperty(houseProperty );
+					
+					SpsShopkeeperPic pic = new SpsShopkeeperPic();
+					
+					pic.setShopkeeperCustomerid(clientNum);
+					
+					pic.setPicSrc(picUrl);
+					
+					pic.setPicType(11);
+					
+					shopkeeperService.insertSpsShopkeeperPic(pic );
 					
 					saveLinkDetail.setCode(Message.SUCCESS_CODE);
 				}
@@ -641,44 +667,15 @@ public class authenticationController {
 					company.setShopkeeperCustomerid(clientNum);
 
 					shopkeeperService.insertShopkeeperCompany(company);
+					/*
+					 * 插入图片
+					 */
+					shopkeeperService.insertSpsShopkeeperPicForEach(clientNum, arg0.getStoreFrontPictures(), 7);
 					
-					SpsShopkeeperPic pic = null;
-
-					pic = new SpsShopkeeperPic();
+					shopkeeperService.insertSpsShopkeeperPicForEach(clientNum, arg0.getStoreInPictures(), 13);
 					
-					pic.setShopkeeperCustomerid(clientNum);
+					shopkeeperService.insertSpsShopkeeperPicForEach(clientNum, arg0.getLeasePictures(), 0);
 					
-					pic.setPicState(0);
-					
-					pic.setPicType(7);
-					
-					pic.setPicSrc(arg0.getStoreFrontPictures());
-					
-					shopkeeperService.insertSpsShopkeeperPic(pic );
-					
-					pic = new SpsShopkeeperPic();
-					
-					pic.setShopkeeperCustomerid(clientNum);
-					
-					pic.setPicState(0);
-					
-					pic.setPicType(11);
-					
-					pic.setPicSrc(arg0.getStoreInPictures());
-					
-					shopkeeperService.insertSpsShopkeeperPic(pic );
-					
-					pic = new SpsShopkeeperPic();
-					
-					pic.setShopkeeperCustomerid(clientNum);
-					
-					pic.setPicState(0);
-					
-					pic.setPicType(0);
-					
-					pic.setPicSrc(arg0.getLeasePictures());
-					
-					shopkeeperService.insertSpsShopkeeperPic(pic );
 					/**
 					 * 更改shopkeeper主表的内容
 					 */
@@ -764,6 +761,7 @@ public class authenticationController {
 			shopkeeperService.updateSpsShopkeeperPersonal(personal);
 			
 			saveMentionDetail.setCode(Message.SUCCESS_CODE);
+			saveMentionDetail.setMsg("手机服务密码保存成功");
 		}else{
 			saveMentionDetail.setCode(Message.FAILURE_CODE);
 			saveMentionDetail.setMsg(Message.FAILURE_CLIENTNUM);

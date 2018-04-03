@@ -6,7 +6,6 @@
 			+ path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -332,12 +331,12 @@
 		      <input type="checkbox" title="7天不包息" value="1" lay-skin="primary" lay-filter="openApplyProduct">
 		    </div>
 		  </div> -->
-<!-- 		<div class="layui-form-item">
+		<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*代销手续费率（%）：</label>
 		    <div class="layui-input-inline">
-		      <input   id="sell" type="text" name="sell" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+		      <input id="sell" type="text" name="sell" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
 		    </div>
-		</div> -->
+		</div>
 		<!-- 开户信息结束 -->
 		 	<div class="layui-form-item" align="center" id="btn" >
 				<button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">返回</button>
@@ -784,7 +783,7 @@
 		 				//openApplyProduct:openApplyProduct.toString(),
 		 				openApplyProduct:openApplyProduct.toString(),
 		 				//openSellRate:openSellRate, 
-		 				openSellRate:7, 
+		 				openSellRate:openSellRate, 
 				  },
 				  success:function(result){
 					  if(result.state == 'success'){

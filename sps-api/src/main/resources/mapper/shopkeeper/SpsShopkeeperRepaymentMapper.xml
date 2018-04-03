@@ -69,6 +69,36 @@
       </foreach>
     </where>
   </sql>
+    <sql id="Base_Column_List" >
+    repayment_id, repayment_bankId, repayment_deposit_bank, repayment_phone, shopkeeper_customerId, 
+    repayment_username, repayment_creat_time, repayment_update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperRepaymentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_repayment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_repayment
+    where repayment_id = #{repaymentId,jdbcType=INTEGER}
+  </select>
+  <select id="countByExample" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperRepaymentExample" resultType="java.lang.Integer" >
+    select count(*) from sps_shopkeeper_repayment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sps_shopkeeper_repayment
     where repayment_id = #{repaymentId,jdbcType=INTEGER}

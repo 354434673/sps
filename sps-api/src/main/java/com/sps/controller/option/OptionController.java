@@ -1,6 +1,7 @@
 package com.sps.controller.option;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -8,8 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.juzifenqi.capital.entity.BinCode;
+import com.juzifenqi.capital.entity.CapBank;
 import com.juzifenqi.capital.service.IBinCodeService;
+import com.juzifenqi.capital.service.ICapBankService;
 import com.juzifenqi.core.ServiceResult;
+import com.juzifenqi.usercenter.service.ICache;
 import com.sps.service.area.AreasService;
 
 
@@ -27,6 +31,8 @@ public class OptionController {
 	private IBinCodeService iBinCodeService;
 	@Resource
 	private AreasService areasService;
+	@Resource
+	private ICapBankService iCapBankService;
 	/**
 	 * @return 
 	 * 根据银行卡查询所属银行
@@ -63,4 +69,12 @@ public class OptionController {
 		
 		return areasList;
 	}
+	@RequestMapping("/queryAllBank")
+	public ServiceResult<List<CapBank>> queryAllBank(String parentId){
+		
+		ServiceResult<List<CapBank>> bankById = iCapBankService.getBankById("11");
+		
+		return bankById;
+	}
+	
 }

@@ -44,6 +44,7 @@ import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonalExample;
 import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 import com.sps.entity.shopkeeper.SpsShopkeeperRepayment;
+import com.sps.entity.shopkeeper.SpsShopkeeperRepaymentExample;
 import com.sps.entity.shopkeeper.SpsShopkeeperTaking;
 import com.sps.service.shopkeeper.ShopkeeperService;
 /**
@@ -319,6 +320,8 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		pic.setPicCreatTime(new Date());
 		
 		pic.setPicUploadTime(new Date());
+
+		pic.setPicState(0);
 		
 		return picDao.insertSelective(pic);
 	}
@@ -573,5 +576,52 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 	@Override
 	public String queryByLoginName(String loginName) {
 		return spsShopkeeperDao.selectByLoginName(loginName);
+	}
+	@Override
+	public HashMap<String, Object> queryRepayment(String clientNum, String bankId) {
+		
+		HashMap<String, Object> resultMap = null;
+		try {
+			SpsShopkeeperRepaymentExample example = new SpsShopkeeperRepaymentExample();
+			
+			example.createCriteria().andShopkeeperCustomeridEqualTo(clientNum).andRepaymentBankidEqualTo(bankId);
+			
+			List<SpsShopkeeperRepayment> selectByExample = repaymentDao.selectByExample(example);
+			
+			if(selectByExample.size() == 0){
+				
+				resultMap = Message.resultMap(Message.SUCCESS_CODE, "该银行卡未被绑定", Message.SUCCESS_MSG, 
+						0, null);
+			}else{
+				resultMap = Message.resultMap(Message.FAILURE_CODE, "该银行卡已被绑定", Message.FAILURE_CODE, 
+						1, null);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			resultMap = Message.resultMap(Message.FAILURE_CODE, Message.FAILURE_CODE, Message.FAILURE_CODE, 
+					0, null);
+		}
+		return resultMap;
+	}
+	@Override
+	public int insertSpsShopkeeperPicForEach(String clientNum, String pic, Integer type) {
+		
+		String[] picArr = pic.split(",");
+		
+		SpsShopkeeperPic spsShopkeeperPic = null;
+		
+		for (String picUrl : picArr) {
+			spsShopkeeperPic = new SpsShopkeeperPic();
+			
+			spsShopkeeperPic.setShopkeeperCustomerid(clientNum);
+			
+			spsShopkeeperPic.setPicSrc(picUrl);
+			
+			spsShopkeeperPic.setPicType(type);
+			
+			int insertSpsShopkeeperPic = insertSpsShopkeeperPic(spsShopkeeperPic);
+		}
+		return 0;
 	}
 }

@@ -85,6 +85,18 @@
     	冻结
   {{#  } }}
 </script>
+<script type="text/html" id="flowStateTpl">
+  {{}}
+  {{#  if(d.channel.channelFlowState == 0){ }}
+    	待提交
+  {{#  } else if(d.channel.channelFlowState == 1){ }}
+    	风控审核中
+  {{#  } else if(d.channel.channelFlowState == 2){ }}
+    	风控审核通过
+  {{#  } else if(d.channel.channelFlowState == 3){ }}
+    	风控审核失败
+  {{#  } }}
+</script>
 	<script>
 	layui.use(['table','layer','form'], function(){
 			  var table = layui.table;
@@ -105,6 +117,7 @@
 			      ,{field: 'enterpriseCompanyName', title: '公司名称',width:240,align:'center'}
 			      ,{field: 'enterpriseBusinesslicenseNo', title: '营业执照编号', width:230, align:'center'}
 			      ,{field: 'channel', title: '核心商户状态', align:'center',width:240,templet: '#channelTpl'} 
+			      ,{field: 'flowState', title: '流程状态', align:'center',width:240,templet: '#flowStateTpl'} 
 			      ,{field: 'tool', title: '操作',align:'center',width:130,toolbar:'#bar'}
 			    ]]
 			  });

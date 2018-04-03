@@ -33,6 +33,8 @@
     <dubbo:reference group = "${dubbo.capital.group}" id="iUserCardNewService" interface="com.juzifenqi.capital.service.IUserCardNewService"/>
     
     <dubbo:reference group = "${dubbo.capital.group}"  id="iBinCodeService" interface="com.juzifenqi.capital.service.IBinCodeService"/>
+    
+    <dubbo:reference group = "${dubbo.capital.group}"  id="iCapBankService" interface="com.juzifenqi.capital.service.ICapBankService"/>
 </beans>
  
  

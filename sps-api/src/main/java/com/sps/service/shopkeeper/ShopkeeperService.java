@@ -17,6 +17,8 @@ import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 import com.sps.entity.shopkeeper.SpsShopkeeperRepayment;
 import com.sps.entity.shopkeeper.SpsShopkeeperTaking;
 
+import io.swagger.models.auth.In;
+
 public interface ShopkeeperService {
 	/**
 	 * 根据关联键查询
@@ -103,6 +105,8 @@ public interface ShopkeeperService {
 	
 	int updateShopkeeper(SpsShopkeeper shopkeeper);
 	
+	int insertSpsShopkeeperPicForEach(String clientNum, String pic, Integer type);
+	
 	HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation);
 	
 	SpsShopkeeperInvitation queryInvitation(String phone);
@@ -116,4 +120,17 @@ public interface ShopkeeperService {
 
 
 	int updateStatus(Map<String, Object> map);
+	/**
+	 * 根据客户编号和卡号查询是否存在
+	 * @Title: queryRepayment   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param clientNum
+	 * @param: @param bankId
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年4月3日 下午2:36:13
+	 * @return: SpsShopkeeperRepayment      
+	 * @throws
+	 */
+	HashMap<String, Object> queryRepayment(String clientNum, String bankId);
 }
