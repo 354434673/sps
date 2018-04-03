@@ -92,13 +92,38 @@
 		tr.bt_trade_type,
 		tr.bt_application_start_date,
 		tr.recharge_status,
-		DATE_FORMAT( tr.bt_application_start_date,"%Y-%m-%d ")  AS dateDesc
+		CONCAT(REPLACE(DATE_FORMAT( tr.bt_application_start_date,"%Y-%m"),'-','年'),'月')   AS dateDesc
 		FROM
 		sps_bank_trade_info tr
 		WHERE
 		tr.bt_trade_name =#{constomeId}
 		AND tr.bt_application_start_date > DATE_SUB(NOW(),INTERVAL 2 MONTH)
 		ORDER BY tr.bt_application_start_date DESC
+	</select>
+	<select id="findBankTrdeShowPageList" resultType="com.sps.entity.account.vo.BankTradeInfoVo">
+		SELECT
+		tr.id,
+		tr.bt_trade_amount,
+		tr.bt_trade_status,
+		tr.bt_trade_type,
+		tr.bt_application_start_date,
+		tr.recharge_status,
+		CONCAT(REPLACE(DATE_FORMAT( tr.bt_application_start_date,"%Y-%m"),'-','年'),'月')   AS dateDesc
+		FROM
+		sps_bank_trade_info tr
+		WHERE
+		tr.bt_trade_name =#{constomeId}
+		<if test="types==0">
+			and bt_trade_type IN(0,2,3)
+		</if>
+		<if test="types==1">
+			and bt_trade_type IN(1)
+		</if>
+		<if test="types==2">
+			and bt_trade_type IN(0,1,2,3)
+		</if>
+		ORDER BY tr.bt_application_start_date DESC
+		limit #{currentPage},#{pageSize}
 	</select>
 
 </mapper>

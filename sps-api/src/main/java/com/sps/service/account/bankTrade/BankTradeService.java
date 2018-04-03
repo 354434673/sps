@@ -17,14 +17,14 @@ import java.util.List;
  * @createDate ${date}$ ${timme}$
  */
 public interface BankTradeService {
-//   根据用户名查询交易信息
+    //   根据用户名查询交易信息
     List<BankTradeInfo> findBankTrdeList(String constomeId);
-//根据交易类型查询信息
+    //根据交易类型查询信息
     List<BankTradeInfo> findBankTrdeListByTradeType(String constomeId,String tradeType);
-//查询交易详情
+    //查询交易详情
     BankTradeInfo findBankTradeDetail(Integer id);
-
     //   根据用户名查询交易信息
     List<BankTradeInfoVo> findBankTrdeShowList(String constomeId);
-
+    //根据查询类型tradeType + 用户customerId 获取交易记录 tradeType 0 标识支出 1标识收入 ,2标识全部
+    List<BankTradeInfoVo> findBankTrdeShowPageList(String constomeId,Integer types,Integer currentPage,Integer pageSize);
 }

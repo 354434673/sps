@@ -24,7 +24,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2018-03-09.
@@ -78,22 +80,21 @@ public class AccountTradeController extends BaseApi{
 
 
     @RequestMapping(value = "/findTradeListByTradeType")
-    public String findTradeListByTradeType(  @RequestParam("customerId") String customerId, @RequestParam("tradeType") Integer tradeType ) {
-        ReturnInfo returnInfo = new ReturnInfo();
-        JSONObject jsonO = new JSONObject();
-        List<BankTradeInfo> bankTrdeList=null;
-        try {
-            if (tradeType!=2){
-                bankTrdeList= bankTradeService.findBankTrdeListByTradeType(customerId,String.valueOf(tradeType));
-            }else{
-                bankTrdeList = bankTradeService.findBankTrdeList(customerId);
+    public JsonResult findTradeListByTradeType(String customerId, Integer types,Integer currentPage, Integer pageSize) {
+
+        log.info("start--根据类型获取交易列表，请求参数{customerId："+customerId+",types:"+types+",currentPage:"+currentPage+",pageSize:"+pageSize+"}");
+        try{
+            if(StringUtils.isBlank(customerId)|| types == null){
+                return returnFaild(ReturnCode.ERROR_PARAMS_NOT_NULL.getMsg());
             }
-            jsonO.put("bankTrdeList",bankTrdeList);
-           return  Message.responseStr(Message.SUCCESS_CODE,Message.SUCCESS_MSG,jsonO);
-        } catch (Exception e) {
-            e.printStackTrace();
-            jsonO.put("bankTrdeList",null);
-            return  Message.responseStr(Message.FAILURE_CODE,Message.FAILURE_MSG,jsonO);
+            List<BankTradeInfoVo> bankTrdeList =  bankTradeService.findBankTrdeShowPageList(customerId,types,currentPage,pageSize);
+            if(bankTrdeList==null){
+                return returnFaild();
+            }
+            return returnSuccess(bankTrdeList);
+        }catch (Exception e){
+            log.info("end--根据类型获取交易列表，异常 "+ e.getMessage());
+            return  returnFaild();
         }
     }
 
@@ -114,14 +115,6 @@ public class AccountTradeController extends BaseApi{
         }
         jsonO.put("bankTradeDetail",null);
         return Message.responseStr(Message.FAILURE_CODE, Message.FAILURE_MSG, jsonO);
-    }
-
-
-
-    public JsonResult getTreeMonthDetial(String customerNum){
-
-
-        return returnFaild();
     }
 
 }
