@@ -38,13 +38,13 @@ public class PersonController {
 
     /**
      * 获取昵称和头像的方法
-     * @param id
+     * @param customerId
      * @return
      */
     @RequestMapping(value = "/queryPersonInfo", method = RequestMethod.POST)
     @ResponseBody
-    public String queryPersonInfo(@RequestParam("id") Integer id) {
-        SpsShopkeeperPersonal person = shopkeeperPersonService.getByPersonId(id);
+    public String queryPersonInfo(@RequestParam("customerId") String  customerId) {
+        SpsShopkeeperPersonal person = shopkeeperPersonService.getByPersonId(customerId);
         JSONObject jsonO = new JSONObject();
         if (StringUtil.isEmpty(person.getPersonalNickname())) {
             String phone = person.getPersonalPhone();
@@ -63,15 +63,15 @@ public class PersonController {
 
     /**
      * 修改头像的方法
-     * @param id
+     * @param customerId
      * @param src
      * @return
      */
     @RequestMapping(value = "/saveSrc", method = RequestMethod.POST)
     @ResponseBody
-    public String saveSrc(@RequestParam("id") Integer id, @RequestParam("src") String src) {
+    public String saveSrc(@RequestParam("customerId") String customerId, @RequestParam("src") String src) {
         //入参检查
-            Boolean flag = shopkeeperPersonService.saveSrc(id, src);
+            Boolean flag = shopkeeperPersonService.saveSrc(customerId, src);
             if (flag) {
                 return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG);
         }
@@ -80,15 +80,15 @@ public class PersonController {
 
     /**
      * 修改昵称的方法
-     * @param id
+     * @param customerId
      * @param nickName
      * @return
      */
     @RequestMapping(value = "updateNicknamerc", method = RequestMethod.POST)
     @ResponseBody
-    public String updateNicknamerc(@RequestParam("id") Integer id, @RequestParam("nickName") String nickName)  {
+    public String updateNicknamerc(@RequestParam("customerId") String customerId, @RequestParam("nickName") String nickName)  {
         //入参检查
-         Boolean flag = shopkeeperPersonService.updateNickName(id, nickName);
+         Boolean flag = shopkeeperPersonService.updateNickName(customerId, nickName);
         if(flag){
             return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG);
         }

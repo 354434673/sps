@@ -74,21 +74,21 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
     }
 
     @Override
-    public Boolean saveSrc(Integer id, String src) {
-        SpsShopkeeperPersonal person = spsShopkeeperPersonalDao.getByPersonId(id);
+    public Boolean saveSrc(String customerId, String src) {
+        SpsShopkeeperPersonal person = spsShopkeeperPersonalDao.getByPersonId(customerId);
         int m = spsShopkeeperPersonalDao.saveSrc(person.getPic().getPicId(), src);
         return m >0 ? true:false;
     }
 
     @Override
-    public Boolean updateNickName(Integer id, String nickName) {
-        int m = spsShopkeeperPersonalDao.updateNickName(id, nickName);
+    public Boolean updateNickName(String customerId, String nickName) {
+        int m = spsShopkeeperPersonalDao.updateNickName(customerId, nickName);
         return m >0 ? true:false;
     }
 
     @Override
-    public SpsShopkeeperPersonal getByPersonId(Integer id) {
-        return spsShopkeeperPersonalDao.getByPersonId(id);
+    public SpsShopkeeperPersonal getByPersonId(String customerId ) {
+        return spsShopkeeperPersonalDao.getByPersonId(customerId);
     }
 
     @Override
