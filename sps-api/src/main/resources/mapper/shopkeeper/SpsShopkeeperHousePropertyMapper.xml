@@ -7,20 +7,30 @@
           (
             house_is_have,
             house_area,
+            house_province_name,
+            house_province_code,
+            house_city_name,
+            house_city_code,
+            house_area_name,
+            house_area_code,
             house_addr,
             shopkeeper_customerId,
             house_username,
-            house_creat_time,
-            house_update_time
+            house_creat_time
          )
         VALUES (
            #{houseIsHave,jdbcType=INTEGER},
            #{houseArea,jdbcType=DOUBLE},
+           #{houseProvinceName,jdbcType=VARCHAR},
+           #{houseProvinceCode,jdbcType=VARCHAR},
+           #{houseCityName,jdbcType=VARCHAR},
+           #{houseCityCode,jdbcType=VARCHAR},
+           #{houseAreaName,jdbcType=VARCHAR},
+           #{houseAreaCode,jdbcType=VARCHAR},
            #{houseAddr,jdbcType=VARCHAR},
            #{shopkeeperCustomerid,jdbcType=VARCHAR},
            #{houseUsername,jdbcType=VARCHAR},
-           #{houseCreatTime,jdbcType=TIMESTAMP},
-           #{houseUpdateTime,jdbcType=TIMESTAMP}
+           #{houseCreatTime,jdbcType=TIMESTAMP}
           )
   </insert>
   

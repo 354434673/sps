@@ -162,18 +162,27 @@ public class PersonController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/saveHouseInfo", method = RequestMethod.POST)
+    @RequestMapping(value ="/saveHouseInfo", method = RequestMethod.POST)
     @ResponseBody
     public String saveHouseInfo(@RequestParam("houseArea") Double  houseArea,@RequestParam("houseAddr") String houseAddr,@RequestParam("houseUsername") String  houseUsername,@RequestParam("customerId") String customerId,@RequestParam("srcList") List<String> srcList)  {
         SpsShopkeeperHouseProperty houseInfo = new SpsShopkeeperHouseProperty();
-        //上传行车证件的标志 ----"1"为已经上传，”0“ 为没有上传
-      //  List<String> srcs = (List<String>) JSONObject.parse(srcList);
+        //上传行车证件的标志 ----"1"为已经上传，"0" 为没有上传
+        String[] strs=houseAddr.split("-");
+        for(int i=0,len=strs.length;i<len;i++){
+            strs[i].toString().trim();
+        }
         Boolean flag;
         if (srcList.size()>0) {
             //1表示有房
             houseInfo.setHouseIsHave(1);
+            houseInfo.setHouseProvinceName(strs[0]);
+            houseInfo.setHouseProvinceCode(strs[1]);
+            houseInfo.setHouseCityName(strs[2]);
+            houseInfo.setHouseCityCode(strs[3]);
+            houseInfo.setHouseAreaName(strs[4]);
+            houseInfo.setHouseAreaCode(strs[5]);
             houseInfo.setHouseArea(houseArea);
-            houseInfo.setHouseAddr(houseAddr);
+            houseInfo.setHouseAddr(strs[6]);
             houseInfo.setHouseUsername(houseUsername);
             houseInfo.setShopkeeperCustomerid(customerId);
             houseInfo.setHouseCreatTime(new Date());
@@ -186,7 +195,13 @@ public class PersonController {
                 //0表示没房
                 houseInfo.setHouseIsHave(0);
                 houseInfo.setHouseArea(houseArea);
-                houseInfo.setHouseAddr(houseAddr);
+                houseInfo.setHouseProvinceName(strs[0]);
+                houseInfo.setHouseProvinceCode(strs[1]);
+                houseInfo.setHouseCityName(strs[2]);
+                houseInfo.setHouseCityCode(strs[3]);
+                houseInfo.setHouseAreaName(strs[4]);
+                houseInfo.setHouseAreaCode(strs[5]);
+                houseInfo.setHouseAddr(strs[6]);
                 houseInfo.setHouseUsername(houseUsername);
                 houseInfo.setShopkeeperCustomerid(customerId);
                 houseInfo.setHouseCreatTime(new Date());
