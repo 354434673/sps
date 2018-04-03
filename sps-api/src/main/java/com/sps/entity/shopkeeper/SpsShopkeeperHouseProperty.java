@@ -15,6 +15,18 @@ public class SpsShopkeeperHouseProperty implements Serializable{
 
     private Double houseArea;
 
+    private  String  houseProvinceName;
+
+    private  String  houseProvinceCode;
+
+    private  String  houseCityName;
+
+    private  String  houseCityCode;
+
+    private  String  houseAreaName;
+
+    private  String   houseAreaCode;
+
     private String houseAddr;
 
     private String shopkeeperCustomerid;
@@ -24,6 +36,56 @@ public class SpsShopkeeperHouseProperty implements Serializable{
     private Date houseCreatTime;
 
     private Date houseUpdateTime;
+
+    public String getHouseProvinceName() {
+        return houseProvinceName;
+    }
+
+    public void setHouseProvinceName(String houseProvinceName) {
+        this.houseProvinceName = houseProvinceName;
+    }
+
+    public String getHouseProvinceCode() {
+        return houseProvinceCode;
+    }
+
+    public void setHouseProvinceCode(String houseProvinceCode) {
+        this.houseProvinceCode = houseProvinceCode;
+    }
+
+    public String getHouseCityName() {
+        return houseCityName;
+    }
+
+    public void setHouseCityName(String houseCityName) {
+        this.houseCityName = houseCityName;
+    }
+
+    public String getHouseCityCode() {
+        return houseCityCode;
+    }
+
+    public void setHouseCityCode(String houseCityCode) {
+        this.houseCityCode = houseCityCode;
+    }
+
+    public String getHouseAreaName() {
+        return houseAreaName;
+    }
+
+    public void setHouseAreaName(String houseAreaName) {
+        this.houseAreaName = houseAreaName;
+    }
+
+    public String getHouseAreaCode() {
+        return houseAreaCode;
+    }
+
+    public void setHouseAreaCode(String houseAreaCode) {
+        this.houseAreaCode = houseAreaCode;
+    }
+
+
 
     public Integer getHouseId() {
         return houseId;
