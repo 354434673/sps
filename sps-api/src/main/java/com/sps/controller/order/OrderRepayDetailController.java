@@ -1,6 +1,5 @@
 package com.sps.controller.order;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sps.common.EntityUtiles;
 import com.sps.common.Message;
 import com.sps.common.ReturnInfo;
-import com.sps.entity.order.SpsOrder;
 import com.sps.entity.order.SpsOrderRepayDetail;
 import com.sps.service.goods.PurchaseOrderService;
 import com.sps.service.order.OrderRepayDetailService;
