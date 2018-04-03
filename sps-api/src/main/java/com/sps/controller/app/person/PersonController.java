@@ -44,7 +44,6 @@ public class PersonController {
     @RequestMapping(value = "/queryPersonInfo", method = RequestMethod.POST)
     @ResponseBody
     public String queryPersonInfo(@RequestParam("id") Integer id) {
-
         SpsShopkeeperPersonal person = shopkeeperPersonService.getByPersonId(id);
         JSONObject jsonO = new JSONObject();
         if (StringUtil.isEmpty(person.getPersonalNickname())) {
