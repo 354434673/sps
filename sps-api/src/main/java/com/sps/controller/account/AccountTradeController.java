@@ -3,6 +3,7 @@ package com.sps.controller.account;
 import com.alibaba.druid.support.logging.Log;
 import com.alibaba.druid.support.logging.LogFactory;
 import com.alibaba.fastjson.JSONObject;
+import com.sps.common.EntityUtiles;
 import com.sps.common.JsonResult;
 import com.sps.common.Message;
 import com.sps.common.ReturnInfo;
@@ -41,20 +42,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/accountTrade")
 public class AccountTradeController extends BaseApi{
+
     private static  final Log log = LogFactory.getLog(AccountTradeController.class);
-    @Autowired
-    private AccountBalanceService accountBalanceService;
+
     @Autowired
     private BankTradeService bankTradeService;
-    @Autowired
-    private BankCardService bankCardService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ShopkeeperPersonService shopkeeperPersonService;
-    @Autowired
-    private ShopkeeperService shopkeeperService;
-
 
     @RequestMapping(value = "/findTradeList")
     public JsonResult findTradeList( @RequestParam("customerId") String customerId) {
@@ -106,15 +98,22 @@ public class AccountTradeController extends BaseApi{
      * @return
      */
     @RequestMapping(value = "/findTradeDetail")
-    public String findTradeDetail( @RequestParam("id") Integer id ) {
-        JSONObject jsonO = new JSONObject();
-        BankTradeInfo bankTradeDetail = bankTradeService.findBankTradeDetail(id);
-        if(bankTradeDetail != null){
-            jsonO.put("bankTradeDetail",bankTradeDetail);
-            return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG, jsonO);
+    public JsonResult findTradeDetail( @RequestParam("id") Integer id ) {
+        log.info("start--根据ID获取用户交易明细，请求参数 " + id);
+        try{
+            if (id == null) {
+                return returnFaild(ReturnCode.ERROR_PARAMS_NOT_NULL.getMsg());
+            }
+            BankTradeInfo bankTradeDetail = bankTradeService.findBankTradeDetail(id);
+            if (bankTradeDetail == null) {
+                return returnFaild(ReturnCode.ERROR_SELECT_IS_NULL.getMsg());
+            }
+            String[] pro = new String[]{"tradeAmount","tradeNo","tradeAfterBalanc","tradeStatus","tradeType","incomeType","expenditureType","paymentDate","standby1 ","standby2","rechargeStatus","bankCardName","bankCardNumber"};
+           return returnSuccess(EntityUtiles.reloadEntityPropertyValue(bankTradeDetail, pro));
+        }catch (Exception e){
+            log.info("start--根据ID获取用户交易明细，异常 " + e.getMessage());
+            return  returnFaild();
         }
-        jsonO.put("bankTradeDetail",null);
-        return Message.responseStr(Message.FAILURE_CODE, Message.FAILURE_MSG, jsonO);
     }
 
 }

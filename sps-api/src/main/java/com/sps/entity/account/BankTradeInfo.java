@@ -55,6 +55,14 @@ public class BankTradeInfo implements Serializable {
 //	订单编号
 	private String   orderId;
 	private BankCardInfo bankCardInfo;
+	//状态
+	private Integer rechargeStatus;
+	//银行code
+	private String bankCardType;
+	//银行名称
+	private String bankCardName;
+	//银行卡号
+	private String bankCardNumber;
 
 	public BankCardInfo getBankCardInfo() {
 		return bankCardInfo;
@@ -217,5 +225,37 @@ public class BankTradeInfo implements Serializable {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public Integer getRechargeStatus() {
+		return rechargeStatus;
+	}
+
+	public void setRechargeStatus(Integer rechargeStatus) {
+		this.rechargeStatus = rechargeStatus;
+	}
+
+	public String getBankCardType() {
+		return bankCardType;
+	}
+
+	public void setBankCardType(String bankCardType) {
+		this.bankCardType = bankCardType;
+	}
+
+	public String getBankCardName() {
+		return bankCardName;
+	}
+
+	public void setBankCardName(String bankCardName) {
+		this.bankCardName = bankCardName;
+	}
+
+	public String getBankCardNumber() {
+		return bankCardNumber;
+	}
+
+	public void setBankCardNumber(String bankCardNumber) {
+		this.bankCardNumber = bankCardNumber;
 	}
 }
