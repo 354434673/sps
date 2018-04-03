@@ -36,8 +36,6 @@ public class IncomePaymentController {
      * 查询交易详情
      * @param page
      * @param limit
-     * @param startTime
-     * @param endTime
      * @param minAmount
      * @param maxAmount
      * @param payType

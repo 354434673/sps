@@ -22,4 +22,6 @@ public interface BankCardService {
     Boolean  removeBankCard(String userId);
     //根据客户编号查询绑卡信息
     List<BankCardInfo> findBindCardInfo(String customerId);
+    //更新银行卡信息
+    Boolean modifyBankInfo(BankCardInfo bankCardInfo);
 }

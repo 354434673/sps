@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.read.SpsBalanceReadMapper" >
+	<select id="selectByUserId" resultType="org.sps.entity.merchant.SpsChannelBalance">
+		SELECT
+			b_id   id,
+			b_balance  balance
+		FROM
+			sps_balance
+		WHERE
+			b_user_no=#{userNo,jdbcType=VARCHAR}
+	</select>
+</mapper>

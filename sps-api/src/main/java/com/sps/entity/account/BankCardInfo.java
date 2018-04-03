@@ -46,6 +46,37 @@ public class BankCardInfo implements Serializable{
 	private  Integer flag;
 	//银行卡类型
 	private  String cardType;
+	//银行编号
+	private  String bankCode;
+	//隐含图片logou
+	private String  bankPic;
+	//银行简称
+	private String  bankName;
+
+
+	public String getBankCode() {
+		return bankCode;
+	}
+
+	public void setBankCode(String bankCode) {
+		this.bankCode = bankCode;
+	}
+
+	public String getBankPic() {
+		return bankPic;
+	}
+
+	public void setBankPic(String bankPic) {
+		this.bankPic = bankPic;
+	}
+
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
 
 	public String getCardType() {
 		return cardType;

@@ -3,6 +3,9 @@ package com.sps.dao.merchant.read;
 
 import org.apache.ibatis.annotations.Param;
 import org.sps.entity.merchant.SpsChannelBalance;
+
+import java.math.BigDecimal;
+
 /**
  * Created by Administrator on 2018-03-14.
  *

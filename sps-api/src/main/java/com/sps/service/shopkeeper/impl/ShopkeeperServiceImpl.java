@@ -194,9 +194,9 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		company.setCompanyUpdateTime(new Date());
 		
 		int insertSelective = companyDao.insertSelective(company);
-
+		
 		JSONObject shopPersonalInfo = new JSONObject();
-
+		
 		shopPersonalInfo.put("shopCode", company.getShopkeeperCustomerid());
 
 		shopPersonalInfo.put("companyName",company.getCompanyName());
@@ -421,8 +421,8 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		data.put("shopApplyInfo", shopApplyInfo);
 
 		HttpClientUtil.doPostJson(URL_APPLY_UPDATE, JSON.toJSONString(data));
-		
-		return spsShopkeeperDao.updateByExampleSelective(shopkeeper, example);
+
+		return spsShopkeeperDao.updateByExample(shopkeeper, example);
 	}
 	@Override
 	public HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation) {

@@ -1,7 +1,9 @@
 package org.sps.entity.merchant;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 /**
  * Created by Administrator on 2018-03-14.
  *
@@ -29,36 +31,47 @@ public class SpsChannelBalance  implements Serializable{
     public Integer getId() {
         return id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
+
     public BigDecimal getBalance() {
         return balance;
     }
+
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
+
     public String getUserNo() {
         return userNo;
     }
+
     public void setUserNo(String userNo) {
         this.userNo = userNo;
     }
+
     public Integer getUserType() {
         return userType;
     }
+
     public void setUserType(Integer userType) {
         this.userType = userType;
     }
+
     public Date getCreateTime() {
         return createTime;
     }
+
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
     public Date getUpdateTime() {
         return updateTime;
     }
+
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }

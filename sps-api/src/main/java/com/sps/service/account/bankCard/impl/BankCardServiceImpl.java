@@ -27,7 +27,7 @@ import java.util.UUID;
 public class BankCardServiceImpl implements BankCardService {
     @Autowired
     private BankCardInfoDao bankCardInfoDao;
-/*    @Autowired
+  /*  @Autowired
     private SpsChannelOpenAccountReadMapper openAccount;*/
     @Autowired
     private AccountBalanceDao accountBalanceDao;
@@ -77,5 +77,11 @@ public class BankCardServiceImpl implements BankCardService {
         List<BankCardInfo> bankCardInfos = bankCardInfoDao.selectByCustomerId(customerId);
 
         return bankCardInfos;
+    }
+
+    @Override
+    public Boolean modifyBankInfo(BankCardInfo bankCardInfo) {
+        int m = bankCardInfoDao.updateBankInfo(bankCardInfo);
+        return m > 0 ? true:false;
     }
 }

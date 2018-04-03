@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.account.BindBankTransDao" >
+  
+  <delete id="deleteByPrimaryKey"  >
+    delete from sps_bank_trans
+    where  t_serial_sh =#{ serialSh } and  t_serial_yop =#{serialYop}
+  </delete>
+ 
+  <insert id="insertBankTrans" parameterType="com.sps.entity.account.BindBankTrans" >
+   	
+    insert into sps_bank_trans
+    (	
+    	t_name, 
+    	t_bank_name ,
+    	t_user_id,
+    	t_login_name,
+    	t_identity ,
+    	t_phone ,
+    	t_merchant_no,
+    	t_start_time ,
+    	t_stop_time ,
+    	t_auth_type  ,
+    	t_serial_sh ,
+    	t_serial_yop ,
+    	t_bank_code  ,
+    	t_state ,
+    	t_remark ,
+    	channl_num 
+      )
+    values (
+     	#{name,jdbcType=VARCHAR}, 
+     	#{bankName,jdbcType=VARCHAR},
+    	#{userId,jdbcType=VARCHAR}, 
+    	#{loginName,jdbcType=VARCHAR}, 
+        #{identity,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR},
+        #{merchantNo,jdbcType=VARCHAR},
+        #{startTime,jdbcType=TIMESTAMP},
+        #{stopTime,jdbcType=TIMESTAMP},
+        #{authType,jdbcType=VARCHAR},
+        #{serialSh,jdbcType=VARCHAR},
+        #{serialYop,jdbcType=VARCHAR},
+        #{bankCode,jdbcType=VARCHAR},
+        #{state,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR},
+        #{channlNum,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <update id="updateBankTrans"  >
+    update sps_bank_trans
+    SET
+        t_stop_time = #{endTime,jdbcType=TIMESTAMP},
+        t_state = #{status,jdbcType=VARCHAR},
+        t_serial_yop = #{yopSerNO,jdbcType=VARCHAR},
+        t_auth_type=#{authtype,jdbcType=VARCHAR},
+        t_remark=#{remark,jdbcType=VARCHAR},
+        t_card_top=#{cardtop,jdbcType=VARCHAR},
+        t_card_last=#{cardlast,jdbcType=VARCHAR}
+     where  id=#{id}
+  </update>
+    <select id="selectOne" resultType="com.sps.entity.account.BindBankTrans">
+    select
+        id        id,
+    t_name        		name,
+    t_bank_name    	bankName,
+    t_user_id     		userId,
+    t_login_name       loginName,
+    t_identity         identity,
+    t_phone    		phone,
+    t_login_name    loginName,
+    t_merchant_no	    merchantNo,
+    t_start_time    	startTime,
+    t_stop_time    	stopTime,
+    t_auth_type        authType,
+    t_serial_sh  		serialSh,
+    t_serial_yop 		serialYop,
+    t_bank_code  		bankCode,
+    t_state      		state,
+    t_remark    		 remark,
+    channl_num          channlNum
+    from
+    sps_bank_trans
+    where
+            t_serial_sh=#{requestno}   and   t_serial_yop=#{yborderid}
+
+    </select>
+    <select id="selectByRequestNo" resultType="com.sps.entity.account.BindBankTrans">
+        select
+        id        id,
+        t_name        		name,
+        t_bank_name    	bankName,
+        t_user_id     		userId,
+        t_identity         identity,
+        t_phone    		phone,
+         t_login_name    loginName,
+        t_merchant_no	    merchantNo,
+        t_start_time    	startTime,
+        t_stop_time    	stopTime,
+        t_auth_type        authType,
+        t_serial_sh  		serialSh,
+        t_serial_yop 		serialYop,
+        t_bank_code  		bankCode,
+        t_state      		state,
+        t_remark    		 remark,
+        channl_num          channlNum
+        FROM
+        sps_bank_trans
+       WHERE
+                t_serial_sh=#{requestno}
+    </select>
+</mapper>

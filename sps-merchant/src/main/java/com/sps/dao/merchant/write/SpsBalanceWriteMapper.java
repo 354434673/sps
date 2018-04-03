@@ -1,8 +1,10 @@
 package com.sps.dao.merchant.write;
+
 import org.apache.ibatis.annotations.Param;
 import org.sps.entity.merchant.SpsChannelBalance;
 import java.math.BigDecimal;
 import java.util.Date;
+
 /**
  * Created by Administrator on 2018-03-14.
  *
@@ -22,6 +24,7 @@ public interface SpsBalanceWriteMapper {
      * @return
      */
     int updateBalance(@Param("id") Integer id,@Param("balance") BigDecimal balance, @Param("updateTime") Date updateTime);
+
     /**
      *
      * @param spsChannelBalance

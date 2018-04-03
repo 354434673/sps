@@ -16,12 +16,6 @@
     <result column="personal_placeOfDomicile" property="personalPlaceofdomicile" jdbcType="VARCHAR" />
     <result column="personal_living_condition" property="personalLivingCondition" jdbcType="VARCHAR" />
     <result column="personal_living_condition_other" property="personalLivingConditionOther" jdbcType="VARCHAR" />
-    <result column="personal_living_province_name" property="personalLivingProvinceName" jdbcType="VARCHAR" />
-    <result column="personal_living_province_code" property="personalLivingProvinceCode" jdbcType="VARCHAR" />
-    <result column="personal_living_city_name" property="personalLivingCityName" jdbcType="VARCHAR" />
-    <result column="personal_living_city_code" property="personalLivingCityCode" jdbcType="VARCHAR" />
-    <result column="personal_living_area_name" property="personalLivingAreaName" jdbcType="VARCHAR" />
-    <result column="personal_living_area_code" property="personalLivingAreaCode" jdbcType="VARCHAR" />
     <result column="personal_living_address" property="personalLivingAddress" jdbcType="VARCHAR" />
     <result column="personal_none_corp" property="personalNoneCorp" jdbcType="VARCHAR" />
     <result column="personal_nickname" property="personalNickname" jdbcType="VARCHAR" />
@@ -67,14 +61,14 @@
     sps_shopkeeper_personal
     WHERE  shopkeeper_customerId=#{customerId}
   </select>
-    <update id="saveSrc"  >
+  <update id="saveSrc"  >
            UPDATE
               sps_shopkeeper_pic
             SET   pic_src=#{src,jdbcType=VARCHAR}
             WHERE
                 pic_id=#{id} AND  pic_type=11
     </update>
-    <update id="updateNickName"  >
+  <update id="updateNickName"  >
         UPDATE
           sps_shopkeeper_personal
         SET   personal_nickname=#{nickName}
@@ -140,12 +134,12 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    personal_id, personal_client_name, personal_sex, personal_idCard, personal_idCard_validity_start, 
-    personal_idCard_validity_end, personal_licence_issuing_authority, personal_age, personal_marital_status, 
-    personal_phone, personal_phone_password, personal_placeOfDomicile, personal_living_condition, 
-    personal_living_condition_other, personal_living_province_name, personal_living_province_code, 
-    personal_living_city_name, personal_living_city_code, personal_living_area_name, 
-    personal_living_area_code, personal_living_address, personal_none_corp, personal_nickname, 
+    personal_id, personal_client_name, personal_sex, personal_idCard, personal_idCard_validity_start,
+    personal_idCard_validity_end, personal_licence_issuing_authority, personal_age, personal_marital_status,
+    personal_phone, personal_phone_password, personal_placeOfDomicile, personal_living_condition,
+    personal_living_condition_other, personal_living_province_name, personal_living_province_code,
+    personal_living_city_name, personal_living_city_code, personal_living_area_name,
+    personal_living_area_code, personal_living_address, personal_none_corp, personal_nickname,
     personal_username, personal_creat_time, personal_update_time, shopkeeper_customerId
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperPersonalExample" >
@@ -163,7 +157,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from sps_shopkeeper_personal
     where personal_id = #{personalId,jdbcType=INTEGER}
@@ -179,30 +173,30 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperPersonal" >
-    insert into sps_shopkeeper_personal (personal_id, personal_client_name, personal_sex, 
-      personal_idCard, personal_idCard_validity_start, 
-      personal_idCard_validity_end, personal_licence_issuing_authority, 
-      personal_age, personal_marital_status, personal_phone, 
-      personal_phone_password, personal_placeOfDomicile, 
-      personal_living_condition, personal_living_condition_other, 
-      personal_living_province_name, personal_living_province_code, 
-      personal_living_city_name, personal_living_city_code, 
-      personal_living_area_name, personal_living_area_code, 
-      personal_living_address, personal_none_corp, 
-      personal_nickname, personal_username, personal_creat_time, 
+    insert into sps_shopkeeper_personal (personal_id, personal_client_name, personal_sex,
+      personal_idCard, personal_idCard_validity_start,
+      personal_idCard_validity_end, personal_licence_issuing_authority,
+      personal_age, personal_marital_status, personal_phone,
+      personal_phone_password, personal_placeOfDomicile,
+      personal_living_condition, personal_living_condition_other,
+      personal_living_province_name, personal_living_province_code,
+      personal_living_city_name, personal_living_city_code,
+      personal_living_area_name, personal_living_area_code,
+      personal_living_address, personal_none_corp,
+      personal_nickname, personal_username, personal_creat_time,
       personal_update_time, shopkeeper_customerId
       )
-    values (#{personalId,jdbcType=INTEGER}, #{personalClientName,jdbcType=VARCHAR}, #{personalSex,jdbcType=VARCHAR}, 
-      #{personalIdcard,jdbcType=VARCHAR}, #{personalIdcardValidityStart,jdbcType=VARCHAR}, 
-      #{personalIdcardValidityEnd,jdbcType=VARCHAR}, #{personalLicenceIssuingAuthority,jdbcType=VARCHAR}, 
-      #{personalAge,jdbcType=INTEGER}, #{personalMaritalStatus,jdbcType=VARCHAR}, #{personalPhone,jdbcType=VARCHAR}, 
-      #{personalPhonePassword,jdbcType=VARCHAR}, #{personalPlaceofdomicile,jdbcType=VARCHAR}, 
-      #{personalLivingCondition,jdbcType=VARCHAR}, #{personalLivingConditionOther,jdbcType=VARCHAR}, 
-      #{personalLivingProvinceName,jdbcType=VARCHAR}, #{personalLivingProvinceCode,jdbcType=VARCHAR}, 
-      #{personalLivingCityName,jdbcType=VARCHAR}, #{personalLivingCityCode,jdbcType=VARCHAR}, 
-      #{personalLivingAreaName,jdbcType=VARCHAR}, #{personalLivingAreaCode,jdbcType=VARCHAR}, 
-      #{personalLivingAddress,jdbcType=VARCHAR}, #{personalNoneCorp,jdbcType=VARCHAR}, 
-      #{personalNickname,jdbcType=VARCHAR}, #{personalUsername,jdbcType=VARCHAR}, #{personalCreatTime,jdbcType=TIMESTAMP}, 
+    values (#{personalId,jdbcType=INTEGER}, #{personalClientName,jdbcType=VARCHAR}, #{personalSex,jdbcType=VARCHAR},
+      #{personalIdcard,jdbcType=VARCHAR}, #{personalIdcardValidityStart,jdbcType=VARCHAR},
+      #{personalIdcardValidityEnd,jdbcType=VARCHAR}, #{personalLicenceIssuingAuthority,jdbcType=VARCHAR},
+      #{personalAge,jdbcType=INTEGER}, #{personalMaritalStatus,jdbcType=VARCHAR}, #{personalPhone,jdbcType=VARCHAR},
+      #{personalPhonePassword,jdbcType=VARCHAR}, #{personalPlaceofdomicile,jdbcType=VARCHAR},
+      #{personalLivingCondition,jdbcType=VARCHAR}, #{personalLivingConditionOther,jdbcType=VARCHAR},
+      #{personalLivingProvinceName,jdbcType=VARCHAR}, #{personalLivingProvinceCode,jdbcType=VARCHAR},
+      #{personalLivingCityName,jdbcType=VARCHAR}, #{personalLivingCityCode,jdbcType=VARCHAR},
+      #{personalLivingAreaName,jdbcType=VARCHAR}, #{personalLivingAreaCode,jdbcType=VARCHAR},
+      #{personalLivingAddress,jdbcType=VARCHAR}, #{personalNoneCorp,jdbcType=VARCHAR},
+      #{personalNickname,jdbcType=VARCHAR}, #{personalUsername,jdbcType=VARCHAR}, #{personalCreatTime,jdbcType=TIMESTAMP},
       #{personalUpdateTime,jdbcType=TIMESTAMP}, #{shopkeeperCustomerid,jdbcType=VARCHAR}
       )
   </insert>
@@ -470,6 +464,9 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <select id="selectByConstomeId" parameterType="String" resultType="String">
+
+  </select>
   <update id="updateByExample" parameterType="map" >
     update sps_shopkeeper_personal
     set personal_id = #{record.personalId,jdbcType=INTEGER},
@@ -617,7 +614,4 @@
       shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR}
     where personal_id = #{personalId,jdbcType=INTEGER}
   </update>
-  <select id="selectByConstomeId" parameterType="String" resultType="String">
-
-  </select>
 </mapper>

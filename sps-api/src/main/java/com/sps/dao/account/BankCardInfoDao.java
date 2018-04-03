@@ -29,4 +29,6 @@ public interface BankCardInfoDao {
      * @return
      */
     List<BankCardInfo> selectByCustomerId(@Param("customerId") String customerId);
+    //跟新银行卡的信息
+    int updateBankInfo(BankCardInfo bankCardInfo );
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sps.dao.merchant.write.SpsBalanceWriteMapper" >
+	<insert id="insertBalance" parameterType="org.sps.entity.merchant.SpsChannelBalance" useGeneratedKeys="true" keyProperty="id">
+		INSERT  INTO  sps_balance
+		(
+			b_balance,
+			b_user_no,
+			b_usertype,
+			create_time,
+			update_time
+		)
+		VALUES
+		(
+			#{balance,jdbcType=DECIMAL},
+			#{userNo,jdbcType=VARCHAR},
+			#{userType,jdbcType=INTEGER},
+			#{createTime,jdbcType=TIMESTAMP},
+			#{updateTime,jdbcType=TIMESTAMP}
+		)
+
+	</insert>
+	<update id="updateBalance" >
+		UPDATE  sps_balance
+		SET
+			b_balance=#{balance,jdbcType=DECIMAL},
+			update_time=#{updateTime,jdbcType=TIMESTAMP}
+		  WHERE
+		  	b_id=#{id,jdbcType=INTEGER}
+	</update>
+</mapper>

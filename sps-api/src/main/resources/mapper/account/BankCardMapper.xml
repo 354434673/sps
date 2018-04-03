@@ -21,6 +21,9 @@
 	<result column="user_mark" property="userMark" jdbcType="INTEGER" />
 	<result column="flag" property="flag" jdbcType="INTEGER" />
 	<result column="b_card_type" property="cardType" jdbcType="VARCHAR" />
+	<result column="b_bank_code" property="bankCode" jdbcType="VARCHAR" />
+	<result column="b_bank_pic" property="bankPic" jdbcType="VARCHAR" />
+	<result column="b_bank_name" property="bankName" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="selectByUserName"   resultType="String">
 			SELECT
@@ -90,4 +93,16 @@
 	  	WHERE
 			channl_num=#{customerId} and flag=0
 	</select>
+
+	<update id="updateBankInfo" parameterType="com.sps.entity.account.BankCardInfo">
+		UPDATE
+				sps_bank
+		SET
+				b_card_type=#{cardType,jdbcType=VARCHAR},
+				b_bank_code=#{bankCode,jdbcType=VARCHAR},
+				b_bank_pic=#{bankPic,jdbcType=VARCHAR},
+				b_bank_name=#{bankName,jdbcType=VARCHAR}
+		WHERE
+				 channl_num=#{channlNum}
+	</update>
 </mapper>

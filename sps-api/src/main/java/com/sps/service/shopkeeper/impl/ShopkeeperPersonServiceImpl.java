@@ -19,6 +19,8 @@ import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import com.sps.entity.shopkeeper.SpsShopkeeperPic;
+import com.sps.service.goods.BrandService;
+import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 import com.sps.entity.shopkeeper.vo.SpsShopFindPersonInfoVo;import com.sps.service.goods.BrandService;
 import com.sps.service.shopkeeper.ShopkeeperPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,14 +62,10 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
         return spsShopkeeperPersonalMapper.findListAllWithMap(map);
     }
 
+
     @Override
     public SpsShopFindPersonInfoVo findEntityByCustomerNum(String customerNum) {
         return spsShopkeeperPersonalMapper.findEntityByCustomerNum(customerNum);
-    }
-
-    @Override
-    public SpsShopkeeperPersonal findByCustomerNum(String shopkeeperNum) {
-        return spsShopkeeperPersonalMapper.findByCustomerNum(shopkeeperNum);
     }
 
     @Override
@@ -105,7 +103,10 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
         int n = spsShopkeeperPicDao.insert(spsShopkeeperPic);
         return m > 0 && n > 0 ? true : false;
     }
-
+    @Override
+    public SpsShopkeeperPersonal findByCustomerNum(String shopkeeperNum) {
+        return spsShopkeeperPersonalMapper.findByCustomerNum(shopkeeperNum);
+    }
     @Override
     public Boolean saveHouseInfo(SpsShopkeeperHouseProperty spsShopkeeperHouseProperty,List<String> lists) {
         int m = houseDao.saveHouseInfo(spsShopkeeperHouseProperty);
