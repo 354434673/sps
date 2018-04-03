@@ -93,6 +93,65 @@
 	  	WHERE
 			channl_num=#{customerId} and flag=0
 	</select>
+	<insert id="insertBankCardInfo"  parameterType="com.sps.entity.account.BankCardInfo"  useGeneratedKeys="true" keyProperty="id" >
+
+		insert into sps_bank
+		(
+		b_name,
+		b_accounts,
+		b_identity,
+		b_phone,
+		b_createtime,
+		b_updatetime,
+		b_bank,
+		b_state,
+		b_remark,
+		b_user_id,
+		b_user_name ,
+		channl_num,
+		b_available_balance,
+		b_trans_password,
+		user_mark,
+		flag
+		)
+		values (
+		#{name,jdbcType=VARCHAR},
+		#{accounts,jdbcType=VARCHAR},
+		#{identity,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP},
+		#{updatetime,jdbcType=TIMESTAMP},
+		#{bank,jdbcType=VARCHAR},
+		#{state,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR},
+		#{userId,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR},
+		#{channlNum,jdbcType=VARCHAR},
+		#{availableBalance,jdbcType=DECIMAL},
+		#{transPassword,jdbcType=VARCHAR},
+		#{userMark,jdbcType=INTEGER},
+		#{flag,jdbcType=INTEGER}
+		)
+	</insert>
+	<update id="deleteBankCard" parameterType="String">
+		UPDATE
+				sps_bank
+		  SET
+		  		flag=1
+		  	WHERE  	b_user_id=#{userId}
+	</update>
+
+	<select id="selectByCustomerId" parameterType="String" resultMap="BaseResultMap">
+		SELECT
+			b_accounts,
+			b_name,
+			b_bank,
+			b_card_type
+	  	FROM
+			sps_bank
+	  	WHERE
+			channl_num=#{customerId} and flag=0
+	</select>
 	<update id="updateBankInfo" parameterType="com.sps.entity.account.BankCardInfo">
 		UPDATE
 				sps_bank

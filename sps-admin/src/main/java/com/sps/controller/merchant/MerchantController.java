@@ -1,5 +1,6 @@
 package com.sps.controller.merchant;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +31,7 @@ import org.sps.service.merchant.write.ChannelWriteService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sps.common.OssUtil;
 import com.sps.dao.user.SpsRoleMapper;
 import com.sps.entity.user.SpsRole;
 import com.sps.entity.user.SpsRoleExample;
@@ -427,23 +429,27 @@ public class MerchantController {
 	 * @throws
 	 */
 	@RequestMapping(value="/uploadPic")
-	public HashMap<String, Object> uploadPic(@RequestParam(value = "file", required = false) MultipartFile[] file,
+	public HashMap<String, Object> uploadPic(@RequestParam(value = "file", required = false) MultipartFile file,
 		String type,String accept, String status, Integer types, String channelNum,  HttpServletRequest request){
 		
 		HashMap<String, Object> uploadPic = null;
-        //String realPath = request.getSession().getServletContext().getRealPath("upload/"); //项目路径
-		String realPath = System.getProperty("user.dir")+"/src/main/webapp/upload/";
-        String filePath = status+"/"+type+"/"+channelNum+"/"+accept+"/";
-        String path = "C:/development/sps/sps/sps-admin/src/main/webapp/upload/"+status+"/"+type+"/"+channelNum+"/"+accept+"/";
 		
-		for (MultipartFile multipartFile : file) {
-			String newName = CommonUtil.getFileName(multipartFile);
-
-			uploadPic = uploadService.uploadPic(filePath, types, multipartFile.getOriginalFilename(),
-									newName, 0, channelNum);
-			if(uploadPic.get("state").equals("success")){//插入成功后才上传
-				CommonUtil.uploadPicture(multipartFile, realPath+filePath, newName);
-			}
+		try {
+			OssUtil ossUtil = new OssUtil();
+			
+			String uploadImg2Oss = ossUtil.uploadImg2Oss(file);
+			
+			String imgUrl = ossUtil.getImgUrl(uploadImg2Oss); 
+			
+			String[] split = imgUrl.split("\\?");  
+			
+			uploadPic = uploadService.uploadPic(split[0], types, file.getOriginalFilename(),
+					uploadImg2Oss, 0, channelNum);
+/*			for (MultipartFile multipartFile : file) {
+			}*/
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return uploadPic;
 	}

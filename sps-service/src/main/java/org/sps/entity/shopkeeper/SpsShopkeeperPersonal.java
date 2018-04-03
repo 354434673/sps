@@ -37,6 +37,18 @@ public class SpsShopkeeperPersonal implements Serializable{
 
     private String personalLivingConditionOther;
 
+    private String personalLivingProvinceName;
+
+    private String personalLivingProvinceCode;
+
+    private String personalLivingCityName;
+
+    private String personalLivingCityCode;
+
+    private String personalLivingAreaName;
+
+    private String personalLivingAreaCode;
+
     private String personalLivingAddress;
 
     private String personalNoneCorp;
@@ -161,6 +173,54 @@ public class SpsShopkeeperPersonal implements Serializable{
 
     public void setPersonalLivingConditionOther(String personalLivingConditionOther) {
         this.personalLivingConditionOther = personalLivingConditionOther == null ? null : personalLivingConditionOther.trim();
+    }
+
+    public String getPersonalLivingProvinceName() {
+        return personalLivingProvinceName;
+    }
+
+    public void setPersonalLivingProvinceName(String personalLivingProvinceName) {
+        this.personalLivingProvinceName = personalLivingProvinceName == null ? null : personalLivingProvinceName.trim();
+    }
+
+    public String getPersonalLivingProvinceCode() {
+        return personalLivingProvinceCode;
+    }
+
+    public void setPersonalLivingProvinceCode(String personalLivingProvinceCode) {
+        this.personalLivingProvinceCode = personalLivingProvinceCode == null ? null : personalLivingProvinceCode.trim();
+    }
+
+    public String getPersonalLivingCityName() {
+        return personalLivingCityName;
+    }
+
+    public void setPersonalLivingCityName(String personalLivingCityName) {
+        this.personalLivingCityName = personalLivingCityName == null ? null : personalLivingCityName.trim();
+    }
+
+    public String getPersonalLivingCityCode() {
+        return personalLivingCityCode;
+    }
+
+    public void setPersonalLivingCityCode(String personalLivingCityCode) {
+        this.personalLivingCityCode = personalLivingCityCode == null ? null : personalLivingCityCode.trim();
+    }
+
+    public String getPersonalLivingAreaName() {
+        return personalLivingAreaName;
+    }
+
+    public void setPersonalLivingAreaName(String personalLivingAreaName) {
+        this.personalLivingAreaName = personalLivingAreaName == null ? null : personalLivingAreaName.trim();
+    }
+
+    public String getPersonalLivingAreaCode() {
+        return personalLivingAreaCode;
+    }
+
+    public void setPersonalLivingAreaCode(String personalLivingAreaCode) {
+        this.personalLivingAreaCode = personalLivingAreaCode == null ? null : personalLivingAreaCode.trim();
     }
 
     public String getPersonalLivingAddress() {

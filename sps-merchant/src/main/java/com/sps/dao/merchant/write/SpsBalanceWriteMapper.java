@@ -2,7 +2,6 @@ package com.sps.dao.merchant.write;
 
 import org.apache.ibatis.annotations.Param;
 import org.sps.entity.merchant.SpsChannelBalance;
-
 import java.math.BigDecimal;
 import java.util.Date;
 

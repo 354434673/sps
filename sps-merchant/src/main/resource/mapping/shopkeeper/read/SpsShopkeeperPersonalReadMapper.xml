@@ -16,6 +16,12 @@
     <result column="personal_placeOfDomicile" property="personalPlaceofdomicile" jdbcType="VARCHAR" />
     <result column="personal_living_condition" property="personalLivingCondition" jdbcType="VARCHAR" />
     <result column="personal_living_condition_other" property="personalLivingConditionOther" jdbcType="VARCHAR" />
+    <result column="personal_living_province_name" property="personalLivingProvinceName" jdbcType="VARCHAR" />
+    <result column="personal_living_province_code" property="personalLivingProvinceCode" jdbcType="VARCHAR" />
+    <result column="personal_living_city_name" property="personalLivingCityName" jdbcType="VARCHAR" />
+    <result column="personal_living_city_code" property="personalLivingCityCode" jdbcType="VARCHAR" />
+    <result column="personal_living_area_name" property="personalLivingAreaName" jdbcType="VARCHAR" />
+    <result column="personal_living_area_code" property="personalLivingAreaCode" jdbcType="VARCHAR" />
     <result column="personal_living_address" property="personalLivingAddress" jdbcType="VARCHAR" />
     <result column="personal_none_corp" property="personalNoneCorp" jdbcType="VARCHAR" />
     <result column="personal_nickname" property="personalNickname" jdbcType="VARCHAR" />
@@ -57,7 +63,9 @@
     personal_id, personal_client_name, personal_sex, personal_idCard, personal_idCard_validity_start, 
     personal_idCard_validity_end, personal_licence_issuing_authority, personal_age, personal_marital_status, 
     personal_phone, personal_phone_password, personal_placeOfDomicile, personal_living_condition, 
-    personal_living_condition_other, personal_living_address, personal_none_corp, personal_nickname, 
+    personal_living_condition_other, personal_living_province_name, personal_living_province_code, 
+    personal_living_city_name, personal_living_city_code, personal_living_area_name, 
+    personal_living_area_code, personal_living_address, personal_none_corp, personal_nickname, 
     personal_username, personal_creat_time, personal_update_time, shopkeeper_customerId
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperPersonalExample" >

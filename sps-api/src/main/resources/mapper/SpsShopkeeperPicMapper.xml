@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsShopkeeperPic">
+  <resultMap id="BaseResultMap" type="SpsShopkeeperPic">
+    <id column="pic_id" jdbcType="INTEGER" property="picId" />
+    <result column="pic_src" jdbcType="VARCHAR" property="picSrc" />
+    <result column="pic_type" jdbcType="INTEGER" property="picType" />
+    <result column="pic_upload_time" jdbcType="TIMESTAMP" property="picUploadTime" />
+    <result column="pic_old_name" jdbcType="VARCHAR" property="picOldName" />
+    <result column="pic_new_name" jdbcType="VARCHAR" property="picNewName" />
+    <result column="pic_state" jdbcType="INTEGER" property="picState" />
+    <result column="pic_creat_time" jdbcType="TIMESTAMP" property="picCreatTime" />
+    <result column="pic_update_time" jdbcType="TIMESTAMP" property="picUpdateTime" />
+    <result column="shopkeeper_customerId" jdbcType="VARCHAR" property="shopkeeperCustomerid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pic_id, pic_src, pic_type, pic_upload_time, pic_old_name, pic_new_name, pic_state, 
+    pic_creat_time, pic_update_time, shopkeeper_customerId
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_pic
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_shopkeeper_pic
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsShopkeeperPic">
+    insert into sps_shopkeeper_pic (pic_id, pic_src, pic_type, 
+      pic_upload_time, pic_old_name, pic_new_name, 
+      pic_state, pic_creat_time, pic_update_time, 
+      shopkeeper_customerId)
+    values (#{picId,jdbcType=INTEGER}, #{picSrc,jdbcType=VARCHAR}, #{picType,jdbcType=INTEGER}, 
+      #{picUploadTime,jdbcType=TIMESTAMP}, #{picOldName,jdbcType=VARCHAR}, #{picNewName,jdbcType=VARCHAR}, 
+      #{picState,jdbcType=INTEGER}, #{picCreatTime,jdbcType=TIMESTAMP}, #{picUpdateTime,jdbcType=TIMESTAMP}, 
+      #{shopkeeperCustomerid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="SpsShopkeeperPic">
+    insert into sps_shopkeeper_pic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="picId != null">
+        pic_id,
+      </if>
+      <if test="picSrc != null">
+        pic_src,
+      </if>
+      <if test="picType != null">
+        pic_type,
+      </if>
+      <if test="picUploadTime != null">
+        pic_upload_time,
+      </if>
+      <if test="picOldName != null">
+        pic_old_name,
+      </if>
+      <if test="picNewName != null">
+        pic_new_name,
+      </if>
+      <if test="picState != null">
+        pic_state,
+      </if>
+      <if test="picCreatTime != null">
+        pic_creat_time,
+      </if>
+      <if test="picUpdateTime != null">
+        pic_update_time,
+      </if>
+      <if test="shopkeeperCustomerid != null">
+        shopkeeper_customerId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="picId != null">
+        #{picId,jdbcType=INTEGER},
+      </if>
+      <if test="picSrc != null">
+        #{picSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="picType != null">
+        #{picType,jdbcType=INTEGER},
+      </if>
+      <if test="picUploadTime != null">
+        #{picUploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picOldName != null">
+        #{picOldName,jdbcType=VARCHAR},
+      </if>
+      <if test="picNewName != null">
+        #{picNewName,jdbcType=VARCHAR},
+      </if>
+      <if test="picState != null">
+        #{picState,jdbcType=INTEGER},
+      </if>
+      <if test="picCreatTime != null">
+        #{picCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picUpdateTime != null">
+        #{picUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopkeeperCustomerid != null">
+        #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="SpsShopkeeperPic">
+    update sps_shopkeeper_pic
+    <set>
+      <if test="picSrc != null">
+        pic_src = #{picSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="picType != null">
+        pic_type = #{picType,jdbcType=INTEGER},
+      </if>
+      <if test="picUploadTime != null">
+        pic_upload_time = #{picUploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picOldName != null">
+        pic_old_name = #{picOldName,jdbcType=VARCHAR},
+      </if>
+      <if test="picNewName != null">
+        pic_new_name = #{picNewName,jdbcType=VARCHAR},
+      </if>
+      <if test="picState != null">
+        pic_state = #{picState,jdbcType=INTEGER},
+      </if>
+      <if test="picCreatTime != null">
+        pic_creat_time = #{picCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picUpdateTime != null">
+        pic_update_time = #{picUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopkeeperCustomerid != null">
+        shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsShopkeeperPic">
+    update sps_shopkeeper_pic
+    set pic_src = #{picSrc,jdbcType=VARCHAR},
+      pic_type = #{picType,jdbcType=INTEGER},
+      pic_upload_time = #{picUploadTime,jdbcType=TIMESTAMP},
+      pic_old_name = #{picOldName,jdbcType=VARCHAR},
+      pic_new_name = #{picNewName,jdbcType=VARCHAR},
+      pic_state = #{picState,jdbcType=INTEGER},
+      pic_creat_time = #{picCreatTime,jdbcType=TIMESTAMP},
+      pic_update_time = #{picUpdateTime,jdbcType=TIMESTAMP},
+      shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR}
+    where pic_id = #{picId,jdbcType=INTEGER}
+  </update>
+  <select id="findByNum" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_shopkeeper_pic
+    where shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR}
+  </select>
+</mapper>

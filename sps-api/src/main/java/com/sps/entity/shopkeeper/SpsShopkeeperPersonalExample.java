@@ -1065,6 +1065,426 @@ public class SpsShopkeeperPersonalExample {
             return (Criteria) this;
         }
 
+        public Criteria andPersonalLivingProvinceNameIsNull() {
+            addCriterion("personal_living_province_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameIsNotNull() {
+            addCriterion("personal_living_province_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameEqualTo(String value) {
+            addCriterion("personal_living_province_name =", value, "personalLivingProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameNotEqualTo(String value) {
+            addCriterion("personal_living_province_name <>", value, "personalLivingProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameGreaterThan(String value) {
+            addCriterion("personal_living_province_name >", value, "personalLivingProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameGreaterThanOrEqualTo(String value) {
+            addCriterion("personal_living_province_name >=", value, "personalLivingProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameLessThan(String value) {
+            addCriterion("personal_living_province_name <", value, "personalLivingProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameLessThanOrEqualTo(String value) {
+            addCriterion("personal_living_province_name <=", value, "personalLivingProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameLike(String value) {
+            addCriterion("personal_living_province_name like", value, "personalLivingProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameNotLike(String value) {
+            addCriterion("personal_living_province_name not like", value, "personalLivingProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameIn(List<String> values) {
+            addCriterion("personal_living_province_name in", values, "personalLivingProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameNotIn(List<String> values) {
+            addCriterion("personal_living_province_name not in", values, "personalLivingProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameBetween(String value1, String value2) {
+            addCriterion("personal_living_province_name between", value1, value2, "personalLivingProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceNameNotBetween(String value1, String value2) {
+            addCriterion("personal_living_province_name not between", value1, value2, "personalLivingProvinceName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeIsNull() {
+            addCriterion("personal_living_province_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeIsNotNull() {
+            addCriterion("personal_living_province_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeEqualTo(String value) {
+            addCriterion("personal_living_province_code =", value, "personalLivingProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeNotEqualTo(String value) {
+            addCriterion("personal_living_province_code <>", value, "personalLivingProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeGreaterThan(String value) {
+            addCriterion("personal_living_province_code >", value, "personalLivingProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("personal_living_province_code >=", value, "personalLivingProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeLessThan(String value) {
+            addCriterion("personal_living_province_code <", value, "personalLivingProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeLessThanOrEqualTo(String value) {
+            addCriterion("personal_living_province_code <=", value, "personalLivingProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeLike(String value) {
+            addCriterion("personal_living_province_code like", value, "personalLivingProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeNotLike(String value) {
+            addCriterion("personal_living_province_code not like", value, "personalLivingProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeIn(List<String> values) {
+            addCriterion("personal_living_province_code in", values, "personalLivingProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeNotIn(List<String> values) {
+            addCriterion("personal_living_province_code not in", values, "personalLivingProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeBetween(String value1, String value2) {
+            addCriterion("personal_living_province_code between", value1, value2, "personalLivingProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingProvinceCodeNotBetween(String value1, String value2) {
+            addCriterion("personal_living_province_code not between", value1, value2, "personalLivingProvinceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameIsNull() {
+            addCriterion("personal_living_city_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameIsNotNull() {
+            addCriterion("personal_living_city_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameEqualTo(String value) {
+            addCriterion("personal_living_city_name =", value, "personalLivingCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameNotEqualTo(String value) {
+            addCriterion("personal_living_city_name <>", value, "personalLivingCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameGreaterThan(String value) {
+            addCriterion("personal_living_city_name >", value, "personalLivingCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameGreaterThanOrEqualTo(String value) {
+            addCriterion("personal_living_city_name >=", value, "personalLivingCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameLessThan(String value) {
+            addCriterion("personal_living_city_name <", value, "personalLivingCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameLessThanOrEqualTo(String value) {
+            addCriterion("personal_living_city_name <=", value, "personalLivingCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameLike(String value) {
+            addCriterion("personal_living_city_name like", value, "personalLivingCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameNotLike(String value) {
+            addCriterion("personal_living_city_name not like", value, "personalLivingCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameIn(List<String> values) {
+            addCriterion("personal_living_city_name in", values, "personalLivingCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameNotIn(List<String> values) {
+            addCriterion("personal_living_city_name not in", values, "personalLivingCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameBetween(String value1, String value2) {
+            addCriterion("personal_living_city_name between", value1, value2, "personalLivingCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityNameNotBetween(String value1, String value2) {
+            addCriterion("personal_living_city_name not between", value1, value2, "personalLivingCityName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeIsNull() {
+            addCriterion("personal_living_city_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeIsNotNull() {
+            addCriterion("personal_living_city_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeEqualTo(String value) {
+            addCriterion("personal_living_city_code =", value, "personalLivingCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeNotEqualTo(String value) {
+            addCriterion("personal_living_city_code <>", value, "personalLivingCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeGreaterThan(String value) {
+            addCriterion("personal_living_city_code >", value, "personalLivingCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("personal_living_city_code >=", value, "personalLivingCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeLessThan(String value) {
+            addCriterion("personal_living_city_code <", value, "personalLivingCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeLessThanOrEqualTo(String value) {
+            addCriterion("personal_living_city_code <=", value, "personalLivingCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeLike(String value) {
+            addCriterion("personal_living_city_code like", value, "personalLivingCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeNotLike(String value) {
+            addCriterion("personal_living_city_code not like", value, "personalLivingCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeIn(List<String> values) {
+            addCriterion("personal_living_city_code in", values, "personalLivingCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeNotIn(List<String> values) {
+            addCriterion("personal_living_city_code not in", values, "personalLivingCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeBetween(String value1, String value2) {
+            addCriterion("personal_living_city_code between", value1, value2, "personalLivingCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingCityCodeNotBetween(String value1, String value2) {
+            addCriterion("personal_living_city_code not between", value1, value2, "personalLivingCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameIsNull() {
+            addCriterion("personal_living_area_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameIsNotNull() {
+            addCriterion("personal_living_area_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameEqualTo(String value) {
+            addCriterion("personal_living_area_name =", value, "personalLivingAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameNotEqualTo(String value) {
+            addCriterion("personal_living_area_name <>", value, "personalLivingAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameGreaterThan(String value) {
+            addCriterion("personal_living_area_name >", value, "personalLivingAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameGreaterThanOrEqualTo(String value) {
+            addCriterion("personal_living_area_name >=", value, "personalLivingAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameLessThan(String value) {
+            addCriterion("personal_living_area_name <", value, "personalLivingAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameLessThanOrEqualTo(String value) {
+            addCriterion("personal_living_area_name <=", value, "personalLivingAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameLike(String value) {
+            addCriterion("personal_living_area_name like", value, "personalLivingAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameNotLike(String value) {
+            addCriterion("personal_living_area_name not like", value, "personalLivingAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameIn(List<String> values) {
+            addCriterion("personal_living_area_name in", values, "personalLivingAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameNotIn(List<String> values) {
+            addCriterion("personal_living_area_name not in", values, "personalLivingAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameBetween(String value1, String value2) {
+            addCriterion("personal_living_area_name between", value1, value2, "personalLivingAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaNameNotBetween(String value1, String value2) {
+            addCriterion("personal_living_area_name not between", value1, value2, "personalLivingAreaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeIsNull() {
+            addCriterion("personal_living_area_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeIsNotNull() {
+            addCriterion("personal_living_area_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeEqualTo(String value) {
+            addCriterion("personal_living_area_code =", value, "personalLivingAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeNotEqualTo(String value) {
+            addCriterion("personal_living_area_code <>", value, "personalLivingAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeGreaterThan(String value) {
+            addCriterion("personal_living_area_code >", value, "personalLivingAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("personal_living_area_code >=", value, "personalLivingAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeLessThan(String value) {
+            addCriterion("personal_living_area_code <", value, "personalLivingAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeLessThanOrEqualTo(String value) {
+            addCriterion("personal_living_area_code <=", value, "personalLivingAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeLike(String value) {
+            addCriterion("personal_living_area_code like", value, "personalLivingAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeNotLike(String value) {
+            addCriterion("personal_living_area_code not like", value, "personalLivingAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeIn(List<String> values) {
+            addCriterion("personal_living_area_code in", values, "personalLivingAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeNotIn(List<String> values) {
+            addCriterion("personal_living_area_code not in", values, "personalLivingAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeBetween(String value1, String value2) {
+            addCriterion("personal_living_area_code between", value1, value2, "personalLivingAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonalLivingAreaCodeNotBetween(String value1, String value2) {
+            addCriterion("personal_living_area_code not between", value1, value2, "personalLivingAreaCode");
+            return (Criteria) this;
+        }
+
         public Criteria andPersonalLivingAddressIsNull() {
             addCriterion("personal_living_address is null");
             return (Criteria) this;

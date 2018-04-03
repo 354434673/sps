@@ -266,9 +266,9 @@
 
 
 
-  <select id="findEntityByCustomerNum" parameterType="String" resultMap="BaseResultMap">
+  <select id="findEntityByCustomerNum" parameterType="String" resultType="com.sps.entity.shopkeeper.vo.SpsShopFindPersonInfoVo">
      SELECT
-    sp.personal_nickname,
+    sp.personal_nickname AS personalNickname,
     ssp.pic_src AS url,
     b.balance_amount AS balanceAmount,
     b.balance_amount_usable AS amountUsable,
@@ -298,16 +298,27 @@
     WHERE
     datediff(repay_date,NOW()) <![CDATA[<=]]> 7
     AND custome_num = #{customerNum,jdbcType=VARCHAR}
-    ) AS weekRepayment
+    ) AS weekRepayment,
+    sps.shopkeeper_state AS shopkeeperState
     FROM
     sps_shopkeeper_personal sp
     LEFT JOIN sps_shopkeeper_pic ssp ON sp.shopkeeper_customerId = ssp.shopkeeper_customerId
     LEFT JOIN balance b ON sp.shopkeeper_customerId = b.balance_client_num
     LEFT JOIN sps_balance sb ON sb.b_user_no = b.balance_client_num
+    LEFT JOIN sps_shopkeeper sps ON sps.shopkeeper_customerId = sp.shopkeeper_customerId
     WHERE
     sp.shopkeeper_customerId = #{customerNum,jdbcType=VARCHAR}
-    AND ssp.pic_type = 7;
-  </select>
+    AND ssp.pic_type = 7
+    GROUP BY personalNickname
 
+  </select>
+  <select id="findByCustomerNum" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    sps_shopkeeper_personal
+    WHERE
+    shopkeeper_customerId = #{shopkeeperNum,jdbcType=VARCHAR}
+  </select>
 
 </mapper>

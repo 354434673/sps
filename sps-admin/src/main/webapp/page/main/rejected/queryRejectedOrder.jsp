@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>退货管理</title>
+<title>退货查询</title>
 <!-- 退货查询 -->
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -31,10 +31,6 @@
 			    <div class="layui-input-inline">
 			      <input id="name" type="text" name="name"  lay-verify="" placeholder="请输入店主名称" autocomplete="off" class="layui-input">
 			    </div>
-			    <label class="layui-form-label">店铺名称:</label>
-			    <div class="layui-input-inline">
-			      <input id="selfname" type="text" name="selfname"  lay-verify="" placeholder="请输入店铺名称" autocomplete="off" class="layui-input">
-			    </div>
 			    <label class="layui-form-label">订单编号:</label>
 			    <div class="layui-input-inline">
 			      <input id="orderid" type="text" name="orderid"  lay-verify="" placeholder="请输入订单编号" autocomplete="off" class="layui-input">
@@ -45,6 +41,21 @@
 				     <label class="layui-form-label">申请日期:</label>
 					    <div class="layui-input-inline">
 					      <input id="time" type="text" name="startTime"  lay-verify="" placeholder="选择范围" autocomplete="off" class="layui-input">
+					    </div>
+					  <label class="layui-form-label" >核心商户状态:</label>
+					    <div class="layui-input-inline" >
+					    <select lay-filter="channelState"> 
+						  <option value=""></option>
+						  <option value="1">待确认</option>
+						  <option value="2">已拒绝</option>
+						  <option value="11">已取消</option>
+						  <option value="5">待退款</option>
+						  <option value="6">退货完成</option>
+						  <option value="3">运营审核中</option>
+						  <option value="12">待确认收货</option>
+						  <option value="4">运营审核不通过</option>
+						  <option value="7">待上传发货物流</option>
+				      	</select>
 					    </div>
 				</div>
 			</div> 
@@ -102,8 +113,10 @@
 	 			  ,{field: 'orderid', title: '订单编号', align:'center',sort:true}
 			      ,{field: 'name', title: '店主名称', align:'center'}
 			      ,{field: 'selfname', title: '店铺名称', align:'center'}
+			      ,{field: 'shopkeeper', title: '核心商户名称', align:'center'}
 			      ,{field: 'money', title: '退款金额',align:'center'}
 			      ,{field: 'createtime', title: '退货申请日期', templet:'#date', width:230, align:'center'}
+			      ,{field: 'flag', title: '状态', width:230, align:'center'}
 			      ,{field: 'tool', title: '操作', width:140,align:'center',toolbar:'#bar'}
 			    ]]
 			  });

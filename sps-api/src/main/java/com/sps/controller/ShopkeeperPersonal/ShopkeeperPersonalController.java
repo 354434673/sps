@@ -1,29 +1,24 @@
 package com.sps.controller.ShopkeeperPersonal;
 
-import com.sps.common.Common;
-import com.sps.common.EntityUtiles;
-import com.sps.common.Message;
-import com.sps.common.ReturnInfo;
-import com.sps.entity.goods.SpsPurchaseOrder;
-import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
-import com.sps.service.goods.ApiGoodShopService;
-import com.sps.service.goods.GoodShopSkuService;
-import com.sps.service.goods.PurchaseOrderService;
+import com.alibaba.dubbo.common.utils.StringUtils;
+import com.alibaba.fastjson.JSON;
+import com.sps.common.*;
+import com.sps.controller.BaseApi;
+import com.sps.entity.shopkeeper.vo.SpsShopFindPersonInfoVo;
+import com.sps.enums.ReturnCode;
 import com.sps.service.shopkeeper.ShopkeeperPersonService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/shopkeeperPersonal")
-public class ShopkeeperPersonalController {
+public class ShopkeeperPersonalController extends BaseApi {
+
+    private static Logger log = LoggerFactory.getLogger(ShopkeeperPersonalController.class);
 
     @Resource
     private ShopkeeperPersonService shopkeeperPersonService;
@@ -36,27 +31,27 @@ public class ShopkeeperPersonalController {
      *
      * @return
      */
-    @RequestMapping(value = "/findPersonInfo", method = RequestMethod.POST)
-    @ResponseBody
-    public ReturnInfo findSkuById(String customerNum) {
+    @RequestMapping(value = "/findPersonInfo")
+    public JsonResult findSkuById(String customerNum) {
+        log.info("start--根据用户ID查询用户信息,请求参数"+customerNum);
         ReturnInfo ri = new ReturnInfo();
-        if ("0".equals(ri.getCode())) return ri;
+        if(StringUtils.isBlank(customerNum)){
+            return returnFaild(ReturnCode.ERROR_PARAMS_NOT_NULL.getMsg());
+        }
         try {
-            SpsShopkeeperPersonal personInfo = shopkeeperPersonService.findEntityByCustomerNum(customerNum);
-            String[] pro = new String[]{"personalNickname","url","balanceAmount","amountUsable","balance","repayAmount","threeDayRepayment","weekRepayment"};
-            if (personInfo != null) {
-                ri.setResult(EntityUtiles.reloadEntityPropertyValue(personInfo, pro));
-                ri.setCode(Message.SUCCESS_CODE);
-                ri.setMsg(Message.API_SUCCESS_MSG);
-                ri.setSuccess(Message.API_SUCCESS_FLAG);
+            SpsShopFindPersonInfoVo personInfo = shopkeeperPersonService.findEntityByCustomerNum(customerNum);
+            if(personInfo == null){
+                return returnFaild(ReturnCode.ERROR_SELECT_IS_NULL.getMsg());
             }
+            log.info("start--根据用户ID查询用户信息,返回参数"+ JSON.toJSONString(personInfo));
+            return returnSuccess(personInfo);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info("end--根据用户ID查询用户信息异常"+e.getMessage());
             ri.setCode(Message.FAILURE_CODE);
             ri.setMsg(Message.FAILURE_MSG);
             ri.setSuccess(Message.API_ERROR_FLAG);
+           return returnFaild();
         }
-        return ri;
     }
 
 
