@@ -176,15 +176,50 @@ public class authenticationController {
 		return backIdCardResult;
 	}
 	@RequestMapping("/saveFaceDetail")
-	public JsonResult<AuthFaceIdCard> saveFaceDetail(String clientNum, AuthFaceDetail arg0){
+	public JsonResult<AuthFaceIdCard> saveFaceDetail(String clientNum, AuthFaceDetail arg0, String livingImage3){
 		
-		JsonResult saveFaceDetail = null;
+		JsonResult saveFaceDetail = new JsonResult<>();
 		
 		if(!StringUtil.isEmpty(clientNum)){
 			
 			saveFaceDetail = jzfqAuthApi.saveFaceDetail(arg0 );
 					
 			String code = saveFaceDetail.getCode();
+			
+			if(code.equals("SUCCESS")){
+				SpsShopkeeperPic pic = null;
+				
+				pic = new SpsShopkeeperPic();
+				pic.setPicSrc(arg0.getLivingImage1());
+				
+				pic.setPicType(14);
+				
+				pic.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperPic(pic);
+				
+				pic = new SpsShopkeeperPic();
+				
+				pic.setPicSrc(arg0.getLivingImage2());
+				
+				pic.setPicType(15);
+				
+				pic.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperPic(pic);
+				
+				pic = new SpsShopkeeperPic();
+				
+				pic.setPicSrc(livingImage3);
+				
+				pic.setPicType(16);
+				
+				pic.setShopkeeperCustomerid(clientNum);
+				
+				shopkeeperService.insertSpsShopkeeperPic(pic);
+				
+				saveFaceDetail.setCode(Message.SUCCESS_CODE);
+			}
 		}else{
 			saveFaceDetail.setCode(Message.FAILURE_CODE);
 			saveFaceDetail.setMsg(Message.FAILURE_CLIENTNUM);
