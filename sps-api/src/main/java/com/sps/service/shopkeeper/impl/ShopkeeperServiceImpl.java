@@ -402,6 +402,8 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 		
 		example.createCriteria().andShopkeeperCustomeridEqualTo(shopkeeper.getShopkeeperCustomerid());
 		
+		int updateByExampleSelective = spsShopkeeperDao.updateByExampleSelective(shopkeeper, example);
+		
 		JSONObject shopApplyInfo = new JSONObject();
 
 		shopApplyInfo.put("shopCode", shopkeeper.getShopkeeperCustomerid());
@@ -422,7 +424,7 @@ public class ShopkeeperServiceImpl implements ShopkeeperService{
 
 		HttpClientUtil.doPostJson(URL_APPLY_UPDATE, JSON.toJSONString(data));
 
-		return spsShopkeeperDao.updateByExample(shopkeeper, example);
+		return updateByExampleSelective;
 	}
 	@Override
 	public HashMap<String, Object> insertShopkeeperInvitation(SpsShopkeeperInvitation invitation) {
