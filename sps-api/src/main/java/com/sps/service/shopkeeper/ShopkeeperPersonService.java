@@ -29,32 +29,6 @@ public interface ShopkeeperPersonService {
     List<SpsShopkeeperPersonal> findList(Map<String, Object> map);
 
 
-    SpsShopkeeperPersonal findEntityByCustomerNum(String customerNum);
-
-    /**
-     * 根据客户编号获取个人信息
-     * @param consumerId
-     * @return
-     */
-    SpsShopkeeperPersonal  findPerson(String  consumerId);
-    Boolean  saveSrc(Integer id,String src);
-    Boolean  updateNickName(Integer id,String nickName);
-
-    SpsShopkeeperPersonal getByPersonId(Integer id);
-
-    /**
-     * 保存车辆信息
-     * @param spsShopkeeperCarProperty
-     * @return
-     */
-    Boolean  saveCarInfo(SpsShopkeeperCarProperty spsShopkeeperCarProperty,String src);
-
-    /**
-     * 保存房屋信息
-     * @param spsShopkeeperHouseProperty
-     * @return
-     */
-    Boolean  saveHouseInfo(SpsShopkeeperHouseProperty spsShopkeeperHouseProperty,List<String> lists);
     SpsShopFindPersonInfoVo findEntityByCustomerNum(String customerNum);
 
     /**
@@ -65,7 +39,6 @@ public interface ShopkeeperPersonService {
     SpsShopkeeperPersonal  findPerson(String  consumerId);
     Boolean  saveSrc(Integer id,String src);
     Boolean  updateNickName(Integer id,String nickName);
-
     SpsShopkeeperPersonal getByPersonId(Integer id);
 
     /**
