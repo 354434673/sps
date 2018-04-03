@@ -61,14 +61,14 @@
     sps_shopkeeper_personal
     WHERE  shopkeeper_customerId=#{customerId}
   </select>
-    <update id="saveSrc"  >
+  <update id="saveSrc"  >
            UPDATE
               sps_shopkeeper_pic
             SET   pic_src=#{src,jdbcType=VARCHAR}
             WHERE
                 pic_id=#{id} AND  pic_type=11
     </update>
-    <update id="updateNickName"  >
+  <update id="updateNickName"  >
         UPDATE
           sps_shopkeeper_personal
         SET   personal_nickname=#{nickName}
@@ -614,7 +614,4 @@
       shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR}
     where personal_id = #{personalId,jdbcType=INTEGER}
   </update>
-  <select id="selectByConstomeId" parameterType="String" resultType="String">
-
-  </select>
 </mapper>
