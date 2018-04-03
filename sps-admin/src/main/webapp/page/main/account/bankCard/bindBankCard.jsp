@@ -158,7 +158,7 @@
         });
         lock = true;
     });
-  /*  $("#findSms").on("click",function(){
+   /* $("#findSms").on("click",function(){
      var mobile = $('#mobile').val().trim();
      if(mobile==''){
      layer.msg('手机号不可为空', {
@@ -166,11 +166,11 @@
      time: 1000 //2秒关闭（如果不配置，默认是3秒）
      });
      return ;
-     }*/
+     }
         //发送ajax请求
         $.ajax({
             data: {phone:mobile},
-            url: "<%=path%>/yopBingCard/getVerifyCode",//确认请求
+            url: "/yopBingCard/getVerifyCode",//确认请求
             type: 'post',
             dataType: 'json',
             async: false,
@@ -185,7 +185,7 @@
             }
         });
 
-    });
+    });*/
     //短信验证码确认请求
     function smsConfirm(layer,result,resendCount){
         layer.prompt(
@@ -202,22 +202,7 @@
                         lock =true;
                         return;
                     }
-                },
-                function(value, index, elem){
-                    layer.msg('短信验证码', {
-                        icon: 2,
-                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
-                    });
-
-                   var reg = new RegExp("^[0-9]{6}$");
-                    if(!reg.test(value)){
-                        layer.msg('请输入六位数字的短信验证码', {
-                            icon: 2,
-                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
-                        });
-                    }
-                    if(reg.test(value)){
-                        layer.close(index);
+                }, function(value, index, elem){
                         //发短信验证码确认情求
                         $.ajax({
                             data: {validatecode:value.trim(),requestNo:result.body},
@@ -226,6 +211,7 @@
                             dataType: 'json',
                             async: false,
                             success: function (res) {
+                                alert(res.code);
                                 var code =res.code;
                                 var  msg = res.msg;
                                 layer.msg(msg, {
@@ -250,7 +236,22 @@
                                 }
                             }
                         });
-                    }
+
+
+
+                   /* layer.msg('短信验证码', {
+                        icon: 2,
+                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                    });*/
+
+                  /* var reg = new RegExp("^[0-9]{6}$");
+                    if(!reg.test(value)){
+                        layer.msg('请输入六位数字的短信验证码', {
+                            icon: 2,
+                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                        });
+                    }*/
+
                 }
         );
     }
