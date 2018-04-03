@@ -193,18 +193,18 @@ public class heartController {
                             baseInfoJson.put("chnlTxNo", "1");
 
                             baseInfoJson.put("cooprProdCd", "010207");
-                            //渠道方代码 暂时不知道
+                            //渠道方代码
                             baseInfoJson.put("coperCd", "DF");
                             baseInfoJson.put("downpayment", firstMoney);
                             baseInfoJson.put("fixRateInd", "Y");
                             baseInfoJson.put("intAdjPct", "0");
-                            //起息日待定
+                            //起息日
                             baseInfoJson.put("intStartDt", DateUtil.dateGapDays(DateUtil.getNowDD(), 1));
                             baseInfoJson.put("isFree", "0");
                             baseInfoJson.put("isOverInterest", "0");
                             baseInfoJson.put("isSafe", "1");
                             baseInfoJson.put("loanInitState", "0");
-                            //申请用途待定
+                            //申请用途
                             baseInfoJson.put("loanPurpose", "进货贷款");
                             //下单区域省 待定
                             baseInfoJson.put("orderProvince", "北京");
@@ -235,12 +235,12 @@ public class heartController {
                             baseInfoJson.put("loanContactList", loanContactList);
                             //小B基本信息
                             JSONObject loanMerchant = new JSONObject();
-                            loanMerchant.put("areaStore", personInfo.getPersonalLivingAddress());
+                            loanMerchant.put("areaStore", company.getCompanyBusinessAreaName());
                             //区域编码
-                            loanMerchant.put("areaStoreCd", personInfo.getPersonalLivingAreaCode());
-                            loanMerchant.put("cityStore", personInfo.getPersonalLivingCityName());
+                            loanMerchant.put("areaStoreCd", company.getCompanyBusinessAreaCode());
+                            loanMerchant.put("cityStore", company.getCompanyBusinessCityName());
                             //市编码
-                            loanMerchant.put("cityStoreCd", personInfo.getPersonalLivingCityCode());
+                            loanMerchant.put("cityStoreCd", company.getCompanyBusinessCityCode());
                             //是否法人代表待定
                             loanMerchant.put("isLegalMan", "1");
                             //经纬度
@@ -258,7 +258,7 @@ public class heartController {
                             }
                             //营业执照
                             loanMerchant.put("licenseNo", "1");
-                            //经度也没有
+                            //经度
                             loanMerchant.put("longitude", company.getCompanyBusinessLng());
                             loanMerchant.put("merchantAddr", company.getCompanyBusinessAddr());
                             loanMerchant.put("merchantId", company.getCompanyId());

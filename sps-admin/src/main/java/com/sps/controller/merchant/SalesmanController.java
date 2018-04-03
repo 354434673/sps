@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.sps.entity.merchant.SpsChannelSalesman;
 import org.sps.service.merchant.read.ChannelSalesmanReadService;
 import org.sps.service.merchant.write.ChannelSalesmanWriteService;
+import org.sps.util.FinalUrl;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.juzifenqi.core.ServiceResult;
@@ -27,7 +28,6 @@ import com.juzifenqi.usercenter.service.ISmsCommonService;
 @RestController
 @RequestMapping("/salesman")
 public class SalesmanController {
-	private final String REQUEST_URL = "http://123.56.24.208:8480";
 	@Reference(check = false, group = "dianfu")
 	private ChannelSalesmanWriteService salesmanWrite;
 	@Reference(check = false, group = "dianfu")
@@ -44,7 +44,7 @@ public class SalesmanController {
 	@RequestMapping("insertSalesman")
 	public HashMap<String, Object> insertSalesman(SpsChannelSalesman salesman) {
 		
-		final String URL = REQUEST_URL +"/invitation.html?salemanPhone="+salesman.getSalesmanPhone();
+		final String URL = FinalUrl.REQUEST_URL +"/invitation.html?salemanPhone="+salesman.getSalesmanPhone();
 		
 		final String CONTENT = "【店付】业务员您好，以下为店主邀请链接，请妥善保存此链接:"+URL;
 		
@@ -56,10 +56,10 @@ public class SalesmanController {
 		
 		HashMap<String, Object> insertSalesman = salesmanWrite.insertSalesman(salesman);
 
-/*		if(insertSalesman.get("state").equals("success")){
+		if(insertSalesman.get("state").equals("success")){
 			//业务员添加成功后调用短信接口给业务员发送短信
 			ServiceResult<Boolean> sendCommonSms = iSmsCommonService.sendCommonSms(salesman.getSalesmanPhone(), CONTENT, 3);
-		}*/
+		}
 		return insertSalesman;
 	};
 

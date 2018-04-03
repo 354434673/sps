@@ -11,6 +11,7 @@ import org.sps.entity.merchant.SpsChannelSalesman;
 import org.sps.entity.merchant.SpsChannelSalesmanExample;
 import org.sps.service.merchant.write.ChannelSalesmanWriteService;
 import org.sps.util.FinalData;
+import org.sps.util.FinalUrl;
 import org.sps.util.HttpClientUtil;
 
 import com.alibaba.dubbo.config.annotation.Service;
@@ -21,7 +22,7 @@ import com.sps.dao.merchant.write.SpsChannelSalesmanWriteMapper;
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteService{
-	private static final String URL = "http://test1-spay.juzifenqi.com/sps/updateMerchant";
+	private static final String URL = FinalUrl.RISK_URL+"/sps/updateMerchant";
 	@Resource
 	private SpsChannelSalesmanWriteMapper salesmanWrite;
 	@Resource

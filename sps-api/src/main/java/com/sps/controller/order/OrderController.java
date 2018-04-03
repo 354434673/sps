@@ -171,17 +171,24 @@ public class OrderController {
      */
     @RequestMapping(value = "/orderList", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo orderList(String customerNum,String shopkeeperNum ) {
+    public ReturnInfo orderList(String customerNum,String type ) {
         ReturnInfo ri = new ReturnInfo();
         Map<String, Object> map = new HashMap<>();
         HashMap<String, Object> data = new HashMap<>();
         ArrayList<HashMap<String, Object>> result = new ArrayList<>();
         try {
             map.put("customerNum", customerNum);
-            map.put("shopkeeperNum", shopkeeperNum);
+            map.put("type", type);
             List<SpsOrder> orderList = orderService.findList(map);
             for (SpsOrder list : orderList) {
+                data.put("sumCount", list.getSumCount());
+                data.put("days", list.getDays());
+                data.put("url", list.getUrl());
+                data.put("id", list.getoId());
+                data.put("repayDate", list.getRepayDate());
                 data.put("orderid", list.getOrderid());
+                data.put("orderType", list.getFlag());
+                data.put("orderMoney", list.getMoney());
                 data.put("selfname", list.getSelfname());
                 data.put("scale", list.getScale());
                 data.put("remark", list.getRemark());

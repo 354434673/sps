@@ -3,6 +3,8 @@ package com.sps.controller.account;
 import com.alibaba.druid.support.logging.Log;
 import com.alibaba.druid.support.logging.LogFactory;
 import com.alibaba.dubbo.common.utils.StringUtils;
+import com.alibaba.fastjson.JSON;
+import com.ning.http.client.simple.HeaderMap;
 import com.sps.common.JsonResult;
 import com.sps.controller.BaseApi;
 import com.sps.enums.ReturnCode;
@@ -12,6 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 /**
@@ -53,7 +58,8 @@ public class AccountBalanceController extends BaseApi{
         try {
             BigDecimal balance = accountBalanceService.queryByCustomerId(customerId);
             log.info("end--获取用户余额，返回参数 "+balance.doubleValue());
-         return  returnSuccess(balance);
+            DecimalFormat df=new DecimalFormat("0.00");
+         return  returnSuccess( df.format(balance.doubleValue()).toString());
         } catch (Exception e){
             log.info("end--获取用户余额，异常 "+e.getMessage());
             return  returnFaild();

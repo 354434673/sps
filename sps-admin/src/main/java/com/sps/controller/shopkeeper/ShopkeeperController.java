@@ -24,6 +24,8 @@ import org.sps.entity.shopkeeper.SpsShopkeeperInvitation;
 import org.sps.service.shopkeeper.read.ShopkeeperReadService;
 import org.sps.service.shopkeeper.write.ShopkeeperWriteService;
 import org.sps.util.FinalData;
+import org.sps.util.FinalUrl;
+import org.sps.util.StringUtil;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.google.zxing.WriterException;
@@ -400,8 +402,15 @@ public class ShopkeeperController{
 	@RequestMapping(value = "/getQRcode")
 	public void getCode(HttpServletResponse response, HttpServletRequest request, String channelNum, String clientNum) {
 		try {
-			System.out.println(channelNum);
-			
+			if(StringUtil.isEmpty(channelNum) || StringUtil.isEmpty(clientNum)){
+				Subject subject = SecurityUtils.getSubject();
+				
+				String username = (String) subject.getPrincipal();
+				
+				String attribute = (String) subject.getSession().getAttribute(username);
+				
+				channelNum = attribute;
+			}
 			String serverName = request.getServerName();
 			
 			int serverPort = request.getServerPort();
@@ -412,7 +421,7 @@ public class ShopkeeperController{
 			
 /*			String content = serverName+":"+serverPort+"/"
 					+ contextPath+"/page/main/register.html";*/
-			String content = "http://123.56.24.208:8480/register.html?channelNum="+channelNum+"&clientNum="+clientNum;
+			String content = FinalUrl.REQUEST_URL+"/register.html?channelNum="+channelNum+"&clientNum="+clientNum;
 			
 			int[] size = new int[] { 430, 430 };
 			

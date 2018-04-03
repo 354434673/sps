@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sps.common.FinalUrl;
 import com.sps.common.HttpClientUtil;
 import com.sps.entity.order.SpsOrder;
 import org.springframework.stereotype.Service;
@@ -54,11 +55,11 @@ import com.sps.service.shopkeeper.ShopkeeperService;
  */
 @Service
 public class ShopkeeperServiceImpl implements ShopkeeperService{
-	private static final String URL_PERSONAL_INSERT = "http://test1-spay.juzifenqi.com/sps/insertShopPersonalInfo";
-	private static final String URL_PERSONAL_UPDATE = "http://test1-spay.juzifenqi.com/sps/updateaShopPersonalInfo";
-	private static final String URL_CONTACT_INSERT = "http://test1-spay.juzifenqi.com/sps/insertShopContactInfo";
-	private static final String URL_APPLY_UPDATE = "http://test1-spay.juzifenqi.com/sps/updateaShopApplyInfo";
-	private static final String URL_INSERT_COMPANY = "http://test1-spay.juzifenqi.com/sps/insertShopCompanyInfo";
+	private static final String URL_PERSONAL_INSERT = FinalUrl.RISK_URL+"/sps/insertShopPersonalInfo";
+	private static final String URL_PERSONAL_UPDATE = FinalUrl.RISK_URL+"/sps/updateaShopPersonalInfo";
+	private static final String URL_CONTACT_INSERT = FinalUrl.RISK_URL+"/sps/insertShopContactInfo";
+	private static final String URL_APPLY_UPDATE = FinalUrl.RISK_URL+"/sps/updateaShopApplyInfo";
+	private static final String URL_INSERT_COMPANY = FinalUrl.RISK_URL+"/sps/insertShopCompanyInfo";
 	@Resource
 	private SpsShopkeeperDao spsShopkeeperDao;
 	@Resource

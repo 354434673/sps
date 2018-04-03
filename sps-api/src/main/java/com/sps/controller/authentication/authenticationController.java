@@ -407,7 +407,19 @@ public class authenticationController {
 					 */
 					SpsShopkeeperPersonal personal = new SpsShopkeeperPersonal();
 					
-					personal.setPersonalLivingAddress(arg0.getLiveP()+arg0.getLiveC()+arg0.getLiveA()+arg0.getLiveAddress());
+					personal.setPersonalLivingProvinceName(arg0.getLiveP());
+					
+					personal.setPersonalLivingProvinceCode(arg0.getLivePCode());
+					
+					personal.setPersonalLivingCityName(arg0.getLiveC());
+					
+					personal.setPersonalLivingCityCode(arg0.getLiveCCode());
+					
+					personal.setPersonalLivingAreaName(arg0.getLiveA());
+					
+					personal.setPersonalLivingAreaCode(arg0.getLiveACode());
+					
+					personal.setPersonalLivingAddress(arg0.getLiveAddress());
 					
 					personal.setPersonalMaritalStatus(arg0.getMarriage()+"");
 					
@@ -532,9 +544,6 @@ public class authenticationController {
 			saveLinkDetail = jzfqAuthApi.saveIdentityDetail(arg0 );
 			
 			String code = saveLinkDetail.getCode();
-			
-			shopkeeperService.insertSpsShopkeeperRepayment(repayment);
-			
 			if(code != null){
 				if(code.equals("SUCCESS")){
 					repayment.setShopkeeperCustomerid(clientNum);
@@ -600,7 +609,23 @@ public class authenticationController {
 					company.setCompanyShopName(arg0.getStoreName());
 					
 					//company.setCompanyCorpName(companyCorpName);
+					company.setCompanyBusinessProvinceName(arg0.getActualPName());
 					
+					company.setCompanyBusinessProvinceCode(arg0.getActualPCode());
+					
+					company.setCompanyBusinessCityName(arg0.getActualCName());
+					
+					company.setCompanyBusinessCityCode(arg0.getActualCCode());
+					
+					company.setCompanyBusinessAreaName(arg0.getActualAName());
+					
+					company.setCompanyBusinessAreaCode(arg0.getActualACode());
+					
+					company.setCompanyGpsAddr(arg0.getGpsAddress());
+					
+					company.setCompanyBusinessLat(arg0.getGpsLat());
+					
+					company.setCompanyBusinessLng(arg0.getGpsLng());
 					company.setCompanyBusinessAddr(arg0.getActualPName()+arg0.getActualCName()+arg0.getActualAName());
 					
 					company.setCompanyGpsAddr(arg0.getGpsAddress());
