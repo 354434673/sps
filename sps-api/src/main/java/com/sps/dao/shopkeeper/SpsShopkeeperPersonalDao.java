@@ -8,7 +8,7 @@ import com.sps.service.base.BaseDB;
 
 public interface SpsShopkeeperPersonalDao extends BaseDB<SpsShopkeeperPersonal> {
 
-  SpsShopkeeperPersonal getByPersonId(@Param("id") Integer id);
+  SpsShopkeeperPersonal getByPersonId(@Param("customerId") String customerId);
 
   /**
    * 根据客户户编号获取客户名称
@@ -18,7 +18,8 @@ public interface SpsShopkeeperPersonalDao extends BaseDB<SpsShopkeeperPersonal> 
   SpsShopkeeperPersonal   selectByPersonId(@Param("customerId") String customerId);
 
     int  saveSrc(@Param("id") Integer id, @Param("src") String src);
-    int updateNickName(@Param("id") Integer id, @Param("nickName") String nickName);
+
+    int updateNickName(@Param("customerId") String customerId, @Param("nickName") String nickName);
     
     int insertSelective(SpsShopkeeperPersonal personal);
     

@@ -49,7 +49,7 @@
             sps_shopkeeper_pic  pi
             ON
             per.shopkeeper_customerId=pi.shopkeeper_customerId
-         WHERE per.personal_id=#{id}
+         WHERE per.shopkeeper_customerId=#{customerId}  and  pi.pic_type=17
     </select>
   <select id="selectByPersonId"  parameterType="String" resultMap="BaseResultMap">
     SELECT
@@ -64,16 +64,16 @@
   <update id="saveSrc"  >
            UPDATE
               sps_shopkeeper_pic
-            SET   pic_src=#{src,jdbcType=VARCHAR}
+            SET   pic_src=#{src}
             WHERE
-                pic_id=#{id} AND  pic_type=11
+                pic_id=#{id} AND  pic_type=17
     </update>
   <update id="updateNickName"  >
         UPDATE
           sps_shopkeeper_personal
         SET   personal_nickname=#{nickName}
         WHERE
-        personal_id=#{id}
+        shopkeeper_customerId=#{customerId}
     </update>
   <sql id="Example_Where_Clause" >
     <where >
