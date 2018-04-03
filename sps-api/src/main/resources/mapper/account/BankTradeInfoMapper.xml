@@ -96,7 +96,7 @@
 		tr.bt_trade_amount,
 		tr.bt_trade_status,
 		tr.bt_trade_type,
-		tr.bt_application_start_date,
+		DATE_FORMAT( tr.bt_application_start_date, "%Y-%m-%d %T" ) AS bt_application_start_date,
 		tr.recharge_status,
 		CONCAT(REPLACE(DATE_FORMAT( tr.bt_application_start_date,"%Y-%m"),'-','年'),'月')   AS dateDesc,
 		tr.bank_card_name,
@@ -116,9 +116,13 @@
 		tr.bt_trade_amount,
 		tr.bt_trade_status,
 		tr.bt_trade_type,
-		tr.bt_application_start_date,
+		DATE_FORMAT( tr.bt_application_start_date, "%Y-%m-%d %T" ) AS bt_application_start_date,
 		tr.recharge_status,
-		CONCAT(REPLACE(DATE_FORMAT( tr.bt_application_start_date,"%Y-%m"),'-','年'),'月')   AS dateDesc
+		CONCAT(REPLACE(DATE_FORMAT( tr.bt_application_start_date,"%Y-%m"),'-','年'),'月')   AS dateDesc,
+		tr.bank_card_name,
+		tr.bank_card_number,
+		tr.bt_income_type,
+		tr.bt_expenditure_type
 		FROM
 		sps_bank_trade_info tr
 		WHERE
