@@ -55,4 +55,11 @@ public class BankTradeInfoServiceImpl implements BankTradeService {
         return bankTradeList;
     }
 
+    @Override
+    public List<BankTradeInfoVo> findBankTrdeShowPageList(String constomeId, Integer types,Integer currentPage,Integer pageSize) {
+        //暂时分页写死
+        currentPage = currentPage * pageSize;
+        return  bankTradeInfoDao.findBankTrdeShowPageList(constomeId,types,currentPage,pageSize);
+    }
+
 }

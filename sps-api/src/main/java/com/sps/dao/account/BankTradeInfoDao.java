@@ -25,5 +25,7 @@ public interface BankTradeInfoDao {
     BankTradeInfo selectDetail(Integer id);
     //   获取当前登录用户的所有交易记录
     List<BankTradeInfoVo> selectListByConstomeId(String constomeId);
+    //根据查询类型tradeType + 用户customerId 获取交易记录 tradeType 0 标识支出 1标识收入 ,2标识全部
+    List<BankTradeInfoVo>  findBankTrdeShowPageList(@Param("constomeId") String constomeId,@Param("types") Integer types,@Param("currentPage") Integer currentPage,@Param("pageSize") Integer pageSize) ;
 
 }

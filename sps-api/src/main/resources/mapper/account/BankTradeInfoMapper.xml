@@ -22,6 +22,9 @@
 		<result column="standby2" property="standby2" jdbcType="VARCHAR" />
 		<result column="bt_trade_no" property="tradeNo" jdbcType="VARCHAR" />
 		<result column="orderid" property="orderId" jdbcType="VARCHAR" />
+		<result column="bank_card_name" property="bankCardName" jdbcType="VARCHAR" />
+		<result column="bank_card_number" property="bankCardNumber" jdbcType="VARCHAR" />
+		<result column="bank_card_type" property="bankCardType" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="selectListByUserName" resultMap="BaseResultMap">
 		SELECT
@@ -70,15 +73,18 @@
 	<select id="selectDetail" parameterType="int" resultMap="BaseResultMap">
 		SELECT
 			bt_trade_amount,
-			bt_trade_no,
 			bt_trade_after_balanc,
+			recharge_status,
 			bt_trade_status,
 			bt_trade_type,
 			bt_income_type,
 			bt_expenditure_type,
+			bt_trade_no,
 			bt_payment_date,
 			standby1,
-			standby2
+			standby2,
+			bank_card_name,
+			bank_card_number
 		  FROM
 			sps_bank_trade_info
 		  WHERE
@@ -92,13 +98,42 @@
 		tr.bt_trade_type,
 		tr.bt_application_start_date,
 		tr.recharge_status,
-		DATE_FORMAT( tr.bt_application_start_date,"%Y-%m-%d ")  AS dateDesc
+		CONCAT(REPLACE(DATE_FORMAT( tr.bt_application_start_date,"%Y-%m"),'-','年'),'月')   AS dateDesc,
+		tr.bank_card_name,
+		tr.bank_card_number,
+		tr.bt_income_type,
+		tr.bt_expenditure_type
 		FROM
 		sps_bank_trade_info tr
 		WHERE
 		tr.bt_trade_name =#{constomeId}
 		AND tr.bt_application_start_date > DATE_SUB(NOW(),INTERVAL 2 MONTH)
 		ORDER BY tr.bt_application_start_date DESC
+	</select>
+	<select id="findBankTrdeShowPageList" resultType="com.sps.entity.account.vo.BankTradeInfoVo">
+		SELECT
+		tr.id,
+		tr.bt_trade_amount,
+		tr.bt_trade_status,
+		tr.bt_trade_type,
+		tr.bt_application_start_date,
+		tr.recharge_status,
+		CONCAT(REPLACE(DATE_FORMAT( tr.bt_application_start_date,"%Y-%m"),'-','年'),'月')   AS dateDesc
+		FROM
+		sps_bank_trade_info tr
+		WHERE
+		tr.bt_trade_name =#{constomeId}
+		<if test="types==0">
+			and bt_trade_type = #{types}
+		</if>
+		<if test="types==1">
+			and bt_trade_type = #{types}
+		</if>
+		<if test="types==2">
+			and bt_trade_type IN(0,1)
+		</if>
+		ORDER BY tr.bt_application_start_date DESC
+		limit #{currentPage},#{pageSize}
 	</select>
 
 </mapper>

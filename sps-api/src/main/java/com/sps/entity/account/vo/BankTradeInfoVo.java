@@ -24,6 +24,14 @@ public class BankTradeInfoVo implements Serializable{
     private Integer id;
     //状态
     private Integer rechargeStatus;
+    //银行名
+    private String bankCardName;
+    //银行卡号
+    private String bankCardNumber;
+    //收入类型 0 微信支付，1 支付宝支付，2 银行卡充值，3商品退款，4平添增加
+    private String btIncomeType;
+    //支出类型 0 体现，1支付订单首付，2 还款，3 平台减少
+    private String btExpenditureType;
 
     public String getBtApplicationStartDate() {
         return btApplicationStartDate;
@@ -79,5 +87,37 @@ public class BankTradeInfoVo implements Serializable{
 
     public void setRechargeStatus(Integer rechargeStatus) {
         this.rechargeStatus = rechargeStatus;
+    }
+
+    public String getBankCardName() {
+        return bankCardName;
+    }
+
+    public void setBankCardName(String bankCardName) {
+        this.bankCardName = bankCardName;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
+    }
+
+    public String getBtIncomeType() {
+        return btIncomeType;
+    }
+
+    public void setBtIncomeType(String btIncomeType) {
+        this.btIncomeType = btIncomeType;
+    }
+
+    public String getBtExpenditureType() {
+        return btExpenditureType;
+    }
+
+    public void setBtExpenditureType(String btExpenditureType) {
+        this.btExpenditureType = btExpenditureType;
     }
 }
