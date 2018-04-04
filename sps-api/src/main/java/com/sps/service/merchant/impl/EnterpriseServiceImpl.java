@@ -126,7 +126,12 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
                         }
                     }*/
                     data.put("id", spsChannelEnterprise.getEnterpriseId());
-                    data.put("phone", spsChannelEnterprise.getGuarantee().getGuaranteeCorpPhone());
+                    if( !"".equals(spsChannelEnterprise.getGuarantee().getGuaranteeCorpPhone())){
+                        data.put("phone", spsChannelEnterprise.getGuarantee().getGuaranteeCorpPhone());
+                    }else {
+                        data.put("phone", "");
+                    }
+
                     data.put("businessProduct", goodCategoryService.findListByIds(spsChannelEnterprise.getBusiness().getBusinessProduct()));
                     data.put("companyName", spsChannelEnterprise.getEnterpriseCompanyName());
                     String picUrl = queryChannelPic == null ? null :queryChannelPic.get(0).getPicSrc();
