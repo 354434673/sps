@@ -4,6 +4,7 @@ import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.read.SpsBalanceReadMapper;
 import com.sps.dao.merchant.read.SpsChannelBankReadMapper;
+import com.sps.dao.merchant.read.SpsChannelBankTradeReadMapper;
 import com.sps.dao.merchant.read.SpsChannelOpenAccountReadMapper;
 import com.sps.dao.merchant.write.SpsBalanceWriteMapper;
 import com.sps.dao.merchant.write.SpsChannelBankTradeWriteMapper;
@@ -20,12 +21,16 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteService{
 	@Autowired
 	private SpsChannelBankTradeWriteMapper bankTradeWrite;
+	@Autowired
+	private SpsChannelBankTradeReadMapper bankTradeRead;
 	@Autowired
 	private SpsBalanceReadMapper  spsBalanceReadMapper;
 	@Autowired
@@ -110,20 +115,31 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 	}
 
 	@Override
-	public Boolean modifyBankTradeByApplicateDate(int id, String status,String content) {
+	public Map<String,Object> modifyBankTradeByApplicateDate(int id, String status, String content) {
 		Date date = new Date();
 		//设置审核结束时间,申请结束时间
+		HashMap<String, Object> map = new HashMap<>();
 		int m=0;
+		Boolean flag=true;
 		if(StringUtils.isEmpty(content)){
-//			建议为空
+		//	建议为空
 			m = bankTradeWrite.updateStatus(id, status, date, date);
-			return m >0;
-		}else{
-//			建议存在
-			m = bankTradeWrite.updateStatusAndContent(id, status,content,date,date);
-			return m >0;
-		}
+			SpsChannelBankTrade spsChannelBankTrade = bankTradeRead.selectBankTradeInfo(id);
+			//根据id查询信息
+			map.put("flag",m >0? true:false);
+			map.put("spsChannelBankTrade",spsChannelBankTrade);
+			return map;
 
+		}else{
+			//	建议存在
+			m = bankTradeWrite.updateStatusAndContent(id, status,content,date,date);
+			//根据id查询信息
+			SpsChannelBankTrade spsChannelBankTrade = bankTradeRead.selectBankTradeInfo(id);
+			map.put("flag",m >0? true:false);
+			map.put("spsChannelBankTrade",spsChannelBankTrade);
+			return map;
+		}
+		//return  map;
 	}
 
 
