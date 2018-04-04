@@ -16,6 +16,7 @@ import org.sps.util.FinalUrl;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.juzifenqi.core.ServiceResult;
 import com.juzifenqi.usercenter.service.ISmsCommonService;
+import com.sps.service.risk.RiskService;
 
 /**
  * 业务员控制层
@@ -34,6 +35,8 @@ public class SalesmanController {
 	private ChannelSalesmanReadService salesmanRead;
 	@Resource
 	private ISmsCommonService iSmsCommonService;
+	@Resource
+	private RiskService riskService;
 
 	/**
 	 * 添加业务员 @Title: insertSalesman @Description:
@@ -59,6 +62,8 @@ public class SalesmanController {
 		if(insertSalesman.get("state").equals("success")){
 			//业务员添加成功后调用短信接口给业务员发送短信
 			ServiceResult<Boolean> sendCommonSms = iSmsCommonService.sendCommonSms(salesman.getSalesmanPhone(), CONTENT, 3);
+			
+			riskService.salesmanEntry(salesman);
 		}
 		return insertSalesman;
 	};

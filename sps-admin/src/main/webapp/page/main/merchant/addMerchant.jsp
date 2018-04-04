@@ -152,7 +152,7 @@
 		  <div class="layui-form-item">
 		    <label class="layui-form-label" style="width:200px">*公司简称：</label>
 		    <div class="layui-input-inline">
-		      <input  id="enterpriseCompanyAbbreviation" type="text" name="enterpriseCompanyAbbreviation"  lay-verify="required" placeholder="请输入公司简称" autocomplete="off" class="layui-input">
+		      <input  id="enterpriseCompanyAbbreviation" type="text" name="enterpriseCompanyAbbreviation"  lay-verify="required|IsEnglish" placeholder="请输入公司简称" autocomplete="off" class="layui-input">
 		    </div>
 		  </div>
 		<!-- 属性信息结束 -->

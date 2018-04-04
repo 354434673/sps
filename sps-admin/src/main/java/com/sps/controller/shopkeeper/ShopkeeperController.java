@@ -4,9 +4,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,11 +27,16 @@ import org.sps.service.shopkeeper.read.ShopkeeperReadService;
 import org.sps.service.shopkeeper.write.ShopkeeperWriteService;
 import org.sps.util.FinalData;
 import org.sps.util.FinalUrl;
+import org.sps.util.HttpClientUtil;
+import org.sps.util.RuleUtil;
 import org.sps.util.StringUtil;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.zxing.WriterException;
 import com.sps.common.QRCodeFactory;
+import com.sps.service.risk.RiskService;
 import com.sps.util.ExcelUtil;
 
 /**
@@ -43,10 +50,13 @@ import com.sps.util.ExcelUtil;
 @Controller
 @RequestMapping("/shopkeeper")
 public class ShopkeeperController{
+	private static final String URL_APPLY_INSERT = FinalUrl.RISK_URL+"/sps/insertShopApplyInfo";
 	@Reference(group = "dianfu")
 	private ShopkeeperReadService readService;
 	@Reference(group = "dianfu")
 	private ShopkeeperWriteService writeService;
+	@Resource
+	private RiskService riskService;
 
 	/**
 	 * 查询店主列表
@@ -336,12 +346,15 @@ public class ShopkeeperController{
 		SpsShopkeeperInvitation spsShopkeeperInvitation = null;
 		
 		String channelNum = getChannelNum();
+		
+		String clientNum = null;
 		try {
 			for (ArrayList<String> arrayList : importExcel) {
+					clientNum = RuleUtil.getClientNum("SP");
 					spsShopkeeperInvitation = new SpsShopkeeperInvitation();
 					spsShopkeeperInvitation.setInvitationName(arrayList.get(0));
 					spsShopkeeperInvitation.setInvitationPhone(arrayList.get(1));
-					writeService.insertInvitation(spsShopkeeperInvitation, channelNum);
+					writeService.insertInvitation(spsShopkeeperInvitation, channelNum, clientNum);
 			}
 			map.put("msg", "添加成功");
 			map.put("state", FinalData.STATE_SUCCESS);
@@ -371,8 +384,14 @@ public class ShopkeeperController{
 		
 		String channelNum = getChannelNum();
 		
-		HashMap<String, Object> insertInvitation = writeService.insertInvitation(invitation,channelNum);
+		String clientNum = RuleUtil.getClientNum("SP");
 		
+		HashMap<String, Object> insertInvitation = writeService.insertInvitation(invitation, channelNum, clientNum);
+		
+		if(insertInvitation.get("state").equals(FinalData.STATE_SUCCESS)){
+
+			riskService.invitationEntry(channelNum, clientNum);
+		}
 		return insertInvitation;
 	}
 	/**
@@ -419,8 +438,6 @@ public class ShopkeeperController{
 			
 			response.setContentType("image/png");
 			
-/*			String content = serverName+":"+serverPort+"/"
-					+ contextPath+"/page/main/register.html";*/
 			String content = FinalUrl.REQUEST_URL+"/register.html?channelNum="+channelNum+"&clientNum="+clientNum;
 			
 			int[] size = new int[] { 430, 430 };

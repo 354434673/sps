@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sps.util.HttpClientUtils;
+
+import org.springframework.transaction.annotation.Transactional;
 import org.sps.entity.shopkeeper.SpsShopkeeper;
 import org.sps.entity.shopkeeper.SpsShopkeeperAccount;
 import org.sps.entity.shopkeeper.SpsShopkeeperAccountExample;
@@ -18,6 +20,7 @@ import org.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import org.sps.service.shopkeeper.read.ShopkeeperReadService;
 import org.sps.service.shopkeeper.write.ShopkeeperWriteService;
 import org.sps.util.FinalData;
+import org.sps.util.FinalUrl;
 import org.sps.util.HttpClientUtil;
 import org.sps.util.RuleUtil;
 
@@ -31,7 +34,7 @@ import com.sps.dao.shopkeeper.write.SpsShopkeeperWriteMapper;
 @Service(timeout = 2000, group = "dianfu")
 @org.springframework.stereotype.Service
 public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
-	private static final String URL_APPLY_INSERT = "http://192.168.201.149:8080/sps/insertShopApplyInfo";
+	private static final String URL_APPLY_INSERT = "http://localhost:8080/sps/insertShopApplyInfo";
 	private static String initCustomerAccount = "http://dev.app.chezhubaitiao.com/api/customerAccount/init";
 	private static String initAccount = "http://dev.app.chezhubaitiao.com/api/account/init";
 	@Resource
@@ -94,7 +97,8 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 		return hashMap;
 	}
 	@Override
-	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation,  String channelNum){
+	@Transactional(readOnly = false, rollbackFor = Exception.class)
+	public HashMap<String, Object> insertInvitation(SpsShopkeeperInvitation invitation,  String channelNum, String clientNum){
 		HashMap<String, Object> hashMap = new HashMap<String,Object>();
 		try {
 			//判断是否重复
@@ -112,7 +116,6 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 				/*
 				 * 添加后往店主信息表中差一条数据,店主账号,状态为邀请中(1)
 				 */
-				String clientNum = RuleUtil.getClientNum("SP");
 				SpsShopkeeper spsShopkeeper = new SpsShopkeeper();
 				spsShopkeeper.setShopkeeperUsername(invitation.getInvitationPhone());
 				spsShopkeeper.setShopkeeperCreatTime(new Date());
@@ -137,8 +140,6 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 				personal.setShopkeeperCustomerid(clientNum);
 				personalWrite.insertSelective(personal);
 				
-				insert(invitation, clientNum, channelNum);
-
 				HashMap<String, String> result = new HashMap<>();
 				result.put("channelNum", channelNum);
 				result.put("clientNum", clientNum);
@@ -165,29 +166,6 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 		
 		return null;
 	}
-	private void insert(SpsShopkeeperInvitation invitation, String clientNum, String channelNum){
-
-		JSONObject shopApplyInfo = new JSONObject();
-
-		shopApplyInfo.put("shopCode", clientNum);
-
-		shopApplyInfo.put("applyTime", new Date());
-
-		shopApplyInfo.put("registerChannel", "web");
-
-		shopApplyInfo.put("customer_channel",  "商户邀请");
-
-		shopApplyInfo.put("centerMerchantCode",  channelNum);
-
-		shopApplyInfo.put("createTime",  new Date());
-
-		JSONObject data = new JSONObject();
-
-		data.put("shopApplyInfo", shopApplyInfo);
-
-		HttpClientUtil.doPostJson(URL_APPLY_INSERT, JSON.toJSONString(data));
-	}
-
 	@Override
 	public Map<String, Object> initCustomerAccount(String certNo) {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();

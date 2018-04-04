@@ -18,6 +18,7 @@ import com.jzfq.auth.core.api.FaceAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthApi;
 import com.jzfq.auth.core.api.JzfqAuthQueryApi;
 import com.jzfq.auth.core.api.entiy.AuthBasicDetail;
+import com.jzfq.auth.core.api.entiy.AuthConfig;
 import com.jzfq.auth.core.api.entiy.AuthFaceDetail;
 import com.jzfq.auth.core.api.entiy.AuthHouseDetail;
 import com.jzfq.auth.core.api.entiy.AuthIdentityDetail;
@@ -73,6 +74,18 @@ public class authenticationController {
 		JsonResult<Map<String, Object>> queryStateArray = jzfqAuthQueryApi.queryStateArray(arg0 );
 		
 		queryStateArray.setCode(queryStateArray.getCode().equals("SUCCESS") ? "1":"0");
+		
+		return queryStateArray;
+	}
+	@RequestMapping("/getAuthConfig")
+	public JsonResult<Map<String, Object>> getAuthConfig(){
+		
+		AuthConfig arg0 = new AuthConfig();
+		
+		arg0.setChannel("3");
+		
+		arg0.setProductLine("auth");
+		JsonResult<Map<String, Object>> queryStateArray = jzfqAuthApi.getAuthConfig(arg0);
 		
 		return queryStateArray;
 	}

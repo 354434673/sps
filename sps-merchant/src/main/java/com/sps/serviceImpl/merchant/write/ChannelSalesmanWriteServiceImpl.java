@@ -22,7 +22,6 @@ import com.sps.dao.merchant.write.SpsChannelSalesmanWriteMapper;
 @Service(timeout=2000,group="dianfu")
 @Transactional
 public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteService{
-	private static final String URL = FinalUrl.RISK_URL+"/sps/updateMerchant";
 	@Resource
 	private SpsChannelSalesmanWriteMapper salesmanWrite;
 	@Resource
@@ -36,8 +35,6 @@ public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteServ
 		try {
 			if(channelSalesman == null){
 				salesmanWrite.insertSelective(salesman);
-				//风控进件
-				salesmanEntry(salesman);
 				hashMap.put("msg", "用户添加成功");
 				hashMap.put("state", FinalData.STATE_SUCCESS);
 			}else{
@@ -102,25 +99,4 @@ public class ChannelSalesmanWriteServiceImpl implements ChannelSalesmanWriteServ
 		}
 		return hashMap;
 	};
-	private void salesmanEntry(SpsChannelSalesman salesman){
-		
-		JSONObject centerMerchantInfo = new JSONObject();
-		/**
-		 * 推向风控
-		 */
-		centerMerchantInfo.put("merchantCode", salesman.getSalesmaneChannelNum());//商户编号
-		centerMerchantInfo.put("bussinessName", salesman.getSalesmanName());//店付业务员姓名
-		centerMerchantInfo.put("certNo", salesman.getSalesmanIdcard());//店付业务员身份证
-		centerMerchantInfo.put("city", salesman.getSalesmanCity());//所在城市
-		centerMerchantInfo.put("updateTime",  new Date());//更新时间
-		
-		JSONObject data = new JSONObject();
-		
-		data.put("merchantInfo", centerMerchantInfo);
-		
-		String jsonString = JSON.toJSONString(data);
-		
-		String doPostJson = HttpClientUtil.doPostJson(URL, jsonString);
-		
-	}
 }

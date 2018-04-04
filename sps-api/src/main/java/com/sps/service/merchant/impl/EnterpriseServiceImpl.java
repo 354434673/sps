@@ -9,6 +9,8 @@ import com.sps.common.EntityUtils;
 import com.sps.dao.shopkeeper.SpsChannelMapper;
 import com.sps.entity.merchant.SpsChannel;
 import com.sps.entity.merchant.SpsChannelExample;
+import com.sps.entity.merchant.SpsChannelPic;
+import com.sps.entity.merchant.SpsChannelPicExample;
 import com.sps.entity.shopkeeper.SpsShopkeeperExample;
 import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 
@@ -25,6 +27,7 @@ import com.sps.dao.goods.SpsGoodShopMapper;
 import com.sps.dao.goods.SpsGoodShopSkuMapper;
 import com.sps.dao.goods.SpsGoodsAlbumMapper;
 import com.sps.dao.goods.SpsGoodsMapper;
+import com.sps.dao.merchant.SpsChannelPicDao;
 import com.sps.entity.goods.SpsCustomCategory;
 import com.sps.entity.goods.SpsGoodShop;
 import com.sps.entity.merchant.SpsChannelEnterprise;
@@ -60,6 +63,8 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
     private GoodCategoryService goodCategoryService;
     @Resource
     private ShopkeeperPicService shopkeeperPicService;
+    @Resource
+    private SpsChannelPicDao spsChannelPicDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -91,7 +96,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
 						}*/
                     queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, null, null,null);
                 }
-                List<SpsShopkeeperPic> queryListForTypeAndId = shopkeeperPicService.queryListForTypeAndId(shopkeeperCustomerid, 7);
+                List<SpsChannelPic> queryChannelPic = queryChannelPic(shopkeeperDefaultChannelNum, 7);
                 for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
                     data = new HashMap<String, Object>();
                  /*   if (!"".equals(spsChannelEnterprise.getChannelNum())) {
@@ -124,7 +129,7 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
                     data.put("phone", spsChannelEnterprise.getGuarantee().getGuaranteeCorpPhone());
                     data.put("businessProduct", goodCategoryService.findListByIds(spsChannelEnterprise.getBusiness().getBusinessProduct()));
                     data.put("companyName", spsChannelEnterprise.getEnterpriseCompanyName());
-                    String picUrl = queryListForTypeAndId == null ? null :queryListForTypeAndId.get(0).getPicSrc();
+                    String picUrl = queryChannelPic == null ? null :queryChannelPic.get(0).getPicSrc();
                     data.put("picSrc",picUrl);
                   /*  data.put("goodsList", spsChannelEnterprise.getGoodShops());*/
                     result.add(data);
@@ -324,4 +329,16 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
         }
         return false;
     }
+
+
+	@Override
+	public List<SpsChannelPic> queryChannelPic(String channelNum, Integer type) {
+		SpsChannelPicExample example = new SpsChannelPicExample();
+		
+		example.createCriteria().andPicStateEqualTo(0)
+								.andChannelNumEqualTo(channelNum)
+								.andPicTypeEqualTo(type);
+		List<SpsChannelPic> selectByExample = spsChannelPicDao.selectByExample(example );
+		return selectByExample.size() == 0 ? null : selectByExample;
+	}
 }

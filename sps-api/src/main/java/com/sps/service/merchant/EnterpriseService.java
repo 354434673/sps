@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.sps.entity.merchant.SpsChannelEnterprise;
+import com.sps.entity.merchant.SpsChannelPic;
 
 public interface EnterpriseService {
 	/**
@@ -43,4 +44,19 @@ public interface EnterpriseService {
 	 * @return
 	 */
 	HashMap<String,Object> homeSearch(String shopkeeperCustomerid, String keyWord);
+	/**
+	 * 根据核心商户编号和类型查询图片
+	 * @Title: queryChannelPic   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @param type
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年4月4日 下午5:21:46
+	 * @return: List<SpsChannelPic>      
+	 * @throws
+	 */
+	List<SpsChannelPic> queryChannelPic(String channelNum, Integer type);
+	
+	
 }

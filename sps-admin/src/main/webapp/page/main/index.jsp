@@ -39,9 +39,9 @@
 		<div class="layui-header header header-demo">
 			<div class="layui-main">
 				<div class="admin-login-box">
-					<a class="logo" style="left: 0;"
-						href="http://beginner.zhengjinfan.cn/demo/beginner_admin/"> <span
-						style="font-size: 22px;">桔子分期</span>
+					<a class="logo" 
+						href="#"> <span
+						style="font-size: 22px;padding: 5px">店付科技</span>
 					</a>
 					<div class="admin-side-toggle">
 						<i class="fa fa-bars" aria-hidden="true"></i>
