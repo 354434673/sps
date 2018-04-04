@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sps.dao.shopkeeper.SpsShopkeeperHousePrppertyDao" >
+  <resultMap id="baseHouserInfo" type="com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty">
+    <id column="house_id" property="houseId" jdbcType="INTEGER" />
+    <result column="house_is_have" property="houseIsHave" jdbcType="INTEGER" />
+    <result column="house_area" property="houseArea" jdbcType="DOUBLE" />
+    <result column="house_province_name" property="houseProvinceName" jdbcType="VARCHAR" />
+    <result column="house_province_code" property="houseProvinceCode" jdbcType="VARCHAR" />
+    <result column="house_city_name" property="houseCityName" jdbcType="VARCHAR" />
+    <result column="house_city_code" property="houseCityCode" jdbcType="VARCHAR" />
+    <result column="house_area_name" property="houseAreaName" jdbcType="INTEGER" />
+    <result column="house_area_code" property="houseAreaCode" jdbcType="VARCHAR" />
+    <result column="house_addr" property="houseAddr" jdbcType="VARCHAR" />
+    <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+    <result column="house_username" property="houseUsername" jdbcType="VARCHAR" />
+    <result column="house_creat_time" property="houseCreatTime" jdbcType="TIMESTAMP" />
+    <result column="house_update_time" property="houseUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
   <insert id="saveHouseInfo" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty">
       INSERT INTO
           sps_shopkeeper_house_property
@@ -89,4 +105,12 @@
       </if>
     </trim>
   </insert>
+  <select id="selectByCustomerId" parameterType="String" resultMap="baseHouserInfo">
+     SELECT
+        house_username
+     FROM
+            sps_shopkeeper_house_property
+      WHERE
+           shopkeeper_customerId=#{customerId}
+  </select>
 </mapper>

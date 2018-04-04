@@ -5,10 +5,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Message;
 import com.sps.common.OptionUtil;
 import com.sps.common.StringUtil;
+import com.sps.entity.account.BankCardInfo;
 import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import com.sps.entity.shopkeeper.SpsShopkeeperPic;
+import com.sps.service.account.bankCard.BankCardService;
 import com.sps.service.shopkeeper.ShopkeeperPersonService;
 import com.sps.service.shopkeeper.ShopkeeperPicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,8 @@ public class PersonController {
     private ShopkeeperPersonService shopkeeperPersonService;
     @Autowired
     private ShopkeeperPicService shopkeeperPicService;
+    @Autowired
+    private BankCardService bankCardService;
     /**
      * 获取昵称和头像的方法
      * @param customerId
@@ -48,9 +52,17 @@ public class PersonController {
     @ResponseBody
     public String queryPersonInfo(@RequestParam("customerId") String  customerId,@RequestParam("phone")String phone) {
         SpsShopkeeperPersonal person = shopkeeperPersonService.findPerson(customerId);
-        SpsShopkeeperPic pic = shopkeeperPicService.findByCustomerId(customerId);
         JSONObject jsonO = new JSONObject();
+        SpsShopkeeperPic pic = shopkeeperPicService.findByCustomerId(customerId);
+        List<SpsShopkeeperCarProperty> carInfos = shopkeeperPersonService.getCardInfo(customerId);
+        List<SpsShopkeeperHouseProperty> houseInfos = shopkeeperPersonService.getHouseInfo(customerId);
+        //获取绑卡信息
+        List<BankCardInfo> bindCardInfo = bankCardService.findBindCardInfo(customerId);
+
         if(person !=null){
+            jsonO.put("flagCar",carInfos.size());
+            jsonO.put("flagHouse",houseInfos.size());
+            jsonO.put("flagBankCard",bindCardInfo.size());
             if(pic==null){
                 if (StringUtil.isNotEmpty(person.getPersonalNickname())) {
                     jsonO.put("name", person.getPersonalNickname());
@@ -58,6 +70,7 @@ public class PersonController {
                     jsonO.put("name", phone);
                 }
                 jsonO.put("src", null);
+
                 return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG, jsonO);
             }else{
                 if (StringUtil.isNotEmpty(person.getPersonalNickname())) {

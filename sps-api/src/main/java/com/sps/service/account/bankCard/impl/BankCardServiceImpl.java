@@ -42,7 +42,7 @@ public class BankCardServiceImpl implements BankCardService {
         //		根据用户名获取 余额表信息---存在取出余额---不存在 创建改用户的余额表信息
             BigDecimal balance = accountBalanceDao.selectByUserId(bankInfo.getChannlNum());
             bankInfo.setCreatetime(new Date());
-            bankInfo.setUserMark(2);
+          //  bankInfo.setUserMark(2);
             //绑卡
              bankInfo.setState(1);
              bankInfo.setFlag(0);

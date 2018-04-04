@@ -270,7 +270,8 @@
   <update id="saveSrc"  >
     UPDATE
     sps_shopkeeper_pic
-    SET   pic_src=#{src}
+    SET   pic_src=#{src},
+        pic_update_time=#{updateTime}
     WHERE
     pic_id=#{id} AND  pic_type=17
   </update>

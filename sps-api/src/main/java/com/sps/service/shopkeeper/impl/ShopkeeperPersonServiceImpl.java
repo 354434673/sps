@@ -82,6 +82,7 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
             SpsShopkeeperPic spsShopkeeperPic = new SpsShopkeeperPic();
             spsShopkeeperPic.setPicSrc(src);
             spsShopkeeperPic.setPicType(17);
+            spsShopkeeperPic.setPicState(0);
             spsShopkeeperPic.setPicUploadTime(new Date());
             spsShopkeeperPic.setPicCreatTime(new Date());
             spsShopkeeperPic.setShopkeeperCustomerid(customerId);
@@ -89,7 +90,7 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
             return m >0 ? true:false;
         }else{
             //修改记录
-            int m = spsShopkeeperPicDao.saveSrc(pic.getPicId(), src);
+            int m = spsShopkeeperPicDao.saveSrc(pic.getPicId(), src,new Date());
             return m >0 ? true:false;
         }
 
@@ -107,6 +108,17 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
     public SpsShopkeeperPersonal getByPersonId(String customerId ) {
         return spsShopkeeperPersonalDao.selectByPersonId(customerId);
     }
+
+    @Override
+    public List<SpsShopkeeperCarProperty> getCardInfo(String consumerId) {
+        return carDao.selectByCustomerId(consumerId);
+    }
+
+    @Override
+    public List<SpsShopkeeperHouseProperty> getHouseInfo(String consumerId) {
+        return houseDao.selectByCustomerId(consumerId);
+    }
+
 
     @Override
     public Boolean saveCarInfo(SpsShopkeeperCarProperty spsShopkeeperCarProperty,String src) {

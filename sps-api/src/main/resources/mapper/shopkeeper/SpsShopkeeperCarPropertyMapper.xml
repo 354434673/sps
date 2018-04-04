@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sps.dao.shopkeeper.SpsShopkeeperCarPrppertyDao" >
+ <resultMap id="baseCarInfo" type="com.sps.entity.shopkeeper.SpsShopkeeperCarProperty">
+   <id column="car_id" property="carId" jdbcType="INTEGER" />
+   <result column="car_is_have" property="carIsHave" jdbcType="INTEGER" />
+   <result column="car_chassis_num" property="carChassisNum" jdbcType="VARCHAR" />
+   <result column="car_plate_num" property="carPlateNum" jdbcType="VARCHAR" />
+   <result column="car_brand" property="carBrand" jdbcType="VARCHAR" />
+   <result column="shopkeeper_customerId" property="shopkeeperCustomerid" jdbcType="VARCHAR" />
+   <result column="car_username" property="carUsername" jdbcType="VARCHAR" />
+   <result column="car_creat_time" property="carCreatTime" jdbcType="TIMESTAMP" />
+   <result column="car_update_time" property="carUpdateTime" jdbcType="TIMESTAMP" />
+ </resultMap>
+  <select id="selectByCustomerId" parameterType="String" resultMap="baseCarInfo">
+      SELECT
+        car_username
+        FROM
+        sps_shopkeeper_car_property
+        WHERE
+        shopkeeper_customerId=#{customerId}
+  </select>
   <insert id="saveCarInfo" parameterType="com.sps.entity.shopkeeper.SpsShopkeeperCarProperty">
       INSERT INTO
           sps_shopkeeper_car_property
