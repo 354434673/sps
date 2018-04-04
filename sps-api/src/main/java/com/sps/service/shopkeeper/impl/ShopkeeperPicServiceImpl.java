@@ -2,6 +2,7 @@ package com.sps.service.shopkeeper.impl;
 
 import com.sps.dao.goods.SpsShopkeeperPersonalMapper;
 import com.sps.dao.goods.SpsShopkeeperPicMapper;
+import com.sps.dao.shopkeeper.SpsShopkeeperPicDao;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import com.sps.entity.shopkeeper.SpsShopkeeperPic;
 import com.sps.service.shopkeeper.ShopkeeperPersonService;
@@ -16,7 +17,8 @@ import java.util.Map;
 public class ShopkeeperPicServiceImpl implements ShopkeeperPicService {
     @Resource
     private SpsShopkeeperPicMapper spsShopkeeperPicMapper;
-
+    @Resource
+    private SpsShopkeeperPicDao spsShopkeeperPicDao;
 
     @Override
     public List<SpsShopkeeperPic> findList(String shopkeeperNum) {
@@ -26,5 +28,10 @@ public class ShopkeeperPicServiceImpl implements ShopkeeperPicService {
     @Override
     public SpsShopkeeperPic findByCustomerNum(String shopkeeperNum) {
         return null;
+    }
+
+    @Override
+    public SpsShopkeeperPic findByCustomerId(String customerId) {
+        return spsShopkeeperPicDao.selectByCustomerId(customerId);
     }
 }

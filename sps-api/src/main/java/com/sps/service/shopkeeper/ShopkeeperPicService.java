@@ -15,4 +15,5 @@ public interface ShopkeeperPicService {
 
 
     SpsShopkeeperPic findByCustomerNum(String shopkeeperNum);
+    SpsShopkeeperPic  findByCustomerId(String customerId);
 }
