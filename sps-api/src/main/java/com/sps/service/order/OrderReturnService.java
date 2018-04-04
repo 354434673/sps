@@ -32,6 +32,10 @@ public interface OrderReturnService {
      */
     void falseDeletion(Integer id);
 
-
-
+    /**
+     * 根据订单编号查询退货申请
+     * @param orderNo
+     * @return
+     */
+    SpsOrderReturn findEntityByOrderNo(String orderNo);
 }

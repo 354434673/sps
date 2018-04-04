@@ -54,13 +54,13 @@ public class OrderServiceImpl implements OrderService {
                 goodsMap.put("orderNum", order.getOrderid());
                 List<SpsOrderGoods> goodsList = spsOrderGoodsMapper.findListAllWithMap(goodsMap);
                 Integer count = 0;
-                for (SpsOrderGoods   goods :goodsList){
-                    if (goods.getAmount()!=null){
+                for (SpsOrderGoods goods : goodsList) {
+                    if (goods.getAmount() != null) {
                         count += goods.getAmount();
                     }
                 }
                 order.setSumCount(count);
-                String[] pro1 = new String[]{"skuname", "price", "url","size","amount","summation"};
+                String[] pro1 = new String[]{"skuname", "price", "url", "size", "amount", "summation"};
                 if (goodsList != null && goodsList.size() > 0) {
                     order.setOrderGoodsList((List<SpsOrderGoods>) EntityUtiles.reloadListPropertyValue(goodsList, pro1));
                 }
@@ -82,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
             Map<String, Object> goodsMap = new HashMap<>();
             goodsMap.put("orderNum", order.getOrderid());
             List<SpsOrderGoods> goodsList = spsOrderGoodsMapper.findListAllWithMap(goodsMap);
-            String[] pro1 = new String[]{"skuname", "price", "url","amount","size"};
+            String[] pro1 = new String[]{"skuname", "price", "url", "amount", "size"};
             if (goodsList != null && goodsList.size() > 0) {
                 order.setOrderGoodsList((List<SpsOrderGoods>) EntityUtiles.reloadListPropertyValue(goodsList, pro1));
             }
@@ -117,6 +117,8 @@ public class OrderServiceImpl implements OrderService {
             order.setFlag(5);
         } else if (status == 0) {
             order.setFlag(19);
+        }else {
+            order.setFlag(status);
         }
         order.setModifytime(new Date());
         order.setOrderid(orderNum);
@@ -130,11 +132,22 @@ public class OrderServiceImpl implements OrderService {
             Map<String, Object> goodsMap = new HashMap<>();
             goodsMap.put("orderNum", order.getOrderid());
             List<SpsOrderGoods> goodsList = spsOrderGoodsMapper.findListAllWithMap(goodsMap);
-            String[] pro1 = new String[]{"skuname", "price", "url","amount","size"};
+            String[] pro1 = new String[]{"skuname", "price", "url", "amount", "size"};
             if (goodsList != null && goodsList.size() > 0) {
                 order.setOrderGoodsList((List<SpsOrderGoods>) EntityUtiles.reloadListPropertyValue(goodsList, pro1));
             }
         }
         return order;
+    }
+
+    @Override
+    public void updateStatusByOrderNo(Map map) {
+        Integer status = (Integer) map.get("status");
+        String orderNum = (String) map.get("orderNo");
+        SpsOrder order = new SpsOrder();
+        order.setFlag(status);
+        order.setModifytime(new Date());
+        order.setOrderid(orderNum);
+        spsOrderGoodsMapper.updateToOrderNum(order);
     }
 }

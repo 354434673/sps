@@ -43,6 +43,13 @@ public class OrderReturnServiceImpl implements OrderReturnService {
             if (order.getId() != null) {
                 order.setUpdateTime(new Date());
                 spsOrderReturnMapper.update(order);
+                //插入日志
+                SpsOrderLog log = new SpsOrderLog();
+                log.setLogCreateTime(new Date());
+                log.setLogOrderNo(order.getOrderNum());
+                log.setLogType(2);
+                log.setLogDes("订单编号为：" + order.getOrderNum() + "的订单申请退货");
+                spsOrderLogMapper.insert(log);
             } else {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 order.setOrderTime(sdf.parse(order.getOrderCreateTime()));
@@ -53,6 +60,7 @@ public class OrderReturnServiceImpl implements OrderReturnService {
                 SpsOrderLog log = new SpsOrderLog();
                 log.setLogCreateTime(new Date());
                 log.setLogType(2);
+                log.setLogOrderNo(order.getOrderNum());
                 log.setLogDes("订单编号为：" + order.getOrderNum() + "的订单申请退货");
                 spsOrderLogMapper.insert(log);
             }
@@ -76,5 +84,20 @@ public class OrderReturnServiceImpl implements OrderReturnService {
     @Override
     public void falseDeletion(Integer id) {
 
+    }
+
+    @Override
+    public SpsOrderReturn findEntityByOrderNo(String orderNo) {
+        SpsOrderReturn spsOrderReturn = spsOrderReturnMapper.findEntityByOrderNo(orderNo);
+        if (spsOrderReturn != null) {
+            Map<String, Object> orderMap = new HashMap<>();
+            orderMap.put("orderNo", orderNo);
+            List<SpsOrderLog> logList = spsOrderLogMapper.findListAllWithMap(orderMap);
+            String[] pro1 = new String[]{"logCreateTime", "logType"};
+            if (logList != null && logList.size() > 0) {
+                spsOrderReturn.setOrderLogList((List<SpsOrderLog>) EntityUtiles.reloadListPropertyValue(logList, pro1));
+            }
+        }
+        return spsOrderReturn;
     }
 }

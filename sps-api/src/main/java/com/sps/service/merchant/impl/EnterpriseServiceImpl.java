@@ -164,8 +164,10 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
         ArrayList<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();//存在封装对象的list
         try {
             List<SpsChannelEnterprise> queryBusinessForApi = enterpriseDao.queryBusinessForApi(null, 1, enterpriseId,null);
+
             //排序方式
             if (queryBusinessForApi != null && queryBusinessForApi.size() > 0) {
+                List<SpsChannelPic> queryChannelPic = queryChannelPic(queryBusinessForApi.get(0).getChannelNum(), 7);
                 for (SpsChannelEnterprise spsChannelEnterprise : queryBusinessForApi) {
                     data = new HashMap<String, Object>();
                     if (!"".equals(spsChannelEnterprise.getChannelNum())) {
@@ -181,26 +183,34 @@ public class EnterpriseServiceImpl extends BaseOperate implements EnterpriseServ
                         //查询推荐中的商品
                         List<SpsGoodShop> goodShopList = spsGoodShopMapper.findListAllWithMap(map);
                         List<SpsGoodShop> shopList = new ArrayList<>();
-                        //过滤主营业务
-                        if (goodShopList != null && goodShopList.size() > 0) {
-                            for (SpsGoodShop goods : goodShopList) {
-                                String[] idList = shopkeeperBusinessType.split(",");
-                                //判断数组是否包含id
-                                if (useLoop(idList, goods.getgCategoryIds().split(",")[0])) {
-                                    shopList.add(goods);
+                        if("SP20180302711645".equals(shopkeeperCustomerId)){
+                            String[] pro1 = new String[]{"gId", "gPic", "gSpuName", "gMinPrice"};
+                            if (goodShopList != null && goodShopList.size() > 0) {
+                                spsChannelEnterprise.setGoodShops((List<SpsGoodShop>) EntityUtils.reloadListPropertyValue(goodShopList, pro1));
+                            }
+                        }else {
+                            //过滤主营业务
+                            if (goodShopList != null && goodShopList.size() > 0) {
+                                for (SpsGoodShop goods : goodShopList) {
+                                    String[] idList = shopkeeperBusinessType.split(",");
+                                    //判断数组是否包含id
+                                    if (useLoop(idList, goods.getgCategoryIds().split(",")[0])) {
+                                        shopList.add(goods);
+                                    }
                                 }
                             }
-                        }
-                        String[] pro1 = new String[]{"gId", "gPic", "gSpuName", "gMinPrice"};
-                        if (goodShopList != null && goodShopList.size() > 0) {
-                            spsChannelEnterprise.setGoodShops((List<SpsGoodShop>) EntityUtils.reloadListPropertyValue(shopList, pro1));
+                            String[] pro1 = new String[]{"gId", "gPic", "gSpuName", "gMinPrice"};
+                            if (goodShopList != null && goodShopList.size() > 0) {
+                                spsChannelEnterprise.setGoodShops((List<SpsGoodShop>) EntityUtils.reloadListPropertyValue(shopList, pro1));
+                            }
                         }
                     }
                     data.put("id", spsChannelEnterprise.getEnterpriseId());
                     data.put("phone", spsChannelEnterprise.getGuarantee().getGuaranteeCorpPhone());
                     data.put("businessProduct", goodCategoryService.findListByIds(spsChannelEnterprise.getBusiness().getBusinessProduct()));
                     data.put("companyName", spsChannelEnterprise.getEnterpriseCompanyName());
-                    data.put("picSrc", spsChannelEnterprise.getPic().getPicSrc());
+                    String picUrl = queryChannelPic == null ? null :queryChannelPic.get(0).getPicSrc();
+                    data.put("picSrc",picUrl);
                     data.put("goodsList", spsChannelEnterprise.getGoodShops());
                     result.add(data);
                 }

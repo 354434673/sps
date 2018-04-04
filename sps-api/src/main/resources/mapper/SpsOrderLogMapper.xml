@@ -8,9 +8,10 @@
     <result column="log_des" jdbcType="VARCHAR" property="logDes" />
     <result column="log_create_time" jdbcType="TIMESTAMP" property="logCreateTime" />
     <result column="log_update_time" jdbcType="TIMESTAMP" property="logUpdateTime" />
+    <result column="log_order_no" jdbcType="TIMESTAMP" property="logOrderNo" />
   </resultMap>
   <sql id="Base_Column_List">
-    log_id, log_name, log_type, log_des, log_create_time, log_update_time
+    log_id, log_name, log_type, log_des, log_create_time, log_update_time,log_order_no
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,10 +25,10 @@
   </delete>
   <insert id="insert" parameterType="SpsOrderLog">
     insert into sps_order_log (log_id, log_name, log_type, 
-      log_des, log_create_time, log_update_time
+      log_des, log_create_time, log_update_time,log_order_no
       )
     values (#{logId,jdbcType=INTEGER}, #{logName,jdbcType=VARCHAR}, #{logType,jdbcType=INTEGER}, 
-      #{logDes,jdbcType=VARCHAR}, #{logCreateTime,jdbcType=TIMESTAMP}, #{logUpdateTime,jdbcType=TIMESTAMP}
+      #{logDes,jdbcType=VARCHAR}, #{logCreateTime,jdbcType=TIMESTAMP}, #{logUpdateTime,jdbcType=TIMESTAMP}, #{logOrderNo,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="SpsOrderLog">
@@ -103,4 +104,17 @@
       log_update_time = #{logUpdateTime,jdbcType=TIMESTAMP}
     where log_id = #{logId,jdbcType=INTEGER}
   </update>
+
+
+  <!-- 查询所有 -->
+  <select id="findListAllWithMap" parameterType="map"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+    sps_order_log
+    where 1=1
+    <if test="orderNo !=null and orderNo != ''">
+      and  log_order_no = #{orderNo,jdbcType=VARCHAR}
+    </if>
+  </select>
 </mapper>

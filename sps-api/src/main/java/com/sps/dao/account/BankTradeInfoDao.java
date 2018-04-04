@@ -28,4 +28,10 @@ public interface BankTradeInfoDao {
     //根据查询类型tradeType + 用户customerId 获取交易记录 tradeType 0 标识支出 1标识收入 ,2标识全部
     List<BankTradeInfoVo>  findBankTrdeShowPageList(@Param("constomeId") String constomeId,@Param("types") Integer types,@Param("currentPage") Integer currentPage,@Param("pageSize") Integer pageSize) ;
 
+    /**
+     * 根据订单编号查详情
+     * @param orderNo
+     * @return
+     */
+    BankTradeInfo selectDetailByOrderNo(String orderNo);
 }

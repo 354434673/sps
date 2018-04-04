@@ -1,14 +1,15 @@
 package com.sps.controller.order;
-
 import com.sps.common.Common;
+import com.sps.common.EntityUtiles;
 import com.sps.common.Message;
 import com.sps.common.ReturnInfo;
-import com.sps.entity.goods.SpsGoodShopSku;
+import com.sps.entity.express.SpsExpress;
 import com.sps.entity.goods.SpsPurchaseOrder;
 import com.sps.entity.order.SpsOrder;
-import com.sps.entity.order.SpsOrderGoods;
-import com.sps.entity.shopkeeper.SpsShopkeeperCompany;
+import com.sps.entity.order.SpsOrderLogistics;
 import com.sps.service.goods.PurchaseOrderService;
+import com.sps.service.order.ExpressService;
+import com.sps.service.order.OrderLogisticsService;
 import com.sps.service.order.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,92 @@ public class OrderController {
     private PurchaseOrderService purchaseOrderService;
     @Resource
     private OrderService orderService;
+    @Resource
+    private ExpressService expressService;
+    @Resource
+    private OrderLogisticsService orderLogisticsService;
+
+
+
+
+    /**
+     * 取消退货
+     *
+     * @return
+     */
+    @RequestMapping(value = "/cancelReturn", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnInfo cancelReturn(String  orderNum) {
+        ReturnInfo ri = new ReturnInfo();
+        if ("0".equals(ri.getCode())) return ri;
+        try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("orderNum", orderNum);
+            map.put("orderStatus", 20);
+            orderService.updateStatus(map);
+            ri.setResult(orderNum);
+            ri.setSuccess(Message.SUCCESS_MSG);
+            ri.setCode(Message.SUCCESS_CODE);
+            ri.setMsg(Message.API_SUCCESS_MSG);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ri.setCode(Message.FAILURE_CODE);
+            ri.setMsg(Message.FAILURE_MSG);
+            ri.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return ri;
+    }
+
+
+    /**
+     * 新增订单退货物流
+     * @return
+     */
+    @RequestMapping(value = "/saveLogisticsInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnInfo saveLogisticsInfo(SpsOrderLogistics logistics) {
+        ReturnInfo ri = new ReturnInfo();
+        try {
+            orderLogisticsService.saveOrUpdate(logistics);
+            ri.setCode(Message.SUCCESS_CODE);
+            ri.setMsg(Message.API_SUCCESS_MSG);
+            ri.setSuccess(Message.API_SUCCESS_FLAG);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ri.setCode(Message.FAILURE_CODE);
+            ri.setMsg(Message.FAILURE_MSG);
+            ri.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return ri;
+    }
+
+    /**
+     * 查找物流公司
+     *
+     * @return
+     */
+    @RequestMapping(value = "/findLogisticsCompany", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnInfo findCustomerCategory() {
+        ReturnInfo ri = new ReturnInfo();
+        try {
+            Map<String, Object> map = new HashMap<>();
+            List<SpsExpress> expressList = expressService.findList(map);
+            String[] pro = new String[]{"name", "id"};
+            if (expressList != null) {
+                ri.setResult(EntityUtiles.reloadListPropertyValue(expressList, pro));
+                ri.setSuccess(Message.SUCCESS_MSG);
+                ri.setCode(Message.SUCCESS_CODE);
+                ri.setMsg(Message.API_SUCCESS_MSG);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ri.setCode(Message.FAILURE_CODE);
+            ri.setMsg(Message.FAILURE_MSG);
+            ri.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return ri;
+    }
 
 
     /**
@@ -64,7 +151,7 @@ public class OrderController {
      */
     @RequestMapping(value = "/deleteOrder", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo deleteOrder(Integer id ) {
+    public ReturnInfo deleteOrder(Integer id) {
         ReturnInfo ri = new ReturnInfo();
         try {
             orderService.deleteOrder(id);
@@ -171,7 +258,7 @@ public class OrderController {
      */
     @RequestMapping(value = "/orderList", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo orderList(String customerNum,String type ) {
+    public ReturnInfo orderList(String customerNum, String type) {
         ReturnInfo ri = new ReturnInfo();
         Map<String, Object> map = new HashMap<>();
         HashMap<String, Object> data = new HashMap<>();
@@ -255,7 +342,7 @@ public class OrderController {
         ReturnInfo ri = new ReturnInfo();
         try {
             Map<String, Object> map = purchaseOrderService.verificationOrder(order);
-          
+
             //成功返回当前用户地址个人信息
             if ((Integer) map.get("flag") == 0) {
                 ri.setResult(map.get("company"));
@@ -284,8 +371,8 @@ public class OrderController {
      */
     @RequestMapping(value = "/orderCallback", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo orderCallback(@RequestBody Map<String,Object> map) {
-        ReturnInfo ri =  Common.validate(map, "orderNum","orderStatus");
+    public ReturnInfo orderCallback(@RequestBody Map<String, Object> map) {
+        ReturnInfo ri = Common.validate(map, "orderNum", "orderStatus");
         if ("0".equals(ri.getCode())) return ri;
         try {
             orderService.updateStatus(map);

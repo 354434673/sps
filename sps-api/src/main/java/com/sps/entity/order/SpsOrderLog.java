@@ -11,10 +11,20 @@ public class SpsOrderLog implements Serializable {
     private Integer logType;
 
     private String logDes;
+    private String logOrderNo;
 
     private Date logCreateTime;
 
     private Date logUpdateTime;
+
+
+    public String getLogOrderNo() {
+        return logOrderNo;
+    }
+
+    public void setLogOrderNo(String logOrderNo) {
+        this.logOrderNo = logOrderNo;
+    }
 
     public Integer getLogId() {
         return logId;

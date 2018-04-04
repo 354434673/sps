@@ -59,4 +59,10 @@ public interface OrderService {
     void updateStatus(Map<String, Object> map);
 
     SpsOrder findByCode(String orderCode);
+
+    /**
+     * 修改订单状态
+     * @param map
+     */
+    void updateStatusByOrderNo(Map map);
 }

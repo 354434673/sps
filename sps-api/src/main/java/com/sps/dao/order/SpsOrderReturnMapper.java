@@ -12,4 +12,8 @@ public class SpsOrderReturnMapper extends ApiBaseDaoImpl<SpsOrderReturn, Integer
     public String getNameSpace() {
         return "sqlmap.SpsOrderReturn";
     }
+
+    public SpsOrderReturn findEntityByOrderNo(String orderNo) {
+        return super.selectOne(getStatement("findEntityByOrderNo"), orderNo);
+    }
 }

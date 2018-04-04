@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
     private static String returnGoods = "http://dev.app.chezhubaitiao.com/api/customerAccount/returnGoods";
     private static String frozen = "http://dev.app.chezhubaitiao.com/api/accountSystem/freeze";
     private static String URL_INSERT_SHOPORDER = "http://test1-spay.juzifenqi.com/sps/insertShopOrderInfo";
-    private static String URL_INSERT_REGION= "http://test1-spay.juzifenqi.com/sps/insertShopRegionInfo";
+    private static String URL_INSERT_REGION = "http://test1-spay.juzifenqi.com/sps/insertShopRegionInfo";
 /*    @Autowired
     private GoodCategoryService goodCategoryService;*/
 
@@ -479,7 +479,7 @@ public class OrderServiceImpl implements OrderService {
                     Map map = new HashMap<>();
                     map.put("application", "dianfu");
                     map.put("amount", order.getPayment());
-					/*map.put("certNo", certNo);*/
+                    /*map.put("certNo", certNo);*/
                     map.put("businessId", order.getShopkeeper());
                     map.put("orderId", order.getOrderid());
                     String jsonRes = HttpClientUtils.post(frozen, map);
@@ -504,11 +504,11 @@ public class OrderServiceImpl implements OrderService {
                     json.put("loanTerm", "7");
                     json.put("downPayments", order.getScale());
                     json.put("firstPayment", order.getPayment());
-					/*json.put("repaymentMethod", "df10481065917829");*/
+                    /*json.put("repaymentMethod", "df10481065917829");*/
                     json.put("shopCode", order.getCustomerId());
                     json.put("shopMainBussiness", categoryNames.substring(1));
-				/*	json.put("shopMainBussinessName",order.get);*/
-					/*json.put("shopRiskLevel", "北京");*/
+                /*	json.put("shopMainBussinessName",order.get);*/
+                    /*json.put("shopRiskLevel", "北京");*/
                     json.put("shopCompanyName", order.getSelfname());
                     json.put("shopMainBrand", order.getBrand());
                     json.put("centerMerchantCode", order.getShopkeeper());
@@ -559,25 +559,22 @@ public class OrderServiceImpl implements OrderService {
                 if ("17".equals(flag)) {
                     //退货接口
                     Order order = orderMapper.selectByOrderId(orderid);
-                    if(order.getScale()!=100){
-                        Map map = new HashMap<>();
-                        map.put("amount",order.getShopPayMoney());
-                        map.put("application", "dianfu");
-                        map.put("certNo", order.getIdCard());
-                        map.put("businessId", order.getCustomerId());
-                        map.put("orderId", order.getOrderid());
-                        String jsonRes = HttpClientUtils.post(returnGoods, map);
-                    }
 
+                    Map map = new HashMap<>();
+                    //如果全款退货 金额传0
+                    if (order.getScale() != 100) {
+                        map.put("amount", order.getShopPayMoney());
+                    } else {
+                        map.put("amount", 0);
+                    }
+                    map.put("application", "dianfu");
+                    map.put("certNo", order.getIdCard());
+                    map.put("businessId", order.getCustomerId());
+                    map.put("orderId", order.getOrderid());
+                    String jsonRes = HttpClientUtils.post(returnGoods, map);
 
 
                 }
-
-
-
-
-
-
 
 
                 hashMap.put("count", result);
@@ -605,7 +602,7 @@ public class OrderServiceImpl implements OrderService {
         return hashMap;
     }
 /*
-	@Test
+    @Test
 	public void test2(){
 		String orderid = "df10484395138694";
 		Order order = orderMapper.selectByOrderId("df10484395138694");

@@ -2,11 +2,14 @@ package com.sps.entity.order;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class SpsOrderReturn  implements Serializable {
 
-    private String orderCreateTime;
 
+    private List<SpsOrderLog> orderLogList;
+
+    private String orderCreateTime;
 
     private Integer id;
 
@@ -26,6 +29,14 @@ public class SpsOrderReturn  implements Serializable {
 
     private String businessName;
 
+
+    public List<SpsOrderLog> getOrderLogList() {
+        return orderLogList;
+    }
+
+    public void setOrderLogList(List<SpsOrderLog> orderLogList) {
+        this.orderLogList = orderLogList;
+    }
 
     public String getOrderCreateTime() {
         return orderCreateTime;

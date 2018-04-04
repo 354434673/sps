@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsOrderLogistics">
+  <resultMap id="BaseResultMap" type="SpsOrderLogistics">
+    <id column="logistics_id" jdbcType="INTEGER" property="logisticsId" />
+    <result column="logistics_name" jdbcType="VARCHAR" property="logisticsName" />
+    <result column="logistics_other" jdbcType="VARCHAR" property="logisticsOther" />
+    <result column="logistics_num" jdbcType="VARCHAR" property="logisticsNum" />
+    <result column="logistics_voucher" jdbcType="VARCHAR" property="logisticsVoucher" />
+    <result column="logistics_creat_time" jdbcType="TIMESTAMP" property="logisticsCreatTime" />
+    <result column="logistics_update_time" jdbcType="TIMESTAMP" property="logisticsUpdateTime" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    logistics_id, logistics_name, logistics_other, logistics_num, logistics_voucher, 
+    logistics_creat_time, logistics_update_time, order_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_order_logistics
+    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_order_logistics
+    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsOrderLogistics">
+    insert into sps_order_logistics (logistics_id, logistics_name, logistics_other, 
+      logistics_num, logistics_voucher, logistics_creat_time, 
+      logistics_update_time, order_id)
+    values (#{logisticsId,jdbcType=INTEGER}, #{logisticsName,jdbcType=VARCHAR}, #{logisticsOther,jdbcType=VARCHAR}, 
+      #{logisticsNum,jdbcType=VARCHAR}, #{logisticsVoucher,jdbcType=VARCHAR}, #{logisticsCreatTime,jdbcType=TIMESTAMP}, 
+      #{logisticsUpdateTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="SpsOrderLogistics">
+    insert into sps_order_logistics
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logisticsId != null">
+        logistics_id,
+      </if>
+      <if test="logisticsName != null">
+        logistics_name,
+      </if>
+      <if test="logisticsOther != null">
+        logistics_other,
+      </if>
+      <if test="logisticsNum != null">
+        logistics_num,
+      </if>
+      <if test="logisticsVoucher != null">
+        logistics_voucher,
+      </if>
+      <if test="logisticsCreatTime != null">
+        logistics_creat_time,
+      </if>
+      <if test="logisticsUpdateTime != null">
+        logistics_update_time,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logisticsId != null">
+        #{logisticsId,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsName != null">
+        #{logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsOther != null">
+        #{logisticsOther,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNum != null">
+        #{logisticsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsVoucher != null">
+        #{logisticsVoucher,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCreatTime != null">
+        #{logisticsCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logisticsUpdateTime != null">
+        #{logisticsUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="SpsOrderLogistics">
+    update sps_order_logistics
+    <set>
+      <if test="logisticsName != null">
+        logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsOther != null">
+        logistics_other = #{logisticsOther,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNum != null">
+        logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsVoucher != null">
+        logistics_voucher = #{logisticsVoucher,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCreatTime != null">
+        logistics_creat_time = #{logisticsCreatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logisticsUpdateTime != null">
+        logistics_update_time = #{logisticsUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsOrderLogistics">
+    update sps_order_logistics
+    set logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      logistics_other = #{logisticsOther,jdbcType=VARCHAR},
+      logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+      logistics_voucher = #{logisticsVoucher,jdbcType=VARCHAR},
+      logistics_creat_time = #{logisticsCreatTime,jdbcType=TIMESTAMP},
+      logistics_update_time = #{logisticsUpdateTime,jdbcType=TIMESTAMP},
+      order_id = #{orderId,jdbcType=VARCHAR}
+    where logistics_id = #{logisticsId,jdbcType=INTEGER}
+  </update>
+</mapper>

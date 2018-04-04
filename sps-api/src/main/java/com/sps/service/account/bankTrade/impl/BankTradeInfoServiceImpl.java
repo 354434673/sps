@@ -56,6 +56,12 @@ public class BankTradeInfoServiceImpl implements BankTradeService {
     }
 
     @Override
+    public BankTradeInfo findTradeDetailByOrderNo(String orderNo) {
+        BankTradeInfo bankTradeInfo = bankTradeInfoDao.selectDetailByOrderNo(orderNo);
+        return bankTradeInfo;
+    }
+
+    @Override
     public List<BankTradeInfoVo> findBankTrdeShowPageList(String constomeId, Integer types,Integer currentPage,Integer pageSize) {
         //暂时分页写死
         currentPage = currentPage * pageSize;

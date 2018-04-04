@@ -140,4 +140,15 @@
 		limit #{currentPage},#{pageSize}
 	</select>
 
+
+
+	<select id="selectDetailByOrderNo" parameterType="string" resultMap="BaseResultMap">
+		SELECT
+	     *
+		FROM
+		sps_bank_trade_info
+		WHERE
+		bt_trade_name=#{orderNo}
+	</select>
+
 </mapper>

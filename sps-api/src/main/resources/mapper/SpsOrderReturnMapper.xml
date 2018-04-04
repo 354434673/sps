@@ -139,4 +139,11 @@
       business_name = #{businessName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="findEntityByOrderNo" parameterType="string" resultMap="BaseResultMap">
+   select
+    r.id, r.order_num, r.delete_flag, r.create_time, r.update_time, r.reason, r.excuse, r.order_time,
+    r.business_name,sr.flag as orderStatus
+    from sps_order_return r  LEFT JOIN sps_order sr on sr.orderid=r.order_num
+    where  r.order_num = #{orderNo,jdbcType=VARCHAR}
+  </select>
 </mapper>
