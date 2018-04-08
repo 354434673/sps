@@ -100,10 +100,11 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             //保存收支信息
             BankDrawAudio bankDrawAudio = new BankDrawAudio();
             bankDrawAudio.setAuditSerialNum(info.getTradeSerialNum());
+            bankDrawAudio.setTradeNo(info.getTradeNo());
             bankDrawAudio.setCompanyName(info.getEnterprise().getEnterpriseCompanyName());
             bankDrawAudio.setAmount(info.getTradeAmount());
             bankDrawAudio.setRemark(info.getStandby1());
-            bankDrawAudio.setPayDate(info.getAuditDate());
+            bankDrawAudio.setPayDate(info.getPaymentDate());
             bankDrawAudio.setPayType(info.getTradeType());
             listDrawAudio.add(bankDrawAudio);
         }

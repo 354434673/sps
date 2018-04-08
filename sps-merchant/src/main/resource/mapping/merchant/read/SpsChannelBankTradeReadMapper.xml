@@ -124,7 +124,7 @@
 		bt.standby2,
 		bt.bt_trade_no,
 		bt.orderid,
-		bt.recharge_status  rechargeStatus
+		bt.recharge_status
 		from
 	</sql>
 
@@ -153,6 +153,7 @@
 	</where>
 	  ORDER  BY  bt.bt_application_start_date  desc
   </select>
+
 	<select id="selectBankTradeByUsername" parameterType="String" resultMap="BaseResultMap">
 		SELECT
 		<include refid="join_list" />
@@ -173,6 +174,17 @@
 
 	</select>
 
+	<select id="selectBankTradeBySeriNum" parameterType="String" resultMap="BaseResultMap">
+		SELECT
+		<include refid="join_list" />
+		sps_bank_trade_info bt
+		join
+		sps_bank  b
+		on
+		bt.bt_user_id = b.b_user_id
+		where
+		  	bt.bt_trade_serial_num=#{tradeSerialNum}
+	</select>
     <select id="selectListCashAuditByUserName" parameterType="String"  resultMap="cashAuditBashInfo">
         SELECT
           	bt.id,
@@ -360,12 +372,12 @@
 		ON
 		e.channel_num=b.channl_num
 		<where>
-			  b.channl_num=#{channelNum,jdbcType=VARCHAR}
+			  b.channl_num=#{channelNum,jdbcType=VARCHAR}  AND  bt.recharge_status=1
 			<if test="startTime != null and startTime != '' " >
-				and bt.bt_audit_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
+				and bt.bt_payment_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
 			</if>
 			<if test="endTime != null and endTime != '' " >
-				and bt.bt_audit_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
+				and bt.bt_payment_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
 			</if>
 			<if test="payType != null and payType != '' " >
 				and bt.bt_trade_type = #{payType,jdbcType=VARCHAR}

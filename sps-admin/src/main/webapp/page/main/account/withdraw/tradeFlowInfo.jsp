@@ -127,7 +127,7 @@
                     ,{field: 'payDate', title: '交易时间', width:230, align:'center',templet: '#date'}
                     ,{field: 'payType', title: '类型',align:'center' ,templet: '#type'}
                     ,{field: 'amount', title: '交易金额',width:230,align:'center'}
-                    ,{field: 'auditSerialNum', title: '流水号',width:230,align:'center'}
+                    ,{field: 'tradeNo', title: '流水号',width:230,align:'center'}
                     ,{field: 'companyName', title: '交易方',align:'center' }
                     ,{field: 'remark', title: '备注',event: 'setStatus', width:140,align:'center'}
                     ,{field: 'tool', title: '交易明细',width:270,align:'center', event: 'setSign' ,toolbar:'#bar'}                ]]
@@ -165,6 +165,14 @@
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 var tr = obj.tr; //获得当前行 tr 的DOM对象
                 if(layEvent === 'detail'){ //查看
+                    if(typeof data.orderId==undefined ){
+                        if(data.remark=='提现'){
+                            location.href = '<%=path%>/page/main/account/withdraw/withdrawDetail.jsp?tradeSerialNum='+data.auditSerialNum  ;
+                        }
+                        if( data.remark=='充值'){
+                            location.href = '<%=path%>/page/main/account/recharge/rechargeDetail.jsp?tradeSerialNum='+data.auditSerialNum  ;
+                        }
+                    }
                     location.href = '<%=path%>/page/main/account/withdraw/tradeDetail.jsp?auditSerialNum='+data.auditSerialNum  ;
                 }
             });

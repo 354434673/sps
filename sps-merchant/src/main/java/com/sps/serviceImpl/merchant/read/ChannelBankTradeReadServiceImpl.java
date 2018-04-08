@@ -52,20 +52,17 @@ public class ChannelBankTradeReadServiceImpl implements ChannelBankTradeReadServ
 
 	/**
 	 * 根据登录用户名查询交易信息
-	 * @param loginName
+	 * @param tradeSerialNum
 	 * @return
 	 */
-	
 	@Override
-	public SpsChannelBankTrade getTradeDetail(String loginName, String tradeSerialNum) {
-	String channelNum = accountRead.selectByOpenAdminNum(loginName);
-		SpsChannelBankTrade bankTrade = bankTradeRead.selectBankTradeByUsername(channelNum,tradeSerialNum);
+	public SpsChannelBankTrade getTradeDetail( String tradeSerialNum) {
+		SpsChannelBankTrade bankTrade = bankTradeRead.selectBankTradeBySeriNum(tradeSerialNum);
 		return bankTrade;		
 	}
-
 	@Override
 	public SpsChannelBankTrade getTradeInfo(String tradeSerialNum) {
-		SpsChannelBankTrade bankTrade = bankTradeRead.selectBankTradeByUsername(null,tradeSerialNum);
+		SpsChannelBankTrade bankTrade = bankTradeRead.selectOrderByTradeSeriNum(tradeSerialNum);
 		return bankTrade;
 	}
 

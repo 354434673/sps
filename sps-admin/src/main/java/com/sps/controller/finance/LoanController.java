@@ -54,7 +54,7 @@ public class LoanController {
     @RequestMapping("/findLoanList")
     @ResponseBody
     public HashMap<String, Object> findLoanList(Integer page, Integer limit, String loanStartTime, String loanEndTime,String orderNo, String loanName, Integer loanStatus ) {
-        LogFactory.getLog(LoanController.class).info("+++++++++++++++++findLoanList");
+        LogFactory.getLog(LoanController.class).info("findLoanList");
          HashMap<String, Object> result = orderService.queryOrderList(page, limit, loanStartTime, loanEndTime, loanName, loanStatus, orderNo);
         return result;
     }
