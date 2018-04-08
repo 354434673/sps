@@ -123,7 +123,7 @@ public class PayRechangeController {
                         Logger.info("返回成功 组装业务逻辑开始" );
                         SpsChannelBankTrade bankTradeInfo = new SpsChannelBankTrade();
                         bankTradeInfo.setTradeNo(serialNumber);
-                        String uuid = UUID.randomUUID().toString().replaceAll("-", "").toLowerCase();
+                        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
                         bankTradeInfo.setIdentity(bankInfo.getIdentity());
                         bankTradeInfo.setApplicationStartDate(new Date());
                         bankTradeInfo.setTradeSerialNum(uuid);

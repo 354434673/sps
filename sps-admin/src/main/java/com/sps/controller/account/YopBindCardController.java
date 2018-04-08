@@ -104,7 +104,7 @@ public class YopBindCardController {
         //根据用户名 和用户类型查询Balance中是否存在 该用户
         SpsChannelBank bankCard = bankReadService.getBankInfo(userName);
         if(bankCard !=null){
-            logger.info("【绑卡接口[bindBankCard]】- bankReadService.getBankInfo(userName[%s])查询用户信息，返回空" +(String) SecurityUtils.getSubject().getPrincipal());
+            logger.info("【绑卡接口[bindBankCard]】- bankReadService.getBankInfo(userName)查询用户信息，返回空" +(String) SecurityUtils.getSubject().getPrincipal());
             result.setCode("7");
             result.setMsg("已绑过卡，请解绑卡之后再操作");
             return result;
