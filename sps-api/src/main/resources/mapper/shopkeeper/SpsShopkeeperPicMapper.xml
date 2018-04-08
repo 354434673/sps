@@ -288,4 +288,21 @@
       shopkeeper_customerId = #{shopkeeperCustomerid,jdbcType=VARCHAR}
     where pic_id = #{picId,jdbcType=INTEGER}
   </update>
+  <select id="selectByCustomerId" parameterType="String" resultMap="BaseResultMap">
+      SELECT
+        pic_id,
+        pic_src
+      FROM
+        sps_shopkeeper_pic
+       WHERE
+         shopkeeper_customerId=#{customerId} AND  pic_type=17
+  </select>
+  <update id="saveSrc"  >
+    UPDATE
+    sps_shopkeeper_pic
+    SET   pic_src=#{src},
+        pic_update_time=#{updateTime}
+    WHERE
+    pic_id=#{id} AND  pic_type=17
+  </update>
 </mapper>

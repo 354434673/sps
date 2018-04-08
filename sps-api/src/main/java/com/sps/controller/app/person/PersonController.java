@@ -5,10 +5,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Message;
 import com.sps.common.OptionUtil;
 import com.sps.common.StringUtil;
+import com.sps.entity.account.BankCardInfo;
 import com.sps.entity.shopkeeper.SpsShopkeeperCarProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperHouseProperty;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
+import com.sps.entity.shopkeeper.SpsShopkeeperPic;
+import com.sps.service.account.bankCard.BankCardService;
 import com.sps.service.shopkeeper.ShopkeeperPersonService;
+import com.sps.service.shopkeeper.ShopkeeperPicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +39,10 @@ import static com.juzifenqi.core.EjavashopSequence.getKey;
 public class PersonController {
     @Autowired
     private ShopkeeperPersonService shopkeeperPersonService;
-
+    @Autowired
+    private ShopkeeperPicService shopkeeperPicService;
+    @Autowired
+    private BankCardService bankCardService;
     /**
      * 获取昵称和头像的方法
      * @param customerId
@@ -43,22 +50,39 @@ public class PersonController {
      */
     @RequestMapping(value = "/queryPersonInfo", method = RequestMethod.POST)
     @ResponseBody
-    public String queryPersonInfo(@RequestParam("customerId") String  customerId) {
-        SpsShopkeeperPersonal person = shopkeeperPersonService.getByPersonId(customerId);
+    public String queryPersonInfo(@RequestParam("customerId") String  customerId,@RequestParam("phone")String phone) {
+        SpsShopkeeperPersonal person = shopkeeperPersonService.findPerson(customerId);
         JSONObject jsonO = new JSONObject();
-        if (StringUtil.isEmpty(person.getPersonalNickname())) {
-            String phone = person.getPersonalPhone();
-            String src = person.getPic().getPicSrc();
-            jsonO.put("name", phone);
-            jsonO.put("src", src);
-            return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG, jsonO);
-        } else {
-            String name = person.getPersonalNickname();
-            String src = person.getPic().getPicSrc();
-            jsonO.put("name", name);
-            jsonO.put("src", src);
-            return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG, jsonO);
+        SpsShopkeeperPic pic = shopkeeperPicService.findByCustomerId(customerId);
+        List<SpsShopkeeperCarProperty> carInfos = shopkeeperPersonService.getCardInfo(customerId);
+        List<SpsShopkeeperHouseProperty> houseInfos = shopkeeperPersonService.getHouseInfo(customerId);
+        //获取绑卡信息
+        List<BankCardInfo> bindCardInfo = bankCardService.findBindCardInfo(customerId);
+
+        if(person !=null){
+            jsonO.put("flagCar",carInfos.size());
+            jsonO.put("flagHouse",houseInfos.size());
+            jsonO.put("flagBankCard",bindCardInfo.size());
+            if(pic==null){
+                if (StringUtil.isNotEmpty(person.getPersonalNickname())) {
+                    jsonO.put("name", person.getPersonalNickname());
+                }else{
+                    jsonO.put("name", phone);
+                }
+                jsonO.put("src", null);
+
+                return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG, jsonO);
+            }else{
+                if (StringUtil.isNotEmpty(person.getPersonalNickname())) {
+                    jsonO.put("name", person.getPersonalNickname());
+                }else{
+                    jsonO.put("name", phone);
+                }
+                jsonO.put("src", pic.getPicSrc());
+                return Message.responseStr(Message.SUCCESS_CODE, Message.SUCCESS_MSG, jsonO);
+            }
         }
+        return Message.responseStr(Message.FAILURE_CODE, "该客户编号不存在");
     }
 
     /**

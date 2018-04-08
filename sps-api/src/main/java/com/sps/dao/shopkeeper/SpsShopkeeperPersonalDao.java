@@ -6,9 +6,11 @@ import com.sps.entity.shopkeeper.SpsShopkeeperPersonal;
 import com.sps.entity.shopkeeper.SpsShopkeeperPersonalExample;
 import com.sps.service.base.BaseDB;
 
+import java.util.Date;
+
 public interface SpsShopkeeperPersonalDao extends BaseDB<SpsShopkeeperPersonal> {
 
-  SpsShopkeeperPersonal getByPersonId(@Param("customerId") String customerId);
+ /* SpsShopkeeperPersonal getByPersonId(@Param("customerId") String customerId);*/
 
   /**
    * 根据客户户编号获取客户名称
@@ -16,15 +18,9 @@ public interface SpsShopkeeperPersonalDao extends BaseDB<SpsShopkeeperPersonal> 
    * @return
    */
   SpsShopkeeperPersonal   selectByPersonId(@Param("customerId") String customerId);
-
-    int  saveSrc(@Param("id") Integer id, @Param("src") String src);
-
-    int updateNickName(@Param("customerId") String customerId, @Param("nickName") String nickName);
-    
+    int updateNickName(@Param("customerId") String customerId, @Param("nickName") String nickName,@Param("updateTime") Date updateTime);
     int insertSelective(SpsShopkeeperPersonal personal);
-    
     int updateByExampleSelective(@Param("record") SpsShopkeeperPersonal record, @Param("example") SpsShopkeeperPersonalExample example);
-
     SpsShopkeeperPersonal selectById(@Param("id") Integer id);
 
 }

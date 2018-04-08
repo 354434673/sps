@@ -39,14 +39,20 @@ public interface ShopkeeperPersonService {
     SpsShopkeeperPersonal  findPerson(String  consumerId);
     Boolean  saveSrc(String  consumerId,String src);
     Boolean  updateNickName(String consumerId,String nickName);
-
     /**
-     * 跟腱客户编号获取用户昵称与头像
+     * 客户编号获取用户昵称与头像
      * @param consumerId
      * @return
      */
     SpsShopkeeperPersonal getByPersonId(String consumerId);
-
+    /**
+     * 根据客户编号获取车辆信息
+     */
+    List<SpsShopkeeperCarProperty> getCardInfo(String consumerId);
+    /**根据客户编号获取房子信息
+     *
+     */
+   List<SpsShopkeeperHouseProperty>  getHouseInfo(String consumerId);
     /**
      * 保存车辆信息
      * @param spsShopkeeperCarProperty

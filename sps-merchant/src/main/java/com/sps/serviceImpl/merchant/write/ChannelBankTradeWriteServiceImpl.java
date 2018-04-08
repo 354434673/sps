@@ -1,5 +1,4 @@
 package com.sps.serviceImpl.merchant.write;
-
 import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sps.dao.merchant.read.SpsBalanceReadMapper;
@@ -14,7 +13,6 @@ import org.sps.entity.merchant.SpsChannelBalance;
 import org.sps.entity.merchant.SpsChannelBank;
 import org.sps.entity.merchant.SpsChannelBankTrade;
 import org.sps.service.merchant.write.ChannelBankTradeWriteService;
-
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -36,13 +34,11 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 	private SpsChannelBankWriteMapper bankWrite;
 	@Autowired
 	private SpsChannelOpenAccountReadMapper openAccount;
-
 	/**
 	 * 保存交易记录的方法
 	 */
 	@Override
 	public String  saveBankTradeInfo(SpsChannelBank bankInfo,BigDecimal amount,String tradeType,Integer userId, Integer userMark) {
-
 		SpsChannelBankTrade bankTrandeInfo = new SpsChannelBankTrade();
 		String uuid = UUID.randomUUID().toString();
 		bankTrandeInfo.setIdentity(bankInfo.getIdentity());
@@ -72,7 +68,6 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 			bankTrandeInfo.setStandby1("充值");
 			tradeAfter = bankInfo.getAvailableBalance().add(amount);
 		}
-
 		bankTrandeInfo.setTradeAfterBalanc(tradeAfter);
 		int num = bankTradeWrite.insertBankTrade(bankTrandeInfo);
 //		根据userId 和userMark 获取 id
@@ -84,31 +79,25 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 		}
 		return num > 0?uuid:"";
 	}
-
 	@Override
 	public Boolean saveBankRechangeTradeInfo(SpsChannelBankTrade bankTrandeInfo) {
 		int n = bankWrite.updateBalance(bankTrandeInfo.getUserId(), bankTrandeInfo.getTradeAfterBalanc());
 		int m = bankTradeWrite.insertBankTrade(bankTrandeInfo);
 		return m >0 && n>0? true:false ;
 	}
-
 	@Override
 	public Boolean modifyRechangeStatus(SpsChannelBankTrade spsChannelBankTrade) {
 		int m = bankTradeWrite.updateRechangeStatus(spsChannelBankTrade);
 		return m > 0 ? true:false;
 	}
-
-
 	@Override
 	public void modifyBankTradeInfo(SpsChannelBankTrade bankTrade) {
 		bankTradeWrite.updateBankTrade(bankTrade);
 	}
-
 	@Override
 	public void removeBankTradeInfo(String tradeSerialNum) {
 		bankTradeWrite.deleteBankTrade(tradeSerialNum);
 	}
-
 	@Override
 	public Boolean modifyBankTradeByApplicateDate(int id, String status,String content) {
 		Date date = new Date();
@@ -123,8 +112,5 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 			m = bankTradeWrite.updateStatusAndContent(id, status,content,date,date);
 			return m >0;
 		}
-
 	}
-
-
 }

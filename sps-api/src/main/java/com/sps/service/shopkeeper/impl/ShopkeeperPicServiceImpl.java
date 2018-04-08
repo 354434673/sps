@@ -21,6 +21,7 @@ public class ShopkeeperPicServiceImpl implements ShopkeeperPicService {
     @Resource
     private SpsShopkeeperPicDao SpsShopkeeperPicDao;
 
+    private SpsShopkeeperPicDao spsShopkeeperPicDao;
 
     @Override
     public List<SpsShopkeeperPic> findList(String shopkeeperNum) {
@@ -44,4 +45,8 @@ public class ShopkeeperPicServiceImpl implements ShopkeeperPicService {
 		
 		return selectByExample.size() == 0 ? null : selectByExample;
 	}
+    @Override
+    public SpsShopkeeperPic findByCustomerId(String customerId) {
+        return spsShopkeeperPicDao.selectByCustomerId(customerId);
+    }
 }

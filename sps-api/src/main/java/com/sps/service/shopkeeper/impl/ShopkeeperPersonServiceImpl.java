@@ -75,21 +75,50 @@ public class ShopkeeperPersonServiceImpl implements ShopkeeperPersonService {
 
     @Override
     public Boolean saveSrc(String customerId, String src) {
-        SpsShopkeeperPersonal person = spsShopkeeperPersonalDao.getByPersonId(customerId);
-        int m = spsShopkeeperPersonalDao.saveSrc(person.getPic().getPicId(), src);
-        return m >0 ? true:false;
+        //根据客户编号查看是否存在头像记录
+        SpsShopkeeperPic pic = spsShopkeeperPicDao.selectByCustomerId(customerId);
+        if(pic==null){
+            //保存一条头像记录
+            SpsShopkeeperPic spsShopkeeperPic = new SpsShopkeeperPic();
+            spsShopkeeperPic.setPicSrc(src);
+            spsShopkeeperPic.setPicType(17);
+            spsShopkeeperPic.setPicState(0);
+            spsShopkeeperPic.setPicUploadTime(new Date());
+            spsShopkeeperPic.setPicCreatTime(new Date());
+            spsShopkeeperPic.setShopkeeperCustomerid(customerId);
+            int m = spsShopkeeperPicDao.insert(spsShopkeeperPic);
+            return m >0 ? true:false;
+        }else{
+            //修改记录
+            int m = spsShopkeeperPicDao.saveSrc(pic.getPicId(), src,new Date());
+            return m >0 ? true:false;
+        }
+
+
+
     }
 
     @Override
     public Boolean updateNickName(String customerId, String nickName) {
-        int m = spsShopkeeperPersonalDao.updateNickName(customerId, nickName);
+        int m = spsShopkeeperPersonalDao.updateNickName(customerId, nickName,new Date());
         return m >0 ? true:false;
     }
 
     @Override
     public SpsShopkeeperPersonal getByPersonId(String customerId ) {
-        return spsShopkeeperPersonalDao.getByPersonId(customerId);
+        return spsShopkeeperPersonalDao.selectByPersonId(customerId);
     }
+
+    @Override
+    public List<SpsShopkeeperCarProperty> getCardInfo(String consumerId) {
+        return carDao.selectByCustomerId(consumerId);
+    }
+
+    @Override
+    public List<SpsShopkeeperHouseProperty> getHouseInfo(String consumerId) {
+        return houseDao.selectByCustomerId(consumerId);
+    }
+
 
     @Override
     public Boolean saveCarInfo(SpsShopkeeperCarProperty spsShopkeeperCarProperty,String src) {

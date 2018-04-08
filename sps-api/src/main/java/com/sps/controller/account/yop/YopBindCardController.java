@@ -170,117 +170,124 @@ public class YopBindCardController {
         JSONObject jsonO = new JSONObject();
         //根据customerId 获取登录用户名；
         SpsShopkeeperPersonal person = shopkeeperPersonService.findPerson(customerId);
-        String loginName=person.getPersonalUsername();
-
-        /**
-         * 创建一条绑卡信息
-         */
-        BindBankTrans bindBankTrades = new BindBankTrans();
-        bindBankTrades.setBankName(bankName);
-        bindBankTrades.setPhone(phone);
-        bindBankTrades.setBankCode(cardNo);
-        bindBankTrades.setLoginName(loginName);
-        bindBankTrades.setName(personName);
-        bindBankTrades.setMerchantNo(YEEPAY_MERCHANT_NO);
-        bindBankTrades.setIdentity(person.getPersonalIdcard());
-        bindBankTrades.setUserId(UUID.randomUUID().toString());
-        bindBankTrades.setChannlNum(customerId);
-        //根据登录用户查询是否绑卡
-        String userId = bankCardService.findUserId(customerId);
-        if ( StringUtil.isEmpty(userId)) {
-            /**
-             * 没有绑卡，保存一条绑卡交易记录
-             *
-             */
-            bindBankTrades.setUserId(UUID.randomUUID().toString());
-            HashMap<String, Object> map = bindCardTransService.saveBankTansInfos(bindBankTrades);
-            if (map != null) {
-                Boolean flag = (Boolean) map.get("flag");
-                if (flag) {
-                    BindBankTrans bindBankTrans = (BindBankTrans) map.get("bindBankTransNew");
+        if(person!=null){
+            String loginName=person.getPersonalUsername();
+            if(person.getPersonalIdcard()!=null){
+                /**
+                 * 创建一条绑卡信息
+                 */
+                BindBankTrans bindBankTrades = new BindBankTrans();
+                bindBankTrades.setBankName(bankName);
+                bindBankTrades.setPhone(phone);
+                bindBankTrades.setBankCode(cardNo);
+                bindBankTrades.setLoginName(loginName);
+                bindBankTrades.setName(personName);
+                bindBankTrades.setMerchantNo(YEEPAY_MERCHANT_NO);
+                bindBankTrades.setIdentity(person.getPersonalIdcard());
+                bindBankTrades.setUserId(UUID.randomUUID().toString());
+                bindBankTrades.setChannlNum(customerId);
+                //根据登录用户查询是否绑卡
+                String userId = bankCardService.findUserId(customerId);
+                if ( StringUtil.isEmpty(userId)) {
                     /**
-                     * 调用易宝进行鉴权绑卡
-                     * 57dc8546-0f55-4e30-b73c-85bc760dab89
+                     * 没有绑卡，保存一条绑卡交易记录
+                     *
                      */
-                    String identityid1 = bindBankTrans.getUserId().replaceAll("-","");
-                    YopRequest yopRequest = new YopRequest(YEEPAY_APP_KEY, "", YEEPAY_SERVER_ROOT);
-                    yopRequest.addParam("merchantno", YEEPAY_MERCHANT_NO);
-                    yopRequest.addParam("requestno", bindBankTrans.getSerialSh());
-                    yopRequest.addParam("identityid", identityid1);
-                    yopRequest.addParam("identitytype", "ID_CARD");
-                    yopRequest.addParam("cardno", cardNo);
-                    yopRequest.addParam("idcardno",person.getPersonalIdcard());
-                    yopRequest.addParam("idcardtype", "ID");
-                    yopRequest.addParam("username", personName);
-                    yopRequest.addParam("phone", phone);
-                    yopRequest.addParam("issms", "true");
-                    yopRequest.addParam("advicesmstype", "MESSAGE");
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String dateString = sdf.format(new Date());
-                    yopRequest.addParam("requesttime", dateString);
-                    yopRequest.addParam("authtype", "COMMON_FOUR");
-                    //回调接口
-                     logger.info("易宝绑卡流水号：" + ";请求参数：" + JSON.toJSONString(yopRequest));
-                    YopResponse yopResponse = YopClient3.postRsa(YEEPAY_BIND_CARD_REQUEST_URL, yopRequest);
-                     logger.info("易宝绑卡流水号：" + bindBankTrans.getSerialSh() + ";返回参数：" + JSON.toJSONString(yopResponse));
-                   TreeMap<String, String> responseParames = JSON.parseObject(yopResponse.getStringResult(), new TypeReference<TreeMap<String, String>>() {
-                    });
-                    Boolean aBoolean = bindCardTransService.modifyBankTran(responseParames.get("requestno"), responseParames.get("yborderid"), responseParames.get("status"),responseParames.get("cardtop"),responseParames.get("cardlast"),responseParames.get("authtype"),responseParames.get("remark"));
-                    if ("TO_VALIDATE".equals(responseParames.get("status"))) {
-                        //调用短信验证接口
-                        jsonO.put("requestno",responseParames.get("requestno"));
-                        return Message.responseStr(Message.SUCCESS_CODE,"待短验", jsonO);
-                    }
-                    if ("BIND_FAIL".equals(responseParames.get("status"))) {
-                        //绑卡失败
-                        jsonO.put("requestno",responseParames.get("requestno"));
-                        return Message.responseStr(Message.FAILURE_CODE,"绑卡失败", jsonO);
-                    }
-                    if ("BIND_ERRORE".equals(responseParames.get("status"))) {
-                        //绑卡异常
-                        jsonO.put("requestno",responseParames.get("requestno"));
-                        return Message.responseStr(Message.FAILURE_CODE,"绑卡异常", jsonO);
-                    }
-                    if ("TIME_OUT".equals(responseParames.get("status"))) {
-                        //绑卡超时
-                        jsonO.put("requestno",responseParames.get("requestno"));
-                        return Message.responseStr(Message.FAILURE_CODE,"绑卡超时", jsonO);
-                    }
-                    if ("FAIL".equals(responseParames.get("status"))) {
-                        //系统异常
-                        jsonO.put("requestno",responseParames.get("requestno"));
-                        return Message.responseStr(Message.FAILURE_CODE,"易宝系统异常", jsonO);
-                    }
-                    if ("BIND_SUCCESS".equals(responseParames.get("status"))) {
-                        //根据请求号与易宝号获取信息
-                        BindBankTrans bindBank = bindCardTransService.findBankState(responseParames.get("requestno"), responseParames.get("yborderid"));
-                        BankCardInfo bankInfo = new BankCardInfo();
-                        bankInfo.setUserId(bindBank.getUserId());
-                        bankInfo.setAccounts(bindBank.getBankCode());
-                        bankInfo.setBank(bindBank.getBankName());
-                        bankInfo.setPhone(bindBank.getPhone());
-                        bankInfo.setIdentity(bindBank.getIdentity());
-                        bankInfo.setName(bindBank.getName());
-                        bankInfo.setChannlNum(bindBank.getChannlNum());
-                        bankInfo.setUserName(bindBank.getLoginName());
-                        Boolean saveBankInfo = bankCardService.saveBankCardInfo(bankInfo);
-                        //更新绑卡状态
-                        if (saveBankInfo) {
-                            jsonO.put("requestno",responseParames.get("requestno"));
-                            return Message.responseStr(Message.SUCCESS_CODE,"绑卡成功", jsonO);
+                    bindBankTrades.setUserId(UUID.randomUUID().toString());
+                    HashMap<String, Object> map = bindCardTransService.saveBankTansInfos(bindBankTrades);
+                    if (map != null) {
+                        Boolean flag = (Boolean) map.get("flag");
+                        if (flag) {
+                            BindBankTrans bindBankTrans = (BindBankTrans) map.get("bindBankTransNew");
+                            /**
+                             * 调用易宝进行鉴权绑卡
+                             * 57dc8546-0f55-4e30-b73c-85bc760dab89
+                             */
+                            String identityid1 = bindBankTrans.getUserId().replaceAll("-","");
+                            YopRequest yopRequest = new YopRequest(YEEPAY_APP_KEY, "", YEEPAY_SERVER_ROOT);
+                            yopRequest.addParam("merchantno", YEEPAY_MERCHANT_NO);
+                            yopRequest.addParam("requestno", bindBankTrans.getSerialSh());
+                            yopRequest.addParam("identityid", identityid1);
+                            yopRequest.addParam("identitytype", "ID_CARD");
+                            yopRequest.addParam("cardno", cardNo);
+                            yopRequest.addParam("idcardno",person.getPersonalIdcard());
+                            yopRequest.addParam("idcardtype", "ID");
+                            yopRequest.addParam("username", personName);
+                            yopRequest.addParam("phone", phone);
+                            yopRequest.addParam("issms", "true");
+                            yopRequest.addParam("advicesmstype", "MESSAGE");
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            String dateString = sdf.format(new Date());
+                            yopRequest.addParam("requesttime", dateString);
+                            yopRequest.addParam("authtype", "COMMON_FOUR");
+                            //回调接口
+                            logger.info("易宝绑卡流水号：" + ";请求参数：" + JSON.toJSONString(yopRequest));
+                            YopResponse yopResponse = YopClient3.postRsa(YEEPAY_BIND_CARD_REQUEST_URL, yopRequest);
+                            logger.info("易宝绑卡流水号：" + bindBankTrans.getSerialSh() + ";返回参数：" + JSON.toJSONString(yopResponse));
+                            TreeMap<String, String> responseParames = JSON.parseObject(yopResponse.getStringResult(), new TypeReference<TreeMap<String, String>>() {
+                            });
+                            Boolean aBoolean = bindCardTransService.modifyBankTran(responseParames.get("requestno"), responseParames.get("yborderid"), responseParames.get("status"),responseParames.get("cardtop"),responseParames.get("cardlast"),responseParames.get("authtype"),responseParames.get("remark"));
+                            if ("TO_VALIDATE".equals(responseParames.get("status"))) {
+                                //调用短信验证接口
+                                jsonO.put("requestno",responseParames.get("requestno"));
+                                return Message.responseStr(Message.SUCCESS_CODE,"待短验", jsonO);
+                            }
+                            if ("BIND_FAIL".equals(responseParames.get("status"))) {
+                                //绑卡失败
+                                jsonO.put("requestno",responseParames.get("requestno"));
+                                return Message.responseStr(Message.FAILURE_CODE,"绑卡失败", jsonO);
+                            }
+                            if ("BIND_ERRORE".equals(responseParames.get("status"))) {
+                                //绑卡异常
+                                jsonO.put("requestno",responseParames.get("requestno"));
+                                return Message.responseStr(Message.FAILURE_CODE,"绑卡异常", jsonO);
+                            }
+                            if ("TIME_OUT".equals(responseParames.get("status"))) {
+                                //绑卡超时
+                                jsonO.put("requestno",responseParames.get("requestno"));
+                                return Message.responseStr(Message.FAILURE_CODE,"绑卡超时", jsonO);
+                            }
+                            if ("FAIL".equals(responseParames.get("status"))) {
+                                //系统异常
+                                jsonO.put("requestno",responseParames.get("requestno"));
+                                return Message.responseStr(Message.FAILURE_CODE,"易宝系统异常", jsonO);
+                            }
+                            if ("BIND_SUCCESS".equals(responseParames.get("status"))) {
+                                return Message.responseStr(Message.SUCCESS_CODE,"绑卡成功", jsonO);
+
+                              /*  //根据请求号与易宝号获取信息
+                                BindBankTrans bindBank = bindCardTransService.findBankState(responseParames.get("requestno"), responseParames.get("yborderid"));
+                                BankCardInfo bankInfo = new BankCardInfo();
+                                bankInfo.setUserId(bindBank.getUserId());
+                                bankInfo.setAccounts(bindBank.getBankCode());
+                                bankInfo.setBank(bindBank.getBankName());
+                                bankInfo.setPhone(bindBank.getPhone());
+                                bankInfo.setIdentity(bindBank.getIdentity());
+                                bankInfo.setName(bindBank.getName());
+                                bankInfo.setChannlNum(bindBank.getChannlNum());
+                                bankInfo.setUserName(bindBank.getLoginName());
+                                Boolean saveBankInfo = bankCardService.saveBankCardInfo(bankInfo);
+                                //更新绑卡状态
+                                if (saveBankInfo) {
+                                    jsonO.put("requestno",responseParames.get("requestno"));
+                                }
+                                jsonO.put("requestno",responseParames.get("requestno"));
+                                return Message.responseStr(Message.FAILURE_CODE,"内部服务异常", jsonO);*/
+                            }
                         }
-                        jsonO.put("requestno",responseParames.get("requestno"));
-                        return Message.responseStr(Message.FAILURE_CODE,"内部服务异常", jsonO);
+
                     }
                 }
-
+                return Message.responseStr(Message.FAILURE_CODE,"已绑过卡，请解绑卡之后再操作");
             }
+            return Message.responseStr(Message.FAILURE_CODE,"身份证不存在");
+
         }
-        jsonO.put("requestno",null);
-        return Message.responseStr(Message.FAILURE_CODE,"已绑过卡，请解绑卡之后再操作", jsonO);
+        return Message.responseStr(Message.FAILURE_CODE,"不存在该编号");
+
     }
     //调用短信确认接口
-    @RequestMapping(value = "/smsConfirm", method = RequestMethod.GET)
+    @RequestMapping(value = "/smsConfirm", method = RequestMethod.POST)
     @ResponseBody
     public String  smsConfirm(@RequestParam("validatecode") String validatecode,@RequestParam("requestNo") String requestNo) {
         //根据请求号与易宝交易号获取交易信息
@@ -305,24 +312,29 @@ public class YopBindCardController {
         }
         if ("BIND_FAIL".equals(responseParames.get("status"))) {
             //绑卡失败
-          return  Message.responseStr(Message.FAILURE_CODE, "绑卡失败");
+
+            return  Message.responseStr(Message.FAILURE_CODE, "绑卡失败");
         }
         if ("BIND_ERRORE".equals(responseParames.get("status"))) {
             //绑卡异常
+
             return  Message.responseStr(Message.FAILURE_CODE, "绑卡异常");
         }
         if ("TIME_OUT".equals(responseParames.get("status"))) {
             //绑卡超时
+
             return Message.responseStr(Message.FAILURE_CODE, "绑卡超时");
         }
         if ("FAIL".equals(responseParames.get("status"))) {
             //系统异常
+
             return Message.responseStr(Message.FAILURE_CODE, "系统异常");
         }
         if ("BIND_SUCCESS".equals(responseParames.get("status"))) {
-            //根据请求号与易宝号获取信息
+            return Message.responseStr(Message.SUCCESS_CODE, "绑卡成功");
+
+           /* //根据请求号与易宝号获取信息
             BindBankTrans bindBank = bindCardTransService.findBankState(requestNo,null);
-            SpsUser user = userService.findUserByUserName(bindBank.getLoginName());
             //保存绑卡记录
             BankCardInfo bankInfo = new BankCardInfo();
             bankInfo.setUserId(bindBank.getUserId());
@@ -337,7 +349,7 @@ public class YopBindCardController {
             if(saveBankInfo){
                 return Message.responseStr(Message.SUCCESS_CODE, "绑卡成功");
             }
-            return Message.responseStr(Message.FAILURE_CODE, "后台服务异常");
+            return Message.responseStr(Message.FAILURE_CODE, "后台服务异常");*/
         }
         return Message.responseStr(Message.PARAM_ILLEGAL_CODE,Message.PARAM_ILLEGAL_MSG);
     }
@@ -346,7 +358,7 @@ public class YopBindCardController {
     @ResponseBody
     public String smsResend(@RequestParam("requestNo") String requestNo){
         //根据请求号与易宝交易号获取交易信息
-        BindBankTrans bankState = bindCardTransService.findBankState(requestNo, null);
+      //  BindBankTrans bankState = bindCardTransService.findBankState(requestNo, null);
         JSONObject jsonO = new JSONObject();
         /**
          * 调用易宝进行鉴权绑卡
@@ -360,7 +372,7 @@ public class YopBindCardController {
         logger.info("易宝绑卡流水号：" + requestNo + ";返回参数：" + JSON.toJSONString(yopResponse));
         TreeMap<String, String> responseParames = JSON.parseObject(yopResponse.getStringResult(), new TypeReference<TreeMap<String, String>>() {
         });
-        bindCardTransService.modifyBankTran((String) responseParames.get("requestno"), (String) responseParames.get("yborderid"), (String) responseParames.get("status"), (String) responseParames.get("cardtop"), (String) responseParames.get("cardlast"), (String) responseParames.get("authtype"), (String) responseParames.get("remark"));
+        bindCardTransService.modifyBankTran( responseParames.get("requestno"), responseParames.get("yborderid"), responseParames.get("status"), responseParames.get("cardtop"),  responseParames.get("cardlast"),  responseParames.get("authtype"),  responseParames.get("remark"));
         if ("TO_VALIDATE".equals(responseParames.get("status"))) {
             //调用短信验证接口
             return  Message.responseStr(Message.SUCCESS_CODE, "待短验");
@@ -372,6 +384,10 @@ public class YopBindCardController {
         if ("FAIL".equals(responseParames.get("status"))) {
             //系统异常
             return Message.responseSystemError();
+        }
+        if ("BIND_SUCCESS".equals(responseParames.get("status"))) {
+            //系统异常
+            return Message.responseStr(Message.SUCCESS_CODE, "绑卡成功");
         }
         return Message.responseStr(Message.PARAM_ILLEGAL_CODE,Message.PARAM_ILLEGAL_MSG);
     }

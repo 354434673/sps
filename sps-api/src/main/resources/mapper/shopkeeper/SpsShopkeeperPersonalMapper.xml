@@ -37,7 +37,7 @@
     </association>
   </resultMap>
 
-  <select id="getByPersonId" resultMap="BaseResultMap">
+ <!-- <select id="getByPersonId" resultMap="BaseResultMap">
         SELECT
               per.personal_phone,
               per.personal_nickname,
@@ -50,28 +50,24 @@
             ON
             per.shopkeeper_customerId=pi.shopkeeper_customerId
          WHERE per.shopkeeper_customerId=#{customerId}  and  pi.pic_type=17
-    </select>
+    </select>-->
   <select id="selectByPersonId"  parameterType="String" resultMap="BaseResultMap">
     SELECT
       personal_id,
       personal_client_name,
       personal_username,
-      personal_idCard
+      personal_idCard,
+      personal_phone,
+      personal_nickname
     FROM
     sps_shopkeeper_personal
     WHERE  shopkeeper_customerId=#{customerId}
   </select>
-  <update id="saveSrc"  >
-           UPDATE
-              sps_shopkeeper_pic
-            SET   pic_src=#{src}
-            WHERE
-                pic_id=#{id} AND  pic_type=17
-    </update>
+
   <update id="updateNickName"  >
         UPDATE
           sps_shopkeeper_personal
-        SET   personal_nickname=#{nickName}
+        SET   personal_nickname=#{nickName},personal_update_time=#{updateTime}
         WHERE
         shopkeeper_customerId=#{customerId}
     </update>

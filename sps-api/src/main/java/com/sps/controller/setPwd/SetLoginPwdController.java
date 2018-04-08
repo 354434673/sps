@@ -32,7 +32,7 @@ public class SetLoginPwdController {
 
     @Reference(check = false, group = "member-center-dev1")
     private IMemberDianfuService   memberDianfuService;
-    @Reference(group = "member-center-dev1")
+    @Reference(group ="member-center-dev1")
     private ISmsCommonService ismsCommonService;
 
     /**
@@ -66,10 +66,9 @@ public class SetLoginPwdController {
      */
     @RequestMapping(value = "/modifyLoaginPwdByOldPwd", method = RequestMethod.POST)
     @ResponseBody
-    public  String modifyLoaginPwdByOldPwd(
-                                                      @RequestParam("mobile") String mobile,
-                                                      @RequestParam("oldPwd") String oldPwd,
-                                                      @RequestParam("newPwd") String newPwd) {
+    public String modifyLoaginPwdByOldPwd( @RequestParam("mobile") String mobile,
+                                            @RequestParam("oldPwd") String oldPwd,
+                                            @RequestParam("newPwd") String newPwd) {
         JSONObject json = new JSONObject ();
         //根据旧密码修改登录密码
         logger.info("editPasswordByOldPwd方法开始执行。。。。。。。。。。。");
