@@ -22,6 +22,7 @@
 	<result column="standby2" property="standby2" jdbcType="VARCHAR" />
 	<result column="bt_trade_no" property="tradeNo" jdbcType="VARCHAR" />
 	<result column="orderid" property="orderId" jdbcType="VARCHAR" />
+	<result column="recharge_status" property="rechargeStatus" jdbcType="INTEGER" />
 	<association property="cahnnelBank" javaType="org.sps.entity.merchant.SpsChannelBank">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="b_name" property="name" jdbcType="VARCHAR" />
@@ -56,6 +57,7 @@
 		<result column="standby2" property="standby2" jdbcType="VARCHAR" />
 		<result column="bt_trade_no" property="tradeNo" jdbcType="VARCHAR" />
 		<result column="orderid" property="orderId" jdbcType="VARCHAR" />
+		<result column="recharge_status" property="rechargeStatus" jdbcType="INTEGER" />
 	<association property="cahnnelBank" javaType="org.sps.entity.merchant.SpsChannelBank">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="channl_num" property="channlNum" jdbcType="VARCHAR" />
@@ -91,7 +93,8 @@
 	bt.bt_trade_status,
 	bt.orderid,
 	bt.bt_trade_no,
-	bt.orderid
+	bt.orderid,
+	bt.recharge_status
 	from
   </sql>
 	<sql id="join_listAudit" >
@@ -120,7 +123,8 @@
 		bt.standby1,
 		bt.standby2,
 		bt.bt_trade_no,
-		bt.orderid
+		bt.orderid,
+		bt.recharge_status  rechargeStatus
 		from
 	</sql>
 
@@ -159,7 +163,7 @@
 			bt.bt_user_id = b.b_user_id
 		<where>
 			<if test="tradeSerialNum != null and tradeSerialNum != '' " >
-				 bt.bt_trade_serial_num=#{tradeSerialNum}
+				bt.bt_trade_no=#{tradeSerialNum}
 			</if>
 			<if test="channelNum != null and channelNum != '' " >
 				and  b.channl_num=#{channelNum}

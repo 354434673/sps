@@ -91,10 +91,10 @@ public class ChannelBankTradeWriteServiceImpl implements ChannelBankTradeWriteSe
 	}
 
 	@Override
-	public Boolean saveBankRechangeTradeInfo(SpsChannelBankTrade bankTrandeInfo) {
-		int n = bankWrite.updateBalance(bankTrandeInfo.getUserId(), bankTrandeInfo.getTradeAfterBalanc());
+	public Boolean saveBankRechangeTradeInfo(String  userName,SpsChannelBankTrade bankTrandeInfo) {
+		int n = bankWrite.updateBalance(userName,bankTrandeInfo.getTradeBeforeBalanc());
 		int m = bankTradeWrite.insertBankTrade(bankTrandeInfo);
-		return m >0 && n>0? true:false ;
+		return m >0 ? true:false ;
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import com.juzifenqi.core.ServiceResult;
 import com.sps.common.Result;
 import com.sps.entity.user.SpsUser;
 import com.sps.service.user.UserService;
+import com.sps.util.HttpClientUtils;
 import com.sps.util.Md5Util;
 import com.sps.util.ValidateImageCodeUtils;
 import org.apache.shiro.SecurityUtils;
@@ -38,7 +39,11 @@ import java.util.Map;
 @Controller
 @RequestMapping("/withdraw")
 public class WithdrawController {
-	@Reference(check=false,group="dianfu")
+    private static Logger logger = LoggerFactory.getLogger(WithdrawController.class);
+
+    private static String getMerchantAccount = "http://dev.app.chezhubaitiao.com/api/merchantAccount/getMerchantAccount";
+
+    @Reference(check=false,group="dianfu")
     private ChannelBankTradeWriteService bankTradeWriteService;
 	@Reference(check=false,group="dianfu")
 	private ChannelBankReadService bankReadService;
@@ -55,7 +60,6 @@ public class WithdrawController {
     private ISmsCommonService  ismsCommonService;
 
 
-    private static Logger logger = LoggerFactory.getLogger(WithdrawController.class);
     @RequestMapping("/findBankTradeList")
     @ResponseBody
      public HashMap<String, Object> findBankTradeList( Integer page,Integer limit,String applicationStartDate,String paymentDate,String tradeStatus) {
@@ -103,6 +107,21 @@ public class WithdrawController {
     public SpsChannelBank getAccount(HttpServletRequest request){
         String userName = (String)SecurityUtils.getSubject().getPrincipal();
         SpsChannelBank bankInfo = bankReadService.getBankInfoByUserName(userName);
+        //获取余额信息
+        Map resultMap = new HashMap<>();
+        resultMap.put("application", "dianfu");
+        resultMap.put("businessId", bankInfo.getChannlNum());
+        logger.info("getAccount 方法 开始调用b宝户");
+        String jsonResult = HttpClientUtils.post(getMerchantAccount, resultMap);
+        logger.info("getAccount 方法 调用宝户结束");
+        if (jsonResult != null) {
+            JSONObject object = JSONObject.parseObject(jsonResult);
+            String code = object.getString("code");
+            if ("100000".equals(code)) {
+                String validAmount = object.getJSONObject("result").getString("validAmount");
+                bankInfo.setAvailableBalance(new BigDecimal(validAmount));
+            }
+        }
         return bankInfo;
     }
 

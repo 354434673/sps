@@ -7,22 +7,12 @@
     <update id="updateRechangeStatus" >
         UPDATE
         sps_bank_trade_info
-        <set >
-            <if test="tradeAfterBalanc != null" >
-                bt_trade_after_balanc = #{tradeAfterBalanc,jdbcType=DECIMAL},
-            </if>
-            <if test="rechargeStatus != null" >
-                recharge_status = #{rechargeStatus,jdbcType=INTEGER},
-            </if>
-            <if test="tradeNo != null" >
-                bt_trade_no = #{tradeNo,jdbcType=VARCHAR},
-            </if>
-            <if test="paymentDate != null" >
-                bt_payment_date = #{paymentDate,jdbcType=TIMESTAMP},
-            </if>
-        </set>
+        SET
+        bt_trade_after_balanc = #{tradeAfterBalanc,jdbcType=DECIMAL},
+        recharge_status = #{rechargeStatus,jdbcType=INTEGER},
+        bt_trade_no = #{tradeNo,jdbcType=VARCHAR},
+        bt_payment_date = #{paymentDate,jdbcType=TIMESTAMP},
         WHERE  bt_trade_serial_num=#{tradeSerialNum}
-
     </update>
 
     <insert id="insertBankTrade"  parameterType="org.sps.entity.merchant.SpsChannelBankTrade"  useGeneratedKeys="true" keyProperty="id" >
@@ -45,7 +35,9 @@
         bt_trade_amount,
         bt_trade_status ,
         bt_user_id ,
-        standby1 
+        standby1 ,
+        bt_trade_no,
+        recharge_status
       )
     values (
     	
@@ -64,7 +56,9 @@
        #{tradeAmount,jdbcType=DECIMAL},
        #{tradeStatus,jdbcType=VARCHAR},
        #{userId,jdbcType=VARCHAR},
-       #{standby1,jdbcType=VARCHAR}
+       #{standby1,jdbcType=VARCHAR},
+       #{tradeNo,jdbcType=VARCHAR},
+       #{rechargeStatus,jdbcType=INTEGER}
       )
    </insert>
 

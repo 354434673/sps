@@ -2,11 +2,15 @@ package com.sps.controller.account;
 
 import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSONObject;
 import com.sps.common.Result;
 import com.sps.entity.user.SpsUser;
 import com.sps.service.user.UserService;
+import com.sps.util.HttpClientUtils;
 import com.sps.util.Md5Util;
 import org.apache.shiro.SecurityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +33,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/recharge")
 public class ReChargeController {
+    private static Logger logger = LoggerFactory.getLogger(WithdrawController.class);
+
+    private static String getMerchantAccount = "http://dev.app.chezhubaitiao.com/api/merchantAccount/getMerchantAccount";
 	@Reference(check=false,group="dianfu")
     private ChannelBankTradeWriteService bankTradeWriteService;
 	@Reference(check=false,group="dianfu")
@@ -79,6 +86,21 @@ public class ReChargeController {
     public SpsChannelBank getAccount(HttpServletRequest request){
         String userName = (String)SecurityUtils.getSubject().getPrincipal();
         SpsChannelBank bankInfo = bankReadService.getBankInfoByUserName(userName);
+        //获取余额信息
+        Map resultMap = new HashMap<>();
+        resultMap.put("application", "dianfu");
+        resultMap.put("businessId", bankInfo.getChannlNum());
+        logger.info("getAccount 方法 开始调用b宝户");
+        String jsonResult = HttpClientUtils.post(getMerchantAccount, resultMap);
+        logger.info("getAccount 方法 调用宝户结束");
+        if (jsonResult != null) {
+            JSONObject object = JSONObject.parseObject(jsonResult);
+            String code = object.getString("code");
+            if ("100000".equals(code)) {
+                String validAmount = object.getJSONObject("result").getString("validAmount");
+                bankInfo.setAvailableBalance(new BigDecimal(validAmount));
+            }
+        }
         return bankInfo;
     }
 

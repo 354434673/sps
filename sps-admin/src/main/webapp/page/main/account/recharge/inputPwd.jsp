@@ -98,7 +98,7 @@
                     var psw = $('#tradePwd').val().trim();
                     $.ajax({
                         data:{withdrawAmt: amount,tradePwd:psw},
-                        url: "<%=path%>/recharge/save",//保存交易记录，并提交提现申请调用易宝接口
+                        url: "<%=path%>/payRechange/payment",//保存交易记录，并提交提现申请调用易宝接口
                         type: 'post',
                         dataType: 'json',
                         async: false,

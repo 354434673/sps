@@ -22,7 +22,7 @@ public interface ChannelBankTradeWriteService{
 	 * 插入充值记录
 	 *
 	 */
-	Boolean  saveBankRechangeTradeInfo(SpsChannelBankTrade spsChannelBankTrade);
+	Boolean  saveBankRechangeTradeInfo(String userName,SpsChannelBankTrade spsChannelBankTrade);
 
 	/**
 	 * 更新充值状态
