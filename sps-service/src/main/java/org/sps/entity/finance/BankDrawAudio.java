@@ -11,6 +11,7 @@ public class BankDrawAudio implements Serializable {
     private Integer id;       
     private String  userName;
     private String  auditSerialNum;
+    private  String tradeNo;
     private Date  applicationDate;
     //交易时间 ，到账时间
     private Date payDate;
@@ -34,6 +35,13 @@ public class BankDrawAudio implements Serializable {
         this.remark = remark;
     }
 
+    public String getTradeNo() {
+        return tradeNo;
+    }
+
+    public void setTradeNo(String tradeNo) {
+        this.tradeNo = tradeNo;
+    }
 
     public Integer getId() {
         return id;

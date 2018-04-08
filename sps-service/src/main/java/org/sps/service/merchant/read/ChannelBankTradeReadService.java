@@ -28,11 +28,11 @@ public interface ChannelBankTradeReadService{
 
 	/**ate
 	 * 获取交易详情
-	 * @param loginName
+	 * @param tradeSerialNum
 	 * @return
 	 */
 
-	public SpsChannelBankTrade getTradeDetail(String loginName,String tradeSerialNum);
+	public SpsChannelBankTrade getTradeDetail(String tradeSerialNum);
 
 	SpsChannelBankTrade getTradeInfo(String tradeSerialNum);
 
