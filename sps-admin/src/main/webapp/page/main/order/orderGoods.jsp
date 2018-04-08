@@ -7,7 +7,6 @@
 	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -45,6 +44,8 @@
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
+		<script type="text/javascript"
+		src="<%=path%>/page/static/js/order.js"></script>
 	<script>
 		layui.use(['laydate','table','laypage','layer','form'], function(){
 			  var table = layui.table;

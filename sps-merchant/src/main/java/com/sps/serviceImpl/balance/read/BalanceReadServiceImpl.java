@@ -51,6 +51,17 @@ public class BalanceReadServiceImpl implements BalanceReadService{
 		
 		return hashMap;
 	}
+	@Override
+	public Balance queryBalance(String balanceClientNum, String balanceType) {
+		BalanceExample example = new BalanceExample();
+		
+		example.createCriteria().andBalanceClientNumEqualTo(balanceClientNum)
+								.andBalanceTypeEqualTo(balanceType)
+								.andBalanceStateEqualTo(0);
+		List<Balance> selectByExample = balanceReadMapper.selectByExample(example );
+		
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
+	}
 
 	
 }

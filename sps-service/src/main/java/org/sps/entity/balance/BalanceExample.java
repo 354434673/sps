@@ -426,52 +426,52 @@ public class BalanceExample {
             return (Criteria) this;
         }
 
-        public Criteria andBalanceExpireDateEqualTo(Date value) {
+        public Criteria andBalanceExpireDateEqualTo(String value) {
             addCriterion("balance_expire_date =", value, "balanceExpireDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceExpireDateNotEqualTo(Date value) {
+        public Criteria andBalanceExpireDateNotEqualTo(String value) {
             addCriterion("balance_expire_date <>", value, "balanceExpireDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceExpireDateGreaterThan(Date value) {
+        public Criteria andBalanceExpireDateGreaterThan(String value) {
             addCriterion("balance_expire_date >", value, "balanceExpireDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceExpireDateGreaterThanOrEqualTo(Date value) {
+        public Criteria andBalanceExpireDateGreaterThanOrEqualTo(String value) {
             addCriterion("balance_expire_date >=", value, "balanceExpireDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceExpireDateLessThan(Date value) {
+        public Criteria andBalanceExpireDateLessThan(String value) {
             addCriterion("balance_expire_date <", value, "balanceExpireDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceExpireDateLessThanOrEqualTo(Date value) {
+        public Criteria andBalanceExpireDateLessThanOrEqualTo(String value) {
             addCriterion("balance_expire_date <=", value, "balanceExpireDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceExpireDateIn(List<Date> values) {
+        public Criteria andBalanceExpireDateIn(List<String> values) {
             addCriterion("balance_expire_date in", values, "balanceExpireDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceExpireDateNotIn(List<Date> values) {
+        public Criteria andBalanceExpireDateNotIn(List<String> values) {
             addCriterion("balance_expire_date not in", values, "balanceExpireDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceExpireDateBetween(Date value1, Date value2) {
+        public Criteria andBalanceExpireDateBetween(String value1, String value2) {
             addCriterion("balance_expire_date between", value1, value2, "balanceExpireDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceExpireDateNotBetween(Date value1, Date value2) {
+        public Criteria andBalanceExpireDateNotBetween(String value1, String value2) {
             addCriterion("balance_expire_date not between", value1, value2, "balanceExpireDate");
             return (Criteria) this;
         }
@@ -486,52 +486,52 @@ public class BalanceExample {
             return (Criteria) this;
         }
 
-        public Criteria andBalanceStartDateEqualTo(Date value) {
+        public Criteria andBalanceStartDateEqualTo(String value) {
             addCriterion("balance_start_date =", value, "balanceStartDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceStartDateNotEqualTo(Date value) {
+        public Criteria andBalanceStartDateNotEqualTo(String value) {
             addCriterion("balance_start_date <>", value, "balanceStartDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceStartDateGreaterThan(Date value) {
+        public Criteria andBalanceStartDateGreaterThan(String value) {
             addCriterion("balance_start_date >", value, "balanceStartDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceStartDateGreaterThanOrEqualTo(Date value) {
+        public Criteria andBalanceStartDateGreaterThanOrEqualTo(String value) {
             addCriterion("balance_start_date >=", value, "balanceStartDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceStartDateLessThan(Date value) {
+        public Criteria andBalanceStartDateLessThan(String value) {
             addCriterion("balance_start_date <", value, "balanceStartDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceStartDateLessThanOrEqualTo(Date value) {
+        public Criteria andBalanceStartDateLessThanOrEqualTo(String value) {
             addCriterion("balance_start_date <=", value, "balanceStartDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceStartDateIn(List<Date> values) {
+        public Criteria andBalanceStartDateIn(List<String> values) {
             addCriterion("balance_start_date in", values, "balanceStartDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceStartDateNotIn(List<Date> values) {
+        public Criteria andBalanceStartDateNotIn(List<String> values) {
             addCriterion("balance_start_date not in", values, "balanceStartDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceStartDateBetween(Date value1, Date value2) {
+        public Criteria andBalanceStartDateBetween(String value1, String value2) {
             addCriterion("balance_start_date between", value1, value2, "balanceStartDate");
             return (Criteria) this;
         }
 
-        public Criteria andBalanceStartDateNotBetween(Date value1, Date value2) {
+        public Criteria andBalanceStartDateNotBetween(String value1, String value2) {
             addCriterion("balance_start_date not between", value1, value2, "balanceStartDate");
             return (Criteria) this;
         }

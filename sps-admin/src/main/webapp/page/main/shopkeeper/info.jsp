@@ -752,6 +752,11 @@
 	  $('#refuse').click(function(){
 		  	 var remark = $('#remark').val()
 	 		 if(isAudit){
+	 			if(remark == '' || remark == null){
+					  layer.msg('拒绝理由不能为空',{icon: 2});
+				 }else{
+					  layer.msg('已拒绝',{icon: 2});
+				 }
 <%-- 	 			  $.post({
 					  url:'<%=path%>/shopkeeper/updateAccount',
 					  dataType:'json',
@@ -771,10 +776,8 @@
 						  layer.msg('网络错误',{icon: 2});
 					  }
 				  })  --%>
-				layer.msg('已拒绝',{icon: 2});
-	 		 }else if(remark == '' || remark == null){
-				  layer.msg('拒绝理由不能为空',{icon: 2});
-			 }else{
+
+	 		 }else{
 				  layer.msg('按钮不合法',{icon: 2});
 			  }
 	  })

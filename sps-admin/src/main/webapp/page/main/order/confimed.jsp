@@ -6,7 +6,6 @@
 			+ path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -113,6 +112,8 @@
 			<button id="agree" class="layui-btn layui-btn-warm" >同意</button>
 		</div>
 	</div>
+	<script type="text/javascript"
+		src="<%=path%>/page/static/js/order.js"></script>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
 	<script>
@@ -121,11 +122,11 @@
 			  var laypage = layui.laypage;
 			  var layer = layui.layer;
 			  var $ = layui.jquery;
-			  
+			  var orderid = getUrlParam('orderid') 
 			  $.post({//获得信息
 				  url:'<%=path%>/order/showOrder.json'
 				  ,dataType:'json'
-				  ,data:{orderid:<%=request.getParameter("orderid")%>}
+				  ,data:{orderid:orderid}
 				  ,success:function(result){
 					  $('#orderid').html(result.data[0].orderid)//订单编号
 					  $('#money').html(result.data[0].money)//订单金额
@@ -144,7 +145,7 @@
 			  table.render({
 				    elem: '#orderGoodsDetail'
 				    ,url: '<%=path%>/order/showOrderGoods.json'//数据接口
-				    ,where:{orderid:<%=request.getParameter("orderid")%>} 
+				    ,where:{orderid:orderid} 
 				    ,id:'orderGoods'
 				    ,page:true
 				    ,cols: [[ //表头
@@ -167,7 +168,7 @@
 					  area:  ['700px', '460px']/* iframe自适应，但是并不好用，示例： parent.layer.iframeAuto(parent.layer.getFrameIndex(window.name))*/,
 					  fixed: false, //不固定
 					  maxmin: true,
-					  content: '<%=path%>/page/main/order/orderGoods.jsp?orderid='+<%=request.getParameter("orderid")%>,
+					  content: '<%=path%>/page/main/order/orderGoods.jsp?orderid='+orderid,
 				  	  cancel: function(index, layero){ 
 						  table.reload('orderGoods', {
 							    cols: [[ //表头
@@ -204,7 +205,7 @@
 					  url:'<%=path%>/order/updateConfirmOrderFlag',
 					  dataType:'json',
 					  data:{remark:remark,
-						  orderid:<%=request.getParameter("orderid")%>,
+						  orderid:orderid,
 						  flag:flag},
 					  success:function(data){
 						  layer.msg(msg,{icon: 1});

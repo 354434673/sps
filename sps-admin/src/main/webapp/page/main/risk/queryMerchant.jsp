@@ -20,21 +20,31 @@
     </style>
 </head>
 <body>
-<fieldset class="layui-elem-field layui-field-title">
+<fieldset class="layui-elem-field layui-field-title" id = "risk">
 	  <legend>商 户 审 核</legend>
 	  <div class="layui-field-box">
 	  		<div class="layui-form" style="margin-left: 100px;margin-right: 100px">
 		    	<div class="layui-row layui-col-space10">
-				    <div class="layui-col-md4">
-				      	<label class="layui-form-label" style="width:152px">请输入额度：</label>
+				    <div class="layui-col-md12">
+				      	<label class="layui-form-label" style="width:152px">*请输入额度：</label>
 				    <div class="layui-input-inline">
-				      <input id="channelNum" type="text" name="username"  lay-verify="" placeholder="请输入额度" autocomplete="off" class="layui-input">
+				      <input id="amount" type="text" name="amount"  lay-verify="" placeholder="请输入额度" autocomplete="off" class="layui-input">
 				    </div>
 				    </div>
-				    <div class="layui-col-md8">
-				     	<label class="layui-form-label" style="width:152px">请输入额度：</label>
+				  </div>
+		    	<div class="layui-row layui-col-space10">
+				    <div class="layui-col-md12">
+				      	<label class="layui-form-label" style="width:152px">*额度起始日期：</label>
 				    <div class="layui-input-inline">
-				      <input id="channelNum" type="text" name="username"  lay-verify="" placeholder="请输入额度" autocomplete="off" class="layui-input">
+						<input readonly="" type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required" >	    
+				    </div>
+				    </div>
+				  </div>
+		    	<div class="layui-row layui-col-space10">
+				    <div class="layui-col-md12">
+				      	<label class="layui-form-label" style="width:152px">*额度到期日期：</label>
+				    <div class="layui-input-inline">
+						<input readonly="" type="text" class="layui-input" id="expireTime" placeholder="年-月-日" lay-verify="required" >	    
 				    </div>
 				    </div>
 				  </div>
@@ -472,12 +482,12 @@
     </div>
 </fieldset>
     <div class="layui-form-item" align="center">
-        <button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">同意</button>
-        <button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">拒绝</button>
+        <button id = "agree" class="layui-btn layui-btn-primary">同意</button>
+        <button id = "refuse" class="layui-btn layui-btn-primary">拒绝</button>
         <button onclick="javascript:history.back(-1);" class="layui-btn layui-btn-primary">返回</button>
     </div>
-    <script type="text/javascript"
-            src="<%=path%>/page/static/plugins/layui/layui.all.js"></script>
+<script type="text/javascript"
+		src="<%=path%>/page/layui/layui.js"></script>
     <script type="text/javascript"
             src="<%=path%>/page/layui/layui.js"></script>
     <script type="text/html" id="bar">
@@ -490,17 +500,24 @@
         {{#  }); }}
     </script>
     <script type="text/javascript">
-        layui.use(['form', 'table', 'flow', 'element', 'carousel'], function () {
+        layui.use(['form', 'table', 'flow', 'element', 'carousel','laydate'], function () {
             var element = layui.element;
             var form = layui.form;
             var $ = layui.jquery;
             var table = layui.table;
             var flow = layui.flow;
             var carousel = layui.carousel;
+            var laydate = layui.laydate;
             var channelNum = getUrlParam('channelNum');
             form.render();
             flow.lazyimg();
-            console.log(channelNum)
+            	//加载日期框
+			  laydate.render({
+				    elem: '#startTime'
+				  });
+			  laydate.render({
+				    elem: '#expireTime'
+				  });
             //收款信息
             table.render({
                 elem: '#gatherList'
@@ -558,6 +575,15 @@
                     })
                 }
             });
+      	  $('#agree').click(function(){
+      		  	var balanceAmount = $('#amount').val();
+      		  	var balanceStartDate = $('#startTime').val();
+      		  	var balanceExpireDate = $('#expireTime').val();
+      			updateFlowState(channelNum, 2, balanceAmount, balanceExpireDate, balanceStartDate,"审核成功")
+  			})
+		  $('#refuse').click(function(){
+			  	updateFlowState(channelNum, 3, null, null, null,"拒绝成功")
+		  })
             //查询
              $('#queryGoods').on('click', function () {
                  var goodsName = $('#goodsName').val();
@@ -759,8 +785,6 @@
                     }
                 })
             }
-
-            console.log(channelNum)
             $.post({//获得图片
                 url: '<%=path%>/merchant/getPicList'
                 , dataType: 'json'
@@ -816,7 +840,44 @@
                 if (r != null) return unescape(r[2]);
                 return null;
             }
-
+			function updateFlowState(channelNum, channelFlowState, balanceAmount, balanceExpireDate, balanceStartDate,msg){
+                $.post({//获取主营业务
+                    url: '<%=path%>/merchant/updateChannelState',
+                    dataType: 'json',
+                    data: {channelNum: channelNum,channelFlowState:channelFlowState},
+                    success: function (data) {
+                    	if(data.code == 1){
+                    		 layer.msg(msg,{icon: 1});
+                    		 if(channelFlowState == 2){
+                    		 	insertBalance(channelNum, balanceAmount, balanceExpireDate, balanceStartDate)
+                    		 }
+                    	}else{
+                    		layer.msg('审核失败',{icon: 2});
+                    	}
+                    }
+                })
+			}
+			function insertBalance(balanceClientNum, balanceAmount, balanceExpireDate, balanceStartDate){
+				console.log(balanceExpireDate+balanceStartDate)
+                $.post({//获取主营业务
+                    url: '<%=path%>/risk/insertBalance',
+                    dataType: 'json',
+                    data: {
+                    	balanceType: 1,
+                    	balanceAmount:balanceAmount,
+                    	balanceExpireDate:balanceExpireDate,
+                    	balanceStartDate:balanceStartDate,
+                    	balanceClientNum:balanceClientNum,
+                    	},
+                    success: function (data) {
+                    	if(data.success){
+                    		 layer.msg("审核成功",{icon: 1});
+                    	}else{
+                    		layer.msg('审核失败',{icon: 2});
+                    	}
+                    }
+                })
+			}
             var isId = $('#imageList li div.layui-carousel')//可以获得id,动态加载
             var listId = $('#imageList li div[carousel-item]')//可以获得id,动态加载
             $.each(isId, function (i, data) {

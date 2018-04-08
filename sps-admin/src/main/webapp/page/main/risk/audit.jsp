@@ -131,13 +131,16 @@
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
+<script type="text/javascript"
+		src="<%=path%>/page/static/js/order.js"></script>
 	<script>
 		layui.use(['laydate','table','laypage','layer'], function(){
 			  var table = layui.table;
 			  var laypage = layui.laypage;
 			  var layer = layui.layer;
 			  var $ = layui.jquery;
-			  var isQuery = <%=request.getParameter("isQuery")%>
+			  var isQuery = getUrlParam('isQuery') 
+			  var orderid = getUrlParam('orderid') 
 			  var isSubmit = false;//按钮是否生效,默认不生效,只有入口为审核时才生效
 			  if(isQuery == 1){//为1则为审核	
 				  isSubmit = true
@@ -148,7 +151,7 @@
 			  $.post({//获得信息
 				  url:'<%=path%>/order/showOrder.json'
 				  ,dataType:'json'
-				  ,data:{orderid:<%=request.getParameter("orderid")%>}
+				  ,data:{orderid:orderid}
 				  ,success:function(result){
 					  $('#selfemployed').html(result.data[0].selfemployed)//店主账号
 					  $('#name').html(result.data[0].name)//店主名称
@@ -172,7 +175,7 @@
 			  table.render({
 				    elem: '#orderGoodsDetail'
 				    ,url: '<%=path%>/order/showOrderGoods.json'//数据接口
-				    ,where:{orderid:<%=request.getParameter("orderid")%>} 
+				    ,where:{orderid:orderid} 
 				    ,id:'orderGoods'
 				    ,page:true
 				    ,cols: [[ //表头
@@ -222,12 +225,13 @@
 					  layer.msg('最多为50字意见,请修改 ',{icon: 2});
 				  }else{
 					  //这里需要提交到后台处理，修改订单状态码为已拒绝，并将信息发送到风控
-					  update(4,remark,"拒绝成功,1秒后跳转")
+					  update(19,remark,"拒绝成功,1秒后跳转")
 				  }
 			  });
 			  $(document).on("click","#agree",function(){
 				  	//这里需要提交到后台处理，修改订单状态码为订单审核中，并将信息发送到风控
-				  	 update(5,null,"审核通过,1秒后跳转")
+				  	//暂时这里不提交风控，只是修改状态，之后再进行提交风控
+				  	 update(5,null,"订单已同意,1秒后跳转")
  			  });
 			  //更改状态方法
 			  function update(flag,remark,msg){
@@ -236,7 +240,7 @@
 						  url:'<%=path%>/order/updateConfirmOrderFlag',
 						  dataType:'json',
 						  data:{remark:remark,
-							  orderid:<%=request.getParameter("orderid")%>,
+							  orderid:orderid,
 							  flag:flag},
 						  success:function(data){
 							  layer.msg(msg,{icon: 1});
@@ -253,7 +257,6 @@
 					  layer.msg('按钮不合法',{icon: 2});
 				  }
 			  }
-			  
 			  function getDate(data){
 				    da = new Date(data);
 				    var year = da.getFullYear();

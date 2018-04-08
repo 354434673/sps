@@ -286,4 +286,31 @@ public class ChannelWriteServiceImpl implements ChannelWriteService{
 		}
 		return resultMap;
 	}
+	@Override
+	public HashMap<String, Object> updateChannelState(String channelNum, Integer channelFlowState) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		try {
+			SpsChannelExample example = new SpsChannelExample();
+			
+			example.createCriteria().andChannelNumEqualTo(channelNum);
+			
+			SpsChannel record = new SpsChannel();
+			
+			record.setChannelFlowState(channelFlowState);
+			
+			channelWrite.updateByExampleSelective(record , example);
+			
+			map.put("code", 1);
+			map.put("msg", "流程状态修改成功");
+			map.put("success", "success");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			map.put("code", 0);
+			map.put("msg", "流程状态修改失败");
+			map.put("success", "error");
+		}
+		return map;
+	}
 }

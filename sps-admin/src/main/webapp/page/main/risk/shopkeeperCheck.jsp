@@ -60,11 +60,11 @@
 <script type="text/javascript"
 		src="<%=path%>/page/static/datas/area_data.js"></script>
 <script type="text/html" id="bar">
- {{#  if(d.shopkeeperState != 2 && d.shopkeeperState!=1 && d.shopkeeperState!=3&&d.shopkeeperState!=5){ }}
+ {{#  if(d.shopkeeperState == 6){ }}
   <a class="layui-btn layui-btn-mini" lay-event="edit" >修改</a>
 {{#  } }}
   <a class="layui-btn layui-btn-mini" lay-event="detail">详情</a>
- {{#  if(d.shopkeeperState != 2 && d.shopkeeperState!=1 &&d.shopkeeperState!=5){ }}
+ {{#  if(d.shopkeeperState == 5){ }}
   <a class="layui-btn layui-btn-mini layui-btn-danger " lay-event="audit">审核</a>
 {{#  } }}
 </script>
@@ -166,11 +166,11 @@
 					  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
 					  var tr = obj.tr; //获得当前行 tr 的DOM对象
 					  if(layEvent === 'detail'){ //查看
-						  location.href = '<%=path%>/page/main/shopkeeper/info.jsp?queryType=1&shopkeeperCustomerid='+data.shopkeeperCustomerid
+						  location.href = '<%=path%>/page/main/risk/info.jsp?queryType=1&shopkeeperCustomerid='+data.shopkeeperCustomerid
 					  } else if(layEvent === 'audit'){//审核
-						  location.href = '<%=path%>/page/main/shopkeeper/info.jsp?queryType=2&shopkeeperCustomerid='+data.shopkeeperCustomerid
+						  location.href = '<%=path%>/page/main/risk/info.jsp?queryType=2&shopkeeperCustomerid='+data.shopkeeperCustomerid
 					  } else if(layEvent === 'edit'){ //修改
-						  location.href = '<%=path%>/page/main/shopkeeper/info.jsp?queryType=3&shopkeeperCustomerid='+data.shopkeeperCustomerid
+						  location.href = '<%=path%>/page/main/risk/info.jsp?queryType=3&shopkeeperCustomerid='+data.shopkeeperCustomerid
 					  }
 				});
 			});

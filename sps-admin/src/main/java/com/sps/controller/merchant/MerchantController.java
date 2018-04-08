@@ -320,6 +320,23 @@ public class MerchantController {
 		return picReadService.getPicList(channelNum, type);
 	}
 	/**
+	 * 修改商户流程状态
+	 * @Title: updateChannelState   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @param channelFlowState
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年4月8日 下午2:34:20
+	 * @return: HashMap<String,String>      
+	 * @throws
+	 */
+	@RequestMapping("/updateChannelState")
+	public HashMap<String, Object> updateChannelState(String channelNum, Integer channelFlowState){
+		
+		return chanelWriteService.updateChannelState(channelNum, channelFlowState);
+	}
+	/**
 	 * 提交给风控审核
 	 * @Title: toRisk   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   

@@ -6,7 +6,6 @@
 			+ path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -51,6 +50,8 @@
 	</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
+<script type="text/javascript"
+		src="<%=path%>/page/static/js/order.js"></script>
 <script type="text/html" id="indexTpl">
     {{d.LAY_TABLE_INDEX+1}}
 </script>		
@@ -60,12 +61,12 @@
 			  var laypage = layui.laypage;
 			  var layer = layui.layer;
 			  var $ = layui.jquery;
-			  
+			  var orderid = getUrlParam('orderid') 
 				table.render({
 				    elem: '#orderBasic'
 				    ,height: 230
 				    ,url: '<%=path%>/order/showOrder.json' //数据接口
-				    ,where:{orderid:<%=request.getParameter("orderid")%>} 
+				    ,where:{orderid:orderid} 
 			        ,id:'orderBasic' 
 			        ,page:true
 				    ,cols: 
@@ -89,7 +90,7 @@
 				    elem: '#orderGoodsDetail'
 				    ,height: 500
 				    ,url: '<%=path%>/order/showOrderGoods.json'//数据接口
-				    ,where:{orderid:<%=request.getParameter("orderid")%>} 
+				    ,where:{orderid:orderid} 
 				    ,id:'orderGoods'
 				    ,page:true
 				    ,cols: [[ //表头

@@ -23,6 +23,40 @@
 </style>
 </head>
 <body>
+<fieldset class="layui-elem-field layui-field-title" id = "risk" style="display: none">
+	  <legend>店 主 审 核</legend>
+	  <div class="layui-field-box">
+	  		<div class="layui-form" style="margin-left: 100px;margin-right: 100px">
+		    	<div class="layui-row layui-col-space10">
+				    <div class="layui-col-md12">
+				      	<label class="layui-form-label" style="width:152px">*请输入额度：</label>
+				    <div class="layui-input-inline">
+				      <input id="balance2" type="text" name="balance2"  lay-verify="" placeholder="请输入额度" autocomplete="off" class="layui-input">
+				    </div>
+				    </div>
+				  </div>
+		    	<div class="layui-row layui-col-space10">
+				    <div class="layui-col-md12">
+				      	<label class="layui-form-label" style="width:152px">*额度起始日期：</label>
+				    <div class="layui-input-inline">
+						<input readonly="" type="text" class="layui-input" id="startTime" placeholder="年-月-日" lay-verify="required" >	    
+				    </div>
+				    </div>
+				  </div>
+		    	<div class="layui-row layui-col-space10">
+				    <div class="layui-col-md12">
+				      	<label class="layui-form-label" style="width:152px">*额度到期日期：</label>
+				    <div class="layui-input-inline">
+						<input readonly="" type="text" class="layui-input" id="expireTime" placeholder="年-月-日" lay-verify="required" >	    
+				    </div>
+				    </div>
+				  </div>
+			  </div>
+	  </div>
+</fieldset>
+<fieldset class="layui-elem-field layui-field-title">
+	  <legend>店 主 信 息</legend>
+	  <div class="layui-field-box">
 <div class="layui-tab layui-tab-brie" lay-filter ="tab" style="padding:10px;" >
   <ul class="layui-tab-title">
     <li lay-id="channelInfo" class="layui-this">基本信息</li>
@@ -449,12 +483,6 @@
 			    </div>
 			</div>
 		</div>
-			<div class="layui-form-item layui-form-text" id="remakeDiv" style="display: none">
-				<fieldset class="layui-elem-field layui-field-title" >
-				<legend>说明</legend>
-				  </fieldset>
-		     	 	<textarea placeholder="请输入拒绝理由" class="layui-textarea" id="remark"></textarea>
-	  		</div>
 			 	<div class="layui-form-item" align="center" id="update" style="padding-top: 40px;display: none;" >
 					<button onclick="javascript:history.back(-1)" class="layui-btn layui-btn-primary">返回</button>
 					<button class="layui-btn" lay-filter="sumbit" lay-submit id="submit">提交</button>
@@ -591,6 +619,8 @@
 			</div>
     </div>
   </div>
+  	  </div>
+</fieldset>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.js"></script>
 <script type="text/html" id="bar">
@@ -638,7 +668,6 @@
 {{ fn() }}
 </script>
 <script type="text/javascript">
-	  var a = <%=request.getParameter("orderid")%>
 	  var channelNum ;//外键,很多地方能用到
 	  var businessProductArray = [];//主营业务数组,设为全局变量
 	layui.use(['form','table','laydate','flow','element','upload','carousel'], function(){
@@ -661,12 +690,20 @@
 		  $('#audit').show()
 		  $('#account').hide()
 		  $('#remakeDiv').show()
+		  $('#risk').show()
 	  }else if(queryType == 3){//3为修改
 		  isUpdate = true;
 		  $('#update').show()
 	  }else if(queryType == 1){
 		  $('#back').show()
 	  }
+  	//加载日期框
+	  laydate.render({
+		    elem: '#startTime'
+		  });
+	  laydate.render({
+		    elem: '#expireTime'
+		  });
 	  //收款信息
 	  table.render({
 		    elem: '#gatherList'
@@ -747,34 +784,15 @@
 			  }
 	  })
 	  $('#agree').click(function(){
-				  layer.msg('已同意',{icon: 1});
+			  	var balanceAmount = $('#amount').val();
+	  		  	var balanceStartDate = $('#startTime').val();
+	  		  	var balanceExpireDate = $('#expireTime').val();
+	  		  	updateState(shopkeeperCustomerid, 7, balanceAmount, balanceExpireDate, balanceStartDate,"审核成功")
 	  })
 	  $('#refuse').click(function(){
-		  	 var remark = $('#remark').val()
 	 		 if(isAudit){
-<%-- 	 			  $.post({
-					  url:'<%=path%>/shopkeeper/updateAccount',
-					  dataType:'json',
-					  data:{
-						  shopkeeperCustomerid:shopkeeperCustomerid,
-						  accountDownPayment:accountDownPayment,
-						  accountState:accountState
-					  },
-					  success:function(result){
-						  if(result.state == 'success'){
-							layer.msg(result.msg,{icon: 1});
-						  }else if(result.state == 'error'){
-							  layer.msg(result.msg,{icon: 2});
-						  }
-					  },
-					  error:function(){
-						  layer.msg('网络错误',{icon: 2});
-					  }
-				  })  --%>
-				layer.msg('已拒绝',{icon: 2});
-	 		 }else if(remark == '' || remark == null){
-				  layer.msg('拒绝理由不能为空',{icon: 2});
-			 }else{
+	 			updateState(shopkeeperCustomerid, 6, balanceAmount, balanceExpireDate, balanceStartDate,"审核成功")
+	 		 }else{
 				  layer.msg('按钮不合法',{icon: 2});
 			  }
 	  })
@@ -952,12 +970,52 @@
  					}); 
  			  })
  		   })
+ 		   
  		    	  //获得url参数
      function getUrlParam(name) {
           var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
           var r = window.location.search.substr(1).match(reg);
           if (r != null) return unescape(r[2]); return null;
       }
+	function updateState(clientNum, state, balanceAmount,balanceExpireDate, balanceStartDate,  msg){
+            $.post({//获取主营业务
+                url: '<%=path%>/shopkeeper/updateState',
+                dataType: 'json',
+                data: {shopkeeperCustomerId: clientNum,state:state},
+                success: function (data) {
+                	if(data.code == 1){
+	               		 if(state == 6){
+	             		 	insertBalance(clientNum, balanceAmount, balanceExpireDate, balanceStartDate)
+                			layer.msg(msg,{icon: 2});
+	             		 }
+                	}else{
+                		layer.msg('审核失败',{icon: 2});
+                	}
+                }
+            })
+		}
+	}
+	function insertBalance(balanceClientNum, balanceAmount, balanceExpireDate, balanceStartDate){
+		console.log(balanceExpireDate+balanceStartDate)
+        $.post({//获取主营业务
+            url: '<%=path%>/risk/insertBalance',
+            dataType: 'json',
+            data: {
+            	balanceType: 2,
+            	balanceAmount:balanceAmount,
+            	balanceExpireDate:balanceExpireDate,
+            	balanceStartDate:balanceStartDate,
+            	balanceClientNum:balanceClientNum,
+            	},
+            success: function (data) {
+            	if(data.success){
+            		 layer.msg("审核成功",{icon: 1});
+            	}else{
+            		layer.msg('审核失败',{icon: 2});
+            	}
+            }
+        })
+	}
 	  function getSelect(numbers, data){
 		  for (var j = 1; j < numbers.length; j++) {
 			  if ($(numbers[j]).val() == data) {

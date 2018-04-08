@@ -150,4 +150,19 @@ public interface ChannelWriteService{
 	 * @return
 	 */
 	HashMap<String, Object> initMerchantAccount(String businessId, String name);
+	/**
+	 * 修改商户流程状态
+	 * @Title: updateChannelState   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param channelNum
+	 * @param: @param channelFlowState
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年4月8日 下午2:29:34
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
+	HashMap<String, Object> updateChannelState(String channelNum, Integer channelFlowState);
+	
+	
 }

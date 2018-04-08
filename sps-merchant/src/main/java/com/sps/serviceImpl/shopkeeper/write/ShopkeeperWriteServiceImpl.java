@@ -85,7 +85,7 @@ public class ShopkeeperWriteServiceImpl implements ShopkeeperWriteService {
 			
 			write.updateByExampleSelective(record, example);
 			
-			hashMap.put("code", 0);
+			hashMap.put("code", 1);
 			hashMap.put("msg", "修改成功");
 			hashMap.put("state", FinalData.STATE_SUCCESS);
 		} catch (Exception e) {

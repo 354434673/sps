@@ -6,7 +6,6 @@
 			+ path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -64,17 +63,19 @@
 		</div>
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
+		<script type="text/javascript"
+		src="<%=path%>/page/static/js/order.js"></script>
 	<script>
 		layui.use(['laydate','table','laypage','layer'], function(){
 			  var table = layui.table;
 			  var laypage = layui.laypage;
 			  var layer = layui.layer;
 			  var $ = layui.jquery;
-			  
+			  var orderid = getUrlParam('orderid') 
 			  $.post({//获得信息
 				  url:'<%=path%>/order/showOrder.json'
 				  ,dataType:'json'
-				  ,data:{orderid:<%=request.getParameter("orderid")%>}
+				  ,data:{orderid:orderid}
 				  ,success:function(result){
 					  $('#orderid').html(result.data[0].orderid)//订单编号
 					  $('#name').html(result.data[0].name)//店主名称
@@ -85,7 +86,7 @@
 			  $.post({//获得信息
 				  url:'<%=path%>/order/showOrderGoods.json'
 				  ,dataType:'json'
-				  ,data:{orderid:<%=request.getParameter("orderid")%>}
+				  ,data:{orderid:orderid}
 				  ,success:function(result){
 					  $('#amountTotle').html(result.amountTotle)
 					  $('#priceTotle').html(result.priceTotle)
@@ -95,7 +96,7 @@
 			  table.render({
 				    elem: '#orderGoodsDetail'
 				    ,url: '<%=path%>/order/showOrderGoods.json'//数据接口
-				    ,where:{orderid:<%=request.getParameter("orderid")%>} 
+				    ,where:{orderid:orderid} 
 				    ,id:'orderGoods'
 				    ,page:true
 				    ,skin:'row'

@@ -72,7 +72,16 @@
 <script type="text/javascript"
 		src="<%=path%>/page/static/datas/area_data.js"></script>
 <script type="text/html" id="bar">
-  <a class="layui-btn layui-btn-mini" lay-event="risk">审核</a>
+{{}}
+	{{#  if(d.channel.channelFlowState == 0){ }}
+  	<a class="layui-btn layui-btn-mini" lay-event="risk">审核</a>
+  {{#  } else if(d.channel.channelFlowState == 1){ }}
+    	风控审核中
+  {{#  } else if(d.channel.channelFlowState == 2){ }}
+    	风控审核通过
+  {{#  } else if(d.channel.channelFlowState == 3){ }}
+    	风控审核失败
+{{#  } }}
 </script>
 <!-- 进行数据渲染 -->
 <script type="text/html" id="channelTpl">

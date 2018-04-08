@@ -20,9 +20,9 @@ public class Balance implements Serializable{
 
     private BigDecimal balanceAmountUsable;
 
-    private Date balanceExpireDate;
+    private String balanceExpireDate;
 
-    private Date balanceStartDate;
+    private String balanceStartDate;
 
     private Integer balanceState;
 
@@ -72,19 +72,19 @@ public class Balance implements Serializable{
         this.balanceAmountUsable = balanceAmountUsable;
     }
 
-    public Date getBalanceExpireDate() {
+    public String getBalanceExpireDate() {
         return balanceExpireDate;
     }
 
-    public void setBalanceExpireDate(Date balanceExpireDate) {
+    public void setBalanceExpireDate(String balanceExpireDate) {
         this.balanceExpireDate = balanceExpireDate;
     }
 
-    public Date getBalanceStartDate() {
+    public String getBalanceStartDate() {
         return balanceStartDate;
     }
 
-    public void setBalanceStartDate(Date balanceStartDate) {
+    public void setBalanceStartDate(String balanceStartDate) {
         this.balanceStartDate = balanceStartDate;
     }
 

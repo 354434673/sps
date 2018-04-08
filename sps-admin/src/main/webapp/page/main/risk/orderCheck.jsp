@@ -49,9 +49,9 @@
 				    <div class="layui-input-inline">
 				      <select name="flag" lay-filter="flag" id="flag">
 				        <option value="3,4,18" selected="selected">全部</option>
-				        <option value="3">待审核</option>
-				        <option value="18">审核通过</option>
-				        <option value="4">审核不通过</option>
+				        <option value="18">待审核</option>
+				        <option value="5">审核通过</option>
+				        <option value="19">审核不通过</option>
 				      </select>
 				    </div>
 				  </div>
@@ -63,7 +63,7 @@
 <script type="text/javascript"
 		src="<%=path%>/page/layui/layui.all.js"></script>
 <script type="text/html" id="bar">
-{{#  if(d.flag == 18){ }}
+{{#  if(d.flag == 5){ }}
 <a class="layui-btn layui-btn-mini" lay-event="query" id="query">查看</a>
 {{#  } else if(d.flag == 4){ }}
 <a class="layui-btn layui-btn-mini" lay-event="query" id="query">查看</a>
@@ -86,11 +86,11 @@
 {{ fn() }}
 </script>
 <script type="text/html" id="state">
-{{#  if(d.flag == 3){ }}
+{{#  if(d.flag == 18){ }}
 待审核
-{{#  } else if(d.flag == 18){ }}
+{{#  } else if(d.flag == 5){ }}
 审核通过
-{{#  } else if(d.flag == 4){ }}
+{{#  } else if(d.flag == 19){ }}
 审核不通过
 {{#  } else { }}
   {{d.flag}}
@@ -115,7 +115,7 @@
 			  table.render({
 			    elem: '#orderList'
 			    ,url: '<%=path%>/order/show.json' //数据接口
-			    ,where:{flag:'3,4,18'}
+			    ,where:{flag:'5,18,19'}
 			    ,id:'orderToBeAudit'
 			    ,page:true
 			    ,cols: [[ //表头
@@ -167,9 +167,9 @@
 					 var data = obj.data,  //获得当前行数据
 					 layEvent = obj.event; //获得 lay-event 对应的值
 					 if(layEvent=='audit'){//审核
-						   window.location.href="<%=path%>/page/main/order/audit.jsp?isQuery=1&orderid="+data.orderid; 
+						   window.location.href="<%=path%>/page/main/risk/audit.jsp?isQuery=1&orderid="+data.orderid; 
 					 }else if(layEvent=='query'){//查看
-						 window.location.href="<%=path%>/page/main/order/audit.jsp?orderid="+data.orderid;
+						 window.location.href="<%=path%>/page/main/risk/audit.jsp?orderid="+data.orderid;
 					 } 
 				});
 			  //时间格式化
