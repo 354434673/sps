@@ -23,7 +23,7 @@ public class BankCardInfo implements Serializable{
 	private Date  updatetime ;
 //	开户行
 	private String bank;
-//	卡的状态  0，绑卡，1解绑
+//	卡的状态  0，解绑，1绑卡成功 2，待绑卡（即等待手机短信验证）
 	private Integer state;
 //	备注信息
 	private String remark ;

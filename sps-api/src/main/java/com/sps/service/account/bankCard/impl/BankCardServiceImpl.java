@@ -33,36 +33,29 @@ public class BankCardServiceImpl implements BankCardService {
     private AccountBalanceDao accountBalanceDao;
     @Override
     public String findUserId(String customerId) {
-        String userId = bankCardInfoDao.selectByUserName(customerId);
-        return userId;
+        return  bankCardInfoDao.selectByUserName(customerId);
     }
 
     @Override
     public Boolean saveBankCardInfo(BankCardInfo bankInfo ) {
         //		根据用户名获取 余额表信息---存在取出余额---不存在 创建改用户的余额表信息
-            BigDecimal balance = accountBalanceDao.selectByUserId(bankInfo.getChannlNum());
-            bankInfo.setCreatetime(new Date());
-          //  bankInfo.setUserMark(2);
-            //绑卡
-             bankInfo.setState(1);
-             bankInfo.setFlag(0);
-             bankInfo.setCreatetime(new Date());
-            int m;
-            if(balance !=null){
-                bankInfo.setAvailableBalance(balance);
-                m=bankCardInfoDao.insertBankCardInfo(bankInfo);
-                return m >0 ? true:false;
-            }
-                bankInfo.setAvailableBalance(new BigDecimal(0));
-                //保存一条用户的余额信息
-                AccountBalance accountBalance = new AccountBalance();
-                accountBalance.setBalance(new BigDecimal(0));
-                accountBalance.setCreateTime(new Date());
-                accountBalance.setUserNo(bankInfo.getChannlNum());
-                accountBalance.setUserType(2);
-                m=bankCardInfoDao.insertBankCardInfo(bankInfo);
-                int n=accountBalanceDao.insertAccountBalance(accountBalance);
-                 return m >0 &&  n>0 ? true:false;
+        BigDecimal balance = accountBalanceDao.selectByUserId(bankInfo.getChannlNum());
+        int m;
+        if(balance !=null){
+            bankInfo.setAvailableBalance(balance);
+            m=bankCardInfoDao.insertBankCardInfo(bankInfo);
+            return m >0 ? true:false;
+        }
+        bankInfo.setAvailableBalance(new BigDecimal(0));
+        //保存一条用户的余额信息
+        AccountBalance accountBalance = new AccountBalance();
+        accountBalance.setBalance(new BigDecimal(0));
+        accountBalance.setCreateTime(new Date());
+        accountBalance.setUserNo(bankInfo.getChannlNum());
+       // accountBalance.setUserType(2);
+        m=bankCardInfoDao.insertBankCardInfo(bankInfo);
+        int n=accountBalanceDao.insertAccountBalance(accountBalance);
+        return m >0 &&  n>0 ? true:false;
 
     }
 
