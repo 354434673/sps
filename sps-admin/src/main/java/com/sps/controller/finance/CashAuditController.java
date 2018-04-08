@@ -15,6 +15,7 @@ import org.sps.service.merchant.write.ChannelBankTradeWriteService;
 import org.sps.service.merchant.write.ChannelBankWriteService;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2018-02-23.
@@ -58,8 +59,9 @@ public class CashAuditController {
     @RequestMapping("/saveAuditStatus")
     @ResponseBody
     public Result saveAuditStatus(int   id,String type,String content){
-        Boolean flag = bankTradeWriteService.modifyBankTradeByApplicateDate(id,type,content);
+        Map<String, Object> map = bankTradeWriteService.modifyBankTradeByApplicateDate(id, type, content);
         //审核通过--调用别的接口进行体现
+        Boolean flag = (Boolean) map.get("flag");
         Result<Boolean> result = new Result<Boolean>();
         result.setBody(flag);
         result.setMsg(flag ? "成功" : "保存失败");

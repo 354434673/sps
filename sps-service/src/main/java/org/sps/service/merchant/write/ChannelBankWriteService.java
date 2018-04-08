@@ -16,7 +16,7 @@ public interface ChannelBankWriteService{
 	 * 插入绑卡信息
 	 *
 	 */
-	Boolean  saveBankInfo(SpsChannelBank bankinfo, Integer userId, Integer userMark);
+	Boolean  saveBankInfo(SpsChannelBank bankinfo, Integer userMark);
 
 	/**
 	 * 更新可用余额

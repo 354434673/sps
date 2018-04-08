@@ -32,9 +32,12 @@ import org.sps.entity.merchant.SpsChannelBankTrans;
 import org.sps.service.merchant.read.ChannelBankReadService;
 import org.sps.service.merchant.read.ChannelBankTransReadService;
 import org.sps.service.merchant.read.SpsBalanceReadService;
+import org.sps.service.merchant.read.SpsChannelOpenAccountReadService;
 import org.sps.service.merchant.write.AuthBindCardWriteService;
 import org.sps.service.merchant.write.ChannelBankTransWriteService;
 import org.sps.service.merchant.write.ChannelBankWriteService;
+import org.sps.util.StringUtil;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -73,6 +76,9 @@ public class YopBindCardController {
     private SpsBalanceReadService spsBalanceService;
 
     @Reference(check = false, group = "dianfu")
+    private SpsChannelOpenAccountReadService spsChannelOpenAccountReadService;
+
+    @Reference(check = false, group = "dianfu")
     private ChannelBankReadService bankReadService;
 
     @Reference(check = false, group = "dianfu")
@@ -88,149 +94,142 @@ public class YopBindCardController {
     private UserService userService;
     @Resource
     private UserAndRoleService userAndRoleService;
-
-    /* @RequestMapping("/getVerifyCode")
-    @ResponseBody
-    public Result getVerifyCode(String phone) {
-        logger.info("getVerifyCode 方法 开始调用");
-        Result result = new Result<Boolean>();
-        ServiceResult<Boolean> results = ismsCommonService.sendForgetPasswordSms(phone, 3);
-         if(!results.getSuccess()){
-             result.setBody(results.getSuccess());
-             result.setMsg(results.getMessage());
-         }
-        String msg = "获取成功";
-        msg= results.getResult()?"获取成功":"获取失败";
-        result.setBody(results);
-        result.setMsg(msg);
-        return result;
-
-    }*/
-
     //调用绑卡接口
     @RequestMapping("/bindBankCard")
     @ResponseBody
     public Result bindBankCard( SpsChannelBank bankInfo) {
+        logger.info("【绑卡接口[bindBankCard]】，入参：【bankInfo】"+bankInfo);
         Result<String> result = new Result<String>();
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
         //根据用户名 和用户类型查询Balance中是否存在 该用户
         SpsChannelBank bankCard = bankReadService.getBankInfo(userName);
-        if (bankCard == null) {
-            SpsUser user = userService.findByUserName(userName);
-            SpsChannelBankTrans spsChannelBankTrans = new SpsChannelBankTrans();
-            spsChannelBankTrans.setUserId(UUID.randomUUID().toString().replace("-", "").toLowerCase());
-            spsChannelBankTrans.setName(bankInfo.getName());
-            spsChannelBankTrans.setBankName(bankInfo.getBank());
-            spsChannelBankTrans.setIdentity(bankInfo.getIdentity());
-            spsChannelBankTrans.setPhone(bankInfo.getPhone());
-            spsChannelBankTrans.setMerchantNo(YEEPAY_MERCHANT_NO);
-            spsChannelBankTrans.setLoginName(userName);
-            String seriNum=UUID.randomUUID().toString().replace("-", "").toLowerCase();
-            spsChannelBankTrans.setSerialSh(seriNum);
-            spsChannelBankTrans.setBankCode(bankInfo.getAccounts());
+        if(bankCard !=null){
+            logger.info("【绑卡接口[bindBankCard]】- bankReadService.getBankInfo(userName[%s])查询用户信息，返回空" +(String) SecurityUtils.getSubject().getPrincipal());
+            result.setCode("7");
+            result.setMsg("已绑过卡，请解绑卡之后再操作");
+            return result;
+        }
+        SpsUser user = userService.findByUserName(userName);
+        if(user ==null){
+            result.setCode("10");
+            result.setMsg("该商户的不存在");
+            return result;
+        }
+        String channelNum = spsChannelOpenAccountReadService.selectByOpenAdminNum(userName);
+        if(StringUtil.isEmpty(channelNum)){
+            result.setCode("11");
+            result.setMsg("该商户的渠道编号不存在");
+            return result;
+        }
+        //保存一条交易交易记录
+        SpsChannelBankTrans spsChannelBankTrans = new SpsChannelBankTrans();
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        spsChannelBankTrans.setUserId(uuid);
+        spsChannelBankTrans.setName(bankInfo.getName());
+        spsChannelBankTrans.setBankName(bankInfo.getBank());
+        spsChannelBankTrans.setIdentity(bankInfo.getIdentity());
+        spsChannelBankTrans.setPhone(bankInfo.getPhone());
+        spsChannelBankTrans.setMerchantNo(YEEPAY_MERCHANT_NO);
+        spsChannelBankTrans.setLoginName(userName);
+        spsChannelBankTrans.setSerialSh(uuid);
+        spsChannelBankTrans.setBankCode(bankInfo.getAccounts());
+        spsChannelBankTrans.setChannlNum(channelNum);
+        //保存绑卡记录表
+        Boolean flag = bankTransWriteService.saveBankTansInfos(spsChannelBankTrans);
+       /* Boolean flag =(Boolean) map.get("flag");
 
-            //保存绑卡记录表
-            HashMap<String, Object> map = bankTransWriteService.saveBankTansInfos(spsChannelBankTrans, userName);
-            Boolean flag = (Boolean) map.get("flag");
-            if (flag == true) {
-                SpsChannelBankTrans spsChannelBankTransInfo = (SpsChannelBankTrans) map.get("spsChannelBankTrans1");
-                /**
-                 * 调用易宝进行鉴权绑卡
-                 */
-                YopRequest yopRequest = new YopRequest(YEEPAY_APP_KEY, "", YEEPAY_SERVER_ROOT);
-                yopRequest.addParam("merchantno", YEEPAY_MERCHANT_NO);
-                yopRequest.addParam("requestno", spsChannelBankTrans.getSerialSh());
-                yopRequest.addParam("identityid", spsChannelBankTrans.getUserId());
-                yopRequest.addParam("identitytype", "ID_CARD");
-                yopRequest.addParam("cardno", bankInfo.getAccounts());
-                yopRequest.addParam("idcardno",bankInfo.getIdentity() );
-                yopRequest.addParam("idcardtype", "ID");
-                yopRequest.addParam("username", bankInfo.getName());
-                yopRequest.addParam("phone",bankInfo.getPhone() );
-                yopRequest.addParam("issms", "true");
-                yopRequest.addParam("advicesmstype", "MESSAGE");
-                yopRequest.addParam("requesttime", DateUtils.formatDate(new Date()));
-                yopRequest.addParam("authtype", "COMMON_FOUR");
-                //回调接口
-               yopRequest.addParam("callbackurl", "");
-                logger.info("易宝绑卡流水号：" + spsChannelBankTrans.getSerialSh() + ";请求参数：" + JSON.toJSONString(yopRequest));
-                 YopResponse yopResponse = YopClient3.postRsa(YEEPAY_BIND_CARD_REQUEST_URL, yopRequest);
-                logger.info("易宝绑卡流水号：" + spsChannelBankTrans.getSerialSh() + ";返回参数：" + JSON.toJSONString(yopResponse));
-                TreeMap<String, String> responseParames = JSON.parseObject(yopResponse.getStringResult(), new TypeReference<TreeMap<String, String>>() {
-                });
-                Boolean aBoolean = bankTransWriteService.modifyBankTran(responseParames.get("requestno"), responseParames.get("yborderid"), responseParames.get("status"),responseParames.get("cardtop"),responseParames.get("cardlast"),responseParames.get("authtype"),responseParames.get("remark"));
-                if("TO_VALIDATE".equals(responseParames.get("status"))){
-                    //调用短信验证接口
-                    result.setBody(responseParames.get("requestno"));
-                    result.setMsg(responseParames.get("message"));
-                    result.setCode("0");
-                    return result;
-                }
-                if("BIND_FAIL".equals(responseParames.get("status"))){
-                    //绑卡失败
-                    result.setBody(responseParames.get("requestno"));
-                    result.setMsg(responseParames.get("message"));
-                    result.setCode("1");
-                    return result;
-                }
-                if("BIND_ERRORE".equals(responseParames.get("status"))){
-                    //绑卡异常
-                    result.setBody(responseParames.get("requestno"));
-                    result.setMsg("绑卡异常");
-                    result.setCode("2");
-                    return result;
-                }
-                if("TIME_OUT".equals(responseParames.get("status"))){
-                    //绑卡超时
-                    result.setBody(responseParames.get("requestno"));
-                    result.setMsg("绑卡超时");
-                    result.setCode("3");
-                    return result;
-                }
-                if("FAIL".equals(responseParames.get("status"))){
-                    //系统异常
-                    result.setBody(responseParames.get("requestno"));
-                    result.setMsg("系统异常");
-                    result.setCode("4");
-                    return result;
-                }
-
-                if("BIND_SUCCESS".equals(responseParames.get("status"))){
-                    SpsChannelBankTrans bindBank = bankTransReadService.findBankState(responseParames.get("requestno"), responseParames.get("yborderid"));
-                    //保存绑卡记录
-                    SpsChannelBank bindCardInfo = new SpsChannelBank();
-                    bindCardInfo.setUserId(bindBank.getUserId());
-                    bindCardInfo.setAccounts(bindBank.getBankCode());
-                    bindCardInfo.setBank(bindBank.getBankName());
-                    bindCardInfo.setPhone(bindBank.getPhone());
-                    bindCardInfo.setIdentity(bindBank.getIdentity());
-                    bindCardInfo.setName(bindBank.getName());
-                    bindCardInfo.setChannlNum(bindBank.getChannlNum());
-                    bindCardInfo.setUserName(bindBank.getLoginName());
-                    Boolean saveBankInfo = bankWriteService.saveBankInfo(bindCardInfo, user.getUserId(), user.getUserMark());
-                    if (saveBankInfo) {
-                        result.setCode("5");
-                        result.setBody(responseParames.get("requestno"));
-                        result.success();
-                        result.setMsg("操作绑卡成功");
-                        return result;
-                    }
-                    result.setCode("6");
-                    result.setBody(responseParames.get("requestno"));
-                    result.setMsg("后台操作绑卡失败");
-                    return result;
-                }
-                result.setCode("8");
-                result.setBody(responseParames.get("requestno"));
-                result.setMsg("超过同一卡绑定用户数");
+        String num = (String) map.get("num");*/
+        if(! flag){
+            logger.info("【绑卡接口[bindBankCard]】- 调用bankTransWriteService.saveBankTansInfos(spsChannelBankTrans,userName)查询用户信息，返回空"+ spsChannelBankTrans+"-"+userName);
+            result.setCode("9");
+            result.setMsg("保存交易记录失败");
+            return result;
+        }
+        YopRequest yopRequest = new YopRequest(YEEPAY_APP_KEY, "", YEEPAY_SERVER_ROOT);
+        yopRequest.addParam("merchantno", YEEPAY_MERCHANT_NO);
+        yopRequest.addParam("requestno", spsChannelBankTrans.getSerialSh());
+        yopRequest.addParam("identityid", channelNum);
+        yopRequest.addParam("identitytype", "ID_CARD");
+        yopRequest.addParam("cardno", bankInfo.getAccounts());
+        yopRequest.addParam("idcardno",bankInfo.getIdentity() );
+        yopRequest.addParam("idcardtype", "ID");
+        yopRequest.addParam("username", bankInfo.getName());
+        yopRequest.addParam("phone",bankInfo.getPhone() );
+        yopRequest.addParam("issms", "true");
+        yopRequest.addParam("advicesmstype", "MESSAGE");
+        yopRequest.addParam("requesttime", DateUtils.formatDate(new Date()));
+        yopRequest.addParam("authtype", "COMMON_FOUR");
+            //回调接口
+       yopRequest.addParam("callbackurl", "");
+        logger.info("易宝绑卡流水号：" + spsChannelBankTrans.getSerialSh() + ";请求参数：" + JSON.toJSONString(yopRequest));
+         YopResponse yopResponse = YopClient3.postRsa(YEEPAY_BIND_CARD_REQUEST_URL, yopRequest);
+        logger.info("易宝绑卡流水号：" + spsChannelBankTrans.getSerialSh() + ";返回参数：" + JSON.toJSONString(yopResponse));
+        TreeMap<String, String> responseParames = JSON.parseObject(yopResponse.getStringResult(), new TypeReference<TreeMap<String, String>>() {
+        });
+        Boolean aBoolean = bankTransWriteService.modifyBankTran(responseParames.get("requestno"), responseParames.get("yborderid"), responseParames.get("status"),responseParames.get("cardtop"),responseParames.get("cardlast"),responseParames.get("authtype"),responseParames.get("remark"));
+        result.setBody(responseParames.get("requestno"));
+        if ("TO_VALIDATE".equals(responseParames.get("status"))) {
+            //调用短信验证接口
+            result.setMsg(responseParames.get("message"));
+            result.setCode("0");
+            return result;
+        }
+        if("BIND_FAIL".equals(responseParames.get("status"))){
+                //绑卡失败
+                result.setMsg(responseParames.get("errormsg"));
+                result.setCode("1");
                 return result;
             }
+        if("BIND_ERRORE".equals(responseParames.get("status"))){
+            //绑卡异常
+            result.setMsg(responseParames.get("errormsg"));
+            result.setCode("2");
+            return result;
         }
-
-        result.setCode("7");
-        result.setMsg("已绑过卡，请解绑卡之后再操作");
+        if("TIME_OUT".equals(responseParames.get("status"))){
+            //绑卡超时
+            result.setMsg(responseParames.get("errormsg"));
+            result.setCode("3");
+            return result;
+        }
+        if("FAIL".equals(responseParames.get("status"))){
+            //系统异常
+            result.setMsg(responseParames.get("errormsg"));
+            result.setCode("4");
+            return result;
+        }
+        if ("BIND_SUCCESS".equals(responseParames.get("status"))) {
+            //保存绑卡记录
+            SpsChannelBank bindCardInfo = new SpsChannelBank();
+            bindCardInfo.setUserId(spsChannelBankTrans.getUserId());
+            bindCardInfo.setAccounts(spsChannelBankTrans.getBankCode());
+            bindCardInfo.setBank(spsChannelBankTrans.getBankName());
+            bindCardInfo.setPhone(spsChannelBankTrans.getPhone());
+            bindCardInfo.setIdentity(spsChannelBankTrans.getIdentity());
+            bindCardInfo.setName(spsChannelBankTrans.getName());
+            bindCardInfo.setChannlNum(spsChannelBankTrans.getChannlNum());
+            bindCardInfo.setUserName(spsChannelBankTrans.getLoginName());
+            bindCardInfo.setState(1);
+            bindCardInfo.setFlag(0);
+            bindCardInfo.setCreatetime(new Date());
+            bindCardInfo.setUserMark(user.getUserMark());
+            Boolean saveBankInfo = bankWriteService.saveBankInfo(bindCardInfo,  user.getUserMark());
+            if (saveBankInfo) {
+                result.setCode("5");
+                result.success();
+                result.setMsg("操作绑卡成功");
+                return result;
+            }
+            result.setCode("6");
+            result.setBody(responseParames.get("requestno"));
+            result.setMsg(responseParames.get("errormsg"));
+            return result;
+        }
+        result.setCode("8");
+        result.setBody(responseParames.get("requestno"));
+        result.setMsg("超过同一卡绑定用户数");
         return result;
-    }
+        }
     //调用短信确认接口
     @RequestMapping("/smsConfirm")
     @ResponseBody
@@ -260,31 +259,30 @@ public class YopBindCardController {
         if ("BIND_FAIL".equals(responseParames.get("status"))) {
             //绑卡失败
             result.setCode("1");
-            result.setMsg("绑卡失败");
+            result.setMsg(responseParames.get("errormsg"));
             return result;
         }
         if ("BIND_ERRORE".equals(responseParames.get("status"))) {
             //绑卡异常
             result.setCode("2");
-            result.setMsg("绑卡异常");
+            result.setMsg(responseParames.get("errormsg"));
             return result;
         }
         if ("TIME_OUT".equals(responseParames.get("status"))) {
             //绑卡超时
             result.setCode("3");
-            result.setMsg("绑卡超时");
+            result.setMsg(responseParames.get("errormsg"));
             return result;
         }
         if ("FAIL".equals(responseParames.get("status"))) {
             //系统异常
             result.setCode("4");
-            result.setMsg("系统异常");
+            result.setMsg(responseParames.get("errormsg"));
             return result;
         }
         if ("BIND_SUCCESS".equals(responseParames.get("status"))) {
             //根据请求号与易宝号获取信息
             String userName = (String) SecurityUtils.getSubject().getPrincipal();
-
             SpsChannelBankTrans bindBank = bankTransReadService.findBankState(responseParames.get("requestno"), responseParames.get("yborderid"));
             SpsUser user = userService.findByUserName(userName);
             //保存绑卡记录
@@ -297,7 +295,11 @@ public class YopBindCardController {
             bindCardInfo.setName(bindBank.getName());
             bindCardInfo.setChannlNum(bindBank.getChannlNum());
             bindCardInfo.setUserName(bindBank.getLoginName());
-            Boolean saveBankInfo = bankWriteService.saveBankInfo(bindCardInfo, user.getUserId(), user.getUserMark());
+            bindCardInfo.setState(1);
+            bindCardInfo.setFlag(0);
+            bindCardInfo.setCreatetime(new Date());
+            bindCardInfo.setUserMark(user.getUserMark());
+            Boolean saveBankInfo = bankWriteService.saveBankInfo(bindCardInfo, user.getUserMark());
             if (saveBankInfo) {
                 result.setCode("5");
                 result.setMsg("操作绑卡成功");
@@ -307,7 +309,7 @@ public class YopBindCardController {
             result.setMsg("后台操作绑卡失败");
             return result;
         }
-        result.setCode("7");
+        result.setCode("8");
         result.setMsg("请求参数异常");
         return result;
     }
@@ -316,7 +318,6 @@ public class YopBindCardController {
     @ResponseBody
     public Result smsResend(@RequestParam("requestNo") String requestNo){
         //根据请求号与易宝交易号获取交易信息
-      //  SpsChannelBankTrans bindBank = bankTransReadService.findBankState(requestNo,null);
         Result<String> result = new Result<String>();
         /**
          * 调用易宝进行鉴权绑卡
@@ -349,7 +350,36 @@ public class YopBindCardController {
             result.setMsg("系统异常");
             return result;
         }
-        result.setCode("7");
+        if ("BIND_SUCCESS".equals(responseParames.get("status"))) {
+            //根据请求号与易宝号获取信息
+            String userName = (String) SecurityUtils.getSubject().getPrincipal();
+            SpsChannelBankTrans bindBank = bankTransReadService.findBankState(responseParames.get("requestno"), responseParames.get("yborderid"));
+            SpsUser user = userService.findByUserName(userName);
+            //保存绑卡记录
+            SpsChannelBank bindCardInfo = new SpsChannelBank();
+            bindCardInfo.setUserId(bindBank.getUserId());
+            bindCardInfo.setAccounts(bindBank.getBankCode());
+            bindCardInfo.setBank(bindBank.getBankName());
+            bindCardInfo.setPhone(bindBank.getPhone());
+            bindCardInfo.setIdentity(bindBank.getIdentity());
+            bindCardInfo.setName(bindBank.getName());
+            bindCardInfo.setChannlNum(bindBank.getChannlNum());
+            bindCardInfo.setUserName(bindBank.getLoginName());
+            bindCardInfo.setState(1);
+            bindCardInfo.setFlag(0);
+            bindCardInfo.setCreatetime(new Date());
+            bindCardInfo.setUserMark(user.getUserMark());
+            Boolean saveBankInfo = bankWriteService.saveBankInfo(bindCardInfo, user.getUserMark());
+            if (saveBankInfo) {
+                result.setCode("5");
+                result.setMsg("操作绑卡成功");
+                return result;
+            }
+            result.setCode("6");
+            result.setMsg("后台操作绑卡失败");
+            return result;
+        }
+        result.setCode("8");
         result.setMsg("请求参数异常");
         return result;
     }

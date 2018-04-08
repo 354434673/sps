@@ -4,6 +4,7 @@ import org.sps.entity.merchant.SpsChannelBank;
 import org.sps.entity.merchant.SpsChannelBankTrade;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 /***
  *  充值 提现交易
@@ -44,5 +45,5 @@ public interface ChannelBankTradeWriteService{
 	 * @param id
 	 * @return
 	 */
-	Boolean  modifyBankTradeByApplicateDate(int  id,String status,String content);
+	Map<String,Object> modifyBankTradeByApplicateDate(int  id, String status, String content);
 }

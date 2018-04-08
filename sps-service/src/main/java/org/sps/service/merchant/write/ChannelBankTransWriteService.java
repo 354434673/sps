@@ -5,6 +5,7 @@ import org.sps.entity.merchant.SpsChannelBank;
 import org.sps.entity.merchant.SpsChannelBankTrans;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /***
  *  绑卡流水账号
@@ -30,7 +31,7 @@ public interface ChannelBankTransWriteService{
 	 * 根据页面绑卡记录 保存绑卡交易信息
 	 *
 	 */
-	HashMap<String,Object> saveBankTansInfos(SpsChannelBankTrans  bankTransInfo, String userName);
+    Boolean saveBankTansInfos(SpsChannelBankTrans  spsChannelBankTrans);
 
 	/**
 	 * 根据请求号更新绑卡记录表

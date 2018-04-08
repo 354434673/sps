@@ -168,17 +168,6 @@ public class WithdrawController {
             SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeDetail(userName, tradeSerialNum);
             return tradeDetail;
         }
-     /*   @RequestMapping("/getVerifyCode")
-        @ResponseBody
-        public Result<String> getVerifyCode(HttpServletRequest request, String phone){
-            String numricCode = ValidateImageCodeUtils.getRandNum();
-            request.getSession().setAttribute("phoneCode",numricCode);
-            Result<String> result = new Result<String>();
-            result.setBody(numricCode);
-            result.success();
-            result.setMsg("成功");
-            return result;
-    }*/
 
     /**
      * 获取短信验证码
@@ -202,7 +191,6 @@ public class WithdrawController {
     @ResponseBody
     public Result<JSONObject> getPhoneAndImgCode(){
         String userName = (String)SecurityUtils.getSubject().getPrincipal();
-       // String phone= bankReadService.findMobileByUserName(userName);
         SpsUser user = userService.findByUserName(userName);
         JSONObject body = new JSONObject();
         Result<JSONObject> result = new Result<JSONObject>(body);
@@ -217,8 +205,6 @@ public class WithdrawController {
         Result<Boolean> result = new Result<Boolean>();
         String srcImgCode = (String) request.getSession().getAttribute("imgCode");
         logger.info("srcImgCode" + srcImgCode);
-       // String srcPhoneCode = (String) request.getSession().getAttribute("phoneCode");
-       // logger.info("srcPhoneCode"+ srcPhoneCode);
         if (imgCode.equals(srcImgCode) ) {
             //调用业务层进行更新账户中的交易密码
             String userName = (String) SecurityUtils.getSubject().getPrincipal();

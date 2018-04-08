@@ -33,6 +33,7 @@
   	<include refid="bankInfoSql"/>
   	where
        channl_num=#{channelNum} AND  flag=0
+
   </select>
     <select id="selectByLoginUser" parameterType="String" resultType="String">
        select
@@ -41,6 +42,7 @@
   	    	sps_bank
   	   WHERE
   	        b_user_name =#{userName}  AND  flag=0
+
     </select>
 
     <select id="selectMobileByLoginUser" parameterType="String" resultType="String">
