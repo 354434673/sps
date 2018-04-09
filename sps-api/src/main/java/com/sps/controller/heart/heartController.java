@@ -185,6 +185,7 @@ public class heartController extends BaseApi {
                             SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
                             JSONObject baseInfoJson = new JSONObject();
                             baseInfoJson.put("applDate", df.format(System.currentTimeMillis()));
+                            baseInfoJson.put("serviceFee", order.getServicemoney());
                             baseInfoJson.put("applNosInst", "1");
                             baseInfoJson.put("applNosInstType", 2);
                             baseInfoJson.put("applyAmt", shopPayMoney);
@@ -198,10 +199,9 @@ public class heartController extends BaseApi {
                             baseInfoJson.put("repayBankCd", "1");
                             baseInfoJson.put("repayBankName", bank.getbBank());
                             baseInfoJson.put("chnlTxNo", "1");
-
                             baseInfoJson.put("cooprProdCd", "010207");
-                            //渠道方代码
-                            baseInfoJson.put("coperCd", "DF");
+                            //渠道方代码                            baseInfoJson.put("coperCd", "DF");
+
                             baseInfoJson.put("downpayment", firstMoney);
                             baseInfoJson.put("fixRateInd", "Y");
                             baseInfoJson.put("intAdjPct", "0");
@@ -238,7 +238,6 @@ public class heartController extends BaseApi {
                                     loanContactList.add(content);
                                 }
                             }
-
                             baseInfoJson.put("loanContactList", loanContactList);
                             //小B基本信息
                             JSONObject loanMerchant = new JSONObject();
@@ -296,7 +295,6 @@ public class heartController extends BaseApi {
                             loanUser.put("cityZip", personInfo.getPersonalLivingCityCode());
                             loanUser.put("custId", personInfo.getPersonalId());
                             loanUser.put("custName", personInfo.getPersonalClientName());
-
                             loanUser.put("dtOfBirth", CutId(personInfo.getPersonalIdcard()));
                             //小B工作地址待定
                             loanUser.put("empr", company.getCompanyBusinessAddr());
@@ -494,9 +492,68 @@ public class heartController extends BaseApi {
         return ri;
     }
 
+
+   /* *//**
+     * 个人提现
+     *
+     * @return
+     *//*
+    @RequestMapping(value = "/userWithdrawals", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnInfo userWithdrawals(String period, String serialNumber, String sign, String status) {
+        ReturnInfo ri = new ReturnInfo();
+        try {
+            SpsBankTradeInfo spsBankTradeInfo = tradeInfoService.findBySerialNumber(serialNumber);
+            Map resultMap = new HashMap<>();
+            resultMap.put("amount", amount);
+            resultMap.put("application", "dianfu");
+            resultMap.put("certNo", spsBankTradeInfo.getBtIdentity());
+            resultMap.put("pattern", "5");
+            resultMap.put("payOrder", serialNumber);
+            String jsonResult = HttpClientUtils.post(rechargeMoney, resultMap);
+            System.out.println(jsonResult);
+            if (jsonResult != null) {
+                JSONObject job = JSON.parseObject(jsonResult);
+                String code = job.getString("code");
+                if ("100000".equals(code)) {
+                    //去核心查询个人资金账户余额
+                    SpsBankTradeInfo bankTradeInfo = new SpsBankTradeInfo();
+                    Map map = new HashMap<>();
+                    map.put("application", "dianfu");
+                    map.put("certNo", spsBankTradeInfo.getBtIdentity());
+                    String jsonRes = HttpClientUtils.post(getCustomerAccount, map);
+                    System.out.println(jsonRes);
+                    if (jsonRes != null) {
+                        if ("100000".equals(code)) {
+                            JSONObject obj = JSONObject.parseObject(jsonRes);
+                            String validAmount = obj.getJSONObject("result").getString("validAmount");
+                            bankTradeInfo.setBtTradeAfterBalanc(new BigDecimal(validAmount));
+                            bankTradeInfo.setRechargeStatus(1);
+                            bankTradeInfo.setBtPaymentDate(new Date());
+                            bankTradeInfo.setBtAuditDate(new Date());
+                            bankTradeInfo.setBtTradeNo(serialNumber);
+                            tradeInfoService.updateBySerialNumber(bankTradeInfo);
+                            ri.setCode(Message.SUCCESS_CODE);
+                            ri.setMsg(Message.API_SUCCESS_MSG);
+                            ri.setSuccess(Message.API_SUCCESS_FLAG);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ri.setCode(Message.FAILURE_CODE);
+            ri.setMsg(Message.FAILURE_MSG);
+            ri.setSuccess(Message.API_ERROR_FLAG);
+        }
+        return ri;
+    }*/
+
+
     /**
      * 扣减金额
      * 本地测试用
+     *
      * @return
      */
     @RequestMapping(value = "/buckleMoney", method = RequestMethod.POST)
@@ -523,7 +580,8 @@ public class heartController extends BaseApi {
 
     /**
      * 按身份证号冻结账户金额
-     *本地测试用
+     * 本地测试用
+     *
      * @return
      */
     @RequestMapping(value = "/freezeCustomerAccount", method = RequestMethod.POST)
@@ -547,7 +605,8 @@ public class heartController extends BaseApi {
 
     /**
      * 按身份证号查询账户余额
-     *  本地测试用
+     * 本地测试用
+     *
      * @return
      */
     @RequestMapping(value = "/getCustomerAccount", method = RequestMethod.POST)
@@ -572,6 +631,7 @@ public class heartController extends BaseApi {
     /**
      * 按身份证号解冻账户金额
      * 本地测试用
+     *
      * @return
      */
     @RequestMapping(value = "/unFreezeCustomerAccount", method = RequestMethod.POST)
@@ -597,6 +657,7 @@ public class heartController extends BaseApi {
     /**
      * 冻结后消费接口
      * 本地测试用
+     *
      * @return
      */
     @RequestMapping(value = "/freezeConsumption", method = RequestMethod.POST)
@@ -842,6 +903,7 @@ public class heartController extends BaseApi {
     /**
      * 商户账户提现申请
      * 调这个接口  已经把钱冻结了
+     *
      * @return
      */
     @RequestMapping(value = "/withdrawCash", method = RequestMethod.POST)
@@ -984,7 +1046,7 @@ public class heartController extends BaseApi {
      */
     @RequestMapping(value = "/userRepayment", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnInfo userRepayment(String orderId,BigDecimal amount) {
+    public ReturnInfo userRepayment(String orderId, BigDecimal amount) {
         ReturnInfo ri = new ReturnInfo();
         try {
             BankTradeInfo bankTradeInfo = bankTradeService.findTradeDetailByOrderNo(orderId);
@@ -1014,7 +1076,7 @@ public class heartController extends BaseApi {
                     ri.setCode(Message.SUCCESS_CODE);
                     ri.setMsg(Message.API_SUCCESS_MSG);
                     ri.setSuccess(Message.API_SUCCESS_FLAG);
-                }else {
+                } else {
                     ri.setCode(Message.FAILURE_CODE);
                     ri.setMsg(Message.FAILURE_MSG);
                     ri.setSuccess(Message.API_ERROR_FLAG);

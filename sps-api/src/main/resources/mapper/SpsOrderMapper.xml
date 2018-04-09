@@ -23,11 +23,17 @@
     <result column="sum_money" jdbcType="DECIMAL" property="sumMoney" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="loan_code" jdbcType="VARCHAR" property="loanCode" />
+    <result column="loan_start_time" jdbcType="TIMESTAMP" property="loanStartTime" />
+    <result column="loan_end_time" jdbcType="TIMESTAMP" property="loanEndTime" />
+    <result column="formality_rate" jdbcType="DOUBLE" property="formalityRate" />
+    <result column="service_charge" jdbcType="DECIMAL" property="serviceCharge" />
+    <result column="loan_balance" jdbcType="DECIMAL" property="loanBalance" />
   </resultMap>
   <sql id="Base_Column_List">
     o_id, orderid, shopkeeper, shopkeepername, selfemployed, selfname, scale, createtime, 
     flag, payment, isdelete, remark, money, servicescale, servicemoney, phone, address, 
-    modifytime, sum_money, name, unit
+    modifytime, sum_money, name, unit,loan_code,loan_start_time,loan_end_time,formality_rate,service_charge,loan_balance
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -46,7 +52,7 @@
       payment, isdelete, remark, 
       money, servicescale, servicemoney, 
       phone, address, modifytime, 
-      sum_money, name, unit
+      sum_money, name, unit,loan_code,loan_start_time,loan_end_time,formality_rate,service_charge,loan_balance
       )
     values (#{oId,jdbcType=INTEGER}, #{orderid,jdbcType=VARCHAR}, #{shopkeeper,jdbcType=VARCHAR}, 
       #{shopkeepername,jdbcType=VARCHAR}, #{selfemployed,jdbcType=VARCHAR}, #{selfname,jdbcType=VARCHAR}, 
@@ -55,6 +61,8 @@
       #{money,jdbcType=DECIMAL}, #{servicescale,jdbcType=DOUBLE}, #{servicemoney,jdbcType=DECIMAL}, 
       #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}, 
       #{sumMoney,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}
+      , #{loanCode,jdbcType=VARCHAR}, #{loanStartTime,jdbcType=TIMESTAMP}, #{loanEndTime,jdbcType=TIMESTAMP}, #{formalityRate,jdbcType=DOUBLE}
+      , #{serviceCharge,jdbcType=DECIMAL}, #{loanBalance,jdbcType=DECIMAL}
       )
   </insert>
   <insert id="insertSelective" parameterType="SpsOrder">

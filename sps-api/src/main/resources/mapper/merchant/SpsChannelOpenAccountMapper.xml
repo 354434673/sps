@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sqlmap.SpsChannelOpenAccount">
+  <resultMap id="BaseResultMap" type="SpsChannelOpenAccount">
+    <id column="open_id" jdbcType="INTEGER" property="openId" />
+    <result column="open_admin_num" jdbcType="VARCHAR" property="openAdminNum" />
+    <result column="open_admin_phone" jdbcType="VARCHAR" property="openAdminPhone" />
+    <result column="open_start_time" jdbcType="TIMESTAMP" property="openStartTime" />
+    <result column="open_end_time" jdbcType="TIMESTAMP" property="openEndTime" />
+    <result column="open_apply_product" jdbcType="VARCHAR" property="openApplyProduct" />
+    <result column="open_sell_rate" jdbcType="INTEGER" property="openSellRate" />
+    <result column="channel_num" jdbcType="VARCHAR" property="channelNum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    open_id, open_admin_num, open_admin_phone, open_start_time, open_end_time, open_apply_product, 
+    open_sell_rate, channel_num
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sps_channel_open_account
+    where open_id = #{openId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sps_channel_open_account
+    where open_id = #{openId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="SpsChannelOpenAccount">
+    insert into sps_channel_open_account (open_id, open_admin_num, open_admin_phone, 
+      open_start_time, open_end_time, open_apply_product, 
+      open_sell_rate, channel_num)
+    values (#{openId,jdbcType=INTEGER}, #{openAdminNum,jdbcType=VARCHAR}, #{openAdminPhone,jdbcType=VARCHAR}, 
+      #{openStartTime,jdbcType=TIMESTAMP}, #{openEndTime,jdbcType=TIMESTAMP}, #{openApplyProduct,jdbcType=VARCHAR}, 
+      #{openSellRate,jdbcType=INTEGER}, #{channelNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="SpsChannelOpenAccount">
+    insert into sps_channel_open_account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="openAdminNum != null">
+        open_admin_num,
+      </if>
+      <if test="openAdminPhone != null">
+        open_admin_phone,
+      </if>
+      <if test="openStartTime != null">
+        open_start_time,
+      </if>
+      <if test="openEndTime != null">
+        open_end_time,
+      </if>
+      <if test="openApplyProduct != null">
+        open_apply_product,
+      </if>
+      <if test="openSellRate != null">
+        open_sell_rate,
+      </if>
+      <if test="channelNum != null">
+        channel_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="openId != null">
+        #{openId,jdbcType=INTEGER},
+      </if>
+      <if test="openAdminNum != null">
+        #{openAdminNum,jdbcType=VARCHAR},
+      </if>
+      <if test="openAdminPhone != null">
+        #{openAdminPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="openStartTime != null">
+        #{openStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openEndTime != null">
+        #{openEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openApplyProduct != null">
+        #{openApplyProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="openSellRate != null">
+        #{openSellRate,jdbcType=INTEGER},
+      </if>
+      <if test="channelNum != null">
+        #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="SpsChannelOpenAccount">
+    update sps_channel_open_account
+    <set>
+      <if test="openAdminNum != null">
+        open_admin_num = #{openAdminNum,jdbcType=VARCHAR},
+      </if>
+      <if test="openAdminPhone != null">
+        open_admin_phone = #{openAdminPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="openStartTime != null">
+        open_start_time = #{openStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openEndTime != null">
+        open_end_time = #{openEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openApplyProduct != null">
+        open_apply_product = #{openApplyProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="openSellRate != null">
+        open_sell_rate = #{openSellRate,jdbcType=INTEGER},
+      </if>
+      <if test="channelNum != null">
+        channel_num = #{channelNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where open_id = #{openId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SpsChannelOpenAccount">
+    update sps_channel_open_account
+    set open_admin_num = #{openAdminNum,jdbcType=VARCHAR},
+      open_admin_phone = #{openAdminPhone,jdbcType=VARCHAR},
+      open_start_time = #{openStartTime,jdbcType=TIMESTAMP},
+      open_end_time = #{openEndTime,jdbcType=TIMESTAMP},
+      open_apply_product = #{openApplyProduct,jdbcType=VARCHAR},
+      open_sell_rate = #{openSellRate,jdbcType=INTEGER},
+      channel_num = #{channelNum,jdbcType=VARCHAR}
+    where open_id = #{openId,jdbcType=INTEGER}
+  </update>
+  <select id="findByNum" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sps_channel_open_account
+    where channel_num = #{channelNum,jdbcType=VARCHAR}
+  </select>
+</mapper>

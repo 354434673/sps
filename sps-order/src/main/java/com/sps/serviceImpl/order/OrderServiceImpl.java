@@ -559,14 +559,13 @@ public class OrderServiceImpl implements OrderService {
                 if ("17".equals(flag)) {
                     //退货接口
                     Order order = orderMapper.selectByOrderId(orderid);
-
                     Map map = new HashMap<>();
                     //如果全款退货 金额传0
-                    if (order.getScale() != 100) {
+                  /*  if (order.getScale() != 100) {
                         map.put("amount", order.getShopPayMoney());
                     } else {
                         map.put("amount", 0);
-                    }
+                    }*/
                     map.put("application", "dianfu");
                     map.put("certNo", order.getIdCard());
                     map.put("businessId", order.getCustomerId());
