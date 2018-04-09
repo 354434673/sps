@@ -21,6 +21,10 @@
     <result column="standby2" jdbcType="VARCHAR" property="standby2" />
     <result column="user_mark" jdbcType="INTEGER" property="userMark" />
     <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="b_card_type" jdbcType="VARCHAR" property="bCardType" />
+    <result column="b_bank_code" jdbcType="VARCHAR" property="bBankCode" />
+    <result column="b_bank_pic" jdbcType="VARCHAR" property="bBankPic" />
+    <result column="b_bank_name" jdbcType="VARCHAR" property="bBankName" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="SpsBank">
     <result column="b_card_type" jdbcType="VARBINARY" property="bCardType" />
@@ -28,7 +32,7 @@
   <sql id="Base_Column_List">
     id, b_name, b_accounts, b_identity, b_phone, b_createtime, b_updatetime, b_bank, 
     b_state, b_remark, b_user_id, b_user_name, channl_num, b_available_balance, b_trans_password, 
-    b_password_state, standby2, user_mark, flag
+    b_password_state, standby2, user_mark, flag,b_bank_name,b_bank_pic,b_bank_code,b_card_type
   </sql>
   <sql id="Blob_Column_List">
     b_card_type

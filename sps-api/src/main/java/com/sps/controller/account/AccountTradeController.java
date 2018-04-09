@@ -30,14 +30,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2018-03-09.
- *
- * @projectName ${project_name}.
- * @Package ${package_name}.
- * @ClassName ${type_name}.
- * @Description description  the function of the class
+ * @Description APP商户交易记录
  * @Author 刘彩玲
- * @createDate ${date}$ ${timme}$
+ * @createDate
  */
 @RestController
 @RequestMapping("/api/accountTrade")

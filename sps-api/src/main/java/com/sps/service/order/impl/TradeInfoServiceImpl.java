@@ -14,8 +14,8 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     private SpsBankTradeInfoMapper bankTradeInfoMapper;
 
     @Override
-    public void saveOrUpdate(SpsBankTradeInfo order) {
-        bankTradeInfoMapper.insert(order);
+    public int saveOrUpdate(SpsBankTradeInfo order) {
+       return bankTradeInfoMapper.insert(order);
     }
 
     @Override
@@ -27,4 +27,11 @@ public class TradeInfoServiceImpl implements TradeInfoService {
     public int updateBySerialNumber(SpsBankTradeInfo bankTradeInfo) {
         return bankTradeInfoMapper.updateBySerialNumber(bankTradeInfo);
     }
+
+    @Override
+    public boolean insert(SpsBankTradeInfo bankTradeInfo) {
+        return bankTradeInfoMapper.insert(bankTradeInfo)>0;
+    }
+
+
 }

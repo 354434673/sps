@@ -58,6 +58,14 @@ public class SpsBankTradeInfo implements Serializable {
 
     private Integer rechargeStatus;
 
+    //银行code
+    private String bankCardType;
+    //银行名称
+    private String bankCardName;
+    //银行卡号
+    private String bankCardNumber;
+
+
 
     public Integer getRechargeStatus() {
         return rechargeStatus;
@@ -273,5 +281,29 @@ public class SpsBankTradeInfo implements Serializable {
 
     public void setSumServiceMoney(BigDecimal sumServiceMoney) {
         this.sumServiceMoney = sumServiceMoney;
+    }
+
+    public String getBankCardType() {
+        return bankCardType;
+    }
+
+    public void setBankCardType(String bankCardType) {
+        this.bankCardType = bankCardType;
+    }
+
+    public String getBankCardName() {
+        return bankCardName;
+    }
+
+    public void setBankCardName(String bankCardName) {
+        this.bankCardName = bankCardName;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
     }
 }

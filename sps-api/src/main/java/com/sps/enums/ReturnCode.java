@@ -33,6 +33,7 @@ public enum ReturnCode {
     ERROR_USER_TYPE_ERROR(1111, "用户类型参数错误"),
     ERROR_SYSTEM_ON(504,"系统维护中"),
 
+    SAFE_SYSTEM_MESSAGE(701,"非法请求，请停止当前操作"),
     EXCEPTION(100001, "系统异常"),
     SYS_DOWN(100002, "系统维护中"),
     NOMORE(100000, "正常返回");
