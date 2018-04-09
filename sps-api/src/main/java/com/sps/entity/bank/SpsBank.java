@@ -43,7 +43,16 @@ public class SpsBank  implements Serializable{
 
     private Integer flag;
 
-    private byte[] bCardType;
+    //银行卡的类型
+    private String bCardType;
+    //银行卡简称
+    private String bBankCode;
+    //银行log
+    private String  bBankPic;
+    //银行卡名称
+    private String bBankName;
+
+
 
     public Integer getId() {
         return id;
@@ -197,11 +206,35 @@ public class SpsBank  implements Serializable{
         this.flag = flag;
     }
 
-    public byte[] getbCardType() {
+    public String getbCardType() {
         return bCardType;
     }
 
-    public void setbCardType(byte[] bCardType) {
+    public void setbCardType(String bCardType) {
         this.bCardType = bCardType;
+    }
+
+    public String getbBankCode() {
+        return bBankCode;
+    }
+
+    public void setbBankCode(String bBankCode) {
+        this.bBankCode = bBankCode;
+    }
+
+    public String getbBankPic() {
+        return bBankPic;
+    }
+
+    public void setbBankPic(String bBankPic) {
+        this.bBankPic = bBankPic;
+    }
+
+    public String getbBankName() {
+        return bBankName;
+    }
+
+    public void setbBankName(String bBankName) {
+        this.bBankName = bBankName;
     }
 }

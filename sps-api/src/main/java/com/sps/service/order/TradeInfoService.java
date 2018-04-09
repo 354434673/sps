@@ -9,7 +9,7 @@ public interface TradeInfoService {
     /**
      * 新增或者修改
      */
-    void saveOrUpdate(SpsBankTradeInfo order);
+    int saveOrUpdate(SpsBankTradeInfo order);
 
     /**
      * 根据交易流水查询交易明细
@@ -24,4 +24,11 @@ public interface TradeInfoService {
      * @return
      */
     int updateBySerialNumber(SpsBankTradeInfo bankTradeInfo);
+
+    /**
+     * 根据实体插入数据
+     * @param bankTradeInfo
+     * @return
+     */
+    boolean insert(SpsBankTradeInfo bankTradeInfo);
 }

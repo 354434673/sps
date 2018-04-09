@@ -18,4 +18,8 @@ public class SpsBankTradeInfoMapper extends ApiBaseDaoImpl<SpsBankTradeInfo, Int
     public int updateBySerialNumber(SpsBankTradeInfo bankTradeInfo) {
         return super.updateByValue(getStatement("updateBySerialNumber"), bankTradeInfo);
     }
+
+    public int insert(SpsBankTradeInfo bankTradeInfo) {
+        return super.insert(bankTradeInfo);
+    }
 }

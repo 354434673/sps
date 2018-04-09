@@ -28,14 +28,17 @@
     <result column="service_money" jdbcType="DECIMAL" property="serviceMoney" />
     <result column="sum_service_money" jdbcType="DECIMAL" property="sumServiceMoney" />
     <result column="goods_amout" jdbcType="DECIMAL" property="goodsAmout" />
-    <result column="recharge_status" jdbcType="INTEGER" property="rechargeStatus" />
+    <result column="bank_card_type" jdbcType="VARCHAR" property="bankCardType" />
+    <result column="bank_card_name" jdbcType="VARCHAR" property="bankCardName" />
+    <result column="bank_card_number" jdbcType="VARCHAR" property="bankCardNumber" />
+
   </resultMap>
   <sql id="Base_Column_List">
     id, bt_trade_name, bt_trade_serial_num, bt_identity, bt_application_start_date, bt_application_stop_date, 
     bt_audit_date, bt_payment_date, bt_trade_type, bt_income_type, bt_expenditure_type, 
     bt_trade_Before_balanc, bt_trade_after_balanc, bt_trade_amount, bt_trade_status, 
     bt_user_id, standby1, standby2, standby3, bt_trade_no, orderid, first_money, shop_pay_money, 
-    service_money, sum_service_money,goods_amout,recharge_status
+    service_money, sum_service_money,goods_amout,recharge_status,bank_card_type,bank_card_name,bank_card_number
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -56,16 +59,18 @@
       bt_user_id, standby1, standby2, 
       standby3, bt_trade_no, orderid, 
       first_money, shop_pay_money, service_money, 
-      sum_service_money,goods_amout,recharge_status)
+      sum_service_money,goods_amout,recharge_status,bank_card_type,bank_card_name,bank_card_number)
     values (#{id,jdbcType=INTEGER}, #{btTradeName,jdbcType=VARCHAR}, #{btTradeSerialNum,jdbcType=VARCHAR}, 
-      #{btIdentity,jdbcType=VARCHAR}, #{btApplicationStartDate,jdbcType=TIMESTAMP}, #{btApplicationStopDate,jdbcType=TIMESTAMP}, 
+      #{btIdentity,jdbcType=VARCHAR}, NOW(), #{btApplicationStopDate,jdbcType=TIMESTAMP},
       #{btAuditDate,jdbcType=TIMESTAMP}, #{btPaymentDate,jdbcType=TIMESTAMP}, #{btTradeType,jdbcType=VARCHAR}, 
       #{btIncomeType,jdbcType=VARCHAR}, #{btExpenditureType,jdbcType=VARCHAR}, #{btTradeBeforeBalanc,jdbcType=DECIMAL}, 
       #{btTradeAfterBalanc,jdbcType=DECIMAL}, #{btTradeAmount,jdbcType=DECIMAL}, #{btTradeStatus,jdbcType=VARCHAR}, 
       #{btUserId,jdbcType=VARCHAR}, #{standby1,jdbcType=VARCHAR}, #{standby2,jdbcType=VARCHAR}, 
       #{standby3,jdbcType=VARCHAR}, #{btTradeNo,jdbcType=VARCHAR}, #{orderid,jdbcType=VARCHAR}, 
       #{firstMoney,jdbcType=DECIMAL}, #{shopPayMoney,jdbcType=DECIMAL}, #{serviceMoney,jdbcType=DECIMAL}, 
-      #{sumServiceMoney,jdbcType=DECIMAL},#{sumServiceMoney,jdbcType=DECIMAL},#{rechargeStatus,jdbcType=INTEGER})
+      #{sumServiceMoney,jdbcType=DECIMAL},#{sumServiceMoney,jdbcType=DECIMAL},#{rechargeStatus,jdbcType=INTEGER},
+      #{bankCardType,jdbcType=VARCHAR},#{bankCardName,jdbcType=VARCHAR},#{bankCardNumber,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="SpsBankTradeInfo">
     insert into sps_bank_trade_info
