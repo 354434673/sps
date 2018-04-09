@@ -1,13 +1,15 @@
 package com.sps.controller.heart;
 
+import com.alibaba.druid.support.logging.Log;
+import com.alibaba.druid.support.logging.LogFactory;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.juzifenqi.core.exception.BusinessException;
 import com.sps.common.*;
+import com.sps.controller.BaseApi;
 import com.sps.entity.account.BankTradeInfo;
 import com.sps.entity.bank.SpsBank;
-import com.sps.entity.order.Order;
 import com.sps.entity.order.SpsBankTradeInfo;
 import com.sps.entity.order.SpsOrder;
 import com.sps.entity.order.SpsOrderLog;
@@ -56,7 +58,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/api/heart")
-public class heartController {
+public class heartController extends BaseApi {
 
     @Resource
     private BankTradeService bankTradeService;
@@ -101,12 +103,12 @@ public class heartController {
     private static String privateKey = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCp-nKIvuXjzy3KKBLFUsis4xiqEwIQaaFxngLEAdSiLXaM6FEPdIuw3kGPP3t-VA4FB83Lcb7KUVfbQZXjJrMTUD-P68_vieFXrPoH-N5xoGAeBw_UEJw1yalBWhSyPhC5xvOuvKn_rKOUiQP7ftGs1TEiCG6AYyDKcj8_R60axL0DzDuVIEL9I33ZNT2KhnJGxxI21v_2XKhJBb2lqd3NVm9pMMrKSGnN1W16sQC76U-8jTw6JLSYs0CoktaaubQcjvQmVn7UyMyyEXXVp42TVqDzzwvuvY1GraK8f1GplJgUmX2mZrJwre0YgG00piPqsag9XM3exRTefn1MdHaTAgMBAAECggEASpMPxwEB-WW_MC9OtPXyBzAHdS6rvCmr5B4wFnC7KoAJwB542fAHDY0ldESk2LLmB7z5xCVeUINJqW9n5GXpMTMHAAy0iOKUVBQXCoJcjbuQD_yHLEIxVsPoFzz_UYg7bFZmOSaa6wqCJjvK3H8yXMKYMNdEK93R2CAxsYCv6Mrp9pSCgdRa-npPgM7LcfieeLzvYBXk3tMccOOqZJ10kn3_hW2j-rlk3GIiXzIst5mPxq2yFTawjhAXlPKFX_9f7Z3rzz-9TCJGuxKjivCLS8vJJlGdPc8HnVs9zwgLr2X5Ed-MzL6QtqX3Zin2_94XdvzVmqNHsYagemF7ujbRaQKBgQDpSH4wJRzPtGqxxMb7MxMvr7z3yOdV7jSmpcnn0xh22BJhj9UVQt3guLQpuUKrd2vcCHvf1kfThQiNY4BhSCRdp-HTN-WACiIsXezSQTelkDO1fpe8AKlr9aKRSCvfkbd_dQfnVRICwKiniLpWWfnOZaMV7sBWFxcPeYW1Cs9EzQKBgQC6h9R6A9aR5UATbkW_EBIqFakHO8WdHZG0lmKZJKrxxZCtQs8TcqixpgPr0o5psalJ_2U7tNmvWDMWBGxoGvT_KGbr39pKiLvYJmco69LLYn3FTkiUcmqooJZw2iNKI75tu4LRvtJhc4riiWC9ffhQGMwurrmCBUngGRIMl8Wo3wKBgEnC5DNw6KU8FKhU4d23jo97b7KhUZQ4F2nB7g9hDdE2DMnQYr2wQNu3SzAOJeh1gCM4g4KJDHjzDXs3RPZ9ixIZ7SuN9wD_M0L4B9OLT38IE3GFr5CAXRGHv3lUaprsRisE5BTfLyyzoiAm-VQoavY56NEchrAx6Na5w-80lcjZAoGAfFpPeaSTaKJIDGwojU6-fVYBYLQlczAiUh0r0GLUn-gRIqD2gkWfVweRd6bgkHADpzRfneVcdnw7WoNKbkECchTSQI_07FmpuVkozuwglLytkls1IdoBZzff845JloSr0GYAuaoYgSVRQuNJHisb3vIZNUoAnEDAVmkAUmrgOEsCgYEAkyMSy7AiFw2KCnMYC49ZitSg5Z0s0HNLScAB-Zh_g0Kr0YRvLbvRugHiIhFhTk7wj2FfYkSLNDbbVJEh19oW35o0oUutSdqPiZ_-sVxSJkgVs7Sd9Z79-LYk2v6Xsm8J0HEUffdpbhFmEPRH371cEM_YpCVMsGG1TiLfwaiq19U\",\"publicKey\":\"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqfpyiL7l488tyigSxVLIrOMYqhMCEGmhcZ4CxAHUoi12jOhRD3SLsN5Bjz97flQOBQfNy3G-ylFX20GV4yazE1A_j-vP74nhV6z6B_jecaBgHgcP1BCcNcmpQVoUsj4Qucbzrryp_6yjlIkD-37RrNUxIghugGMgynI_P0etGsS9A8w7lSBC_SN92TU9ioZyRscSNtb_9lyoSQW9pandzVZvaTDKykhpzdVterEAu-lPvI08OiS0mLNAqJLWmrm0HI70JlZ-1MjMshF11aeNk1ag888L7r2NRq2ivH9RqZSYFJl9pmaycK3tGIBtNKYj6rGoPVzN3sUU3n59THR2kwIDAQAB";
 
     //调用用户还款计划
-    private static String userPayPlan = "http://dev.app.chezhubaitiao.com/m/repay/list/byuser";
+    private static String userPayPlan = "http://dev.app.chezhubaitiao.com/api/plan/list/repayments";
     @Resource
     private OrderLogService orderLogService;
     @Resource
     private TradeInfoService tradeInfoService;
-
+    private static  final Log log = LogFactory.getLog(heartController.class);
 
     /**
      * 订单支付
@@ -1308,23 +1310,27 @@ public class heartController {
      * @return
      */
     @RequestMapping(value = "/userPayPlan", method = RequestMethod.POST)
-    @ResponseBody
-    public String  getUserPayPlan(String currentPage, String pageSize, String state) {
-        String jsonResult=null;
+    public JsonResult  getUserPayPlan(String certNo, int currentPage, int indays,int pageSize ,int state) {
+        log.info("start--获取用户还款计划 ，身份证号码"+certNo);
         try {
             Map resultMap = new HashMap<>();
+            resultMap.put("appChannel", "dianfu");
+            resultMap.put("certNo", certNo);
             resultMap.put("currentPage", currentPage);
+            resultMap.put("indays", indays);
             resultMap.put(" pageSize ", pageSize);
-            resultMap.put("orderId", state);
-            jsonResult = HttpClientUtils.post(userPayPlan, resultMap);
-            System.out.println(jsonResult);
-            if (jsonResult != null) {
-                return  jsonResult;
+            resultMap.put("state", state);
+            String  jsonResult = HttpClientUtils.post(userPayPlan, resultMap);
+            JSONObject job = JSON.parseObject(jsonResult);
+            log.info("end--获取用户还款计划 ，身份证号码"+certNo);
+            if(!"100000".equals(job.getString("code"))){
+                return  returnFaild(job.getString("msg"));
             }
+            return returnSuccess(job.getString("result"));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info("end--获取用户还款计划异常 "+e);
+            return  returnFaild();
         }
-        return jsonResult;
     }
 
 }
