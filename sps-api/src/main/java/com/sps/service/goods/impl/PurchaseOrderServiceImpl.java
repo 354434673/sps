@@ -3,6 +3,8 @@ package com.sps.service.goods.impl;
 import com.sps.common.NumberUtil;
 import com.sps.common.OrderCodeCreateUtil;
 import com.sps.dao.goods.*;
+import com.sps.dao.merchant.SpsChannelOpenAccountMapper;
+import com.sps.dao.order.SpsBankTradeInfoMapper;
 import com.sps.dao.order.SpsOrderGoodsMapper;
 import com.sps.dao.order.SpsOrderLogMapper;
 import com.sps.dao.order.SpsOrderMapper;
@@ -11,6 +13,8 @@ import com.sps.entity.goods.SpsGoodShopSku;
 import com.sps.entity.goods.SpsGoods;
 import com.sps.entity.goods.SpsGoodsAlbum;
 import com.sps.entity.goods.SpsPurchaseOrder;
+import com.sps.entity.merchant.SpsChannelOpenAccount;
+import com.sps.entity.order.SpsBankTradeInfo;
 import com.sps.entity.order.SpsOrder;
 import com.sps.entity.order.SpsOrderGoods;
 import com.sps.entity.order.SpsOrderLog;
@@ -24,10 +28,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
@@ -45,6 +46,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     private SpsShopkeeperCompanyDao spsShopkeeperCompanyDao;
     @Resource
     private SpsOrderLogMapper spsOrderLogMapper;
+    @Resource
+    private SpsChannelOpenAccountMapper spsChannelOpenAccountMapper;
+
+    @Resource
+    private SpsBankTradeInfoMapper spsBankTradeInfoMapper;
 
 
     @Override
@@ -144,6 +150,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                     spsOrder.setShopkeeper(shopkeeper.getShopkeeperDefaultChannelNum());
                     spsOrder.setShopkeepername(shopkeeper.getShopkeeperDefaultChannelName());
                     spsOrder.setSelfemployed(shopkeeper.getShopkeeperUsername());
+                    //查询核心商户设置的服务费率
+                    SpsChannelOpenAccount openAccount= spsChannelOpenAccountMapper.findByNum(shopkeeper.getShopkeeperDefaultChannelNum());
+                    Double sumMoney = NumberUtil.add(order.get(0).getPayment().doubleValue(), order.get(0).getShopPayMoney().doubleValue());
                     spsOrder.setUnit("元");
                     spsOrder.setFlag(1);
                     spsOrder.setAddress(order.get(0).getAddress());
@@ -151,16 +160,23 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                     spsOrder.setName(order.get(0).getName());
                     spsOrder.setOrderid(orderCode);
                     spsOrder.setPayment(order.get(0).getPayment());
-                    spsOrder.setServicemoney(order.get(0).getServiceMoney().doubleValue());
+                    //核心商户给供应商的服务费率
+                    spsOrder.setServicescale(NumberUtil.div(Double.valueOf(openAccount.getOpenSellRate()),10));
+                    //核心商户给供应商的服务费
+                    Double serviceMoney = NumberUtil.mul(sumMoney, NumberUtil.div(Double.valueOf(openAccount.getOpenSellRate()), 1000));
+                    spsOrder.setServicemoney(serviceMoney);
                     spsOrder.setIsdelete(0);
                     spsOrder.setShopPayMoney(order.get(0).getShopPayMoney());
-                    spsOrder.setServicescale(0.7);
                     spsOrder.setCreatetime(new Date());
                     spsOrder.setRemark(order.get(0).getRemark());
                     spsOrder.setSelfname(order.get(0).getSelfName());
                     spsOrder.setScale(order.get(0).getScale());
-                    spsOrder.setMoney(NumberUtil.add(order.get(0).getPayment().doubleValue(), NumberUtil.add(order.get(0).getServiceMoney().doubleValue(), order.get(0).getShopPayMoney().doubleValue())));
-                    spsOrder.setSumMoney(BigDecimal.valueOf(NumberUtil.add(order.get(0).getPayment().doubleValue(), order.get(0).getShopPayMoney().doubleValue())));
+                    spsOrder.setMoney(NumberUtil.add(order.get(0).getPayment().doubleValue(), NumberUtil.add(serviceMoney, order.get(0).getShopPayMoney().doubleValue())));
+                    spsOrder.setSumMoney(BigDecimal.valueOf(sumMoney));
+                    //app算好的每日服务费
+                    spsOrder.setServiceCharge(BigDecimal.valueOf(spsOrder.getServicemoney()));
+                    //每日利息 千分之一
+                    spsOrder.setFormalityRate(0.001);
                     spsOrderMapper.insert(spsOrder);
                     //插入日志
                     SpsOrderLog log = new SpsOrderLog();
@@ -170,6 +186,15 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                     log.setLogOrderNo(orderCode);
                     log.setLogDes("订单编号为：" + orderCode + "的订单创建成功,订单商品信息： " + sb.toString());
                     spsOrderLogMapper.insert(log);
+                    //插入交易记录
+                    SpsBankTradeInfo bankTradeInfo = new SpsBankTradeInfo();
+                    bankTradeInfo.setBtTradeName(shopkeeper.getShopkeeperDefaultChannelNum());
+                    bankTradeInfo.setBtTradeSerialNum(UUID.randomUUID().toString().replaceAll("-", ""));
+                    bankTradeInfo.setBtTradeType("1");
+                    bankTradeInfo.setFirstMoney(order.get(0).getPayment());
+                    bankTradeInfo.setShopPayMoney(order.get(0).getShopPayMoney());
+                    bankTradeInfo.setBtApplicationStartDate(new Date());
+                    spsBankTradeInfoMapper.insert(bankTradeInfo);
                     map.put("orderCode", orderCode);
                 } else {
                     map.put("flag", 6);
@@ -222,6 +247,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
                             }
                         }
                     }
+
                     HashMap<String, Object> data = new HashMap<String, Object>();//封装对象
                     SpsShopkeeperCompany company = spsShopkeeperCompanyDao.queryCompanyJoin(order.get(0).getCustomerId());
                     data.put("companyShopName", company.getCompanyShopName());

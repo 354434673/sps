@@ -7,6 +7,13 @@ import java.util.List;
 
 public class SpsOrder implements Serializable {
 
+
+    private String loanCode;
+    private String loanStartTime;
+    private String loanEndTime;
+    private Double formalityRate;
+    private BigDecimal serviceCharge;
+    private BigDecimal loanBalance;
     private Integer sumCount;
     private String url;
     private String days;
@@ -62,6 +69,54 @@ public class SpsOrder implements Serializable {
 
     private List<SpsOrderGoods>  orderGoodsList;
 
+
+    public String getLoanCode() {
+        return loanCode;
+    }
+
+    public void setLoanCode(String loanCode) {
+        this.loanCode = loanCode;
+    }
+
+    public String getLoanStartTime() {
+        return loanStartTime;
+    }
+
+    public void setLoanStartTime(String loanStartTime) {
+        this.loanStartTime = loanStartTime;
+    }
+
+    public String getLoanEndTime() {
+        return loanEndTime;
+    }
+
+    public void setLoanEndTime(String loanEndTime) {
+        this.loanEndTime = loanEndTime;
+    }
+
+    public Double getFormalityRate() {
+        return formalityRate;
+    }
+
+    public void setFormalityRate(Double formalityRate) {
+        this.formalityRate = formalityRate;
+    }
+
+    public BigDecimal getServiceCharge() {
+        return serviceCharge;
+    }
+
+    public void setServiceCharge(BigDecimal serviceCharge) {
+        this.serviceCharge = serviceCharge;
+    }
+
+    public BigDecimal getLoanBalance() {
+        return loanBalance;
+    }
+
+    public void setLoanBalance(BigDecimal loanBalance) {
+        this.loanBalance = loanBalance;
+    }
 
     public Date getRepayDate() {
         return repayDate;
