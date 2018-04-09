@@ -3,6 +3,7 @@ package com.sps.serviceImpl.merchant.write;
 import java.util.Date;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -47,22 +48,10 @@ public class ChannelBankTransWriteServiceImpl implements ChannelBankTransWriteSe
 	}
 
 	@Override
-	public HashMap<String,Object> saveBankTansInfos(SpsChannelBankTrans bankTransInfo, String userName) {
-		String num = openAccount.selectByOpenAdminNum(userName);
-        bankTransInfo.setStartTime(new Date());
-        bankTransInfo.setChannlNum(num);
-		HashMap<String, Object> map = new HashMap<>();
-		int m = bankTrans.insertBankTrans(bankTransInfo);
-		if(m >0){
-			SpsChannelBankTrans spsChannelBankTrans1 = bankTransReadMapper.selectByRequestNo(bankTransInfo.getSerialSh());
-			map.put("flag",true);
-			map.put("spsChannelBankTrans1",spsChannelBankTrans1);
-			return  map;
-		}
-		map.put("flag",false);
-		map.put("spsChannelBankTrans1",null);
-		return  map;
-
+	public Boolean saveBankTansInfos(SpsChannelBankTrans spsChannelBankTrans) {
+		spsChannelBankTrans.setStartTime(new Date());
+		int m = bankTrans.insertBankTrans(spsChannelBankTrans);
+		return m>0;
 	}
 
 	@Override

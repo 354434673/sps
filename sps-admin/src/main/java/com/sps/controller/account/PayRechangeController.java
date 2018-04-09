@@ -89,7 +89,7 @@ public class PayRechangeController {
         Logger.info("根据用户名获取 盐"+"   findSalt"+"开始" +salt);
         String pass = Md5Util.getMd5(tradePwd, salt);
         if (pass.equals(pwd)) {
-          //  SpsUser user = userService.findByUserName(userName);
+            //  SpsUser user = userService.findByUserName(userName);
             //从当前登录用户中获取用户银行卡信息
             Logger.info("根据用户名获取银行卡信息"+"   getBankInfoByUserName"+"开始" +userName);
             SpsChannelBank bankInfo = bankReadService.getBankInfoByUserName(userName);
@@ -122,7 +122,8 @@ public class PayRechangeController {
                     if ("S".equals(status)) {
                         Logger.info("返回成功 组装业务逻辑开始" );
                         SpsChannelBankTrade bankTradeInfo = new SpsChannelBankTrade();
-                        String uuid = UUID.randomUUID().toString().replaceAll("-", "").toLowerCase();
+                        bankTradeInfo.setTradeNo(serialNumber);
+                        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
                         bankTradeInfo.setIdentity(bankInfo.getIdentity());
                         bankTradeInfo.setApplicationStartDate(new Date());
                         bankTradeInfo.setTradeSerialNum(uuid);
@@ -136,6 +137,8 @@ public class PayRechangeController {
                         bankTradeInfo.setAuditDate(new Date());
                         bankTradeInfo.setTradeBeforeBalanc(bankInfo.getAvailableBalance());
                         bankTradeInfo.setTradeName(bankInfo.getChannlNum());
+                        bankTradeInfo.setStandby1("充值");
+
                         Logger.info("封装一条交易记录" );
 
                         /**根据身份证
@@ -143,24 +146,25 @@ public class PayRechangeController {
                          */
                         Map map = new HashMap<>();
                         map.put("application", "dianfu");
-                        resultMap.put("businessId", bankInfo.getChannlNum());
+                        map.put("businessId", bankInfo.getChannlNum());
                         Logger.info("根据身份证去核心查询个人资金账户余额 开始" );
                         //发送请求查询个人资金账户余额
                         String jsonRes = HttpClientUtils.post(getMerchantAccount, map);
                         Logger.info("根据身份证去核心查询个人资金账户余额 结束" );
-                        System.out.println(jsonRes);
+                        bankTradeInfo.setRechargeStatus(2);
+                        //银行卡充值
+                        bankTradeInfo.setIncomeType("2");
                         String validAmount;
                         if (jsonRes != null) {
                             if ("000000".equals(code)) {
                                 JSONObject obj = JSONObject.parseObject(jsonRes);
                                 validAmount = obj.getJSONObject("result").getString("validAmount");
                                 //更新交易前余额
-                                bankTradeInfo.setTradeBeforeBalanc(new BigDecimal(validAmount).subtract(new BigDecimal(withdrawAmt)));
+                                bankTradeInfo.setTradeBeforeBalanc(new BigDecimal(validAmount));
                             }
                         }
-                        bankTradeInfo.setTradeNo(serialNumber);
                         //更新绑卡基本信息中的可用余额
-                        Boolean flag = bankTradeWriteService.saveBankRechangeTradeInfo(bankTradeInfo);
+                        Boolean flag = bankTradeWriteService.saveBankRechangeTradeInfo(userName,bankTradeInfo);
                         result.setCode(Message.SUCCESS_CODE);
                         result.setBody(serialNumber);
                         result.setMsg(flag ? "成功" : "保存失败");
@@ -203,7 +207,7 @@ public class PayRechangeController {
                     String code = job.getString("code");
                     if ("100000".equals(code)) {
                         //去核心查询个人资金账户余额
-                       // SpsChannelBankTrade bankTradeInfo = new SpsChannelBankTrade();
+                        // SpsChannelBankTrade bankTradeInfo = new SpsChannelBankTrade();
                         Map map = new HashMap<>();
                         map.put("application", "dianfu");
                         resultMap.put("businessId", spsBankTradeInfo.getChannel());

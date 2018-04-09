@@ -22,6 +22,7 @@
 	<result column="standby2" property="standby2" jdbcType="VARCHAR" />
 	<result column="bt_trade_no" property="tradeNo" jdbcType="VARCHAR" />
 	<result column="orderid" property="orderId" jdbcType="VARCHAR" />
+	<result column="recharge_status" property="rechargeStatus" jdbcType="INTEGER" />
 	<association property="cahnnelBank" javaType="org.sps.entity.merchant.SpsChannelBank">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="b_name" property="name" jdbcType="VARCHAR" />
@@ -56,6 +57,7 @@
 		<result column="standby2" property="standby2" jdbcType="VARCHAR" />
 		<result column="bt_trade_no" property="tradeNo" jdbcType="VARCHAR" />
 		<result column="orderid" property="orderId" jdbcType="VARCHAR" />
+		<result column="recharge_status" property="rechargeStatus" jdbcType="INTEGER" />
 	<association property="cahnnelBank" javaType="org.sps.entity.merchant.SpsChannelBank">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="channl_num" property="channlNum" jdbcType="VARCHAR" />
@@ -91,7 +93,8 @@
 	bt.bt_trade_status,
 	bt.orderid,
 	bt.bt_trade_no,
-	bt.orderid
+	bt.orderid,
+	bt.recharge_status
 	from
   </sql>
 	<sql id="join_listAudit" >
@@ -120,7 +123,8 @@
 		bt.standby1,
 		bt.standby2,
 		bt.bt_trade_no,
-		bt.orderid
+		bt.orderid,
+		bt.recharge_status
 		from
 	</sql>
 
@@ -149,6 +153,7 @@
 	</where>
 	  ORDER  BY  bt.bt_application_start_date  desc
   </select>
+
 	<select id="selectBankTradeByUsername" parameterType="String" resultMap="BaseResultMap">
 		SELECT
 		<include refid="join_list" />
@@ -159,7 +164,7 @@
 			bt.bt_user_id = b.b_user_id
 		<where>
 			<if test="tradeSerialNum != null and tradeSerialNum != '' " >
-				 bt.bt_trade_serial_num=#{tradeSerialNum}
+				bt.bt_trade_no=#{tradeSerialNum}
 			</if>
 			<if test="channelNum != null and channelNum != '' " >
 				and  b.channl_num=#{channelNum}
@@ -169,6 +174,17 @@
 
 	</select>
 
+	<select id="selectBankTradeBySeriNum" parameterType="String" resultMap="BaseResultMap">
+		SELECT
+		<include refid="join_list" />
+		sps_bank_trade_info bt
+		join
+		sps_bank  b
+		on
+		bt.bt_user_id = b.b_user_id
+		where
+		  	bt.bt_trade_serial_num=#{tradeSerialNum}
+	</select>
     <select id="selectListCashAuditByUserName" parameterType="String"  resultMap="cashAuditBashInfo">
         SELECT
           	bt.id,
@@ -356,12 +372,12 @@
 		ON
 		e.channel_num=b.channl_num
 		<where>
-			  b.channl_num=#{channelNum,jdbcType=VARCHAR}
+			  b.channl_num=#{channelNum,jdbcType=VARCHAR}  AND  bt.recharge_status=1
 			<if test="startTime != null and startTime != '' " >
-				and bt.bt_audit_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
+				and bt.bt_payment_date  <![CDATA[ >= ]]>    #{startTime,jdbcType=VARCHAR}
 			</if>
 			<if test="endTime != null and endTime != '' " >
-				and bt.bt_audit_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
+				and bt.bt_payment_date  <![CDATA[ <= ]]>    #{endTime,jdbcType=VARCHAR}
 			</if>
 			<if test="payType != null and payType != '' " >
 				and bt.bt_trade_type = #{payType,jdbcType=VARCHAR}

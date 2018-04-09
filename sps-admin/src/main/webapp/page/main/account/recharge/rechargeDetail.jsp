@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>充值成功</title>
+    <title>充值详情页</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"   content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -62,6 +62,14 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 130px;">充值状态：</label>
+            <div class="layui-input-inline">
+                <input id="state" type="text" name="state"  value=""
+                       placeholder="充值状态"
+                       autocomplete="off" class="layui-input layui-disabled"   lay-verify="none">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label" style="width: 130px;">充值时间：</label>
             <div class="layui-input-inline">
                 <input id="applyTime" type="text" name="applyTime"  value=""
@@ -69,28 +77,12 @@
                        autocomplete="off" class="layui-input layui-disabled"    lay-verify="none">
             </div>
           </div> 
-           <%--
-           <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 130px;">充值通过时间</label>
-            <div class="layui-input-inline">
-                <input id="passTime" type="text" name="identity"  value=" "
-                       placeholder="审核通过时间"
-                       autocomplete="off" class="layui-input layui-disabled"  lay-verify="none">
-            </div>
-            </div>
-             <div class="layui-form-item"> 
-            	<label class="layui-form-label" style="width: 130px;">到账时间：</label>
-           			 <div class="layui-input-inline">
-                		<input id="incomeTime" type="text" name="incomeTime"  value=""
-                       placeholder="到账时间"
-                       autocomplete="off" class="layui-input layui-disabled"   lay-verify="none">
-            		</div>
-            </div>
-            --%>
+
         </div>
        
 </div>
 <script language="JavaScript"  src="<%=request.getContextPath() %>/page/static/js/jquery-1.10.2.min.js"></script>
+
 <script type="text/javascript">
     $(function () {
  		var tradeSerialNum = getUrlParam("tradeSerialNum");
@@ -108,8 +100,16 @@
                 $('#amountBefore').val(result.tradeBeforeBalanc);
                 $('#amountAfter').val(result.tradeAfterBalanc);
                 $('#applyTime').val(dateFormate(result.applicationStartDate));
-                //$('#passTime').val(dateFormate(result.auditDate));
-                //$('#incomeTime').val(dateFormate(result.paymentDate));
+                var temp=result.rechargeStatus;
+                if(temp==0){
+                    $('#state').val("失败");
+                }
+                if(temp==1){
+                    $('#state').val("成功");
+                }
+                if( temp==2){
+                    $('#state').val("充值中");
+                }
             }
         });
     });

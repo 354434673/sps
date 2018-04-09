@@ -232,26 +232,9 @@
                                                 //跳转至详情页
                                             });
                                     window.location.href = "<%=path%>/page/main/account/bankCard/bankCardDetail.jsp";
-                                    return ;
                                 }
                             }
                         });
-
-
-
-                   /* layer.msg('短信验证码', {
-                        icon: 2,
-                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
-                    });*/
-
-                  /* var reg = new RegExp("^[0-9]{6}$");
-                    if(!reg.test(value)){
-                        layer.msg('请输入六位数字的短信验证码', {
-                            icon: 2,
-                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
-                        });
-                    }*/
-
                 }
         );
     }

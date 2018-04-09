@@ -7,6 +7,7 @@ import com.juzifenqi.core.ServiceResult;
 import com.sps.common.Result;
 import com.sps.entity.user.SpsUser;
 import com.sps.service.user.UserService;
+import com.sps.util.HttpClientUtils;
 import com.sps.util.Md5Util;
 import com.sps.util.ValidateImageCodeUtils;
 import org.apache.shiro.SecurityUtils;
@@ -38,7 +39,11 @@ import java.util.Map;
 @Controller
 @RequestMapping("/withdraw")
 public class WithdrawController {
-	@Reference(check=false,group="dianfu")
+    private static Logger logger = LoggerFactory.getLogger(WithdrawController.class);
+
+    private static String getMerchantAccount = "http://dev.app.chezhubaitiao.com/api/merchantAccount/getMerchantAccount";
+
+    @Reference(check=false,group="dianfu")
     private ChannelBankTradeWriteService bankTradeWriteService;
 	@Reference(check=false,group="dianfu")
 	private ChannelBankReadService bankReadService;
@@ -55,7 +60,6 @@ public class WithdrawController {
     private ISmsCommonService  ismsCommonService;
 
 
-    private static Logger logger = LoggerFactory.getLogger(WithdrawController.class);
     @RequestMapping("/findBankTradeList")
     @ResponseBody
      public HashMap<String, Object> findBankTradeList( Integer page,Integer limit,String applicationStartDate,String paymentDate,String tradeStatus) {
@@ -103,6 +107,21 @@ public class WithdrawController {
     public SpsChannelBank getAccount(HttpServletRequest request){
         String userName = (String)SecurityUtils.getSubject().getPrincipal();
         SpsChannelBank bankInfo = bankReadService.getBankInfoByUserName(userName);
+        //获取余额信息
+        Map resultMap = new HashMap<>();
+        resultMap.put("application", "dianfu");
+        resultMap.put("businessId", bankInfo.getChannlNum());
+        logger.info("getAccount 方法 开始调用b宝户");
+        String jsonResult = HttpClientUtils.post(getMerchantAccount, resultMap);
+        logger.info("getAccount 方法 调用宝户结束");
+        if (jsonResult != null) {
+            JSONObject object = JSONObject.parseObject(jsonResult);
+            String code = object.getString("code");
+            if ("100000".equals(code)) {
+                String validAmount = object.getJSONObject("result").getString("validAmount");
+                bankInfo.setAvailableBalance(new BigDecimal(validAmount));
+            }
+        }
         return bankInfo;
     }
 
@@ -164,21 +183,9 @@ public class WithdrawController {
         @ResponseBody
         public SpsChannelBankTrade findTradeDetail(String  tradeSerialNum) {
             Map<String, String > resultMap = new HashMap<String,String>();
-            String userName = (String)SecurityUtils.getSubject().getPrincipal();
-            SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeDetail(userName, tradeSerialNum);
+            SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeDetail(tradeSerialNum);
             return tradeDetail;
         }
-     /*   @RequestMapping("/getVerifyCode")
-        @ResponseBody
-        public Result<String> getVerifyCode(HttpServletRequest request, String phone){
-            String numricCode = ValidateImageCodeUtils.getRandNum();
-            request.getSession().setAttribute("phoneCode",numricCode);
-            Result<String> result = new Result<String>();
-            result.setBody(numricCode);
-            result.success();
-            result.setMsg("成功");
-            return result;
-    }*/
 
     /**
      * 获取短信验证码
@@ -202,7 +209,6 @@ public class WithdrawController {
     @ResponseBody
     public Result<JSONObject> getPhoneAndImgCode(){
         String userName = (String)SecurityUtils.getSubject().getPrincipal();
-       // String phone= bankReadService.findMobileByUserName(userName);
         SpsUser user = userService.findByUserName(userName);
         JSONObject body = new JSONObject();
         Result<JSONObject> result = new Result<JSONObject>(body);
@@ -217,8 +223,6 @@ public class WithdrawController {
         Result<Boolean> result = new Result<Boolean>();
         String srcImgCode = (String) request.getSession().getAttribute("imgCode");
         logger.info("srcImgCode" + srcImgCode);
-       // String srcPhoneCode = (String) request.getSession().getAttribute("phoneCode");
-       // logger.info("srcPhoneCode"+ srcPhoneCode);
         if (imgCode.equals(srcImgCode) ) {
             //调用业务层进行更新账户中的交易密码
             String userName = (String) SecurityUtils.getSubject().getPrincipal();

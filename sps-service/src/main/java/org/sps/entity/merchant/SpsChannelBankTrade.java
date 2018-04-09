@@ -72,6 +72,7 @@ public class SpsChannelBankTrade implements Serializable {
 	private SpsChannel  channel;
 	private SpsChannelEnterprise  enterprise;
 
+
 	public Integer getRechargeStatus() {
 		return rechargeStatus;
 	}

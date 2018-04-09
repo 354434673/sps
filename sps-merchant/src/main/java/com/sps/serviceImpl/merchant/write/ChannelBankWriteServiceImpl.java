@@ -65,11 +65,8 @@ public class ChannelBankWriteServiceImpl implements ChannelBankWriteService{
 	 * 保存绑卡信息
 	 */
 	@Override
-	public Boolean saveBankInfo(SpsChannelBank bankInfo,Integer userId,Integer userMark) {
-		bankInfo.setCreatetime(new Date());
-		bankInfo.setUserMark(userMark);
-		bankInfo.setState(1);
-		bankInfo.setFlag(0);
+	public Boolean saveBankInfo(SpsChannelBank bankInfo,Integer userMark) {
+
 		//查询余额信息
 		SpsChannelBalance spsChannelBalance = balanceReadMapper.selectByUserId(bankInfo.getChannlNum());
 		int m;
