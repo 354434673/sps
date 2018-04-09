@@ -40,7 +40,7 @@ public class AccountBalanceController extends BaseApi{
     //按身份证号查询账户余额
     private static String getUserAmont = "http://dev.app.chezhubaitiao.com/api/customerAccount/getCustomerAccount";
     /**
-     * 获取用户余额
+     * 获取用户余额啊
      * @param customerId
      * @return
      */
