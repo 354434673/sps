@@ -57,11 +57,18 @@ public interface SpsChannelBankTradeReadMapper {
 	SpsChannelBankTrade  selectBankTradeByUsername(@Param("channelNum") String channelNum,@Param("tradeSerialNum") String tradeSerialNum);
 
 	/**
-	 * 根据交易流水号进行查询
+	 * 充值交易流水号进行查询
 	 * @param tradeSerialNum
 	 * @return
 	 */
 	SpsChannelBankTrade  selectBankTradeBySeriNum(@Param("tradeSerialNum") String tradeSerialNum);
+
+	/**
+	 * 提现交易流水号进行查询
+	 * @param tradeSerialNum
+	 * @return
+	 */
+	SpsChannelBankTrade  selectBankTradeAuditBySeriNum(@Param("tradeSerialNum") String tradeSerialNum);
 
 
 	/**获取索索商户的提现申请记录信息

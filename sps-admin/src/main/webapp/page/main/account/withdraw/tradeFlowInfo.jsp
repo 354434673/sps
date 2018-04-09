@@ -165,15 +165,17 @@
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 var tr = obj.tr; //获得当前行 tr 的DOM对象
                 if(layEvent === 'detail'){ //查看
-                    if(typeof data.orderId==undefined ){
+                    if(data.orderId==undefined ){
                         if(data.remark=='提现'){
                             location.href = '<%=path%>/page/main/account/withdraw/withdrawDetail.jsp?tradeSerialNum='+data.auditSerialNum  ;
                         }
                         if( data.remark=='充值'){
                             location.href = '<%=path%>/page/main/account/recharge/rechargeDetail.jsp?tradeSerialNum='+data.auditSerialNum  ;
                         }
+                    }else{
+                        location.href = '<%=path%>/page/main/account/withdraw/tradeDetail.jsp?auditSerialNum='+data.auditSerialNum  ;
+
                     }
-                    location.href = '<%=path%>/page/main/account/withdraw/tradeDetail.jsp?auditSerialNum='+data.auditSerialNum  ;
                 }
             });
         });
@@ -187,10 +189,6 @@
             var year = da.getFullYear();
             var month = da.getMonth()+1;
             var date = da.getDate();
-            /*var hours= da.getHours();
-             var minutes= da.getMinutes();
-             var seconds= da.getSeconds();*/
-
             var dat =[year,month,date].join('-');
             var tad = [23,59,59].join(':');
             return [dat,tad].join(' ');

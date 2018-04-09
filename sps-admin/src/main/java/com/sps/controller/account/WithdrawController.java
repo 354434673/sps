@@ -183,7 +183,7 @@ public class WithdrawController {
         @ResponseBody
         public SpsChannelBankTrade findTradeDetail(String  tradeSerialNum) {
             Map<String, String > resultMap = new HashMap<String,String>();
-            SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeDetail(tradeSerialNum);
+            SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeAuditDetail(tradeSerialNum);
             return tradeDetail;
         }
 

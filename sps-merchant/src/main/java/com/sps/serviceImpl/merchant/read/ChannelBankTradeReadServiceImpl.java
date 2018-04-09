@@ -51,7 +51,7 @@ public class ChannelBankTradeReadServiceImpl implements ChannelBankTradeReadServ
 	}
 
 	/**
-	 * 根据登录用户名查询交易信息
+	 * 根据充值查询交易信息
 	 * @param tradeSerialNum
 	 * @return
 	 */
@@ -60,6 +60,12 @@ public class ChannelBankTradeReadServiceImpl implements ChannelBankTradeReadServ
 		SpsChannelBankTrade bankTrade = bankTradeRead.selectBankTradeBySeriNum(tradeSerialNum);
 		return bankTrade;		
 	}
+
+	@Override
+	public SpsChannelBankTrade getTradeAuditDetail(String tradeSerialNum) {
+		return bankTradeRead.selectBankTradeAuditBySeriNum(tradeSerialNum);
+	}
+
 	@Override
 	public SpsChannelBankTrade getTradeInfo(String tradeSerialNum) {
 		SpsChannelBankTrade bankTrade = bankTradeRead.selectOrderByTradeSeriNum(tradeSerialNum);

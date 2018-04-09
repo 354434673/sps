@@ -106,6 +106,7 @@ public class CashAuditServiceImpl implements CashAuditReadService {
             bankDrawAudio.setRemark(info.getStandby1());
             bankDrawAudio.setPayDate(info.getPaymentDate());
             bankDrawAudio.setPayType(info.getTradeType());
+            bankDrawAudio.setOrderId(info.getOrderId());
             listDrawAudio.add(bankDrawAudio);
         }
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
