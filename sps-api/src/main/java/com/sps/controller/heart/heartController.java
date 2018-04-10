@@ -46,8 +46,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.enterprise.inject.New;
 import java.io.*;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -56,7 +58,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/heart")
 public class heartController extends BaseApi {
 
@@ -1310,23 +1312,36 @@ public class heartController extends BaseApi {
      * @return
      */
     @RequestMapping(value = "/userPayPlan", method = RequestMethod.POST)
-    public JsonResult  getUserPayPlan(String certNo, int currentPage, int indays,int pageSize ,int state) {
+    public JsonResult  getUserPayPlan(String appChannel, String certNo, String currentPage, String indays,String pageSize ,String state) {
         log.info("start--获取用户还款计划 ，身份证号码"+certNo);
         try {
             Map resultMap = new HashMap<>();
-            resultMap.put("appChannel", "dianfu");
+            resultMap.put("appChannel", appChannel);
             resultMap.put("certNo", certNo);
             resultMap.put("currentPage", currentPage);
-            resultMap.put("indays", indays);
-            resultMap.put(" pageSize ", pageSize);
+            if(indays!=null){
+                resultMap.put("indays", indays);
+            }
+            resultMap.put("pageSize", pageSize);
             resultMap.put("state", state);
             String  jsonResult = HttpClientUtils.post(userPayPlan, resultMap);
             JSONObject job = JSON.parseObject(jsonResult);
+            JSONArray json =job.getJSONObject("result").getJSONArray("data");
+           /*if(json.size()>0){
+                for(int i=0;i<json.size();i++){
+                    JSONObject gardenJson = (JSONObject) json.get(i);
+                    for (int j=0;j<gardenJson.size();j++){
+                        if (!"orderId".equals(gardenJson.get(j))  || !"overDueDay".equals(gardenJson.get(j))  || !"repayMoney".equals(gardenJson.get(j)) || !"state".equals(gardenJson.get(j))){
+                            gardenJson.remove(j);
+                        }
+                    }
+                }
+            }*/
             log.info("end--获取用户还款计划 ，身份证号码"+certNo);
             if(!"100000".equals(job.getString("code"))){
                 return  returnFaild(job.getString("msg"));
             }
-            return returnSuccess(job.getString("result"));
+            return returnSuccess(job.getJSONObject("result").getJSONArray("data"));
         } catch (Exception e) {
             log.info("end--获取用户还款计划异常 "+e);
             return  returnFaild();
