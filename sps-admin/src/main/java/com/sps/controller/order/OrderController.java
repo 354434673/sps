@@ -196,7 +196,7 @@ public class OrderController {
 		return insertLogistics;
 	}
 	/**
-	 * 查看物流流程
+	 * 查看物流轨迹
 	 * @Title: getLogisticsTrack   
 	 * @Description: TODO(这里用一句话描述这个方法的作用)   
 	 * @param: @param orderId
