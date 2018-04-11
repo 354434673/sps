@@ -151,8 +151,7 @@ public class ReChargeController {
     @RequestMapping(value = "/rechargeDetail")
     @ResponseBody
     public SpsChannelBankTrade findTradeDetail(String  tradeSerialNum) {
-        Map<String, String > resultMap = new HashMap<String,String>();
-        SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeInfo( tradeSerialNum);
+        SpsChannelBankTrade tradeDetail = bankTradereadService.getTradeDetail( tradeSerialNum);
         return tradeDetail;
     }
 

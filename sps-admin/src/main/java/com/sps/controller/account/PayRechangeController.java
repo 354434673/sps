@@ -193,7 +193,7 @@ public class PayRechangeController {
         ReturnInfo ri = new ReturnInfo();
         try {
             if ("000000".equals(status)) {
-                SpsChannelBankTrade spsBankTradeInfo = bankTradereadService.getTradeInfo(serialNumber);
+                SpsChannelBankTrade spsBankTradeInfo = bankTradereadService.getTradeDetail(serialNumber);
                 Map resultMap = new HashMap<>();
                 resultMap.put("amount", amount);
                 resultMap.put("application", "dianfu");
@@ -223,7 +223,7 @@ public class PayRechangeController {
                                 spsChannelBankTrade.setRechargeStatus(1);
                                 spsChannelBankTrade.setPaymentDate(new Date());
                                 spsChannelBankTrade.setTradeNo(serialNumber);
-                                spsChannelBankTrade.setTradeSerialNum(serialNumber);
+                                spsChannelBankTrade.setTradeSerialNum(spsBankTradeInfo.getTradeSerialNum());
                                 Boolean flag = bankTradeWriteService.modifyRechangeStatus(spsChannelBankTrade);
                                 if(flag) {
                                     ri.setCode(Message.SUCCESS_CODE);

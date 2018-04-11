@@ -24,8 +24,16 @@ public class BankDrawAudio implements Serializable {
     private String  companyName  ;
     private String  status  ;
     private String  advice  ;
-
+    private String  orderId;  ;
     private String  remark;
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
     public String getRemark() {
         return remark;

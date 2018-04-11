@@ -183,9 +183,21 @@
 		on
 		bt.bt_user_id = b.b_user_id
 		where
-		  	bt.bt_trade_serial_num=#{tradeSerialNum}
+		bt.bt_trade_no=#{tradeSerialNum}
 	</select>
-    <select id="selectListCashAuditByUserName" parameterType="String"  resultMap="cashAuditBashInfo">
+	<select id="selectBankTradeAuditBySeriNum" parameterType="String" resultMap="BaseResultMap">
+		SELECT
+		<include refid="join_list" />
+		sps_bank_trade_info bt
+		join
+		sps_bank  b
+		on
+		bt.bt_user_id = b.b_user_id
+		where
+		bt.bt_trade_serial_num=#{tradeSerialNum}
+	</select>
+
+	<select id="selectListCashAuditByUserName" parameterType="String"  resultMap="cashAuditBashInfo">
         SELECT
           	bt.id,
            bt.bt_application_start_date,
