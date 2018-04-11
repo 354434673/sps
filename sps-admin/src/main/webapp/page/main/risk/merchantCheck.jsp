@@ -25,11 +25,11 @@
 		    <div class="layui-form-item">
 			    <label class="layui-form-label" style="width: 200px">核心商户编号:</label>
 			    <div class="layui-input-inline">
-			      <input id="channelNum" type="text" name="username"  lay-verify="" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+			      <input id="channelNum" type="text" name="channelNum"  lay-verify="" placeholder="请输入用户名" autocomplete="off" class="layui-input">
 			    </div>
 			    <label class="layui-form-label" style="width: 200px" >核心商户名称:</label>
 			    <div class="layui-input-inline">
-			      <input id="queryName" type="text" name="name"  lay-verify="" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+			      <input id="queryName" type="text" name="queryName"  lay-verify="" placeholder="请输入姓名" autocomplete="off" class="layui-input">
 			    </div>
 			    	<button class="layui-btn layui-btn-primary" id="queryChannelNum">查询</button>
 			    	<button class="layui-btn layui-btn-primary" id="reset">重置</button>

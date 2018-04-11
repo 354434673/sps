@@ -4,9 +4,16 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class SpsOrderLogistics implements Serializable{
-    private Integer logisticsId;
+    /**   
+	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)   
+	 */   
+	private static final long serialVersionUID = 1L;
+
+	private Integer logisticsId;
 
     private String logisticsName;
+
+    private String logisticsCode;
 
     private String logisticsOther;
 
@@ -36,6 +43,14 @@ public class SpsOrderLogistics implements Serializable{
         this.logisticsName = logisticsName == null ? null : logisticsName.trim();
     }
 
+    public String getLogisticsCode() {
+        return logisticsCode;
+    }
+
+    public void setLogisticsCode(String logisticsCode) {
+        this.logisticsCode = logisticsCode == null ? null : logisticsCode.trim();
+    }
+
     public String getLogisticsOther() {
         return logisticsOther;
     }
@@ -49,7 +64,7 @@ public class SpsOrderLogistics implements Serializable{
     }
 
     public void setLogisticsNum(String logisticsNum) {
-        this.logisticsNum = logisticsNum;
+        this.logisticsNum = logisticsNum == null ? null : logisticsNum.trim();
     }
 
     public String getLogisticsVoucher() {

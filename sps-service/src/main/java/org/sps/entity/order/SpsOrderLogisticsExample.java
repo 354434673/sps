@@ -235,6 +235,76 @@ public class SpsOrderLogisticsExample {
             return (Criteria) this;
         }
 
+        public Criteria andLogisticsCodeIsNull() {
+            addCriterion("logistics_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeIsNotNull() {
+            addCriterion("logistics_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeEqualTo(String value) {
+            addCriterion("logistics_code =", value, "logisticsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeNotEqualTo(String value) {
+            addCriterion("logistics_code <>", value, "logisticsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeGreaterThan(String value) {
+            addCriterion("logistics_code >", value, "logisticsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("logistics_code >=", value, "logisticsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeLessThan(String value) {
+            addCriterion("logistics_code <", value, "logisticsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeLessThanOrEqualTo(String value) {
+            addCriterion("logistics_code <=", value, "logisticsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeLike(String value) {
+            addCriterion("logistics_code like", value, "logisticsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeNotLike(String value) {
+            addCriterion("logistics_code not like", value, "logisticsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeIn(List<String> values) {
+            addCriterion("logistics_code in", values, "logisticsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeNotIn(List<String> values) {
+            addCriterion("logistics_code not in", values, "logisticsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeBetween(String value1, String value2) {
+            addCriterion("logistics_code between", value1, value2, "logisticsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsCodeNotBetween(String value1, String value2) {
+            addCriterion("logistics_code not between", value1, value2, "logisticsCode");
+            return (Criteria) this;
+        }
+
         public Criteria andLogisticsOtherIsNull() {
             addCriterion("logistics_other is null");
             return (Criteria) this;
@@ -315,52 +385,62 @@ public class SpsOrderLogisticsExample {
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsNumEqualTo(Integer value) {
+        public Criteria andLogisticsNumEqualTo(String value) {
             addCriterion("logistics_num =", value, "logisticsNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsNumNotEqualTo(Integer value) {
+        public Criteria andLogisticsNumNotEqualTo(String value) {
             addCriterion("logistics_num <>", value, "logisticsNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsNumGreaterThan(Integer value) {
+        public Criteria andLogisticsNumGreaterThan(String value) {
             addCriterion("logistics_num >", value, "logisticsNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsNumGreaterThanOrEqualTo(Integer value) {
+        public Criteria andLogisticsNumGreaterThanOrEqualTo(String value) {
             addCriterion("logistics_num >=", value, "logisticsNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsNumLessThan(Integer value) {
+        public Criteria andLogisticsNumLessThan(String value) {
             addCriterion("logistics_num <", value, "logisticsNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsNumLessThanOrEqualTo(Integer value) {
+        public Criteria andLogisticsNumLessThanOrEqualTo(String value) {
             addCriterion("logistics_num <=", value, "logisticsNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsNumIn(List<Integer> values) {
+        public Criteria andLogisticsNumLike(String value) {
+            addCriterion("logistics_num like", value, "logisticsNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsNumNotLike(String value) {
+            addCriterion("logistics_num not like", value, "logisticsNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticsNumIn(List<String> values) {
             addCriterion("logistics_num in", values, "logisticsNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsNumNotIn(List<Integer> values) {
+        public Criteria andLogisticsNumNotIn(List<String> values) {
             addCriterion("logistics_num not in", values, "logisticsNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsNumBetween(Integer value1, Integer value2) {
+        public Criteria andLogisticsNumBetween(String value1, String value2) {
             addCriterion("logistics_num between", value1, value2, "logisticsNum");
             return (Criteria) this;
         }
 
-        public Criteria andLogisticsNumNotBetween(Integer value1, Integer value2) {
+        public Criteria andLogisticsNumNotBetween(String value1, String value2) {
             addCriterion("logistics_num not between", value1, value2, "logisticsNum");
             return (Criteria) this;
         }

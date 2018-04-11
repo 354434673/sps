@@ -5,7 +5,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.logistics.tracking.api.IKdniaoTrackService;
+import org.logistics.tracking.vo.LogisticsTrackVo;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.juzifenqi.capital.entity.BinCode;
@@ -13,7 +16,6 @@ import com.juzifenqi.capital.entity.CapBank;
 import com.juzifenqi.capital.service.IBinCodeService;
 import com.juzifenqi.capital.service.ICapBankService;
 import com.juzifenqi.core.ServiceResult;
-import com.juzifenqi.usercenter.service.ICache;
 import com.sps.service.area.AreasService;
 
 
@@ -76,5 +78,4 @@ public class OptionController {
 		
 		return bankById;
 	}
-	
 }

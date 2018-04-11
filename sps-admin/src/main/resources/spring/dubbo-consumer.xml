@@ -18,7 +18,9 @@
 	<dubbo:registry protocol="zookeeper" address="${dubbo.zookeeper}" />
 	<!-- 使用注解方式暴露接口 -->
     <dubbo:annotation package="com.sps.controller"/>
-	<dubbo:reference group ="member-center-dev1" id="iSmsCommonService" interface="com.juzifenqi.usercenter.service.ISmsCommonService"/>
+    <dubbo:reference group = "${dubbo.tracking.group}"  id="iKdniaoTrackService" interface="org.logistics.tracking.api.IKdniaoTrackService"/>
+    
+	<dubbo:reference group = "${dubbo.member.group}" id="iSmsCommonService" interface="com.juzifenqi.usercenter.service.ISmsCommonService"/>
 </beans>
  
  

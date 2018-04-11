@@ -119,6 +119,7 @@
 			and s1.shopkeeper_state = #{shopkeeperState}
 		</if>
 	</where>
+	GROUP BY s1.shopkeeper_customerId
   </select>
   <select id="countByExample" parameterType="org.sps.entity.shopkeeper.SpsShopkeeperExample" resultType="java.lang.Integer" >
     select count(*) from sps_shopkeeper

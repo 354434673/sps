@@ -90,6 +90,8 @@ public interface OrderService extends Serializable{
 	 * @throws
 	 */
 	HashMap<String, Object> insertLogistics(String flag, SpsOrderLogistics logistics);
+	
+	HashMap<String, Object> updateLogistics(SpsOrderLogistics logistics);
 
 	/**
 	 * 根据各种条件查询信息
@@ -124,7 +126,11 @@ public interface OrderService extends Serializable{
 	 * @return
 	 */
 	Order queryByOrderId(String orderId);
-
+	
+	SpsOrderLogistics queryLogisticsByOrderId(String orderId);
+	
+	
+	
 	/**
 	 *根据订单id查询所有的订单项
 	 * @param page

@@ -74,6 +74,7 @@
 			  })
 			  table.on('tool(expressTables)', function(obj){
 				  var data = obj.data;
+				  console.log(obj)
 				  expressIds = data;
 /* 				  if(obj.checked){
 					  expressIds.push(obj.data.name)

@@ -21,6 +21,7 @@ public interface ExpressService {
 	 * @throws
 	 */
 	HashMap<String,Object> getExpress(String name, Integer page, Integer limit);
+	
 	/**
 	 * 插入其他
 	 * @Title: insertExpress   
@@ -33,4 +34,5 @@ public interface ExpressService {
 	 * @throws
 	 */
 	int insertExpress(String name);
+	
 }

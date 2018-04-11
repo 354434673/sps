@@ -31,7 +31,7 @@
 				    <div class="layui-col-md12">
 				      	<label class="layui-form-label" style="width:152px">*请输入额度：</label>
 				    <div class="layui-input-inline">
-				      <input id="balance2" type="text" name="balance2"  lay-verify="" placeholder="请输入额度" autocomplete="off" class="layui-input">
+				      <input id="amount" type="text" name="amount"  lay-verify="" placeholder="请输入额度" autocomplete="off" class="layui-input">
 				    </div>
 				    </div>
 				  </div>
@@ -787,11 +787,18 @@
 			  	var balanceAmount = $('#amount').val();
 	  		  	var balanceStartDate = $('#startTime').val();
 	  		  	var balanceExpireDate = $('#expireTime').val();
-	  		  	updateState(shopkeeperCustomerid, 7, balanceAmount, balanceExpireDate, balanceStartDate,"审核成功")
+	  		  	var regex = /^[0-9]*[1-9][0-9]*$/;
+	  		  	if(balanceAmount == '' || balanceStartDate == '' || balanceExpireDate == ''  ){
+	  		  		layer.msg('必填项不可为空',{icon: 2});
+	  		  	}else if(!balanceAmount.match(regex)){
+	  		  		layer.msg('请输入正确的额度,只能为正整数',{icon: 2});
+	  		  	}else{
+	  		  		updateState(shopkeeperCustomerid, 7, balanceAmount, balanceExpireDate, balanceStartDate,"审核成功")
+	  		  	}
 	  })
 	  $('#refuse').click(function(){
 	 		 if(isAudit){
-	 			updateState(shopkeeperCustomerid, 6, balanceAmount, balanceExpireDate, balanceStartDate,"审核成功")
+	 			updateState(shopkeeperCustomerid, 6, null, null, null,"审核成功")
 	 		 }else{
 				  layer.msg('按钮不合法',{icon: 2});
 			  }
@@ -981,19 +988,22 @@
             $.post({//获取主营业务
                 url: '<%=path%>/shopkeeper/updateState',
                 dataType: 'json',
-                data: {shopkeeperCustomerId: clientNum,state:state},
+                data: {shopkeeperCustomerid: clientNum,state:state},
                 success: function (data) {
                 	if(data.code == 1){
-	               		 if(state == 6){
+	               		 if(state == 7){
 	             		 	insertBalance(clientNum, balanceAmount, balanceExpireDate, balanceStartDate)
-                			layer.msg(msg,{icon: 2});
+                			layer.msg(msg,{icon: 1});
 	             		 }
+						  setTimeout(function(){
+							  //跳转到上一页
+							  window.location.href='<%=path%>/page/main/risk/shopkeeperCheck.jsp'
+						  },1000);
                 	}else{
                 		layer.msg('审核失败',{icon: 2});
                 	}
                 }
             })
-		}
 	}
 	function insertBalance(balanceClientNum, balanceAmount, balanceExpireDate, balanceStartDate){
 		console.log(balanceExpireDate+balanceStartDate)
@@ -1009,7 +1019,8 @@
             	},
             success: function (data) {
             	if(data.success){
-            		 layer.msg("审核成功",{icon: 1});
+            		 layer.msg("审核成功,1秒后跳转",{icon: 1});
+
             	}else{
             		layer.msg('审核失败',{icon: 2});
             	}

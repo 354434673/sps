@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.logistics.tracking.api.IExpressService;
+import org.logistics.tracking.api.IKdniaoTrackService;
+import org.logistics.tracking.core.ServiceResult;
+import org.logistics.tracking.vo.LogisticsTrackVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.sps.entity.order.Order;
 import org.sps.entity.order.OrderGoods;
 import org.sps.entity.order.SpsOrderLogistics;
 import org.sps.service.order.OrderService;
+import org.sps.util.FinalData;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.sps.common.OssUtil;
+import com.sps.exception.ImgException;
 import com.sps.service.express.ExpressService;
 import com.sps.util.CommonUtil;
 
@@ -34,6 +42,8 @@ public class OrderController {
 	OrderService orderService;
 	@Resource
 	private ExpressService expressService;
+	@Resource
+	private IKdniaoTrackService iKdniaoTrackService;
 
 	@RequestMapping("/showOrder.json")
 	@ResponseBody
@@ -150,32 +160,96 @@ public class OrderController {
 		HashMap<String, Object> updateOrderFlag = orderService.updateOrderFlag(orderid, flag, remark);
 		return updateOrderFlag;
 	}
+	/**
+	 * 订阅物流信息
+	 * @Title: insertLogistics   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param logistics
+	 * @param: @param flag
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年4月11日 上午11:38:37
+	 * @return: HashMap<String,Object>      
+	 * @throws
+	 */
 	@RequestMapping("/insertLogistics")
 	@ResponseBody
 	public HashMap<String, Object> insertLogistics(SpsOrderLogistics logistics, String flag){
 		String otherName = logistics.getLogisticsOther();
+		
+		HashMap<String, Object> insertLogistics = null;
 		if(!(otherName.equals("")||otherName == null)){//物流配送中其他字段如果填了选项,则插入数据
 			expressService.insertExpress(otherName);
 		}
-		HashMap<String, Object> insertLogistics = orderService.insertLogistics(flag, logistics);
-
+		SpsOrderLogistics queryLogisticsByOrderId = orderService.queryLogisticsByOrderId(logistics.getOrderId());
+		
+		if(queryLogisticsByOrderId == null){
+			insertLogistics = orderService.insertLogistics(flag, logistics);
+		}else{
+			insertLogistics = orderService.updateLogistics(logistics);
+		}
+		if(insertLogistics.get("state").equals(FinalData.STATE_SUCCESS)){
+			//订阅物流
+			ServiceResult<Boolean> subLogisticsTrack = iKdniaoTrackService.subLogisticsTrack(
+					null, logistics.getLogisticsCode(), logistics.getLogisticsNum(), logistics.getLogisticsName());
+		}
 		return insertLogistics;
+	}
+	/**
+	 * 查看物流流程
+	 * @Title: getLogisticsTrack   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param orderId
+	 * @param: @return  
+	 * @author YangNingSheng    
+	 * @date 2018年4月11日 上午11:38:02
+	 * @return: ServiceResult<LogisticsTrackVo>      
+	 * @throws
+	 */
+	@RequestMapping("/getLogisticsTrack")
+	@ResponseBody
+	public ServiceResult<LogisticsTrackVo> getLogisticsTrack(String orderId){
+		
+		SpsOrderLogistics data = orderService.queryLogisticsByOrderId(orderId);
+		
+		ServiceResult<LogisticsTrackVo> logisticsTrack = null;
+		if(data != null){
+			logisticsTrack = iKdniaoTrackService.getLogisticsTrack(null, data.getLogisticsCode(), data.getLogisticsNum());
+		}else{
+			logisticsTrack = iKdniaoTrackService.getLogisticsTrack(null, null, null);
+		}
+		//ServiceResult<LogisticsTrackVo> logisticsTrack = iKdniaoTrackService.getLogisticsTrack(null, "YD", "3934460804760");
+
+		return logisticsTrack;
 	}
 	@RequestMapping("/uploadLogistics")
 	@ResponseBody
 	public HashMap<String, Object> uploadLogistics(@RequestParam(value = "file", required = false) MultipartFile file,
 												   SpsOrderLogistics logistics, String orderid,String flag, HttpServletRequest request){
 
-		if(file != null){//文件不为空则上传图片
-			//String realPath = request.getSession().getServletContext().getRealPath("upload/"); //项目路径
-
-			String realPath = "C:\\development\\sps\\sps\\sps-admin\\src\\main\\webapp\\upload\\";
-
-			String filePath ="order/"+logistics.getOrderId()+"/";
-
-			CommonUtil.uploadPicture(file, realPath+filePath, file.getOriginalFilename());
-		}
-		HashMap<String, Object> insertLogistics = orderService.insertLogistics(flag, logistics);
+			HashMap<String, Object> insertLogistics = null;
+			try {
+				OssUtil ossUtil = new OssUtil();
+				
+				String uploadImg2Oss = ossUtil.uploadImg2Oss(file);
+				
+				String imgUrl = ossUtil.getImgUrl(uploadImg2Oss); 
+				
+				String[] split = imgUrl.split("\\?");  
+				
+				logistics.setLogisticsVoucher(split[0]);
+				
+				SpsOrderLogistics queryLogisticsByOrderId = orderService.queryLogisticsByOrderId(logistics.getOrderId());
+				
+				if(queryLogisticsByOrderId == null){
+					insertLogistics = orderService.insertLogistics(flag, logistics);
+				}else{
+					insertLogistics = orderService.updateLogistics(logistics);
+				}
+			} catch (ImgException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		return insertLogistics;
 	}

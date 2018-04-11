@@ -629,5 +629,37 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}*/
 
+	@Override
+	public HashMap<String, Object> updateLogistics(SpsOrderLogistics logistics) {
+		 HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		try {
+			SpsOrderLogisticsExample example = new SpsOrderLogisticsExample();
+			
+			example.createCriteria().andOrderIdEqualTo(logistics.getOrderId());
+			
+			mapper.updateByExampleSelective(logistics, example );
+			
+            hashMap.put("msg", "成功");
+            hashMap.put("state", FinalData.STATE_SUCCESS);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+	        hashMap.put("msg", "失败");
+	        hashMap.put("state", FinalData.STATE_ERROR);
+		}
+		return hashMap;
+	}
+
+	@Override
+	public SpsOrderLogistics queryLogisticsByOrderId(String orderId) {
+		SpsOrderLogisticsExample example = new SpsOrderLogisticsExample();
+		
+		example.createCriteria().andOrderIdEqualTo(orderId);
+		
+		List<SpsOrderLogistics> selectByExample = mapper.selectByExample(example );
+		
+		return selectByExample.size() == 0 ? null : selectByExample.get(0);
+	}
+
 }
 

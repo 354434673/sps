@@ -23,7 +23,9 @@
     <dubbo:reference group = "${dubbo.member.group}" id="iSmsCommonService" interface="com.juzifenqi.usercenter.service.ISmsCommonService"/>
     
     <dubbo:reference group = "${dubbo.member.group}"  id="iDianfuPassportService" interface="com.juzifenqi.usercenter.service.authorization.IDianfuPassportService"/>
+    
     <dubbo:reference group = "${dubbo.member.group}"  id="memberDianfuService" interface="com.juzifenqi.usercenter.service.member.IMemberDianfuService"/>
+    
     <dubbo:reference group = "${dubbo.auth.group}" id="faceAuthApi" interface="com.jzfq.auth.core.api.FaceAuthApi"/>
     
     <dubbo:reference group = "${dubbo.auth.group}" id="jzfqAuthApi" interface="com.jzfq.auth.core.api.JzfqAuthApi"/>
@@ -34,7 +36,9 @@
     
     <dubbo:reference group = "${dubbo.capital.group}"  id="iBinCodeService" interface="com.juzifenqi.capital.service.IBinCodeService"/>
     
-    <dubbo:reference group = "${dubbo.capital.group}"  id="iCapBankService" interface="com.juzifenqi.capital.service.ICapBankService"/>
+<!--     <dubbo:reference group = "${dubbo.capital.group}"  id="iCapBankService" interface="com.juzifenqi.capital.service.ICapBankService"/>
+    
+    <dubbo:reference group = "${dubbo.tracking.group}"  id="iKdniaoTrackService" interface="org.logistics.tracking.api.IKdniaoTrackService"/> -->
 </beans>
  
  

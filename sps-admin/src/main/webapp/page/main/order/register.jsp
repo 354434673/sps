@@ -100,7 +100,8 @@
 			<div class="layui-form-item">
 		    <label class="layui-form-label" style="width:130px">*物流公司：</label>
 		    <div class="layui-input-inline">
-		      <input disabled="disabled" id="logisticsCooperationName" type="logisticsCooperationName" name="name" lay-verify="required" placeholder="合作物流" autocomplete="off" class="layui-input">
+		      <input disabled="disabled" id="logisticsCooperationName" type="text" name="logisticsCooperationName" lay-verify="required" placeholder="合作物流" autocomplete="off" class="layui-input">
+		      <input style="display: none" id="logisticsCooperationCode" type="text" name="logisticsCooperationCode" lay-verify="required" placeholder="合作物流" autocomplete="off" class="layui-input">
 		    </div>
 		   		<button class="layui-btn layui-btn-primary" lay-filter="openExpress" id="openExpress">
 			    <i class="layui-icon">&#xe608;</i> 搜索</button>
@@ -205,15 +206,17 @@
 			  var fileName = ''
 			  form.on('submit(submit)', function(data){
 				  logisticsCooperationName = $('#logisticsCooperationName').val()
+				  logisticsCooperationCode = $('#logisticsCooperationCode').val()
 				  logisticsOther = $('#logisticsOther').val()
 				  logisticsNum = $('#logisticsNum').val()
-				  orderId = <%=request.getParameter("orderid")%>
+				  orderId = orderid
  				  $.post({
 					  url:'<%=path%>/order/insertLogistics',
 					  dataType:'json',
 					  data:{
 	 			          logisticsName:logisticsCooperationName,
-						  orderId:orderId,
+	 			          logisticsCode:logisticsCooperationCode,
+	 			          orderId:orderid,
 						  logisticsOther:logisticsOther,
 						  logisticsNum:logisticsNum,
 						  flag:7
@@ -234,9 +237,7 @@
 					  }
 				  }) 
 			  })
-			  function uploadFile(name,id,other,num,flag){
-			  }
-				  upload.render({
+<%-- 				  upload.render({
 					    elem: '#testList'
 					    ,accept:'images'
 					    ,url:'<%=path%>/order/uploadLogistics'
@@ -244,11 +245,7 @@
 					    ,multiple: true
 					    ,bindAction:'#submit'
 		 			    ,data:{
-		 			          logisticsName:1,
-							  orderId:1,
-							  logisticsOther:1,
-							  logisticsNum:1,
-							  flag:1
+		 			          orderId:orderid,
 		 			    	}
 					    ,done: function(res){
 					    	if(res.state == 'success'){
@@ -262,7 +259,7 @@
 					    ,error: function(){
 					    	layer.msg('图片失败',{icon: 2});
 					    }
-					  }); 
+					  });  --%>
 			//物流信息
 			  $('#openExpress').on('click', function() {
 				  layer.open({
@@ -274,8 +271,10 @@
 				      yes: function(index, layero){
 					  	  layer.close(layer.index);
 						  var data = $(layero).find("iframe")[0].contentWindow.expressIds;
+						  console.log(data)
 						  if(data.length != 0 || data != ""){
 							  $('#logisticsCooperationName').val(data.name)
+							  $('#logisticsCooperationCode').val(data.no)
 							  $('#logisticsOther').attr("disabled","disabled")
 							  $('#logisticsOther').addClass("layui-disabled")
 						  }

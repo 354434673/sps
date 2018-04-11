@@ -579,7 +579,14 @@
       		  	var balanceAmount = $('#amount').val();
       		  	var balanceStartDate = $('#startTime').val();
       		  	var balanceExpireDate = $('#expireTime').val();
-      			updateFlowState(channelNum, 2, balanceAmount, balanceExpireDate, balanceStartDate,"审核成功")
+    			var regex = /^[0-9]*[1-9][0-9]*$/;
+	  		  	if(balanceAmount == '' || balanceStartDate == '' || balanceExpireDate == ''  ){
+	  		  		layer.msg('必填项不可为空',{icon: 2});
+	  		  	}else if(!balanceAmount.match(regex)){
+	  		  		layer.msg('请输入正确的额度,只能为正整数',{icon: 2});
+	  		  	}else{
+	      			updateFlowState(channelNum, 2, balanceAmount, balanceExpireDate, balanceStartDate,"审核成功")
+	  		  	}
   			})
 		  $('#refuse').click(function(){
 			  	updateFlowState(channelNum, 3, null, null, null,"拒绝成功")
@@ -851,6 +858,10 @@
                     		 if(channelFlowState == 2){
                     		 	insertBalance(channelNum, balanceAmount, balanceExpireDate, balanceStartDate)
                     		 }
+							  setTimeout(function(){
+								  //跳转到上一页
+								  window.location.href='<%=path%>/page/main/risk/merchantCheck.jsp'
+							  },1000);
                     	}else{
                     		layer.msg('审核失败',{icon: 2});
                     	}
@@ -871,7 +882,7 @@
                     	},
                     success: function (data) {
                     	if(data.success){
-                    		 layer.msg("审核成功",{icon: 1});
+                    		 layer.msg("审核成功,1秒后跳转",{icon: 1});
                     	}else{
                     		layer.msg('审核失败',{icon: 2});
                     	}
